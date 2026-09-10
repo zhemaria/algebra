@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<!--
+  Producto de un monomio por un polinomio · Interactivo de la Lección 2.3
+  Spanish ASE Math · Nivel 4 · Tema 2 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)
+  https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Producto de un monomio por un polinomio · Lección 2.3</title>
+<meta name="description" content="Interactivo para multiplicar un monomio por un polinomio con la propiedad distributiva y el modelo de caja.">
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<meta name="dcterms.rights" content="Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">
+<style>
+:root {
+  --tema: #004d40;
+  --tema-d: #00332b;
+  --tema-bg: #e0f2f1;
+  --tema-bg2: #b2dfdb;
+  --acento: #bf360c;
+  --acento-d: #8c2708;
+  --acento-bg: #fbe9e7;
+  --tinta: #1d2a28;
+  --gris: #4a5654;
+  --fondo: #f4f7f6;
+  --linea: #e4eeec;
+  --borde: #c9d8d5;
+  --ok: #1b5e20;
+  --ok-bg: #e8f5e9;
+  --no: #b3261e;
+  --no-bg: #fdecea;
+  --ambar: #5c3900;
+  --ambar-bg: #fff8e1;
+  --math: "Cambria Math", Cambria, "STIX Two Math", "Times New Roman", Georgia, serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--tinta);
+  line-height: 1.6;
+  font-size: 17px;
+}
+.contenedor { max-width: 920px; margin: 0 auto; padding: 24px 18px 40px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.saltar {
+  position: absolute; left: -9999px; top: 8px; background: #fff; color: var(--tema-d);
+  padding: 8px 14px; border-radius: 6px; z-index: 20; font-weight: 700;
+}
+.saltar:focus { left: 12px; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
+
+/* Encabezado */
+header.principal {
+  background: linear-gradient(135deg, #00332b 0%, #004d40 55%, #00695c 100%);
+  color: #fff; padding: 28px 30px; border-radius: 14px; margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(0, 51, 43, 0.25);
+}
+header.principal .ruta { font-size: 14px; margin: 0; opacity: 0.95; }
+header.principal h1 { margin: 6px 0 8px; font-size: clamp(25px, 4.2vw, 32px); line-height: 1.2; }
+header.principal .lema { margin: 0; font-size: 17px; max-width: 60ch; }
+
+/* Bloques */
+section.bloque {
+  background: #fff; border: 1px solid var(--borde); border-radius: 12px;
+  padding: 22px 26px 24px; margin-bottom: 22px;
+}
+section.bloque > h2 { color: var(--tema-d); font-size: 23px; margin: 0 0 6px; line-height: 1.3; }
+h3 { color: var(--tema-d); font-size: 18px; margin: 18px 0 8px; line-height: 1.35; }
+p { margin: 10px 0; max-width: 74ch; }
+.intro { color: var(--gris); margin-top: 0; }
+
+/* Matemáticas */
+.m { font-family: var(--math); font-size: 1.18em; white-space: nowrap; }
+.m i { font-style: italic; padding-right: 0.04em; }
+.m sup { font-size: 0.66em; line-height: 0; position: relative; top: -0.1em; }
+.par { color: var(--acento); font-weight: 700; }
+.exp-ac { color: var(--acento); font-weight: 700; }
+
+/* La pizarra cuadriculada: el elemento visual de identidad */
+.pizarra {
+  position: relative;
+  background-color: #fff;
+  background-image:
+    linear-gradient(var(--linea) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linea) 1px, transparent 1px);
+  background-size: 26px 26px;
+  border: 2px solid var(--tema);
+  border-radius: 12px;
+  padding: 22px 20px;
+  margin: 14px 0;
+  text-align: center;
+  font-size: clamp(21px, 3.8vw, 30px);
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.pizarra .m { font-size: 1em; }
+.pizarra.peq { font-size: clamp(19px, 3vw, 24px); padding: 14px 16px; }
+.pizarra .rotulo {
+  display: block; font-family: "Segoe UI", system-ui, sans-serif; font-size: 15px;
+  color: var(--gris); margin-bottom: 2px; text-align: left;
+}
+
+/* Cajas de mensaje */
+.regla-oro {
+  border-left: 6px solid var(--acento); background: var(--acento-bg);
+  padding: 14px 18px; border-radius: 0 10px 10px 0; margin: 14px 0; color: #4a1a05;
+}
+.regla-oro strong { color: #4a1a05; }
+.caja-tip {
+  background: var(--ambar-bg); border-left: 5px solid #f9a825; color: var(--ambar);
+  padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0; font-size: 16px;
+}
+.caja-tip strong { color: var(--ambar); }
+
+/* Botones */
+.btn {
+  font: inherit; font-size: 15px; font-weight: 700; background: var(--tema); color: #fff;
+  border: 2px solid var(--tema); padding: 9px 18px; border-radius: 8px; cursor: pointer;
+  margin: 8px 8px 0 0;
+}
+.btn:hover { background: var(--tema-d); border-color: var(--tema-d); }
+.btn.sec { background: #fff; color: var(--tema-d); }
+.btn.sec:hover { background: var(--tema-bg); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.fila-botones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; align-items: center; }
+.chips .nombre-grupo { font-size: 15px; color: var(--gris); margin-right: 4px; }
+.chip {
+  font: inherit; font-size: 15px; background: #fff; color: var(--tema-d);
+  border: 2px solid var(--tema); border-radius: 999px; padding: 5px 15px; cursor: pointer;
+}
+.chip:hover { background: var(--tema-bg); }
+.chip[aria-pressed="true"] { background: var(--tema); color: #fff; }
+
+/* Retroalimentación */
+.fb { margin-top: 12px; padding: 12px 16px; border-radius: 8px; font-size: 16px; display: none; }
+.fb.visible { display: block; }
+.fb.ok { background: var(--ok-bg); color: var(--ok); border-left: 5px solid #2e7d32; }
+.fb.no { background: var(--no-bg); color: var(--no); border-left: 5px solid var(--no); }
+.fb.info { background: var(--ambar-bg); color: var(--ambar); border-left: 5px solid #f9a825; }
+.fb ul { margin: 6px 0 0; padding-left: 20px; }
+.fb li { margin: 5px 0; }
+.fb .m { color: inherit; }
+.etq-trampa {
+  display: inline-block; font-size: 14px; font-weight: 700; border: 2px solid currentColor;
+  border-radius: 999px; padding: 0 10px; margin-left: 4px; white-space: nowrap;
+}
+
+/* Campos numéricos */
+input.num {
+  font-family: var(--math); font-size: 22px; width: 3.4em; text-align: center;
+  padding: 3px 6px; border: 2px solid #8fa5a1; border-radius: 6px; color: var(--tinta);
+  background: #fff;
+}
+input.num:focus { border-color: var(--tema); }
+input.num.ok { border-color: #2e7d32; background: var(--ok-bg); }
+input.num.no { border-color: var(--no); background: var(--no-bg); }
+
+/* Las cinco trampas */
+.trampas {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 14px; margin-top: 14px; padding: 0; list-style: none;
+}
+.trampa { border: 1px solid var(--borde); border-radius: 10px; padding: 14px 16px; background: #fcfdfd; }
+.trampa h3 { margin: 0 0 8px; font-size: 17px; display: flex; gap: 10px; align-items: flex-start; }
+.trampa .n {
+  flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--acento-d);
+  color: #fff; font-weight: 700; display: inline-grid; place-items: center; font-size: 15px;
+}
+.mal, .bien { display: block; margin: 4px 0; font-size: 16px; }
+.mal { color: var(--no); }
+.bien { color: var(--ok); }
+.marca { font-weight: 700; display: inline-block; width: 1.2em; }
+.trampa .porque { font-size: 15px; color: var(--gris); margin: 8px 0 0; }
+
+/* Pasos del taller */
+.pasos-nav { display: flex; gap: 6px; list-style: none; padding: 0; margin: 12px 0 4px; flex-wrap: wrap; }
+.pasos-nav li { padding: 3px 13px; border-radius: 999px; background: #eef3f2; color: var(--gris); font-size: 14px; }
+.pasos-nav li.activo { background: var(--tema); color: #fff; font-weight: 700; }
+.pasos-nav li.hecho { background: var(--tema-bg2); color: var(--tema-d); }
+.paso { border-top: 2px dashed var(--borde); padding-top: 12px; margin-top: 16px; }
+.paso > h3 { margin-top: 0; }
+.fila-calc { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 10px 0; }
+.nota { font-size: 15px; color: var(--gris); }
+
+/* Opciones (detective y preguntas) */
+.opciones { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 10px 0; }
+.op {
+  font: inherit; font-size: 16px; text-align: left; background: #fff; color: var(--tinta);
+  border: 2px solid var(--borde); border-radius: 8px; padding: 9px 13px; cursor: pointer;
+}
+.op:hover:not(:disabled) { border-color: var(--tema); }
+.op.correcta { border-color: #2e7d32; background: var(--ok-bg); color: var(--ok); }
+.op.incorrecta { border-color: var(--no); background: var(--no-bg); color: var(--no); }
+.op:disabled { cursor: default; }
+.op .m { font-size: 1.2em; }
+.progreso { font-size: 15px; color: var(--gris); margin: 0 0 4px; }
+ol.lineas { margin: 8px 0; padding-left: 26px; }
+ol.lineas li { margin: 4px 0; }
+ol.lineas li::marker { color: var(--gris); }
+
+/* Lista de control */
+ul.control { list-style: none; padding: 0; margin: 10px 0 0; }
+ul.control li { padding: 7px 0 7px 34px; position: relative; border-bottom: 1px solid var(--linea); }
+ul.control li::before {
+  content: "✓"; position: absolute; left: 4px; top: 6px; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--tema); color: #fff; font-size: 13px;
+  display: grid; place-items: center; font-weight: 700;
+}
+
+footer { text-align: center; padding: 20px 10px; color: #555; font-size: 14px; border-top: 1px solid #d6dedc; margin-top: 24px; }
+footer a { color: var(--tema-d); }
+
+@keyframes destello { from { background: var(--acento-bg); } to { background: transparent; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 600px) {
+  section.bloque { padding: 18px 15px 20px; }
+  header.principal { padding: 22px 20px; }
+  body { font-size: 16px; }
+}
+
+/* Demostración con flechas */
+.demo-piz { padding-top: 84px; padding-bottom: 26px; overflow: visible; }
+.demo-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.arco { fill: none; stroke: var(--tema); stroke-width: 2.5; }
+.arco.actual { stroke: var(--acento); stroke-width: 3; }
+.arco.nuevo { stroke-dasharray: 1; stroke-dashoffset: 1; animation: trazo 0.7s ease-out forwards; }
+@keyframes trazo { to { stroke-dashoffset: 0; } }
+.demo-mono { background: var(--tema-bg); border-bottom: 3px solid var(--tema); border-radius: 5px; padding: 0 5px; }
+.demo-t { padding: 0 5px; border-radius: 5px; border-bottom: 3px solid transparent; }
+.demo-t.visto { background: #eef3f2; border-bottom-color: var(--tema-bg2); }
+.demo-t.actual { background: var(--acento-bg); border-bottom-color: var(--acento); }
+.demo-lineas { list-style: none; padding: 0; margin: 6px 0 0; }
+.demo-lineas li { padding: 8px 12px; border-left: 5px solid var(--tema-bg2); margin: 6px 0; background: #fafcfb; font-size: 20px; }
+.demo-lineas li.res { border-left-color: var(--tema); background: var(--tema-bg); font-weight: 700; color: var(--tema-d); }
+.demo-lineas li.actual { border-left-color: var(--acento); }
+.demo-lineas .m { font-size: 1em; white-space: normal; }
+.carril-coef { background: var(--tema-bg); color: var(--tema-d); border-radius: 4px; padding: 0 5px; }
+.carril-exp { background: var(--acento-bg); color: var(--acento-d); border-radius: 4px; padding: 0 5px; }
+.demo-lineas .etq { font-family: "Segoe UI", system-ui, sans-serif; font-size: 13px; display: block; color: var(--gris); }
+
+/* Carriles */
+.carriles { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; }
+.carril { border-radius: 10px; padding: 4px 18px 14px; }
+.c-coef { background: #f1f8f7; border-top: 6px solid var(--tema); }
+.c-exp { background: #fdf4f1; border-top: 6px solid var(--acento); }
+.c-exp h3 { color: var(--acento-d); }
+.m-grande { font-size: 20px; }
+.carril ul { padding-left: 20px; margin: 6px 0; }
+table.signos { border-collapse: collapse; margin: 6px 0; font-size: 16px; background: #fff; }
+table.signos caption { text-align: left; font-size: 14px; color: var(--gris); padding-bottom: 4px; }
+table.signos th, table.signos td { border: 1px solid var(--borde); padding: 5px 16px; text-align: center; }
+table.signos th { background: var(--tema); color: #fff; }
+
+/* Modelo de caja */
+.caja-envoltura { overflow-x: auto; padding: 4px 0 8px; }
+.caja-grid { display: grid; gap: 0; min-width: min-content; border: 2px solid var(--tema); border-radius: 10px; overflow: hidden; background: #fff; }
+.caja-esq, .caja-cab, .caja-mono, .caja-celda { border-right: 1px solid var(--borde); border-bottom: 1px solid var(--borde); padding: 10px; display: flex; align-items: center; justify-content: center; }
+.caja-esq { background: var(--tema); color: #fff; font-size: 24px; font-weight: 700; }
+.caja-cab { background: var(--tema-bg); font-size: 22px; }
+.caja-mono { background: var(--tema-bg); font-size: 22px; }
+.caja-cab .m, .caja-mono .m { font-size: 1.05em; }
+.caja-celda { flex-direction: column; gap: 4px; min-height: 108px; }
+.celda-term { display: flex; align-items: flex-start; gap: 2px; padding-top: 14px; }
+.celda-term input.coef { width: 3.2em; }
+.celda-term .x-fija { font-size: 28px; line-height: 1.3; padding: 0 2px; }
+.celda-term input.exp { width: 2.3em; font-size: 17px; padding: 2px 3px; margin-top: -14px; }
+.celda-pista { font-size: 15px; color: var(--ambar); text-align: center; line-height: 1.5; }
+.caja-celda.ok { background: var(--ok-bg); }
+#caja-verif .m { font-size: 1.05em; }
+
+.caja-aviso { display: none; }
+@media (max-width: 600px) {
+  .caja-aviso { display: block; }
+  .caja-celda { padding: 8px 6px; }
+  .demo-lineas li { font-size: 17px; }
+}
+
+</style>
+</head>
+<body>
+<a class="saltar" href="#principal">Saltar al contenido principal</a>
+<div id="anuncio" class="sr-only" aria-live="polite"></div>
+<div class="contenedor">
+<header class="principal">
+  <p class="ruta">Spanish ASE Math · Nivel 4 · Tema 2 · Lección 2.3</p>
+  <h1>Producto de un monomio por un polinomio</h1>
+  <p class="lema">El monomio visita a cada término del paréntesis, uno por uno.</p>
+</header>
+
+<main id="principal">
+
+  <section class="bloque" aria-labelledby="t-demo">
+    <h2 id="t-demo">La propiedad distributiva, flecha por flecha</h2>
+    <p>El monomio de fuera multiplica a <strong>cada</strong> término de dentro. Pulsa <strong>Siguiente producto</strong> para seguir las flechas.</p>
+    <div class="chips" id="chips-demo" role="group" aria-label="Ejemplo">
+      <span class="nombre-grupo" aria-hidden="true">Ejemplo:</span>
+      <button type="button" class="chip" data-v="A" aria-pressed="true">Monomio positivo</button>
+      <button type="button" class="chip" data-v="B" aria-pressed="false">Monomio negativo</button>
+    </div>
+    <div class="pizarra demo-piz" id="demo-piz">
+      <svg id="demo-svg" class="demo-svg" aria-hidden="true" focusable="false"></svg>
+      <div id="demo-expr"></div>
+    </div>
+    <ol class="demo-lineas" id="demo-lineas" aria-live="polite"></ol>
+    <div class="fila-botones">
+      <button type="button" class="btn" id="demo-sig">Siguiente producto</button>
+      <button type="button" class="btn sec" id="demo-rein">Empezar de nuevo</button>
+    </div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-carriles">
+    <h2 id="t-carriles">Dos reglas que van por carriles separados</h2>
+    <p class="intro">En cada producto hay dos operaciones distintas. No se mezclan.</p>
+    <div class="carriles">
+      <div class="carril c-coef">
+        <h3>Los coeficientes se multiplican</h3>
+        <p class="m-grande"><span class="m" aria-hidden="true">3<i>x</i> · 2<i>x</i><sup>2</sup></span><span class="sr-only">3x por 2x al cuadrado</span> → <span class="m">3 · 2 = 6</span></p>
+        <p>Y se aplica la regla de los signos:</p>
+        <table class="signos">
+          <caption>Regla de los signos para multiplicar</caption>
+          <thead><tr><th scope="col">Factores</th><th scope="col">Resultado</th></tr></thead>
+          <tbody>
+            <tr><td>(+) · (+)</td><td>+</td></tr>
+            <tr><td>(−) · (−)</td><td>+</td></tr>
+            <tr><td>(+) · (−)</td><td>−</td></tr>
+            <tr><td>(−) · (+)</td><td>−</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="carril c-exp">
+        <h3>Los exponentes de <span class="m"><i>x</i></span> se suman</h3>
+        <p class="m-grande"><span class="m" aria-hidden="true"><i>x</i> · <i>x</i><sup>2</sup></span><span class="sr-only">x por x al cuadrado</span> → <span class="m"><i>x</i><sup>1 + 2</sup> = <i>x</i><sup>3</sup></span></p>
+        <p>Dos ideas que evitan muchos errores:</p>
+        <ul>
+          <li>Una <span class="m"><i>x</i></span> sola tiene exponente 1: <span class="m"><i>x</i> = <i>x</i><sup>1</sup></span>.</li>
+          <li>Un número solo no tiene <span class="m"><i>x</i></span>: no cambia el exponente. Por ejemplo, <span class="m">3<i>x</i> · 5 = 15<i>x</i></span>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-trampas">
+    <h2 id="t-trampas">Las cinco trampas más frecuentes</h2>
+    <p class="intro">En el taller, si caes en una, el mensaje te indicará su número.</p>
+    <ul class="trampas">
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">1</span>No multiplicar todos los términos</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">5(<i>x</i> + 2) = 5<i>x</i> + 2</span><span class="sr-only">5 abre paréntesis x más 2 cierra paréntesis igual a 5x más 2</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">5(<i>x</i> + 2) = 5<i>x</i> + 10</span><span class="sr-only">5 abre paréntesis x más 2 cierra paréntesis igual a 5x más 10</span></span>
+        <p class="porque">El monomio visita a cada término del paréntesis, sin saltarse ninguno.</p>
+      </li>
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">2</span>Equivocarse con el signo</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">−3<i>x</i>(<i>x</i> − 4) = −3<i>x</i><sup>2</sup> − 12<i>x</i></span><span class="sr-only">menos 3x abre paréntesis x menos 4 cierra paréntesis igual a menos 3x al cuadrado menos 12x</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">−3<i>x</i>(<i>x</i> − 4) = −3<i>x</i><sup>2</sup> + 12<i>x</i></span><span class="sr-only">menos 3x abre paréntesis x menos 4 cierra paréntesis igual a menos 3x al cuadrado más 12x</span></span>
+        <p class="porque">Signos iguales dan positivo; signos distintos dan negativo.</p>
+      </li>
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">3</span>Multiplicar los exponentes</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true"><i>x</i><sup>2</sup> · <i>x</i><sup>3</sup> = <i>x</i><sup>6</sup></span><span class="sr-only">x al cuadrado por x al cubo igual a x a la 6</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true"><i>x</i><sup>2</sup> · <i>x</i><sup>3</sup> = <i>x</i><sup>5</sup></span><span class="sr-only">x al cuadrado por x al cubo igual a x a la 5</span></span>
+        <p class="porque">Al multiplicar potencias de <span class="m"><i>x</i></span>, los exponentes se suman: 2 + 3 = 5.</p>
+      </li>
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">4</span>Sumar los coeficientes</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">4<i>x</i> · 3<i>x</i> = 7<i>x</i><sup>2</sup></span><span class="sr-only">4x por 3x igual a 7x al cuadrado</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">4<i>x</i> · 3<i>x</i> = 12<i>x</i><sup>2</sup></span><span class="sr-only">4x por 3x igual a 12x al cuadrado</span></span>
+        <p class="porque">Los números se multiplican: 4 · 3 = 12.</p>
+      </li>
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">5</span>Perder la <span class="m">&nbsp;<i>x</i></span></h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">2<i>x</i> · (−3) = −6</span><span class="sr-only">2x por abre paréntesis menos 3 cierra paréntesis igual a menos 6</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">2<i>x</i> · (−3) = −6<i>x</i></span><span class="sr-only">2x por abre paréntesis menos 3 cierra paréntesis igual a menos 6x</span></span>
+        <p class="porque">Si uno de los factores tiene <span class="m"><i>x</i></span>, el resultado también la tiene.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-caja">
+    <h2 id="t-caja">Taller: el modelo de caja</h2>
+    <p class="intro">El monomio va a la izquierda; cada término del polinomio encabeza una columna. En cada casilla escribe el <strong>coeficiente</strong> (casilla grande) y el <strong>exponente</strong> de <span class="m"><i>x</i></span> (casilla pequeña, arriba).</p>
+    <div class="chips" id="chips-nivel" role="group" aria-label="Dificultad">
+      <span class="nombre-grupo" aria-hidden="true">Dificultad:</span>
+      <button type="button" class="chip" data-v="1" aria-pressed="true">Número × binomio</button>
+      <button type="button" class="chip" data-v="2" aria-pressed="false">Monomio × binomio</button>
+      <button type="button" class="chip" data-v="3" aria-pressed="false">Monomio negativo × trinomio</button>
+    </div>
+    <div class="pizarra" id="caja-enun"></div>
+    <p class="nota caja-aviso">Si no ves todas las columnas, desliza la caja hacia los lados.</p>
+    <div class="caja-envoltura" id="caja" tabindex="0" role="region" aria-label="Modelo de caja"></div>
+    <p class="nota">Escribe siempre el exponente: <strong>1</strong> si queda <span class="m"><i>x</i></span>, y <strong>0</strong> si el resultado es solo un número (<span class="m"><i>x</i><sup>0</sup> = 1</span>). Usa el guion para el signo menos.</p>
+    <div class="fila-botones">
+      <button type="button" class="btn" id="caja-comprobar">Comprobar</button>
+      <button type="button" class="btn sec" id="caja-pista">Pista</button>
+      <button type="button" class="btn sec" id="caja-solucion">Mostrar solución</button>
+      <button type="button" class="btn sec" id="caja-nuevo">Nuevo ejercicio</button>
+    </div>
+    <div class="fb" id="caja-fb" role="status"></div>
+    <div id="caja-final" hidden>
+      <div class="pizarra" id="caja-res"></div>
+      <div class="caja-tip" id="caja-verif"></div>
+    </div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-detective">
+    <h2 id="t-detective">Detective de errores</h2>
+    <p class="intro">Cada caso muestra una resolución. Algunas tienen un error y otras están bien. Decide qué ocurrió.</p>
+    <div id="detective"></div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-control">
+    <h2 id="t-control">Antes de dar tu respuesta, comprueba</h2>
+    <ul class="control">
+      <li>¿El monomio multiplicó a <strong>todos</strong> los términos del paréntesis? Cuenta: tantos términos dentro como términos en la respuesta.</li>
+      <li>¿Apliqué la regla de los signos en cada producto?</li>
+      <li>¿Multipliqué los coeficientes y <strong>sumé</strong> los exponentes?</li>
+      <li>¿Conté el exponente 1 de cada <span class="m"><i>x</i></span> sola?</li>
+      <li>¿Conservé la <span class="m"><i>x</i></span> cuando multipliqué por un número?</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+  <p>Material bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank" rel="license noopener noreferrer">Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+</footer>
+</div>
+<script>
+/* ============================================================
+   FUNCIONES COMUNES
+   Formato matemático, texto para lectores de pantalla,
+   números al azar, lectura de respuestas y el "detective de errores".
+   ============================================================ */
+var MENOS = '\u2212';
+
+/* ---------- Números ---------- */
+function fmtNum(n) { return n < 0 ? MENOS + Math.abs(n) : String(n); }
+function fmtParen(n) { return n < 0 ? '(' + MENOS + Math.abs(n) + ')' : String(n); }
+function signoTxt(n) { return n < 0 ? MENOS : '+'; }
+function potencia(b, e) { var r = 1; for (var i = 0; i < e; i++) { r = r * b; } return r; }
+function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+function rndNZ(a, b) { var n; do { n = rnd(a, b); } while (n === 0); return n; }
+function barajar(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+/* Lee un entero escrito por el estudiante. Acepta el signo − tipográfico. */
+function leerNum(txt) {
+  var s = String(txt || '').trim().replace(/[\u2212\u2013\u2014]/g, '-').replace(/\s+/g, '').replace(/^\+/, '');
+  if (!/^-?\d+$/.test(s)) { return null; }
+  return parseInt(s, 10);
+}
+
+/* ---------- Términos y polinomios en HTML ---------- */
+function sup(e) { return e > 1 ? '<sup>' + e + '</sup>' : ''; }
+function lit(e) { return e === 0 ? '' : '<i>x</i>' + sup(e); }
+function termHTML(c, e) {
+  if (c === 0) { return '0'; }
+  var s = c < 0 ? MENOS : '';
+  var a = Math.abs(c);
+  if (e === 0) { return s + a; }
+  return s + (a === 1 ? '' : a) + lit(e);
+}
+/* Término con su signo siempre visible: "+ 3x²", "− x" */
+function termSignado(c, e) { return signoTxt(c) + '\u2009' + termHTML(Math.abs(c), e); }
+function polyHTML(terms) {
+  var out = '', primero = true;
+  terms.forEach(function (t) {
+    if (t.c === 0) { return; }
+    if (primero) { out += termHTML(t.c, t.e); primero = false; }
+    else { out += (t.c < 0 ? ' ' + MENOS + ' ' : ' + ') + termHTML(Math.abs(t.c), t.e); }
+  });
+  return primero ? '0' : out;
+}
+
+/* ---------- Versión hablada (lectores de pantalla) ---------- */
+var ORDINAL = { 4: 'cuarta', 5: 'quinta', 6: 'sexta', 7: 'séptima', 8: 'octava', 9: 'novena' };
+function expVoz(e) {
+  if (e <= 1) { return ''; }
+  if (e === 2) { return ' al cuadrado'; }
+  if (e === 3) { return ' al cubo'; }
+  return ' a la ' + (ORDINAL[e] || e);
+}
+function numVoz(n) { return n < 0 ? 'menos ' + Math.abs(n) : String(n); }
+function termVoz(c, e) {
+  if (c === 0) { return '0'; }
+  var s = c < 0 ? 'menos ' : '';
+  var a = Math.abs(c);
+  if (e === 0) { return s + a; }
+  return s + (a === 1 ? '' : a + ' ') + 'x' + expVoz(e);
+}
+function polyVoz(terms) {
+  var partes = [], primero = true;
+  terms.forEach(function (t) {
+    if (t.c === 0) { return; }
+    if (primero) { partes.push(termVoz(t.c, t.e)); primero = false; }
+    else { partes.push((t.c < 0 ? 'menos ' : 'más ') + termVoz(Math.abs(t.c), t.e)); }
+  });
+  return primero ? '0' : partes.join(' ');
+}
+/* Muestra la versión visual y, oculta, la versión hablada */
+function mathSpan(html, voz) {
+  return '<span class="m" aria-hidden="true">' + html + '</span><span class="sr-only">' + voz + '</span>';
+}
+
+/* Mini-marcado para textos fijos: "3x^2 - 4x + 5", "*" es el punto de multiplicar */
+function M(s) {
+  return s
+    .replace(/x(\^(\d+))?/g, function (m, p, n) { return '<i>x</i>' + (n ? '<sup>' + n + '</sup>' : ''); })
+    .replace(/\^(\d+)/g, '<sup>$1</sup>')
+    .replace(/-/g, MENOS)
+    .replace(/\*/g, '·');
+}
+function MV(s) {
+  return s
+    .replace(/\^2/g, ' al cuadrado').replace(/\^3/g, ' al cubo').replace(/\^(\d+)/g, ' a la $1')
+    .replace(/\(/g, ' abre paréntesis ').replace(/\)/g, ' cierra paréntesis ')
+    .replace(/-/g, ' menos ').replace(/\+/g, ' más ').replace(/\*/g, ' por ').replace(/=/g, ' igual a ')
+    .replace(/\s+/g, ' ').trim();
+}
+function MS(s) { return mathSpan(M(s), MV(s)); }
+
+/* ---------- Retroalimentación ---------- */
+function mostrarFB(el, tipo, html) { el.className = 'fb visible ' + tipo; el.innerHTML = html; }
+function ocultarFB(el) { el.className = 'fb'; el.innerHTML = ''; }
+function marcarCampo(input, ok) { input.classList.remove('ok', 'no'); input.classList.add(ok ? 'ok' : 'no'); }
+function anunciar(txt) {
+  var a = document.getElementById('anuncio');
+  if (!a) { return; }
+  a.textContent = '';
+  window.setTimeout(function () { a.textContent = txt; }, 60);
+}
+
+/* Grupo de botones de selección única (chips) */
+function prepararChips(grupo, alCambiar) {
+  grupo.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.chip');
+    if (!b) { return; }
+    grupo.querySelectorAll('button.chip').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    b.setAttribute('aria-pressed', 'true');
+    alCambiar(b.getAttribute('data-v'));
+  });
+}
+
+/* ============================================================
+   DETECTIVE DE ERRORES
+   casos: [{pre, enun, lineas:[...], resp, expl, bien}]
+   categorias: [{id, txt}]
+   ============================================================ */
+function crearDetective(raiz, casos, categorias) {
+  var orden, idx, aciertos;
+
+  function iniciar() { orden = barajar(casos.map(function (c, i) { return i; })); idx = 0; aciertos = 0; pintar(); }
+
+  function pintar() {
+    if (idx >= orden.length) { pintarFinal(); return; }
+    var c = casos[orden[idx]];
+    var h = '<p class="progreso">Caso ' + (idx + 1) + ' de ' + orden.length + '. Aciertos: ' + aciertos + '.</p>';
+    h += '<div class="pizarra peq"><span class="rotulo">' + (c.pre || 'Ejercicio:') + '</span>' + MS(c.enun) + '</div>';
+    h += '<p>Esta es la resolución propuesta:</p><ol class="lineas">';
+    c.lineas.forEach(function (l) { h += '<li>' + MS(l) + '</li>'; });
+    h += '</ol><p><strong>¿Qué ocurrió en esta resolución?</strong></p><div class="opciones" role="group" aria-label="Posibles diagnósticos">';
+    categorias.forEach(function (cat) { h += '<button type="button" class="op" data-id="' + cat.id + '">' + cat.txt + '</button>'; });
+    h += '</div><div class="fb" role="status"></div>';
+    h += '<div class="fila-botones"><button type="button" class="btn sig" hidden>Siguiente caso</button></div>';
+    raiz.innerHTML = h;
+  }
+
+  function pintarFinal() {
+    var n = orden.length;
+    var msj = aciertos === n ? 'Excelente: identificaste todos los errores.' :
+      (aciertos >= n - 2 ? 'Muy bien: tienes buen ojo para los errores.' : 'Conviene repasar las cinco trampas y volver a intentarlo.');
+    raiz.innerHTML = '<div class="fb visible ' + (aciertos >= n - 2 ? 'ok' : 'info') + '" role="status"><strong>Resultado: ' +
+      aciertos + ' de ' + n + '.</strong> ' + msj + '</div><div class="fila-botones"><button type="button" class="btn rep">Repetir los casos</button></div>';
+  }
+
+  raiz.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button');
+    if (!b) { return; }
+    if (b.classList.contains('op')) {
+      var c = casos[orden[idx]];
+      var elegido = b.getAttribute('data-id');
+      var acierto = elegido === c.resp;
+      if (acierto) { aciertos++; }
+      raiz.querySelectorAll('button.op').forEach(function (o) {
+        o.disabled = true;
+        if (o.getAttribute('data-id') === c.resp) { o.classList.add('correcta'); }
+      });
+      if (!acierto) { b.classList.add('incorrecta'); }
+      var etiqueta = '';
+      categorias.forEach(function (cat) { if (cat.id === c.resp) { etiqueta = cat.txt; } });
+      var html = (acierto ? '<strong>Correcto.</strong> ' : '<strong>No es eso.</strong> La respuesta es: ' + etiqueta + '. ') + c.expl;
+      if (c.bien) { html += '<br>Resultado correcto: ' + MS(c.bien); }
+      mostrarFB(raiz.querySelector('.fb'), acierto ? 'ok' : 'no', html);
+      var sig = raiz.querySelector('.sig');
+      sig.hidden = false;
+      sig.textContent = idx === orden.length - 1 ? 'Ver resultado' : 'Siguiente caso';
+      sig.focus();
+    } else if (b.classList.contains('sig')) {
+      idx++; pintar();
+      var p = raiz.querySelector('.progreso, .fb');
+      if (p) { p.setAttribute('tabindex', '-1'); p.focus(); }
+    } else if (b.classList.contains('rep')) {
+      iniciar();
+    }
+  });
+
+  iniciar();
+}
+
+(function () {
+  'use strict';
+
+  var NOMBRES = {
+    1: 'no multiplicar todos los términos',
+    2: 'equivocarse con el signo',
+    3: 'multiplicar los exponentes',
+    4: 'sumar los coeficientes',
+    5: 'perder la x'
+  };
+  function trampa(n) { return ' <span class="etq-trampa">Trampa ' + n + ': ' + NOMBRES[n] + '</span>'; }
+  function $(id) { return document.getElementById(id); }
+  var reducirMov = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Un término entre paréntesis si es negativo: (−4x) */
+  function parenTerm(t) { return t.c < 0 ? '(' + termHTML(t.c, t.e) + ')' : termHTML(t.c, t.e); }
+  function sgnTxt(n) { return n < 0 ? '(−)' : '(+)'; }
+
+  /* =========================================================
+     DEMOSTRACIÓN CON FLECHAS
+     ========================================================= */
+  var DEMOS = {
+    A: { m: { c: 3, e: 1 }, P: [{ c: 2, e: 2 }, { c: -4, e: 1 }, { c: 5, e: 0 }] },
+    B: { m: { c: -2, e: 2 }, P: [{ c: 1, e: 3 }, { c: -3, e: 1 }] }
+  };
+  var demo = { k: 'A', paso: 0 };
+
+  function lineaProducto(m, t, actual) {
+    var c = m.c * t.c, e = m.e + t.e;
+    var html = '<span class="m">' + termHTML(m.c, m.e) + ' · ' + parenTerm(t) + ' = ' +
+      '<span class="carril-coef">' + fmtParen(m.c) + '·' + fmtParen(t.c) + '</span> ' +
+      '<span class="carril-exp"><i>x</i><sup>' + m.e + '+' + t.e + '</sup></span> = <strong>' + termHTML(c, e) + '</strong></span>';
+    var voz = termVoz(m.c, m.e) + ' por ' + termVoz(t.c, t.e) + '. Coeficientes: ' + numVoz(m.c) + ' por ' + numVoz(t.c) +
+      ' igual a ' + numVoz(c) + '. Exponentes: ' + m.e + ' más ' + t.e + ' igual a ' + e + '. Resultado: ' + termVoz(c, e) + '.';
+    return '<li' + (actual ? ' class="actual"' : '') + '><span aria-hidden="true">' + html + '</span><span class="sr-only">' + voz + '</span></li>';
+  }
+
+  function pintarDemo(animar) {
+    var d = DEMOS[demo.k];
+    var h = '<span class="m" aria-hidden="true"><span class="demo-mono" id="dm">' + termHTML(d.m.c, d.m.e) + '</span>(';
+    d.P.forEach(function (t, i) {
+      var cls = 'demo-t' + (i < demo.paso - 1 ? ' visto' : '') + (i === demo.paso - 1 ? ' actual' : '');
+      h += (i === 0 ? '' : ' ') + '<span class="' + cls + '" data-i="' + i + '">' + (i === 0 ? termHTML(t.c, t.e) : termSignado(t.c, t.e)) + '</span>';
+    });
+    h += ')</span><span class="sr-only">' + termVoz(d.m.c, d.m.e) + ' por paréntesis ' + polyVoz(d.P) + ' cierra paréntesis</span>';
+    $('demo-expr').innerHTML = h;
+
+    var lineas = '';
+    for (var i = 0; i < demo.paso; i++) { lineas += lineaProducto(d.m, d.P[i], i === demo.paso - 1); }
+    if (demo.paso === d.P.length) {
+      var res = d.P.map(function (t) { return { c: d.m.c * t.c, e: d.m.e + t.e }; });
+      lineas += '<li class="res">' + mathSpan('Resultado: ' + termHTML(d.m.c, d.m.e) + '(' + polyHTML(d.P) + ') = ' + polyHTML(res),
+        'Resultado: ' + polyVoz(res)) + '</li>';
+    }
+    $('demo-lineas').innerHTML = lineas;
+    $('demo-sig').disabled = demo.paso >= d.P.length;
+    dibujarArcos(animar);
+  }
+
+  function dibujarArcos(animar) {
+    var piz = $('demo-piz'), svg = $('demo-svg');
+    var r0 = piz.getBoundingClientRect();
+    var mono = $('dm').getBoundingClientRect();
+    var x1 = mono.left + mono.width / 2 - r0.left, y1 = mono.top - r0.top - 2;
+    var defs = '<defs>' +
+      '<marker id="puntaT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#004d40"/></marker>' +
+      '<marker id="puntaA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#bf360c"/></marker></defs>';
+    var paths = '';
+    $('demo-expr').querySelectorAll('.demo-t').forEach(function (el, i) {
+      if (i >= demo.paso) { return; }
+      var r = el.getBoundingClientRect();
+      var x2 = r.left + r.width / 2 - r0.left, y2 = r.top - r0.top - 7;
+      var h = Math.min(74, 40 + Math.abs(x2 - x1) * 0.35);
+      var cy = Math.max(4, Math.min(y1, y2) - h);
+      var actual = i === demo.paso - 1;
+      paths += '<path pathLength="1" class="arco' + (actual ? ' actual' : '') + (actual && animar && !reducirMov ? ' nuevo' : '') +
+        '" d="M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' Q' + ((x1 + x2) / 2).toFixed(1) + ' ' + cy.toFixed(1) + ' ' +
+        x2.toFixed(1) + ' ' + y2.toFixed(1) + '" marker-end="url(#punta' + (actual ? 'A' : 'T') + ')"/>';
+    });
+    svg.setAttribute('viewBox', '0 0 ' + r0.width.toFixed(1) + ' ' + r0.height.toFixed(1));
+    svg.innerHTML = defs + paths;
+  }
+
+  prepararChips($('chips-demo'), function (v) { demo.k = v; demo.paso = 0; pintarDemo(false); });
+  $('demo-sig').addEventListener('click', function () {
+    if (demo.paso < DEMOS[demo.k].P.length) { demo.paso++; pintarDemo(true); }
+    if ($('demo-sig').disabled) { $('demo-rein').focus(); }
+  });
+  $('demo-rein').addEventListener('click', function () { demo.paso = 0; pintarDemo(false); $('demo-sig').focus(); });
+  window.addEventListener('resize', function () { dibujarArcos(false); });
+
+  /* =========================================================
+     TALLER: MODELO DE CAJA
+     ========================================================= */
+  var caja = { nivel: 1, m: null, P: [], resuelto: false };
+
+  function generarCaja() {
+    var n = caja.nivel;
+    if (n === 1) {
+      caja.m = { c: rnd(2, 9), e: 0 };
+      caja.P = [{ c: rndNZ(-9, 9), e: 1 }, { c: rndNZ(-9, 9), e: 0 }];
+    } else if (n === 2) {
+      var ex = [[1, 0], [2, 1], [2, 0]][rnd(0, 2)];
+      caja.m = { c: rndNZ(-6, 6), e: rnd(1, 2) };
+      caja.P = ex.map(function (e) { return { c: rndNZ(-7, 7), e: e }; });
+    } else {
+      var ex3 = [[2, 1, 0], [3, 1, 0], [3, 2, 1]][rnd(0, 2)];
+      caja.m = { c: rndNZ(-6, -1), e: rnd(1, 3) };
+      caja.P = ex3.map(function (e) { return { c: rndNZ(-6, 6), e: e }; });
+      caja.P[rnd(0, 2)].c = Math.random() < 0.5 ? 1 : -1;
+    }
+    caja.resuelto = false;
+  }
+
+  function nombreVoz(t) { return termVoz(caja.m.c, caja.m.e) + ' por ' + termVoz(t.c, t.e); }
+
+  function pintarCaja() {
+    var m = caja.m, P = caja.P;
+    $('caja-enun').innerHTML = '<span class="rotulo">Multiplica:</span>' +
+      mathSpan(termHTML(m.c, m.e) + '(' + polyHTML(P) + ')', termVoz(m.c, m.e) + ' por paréntesis ' + polyVoz(P) + ' cierra paréntesis');
+    var h = '<div class="caja-grid" style="grid-template-columns:minmax(76px,auto) repeat(' + P.length + ',minmax(136px,1fr))">';
+    h += '<div class="caja-esq" aria-hidden="true">×</div>';
+    P.forEach(function (t) { h += '<div class="caja-cab">' + mathSpan(termHTML(t.c, t.e), termVoz(t.c, t.e)) + '</div>'; });
+    h += '<div class="caja-mono">' + mathSpan(termHTML(m.c, m.e), 'Monomio: ' + termVoz(m.c, m.e)) + '</div>';
+    P.forEach(function (t, i) {
+      h += '<div class="caja-celda" id="cel-' + i + '"><div class="celda-term">' +
+        '<input type="text" class="num coef" id="co-' + i + '" autocomplete="off" spellcheck="false" aria-label="Coeficiente de ' + nombreVoz(t) + '">' +
+        '<span class="m x-fija" aria-hidden="true"><i>x</i></span>' +
+        '<input type="text" class="num exp" id="ex-' + i + '" autocomplete="off" spellcheck="false" aria-label="Exponente de x en ' + nombreVoz(t) + '">' +
+        '</div><div class="celda-pista" id="pi-' + i + '" hidden></div></div>';
+    });
+    h += '</div>';
+    $('caja').innerHTML = h;
+    ocultarFB($('caja-fb'));
+    $('caja-final').hidden = true;
+    ['caja-comprobar', 'caja-pista', 'caja-solucion'].forEach(function (id) { $(id).disabled = false; });
+  }
+
+  function nuevoCaja() { generarCaja(); pintarCaja(); }
+
+  function esperado(t) { return { c: caja.m.c * t.c, e: caja.m.e + t.e }; }
+  function etiqueta(t) { return '<span class="m">' + termHTML(caja.m.c, caja.m.e) + ' · ' + parenTerm(t) + '</span>'; }
+
+  function diagnosticoCelda(t, vc, ve) {
+    var m = caja.m, x = esperado(t);
+    var et = etiqueta(t);
+    if (vc === null && ve === null) { return et + ': faltan el coeficiente y el exponente.'; }
+    if (vc === null) { return et + ': falta el coeficiente.'; }
+    if (ve === null) { return et + ': falta el exponente (1 si queda <span class="m"><i>x</i></span>; 0 si no queda <span class="m"><i>x</i></span>).'; }
+    /* Término que se quedó sin multiplicar */
+    if (vc === t.c && ve === t.e && !(m.c === 1 && m.e === 0) && !(vc === x.c && ve === x.e)) {
+      return et + ': este término se quedó sin multiplicar. El monomio multiplica a <strong>todos</strong> los términos del paréntesis.' + trampa(1);
+    }
+    var partes = [];
+    if (vc !== x.c) {
+      if (vc === -x.c) {
+        partes.push('el signo no es correcto: ' + sgnTxt(m.c) + ' · ' + sgnTxt(t.c) + ' da ' + (x.c > 0 ? 'positivo' : 'negativo') + '.' + trampa(2));
+      } else if (vc === m.c + t.c) {
+        partes.push('sumaste los coeficientes; se <strong>multiplican</strong>: <span class="m">' + fmtParen(m.c) + ' · ' + fmtParen(t.c) + '</span>.' + trampa(4));
+      } else {
+        partes.push('revisa el coeficiente: multiplica <span class="m">' + fmtParen(m.c) + ' · ' + fmtParen(t.c) + '</span>.');
+      }
+    }
+    if (ve !== x.e) {
+      if (ve === m.e * t.e) {
+        partes.push('multiplicaste los exponentes; al multiplicar potencias de <span class="m"><i>x</i></span> se <strong>suman</strong>: ' + m.e + ' + ' + t.e + '.' + trampa(3));
+      } else if (t.e === 0 && ve === 0) {
+        partes.push('se perdió la <span class="m"><i>x</i></span>. El número multiplica al coeficiente, pero la <span class="m"><i>x</i></span> del monomio sigue ahí: exponente ' + m.e + '.' + trampa(5));
+      } else if (m.e === 0 && ve === 0) {
+        partes.push('se perdió la <span class="m"><i>x</i></span> del término: el exponente queda en ' + t.e + '.' + trampa(5));
+      } else if (ve === t.e) {
+        partes.push(m.e === 1 ? 'la <span class="m"><i>x</i></span> del monomio también cuenta, porque <span class="m"><i>x</i> = <i>x</i><sup>1</sup></span>: suma ' + m.e + ' + ' + t.e + '.'
+          : 'suma también el exponente del monomio: ' + m.e + ' + ' + t.e + '.');
+      } else if (ve === m.e) {
+        partes.push(t.e === 1 ? 'la <span class="m"><i>x</i></span> del término también cuenta, porque <span class="m"><i>x</i> = <i>x</i><sup>1</sup></span>: suma ' + m.e + ' + ' + t.e + '.'
+          : 'suma también el exponente del término: ' + m.e + ' + ' + t.e + '.');
+      } else {
+        partes.push('revisa el exponente: suma ' + m.e + ' + ' + t.e + '.');
+      }
+    }
+    return et + ': ' + partes.join(' Además, ');
+  }
+
+  function valorEn(terms, v) { return terms.reduce(function (s, t) { return s + t.c * potencia(v, t.e); }, 0); }
+
+  function mostrarResultado() {
+    var m = caja.m, P = caja.P;
+    var res = P.map(esperado).sort(function (a, b) { return b.e - a.e; });
+    $('caja-res').innerHTML = '<span class="rotulo">Resultado:</span>' +
+      mathSpan(termHTML(m.c, m.e) + '(' + polyHTML(P) + ') = ' + polyHTML(res), 'Resultado: ' + polyVoz(res));
+    var a = valorEn([m], 2), b = valorEn(P, 2), r = valorEn(res, 2);
+    $('caja-verif').innerHTML = '<strong>Comprobación con un número (x = 2).</strong> El monomio vale <span class="m">' + fmtNum(a) +
+      '</span> y el polinomio vale <span class="m">' + fmtNum(b) + '</span>; su producto es <span class="m">' + fmtParen(a) + ' · ' + fmtParen(b) + ' = ' + fmtNum(a * b) +
+      '</span>. El resultado, evaluado en x = 2, también da <span class="m">' + fmtNum(r) + '</span>. ' +
+      (a * b === r ? 'Coinciden: el producto está bien hecho.' : '') +
+      ' Este truco sirve para revisar cualquier producto.';
+    $('caja-final').hidden = false;
+    ['caja-comprobar', 'caja-pista', 'caja-solucion'].forEach(function (id) { $(id).disabled = true; });
+    $('caja').querySelectorAll('input').forEach(function (i) { i.readOnly = true; });
+    caja.resuelto = true;
+  }
+
+  $('caja-comprobar').addEventListener('click', function () {
+    var msgs = [];
+    caja.P.forEach(function (t, i) {
+      var iC = $('co-' + i), iE = $('ex-' + i);
+      var vc = leerNum(iC.value), ve = leerNum(iE.value);
+      var x = esperado(t);
+      var okC = vc === x.c, okE = ve === x.e;
+      marcarCampo(iC, okC); marcarCampo(iE, okE);
+      $('cel-' + i).classList.toggle('ok', okC && okE);
+      if (!(okC && okE)) { msgs.push('<li>' + diagnosticoCelda(t, vc, ve) + '</li>'); }
+    });
+    if (msgs.length) {
+      mostrarFB($('caja-fb'), 'no', 'Revisa las casillas marcadas en rojo:<ul>' + msgs.join('') + '</ul>');
+    } else {
+      mostrarFB($('caja-fb'), 'ok', '<strong>¡Excelente!</strong> Todos los productos son correctos: multiplicaste coeficientes, sumaste exponentes y cuidaste los signos.');
+      mostrarResultado();
+    }
+  });
+
+  $('caja-pista').addEventListener('click', function () {
+    var m = caja.m;
+    for (var i = 0; i < caja.P.length; i++) {
+      var t = caja.P[i], x = esperado(t);
+      var ok = leerNum($('co-' + i).value) === x.c && leerNum($('ex-' + i).value) === x.e;
+      var p = $('pi-' + i);
+      if (!ok && p.hidden) {
+        p.hidden = false;
+        p.innerHTML = '<span class="carril-coef"><span class="m">' + fmtParen(m.c) + ' · ' + fmtParen(t.c) + ' = ?</span></span><br>' +
+          '<span class="carril-exp">exponente: ' + m.e + ' + ' + t.e + ' = ?</span>';
+        mostrarFB($('caja-fb'), 'info', 'Pista en la casilla de ' + etiqueta(t) + '. Pulsa <strong>Pista</strong> otra vez para la siguiente casilla.');
+        $('co-' + i).focus();
+        return;
+      }
+    }
+    mostrarFB($('caja-fb'), 'info', 'Ya tienes las pistas de todas las casillas pendientes.');
+  });
+
+  $('caja-solucion').addEventListener('click', function () {
+    caja.P.forEach(function (t, i) {
+      var x = esperado(t);
+      $('co-' + i).value = fmtNum(x.c).replace(MENOS, '-');
+      $('ex-' + i).value = x.e;
+      marcarCampo($('co-' + i), true); marcarCampo($('ex-' + i), true);
+      $('cel-' + i).classList.add('ok');
+    });
+    mostrarFB($('caja-fb'), 'info', 'Esta es la solución. Estúdiala y después pulsa <strong>Nuevo ejercicio</strong> para intentarlo sin ayuda.');
+    mostrarResultado();
+  });
+
+  $('caja-nuevo').addEventListener('click', function () { nuevoCaja(); $('co-0').focus(); });
+  prepararChips($('chips-nivel'), function (v) { caja.nivel = +v; nuevoCaja(); });
+
+  /* =========================================================
+     DETECTIVE DE ERRORES
+     ========================================================= */
+  var CASOS = [
+    { pre: 'Multiplicar:', enun: '5(x + 2)', lineas: ['5 * x + 2', '5x + 2'], resp: 't1',
+      expl: 'El 5 multiplicó a x pero no al 2. Debe multiplicar a los dos términos: 5 · 2 = 10.', bien: '5x + 10' },
+    { pre: 'Multiplicar:', enun: '3x(x^2 - 2x + 6)', lineas: ['3x * x^2 - 3x * 2x + 6', '3x^3 - 6x^2 + 6'], resp: 't1',
+      expl: 'El 6 se quedó sin multiplicar: 3x · 6 = 18x.', bien: '3x^3 - 6x^2 + 18x' },
+    { pre: 'Multiplicar:', enun: '-3x(2x - 4)', lineas: ['(-3x) * 2x + (-3x) * (-4)', '-6x^2 - 12x'], resp: 't2',
+      expl: 'Negativo por negativo da positivo: (−3x) · (−4) = +12x.', bien: '-6x^2 + 12x' },
+    { pre: 'Multiplicar:', enun: '-2x(x^2 + 4)', lineas: ['(-2x) * x^2 + (-2x) * 4', '-2x^3 + 8x'], resp: 't2',
+      expl: 'Negativo por positivo da negativo: (−2x) · 4 = −8x.', bien: '-2x^3 - 8x' },
+    { pre: 'Multiplicar:', enun: 'x^2(x^3 + 2x)', lineas: ['x^2 * x^3 + x^2 * 2x', 'x^6 + 2x^3'], resp: 't3',
+      expl: 'En x² · x³ los exponentes se suman (2 + 3 = 5); aquí se multiplicaron (2 · 3 = 6).', bien: 'x^5 + 2x^3' },
+    { pre: 'Multiplicar:', enun: '4x(3x + 5)', lineas: ['4x * 3x + 4x * 5', '7x^2 + 20x'], resp: 't4',
+      expl: 'En 4x · 3x los coeficientes se multiplican (4 · 3 = 12); aquí se sumaron (4 + 3 = 7).', bien: '12x^2 + 20x' },
+    { pre: 'Multiplicar:', enun: '2x(x - 3)', lineas: ['2x * x + 2x * (-3)', '2x^2 - 6'], resp: 't5',
+      expl: 'En 2x · (−3) se multiplicaron los números, pero se perdió la x: el resultado es −6x.', bien: '2x^2 - 6x' },
+    { pre: 'Multiplicar:', enun: '2x^2(3x^2 - x + 4)', lineas: ['2x^2 * 3x^2 + 2x^2 * (-x) + 2x^2 * 4', '6x^4 - 2x^3 + 8x^2'], resp: 'ok',
+      expl: 'Está bien resuelto: coeficientes multiplicados, exponentes sumados y signos correctos.', bien: null },
+    { pre: 'Multiplicar:', enun: '-x(x^2 - 5x + 1)', lineas: ['(-x) * x^2 + (-x) * (-5x) + (-x) * 1', '-x^3 + 5x^2 - x'], resp: 'ok',
+      expl: 'Está bien resuelto. Recuerda que −x es −1x: por eso (−x) · x² = −x³.', bien: null }
+  ];
+  var CATEGORIAS = [1, 2, 3, 4, 5].map(function (n) {
+    return { id: 't' + n, txt: 'Trampa ' + n + ': ' + NOMBRES[n] };
+  }).concat([{ id: 'ok', txt: 'No hay error: está bien resuelto' }]);
+  crearDetective($('detective'), CASOS, CATEGORIAS);
+
+  /* Inicio */
+  pintarDemo(false);
+  nuevoCaja();
+})();
+
+</script>
+</body>
+</html>

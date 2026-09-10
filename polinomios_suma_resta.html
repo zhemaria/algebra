@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<!--
+  Suma y resta de polinomios · Interactivo de la Lección 2.3
+  Spanish ASE Math · Nivel 4 · Tema 2 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)
+  https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suma y resta de polinomios · Lección 2.3</title>
+<meta name="description" content="Interactivo para sumar y restar polinomios combinando términos semejantes, con diagnóstico de los errores más frecuentes.">
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<meta name="dcterms.rights" content="Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">
+<style>
+:root {
+  --tema: #004d40;
+  --tema-d: #00332b;
+  --tema-bg: #e0f2f1;
+  --tema-bg2: #b2dfdb;
+  --acento: #bf360c;
+  --acento-d: #8c2708;
+  --acento-bg: #fbe9e7;
+  --tinta: #1d2a28;
+  --gris: #4a5654;
+  --fondo: #f4f7f6;
+  --linea: #e4eeec;
+  --borde: #c9d8d5;
+  --ok: #1b5e20;
+  --ok-bg: #e8f5e9;
+  --no: #b3261e;
+  --no-bg: #fdecea;
+  --ambar: #5c3900;
+  --ambar-bg: #fff8e1;
+  --math: "Cambria Math", Cambria, "STIX Two Math", "Times New Roman", Georgia, serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--tinta);
+  line-height: 1.6;
+  font-size: 17px;
+}
+.contenedor { max-width: 920px; margin: 0 auto; padding: 24px 18px 40px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.saltar {
+  position: absolute; left: -9999px; top: 8px; background: #fff; color: var(--tema-d);
+  padding: 8px 14px; border-radius: 6px; z-index: 20; font-weight: 700;
+}
+.saltar:focus { left: 12px; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
+
+/* Encabezado */
+header.principal {
+  background: linear-gradient(135deg, #00332b 0%, #004d40 55%, #00695c 100%);
+  color: #fff; padding: 28px 30px; border-radius: 14px; margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(0, 51, 43, 0.25);
+}
+header.principal .ruta { font-size: 14px; margin: 0; opacity: 0.95; }
+header.principal h1 { margin: 6px 0 8px; font-size: clamp(25px, 4.2vw, 32px); line-height: 1.2; }
+header.principal .lema { margin: 0; font-size: 17px; max-width: 60ch; }
+
+/* Bloques */
+section.bloque {
+  background: #fff; border: 1px solid var(--borde); border-radius: 12px;
+  padding: 22px 26px 24px; margin-bottom: 22px;
+}
+section.bloque > h2 { color: var(--tema-d); font-size: 23px; margin: 0 0 6px; line-height: 1.3; }
+h3 { color: var(--tema-d); font-size: 18px; margin: 18px 0 8px; line-height: 1.35; }
+p { margin: 10px 0; max-width: 74ch; }
+.intro { color: var(--gris); margin-top: 0; }
+
+/* Matemáticas */
+.m { font-family: var(--math); font-size: 1.18em; white-space: nowrap; }
+.m i { font-style: italic; padding-right: 0.04em; }
+.m sup { font-size: 0.66em; line-height: 0; position: relative; top: -0.1em; }
+.par { color: var(--acento); font-weight: 700; }
+.exp-ac { color: var(--acento); font-weight: 700; }
+
+/* La pizarra cuadriculada: el elemento visual de identidad */
+.pizarra {
+  position: relative;
+  background-color: #fff;
+  background-image:
+    linear-gradient(var(--linea) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linea) 1px, transparent 1px);
+  background-size: 26px 26px;
+  border: 2px solid var(--tema);
+  border-radius: 12px;
+  padding: 22px 20px;
+  margin: 14px 0;
+  text-align: center;
+  font-size: clamp(21px, 3.8vw, 30px);
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.pizarra .m { font-size: 1em; }
+.pizarra.peq { font-size: clamp(19px, 3vw, 24px); padding: 14px 16px; }
+.pizarra .rotulo {
+  display: block; font-family: "Segoe UI", system-ui, sans-serif; font-size: 15px;
+  color: var(--gris); margin-bottom: 2px; text-align: left;
+}
+
+/* Cajas de mensaje */
+.regla-oro {
+  border-left: 6px solid var(--acento); background: var(--acento-bg);
+  padding: 14px 18px; border-radius: 0 10px 10px 0; margin: 14px 0; color: #4a1a05;
+}
+.regla-oro strong { color: #4a1a05; }
+.caja-tip {
+  background: var(--ambar-bg); border-left: 5px solid #f9a825; color: var(--ambar);
+  padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0; font-size: 16px;
+}
+.caja-tip strong { color: var(--ambar); }
+
+/* Botones */
+.btn {
+  font: inherit; font-size: 15px; font-weight: 700; background: var(--tema); color: #fff;
+  border: 2px solid var(--tema); padding: 9px 18px; border-radius: 8px; cursor: pointer;
+  margin: 8px 8px 0 0;
+}
+.btn:hover { background: var(--tema-d); border-color: var(--tema-d); }
+.btn.sec { background: #fff; color: var(--tema-d); }
+.btn.sec:hover { background: var(--tema-bg); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.fila-botones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; align-items: center; }
+.chips .nombre-grupo { font-size: 15px; color: var(--gris); margin-right: 4px; }
+.chip {
+  font: inherit; font-size: 15px; background: #fff; color: var(--tema-d);
+  border: 2px solid var(--tema); border-radius: 999px; padding: 5px 15px; cursor: pointer;
+}
+.chip:hover { background: var(--tema-bg); }
+.chip[aria-pressed="true"] { background: var(--tema); color: #fff; }
+
+/* Retroalimentación */
+.fb { margin-top: 12px; padding: 12px 16px; border-radius: 8px; font-size: 16px; display: none; }
+.fb.visible { display: block; }
+.fb.ok { background: var(--ok-bg); color: var(--ok); border-left: 5px solid #2e7d32; }
+.fb.no { background: var(--no-bg); color: var(--no); border-left: 5px solid var(--no); }
+.fb.info { background: var(--ambar-bg); color: var(--ambar); border-left: 5px solid #f9a825; }
+.fb ul { margin: 6px 0 0; padding-left: 20px; }
+.fb li { margin: 5px 0; }
+.fb .m { color: inherit; }
+.etq-trampa {
+  display: inline-block; font-size: 14px; font-weight: 700; border: 2px solid currentColor;
+  border-radius: 999px; padding: 0 10px; margin-left: 4px; white-space: nowrap;
+}
+
+/* Campos numéricos */
+input.num {
+  font-family: var(--math); font-size: 22px; width: 3.4em; text-align: center;
+  padding: 3px 6px; border: 2px solid #8fa5a1; border-radius: 6px; color: var(--tinta);
+  background: #fff;
+}
+input.num:focus { border-color: var(--tema); }
+input.num.ok { border-color: #2e7d32; background: var(--ok-bg); }
+input.num.no { border-color: var(--no); background: var(--no-bg); }
+
+/* Las cinco trampas */
+.trampas {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 14px; margin-top: 14px; padding: 0; list-style: none;
+}
+.trampa { border: 1px solid var(--borde); border-radius: 10px; padding: 14px 16px; background: #fcfdfd; }
+.trampa h3 { margin: 0 0 8px; font-size: 17px; display: flex; gap: 10px; align-items: flex-start; }
+.trampa .n {
+  flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--acento-d);
+  color: #fff; font-weight: 700; display: inline-grid; place-items: center; font-size: 15px;
+}
+.mal, .bien { display: block; margin: 4px 0; font-size: 16px; }
+.mal { color: var(--no); }
+.bien { color: var(--ok); }
+.marca { font-weight: 700; display: inline-block; width: 1.2em; }
+.trampa .porque { font-size: 15px; color: var(--gris); margin: 8px 0 0; }
+
+/* Pasos del taller */
+.pasos-nav { display: flex; gap: 6px; list-style: none; padding: 0; margin: 12px 0 4px; flex-wrap: wrap; }
+.pasos-nav li { padding: 3px 13px; border-radius: 999px; background: #eef3f2; color: var(--gris); font-size: 14px; }
+.pasos-nav li.activo { background: var(--tema); color: #fff; font-weight: 700; }
+.pasos-nav li.hecho { background: var(--tema-bg2); color: var(--tema-d); }
+.paso { border-top: 2px dashed var(--borde); padding-top: 12px; margin-top: 16px; }
+.paso > h3 { margin-top: 0; }
+.fila-calc { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 10px 0; }
+.nota { font-size: 15px; color: var(--gris); }
+
+/* Opciones (detective y preguntas) */
+.opciones { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 10px 0; }
+.op {
+  font: inherit; font-size: 16px; text-align: left; background: #fff; color: var(--tinta);
+  border: 2px solid var(--borde); border-radius: 8px; padding: 9px 13px; cursor: pointer;
+}
+.op:hover:not(:disabled) { border-color: var(--tema); }
+.op.correcta { border-color: #2e7d32; background: var(--ok-bg); color: var(--ok); }
+.op.incorrecta { border-color: var(--no); background: var(--no-bg); color: var(--no); }
+.op:disabled { cursor: default; }
+.op .m { font-size: 1.2em; }
+.progreso { font-size: 15px; color: var(--gris); margin: 0 0 4px; }
+ol.lineas { margin: 8px 0; padding-left: 26px; }
+ol.lineas li { margin: 4px 0; }
+ol.lineas li::marker { color: var(--gris); }
+
+/* Lista de control */
+ul.control { list-style: none; padding: 0; margin: 10px 0 0; }
+ul.control li { padding: 7px 0 7px 34px; position: relative; border-bottom: 1px solid var(--linea); }
+ul.control li::before {
+  content: "✓"; position: absolute; left: 4px; top: 6px; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--tema); color: #fff; font-size: 13px;
+  display: grid; place-items: center; font-weight: 700;
+}
+
+footer { text-align: center; padding: 20px 10px; color: #555; font-size: 14px; border-top: 1px solid #d6dedc; margin-top: 24px; }
+footer a { color: var(--tema-d); }
+
+@keyframes destello { from { background: var(--acento-bg); } to { background: transparent; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 600px) {
+  section.bloque { padding: 18px 15px 20px; }
+  header.principal { padding: 22px 20px; }
+  body { font-size: 16px; }
+}
+
+/* Colores de familia (siempre acompañados de texto: no dependen solo del color) */
+.fam-3 { --fc: #4527a0; --fb: #ede7f6; }
+.fam-2 { --fc: #00332b; --fb: #e0f2f1; }
+.fam-1 { --fc: #8c2708; --fb: #fbe9e7; }
+.fam-0 { --fc: #37474f; --fb: #eceff1; }
+.marca-fam { color: var(--fc); background: var(--fb); border-bottom: 3px solid var(--fc); padding: 0 4px; border-radius: 4px; }
+.leyenda-fam { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; font-family: "Segoe UI", system-ui, sans-serif; font-size: 15px; margin: 8px 0 4px; }
+.leyenda-fam .marca-fam { font-family: "Segoe UI", system-ui, sans-serif; }
+.leyenda-fam i { font-family: var(--math); }
+.resultado-ej { display: block; margin-top: 6px; color: var(--tema-d); font-weight: 700; }
+
+/* Fichas */
+.ficha {
+  font-family: var(--math); font-size: 22px; background: #fff; color: var(--tinta);
+  border: 2px solid #8fa5a1; border-radius: 8px; padding: 2px 12px; margin: 4px 3px;
+  cursor: pointer; line-height: 1.5; vertical-align: middle;
+}
+.ficha i { font-style: italic; }
+.ficha sup { font-size: 0.66em; line-height: 0; position: relative; top: -0.1em; }
+.ficha:hover:not(:disabled) { border-color: var(--tema); }
+.ficha[aria-pressed="true"] { border-color: var(--acento); box-shadow: 0 0 0 3px var(--acento-bg); background: var(--acento-bg); }
+.ficha.no { border-color: var(--no); background: var(--no-bg); border-style: dashed; }
+.ficha.cambiada { animation: destello 0.6s ease-out; }
+.ficha:disabled { cursor: default; opacity: 1; }
+#p1-fichas { text-align: center; }
+#p1-fichas .m { font-size: 1em; }
+
+.pool {
+  min-height: 62px; border: 2px dashed var(--borde); border-radius: 10px; padding: 8px;
+  text-align: center; background: #fafcfb; margin: 10px 0;
+}
+.pool .vacio { color: var(--gris); font-size: 15px; line-height: 44px; }
+.familias { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.familia { border: 2px solid var(--fc); background: var(--fb); border-radius: 10px; padding: 8px 10px 10px; min-height: 120px; }
+.fam-cab { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.fam-nombre { font-weight: 700; color: var(--fc); }
+.fam-nombre .m { font-size: 1.1em; }
+.familia .btn.sec { margin: 0; padding: 5px 12px; font-size: 14px; border-color: var(--fc); color: var(--fc); }
+.fam-fichas { margin-top: 6px; text-align: center; }
+.familia .ficha { border-color: var(--fc); }
+
+/* Paso 3 */
+.fila-comb {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 12px;
+  border-left: 5px solid var(--fc); background: var(--fb); border-radius: 0 8px 8px 0; margin: 10px 0;
+  font-size: 22px;
+}
+.fila-comb .m { font-size: 1em; }
+.fila-comb .nota { font-size: 15px; }
+.pista-fila { flex-basis: 100%; font-size: 16px; color: var(--ambar); }
+.pista-fila .m { font-size: 1.1em; }
+#final-nota p { color: var(--gris); }
+
+</style>
+</head>
+<body>
+<a class="saltar" href="#principal">Saltar al contenido principal</a>
+<div id="anuncio" class="sr-only" aria-live="polite"></div>
+<div class="contenedor">
+<header class="principal">
+  <p class="ruta">Spanish ASE Math · Nivel 4 · Tema 2 · Lección 2.3</p>
+  <h1>Suma y resta de polinomios</h1>
+  <p class="lema">Juntar lo que es semejante, sin caer en las trampas más frecuentes.</p>
+</header>
+
+<main id="principal">
+
+  <section class="bloque" aria-labelledby="t-regla">
+    <h2 id="t-regla">La regla de oro</h2>
+    <p>Solo se juntan los <strong>términos semejantes</strong>: los que tienen la misma variable con el mismo exponente. Es como ordenar ropa: las camisas con las camisas, los pantalones con los pantalones.</p>
+    <div class="pizarra">
+      <span class="rotulo">Tres familias distintas en un mismo polinomio:</span>
+      <span class="m" aria-hidden="true"><span class="fam-2 marca-fam">5<i>x</i><sup>2</sup></span> + <span class="fam-1 marca-fam">3<i>x</i></span> + <span class="fam-2 marca-fam">2<i>x</i><sup>2</sup></span> − <span class="fam-0 marca-fam">4</span> + <span class="fam-1 marca-fam"><i>x</i></span></span>
+      <span class="sr-only">5 x al cuadrado más 3 x más 2 x al cuadrado menos 4 más x. Familia x al cuadrado: 5 x al cuadrado y 2 x al cuadrado. Familia x: 3 x y x. Números: menos 4.</span>
+      <span class="leyenda-fam" aria-hidden="true"><span class="fam-2 marca-fam">familia <i>x</i><sup>2</sup></span> <span class="fam-1 marca-fam">familia <i>x</i></span> <span class="fam-0 marca-fam">números</span></span>
+      <span class="m resultado-ej" aria-hidden="true">= 7<i>x</i><sup>2</sup> + 4<i>x</i> − 4</span>
+      <span class="sr-only">Resultado: 7 x al cuadrado más 4 x menos 4.</span>
+    </div>
+    <div class="regla-oro">Al sumar o restar se operan <strong>solo los coeficientes</strong> (los números). La parte literal, es decir, la <span class="m"><i>x</i></span> con su exponente, <strong>se copia igual</strong>.</div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-trampas">
+    <h2 id="t-trampas">Las cinco trampas más frecuentes</h2>
+    <p class="intro">Estas son las equivocaciones que más se repiten. En el taller, si caes en una, el mensaje te indicará su número.</p>
+    <ul class="trampas">
+      <li class="trampa" id="trampa-1">
+        <h3><span class="n" aria-hidden="true">1</span>Operar con los exponentes</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">3<i>x</i><sup>2</sup> + 5<i>x</i><sup>2</sup> = 8<i>x</i><sup>4</sup></span><span class="sr-only">3x al cuadrado más 5x al cuadrado igual a 8x a la 4</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">3<i>x</i><sup>2</sup> + 5<i>x</i><sup>2</sup> = 8<i>x</i><sup>2</sup></span><span class="sr-only">3x al cuadrado más 5x al cuadrado igual a 8x al cuadrado</span></span>
+        <p class="porque">Al sumar o restar, el exponente se copia. Los exponentes solo se suman al <em>multiplicar</em>.</p>
+      </li>
+      <li class="trampa" id="trampa-2">
+        <h3><span class="n" aria-hidden="true">2</span>Juntar términos que no son semejantes</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">3<i>x</i><sup>2</sup> + 2<i>x</i> = 5<i>x</i><sup>3</sup></span><span class="sr-only">3x al cuadrado más 2x igual a 5x al cubo</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">3<i>x</i><sup>2</sup> + 2<i>x</i></span><span class="sr-only">3x al cuadrado más 2x</span> ya está simplificado</span>
+        <p class="porque"><span class="m"><i>x</i><sup>2</sup></span> y <span class="m"><i>x</i></span> son familias distintas. Tampoco se juntan una <span class="m"><i>x</i></span> y un número.</p>
+      </li>
+      <li class="trampa" id="trampa-3">
+        <h3><span class="n" aria-hidden="true">3</span>Cambiar solo el primer signo en la resta</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">−(2<i>x</i><sup>2</sup> − <i>x</i> + 4) = −2<i>x</i><sup>2</sup> − <i>x</i> + 4</span><span class="sr-only">menos abre paréntesis 2x al cuadrado menos x más 4 cierra paréntesis igual a menos 2x al cuadrado menos x más 4</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">−(2<i>x</i><sup>2</sup> − <i>x</i> + 4) = −2<i>x</i><sup>2</sup> + <i>x</i> − 4</span><span class="sr-only">menos abre paréntesis 2x al cuadrado menos x más 4 cierra paréntesis igual a menos 2x al cuadrado más x menos 4</span></span>
+        <p class="porque">El signo menos delante del paréntesis cambia el signo de <strong>todos</strong> los términos, no solo el del primero.</p>
+      </li>
+      <li class="trampa" id="trampa-4">
+        <h3><span class="n" aria-hidden="true">4</span>Perder el signo de un término</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">7 − 3<i>x</i> + 5<i>x</i> = 7 + 8<i>x</i></span><span class="sr-only">7 menos 3x más 5x igual a 7 más 8x</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">7 − 3<i>x</i> + 5<i>x</i> = 7 + 2<i>x</i></span><span class="sr-only">7 menos 3x más 5x igual a 7 más 2x</span></span>
+        <p class="porque">Cada término se lleva el signo que tiene a su izquierda: aquí se combinan <span class="m">−3<i>x</i></span> y <span class="m">+5<i>x</i></span>.</p>
+      </li>
+      <li class="trampa" id="trampa-5">
+        <h3><span class="n" aria-hidden="true">5</span>Olvidar el coeficiente invisible 1</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true"><i>x</i><sup>2</sup> + 4<i>x</i><sup>2</sup> = 4<i>x</i><sup>2</sup></span><span class="sr-only">x al cuadrado más 4x al cuadrado igual a 4x al cuadrado</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true"><i>x</i><sup>2</sup> + 4<i>x</i><sup>2</sup> = 5<i>x</i><sup>2</sup></span><span class="sr-only">x al cuadrado más 4x al cuadrado igual a 5x al cuadrado</span></span>
+        <p class="porque">Si no se ve un número delante de la <span class="m"><i>x</i></span>, el coeficiente es 1. Y <span class="m"><i>x</i> − <i>x</i> = 0</span>, no <span class="m"><i>x</i></span>.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-taller">
+    <h2 id="t-taller">Taller guiado</h2>
+    <p class="intro">Resuelve el ejercicio en tres pasos. Cada paso se comprueba antes de pasar al siguiente.</p>
+    <div class="chips" id="chips-op" role="group" aria-label="Operación">
+      <span class="nombre-grupo" aria-hidden="true">Operación:</span>
+      <button type="button" class="chip" data-v="suma" aria-pressed="true">Suma</button>
+      <button type="button" class="chip" data-v="resta" aria-pressed="false">Resta</button>
+    </div>
+    <div class="chips" id="chips-nivel" role="group" aria-label="Dificultad">
+      <span class="nombre-grupo" aria-hidden="true">Dificultad:</span>
+      <button type="button" class="chip" data-v="1" aria-pressed="true">Binomios</button>
+      <button type="button" class="chip" data-v="2" aria-pressed="false">Trinomios</button>
+      <button type="button" class="chip" data-v="3" aria-pressed="false">Trinomios desordenados</button>
+    </div>
+
+    <div class="pizarra" id="enunciado" aria-live="polite"></div>
+
+    <ol class="pasos-nav" id="pasos-nav" aria-label="Progreso del taller">
+      <li>Paso 1: quitar paréntesis</li>
+      <li>Paso 2: agrupar familias</li>
+      <li>Paso 3: combinar</li>
+    </ol>
+
+    <!-- PASO 1 -->
+    <div class="paso" id="paso1">
+      <h3>Paso 1 · Quitar los paréntesis</h3>
+      <div id="p1-suma" hidden>
+        <p>Antes de quitar los paréntesis: ¿hay que cambiar algún signo?</p>
+        <div class="opciones" role="group" aria-label="Respuesta">
+          <button type="button" class="op" data-v="si">Sí, los del segundo polinomio</button>
+          <button type="button" class="op" data-v="no">No, todos se quedan igual</button>
+        </div>
+      </div>
+      <div id="p1-resta" hidden>
+        <p>El segundo polinomio tiene un signo menos delante. Pulsa cada término del segundo paréntesis para cambiar su signo. Cambia los que correspondan y luego comprueba.</p>
+        <div class="pizarra peq"><span class="rotulo">Sin paréntesis:</span><div id="p1-fichas"></div></div>
+        <div class="fila-botones">
+          <button type="button" class="btn" id="p1-comprobar">Comprobar</button>
+        </div>
+      </div>
+      <div class="fb" id="p1-fb" role="status"></div>
+      <div class="fila-botones"><button type="button" class="btn" id="p1-seguir" hidden>Continuar al paso 2</button></div>
+    </div>
+
+    <!-- PASO 2 -->
+    <div class="paso" id="paso2" hidden>
+      <h3>Paso 2 · Agrupar por familias</h3>
+      <p>Elige una ficha y después pulsa <strong>Colocar aquí</strong> en su familia. Cada ficha lleva pegado su signo: el que tenía a su izquierda.</p>
+      <div class="pool" id="p2-pool" aria-label="Fichas por clasificar" role="group"></div>
+      <div class="familias" id="p2-familias"></div>
+      <div class="fila-botones">
+        <button type="button" class="btn" id="p2-comprobar">Comprobar</button>
+        <button type="button" class="btn sec" id="p2-pista">Pista</button>
+      </div>
+      <div class="fb" id="p2-fb" role="status"></div>
+      <div class="fila-botones"><button type="button" class="btn" id="p2-seguir" hidden>Continuar al paso 3</button></div>
+    </div>
+
+    <!-- PASO 3 -->
+    <div class="paso" id="paso3" hidden>
+      <h3>Paso 3 · Combinar cada familia</h3>
+      <div id="p3-exp"></div>
+      <p>Suma los coeficientes de cada familia, con su signo. La parte literal ya está escrita: no cambia.</p>
+      <div id="p3-filas"></div>
+      <div class="fila-botones">
+        <button type="button" class="btn" id="p3-comprobar">Comprobar</button>
+        <button type="button" class="btn sec" id="p3-pista">Pista</button>
+      </div>
+      <div class="fb" id="p3-fb" role="status"></div>
+    </div>
+
+    <div class="paso" id="final" hidden>
+      <h3>Resultado</h3>
+      <div class="pizarra" id="final-res"></div>
+      <div id="final-nota"></div>
+    </div>
+
+    <div class="fila-botones"><button type="button" class="btn sec" id="nuevo">Nuevo ejercicio</button></div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-detective">
+    <h2 id="t-detective">Detective de errores</h2>
+    <p class="intro">Cada caso muestra una resolución. Algunas tienen un error y otras están bien. Decide qué ocurrió.</p>
+    <div id="detective"></div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-control">
+    <h2 id="t-control">Antes de dar tu respuesta, comprueba</h2>
+    <ul class="control">
+      <li>Si hay una resta, ¿cambié el signo de <strong>todos</strong> los términos del segundo paréntesis?</li>
+      <li>¿Junté solo términos de la misma familia (misma <span class="m"><i>x</i></span>, mismo exponente)?</li>
+      <li>¿Dejé los exponentes como estaban?</li>
+      <li>¿Cada término conservó el signo que tenía a su izquierda?</li>
+      <li>¿Conté el 1 invisible en términos como <span class="m"><i>x</i><sup>2</sup></span> o <span class="m">−<i>x</i></span>?</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+  <p>Material bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank" rel="license noopener noreferrer">Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+</footer>
+</div>
+<script>
+/* ============================================================
+   FUNCIONES COMUNES
+   Formato matemático, texto para lectores de pantalla,
+   números al azar, lectura de respuestas y el "detective de errores".
+   ============================================================ */
+var MENOS = '\u2212';
+
+/* ---------- Números ---------- */
+function fmtNum(n) { return n < 0 ? MENOS + Math.abs(n) : String(n); }
+function fmtParen(n) { return n < 0 ? '(' + MENOS + Math.abs(n) + ')' : String(n); }
+function signoTxt(n) { return n < 0 ? MENOS : '+'; }
+function potencia(b, e) { var r = 1; for (var i = 0; i < e; i++) { r = r * b; } return r; }
+function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+function rndNZ(a, b) { var n; do { n = rnd(a, b); } while (n === 0); return n; }
+function barajar(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+/* Lee un entero escrito por el estudiante. Acepta el signo − tipográfico. */
+function leerNum(txt) {
+  var s = String(txt || '').trim().replace(/[\u2212\u2013\u2014]/g, '-').replace(/\s+/g, '').replace(/^\+/, '');
+  if (!/^-?\d+$/.test(s)) { return null; }
+  return parseInt(s, 10);
+}
+
+/* ---------- Términos y polinomios en HTML ---------- */
+function sup(e) { return e > 1 ? '<sup>' + e + '</sup>' : ''; }
+function lit(e) { return e === 0 ? '' : '<i>x</i>' + sup(e); }
+function termHTML(c, e) {
+  if (c === 0) { return '0'; }
+  var s = c < 0 ? MENOS : '';
+  var a = Math.abs(c);
+  if (e === 0) { return s + a; }
+  return s + (a === 1 ? '' : a) + lit(e);
+}
+/* Término con su signo siempre visible: "+ 3x²", "− x" */
+function termSignado(c, e) { return signoTxt(c) + '\u2009' + termHTML(Math.abs(c), e); }
+function polyHTML(terms) {
+  var out = '', primero = true;
+  terms.forEach(function (t) {
+    if (t.c === 0) { return; }
+    if (primero) { out += termHTML(t.c, t.e); primero = false; }
+    else { out += (t.c < 0 ? ' ' + MENOS + ' ' : ' + ') + termHTML(Math.abs(t.c), t.e); }
+  });
+  return primero ? '0' : out;
+}
+
+/* ---------- Versión hablada (lectores de pantalla) ---------- */
+var ORDINAL = { 4: 'cuarta', 5: 'quinta', 6: 'sexta', 7: 'séptima', 8: 'octava', 9: 'novena' };
+function expVoz(e) {
+  if (e <= 1) { return ''; }
+  if (e === 2) { return ' al cuadrado'; }
+  if (e === 3) { return ' al cubo'; }
+  return ' a la ' + (ORDINAL[e] || e);
+}
+function numVoz(n) { return n < 0 ? 'menos ' + Math.abs(n) : String(n); }
+function termVoz(c, e) {
+  if (c === 0) { return '0'; }
+  var s = c < 0 ? 'menos ' : '';
+  var a = Math.abs(c);
+  if (e === 0) { return s + a; }
+  return s + (a === 1 ? '' : a + ' ') + 'x' + expVoz(e);
+}
+function polyVoz(terms) {
+  var partes = [], primero = true;
+  terms.forEach(function (t) {
+    if (t.c === 0) { return; }
+    if (primero) { partes.push(termVoz(t.c, t.e)); primero = false; }
+    else { partes.push((t.c < 0 ? 'menos ' : 'más ') + termVoz(Math.abs(t.c), t.e)); }
+  });
+  return primero ? '0' : partes.join(' ');
+}
+/* Muestra la versión visual y, oculta, la versión hablada */
+function mathSpan(html, voz) {
+  return '<span class="m" aria-hidden="true">' + html + '</span><span class="sr-only">' + voz + '</span>';
+}
+
+/* Mini-marcado para textos fijos: "3x^2 - 4x + 5", "*" es el punto de multiplicar */
+function M(s) {
+  return s
+    .replace(/x(\^(\d+))?/g, function (m, p, n) { return '<i>x</i>' + (n ? '<sup>' + n + '</sup>' : ''); })
+    .replace(/\^(\d+)/g, '<sup>$1</sup>')
+    .replace(/-/g, MENOS)
+    .replace(/\*/g, '·');
+}
+function MV(s) {
+  return s
+    .replace(/\^2/g, ' al cuadrado').replace(/\^3/g, ' al cubo').replace(/\^(\d+)/g, ' a la $1')
+    .replace(/\(/g, ' abre paréntesis ').replace(/\)/g, ' cierra paréntesis ')
+    .replace(/-/g, ' menos ').replace(/\+/g, ' más ').replace(/\*/g, ' por ').replace(/=/g, ' igual a ')
+    .replace(/\s+/g, ' ').trim();
+}
+function MS(s) { return mathSpan(M(s), MV(s)); }
+
+/* ---------- Retroalimentación ---------- */
+function mostrarFB(el, tipo, html) { el.className = 'fb visible ' + tipo; el.innerHTML = html; }
+function ocultarFB(el) { el.className = 'fb'; el.innerHTML = ''; }
+function marcarCampo(input, ok) { input.classList.remove('ok', 'no'); input.classList.add(ok ? 'ok' : 'no'); }
+function anunciar(txt) {
+  var a = document.getElementById('anuncio');
+  if (!a) { return; }
+  a.textContent = '';
+  window.setTimeout(function () { a.textContent = txt; }, 60);
+}
+
+/* Grupo de botones de selección única (chips) */
+function prepararChips(grupo, alCambiar) {
+  grupo.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.chip');
+    if (!b) { return; }
+    grupo.querySelectorAll('button.chip').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    b.setAttribute('aria-pressed', 'true');
+    alCambiar(b.getAttribute('data-v'));
+  });
+}
+
+/* ============================================================
+   DETECTIVE DE ERRORES
+   casos: [{pre, enun, lineas:[...], resp, expl, bien}]
+   categorias: [{id, txt}]
+   ============================================================ */
+function crearDetective(raiz, casos, categorias) {
+  var orden, idx, aciertos;
+
+  function iniciar() { orden = barajar(casos.map(function (c, i) { return i; })); idx = 0; aciertos = 0; pintar(); }
+
+  function pintar() {
+    if (idx >= orden.length) { pintarFinal(); return; }
+    var c = casos[orden[idx]];
+    var h = '<p class="progreso">Caso ' + (idx + 1) + ' de ' + orden.length + '. Aciertos: ' + aciertos + '.</p>';
+    h += '<div class="pizarra peq"><span class="rotulo">' + (c.pre || 'Ejercicio:') + '</span>' + MS(c.enun) + '</div>';
+    h += '<p>Esta es la resolución propuesta:</p><ol class="lineas">';
+    c.lineas.forEach(function (l) { h += '<li>' + MS(l) + '</li>'; });
+    h += '</ol><p><strong>¿Qué ocurrió en esta resolución?</strong></p><div class="opciones" role="group" aria-label="Posibles diagnósticos">';
+    categorias.forEach(function (cat) { h += '<button type="button" class="op" data-id="' + cat.id + '">' + cat.txt + '</button>'; });
+    h += '</div><div class="fb" role="status"></div>';
+    h += '<div class="fila-botones"><button type="button" class="btn sig" hidden>Siguiente caso</button></div>';
+    raiz.innerHTML = h;
+  }
+
+  function pintarFinal() {
+    var n = orden.length;
+    var msj = aciertos === n ? 'Excelente: identificaste todos los errores.' :
+      (aciertos >= n - 2 ? 'Muy bien: tienes buen ojo para los errores.' : 'Conviene repasar las cinco trampas y volver a intentarlo.');
+    raiz.innerHTML = '<div class="fb visible ' + (aciertos >= n - 2 ? 'ok' : 'info') + '" role="status"><strong>Resultado: ' +
+      aciertos + ' de ' + n + '.</strong> ' + msj + '</div><div class="fila-botones"><button type="button" class="btn rep">Repetir los casos</button></div>';
+  }
+
+  raiz.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button');
+    if (!b) { return; }
+    if (b.classList.contains('op')) {
+      var c = casos[orden[idx]];
+      var elegido = b.getAttribute('data-id');
+      var acierto = elegido === c.resp;
+      if (acierto) { aciertos++; }
+      raiz.querySelectorAll('button.op').forEach(function (o) {
+        o.disabled = true;
+        if (o.getAttribute('data-id') === c.resp) { o.classList.add('correcta'); }
+      });
+      if (!acierto) { b.classList.add('incorrecta'); }
+      var etiqueta = '';
+      categorias.forEach(function (cat) { if (cat.id === c.resp) { etiqueta = cat.txt; } });
+      var html = (acierto ? '<strong>Correcto.</strong> ' : '<strong>No es eso.</strong> La respuesta es: ' + etiqueta + '. ') + c.expl;
+      if (c.bien) { html += '<br>Resultado correcto: ' + MS(c.bien); }
+      mostrarFB(raiz.querySelector('.fb'), acierto ? 'ok' : 'no', html);
+      var sig = raiz.querySelector('.sig');
+      sig.hidden = false;
+      sig.textContent = idx === orden.length - 1 ? 'Ver resultado' : 'Siguiente caso';
+      sig.focus();
+    } else if (b.classList.contains('sig')) {
+      idx++; pintar();
+      var p = raiz.querySelector('.progreso, .fb');
+      if (p) { p.setAttribute('tabindex', '-1'); p.focus(); }
+    } else if (b.classList.contains('rep')) {
+      iniciar();
+    }
+  });
+
+  iniciar();
+}
+
+(function () {
+  'use strict';
+
+  /* ---------- Trampas (para citarlas en la retroalimentación) ---------- */
+  var NOMBRES = {
+    1: 'operar con los exponentes',
+    2: 'juntar términos que no son semejantes',
+    3: 'cambiar solo el primer signo',
+    4: 'perder el signo de un término',
+    5: 'olvidar el coeficiente invisible 1'
+  };
+  function trampa(n) { return ' <span class="etq-trampa">Trampa ' + n + ': ' + NOMBRES[n] + '</span>'; }
+
+  function $(id) { return document.getElementById(id); }
+
+  /* ---------- Estado ---------- */
+  var st = {
+    op: 'suma', nivel: 1,
+    P1: [], P2: [],
+    cambios: [],      // paso 1 (resta): qué términos del 2.º polinomio cambiaron de signo
+    fichas: [],       // términos ya sin paréntesis
+    ubic: {},         // paso 2: familia en la que se colocó cada ficha
+    sel: null,        // ficha elegida
+    expOk: false      // paso 3: pregunta del exponente
+  };
+
+  /* ---------- Generación del ejercicio ---------- */
+  function genPoly(exps, r) { return exps.map(function (e) { return { c: rndNZ(-r, r), e: e }; }); }
+  function comunes(a, b) { return a.filter(function (x) { return b.indexOf(x) >= 0; }).length; }
+
+  function generar() {
+    var P1, P2;
+    if (st.nivel === 1) {
+      P1 = genPoly([1, 0], 9); P2 = genPoly([1, 0], 9);
+    } else if (st.nivel === 2) {
+      P1 = genPoly([2, 1, 0], 8); P2 = genPoly([2, 1, 0], 8);
+    } else {
+      var bases = [[3, 2, 1], [3, 1, 0], [2, 1, 0], [3, 2, 0]];
+      var e1 = bases[rnd(0, 3)], e2;
+      /* Comparten al menos dos familias, y una de ellas lleva exponente 2 o 3 */
+      do { e2 = bases[rnd(0, 3)]; } while (comunes(e1, e2) < 2 ||
+        !e1.some(function (x) { return x >= 2 && e2.indexOf(x) >= 0; }));
+      P1 = barajar(genPoly(e1, 9)); P2 = barajar(genPoly(e2, 9));
+      /* Un coeficiente invisible (1 o −1) en un término que tenga pareja */
+      var conPareja = P1.concat(P2).filter(function (t) {
+        return P1.some(function (a) { return a.e === t.e; }) && P2.some(function (b) { return b.e === t.e; });
+      });
+      conPareja[rnd(0, conPareja.length - 1)].c = Math.random() < 0.5 ? 1 : -1;
+    }
+    st.P1 = P1; st.P2 = P2;
+  }
+
+  function construirFichas() {
+    st.fichas = [];
+    var id = 0;
+    st.P1.forEach(function (t) { st.fichas.push({ id: id++, c: t.c, e: t.e }); });
+    st.P2.forEach(function (t) { st.fichas.push({ id: id++, c: st.op === 'resta' ? -t.c : t.c, e: t.e }); });
+    st.ubic = {}; st.sel = null;
+  }
+
+  function familias() {
+    var ex = [];
+    st.fichas.forEach(function (f) { if (ex.indexOf(f.e) < 0) { ex.push(f.e); } });
+    return ex.sort(function (a, b) { return b - a; });
+  }
+  function famHTML(e) { return e === 0 ? 'Números' : 'Términos en <span class="m">' + lit(e) + '</span>'; }
+  function famVoz(e) { return e === 0 ? 'números' : 'términos en x' + expVoz(e); }
+  function famTxt(e) { return e === 0 ? 'los números' : 'los términos en <span class="m">' + lit(e) + '</span>'; }
+  function fc(e) { return 'fam-' + Math.min(e, 3); }
+
+  /* ---------- Navegación de pasos ---------- */
+  function marcarPaso(n) {
+    var lis = $('pasos-nav').querySelectorAll('li');
+    lis.forEach(function (li, i) {
+      li.classList.remove('activo', 'hecho');
+      if (i + 1 < n) { li.classList.add('hecho'); }
+      if (i + 1 === n) { li.classList.add('activo'); li.setAttribute('aria-current', 'step'); }
+      else { li.removeAttribute('aria-current'); }
+    });
+  }
+  function irA(n) {
+    ['paso1', 'paso2', 'paso3', 'final'].forEach(function (id, i) { $(id).hidden = i + 1 > n; });
+    marcarPaso(n);
+    var destino = n === 4 ? $('final') : $('paso' + n);
+    var h = destino.querySelector('h3');
+    h.setAttribute('tabindex', '-1'); h.focus();
+  }
+
+  function expresionOriginal() {
+    var s = st.op === 'suma' ? '+' : MENOS;
+    return mathSpan('(' + polyHTML(st.P1) + ')\u2002' + s + '\u2002(' + polyHTML(st.P2) + ')',
+      'paréntesis ' + polyVoz(st.P1) + ' cierra paréntesis, ' + (st.op === 'suma' ? 'más' : 'menos') +
+      ', paréntesis ' + polyVoz(st.P2) + ' cierra paréntesis');
+  }
+  function expresionSinParentesis() {
+    var ts = st.fichas.map(function (f) { return { c: f.c, e: f.e }; });
+    return mathSpan(polyHTML(ts), polyVoz(ts));
+  }
+
+  /* ---------- Nuevo ejercicio ---------- */
+  function nuevo() {
+    generar();
+    st.cambios = st.P2.map(function () { return false; });
+    st.fichas = []; st.expOk = false;
+    ['p1-fb', 'p2-fb', 'p3-fb'].forEach(function (id) { ocultarFB($(id)); });
+    $('p1-seguir').hidden = true; $('p2-seguir').hidden = true;
+    $('enunciado').innerHTML = '<span class="rotulo">' + (st.op === 'suma' ? 'Suma:' : 'Resta:') + '</span>' + expresionOriginal();
+    ['paso2', 'paso3', 'final'].forEach(function (id) { $(id).hidden = true; });
+    $('paso1').hidden = false;
+    marcarPaso(1);
+    pintarPaso1();
+  }
+
+  /* =========================================================
+     PASO 1
+     ========================================================= */
+  function pintarPaso1() {
+    $('p1-suma').hidden = st.op !== 'suma';
+    $('p1-resta').hidden = st.op !== 'resta';
+    $('p1-suma').querySelectorAll('.op').forEach(function (b) { b.disabled = false; b.classList.remove('correcta', 'incorrecta'); });
+    $('p1-comprobar').disabled = false;
+    if (st.op === 'resta') { pintarFichasResta(false); }
+  }
+
+  function pintarFichasResta(bloquear) {
+    var h = mathSpan(polyHTML(st.P1), polyVoz(st.P1));
+    st.P2.forEach(function (t, i) {
+      var c = st.cambios[i] ? -t.c : t.c;
+      h += ' <button type="button" class="ficha" data-i="' + i + '"' + (bloquear ? ' disabled' : '') +
+        ' aria-label="Término ' + (i + 1) + ' del segundo polinomio: ' + (c < 0 ? 'menos ' : 'más ') + termVoz(Math.abs(c), t.e) +
+        '. Pulsa para cambiar su signo."><span aria-hidden="true">' + termSignado(c, t.e) + '</span></button>';
+    });
+    $('p1-fichas').innerHTML = h;
+  }
+
+  $('p1-fichas').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.ficha');
+    if (!b || b.disabled) { return; }
+    var i = +b.getAttribute('data-i');
+    st.cambios[i] = !st.cambios[i];
+    pintarFichasResta(false);
+    var nb = $('p1-fichas').querySelector('[data-i="' + i + '"]');
+    nb.classList.add('cambiada'); nb.focus();
+    ocultarFB($('p1-fb'));
+  });
+
+  $('p1-comprobar').addEventListener('click', function () {
+    var faltan = [];
+    st.P2.forEach(function (t, i) { if (!st.cambios[i]) { faltan.push(i); } });
+    var fb = $('p1-fb');
+    if (faltan.length === 0) {
+      construirFichas();
+      pintarFichasResta(true);
+      $('p1-comprobar').disabled = true;
+      mostrarFB(fb, 'ok', '<strong>Correcto.</strong> El signo menos cambió el signo de <strong>todos</strong> los términos del segundo paréntesis. Sin paréntesis queda: ' + expresionSinParentesis());
+      $('p1-seguir').hidden = false;
+    } else if (faltan.length === st.P2.length) {
+      mostrarFB(fb, 'no', 'Todavía no cambiaste ningún signo. El menos delante del paréntesis equivale a multiplicar cada término por −1: todos los signos del segundo polinomio cambian.');
+    } else if (st.cambios[0] && faltan.length === st.P2.length - 1) {
+      mostrarFB(fb, 'no', 'Cambiaste solo el signo del primer término. El menos afecta a <strong>cada</strong> término del paréntesis.' + trampa(3));
+    } else {
+      var lista = faltan.map(function (i) { return '<span class="m">' + termSignado(st.P2[i].c, st.P2[i].e) + '</span>'; }).join(', ');
+      mostrarFB(fb, 'no', 'Vas bien, pero faltan por cambiar: ' + lista + '. El menos afecta a todos los términos del paréntesis.' + trampa(3));
+    }
+  });
+
+  $('p1-suma').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.op');
+    if (!b || b.disabled) { return; }
+    var fb = $('p1-fb');
+    if (b.getAttribute('data-v') === 'no') {
+      construirFichas();
+      $('p1-suma').querySelectorAll('.op').forEach(function (o) { o.disabled = true; });
+      b.classList.add('correcta');
+      mostrarFB(fb, 'ok', '<strong>Correcto.</strong> El signo más delante del paréntesis no cambia nada. Sin paréntesis queda: ' + expresionSinParentesis() +
+        '<br>Compáralo con la resta: allí el menos cambia <strong>todos</strong> los signos del segundo polinomio.');
+      $('p1-seguir').hidden = false;
+      $('p1-seguir').focus();
+    } else {
+      b.classList.add('incorrecta');
+      mostrarFB(fb, 'no', 'En una suma no cambia ningún signo: el signo más delante del paréntesis deja cada término igual. Solo el signo menos obliga a cambiar los signos.');
+    }
+  });
+
+  $('p1-seguir').addEventListener('click', function () {
+    $('p1-seguir').hidden = true;
+    irA(2);
+    pintarPaso2();
+  });
+
+  /* =========================================================
+     PASO 2
+     ========================================================= */
+  function fichaHTML(f) {
+    return '<button type="button" class="ficha' + (f.mal ? ' no' : '') + '" data-id="' + f.id + '" aria-pressed="' + (st.sel === f.id) +
+      '" aria-label="Ficha ' + (f.c < 0 ? 'menos ' : 'más ') + termVoz(Math.abs(f.c), f.e) + '"><span aria-hidden="true">' +
+      termSignado(f.c, f.e) + '</span></button>';
+  }
+
+  function pintarPaso2() {
+    var pool = st.fichas.filter(function (f) { return st.ubic[f.id] === undefined; });
+    $('p2-pool').innerHTML = pool.length ? pool.map(fichaHTML).join(' ') : '<span class="vacio">Todas las fichas están colocadas.</span>';
+    $('p2-familias').innerHTML = familias().map(function (e) {
+      var dentro = st.fichas.filter(function (f) { return st.ubic[f.id] === e; });
+      return '<div class="familia ' + fc(e) + '"><div class="fam-cab"><span class="fam-nombre">' + famHTML(e) + '</span>' +
+        '<button type="button" class="btn sec colocar" data-e="' + e + '" aria-label="Colocar la ficha elegida en ' + famVoz(e) + '">Colocar aquí</button></div>' +
+        '<div class="fam-fichas">' + dentro.map(fichaHTML).join(' ') + '</div></div>';
+    }).join('');
+  }
+
+  $('paso2').addEventListener('click', function (ev) {
+    var f = ev.target.closest('button.ficha');
+    var col = ev.target.closest('button.colocar');
+    if (f) {
+      var id = +f.getAttribute('data-id');
+      st.sel = st.sel === id ? null : id;
+      pintarPaso2();
+      $('paso2').querySelector('.ficha[data-id="' + id + '"]').focus();
+      if (st.sel !== null) { anunciar('Ficha elegida. Ahora pulsa Colocar aquí en su familia.'); }
+    } else if (col) {
+      if (st.sel === null) {
+        mostrarFB($('p2-fb'), 'info', 'Primero elige una ficha y después pulsa <strong>Colocar aquí</strong>.');
+        return;
+      }
+      var e = +col.getAttribute('data-e');
+      var ficha = st.fichas[st.sel];
+      st.ubic[st.sel] = e; ficha.mal = false; st.sel = null;
+      pintarPaso2();
+      ocultarFB($('p2-fb'));
+      anunciar('Colocada en ' + famVoz(e) + '.');
+      var siguiente = $('p2-pool').querySelector('.ficha');
+      (siguiente || $('p2-comprobar')).focus();
+    }
+  });
+
+  $('p2-comprobar').addEventListener('click', function () {
+    var fb = $('p2-fb');
+    var sinColocar = st.fichas.filter(function (f) { return st.ubic[f.id] === undefined; });
+    if (sinColocar.length) {
+      mostrarFB(fb, 'info', 'Faltan ' + sinColocar.length + (sinColocar.length === 1 ? ' ficha' : ' fichas') + ' por colocar.');
+      return;
+    }
+    var msgs = [];
+    st.fichas.forEach(function (f) {
+      var donde = st.ubic[f.id];
+      f.mal = donde !== f.e;
+      if (!f.mal) { return; }
+      var t = '<span class="m">' + termSignado(f.c, f.e) + '</span>';
+      var porque;
+      if (f.e === 0) { porque = 'es solo un número, sin <span class="m"><i>x</i></span>: va con los números.'; }
+      else if (f.e === 1) { porque = 'tiene una <span class="m"><i>x</i></span> sin exponente visible, que equivale a <span class="m"><i>x</i><sup>1</sup></span>: va con ' + famTxt(1) + '.'; }
+      else { porque = 'tiene exponente ' + f.e + ': va con ' + famTxt(f.e) + '.'; }
+      msgs.push('<li>' + t + ' ' + porque + (donde !== 0 && f.e !== 0 ? trampa(2) : '') + '</li>');
+    });
+    pintarPaso2();
+    if (msgs.length) {
+      mostrarFB(fb, 'no', 'Hay fichas en una familia que no es la suya (marcadas con borde discontinuo). Vuelve a colocarlas:<ul>' + msgs.join('') + '</ul>');
+    } else {
+      st.fichas.forEach(function (f) { f.bloq = true; });
+      $('paso2').querySelectorAll('.ficha, .colocar').forEach(function (b) { b.disabled = true; });
+      $('p2-comprobar').disabled = true; $('p2-pista').disabled = true;
+      mostrarFB(fb, 'ok', '<strong>Correcto.</strong> Cada término está con su familia. Ahora solo se combinan los de una misma familia.');
+      $('p2-seguir').hidden = false; $('p2-seguir').focus();
+    }
+  });
+
+  $('p2-pista').addEventListener('click', function () {
+    mostrarFB($('p2-fb'), 'info', 'Mira solo el exponente de la <span class="m"><i>x</i></span>: <span class="m"><i>x</i><sup>2</sup></span> es familia 2; <span class="m"><i>x</i></span> sola es <span class="m"><i>x</i><sup>1</sup></span>, familia 1; y un número sin <span class="m"><i>x</i></span> va con los números. El coeficiente y el signo no deciden la familia.');
+  });
+
+  $('p2-seguir').addEventListener('click', function () {
+    $('p2-seguir').hidden = true;
+    irA(3);
+    pintarPaso3();
+  });
+
+  /* =========================================================
+     PASO 3
+     ========================================================= */
+  function coefsDe(e) { return st.fichas.filter(function (f) { return f.e === e; }).map(function (f) { return f.c; }); }
+  function sumaArr(a) { return a.reduce(function (s, x) { return s + x; }, 0); }
+
+  function pintarPaso3() {
+    var fams = familias();
+    var conExp = fams.filter(function (e) { return e >= 2 && coefsDe(e).length > 1; });
+    var h = '';
+    if (conExp.length) {
+      var e = conExp[0];
+      var opciones = barajar([e, 2 * e, 0]);
+      h += '<p><strong>Antes de operar:</strong> al juntar ' + famTxt(e) + ', ¿qué parte literal lleva el resultado?</p>' +
+        '<div class="opciones" role="group" aria-label="Parte literal del resultado">' +
+        opciones.map(function (v) {
+          return '<button type="button" class="op op-exp" data-v="' + v + '" data-e="' + e + '">' + mathSpan('<i>x</i><sup>' + v + '</sup>', 'x a la ' + v) + '</button>';
+        }).join('') + '</div>';
+    } else {
+      st.expOk = true;
+    }
+    $('p3-exp').innerHTML = h;
+
+    $('p3-filas').innerHTML = fams.map(function (e) {
+      var fs = st.fichas.filter(function (f) { return f.e === e; });
+      var ts = fs.map(function (f) { return { c: f.c, e: f.e }; });
+      return '<div class="fila-comb ' + fc(e) + '">' + mathSpan(polyHTML(ts), polyVoz(ts)) +
+        ' <span class="m" aria-hidden="true">=</span> <input type="text" class="num" id="c3-' + e + '" autocomplete="off" spellcheck="false" aria-label="Coeficiente del resultado para ' + famVoz(e) + '">' +
+        '<span class="m" aria-hidden="true">' + lit(e) + '</span>' +
+        (fs.length === 1 ? '<span class="nota">No tiene pareja: se copia tal cual.</span>' : '') +
+        '<div class="pista-fila" id="pf-' + e + '" hidden></div></div>';
+    }).join('');
+    $('p3-comprobar').disabled = false; $('p3-pista').disabled = false;
+  }
+
+  $('p3-exp').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.op-exp');
+    if (!b || b.disabled) { return; }
+    var v = +b.getAttribute('data-v'), e = +b.getAttribute('data-e');
+    var fb = $('p3-fb');
+    $('p3-exp').querySelectorAll('.op').forEach(function (o) { o.classList.remove('incorrecta'); });
+    if (v === e) {
+      st.expOk = true;
+      $('p3-exp').querySelectorAll('.op').forEach(function (o) { o.disabled = true; });
+      b.classList.add('correcta');
+      mostrarFB(fb, 'ok', '<strong>Exacto.</strong> El exponente se copia igual: <span class="m"><i>x</i><sup>' + e + '</sup></span>. Solo cambian los coeficientes. Ahora completa las casillas.');
+      var primero = $('p3-filas').querySelector('input'); if (primero) { primero.focus(); }
+    } else {
+      b.classList.add('incorrecta');
+      mostrarFB(fb, 'no', (v === 2 * e ? 'Sumaste los exponentes.' : 'Restaste los exponentes y la <span class="m"><i>x</i></span> desapareció.') +
+        ' Al sumar o restar términos semejantes el exponente no cambia.' + trampa(1));
+    }
+  });
+
+  function diagnostico(cs, val, e) {
+    var ok = sumaArr(cs);
+    var nombre = famTxt(e);
+    var absS = sumaArr(cs.map(Math.abs));
+    var i;
+    if (val === absS && absS !== ok) {
+      return 'En ' + nombre + ': sumaste los números sin sus signos. Cada coeficiente conserva el signo que lleva delante.' + trampa(4);
+    }
+    for (i = 0; i < cs.length; i++) {
+      if (Math.abs(cs[i]) === 1 && cs.length > 1 && val === ok - cs[i]) {
+        return 'En ' + nombre + ': el término <span class="m">' + termSignado(cs[i], e) + '</span> tiene coeficiente ' + fmtNum(cs[i]) + ', aunque no se vea. Hay que contarlo.' + trampa(5);
+      }
+    }
+    for (i = 0; i < cs.length; i++) {
+      if (val === ok - 2 * cs[i] && cs.length > 1) {
+        return 'En ' + nombre + ': el término <span class="m">' + termSignado(cs[i], e) + '</span> cambió de signo por el camino. Cada término se lleva el signo que tiene a su izquierda.' + trampa(4);
+      }
+    }
+    if (val === -ok) {
+      return 'En ' + nombre + ': el número es correcto, pero el signo no. Con signos distintos se restan y el resultado lleva el signo del número de mayor valor absoluto.';
+    }
+    return 'En ' + nombre + ': revisa la cuenta ' + cuentaHTML(cs) + '.';
+  }
+  function cuentaHTML(cs) {
+    return '<span class="m">' + cs.map(function (c) { return '(' + signoTxt(c) + Math.abs(c) + ')'; }).join(' + ') + '</span>';
+  }
+
+  $('p3-comprobar').addEventListener('click', function () {
+    var fb = $('p3-fb');
+    if (!st.expOk) { mostrarFB(fb, 'info', 'Responde primero la pregunta sobre la parte literal.'); return; }
+    var fams = familias(), msgs = [], todo = true;
+    fams.forEach(function (e) {
+      var inp = $('c3-' + e);
+      var val = leerNum(inp.value);
+      var cs = coefsDe(e);
+      if (val === null) {
+        todo = false; marcarCampo(inp, false);
+        msgs.push('<li>Escribe un número entero para ' + famTxt(e) + ' (usa el guion para el signo menos).</li>');
+        return;
+      }
+      var d = val === sumaArr(cs) ? null : diagnostico(cs, val, e);
+      marcarCampo(inp, !d);
+      if (d) { todo = false; msgs.push('<li>' + d + '</li>'); }
+    });
+    if (!todo) {
+      mostrarFB(fb, 'no', 'Revisa las casillas en rojo:<ul>' + msgs.join('') + '</ul>');
+      return;
+    }
+    $('p3-filas').querySelectorAll('input').forEach(function (i) { i.readOnly = true; });
+    $('p3-comprobar').disabled = true; $('p3-pista').disabled = true;
+    mostrarFB(fb, 'ok', '<strong>¡Muy bien!</strong> Todas las familias están bien combinadas.');
+    var res = fams.map(function (e) { return { c: sumaArr(coefsDe(e)), e: e }; });
+    $('final-res').innerHTML = '<span class="rotulo">Resultado:</span>' + expresionOriginal() + '<br>' +
+      mathSpan('= ' + polyHTML(res), 'igual a ' + polyVoz(res));
+    var ceros = res.filter(function (t) { return t.c === 0; });
+    $('final-nota').innerHTML = ceros.length ? '<p>' + ceros.map(function (t) { return famTxt(t.e); }).join(' y ') +
+      ' se anulan (su suma es 0), por eso no aparecen en el resultado.</p>' : '';
+    irA(4);
+    marcarPaso(4);
+  });
+
+  $('p3-pista').addEventListener('click', function () {
+    familias().forEach(function (e) {
+      var p = $('pf-' + e);
+      p.hidden = false;
+      p.innerHTML = 'Pista: ' + cuentaHTML(coefsDe(e)) + ' = ?';
+    });
+    mostrarFB($('p3-fb'), 'info', 'Suma los coeficientes con su signo. Con signos iguales, se suman y se conserva el signo. Con signos distintos, se restan y se pone el signo del mayor.');
+  });
+
+  /* ---------- Controles generales ---------- */
+  prepararChips($('chips-op'), function (v) { st.op = v; nuevo(); });
+  prepararChips($('chips-nivel'), function (v) { st.nivel = +v; nuevo(); });
+  $('nuevo').addEventListener('click', nuevo);
+
+  /* =========================================================
+     DETECTIVE DE ERRORES
+     ========================================================= */
+  var CASOS = [
+    { pre: 'Sumar:', enun: '(4x^2 + 3x) + (2x^2 + x)', lineas: ['4x^2 + 2x^2 + 3x + x', '6x^4 + 4x'], resp: 't1',
+      expl: 'Al juntar 4x² y 2x² también se sumaron los exponentes. Solo se suman los coeficientes: 4x² + 2x² = 6x².', bien: '6x^2 + 4x' },
+    { pre: 'Restar:', enun: '(6x^3 + 2x) - (2x^3 - 5x)', lineas: ['6x^3 + 2x - 2x^3 + 5x', '4 + 7x'], resp: 't1',
+      expl: 'En 6x³ − 2x³ se restaron los exponentes (3 − 3 = 0) y la x desapareció. El exponente se copia: 6x³ − 2x³ = 4x³.', bien: '4x^3 + 7x' },
+    { pre: 'Sumar:', enun: '(5x + 2) + (3x^2 - 4)', lineas: ['3x^2 + 5x + 2 - 4', '8x^3 - 2'], resp: 't2',
+      expl: '3x² y 5x no son semejantes: uno tiene exponente 2 y el otro exponente 1. No se pueden juntar.', bien: '3x^2 + 5x - 2' },
+    { pre: 'Sumar:', enun: '(2x + 5) + (x + 3)', lineas: ['2x + x + 5 + 3', '3x + 8', '11x'], resp: 't2',
+      expl: 'La segunda línea ya era la respuesta. 3x y 8 no son semejantes: uno lleva x y el otro es un número.', bien: '3x + 8' },
+    { pre: 'Restar:', enun: '(6x^2 - 2x + 5) - (x^2 + 3x - 1)', lineas: ['6x^2 - 2x + 5 - x^2 + 3x - 1', '5x^2 + x + 4'], resp: 't3',
+      expl: 'El menos cambió solo el signo de x². También debía cambiar los otros dos: −x² − 3x + 1.', bien: '5x^2 - 5x + 6' },
+    { pre: 'Simplificar:', enun: '3x - 5x^2 + 4x + 2x^2', lineas: ['5x^2 + 2x^2 + 3x + 4x', '7x^2 + 7x'], resp: 't4',
+      expl: 'Al reordenar, el término −5x² perdió su signo. El signo que está a la izquierda viaja con el término: −5x² + 2x² = −3x².', bien: '-3x^2 + 7x' },
+    { pre: 'Sumar:', enun: '(x^2 + 7x) + (2x^2 - 3x)', lineas: ['x^2 + 2x^2 + 7x - 3x', '2x^2 + 4x'], resp: 't5',
+      expl: 'x² es 1x². Al juntar 1x² + 2x² resulta 3x², no 2x².', bien: '3x^2 + 4x' },
+    { pre: 'Sumar:', enun: '(2x^2 - 4x + 1) + (3x^2 + 4x - 6)', lineas: ['2x^2 + 3x^2 - 4x + 4x + 1 - 6', '5x^2 + 0x - 5', '5x^2 - 5'], resp: 'ok',
+      expl: 'Está bien resuelto. −4x + 4x = 0x = 0, por eso el término en x desaparece.', bien: null },
+    { pre: 'Restar:', enun: '(8x - 3) - (2x - 5)', lineas: ['8x - 3 - 2x + 5', '6x + 2'], resp: 'ok',
+      expl: 'Está bien resuelto: el menos cambió los dos signos del segundo paréntesis (−2x y +5).', bien: null }
+  ];
+  var CATEGORIAS = [1, 2, 3, 4, 5].map(function (n) {
+    return { id: 't' + n, txt: 'Trampa ' + n + ': ' + NOMBRES[n] };
+  }).concat([{ id: 'ok', txt: 'No hay error: está bien resuelto' }]);
+  CATEGORIAS[2].txt = 'Trampa 3: cambiar solo el primer signo en la resta';
+
+  crearDetective($('detective'), CASOS, CATEGORIAS);
+
+  /* Inicio */
+  nuevo();
+})();
+
+</script>
+</body>
+</html>

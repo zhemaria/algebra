@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<!--
+  Evaluar un polinomio · Interactivo de la Lección 2.3
+  Spanish ASE Math · Nivel 4 · Tema 2 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)
+  https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluar un polinomio · Lección 2.3</title>
+<meta name="description" content="Interactivo para evaluar polinomios sustituyendo la variable entre paréntesis, con énfasis en exponentes y valores negativos.">
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<meta name="dcterms.rights" content="Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">
+<style>
+:root {
+  --tema: #004d40;
+  --tema-d: #00332b;
+  --tema-bg: #e0f2f1;
+  --tema-bg2: #b2dfdb;
+  --acento: #bf360c;
+  --acento-d: #8c2708;
+  --acento-bg: #fbe9e7;
+  --tinta: #1d2a28;
+  --gris: #4a5654;
+  --fondo: #f4f7f6;
+  --linea: #e4eeec;
+  --borde: #c9d8d5;
+  --ok: #1b5e20;
+  --ok-bg: #e8f5e9;
+  --no: #b3261e;
+  --no-bg: #fdecea;
+  --ambar: #5c3900;
+  --ambar-bg: #fff8e1;
+  --math: "Cambria Math", Cambria, "STIX Two Math", "Times New Roman", Georgia, serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--tinta);
+  line-height: 1.6;
+  font-size: 17px;
+}
+.contenedor { max-width: 920px; margin: 0 auto; padding: 24px 18px 40px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.saltar {
+  position: absolute; left: -9999px; top: 8px; background: #fff; color: var(--tema-d);
+  padding: 8px 14px; border-radius: 6px; z-index: 20; font-weight: 700;
+}
+.saltar:focus { left: 12px; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
+
+/* Encabezado */
+header.principal {
+  background: linear-gradient(135deg, #00332b 0%, #004d40 55%, #00695c 100%);
+  color: #fff; padding: 28px 30px; border-radius: 14px; margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(0, 51, 43, 0.25);
+}
+header.principal .ruta { font-size: 14px; margin: 0; opacity: 0.95; }
+header.principal h1 { margin: 6px 0 8px; font-size: clamp(25px, 4.2vw, 32px); line-height: 1.2; }
+header.principal .lema { margin: 0; font-size: 17px; max-width: 60ch; }
+
+/* Bloques */
+section.bloque {
+  background: #fff; border: 1px solid var(--borde); border-radius: 12px;
+  padding: 22px 26px 24px; margin-bottom: 22px;
+}
+section.bloque > h2 { color: var(--tema-d); font-size: 23px; margin: 0 0 6px; line-height: 1.3; }
+h3 { color: var(--tema-d); font-size: 18px; margin: 18px 0 8px; line-height: 1.35; }
+p { margin: 10px 0; max-width: 74ch; }
+.intro { color: var(--gris); margin-top: 0; }
+
+/* Matemáticas */
+.m { font-family: var(--math); font-size: 1.18em; white-space: nowrap; }
+.m i { font-style: italic; padding-right: 0.04em; }
+.m sup { font-size: 0.66em; line-height: 0; position: relative; top: -0.1em; }
+.par { color: var(--acento); font-weight: 700; }
+.exp-ac { color: var(--acento); font-weight: 700; }
+
+/* La pizarra cuadriculada: el elemento visual de identidad */
+.pizarra {
+  position: relative;
+  background-color: #fff;
+  background-image:
+    linear-gradient(var(--linea) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linea) 1px, transparent 1px);
+  background-size: 26px 26px;
+  border: 2px solid var(--tema);
+  border-radius: 12px;
+  padding: 22px 20px;
+  margin: 14px 0;
+  text-align: center;
+  font-size: clamp(21px, 3.8vw, 30px);
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.pizarra .m { font-size: 1em; }
+.pizarra.peq { font-size: clamp(19px, 3vw, 24px); padding: 14px 16px; }
+.pizarra .rotulo {
+  display: block; font-family: "Segoe UI", system-ui, sans-serif; font-size: 15px;
+  color: var(--gris); margin-bottom: 2px; text-align: left;
+}
+
+/* Cajas de mensaje */
+.regla-oro {
+  border-left: 6px solid var(--acento); background: var(--acento-bg);
+  padding: 14px 18px; border-radius: 0 10px 10px 0; margin: 14px 0; color: #4a1a05;
+}
+.regla-oro strong { color: #4a1a05; }
+.caja-tip {
+  background: var(--ambar-bg); border-left: 5px solid #f9a825; color: var(--ambar);
+  padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0; font-size: 16px;
+}
+.caja-tip strong { color: var(--ambar); }
+
+/* Botones */
+.btn {
+  font: inherit; font-size: 15px; font-weight: 700; background: var(--tema); color: #fff;
+  border: 2px solid var(--tema); padding: 9px 18px; border-radius: 8px; cursor: pointer;
+  margin: 8px 8px 0 0;
+}
+.btn:hover { background: var(--tema-d); border-color: var(--tema-d); }
+.btn.sec { background: #fff; color: var(--tema-d); }
+.btn.sec:hover { background: var(--tema-bg); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.fila-botones { display: flex; flex-wrap: wrap; align-items: center; margin-top: 6px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; align-items: center; }
+.chips .nombre-grupo { font-size: 15px; color: var(--gris); margin-right: 4px; }
+.chip {
+  font: inherit; font-size: 15px; background: #fff; color: var(--tema-d);
+  border: 2px solid var(--tema); border-radius: 999px; padding: 5px 15px; cursor: pointer;
+}
+.chip:hover { background: var(--tema-bg); }
+.chip[aria-pressed="true"] { background: var(--tema); color: #fff; }
+
+/* Retroalimentación */
+.fb { margin-top: 12px; padding: 12px 16px; border-radius: 8px; font-size: 16px; display: none; }
+.fb.visible { display: block; }
+.fb.ok { background: var(--ok-bg); color: var(--ok); border-left: 5px solid #2e7d32; }
+.fb.no { background: var(--no-bg); color: var(--no); border-left: 5px solid var(--no); }
+.fb.info { background: var(--ambar-bg); color: var(--ambar); border-left: 5px solid #f9a825; }
+.fb ul { margin: 6px 0 0; padding-left: 20px; }
+.fb li { margin: 5px 0; }
+.fb .m { color: inherit; }
+.etq-trampa {
+  display: inline-block; font-size: 14px; font-weight: 700; border: 2px solid currentColor;
+  border-radius: 999px; padding: 0 10px; margin-left: 4px; white-space: nowrap;
+}
+
+/* Campos numéricos */
+input.num {
+  font-family: var(--math); font-size: 22px; width: 3.4em; text-align: center;
+  padding: 3px 6px; border: 2px solid #8fa5a1; border-radius: 6px; color: var(--tinta);
+  background: #fff;
+}
+input.num:focus { border-color: var(--tema); }
+input.num.ok { border-color: #2e7d32; background: var(--ok-bg); }
+input.num.no { border-color: var(--no); background: var(--no-bg); }
+
+/* Las cinco trampas */
+.trampas {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 14px; margin-top: 14px; padding: 0; list-style: none;
+}
+.trampa { border: 1px solid var(--borde); border-radius: 10px; padding: 14px 16px; background: #fcfdfd; }
+.trampa h3 { margin: 0 0 8px; font-size: 17px; display: flex; gap: 10px; align-items: flex-start; }
+.trampa .n {
+  flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--acento-d);
+  color: #fff; font-weight: 700; display: inline-grid; place-items: center; font-size: 15px;
+}
+.mal, .bien { display: block; margin: 4px 0; font-size: 16px; }
+.mal { color: var(--no); }
+.bien { color: var(--ok); }
+.marca { font-weight: 700; display: inline-block; width: 1.2em; }
+.trampa .porque { font-size: 15px; color: var(--gris); margin: 8px 0 0; }
+
+/* Pasos del taller */
+.pasos-nav { display: flex; gap: 6px; list-style: none; padding: 0; margin: 12px 0 4px; flex-wrap: wrap; }
+.pasos-nav li { padding: 3px 13px; border-radius: 999px; background: #eef3f2; color: var(--gris); font-size: 14px; }
+.pasos-nav li.activo { background: var(--tema); color: #fff; font-weight: 700; }
+.pasos-nav li.hecho { background: var(--tema-bg2); color: var(--tema-d); }
+.paso { border-top: 2px dashed var(--borde); padding-top: 12px; margin-top: 16px; }
+.paso > h3 { margin-top: 0; }
+.fila-calc { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 10px 0; }
+.nota { font-size: 15px; color: var(--gris); }
+
+/* Opciones (detective y preguntas) */
+.opciones { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 10px 0; }
+.op {
+  font: inherit; font-size: 16px; text-align: left; background: #fff; color: var(--tinta);
+  border: 2px solid var(--borde); border-radius: 8px; padding: 9px 13px; cursor: pointer;
+}
+.op:hover:not(:disabled) { border-color: var(--tema); }
+.op.correcta { border-color: #2e7d32; background: var(--ok-bg); color: var(--ok); }
+.op.incorrecta { border-color: var(--no); background: var(--no-bg); color: var(--no); }
+.op:disabled { cursor: default; }
+.op .m { font-size: 1.2em; }
+.progreso { font-size: 15px; color: var(--gris); margin: 0 0 4px; }
+ol.lineas { margin: 8px 0; padding-left: 26px; }
+ol.lineas li { margin: 4px 0; }
+ol.lineas li::marker { color: var(--gris); }
+
+/* Lista de control */
+ul.control { list-style: none; padding: 0; margin: 10px 0 0; }
+ul.control li { padding: 7px 0 7px 34px; position: relative; border-bottom: 1px solid var(--linea); }
+ul.control li::before {
+  content: "✓"; position: absolute; left: 4px; top: 6px; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--tema); color: #fff; font-size: 13px;
+  display: grid; place-items: center; font-weight: 700;
+}
+
+footer { text-align: center; padding: 20px 10px; color: #555; font-size: 14px; border-top: 1px solid #d6dedc; margin-top: 24px; }
+footer a { color: var(--tema-d); }
+
+@keyframes destello { from { background: var(--acento-bg); } to { background: transparent; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 600px) {
+  section.bloque { padding: 18px 15px 20px; }
+  header.principal { padding: 22px 20px; }
+  body { font-size: 16px; }
+}
+
+/* La regla del hueco */
+.hueco-piz { font-size: clamp(26px, 5vw, 40px); padding: 30px 16px; min-height: 130px; }
+.hueco {
+  display: inline-block; width: 1.3em; height: 0.95em; vertical-align: -0.12em;
+  border-bottom: 3px dotted var(--acento); margin: 0 1px;
+}
+.par { display: inline-block; }
+.aparece { animation: aparecer 0.5s ease-out; }
+@keyframes aparecer { from { transform: scale(1.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.val { color: var(--tema-d); font-weight: 700; }
+.val.aparece { animation: caer 0.5s ease-out; }
+@keyframes caer { from { transform: translateY(-0.8em); opacity: 0; } to { transform: none; opacity: 1; } }
+.pizarra .xvar { color: var(--tinta); }
+.pizarra .xvar.marcada { background: var(--acento-bg); border-radius: 4px; box-shadow: 0 0 0 2px var(--acento); }
+
+.calc-lineas { list-style: none; padding: 0; margin: 12px 0 0; counter-reset: calc; }
+.calc-lineas li {
+  display: grid; grid-template-columns: 190px 1fr; gap: 12px; align-items: baseline;
+  padding: 8px 12px; margin: 6px 0; background: #fafcfb; border-left: 5px solid var(--tema-bg2);
+}
+.calc-lineas li.fin { border-left-color: var(--tema); background: var(--tema-bg); }
+.calc-lineas .que { font-size: 15px; color: var(--gris); }
+.calc-lineas .m { font-size: 22px; white-space: normal; }
+.calc-lineas .detalle { font-size: 15px; color: var(--gris); display: block; }
+.calc-lineas .detalle .m { font-size: 17px; }
+@media (max-width: 600px) { .calc-lineas li { grid-template-columns: 1fr; gap: 2px; } }
+
+/* ¿Qué abraza el exponente? */
+.abrazos { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; margin: 12px 0; }
+.abrazo-card { border: 1px solid var(--borde); border-radius: 10px; padding: 14px 16px; background: #fcfdfd; }
+.abrazo-expr { font-family: var(--math); font-size: 34px; text-align: center; padding: 18px 0 6px; }
+.abrazo-expr sup { font-size: 0.6em; line-height: 0; position: relative; top: -0.15em; }
+.abr { display: inline-block; position: relative; }
+.abr::before {
+  content: ""; position: absolute; left: -3px; right: -3px; top: 0.02em; height: 0.28em;
+  border: 3px solid var(--acento); border-bottom: none; border-radius: 12px 12px 0 0; opacity: 0;
+}
+.abrazo-card.revelado .abr::before { opacity: 1; }
+.abrazo-card.revelado sup { color: var(--acento); font-weight: 700; }
+.abrazo-card .opciones { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.abrazo-card .op { text-align: center; font-family: var(--math); font-size: 20px; padding: 6px; }
+.abrazo-card .expl { font-size: 15px; margin: 8px 0 0; display: none; }
+.abrazo-card.revelado .expl { display: block; }
+.abrazo-card .expl .m { font-size: 1.05em; white-space: normal; }
+kbd {
+  font-family: "Segoe UI", system-ui, sans-serif; font-size: 14px; background: #fff; color: var(--tinta);
+  border: 1px solid #8fa5a1; border-bottom-width: 3px; border-radius: 5px; padding: 1px 7px; white-space: nowrap;
+}
+
+/* Taller */
+.una-col { grid-template-columns: 1fr; }
+.una-col .op .m { font-size: 24px; }
+.fila-calc .m { font-size: 24px; }
+.fila-calc .nota { font-size: 15px; }
+#p2-sust .m { font-size: 1em; }
+
+/* Reto */
+.reto-enun { font-size: clamp(22px, 4vw, 30px); }
+.reto-marcador { display: flex; gap: 6px; margin: 4px 0 10px; list-style: none; padding: 0; }
+.reto-marcador li { width: 30px; height: 30px; border-radius: 50%; background: #eef3f2; border: 2px solid var(--borde); display: grid; place-items: center; font-size: 14px; font-weight: 700; color: var(--gris); }
+.reto-marcador li.ok { background: var(--ok-bg); border-color: #2e7d32; color: var(--ok); }
+.reto-marcador li.no { background: var(--no-bg); border-color: var(--no); color: var(--no); }
+.reto-marcador li.actual { border-color: var(--tema); color: var(--tema-d); }
+
+</style>
+</head>
+<body>
+<a class="saltar" href="#principal">Saltar al contenido principal</a>
+<div id="anuncio" class="sr-only" aria-live="polite"></div>
+<div class="contenedor">
+<header class="principal">
+  <p class="ruta">Spanish ASE Math · Nivel 4 · Tema 2 · Lección 2.3</p>
+  <h1>Evaluar un polinomio</h1>
+  <p class="lema">Primero el paréntesis, después el número. Y el exponente nunca se queda por el camino.</p>
+</header>
+
+<main id="principal">
+
+  <section class="bloque" aria-labelledby="t-hueco">
+    <h2 id="t-hueco">La regla del hueco</h2>
+    <p>Evaluar es cambiar la <span class="m"><i>x</i></span> por un número y calcular. El secreto está en <strong>no escribir el número directamente</strong>: primero se abre un hueco con un paréntesis vacío en el lugar de cada <span class="m"><i>x</i></span>, y solo después se mete el número dentro.</p>
+
+    <div class="chips" id="chips-poli" role="group" aria-label="Polinomio">
+      <span class="nombre-grupo" aria-hidden="true">Polinomio:</span>
+      <button type="button" class="chip" data-v="0" aria-pressed="true"><span class="m" aria-hidden="true">2<i>x</i><sup>2</sup> − 3<i>x</i> + 1</span><span class="sr-only">2x al cuadrado menos 3x más 1</span></button>
+      <button type="button" class="chip" data-v="1" aria-pressed="false"><span class="m" aria-hidden="true"><i>x</i><sup>2</sup> + 4<i>x</i> − 5</span><span class="sr-only">x al cuadrado más 4x menos 5</span></button>
+      <button type="button" class="chip" data-v="2" aria-pressed="false"><span class="m" aria-hidden="true">−<i>x</i><sup>2</sup> + 2<i>x</i> + 3</span><span class="sr-only">menos x al cuadrado más 2x más 3</span></button>
+      <button type="button" class="chip" data-v="3" aria-pressed="false"><span class="m" aria-hidden="true"><i>x</i><sup>3</sup> − 2<i>x</i><sup>2</sup> + 4</span><span class="sr-only">x al cubo menos 2x al cuadrado más 4</span></button>
+    </div>
+    <div class="chips" id="chips-valor" role="group" aria-label="Valor de x">
+      <span class="nombre-grupo" aria-hidden="true">Valor de <i>x</i>:</span>
+      <button type="button" class="chip" data-v="-3" aria-pressed="true">−3</button>
+      <button type="button" class="chip" data-v="-2" aria-pressed="false">−2</button>
+      <button type="button" class="chip" data-v="-1" aria-pressed="false">−1</button>
+      <button type="button" class="chip" data-v="2" aria-pressed="false">2</button>
+      <button type="button" class="chip" data-v="3" aria-pressed="false">3</button>
+      <button type="button" class="chip" data-v="4" aria-pressed="false">4</button>
+    </div>
+
+    <div class="pizarra hueco-piz" id="demo-piz" aria-live="polite"></div>
+    <div class="fila-botones">
+      <button type="button" class="btn" id="mov-1">1. Abrir los huecos</button>
+      <button type="button" class="btn" id="mov-2" disabled>2. Meter el valor</button>
+      <button type="button" class="btn" id="mov-3" disabled>3. Calcular</button>
+      <button type="button" class="btn sec" id="mov-0">Empezar de nuevo</button>
+    </div>
+    <ol class="calc-lineas" id="demo-calc"></ol>
+    <div class="regla-oro">Fíjate en dónde queda el exponente: <strong>fuera del paréntesis, agarrado a él</strong>. El exponente eleva todo lo que hay dentro, incluido el signo menos. Por eso <span class="m">(−3)<sup class="exp-ac">2</sup> = (−3)(−3) = 9</span>.</div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-trampas">
+    <h2 id="t-trampas">Las cinco trampas más frecuentes</h2>
+    <p class="intro">En el taller, si caes en una, el mensaje te indicará su número.</p>
+    <ul class="trampas">
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">1</span>Olvidar el exponente</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">2(3)<sup>2</sup> = 2(3) = 6</span><span class="sr-only">2 abre paréntesis 3 cierra paréntesis al cuadrado igual a 2 abre paréntesis 3 cierra paréntesis igual a 6</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">2(3)<sup>2</sup> = 2 · 9 = 18</span><span class="sr-only">2 abre paréntesis 3 cierra paréntesis al cuadrado igual a 2 por 9 igual a 18</span></span>
+        <p class="porque">El exponente es una instrucción más. No se puede saltar ni dejar para después.</p>
+      </li>
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">2</span>Sustituir sin paréntesis</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m">−3<sup>2</sup> = −9</span><span class="sr-only">menos 3 al cuadrado igual a menos 9</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">(−3)<sup>2</sup> = 9</span><span class="sr-only">abre paréntesis menos 3 cierra paréntesis al cuadrado igual a 9</span></span>
+        <p class="porque">Sin paréntesis, el exponente eleva solo al 3 y el signo menos se queda fuera.</p>
+      </li>
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">3</span>Multiplicar por el exponente</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">(4)<sup>2</sup> = 4 · 2 = 8</span><span class="sr-only">abre paréntesis 4 cierra paréntesis al cuadrado igual a 4 por 2 igual a 8</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">(4)<sup>2</sup> = 4 · 4 = 16</span><span class="sr-only">abre paréntesis 4 cierra paréntesis al cuadrado igual a 4 por 4 igual a 16</span></span>
+        <p class="porque">El exponente dice cuántas veces se repite el número como factor.</p>
+      </li>
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">4</span>Elevar también el coeficiente</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">2(3)<sup>2</sup> = 6<sup>2</sup> = 36</span><span class="sr-only">2 abre paréntesis 3 cierra paréntesis al cuadrado igual a 6 al cuadrado igual a 36</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">2(3)<sup>2</sup> = 2 · 9 = 18</span><span class="sr-only">2 abre paréntesis 3 cierra paréntesis al cuadrado igual a 2 por 9 igual a 18</span></span>
+        <p class="porque">El exponente solo afecta a la <span class="m"><i>x</i></span>, es decir, al paréntesis. El 2 no se eleva.</p>
+      </li>
+      <li class="trampa">
+        <h3><span class="n" aria-hidden="true">5</span>Cambiar el orden de las operaciones</h3>
+        <span class="mal"><span class="marca" aria-hidden="true">✗</span><span class="sr-only">Incorrecto: </span><span class="m" aria-hidden="true">10 − 2(4) = 8(4) = 32</span><span class="sr-only">10 menos 2 abre paréntesis 4 cierra paréntesis igual a 8 abre paréntesis 4 cierra paréntesis igual a 32</span></span>
+        <span class="bien"><span class="marca" aria-hidden="true">✓</span><span class="sr-only">Correcto: </span><span class="m" aria-hidden="true">10 − 2(4) = 10 − 8 = 2</span><span class="sr-only">10 menos 2 abre paréntesis 4 cierra paréntesis igual a 10 menos 8 igual a 2</span></span>
+        <p class="porque">Primero las potencias, después las multiplicaciones y, al final, las sumas y restas.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-abrazo">
+    <h2 id="t-abrazo">¿Qué abraza el exponente?</h2>
+    <p class="intro">El exponente eleva solo lo que tiene inmediatamente a su izquierda. Si ahí hay un paréntesis, eleva todo lo de dentro. Predice cada resultado y observa qué parte queda abrazada.</p>
+    <div class="abrazos" id="abrazos"></div>
+    <div class="caja-tip"><strong>En la calculadora TI-30XS del GED ocurre lo mismo.</strong> Si tecleas <kbd>(−)</kbd> <kbd>3</kbd> <kbd>x²</kbd>, la calculadora da −9. Para elevar el número negativo hay que teclear los paréntesis: <kbd>(</kbd> <kbd>(−)</kbd> <kbd>3</kbd> <kbd>)</kbd> <kbd>x²</kbd>, que da 9.</div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-taller">
+    <h2 id="t-taller">Taller paso a paso</h2>
+    <p class="intro">Cuatro pasos, en el orden correcto de las operaciones. Cada paso se comprueba antes de pasar al siguiente.</p>
+    <div class="chips" id="chips-nivel" role="group" aria-label="Dificultad">
+      <span class="nombre-grupo" aria-hidden="true">Dificultad:</span>
+      <button type="button" class="chip" data-v="1" aria-pressed="true"><i>x</i> positivo</button>
+      <button type="button" class="chip" data-v="2" aria-pressed="false"><i>x</i> negativo</button>
+      <button type="button" class="chip" data-v="3" aria-pressed="false"><i>x</i> negativo y cubos</button>
+    </div>
+    <div class="pizarra" id="t-enun"></div>
+    <ol class="pasos-nav" id="pasos-nav" aria-label="Progreso del taller">
+      <li>Paso 1: sustituir</li>
+      <li>Paso 2: potencias</li>
+      <li>Paso 3: multiplicaciones</li>
+      <li>Paso 4: sumas y restas</li>
+    </ol>
+
+    <div class="paso" id="paso1">
+      <h3>Paso 1 · Sustituir</h3>
+      <p>¿Cuál es la sustitución bien escrita?</p>
+      <div class="opciones una-col" id="p1-ops" role="group" aria-label="Sustituciones posibles"></div>
+      <div class="fb" id="p1-fb" role="status"></div>
+      <div class="fila-botones"><button type="button" class="btn" id="p1-seguir" hidden>Continuar al paso 2</button></div>
+    </div>
+
+    <div class="paso" id="paso2" hidden>
+      <h3>Paso 2 · Primero, las potencias</h3>
+      <div class="pizarra peq" id="p2-sust"></div>
+      <div id="p2-filas"></div>
+      <div class="fila-botones">
+        <button type="button" class="btn" id="p2-comprobar">Comprobar</button>
+        <button type="button" class="btn sec" id="p2-pista">Pista</button>
+      </div>
+      <div class="fb" id="p2-fb" role="status"></div>
+    </div>
+
+    <div class="paso" id="paso3" hidden>
+      <h3>Paso 3 · Después, las multiplicaciones</h3>
+      <p>Cada coeficiente lleva su signo. Multiplícalo por la potencia que obtuviste.</p>
+      <div id="p3-filas"></div>
+      <div class="fila-botones">
+        <button type="button" class="btn" id="p3-comprobar">Comprobar</button>
+        <button type="button" class="btn sec" id="p3-pista">Pista</button>
+      </div>
+      <div class="fb" id="p3-fb" role="status"></div>
+    </div>
+
+    <div class="paso" id="paso4" hidden>
+      <h3>Paso 4 · Al final, las sumas y restas</h3>
+      <div id="p4-fila"></div>
+      <div class="fila-botones">
+        <button type="button" class="btn" id="p4-comprobar">Comprobar</button>
+        <button type="button" class="btn sec" id="p4-pista">Pista</button>
+      </div>
+      <div class="fb" id="p4-fb" role="status"></div>
+    </div>
+
+    <div class="paso" id="final" hidden>
+      <h3>Resumen del proceso</h3>
+      <ol class="calc-lineas" id="final-calc"></ol>
+    </div>
+    <div class="fila-botones"><button type="button" class="btn sec" id="nuevo">Nuevo ejercicio</button></div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-reto">
+    <h2 id="t-reto">Reto rápido</h2>
+    <p class="intro">Seis polinomios para evaluar de principio a fin. Si te equivocas, el mensaje identificará la trampa en la que caíste.</p>
+    <div id="reto"></div>
+  </section>
+
+  <section class="bloque" aria-labelledby="t-control">
+    <h2 id="t-control">Antes de dar tu respuesta, comprueba</h2>
+    <ul class="control">
+      <li>¿Abrí un paréntesis en el lugar de <strong>cada</strong> <span class="m"><i>x</i></span> antes de escribir el número?</li>
+      <li>¿Dejé el exponente fuera del paréntesis y lo calculé?</li>
+      <li>¿Elevé solo el paréntesis y no el coeficiente?</li>
+      <li>¿Seguí el orden: potencias, multiplicaciones, sumas y restas?</li>
+      <li>Con un valor negativo y exponente par, ¿me salió positivo? Con exponente impar, ¿negativo?</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+  <p>Material bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank" rel="license noopener noreferrer">Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+</footer>
+</div>
+<script>
+/* ============================================================
+   FUNCIONES COMUNES
+   Formato matemático, texto para lectores de pantalla,
+   números al azar, lectura de respuestas y el "detective de errores".
+   ============================================================ */
+var MENOS = '\u2212';
+
+/* ---------- Números ---------- */
+function fmtNum(n) { return n < 0 ? MENOS + Math.abs(n) : String(n); }
+function fmtParen(n) { return n < 0 ? '(' + MENOS + Math.abs(n) + ')' : String(n); }
+function signoTxt(n) { return n < 0 ? MENOS : '+'; }
+function potencia(b, e) { var r = 1; for (var i = 0; i < e; i++) { r = r * b; } return r; }
+function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+function rndNZ(a, b) { var n; do { n = rnd(a, b); } while (n === 0); return n; }
+function barajar(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+/* Lee un entero escrito por el estudiante. Acepta el signo − tipográfico. */
+function leerNum(txt) {
+  var s = String(txt || '').trim().replace(/[\u2212\u2013\u2014]/g, '-').replace(/\s+/g, '').replace(/^\+/, '');
+  if (!/^-?\d+$/.test(s)) { return null; }
+  return parseInt(s, 10);
+}
+
+/* ---------- Términos y polinomios en HTML ---------- */
+function sup(e) { return e > 1 ? '<sup>' + e + '</sup>' : ''; }
+function lit(e) { return e === 0 ? '' : '<i>x</i>' + sup(e); }
+function termHTML(c, e) {
+  if (c === 0) { return '0'; }
+  var s = c < 0 ? MENOS : '';
+  var a = Math.abs(c);
+  if (e === 0) { return s + a; }
+  return s + (a === 1 ? '' : a) + lit(e);
+}
+/* Término con su signo siempre visible: "+ 3x²", "− x" */
+function termSignado(c, e) { return signoTxt(c) + '\u2009' + termHTML(Math.abs(c), e); }
+function polyHTML(terms) {
+  var out = '', primero = true;
+  terms.forEach(function (t) {
+    if (t.c === 0) { return; }
+    if (primero) { out += termHTML(t.c, t.e); primero = false; }
+    else { out += (t.c < 0 ? ' ' + MENOS + ' ' : ' + ') + termHTML(Math.abs(t.c), t.e); }
+  });
+  return primero ? '0' : out;
+}
+
+/* ---------- Versión hablada (lectores de pantalla) ---------- */
+var ORDINAL = { 4: 'cuarta', 5: 'quinta', 6: 'sexta', 7: 'séptima', 8: 'octava', 9: 'novena' };
+function expVoz(e) {
+  if (e <= 1) { return ''; }
+  if (e === 2) { return ' al cuadrado'; }
+  if (e === 3) { return ' al cubo'; }
+  return ' a la ' + (ORDINAL[e] || e);
+}
+function numVoz(n) { return n < 0 ? 'menos ' + Math.abs(n) : String(n); }
+function termVoz(c, e) {
+  if (c === 0) { return '0'; }
+  var s = c < 0 ? 'menos ' : '';
+  var a = Math.abs(c);
+  if (e === 0) { return s + a; }
+  return s + (a === 1 ? '' : a + ' ') + 'x' + expVoz(e);
+}
+function polyVoz(terms) {
+  var partes = [], primero = true;
+  terms.forEach(function (t) {
+    if (t.c === 0) { return; }
+    if (primero) { partes.push(termVoz(t.c, t.e)); primero = false; }
+    else { partes.push((t.c < 0 ? 'menos ' : 'más ') + termVoz(Math.abs(t.c), t.e)); }
+  });
+  return primero ? '0' : partes.join(' ');
+}
+/* Muestra la versión visual y, oculta, la versión hablada */
+function mathSpan(html, voz) {
+  return '<span class="m" aria-hidden="true">' + html + '</span><span class="sr-only">' + voz + '</span>';
+}
+
+/* Mini-marcado para textos fijos: "3x^2 - 4x + 5", "*" es el punto de multiplicar */
+function M(s) {
+  return s
+    .replace(/x(\^(\d+))?/g, function (m, p, n) { return '<i>x</i>' + (n ? '<sup>' + n + '</sup>' : ''); })
+    .replace(/\^(\d+)/g, '<sup>$1</sup>')
+    .replace(/-/g, MENOS)
+    .replace(/\*/g, '·');
+}
+function MV(s) {
+  return s
+    .replace(/\^2/g, ' al cuadrado').replace(/\^3/g, ' al cubo').replace(/\^(\d+)/g, ' a la $1')
+    .replace(/\(/g, ' abre paréntesis ').replace(/\)/g, ' cierra paréntesis ')
+    .replace(/-/g, ' menos ').replace(/\+/g, ' más ').replace(/\*/g, ' por ').replace(/=/g, ' igual a ')
+    .replace(/\s+/g, ' ').trim();
+}
+function MS(s) { return mathSpan(M(s), MV(s)); }
+
+/* ---------- Retroalimentación ---------- */
+function mostrarFB(el, tipo, html) { el.className = 'fb visible ' + tipo; el.innerHTML = html; }
+function ocultarFB(el) { el.className = 'fb'; el.innerHTML = ''; }
+function marcarCampo(input, ok) { input.classList.remove('ok', 'no'); input.classList.add(ok ? 'ok' : 'no'); }
+function anunciar(txt) {
+  var a = document.getElementById('anuncio');
+  if (!a) { return; }
+  a.textContent = '';
+  window.setTimeout(function () { a.textContent = txt; }, 60);
+}
+
+/* Grupo de botones de selección única (chips) */
+function prepararChips(grupo, alCambiar) {
+  grupo.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.chip');
+    if (!b) { return; }
+    grupo.querySelectorAll('button.chip').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    b.setAttribute('aria-pressed', 'true');
+    alCambiar(b.getAttribute('data-v'));
+  });
+}
+
+/* ============================================================
+   DETECTIVE DE ERRORES
+   casos: [{pre, enun, lineas:[...], resp, expl, bien}]
+   categorias: [{id, txt}]
+   ============================================================ */
+function crearDetective(raiz, casos, categorias) {
+  var orden, idx, aciertos;
+
+  function iniciar() { orden = barajar(casos.map(function (c, i) { return i; })); idx = 0; aciertos = 0; pintar(); }
+
+  function pintar() {
+    if (idx >= orden.length) { pintarFinal(); return; }
+    var c = casos[orden[idx]];
+    var h = '<p class="progreso">Caso ' + (idx + 1) + ' de ' + orden.length + '. Aciertos: ' + aciertos + '.</p>';
+    h += '<div class="pizarra peq"><span class="rotulo">' + (c.pre || 'Ejercicio:') + '</span>' + MS(c.enun) + '</div>';
+    h += '<p>Esta es la resolución propuesta:</p><ol class="lineas">';
+    c.lineas.forEach(function (l) { h += '<li>' + MS(l) + '</li>'; });
+    h += '</ol><p><strong>¿Qué ocurrió en esta resolución?</strong></p><div class="opciones" role="group" aria-label="Posibles diagnósticos">';
+    categorias.forEach(function (cat) { h += '<button type="button" class="op" data-id="' + cat.id + '">' + cat.txt + '</button>'; });
+    h += '</div><div class="fb" role="status"></div>';
+    h += '<div class="fila-botones"><button type="button" class="btn sig" hidden>Siguiente caso</button></div>';
+    raiz.innerHTML = h;
+  }
+
+  function pintarFinal() {
+    var n = orden.length;
+    var msj = aciertos === n ? 'Excelente: identificaste todos los errores.' :
+      (aciertos >= n - 2 ? 'Muy bien: tienes buen ojo para los errores.' : 'Conviene repasar las cinco trampas y volver a intentarlo.');
+    raiz.innerHTML = '<div class="fb visible ' + (aciertos >= n - 2 ? 'ok' : 'info') + '" role="status"><strong>Resultado: ' +
+      aciertos + ' de ' + n + '.</strong> ' + msj + '</div><div class="fila-botones"><button type="button" class="btn rep">Repetir los casos</button></div>';
+  }
+
+  raiz.addEventListener('click', function (ev) {
+    var b = ev.target.closest('button');
+    if (!b) { return; }
+    if (b.classList.contains('op')) {
+      var c = casos[orden[idx]];
+      var elegido = b.getAttribute('data-id');
+      var acierto = elegido === c.resp;
+      if (acierto) { aciertos++; }
+      raiz.querySelectorAll('button.op').forEach(function (o) {
+        o.disabled = true;
+        if (o.getAttribute('data-id') === c.resp) { o.classList.add('correcta'); }
+      });
+      if (!acierto) { b.classList.add('incorrecta'); }
+      var etiqueta = '';
+      categorias.forEach(function (cat) { if (cat.id === c.resp) { etiqueta = cat.txt; } });
+      var html = (acierto ? '<strong>Correcto.</strong> ' : '<strong>No es eso.</strong> La respuesta es: ' + etiqueta + '. ') + c.expl;
+      if (c.bien) { html += '<br>Resultado correcto: ' + MS(c.bien); }
+      mostrarFB(raiz.querySelector('.fb'), acierto ? 'ok' : 'no', html);
+      var sig = raiz.querySelector('.sig');
+      sig.hidden = false;
+      sig.textContent = idx === orden.length - 1 ? 'Ver resultado' : 'Siguiente caso';
+      sig.focus();
+    } else if (b.classList.contains('sig')) {
+      idx++; pintar();
+      var p = raiz.querySelector('.progreso, .fb');
+      if (p) { p.setAttribute('tabindex', '-1'); p.focus(); }
+    } else if (b.classList.contains('rep')) {
+      iniciar();
+    }
+  });
+
+  iniciar();
+}
+
+(function () {
+  'use strict';
+
+  var NOMBRES = {
+    1: 'olvidar el exponente',
+    2: 'sustituir sin paréntesis',
+    3: 'multiplicar por el exponente',
+    4: 'elevar también el coeficiente',
+    5: 'cambiar el orden de las operaciones'
+  };
+  function trampa(n) { return ' <span class="etq-trampa">Trampa ' + n + ': ' + NOMBRES[n] + '</span>'; }
+  function $(id) { return document.getElementById(id); }
+
+  /* ---------- Cálculos ---------- */
+  function valorP(terms, v) { return terms.reduce(function (s, t) { return s + t.c * potencia(v, t.e); }, 0); }
+  function expansion(v, e) { var a = []; for (var i = 0; i < e; i++) { a.push('(' + fmtNum(v) + ')'); } return a.join(''); }
+
+  /* ---------- Escritura de la sustitución ----------
+     estilo: 'x' (polinomio original), 'hueco', 'valor',
+             'sinpar' (sin paréntesis), 'sinexp' (sin exponente), 'coef' (coeficiente dentro)  */
+  function sustitucion(terms, v, estilo, resaltar, animar) {
+    var h = '', voz = [];
+    terms.forEach(function (t, i) {
+      var a = Math.abs(t.c);
+      var sH = i === 0 ? (t.c < 0 ? MENOS : '') : (t.c < 0 ? ' ' + MENOS + ' ' : ' + ');
+      var sV = i === 0 ? (t.c < 0 ? 'menos ' : '') : (t.c < 0 ? 'menos ' : 'más ');
+      if (t.e === 0) { h += sH + a; voz.push(sV + a); return; }
+      var coefH = a === 1 ? '' : String(a);
+      var coefV = a === 1 ? '' : a + ' por ';
+      var pa = resaltar ? '<span class="par' + (animar === 'par' ? ' aparece' : '') + '">(</span>' : '(';
+      var pc = resaltar ? '<span class="par' + (animar === 'par' ? ' aparece' : '') + '">)</span>' : ')';
+      var ex = t.e > 1 ? (resaltar ? '<sup class="exp-ac">' + t.e + '</sup>' : '<sup>' + t.e + '</sup>') : '';
+      var cuerpo, cv;
+      switch (estilo) {
+        case 'x':
+          cuerpo = coefH + '<i class="xvar' + (resaltar ? ' marcada' : '') + '">x</i>' + ex;
+          cv = (a === 1 ? '' : a + ' ') + 'x' + expVoz(t.e); break;
+        case 'hueco':
+          cuerpo = coefH + pa + '<span class="hueco"></span>' + pc + ex;
+          cv = coefV + 'paréntesis vacío' + expVoz(t.e); break;
+        case 'sinpar':
+          cuerpo = coefH + fmtNum(v) + ex;
+          cv = (a === 1 ? '' : a + ' ') + numVoz(v) + expVoz(t.e); break;
+        case 'sinexp':
+          cuerpo = coefH + '(' + fmtNum(v) + ')';
+          cv = coefV + 'paréntesis ' + numVoz(v) + ' cierra paréntesis'; break;
+        case 'coef':
+          if (t.e >= 2 && a !== 1) {
+            cuerpo = '(' + a + '·' + fmtParen(v) + ')' + ex;
+            cv = 'paréntesis ' + a + ' por ' + numVoz(v) + ' cierra paréntesis' + expVoz(t.e);
+          } else {
+            cuerpo = coefH + '(' + fmtNum(v) + ')' + ex;
+            cv = coefV + 'paréntesis ' + numVoz(v) + ' cierra paréntesis' + expVoz(t.e);
+          }
+          break;
+        default: /* valor */
+          cuerpo = coefH + pa + (resaltar ? '<span class="val' + (animar === 'val' ? ' aparece' : '') + '">' + fmtNum(v) + '</span>' : fmtNum(v)) + pc + ex;
+          cv = coefV + 'paréntesis ' + numVoz(v) + ' cierra paréntesis' + expVoz(t.e);
+      }
+      h += sH + cuerpo; voz.push(sV + cv);
+    });
+    return { h: h, v: voz.join(', ') };
+  }
+  function sustSpan(terms, v, estilo, resaltar, animar) {
+    var s = sustitucion(terms, v, estilo, resaltar, animar);
+    return mathSpan(s.h, s.v);
+  }
+
+  /* Líneas del cálculo completo (demostración, resumen y reto) */
+  function lineaPotencias(terms, v) {
+    return terms.map(function (t, i) {
+      var a = Math.abs(t.c);
+      var s = i === 0 ? (t.c < 0 ? MENOS : '') : (t.c < 0 ? ' ' + MENOS + ' ' : ' + ');
+      return s + (t.e === 0 ? a : a + '·' + fmtParen(potencia(v, t.e)));
+    }).join('');
+  }
+  function lineaValores(terms, v) {
+    return terms.map(function (t, i) {
+      var x = t.c * potencia(v, t.e);
+      return i === 0 ? fmtNum(x) : (x < 0 ? ' ' + MENOS + ' ' + Math.abs(x) : ' + ' + x);
+    }).join('');
+  }
+  function lineasCalculo(terms, v, animar) {
+    var pot = terms.filter(function (t) { return t.e >= 2; }).map(function (t) {
+      return '<span class="m">(' + fmtNum(v) + ')<sup>' + t.e + '</sup> = ' + expansion(v, t.e) + ' = ' + fmtNum(potencia(v, t.e)) + '</span>';
+    });
+    var prod = terms.filter(function (t) { return t.e >= 1; }).map(function (t) {
+      var pv = potencia(v, t.e);
+      return '<span class="m">' + fmtNum(t.c) + '·' + fmtParen(pv) + ' = ' + fmtNum(t.c * pv) + '</span>';
+    });
+    var total = valorP(terms, v);
+    return '<li><span class="que">Sustitución</span><span>' + sustSpan(terms, v, 'valor', true, animar ? 'val' : null) + '</span></li>' +
+      '<li><span class="que">1.º Potencias</span><span><span class="m">= ' + lineaPotencias(terms, v) + '</span><span class="detalle">' + pot.join(' ; ') + '</span></span></li>' +
+      '<li><span class="que">2.º Multiplicaciones</span><span><span class="m">= ' + lineaValores(terms, v) + '</span><span class="detalle">' + prod.join(' ; ') + '</span></span></li>' +
+      '<li class="fin"><span class="que">3.º Sumas y restas</span><span><span class="m">= <strong>' + fmtNum(total) + '</strong></span></span></li>';
+  }
+
+  /* =========================================================
+     DEMOSTRACIÓN: LA REGLA DEL HUECO
+     ========================================================= */
+  var POLIS = [
+    [{ c: 2, e: 2 }, { c: -3, e: 1 }, { c: 1, e: 0 }],
+    [{ c: 1, e: 2 }, { c: 4, e: 1 }, { c: -5, e: 0 }],
+    [{ c: -1, e: 2 }, { c: 2, e: 1 }, { c: 3, e: 0 }],
+    [{ c: 1, e: 3 }, { c: -2, e: 2 }, { c: 4, e: 0 }]
+  ];
+  var demo = { p: 0, v: -3, fase: 0 };
+
+  function pintarDemo(animar) {
+    var T = POLIS[demo.p], v = demo.v;
+    var rot, cont;
+    if (demo.fase === 0) {
+      rot = 'Polinomio:'; cont = mathSpan('P(<i>x</i>) = ', 'P de x igual a ') + sustSpan(T, v, 'x', false);
+    } else if (demo.fase === 1) {
+      rot = 'Movimiento 1: cada x se convierte en un paréntesis vacío.';
+      cont = mathSpan('P( ) = ', 'P de hueco igual a ') + sustSpan(T, v, 'hueco', true, animar ? 'par' : null);
+    } else {
+      rot = demo.fase === 2 ? 'Movimiento 2: el valor entra en cada hueco.' : 'Movimiento 3: se calcula en orden.';
+      cont = mathSpan('P(' + fmtNum(v) + ') = ', 'P de ' + numVoz(v) + ' igual a ') + sustSpan(T, v, 'valor', true, animar && demo.fase === 2 ? 'val' : null);
+    }
+    $('demo-piz').innerHTML = '<span class="rotulo">' + rot + '</span>' + cont;
+    $('demo-calc').innerHTML = demo.fase === 3 ? lineasCalculo(T, v, false) : '';
+    $('mov-1').disabled = demo.fase !== 0;
+    $('mov-2').disabled = demo.fase !== 1;
+    $('mov-3').disabled = demo.fase !== 2;
+  }
+
+  prepararChips($('chips-poli'), function (x) { demo.p = +x; pintarDemo(false); });
+  prepararChips($('chips-valor'), function (x) { demo.v = +x; pintarDemo(false); });
+  [1, 2, 3].forEach(function (n) {
+    $('mov-' + n).addEventListener('click', function () {
+      demo.fase = n; pintarDemo(true);
+      var sig = $('mov-' + (n + 1));
+      (sig && !sig.disabled ? sig : $('mov-0')).focus();
+    });
+  });
+  $('mov-0').addEventListener('click', function () { demo.fase = 0; pintarDemo(false); $('mov-1').focus(); });
+
+  /* =========================================================
+     ¿QUÉ ABRAZA EL EXPONENTE?
+     ========================================================= */
+  var ABRAZOS = [
+    { vis: MENOS + '<span class="abr">3</span><sup>2</sup>', voz: 'menos 3 al cuadrado, sin paréntesis', ops: [-9, 9, -6], resp: -9,
+      expl: 'El exponente abraza solo al 3. El signo menos queda fuera: <span class="m">−(3 · 3) = −9</span>.' },
+    { vis: '<span class="abr">(' + MENOS + '3)</span><sup>2</sup>', voz: 'paréntesis menos 3 cierra paréntesis, al cuadrado', ops: [9, -9, 6], resp: 9,
+      expl: 'El paréntesis mete el signo dentro del abrazo: <span class="m">(−3)(−3) = 9</span>.' },
+    { vis: '2 · <span class="abr">3</span><sup>2</sup>', voz: '2 por 3 al cuadrado', ops: [18, 36, 12], resp: 18,
+      expl: 'El exponente abraza solo al 3: <span class="m">2 · (3 · 3) = 2 · 9 = 18</span>. Así se evalúa 2<i>x</i>² con <i>x</i> = 3.' },
+    { vis: '<span class="abr">(2 · 3)</span><sup>2</sup>', voz: 'paréntesis 2 por 3 cierra paréntesis, al cuadrado', ops: [36, 18, 12], resp: 36,
+      expl: 'Aquí el paréntesis encierra el 2 y el 3: <span class="m">6 · 6 = 36</span>. Al evaluar 2<i>x</i>² esto no ocurre, porque el paréntesis solo encierra el valor de <i>x</i>.' },
+    { vis: '<span class="abr">(' + MENOS + '2)</span><sup>3</sup>', voz: 'paréntesis menos 2 cierra paréntesis, al cubo', ops: [-8, 8, -6], resp: -8,
+      expl: 'Tres factores negativos: <span class="m">(−2)(−2)(−2) = −8</span>. Con exponente impar, el resultado sigue siendo negativo.' },
+    { vis: MENOS + '<span class="abr">(' + MENOS + '2)</span><sup>2</sup>', voz: 'menos, paréntesis menos 2 cierra paréntesis, al cuadrado', ops: [-4, 4, 8], resp: -4,
+      expl: 'Es lo que aparece al evaluar −<i>x</i>² con <i>x</i> = −2. Primero la potencia: <span class="m">(−2)² = 4</span>. Después, el signo de fuera: −4.' }
+  ];
+
+  function pintarAbrazos() {
+    $('abrazos').innerHTML = ABRAZOS.map(function (a, i) {
+      return '<div class="abrazo-card" id="abr-' + i + '"><div class="abrazo-expr"><span aria-hidden="true">' + a.vis + '</span><span class="sr-only">' + a.voz + '</span></div>' +
+        '<div class="opciones" role="group" aria-label="¿Cuánto vale?">' +
+        barajar(a.ops).map(function (o) { return '<button type="button" class="op" data-i="' + i + '" data-v="' + o + '">' + fmtNum(o) + '</button>'; }).join('') +
+        '</div><p class="expl" role="status"></p></div>';
+    }).join('');
+  }
+  $('abrazos').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.op');
+    if (!b || b.disabled) { return; }
+    var i = +b.getAttribute('data-i'), v = +b.getAttribute('data-v'), a = ABRAZOS[i];
+    var card = $('abr-' + i);
+    card.querySelectorAll('.op').forEach(function (o) {
+      o.disabled = true;
+      if (+o.getAttribute('data-v') === a.resp) { o.classList.add('correcta'); }
+    });
+    if (v !== a.resp) { b.classList.add('incorrecta'); }
+    card.classList.add('revelado');
+    card.querySelector('.expl').innerHTML = (v === a.resp ? '<strong>Correcto.</strong> ' : '<strong>Vale ' + fmtNum(a.resp) + '.</strong> ') + a.expl;
+  });
+
+  /* =========================================================
+     GENERADOR DE EJERCICIOS
+     ========================================================= */
+  function valido(terms) {
+    var t1 = terms.filter(function (t) { return t.e === 1; })[0];
+    if (t1 && Math.abs(t1.c) < 2) { return false; }
+    return terms.some(function (t) { return t.e >= 2 && Math.abs(t.c) >= 2; });
+  }
+  function genEval(n) {
+    var terms, v, intentos = 0;
+    do {
+      if (n === 1) {
+        v = rnd(2, 5);
+        terms = [{ c: rnd(2, 5), e: 2 }, { c: rndNZ(-6, 6), e: 1 }, { c: rndNZ(-9, 9), e: 0 }];
+      } else if (n === 2) {
+        v = rnd(-5, -1);
+        terms = [{ c: rndNZ(-4, 5), e: 2 }, { c: rndNZ(-6, 6), e: 1 }, { c: rndNZ(-9, 9), e: 0 }];
+      } else {
+        v = rnd(-4, -1);
+        var ex = [[3, 1, 0], [3, 2, 0], [3, 2, 1]][rnd(0, 2)];
+        terms = ex.map(function (e) { return { c: rndNZ(-5, 5), e: e }; });
+        if (Math.random() < 0.4) { terms[0].c = -1; }
+      }
+      intentos++;
+    } while (!valido(terms) && intentos < 200);
+    return { terms: terms, v: v };
+  }
+  function polyP(terms) { return mathSpan('P(<i>x</i>) = ' + polyHTML(terms), 'P de x igual a ' + polyVoz(terms)); }
+
+  /* =========================================================
+     TALLER PASO A PASO
+     ========================================================= */
+  var tl = { nivel: 1, terms: [], v: 0 };
+
+  function marcarPaso(n) {
+    $('pasos-nav').querySelectorAll('li').forEach(function (li, i) {
+      li.classList.remove('activo', 'hecho');
+      if (i + 1 < n) { li.classList.add('hecho'); }
+      if (i + 1 === n) { li.classList.add('activo'); li.setAttribute('aria-current', 'step'); } else { li.removeAttribute('aria-current'); }
+    });
+  }
+  function irA(n) {
+    ['paso1', 'paso2', 'paso3', 'paso4', 'final'].forEach(function (id, i) { $(id).hidden = i + 1 > n; });
+    marcarPaso(n);
+    var h = $(n === 5 ? 'final' : 'paso' + n).querySelector('h3');
+    h.setAttribute('tabindex', '-1'); h.focus();
+  }
+
+  function nuevoTaller() {
+    var g = genEval(tl.nivel);
+    tl.terms = g.terms; tl.v = g.v;
+    $('t-enun').innerHTML = '<span class="rotulo">Evalúa el polinomio para ' + mathSpan('<i>x</i> = ' + fmtNum(tl.v), 'x igual a ' + numVoz(tl.v)) + ':</span>' + polyP(tl.terms);
+    ['p1-fb', 'p2-fb', 'p3-fb', 'p4-fb'].forEach(function (id) { ocultarFB($(id)); });
+    ['paso2', 'paso3', 'paso4', 'final'].forEach(function (id) { $(id).hidden = true; });
+    $('paso1').hidden = false; $('p1-seguir').hidden = true;
+    marcarPaso(1);
+    pintarP1();
+  }
+
+  /* ----- Paso 1 ----- */
+  var TIPOS_P1 = ['valor', 'sinpar', 'sinexp', 'coef'];
+  function pintarP1() {
+    $('p1-ops').innerHTML = barajar(TIPOS_P1).map(function (tipo) {
+      return '<button type="button" class="op" data-t="' + tipo + '">' + sustSpan(tl.terms, tl.v, tipo, false) + '</button>';
+    }).join('');
+  }
+  $('p1-ops').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button.op');
+    if (!b || b.disabled) { return; }
+    var tipo = b.getAttribute('data-t'), fb = $('p1-fb');
+    if (tipo === 'valor') {
+      $('p1-ops').querySelectorAll('.op').forEach(function (o) { o.disabled = true; });
+      b.classList.add('correcta');
+      mostrarFB(fb, 'ok', '<strong>Correcto.</strong> Cada <span class="m"><i>x</i></span> se convirtió en un paréntesis con el valor dentro, y los exponentes siguen fuera, agarrados al paréntesis:<br>' +
+        sustSpan(tl.terms, tl.v, 'valor', true));
+      $('p1-seguir').hidden = false; $('p1-seguir').focus();
+      return;
+    }
+    b.classList.add('incorrecta'); b.disabled = true;
+    var msj = {
+      sinpar: 'Sin paréntesis, el número se pega al coeficiente o su signo se confunde con una resta. Por ejemplo, <span class="m">2<i>x</i><sup>2</sup></span> con <span class="m"><i>x</i> = 3</span> se leería como <span class="m">23<sup>2</sup></span>, y con <span class="m"><i>x</i> = −3</span> como <span class="m">2 − 3<sup>2</sup></span>.' + trampa(2),
+      sinexp: 'En esta opción desaparecieron los exponentes. El exponente forma parte del término: se queda fuera del paréntesis, pegado a él.' + trampa(1),
+      coef: 'En esta opción el coeficiente quedó dentro del paréntesis y también se elevaría. El exponente solo afecta a la <span class="m"><i>x</i></span>, es decir, al paréntesis.' + trampa(4)
+    };
+    mostrarFB(fb, 'no', msj[tipo] + ' Prueba con otra opción.');
+  });
+  $('p1-seguir').addEventListener('click', function () { $('p1-seguir').hidden = true; irA(2); pintarP2(); });
+
+  /* ----- Paso 2 ----- */
+  function conPotencia() { return tl.terms.filter(function (t) { return t.e >= 2; }); }
+  function pintarP2() {
+    $('p2-sust').innerHTML = sustSpan(tl.terms, tl.v, 'valor', true);
+    var v = tl.v;
+    var h = '<p>Calcula cada potencia. Solo los paréntesis con exponente.</p>';
+    conPotencia().forEach(function (t) {
+      h += '<div class="fila-calc">' + mathSpan('(' + fmtNum(v) + ')<sup class="exp-ac">' + t.e + '</sup> =', 'paréntesis ' + numVoz(v) + ' cierra paréntesis' + expVoz(t.e) + ', igual a') +
+        '<input type="text" class="num" id="p2-' + t.e + '" autocomplete="off" spellcheck="false" aria-label="Valor de paréntesis ' + numVoz(v) + expVoz(t.e) + '"></div>';
+    });
+    if (tl.terms.some(function (t) { return t.e === 1; })) {
+      h += '<p class="nota">El término con <span class="m"><i>x</i></span> sola no lleva potencia: <span class="m">(' + fmtNum(v) + ')<sup>1</sup> = ' + fmtNum(v) + '</span>.</p>';
+    }
+    $('p2-filas').innerHTML = h;
+    $('p2-comprobar').disabled = false; $('p2-pista').disabled = false;
+  }
+  function diagPotencia(v, e, val) {
+    var ok = potencia(v, e);
+    var base = '<span class="m">(' + fmtNum(v) + ')<sup>' + e + '</sup></span>';
+    if (v < 0 && e % 2 === 0 && val === -ok) {
+      return base + ': obtuviste ' + fmtNum(val) + ', que es lo que da <span class="m">' + MENOS + Math.abs(v) + '<sup>' + e + '</sup></span> sin paréntesis. Con paréntesis el signo también se multiplica: <span class="m">' + expansion(v, e) + ' = ' + ok + '</span>.' + trampa(2);
+    }
+    if (val === v * e && v * e !== ok) {
+      return base + ': multiplicaste el número por el exponente. Elevar significa repetir el número como factor ' + e + ' veces: <span class="m">' + expansion(v, e) + '</span>.' + trampa(3);
+    }
+    if (val === v && v !== ok) {
+      return base + ': ese es el valor sin elevar. El exponente no se puede saltar: <span class="m">' + expansion(v, e) + '</span>.' + trampa(1);
+    }
+    if (v < 0 && e % 2 === 1 && val === -ok) {
+      return base + ': con exponente impar, un número negativo da resultado negativo: <span class="m">' + expansion(v, e) + ' = ' + fmtNum(ok) + '</span>.';
+    }
+    return base + ': multiplica <span class="m">' + expansion(v, e) + '</span> paso a paso.';
+  }
+  function comprobarFilas(filas, fb, alTerminar) {
+    var msgs = [];
+    filas.forEach(function (f) {
+      var inp = $(f.id), val = leerNum(inp.value);
+      var ok = val === f.ok;
+      marcarCampo(inp, ok);
+      if (!ok) { msgs.push('<li>' + (val === null ? f.vacio : f.diag(val)) + '</li>'); }
+    });
+    if (msgs.length) { mostrarFB(fb, 'no', 'Revisa las casillas en rojo:<ul>' + msgs.join('') + '</ul>'); return; }
+    filas.forEach(function (f) { $(f.id).readOnly = true; });
+    alTerminar();
+  }
+  $('p2-comprobar').addEventListener('click', function () {
+    var v = tl.v;
+    var filas = conPotencia().map(function (t) {
+      return { id: 'p2-' + t.e, ok: potencia(v, t.e), vacio: 'Escribe el valor de la potencia con exponente ' + t.e + '.', diag: function (val) { return diagPotencia(v, t.e, val); } };
+    });
+    comprobarFilas(filas, $('p2-fb'), function () {
+      $('p2-comprobar').disabled = true; $('p2-pista').disabled = true;
+      mostrarFB($('p2-fb'), 'ok', '<strong>Correcto.</strong> Las potencias están calculadas. ' +
+        (v < 0 ? 'Observa: con exponente par el resultado es positivo; con exponente impar, negativo.' : ''));
+      irA(3); pintarP3();
+    });
+  });
+  $('p2-pista').addEventListener('click', function () {
+    var v = tl.v;
+    mostrarFB($('p2-fb'), 'info', 'Escribe la potencia como una multiplicación repetida: ' + conPotencia().map(function (t) {
+      return '<span class="m">(' + fmtNum(v) + ')<sup>' + t.e + '</sup> = ' + expansion(v, t.e) + '</span>';
+    }).join(' ; ') + '. Recuerda: negativo por negativo da positivo.');
+  });
+
+  /* ----- Paso 3 ----- */
+  function conX() { return tl.terms.filter(function (t) { return t.e >= 1; }); }
+  function pintarP3() {
+    var v = tl.v, h = '';
+    tl.terms.forEach(function (t) {
+      if (t.e === 0) {
+        h += '<p class="nota">El número <span class="m">' + fmtNum(t.c) + '</span> no lleva <span class="m"><i>x</i></span>: pasa tal cual al paso siguiente.</p>';
+        return;
+      }
+      var pv = potencia(v, t.e);
+      h += '<div class="fila-calc">' + mathSpan(fmtNum(t.c) + ' · ' + fmtParen(pv) + ' =', numVoz(t.c) + ' por ' + numVoz(pv) + ', igual a') +
+        '<input type="text" class="num" id="p3-' + t.e + '" autocomplete="off" spellcheck="false" aria-label="Producto de ' + numVoz(t.c) + ' por ' + numVoz(pv) + '">' +
+        (Math.abs(t.c) === 1 ? '<span class="nota">El coeficiente invisible es ' + fmtNum(t.c) + '.</span>' : '') + '</div>';
+    });
+    $('p3-filas').innerHTML = h;
+    $('p3-comprobar').disabled = false; $('p3-pista').disabled = false;
+  }
+  $('p3-comprobar').addEventListener('click', function () {
+    var v = tl.v;
+    var filas = conX().map(function (t) {
+      var pv = potencia(v, t.e), ok = t.c * pv;
+      var et = '<span class="m">' + fmtNum(t.c) + ' · ' + fmtParen(pv) + '</span>';
+      return {
+        id: 'p3-' + t.e, ok: ok, vacio: 'Escribe el resultado de ' + et + '.',
+        diag: function (val) {
+          if (val === -ok) { return et + ': el número es correcto, pero el signo no. Signos iguales dan positivo; signos distintos dan negativo.'; }
+          if (val === t.c + pv) { return et + ': sumaste; aquí hay que multiplicar.'; }
+          if (t.e >= 2 && val === potencia(t.c * v, t.e)) { return et + ': elevaste también el coeficiente. El coeficiente solo multiplica.' + trampa(4); }
+          return et + ': revisa la multiplicación.';
+        }
+      };
+    });
+    comprobarFilas(filas, $('p3-fb'), function () {
+      $('p3-comprobar').disabled = true; $('p3-pista').disabled = true;
+      mostrarFB($('p3-fb'), 'ok', '<strong>Correcto.</strong> Ya solo quedan sumas y restas.');
+      irA(4); pintarP4();
+    });
+  });
+  $('p3-pista').addEventListener('click', function () {
+    mostrarFB($('p3-fb'), 'info', 'Primero decide el signo (signos iguales, positivo; signos distintos, negativo). Después multiplica los números sin signo.');
+  });
+
+  /* ----- Paso 4 ----- */
+  function pintarP4() {
+    $('p4-fila').innerHTML = '<p>Suma y resta de izquierda a derecha.</p><div class="fila-calc">' +
+      mathSpan('P(' + fmtNum(tl.v) + ') = ' + lineaValores(tl.terms, tl.v) + ' =', 'P de ' + numVoz(tl.v) + ' igual a ' + lineaValores(tl.terms, tl.v).replace(/\u2212/g, 'menos').replace(/\+/g, 'más') + ', igual a') +
+      '<input type="text" class="num" id="p4-r" autocomplete="off" spellcheck="false" aria-label="Resultado final"></div>';
+    $('p4-comprobar').disabled = false; $('p4-pista').disabled = false;
+  }
+  $('p4-comprobar').addEventListener('click', function () {
+    var vals = tl.terms.map(function (t) { return t.c * potencia(tl.v, t.e); });
+    var ok = vals.reduce(function (s, x) { return s + x; }, 0);
+    var absS = vals.reduce(function (s, x) { return s + Math.abs(x); }, 0);
+    comprobarFilas([{
+      id: 'p4-r', ok: ok, vacio: 'Escribe el resultado final.',
+      diag: function (val) {
+        if (val === absS && absS !== ok) { return 'Sumaste todos los números como positivos. Los que llevan signo menos restan.'; }
+        if (val === -ok) { return 'El número es correcto, pero el signo no. Revisa la suma de izquierda a derecha.'; }
+        return 'Suma de izquierda a derecha, un número cada vez. Usa la pista si la necesitas.';
+      }
+    }], $('p4-fb'), function () {
+      $('p4-comprobar').disabled = true; $('p4-pista').disabled = true;
+      mostrarFB($('p4-fb'), 'ok', '<strong>¡Muy bien!</strong> ' + mathSpan('P(' + fmtNum(tl.v) + ') = ' + fmtNum(ok), 'P de ' + numVoz(tl.v) + ' igual a ' + numVoz(ok)) + '.');
+      $('final-calc').innerHTML = lineasCalculo(tl.terms, tl.v, false);
+      irA(5); marcarPaso(5);
+    });
+  });
+  $('p4-pista').addEventListener('click', function () {
+    var vals = tl.terms.map(function (t) { return t.c * potencia(tl.v, t.e); });
+    var acum = vals[0], pasos = [];
+    for (var i = 1; i < vals.length; i++) {
+      var nuevo = acum + vals[i];
+      pasos.push('<span class="m">' + fmtNum(acum) + (vals[i] < 0 ? ' ' + MENOS + ' ' + Math.abs(vals[i]) : ' + ' + vals[i]) + ' = ?</span>');
+      acum = nuevo;
+    }
+    mostrarFB($('p4-fb'), 'info', 'Ve de dos en dos. Empieza por ' + pasos[0] + ' y después suma el siguiente número al resultado.');
+  });
+
+  /* Enter en cualquier casilla del taller equivale a Comprobar */
+  $('t-taller').parentNode.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Enter' || !ev.target.matches('input.num')) { return; }
+    var paso = ev.target.closest('.paso');
+    if (!paso) { return; }
+    var btn = paso.querySelector('[id$="-comprobar"]');
+    if (btn && !btn.disabled) { ev.preventDefault(); btn.click(); }
+  });
+
+  prepararChips($('chips-nivel'), function (x) { tl.nivel = +x; nuevoTaller(); });
+  $('nuevo').addEventListener('click', nuevoTaller);
+
+  /* =========================================================
+     RETO RÁPIDO
+     ========================================================= */
+  var reto = { lista: [], i: 0, res: [], respondido: false };
+
+  function nuevaRonda() {
+    reto.lista = [1, 2, 2, 3, 2, 3].map(genEval);
+    reto.i = 0; reto.res = []; reto.respondido = false;
+    pintarReto();
+  }
+  function pintarReto() {
+    var raiz = $('reto');
+    var marc = '<ol class="reto-marcador" aria-label="Progreso del reto">' + reto.lista.map(function (x, k) {
+      var cls = reto.res[k] === true ? 'ok' : (reto.res[k] === false ? 'no' : (k === reto.i ? 'actual' : ''));
+      var estado = reto.res[k] === true ? 'correcto' : (reto.res[k] === false ? 'incorrecto' : (k === reto.i ? 'actual' : 'pendiente'));
+      return '<li class="' + cls + '"><span aria-hidden="true">' + (k + 1) + '</span><span class="sr-only">Ejercicio ' + (k + 1) + ': ' + estado + '</span></li>';
+    }).join('') + '</ol>';
+    if (reto.i >= reto.lista.length) {
+      var n = reto.res.filter(Boolean).length;
+      raiz.innerHTML = marc + '<div class="fb visible ' + (n >= 5 ? 'ok' : 'info') + '" role="status"><strong>Resultado: ' + n + ' de 6.</strong> ' +
+        (n === 6 ? 'Evaluación impecable.' : n >= 4 ? 'Buen trabajo. Repasa las trampas que aparecieron.' : 'Vuelve al taller paso a paso y después intenta otra ronda.') +
+        '</div><div class="fila-botones"><button type="button" class="btn" id="reto-otra">Otra ronda</button></div>';
+      return;
+    }
+    var x = reto.lista[reto.i];
+    raiz.innerHTML = marc + '<div class="pizarra reto-enun"><span class="rotulo">Ejercicio ' + (reto.i + 1) + ' de 6. Halla ' +
+      mathSpan('P(' + fmtNum(x.v) + ')', 'P de ' + numVoz(x.v)) + ':</span>' + polyP(x.terms) + '</div>' +
+      '<div class="fila-calc">' + mathSpan('P(' + fmtNum(x.v) + ') =', 'P de ' + numVoz(x.v) + ' igual a') +
+      '<input type="text" class="num" id="reto-r" autocomplete="off" spellcheck="false" aria-label="Valor de P de ' + numVoz(x.v) + '">' +
+      '<button type="button" class="btn" id="reto-comp">Comprobar</button></div>' +
+      '<div class="fb" id="reto-fb" role="status"></div><ol class="calc-lineas" id="reto-calc"></ol>' +
+      '<div class="fila-botones"><button type="button" class="btn" id="reto-sig" hidden>' + (reto.i === 5 ? 'Ver resultado' : 'Siguiente') + '</button></div>';
+    reto.respondido = false;
+  }
+
+  function modelos(terms, v) {
+    function suma(f) { return terms.reduce(function (s, t) { return s + f(t); }, 0); }
+    return [
+      { id: 2, val: suma(function (t) { return t.e === 0 ? t.c : t.c * (v < 0 && t.e >= 2 ? -potencia(Math.abs(v), t.e) : potencia(v, t.e)); }),
+        msj: 'Parece que elevaste el número sin paréntesis: <span class="m">' + MENOS + Math.abs(v) + '<sup>2</sup></span> en lugar de <span class="m">(' + fmtNum(v) + ')<sup>2</sup></span>. Sin paréntesis, el signo se queda fuera del exponente.' },
+      { id: 1, val: suma(function (t) { return t.e === 0 ? t.c : t.c * v; }),
+        msj: 'Parece que te saltaste los exponentes y calculaste cada término como si solo fuera coeficiente por <span class="m"><i>x</i></span>.' },
+      { id: 4, val: suma(function (t) { return t.e === 0 ? t.c : potencia(t.c * v, t.e); }),
+        msj: 'Parece que elevaste también el coeficiente, como si <span class="m">2<i>x</i><sup>2</sup></span> fuera <span class="m">(2<i>x</i>)<sup>2</sup></span>.' },
+      { id: 3, val: suma(function (t) { return t.e === 0 ? t.c : t.c * v * t.e; }),
+        msj: 'Parece que multiplicaste el valor por el exponente en lugar de elevarlo.' }
+    ];
+  }
+
+  $('reto').addEventListener('click', function (ev) {
+    var b = ev.target.closest('button');
+    if (!b) { return; }
+    if (b.id === 'reto-comp') { comprobarReto(); }
+    else if (b.id === 'reto-sig') { reto.i++; pintarReto(); var r = $('reto-r') || $('reto-otra'); if (r) { r.focus(); } }
+    else if (b.id === 'reto-otra') { nuevaRonda(); $('reto-r').focus(); }
+  });
+  $('reto').addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter' && ev.target.id === 'reto-r') { ev.preventDefault(); comprobarReto(); }
+  });
+
+  function comprobarReto() {
+    if (reto.respondido) { return; }
+    var x = reto.lista[reto.i], inp = $('reto-r'), fb = $('reto-fb');
+    var val = leerNum(inp.value);
+    if (val === null) { mostrarFB(fb, 'info', 'Escribe un número entero. Usa el guion para el signo menos.'); return; }
+    var ok = valorP(x.terms, x.v);
+    reto.respondido = true;
+    reto.res[reto.i] = val === ok;
+    marcarCampo(inp, val === ok); inp.readOnly = true;
+    $('reto-comp').disabled = true;
+    if (val === ok) {
+      mostrarFB(fb, 'ok', '<strong>Correcto.</strong> ' + mathSpan('P(' + fmtNum(x.v) + ') = ' + fmtNum(ok), 'P de ' + numVoz(x.v) + ' igual a ' + numVoz(ok)) + '.');
+    } else {
+      var msj = null;
+      modelos(x.terms, x.v).forEach(function (m) { if (!msj && m.val === val && m.val !== ok) { msj = m.msj + trampa(m.id); } });
+      if (!msj && val === -ok) { msj = 'El número es correcto, pero el signo no. Revisa los signos al multiplicar y al sumar.'; }
+      if (!msj) { msj = 'Compara tu proceso con la solución de abajo para encontrar el paso en el que cambió el resultado.'; }
+      mostrarFB(fb, 'no', 'La respuesta es <strong>' + fmtNum(ok) + '</strong>. ' + msj);
+    }
+    $('reto-calc').innerHTML = lineasCalculo(x.terms, x.v, false);
+    var sig = $('reto-sig'); sig.hidden = false; sig.focus();
+    /* Actualiza el marcador */
+    var li = $('reto').querySelectorAll('.reto-marcador li')[reto.i];
+    li.className = val === ok ? 'ok' : 'no';
+    li.querySelector('.sr-only').textContent = 'Ejercicio ' + (reto.i + 1) + ': ' + (val === ok ? 'correcto' : 'incorrecto');
+  }
+
+  /* Inicio */
+  pintarDemo(false);
+  pintarAbrazos();
+  nuevoTaller();
+  nuevaRonda();
+})();
+
+</script>
+</body>
+</html>
