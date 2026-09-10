@@ -233,6 +233,46 @@ footer a { color: var(--tema-d); }
   body { font-size: 16px; }
 }
 
+/* ---------- Acordeón ---------- */
+.acordeon-barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 8px 16px; margin: 0 0 14px; }
+.acordeon-barra p { margin: 0; color: var(--tema-d); font-weight: 600; }
+section.bloque.acordeon { padding: 0; overflow: hidden; border-left: 6px solid var(--tema); }
+section.bloque.acordeon > h2 { margin: 0; font-size: 23px; }
+.acordeon-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  width: 100%; margin: 0; padding: 18px 24px 8px; border: 0; background: transparent;
+  font: inherit; color: var(--tema-d); text-align: left; cursor: pointer;
+}
+.acordeon-btn:hover { background: var(--tema-bg); }
+.acordeon-btn:hover .acordeon-accion { background: var(--tema-d); }
+.acordeon-titulo { flex: 1; }
+.acordeon-accion {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 15px; font-weight: 700; color: #fff; background: var(--tema);
+  border-radius: 999px; padding: 5px 14px 5px 12px;
+}
+.acordeon-accion::after {
+  content: ""; width: 8px; height: 8px; border-right: 2.5px solid #fff; border-bottom: 2.5px solid #fff;
+  transform: translateY(-2px) rotate(45deg); transition: transform .2s;
+}
+.acordeon-btn[aria-expanded="true"] .acordeon-accion::after { transform: translateY(2px) rotate(-135deg); }
+.acordeon-avance { margin: 0; padding: 0 24px 18px; color: #3d4a48; max-width: none; }
+.acordeon-panel { padding: 4px 26px 24px; border-top: 1px solid var(--borde); margin-top: 0; }
+section.acordeon.abierto .acordeon-avance { padding-bottom: 12px; }
+section.acordeon.abierto { border-left-color: var(--acento); }
+@media (max-width: 600px) {
+  .acordeon-btn { padding: 16px 15px 6px; }
+  .acordeon-avance { padding: 0 15px 16px; }
+  .acordeon-panel { padding: 4px 15px 20px; }
+  section.bloque.acordeon > h2 { font-size: 20px; }
+}
+@media print {
+  .acordeon-panel[hidden] { display: block !important; }
+  .acordeon-accion, .acordeon-barra { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .acordeon-accion::after { transition: none; } }
+
 /* La regla del hueco */
 .hueco-piz { font-size: clamp(26px, 5vw, 40px); padding: 30px 16px; min-height: 130px; }
 .hueco {
@@ -313,7 +353,7 @@ kbd {
 
   <section class="bloque" aria-labelledby="t-hueco">
     <h2 id="t-hueco">La regla del hueco</h2>
-    <p>Evaluar es cambiar la <span class="m"><i>x</i></span> por un número y calcular. El secreto está en <strong>no escribir el número directamente</strong>: primero se abre un hueco con un paréntesis vacío en el lugar de cada <span class="m"><i>x</i></span>, y solo después se mete el número dentro.</p>
+    <p>Evaluar es cambiar la <span class="m"><i>x</i></span> por un número y calcular. El secreto está en <strong>no escribir el número directamente</strong>: primero se abre un hueco con un paréntesis vacío en el lugar de cada <span class="m"><i>x</i></span>, y solo después se coloca el número dentro.</p>
 
     <div class="chips" id="chips-poli" role="group" aria-label="Polinomio">
       <span class="nombre-grupo" aria-hidden="true">Polinomio:</span>
@@ -335,7 +375,7 @@ kbd {
     <div class="pizarra hueco-piz" id="demo-piz" aria-live="polite"></div>
     <div class="fila-botones">
       <button type="button" class="btn" id="mov-1">1. Abrir los huecos</button>
-      <button type="button" class="btn" id="mov-2" disabled>2. Meter el valor</button>
+      <button type="button" class="btn" id="mov-2" disabled>2. Colocar el valor</button>
       <button type="button" class="btn" id="mov-3" disabled>3. Calcular</button>
       <button type="button" class="btn sec" id="mov-0">Empezar de nuevo</button>
     </div>
@@ -343,7 +383,7 @@ kbd {
     <div class="regla-oro">Fíjate en dónde queda el exponente: <strong>fuera del paréntesis, agarrado a él</strong>. El exponente eleva todo lo que hay dentro, incluido el signo menos. Por eso <span class="m">(−3)<sup class="exp-ac">2</sup> = (−3)(−3) = 9</span>.</div>
   </section>
 
-  <section class="bloque" aria-labelledby="t-trampas">
+  <section class="bloque acordeon" aria-labelledby="t-trampas" data-avance="Los cinco errores que más se repiten al evaluar, cada uno con el ejemplo mal y bien resuelto.">
     <h2 id="t-trampas">Las cinco trampas más frecuentes</h2>
     <p class="intro">En el taller, si caes en una, el mensaje te indicará su número.</p>
     <ul class="trampas">
@@ -380,14 +420,14 @@ kbd {
     </ul>
   </section>
 
-  <section class="bloque" aria-labelledby="t-abrazo">
+  <section class="bloque acordeon" aria-labelledby="t-abrazo" data-avance="Seis expresiones que parecen iguales y no lo son. ¿Te atreves a predecir el resultado?">
     <h2 id="t-abrazo">¿Qué abraza el exponente?</h2>
     <p class="intro">El exponente eleva solo lo que tiene inmediatamente a su izquierda. Si ahí hay un paréntesis, eleva todo lo de dentro. Predice cada resultado y observa qué parte queda abrazada.</p>
     <div class="abrazos" id="abrazos"></div>
     <div class="caja-tip"><strong>En la calculadora TI-30XS del GED ocurre lo mismo.</strong> Si tecleas <kbd>(−)</kbd> <kbd>3</kbd> <kbd>x²</kbd>, la calculadora da −9. Para elevar el número negativo hay que teclear los paréntesis: <kbd>(</kbd> <kbd>(−)</kbd> <kbd>3</kbd> <kbd>)</kbd> <kbd>x²</kbd>, que da 9.</div>
   </section>
 
-  <section class="bloque" aria-labelledby="t-taller">
+  <section class="bloque acordeon" aria-labelledby="t-taller" data-avance="Evalúa en cuatro pasos, siguiendo el orden correcto de las operaciones.">
     <h2 id="t-taller">Taller paso a paso</h2>
     <p class="intro">Cuatro pasos, en el orden correcto de las operaciones. Cada paso se comprueba antes de pasar al siguiente.</p>
     <div class="chips" id="chips-nivel" role="group" aria-label="Dificultad">
@@ -451,7 +491,7 @@ kbd {
     <div class="fila-botones"><button type="button" class="btn sec" id="nuevo">Nuevo ejercicio</button></div>
   </section>
 
-  <section class="bloque" aria-labelledby="t-reto">
+  <section class="bloque acordeon" aria-labelledby="t-reto" data-avance="Seis ejercicios para comprobar lo que aprendiste.">
     <h2 id="t-reto">Reto rápido</h2>
     <p class="intro">Seis polinomios para evaluar de principio a fin. Si te equivocas, el mensaje identificará la trampa en la que caíste.</p>
     <div id="reto"></div>
@@ -662,6 +702,91 @@ function crearDetective(raiz, casos, categorias) {
   iniciar();
 }
 
+/* =========================================================
+   ACORDEÓN ACCESIBLE (patrón WAI-ARIA: botón dentro del h2)
+   Se conserva el encabezado para la navegación con lector
+   de pantalla. Sin JavaScript, todo queda visible.
+   ========================================================= */
+function prepararAcordeones() {
+  var secs = Array.prototype.slice.call(document.querySelectorAll('section.acordeon'));
+  if (!secs.length) { return; }
+  var botones = [];
+
+  function fijar(btn, abierto) {
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    btn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    btn.querySelector('.acordeon-accion').textContent = abierto ? 'Cerrar' : 'Abrir';
+    panel.hidden = !abierto;
+    btn.closest('section').classList.toggle('abierto', abierto);
+    actualizarTodo();
+  }
+
+  secs.forEach(function (sec, i) {
+    var h = sec.querySelector(':scope > h2');
+    var panel = document.createElement('div');
+    panel.className = 'acordeon-panel';
+    panel.id = 'panel-' + (h.id || ('s' + i));
+    while (h.nextSibling) { panel.appendChild(h.nextSibling); }
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'acordeon-btn';
+    btn.setAttribute('aria-controls', panel.id);
+    btn.innerHTML = '<span class="acordeon-titulo">' + h.innerHTML + '</span>' +
+      '<span class="acordeon-accion" aria-hidden="true">Abrir</span>';
+    h.innerHTML = '';
+    h.appendChild(btn);
+
+    var av = sec.getAttribute('data-avance');
+    if (av) {
+      var p = document.createElement('p');
+      p.className = 'acordeon-avance';
+      p.id = panel.id + '-avance';
+      p.textContent = av;
+      sec.appendChild(p);
+      btn.setAttribute('aria-describedby', p.id);
+    }
+    sec.appendChild(panel);
+    botones.push(btn);
+    btn.addEventListener('click', function () { fijar(btn, btn.getAttribute('aria-expanded') !== 'true'); });
+    btn.setAttribute('aria-expanded', 'false');
+    panel.hidden = true;
+  });
+
+  /* Botón general: abrir o cerrar todas las secciones */
+  var barra = document.createElement('div');
+  barra.className = 'acordeon-barra';
+  barra.innerHTML = '<p>Cada sección se abre al pulsar su título.</p>' +
+    '<button type="button" class="btn sec" id="acordeon-todo">Abrir todas las secciones</button>';
+  secs[0].parentNode.insertBefore(barra, secs[0]);
+  var todo = barra.querySelector('button');
+  function actualizarTodo() {
+    var abiertas = botones.filter(function (b) { return b.getAttribute('aria-expanded') === 'true'; }).length;
+    todo.textContent = abiertas === botones.length ? 'Cerrar todas las secciones' : 'Abrir todas las secciones';
+  }
+  todo.addEventListener('click', function () {
+    var abrir = botones.some(function (b) { return b.getAttribute('aria-expanded') !== 'true'; });
+    botones.forEach(function (b) { fijar(b, abrir); });
+  });
+
+  /* Si un enlace interno apunta dentro de una sección cerrada, se abre */
+  function abrirHasta(id) {
+    var el = id && document.getElementById(id);
+    if (!el) { return; }
+    var sec = el.closest('section.acordeon');
+    if (sec) {
+      var b = sec.querySelector('.acordeon-btn');
+      if (b.getAttribute('aria-expanded') !== 'true') { fijar(b, true); }
+    }
+  }
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest('a[href^="#"]');
+    if (a) { abrirHasta(a.getAttribute('href').slice(1)); }
+  });
+  if (location.hash) { abrirHasta(location.hash.slice(1)); }
+}
+prepararAcordeones();
+
 (function () {
   'use strict';
 
@@ -807,7 +932,7 @@ function crearDetective(raiz, casos, categorias) {
     { vis: MENOS + '<span class="abr">3</span><sup>2</sup>', voz: 'menos 3 al cuadrado, sin paréntesis', ops: [-9, 9, -6], resp: -9,
       expl: 'El exponente abraza solo al 3. El signo menos queda fuera: <span class="m">−(3 · 3) = −9</span>.' },
     { vis: '<span class="abr">(' + MENOS + '3)</span><sup>2</sup>', voz: 'paréntesis menos 3 cierra paréntesis, al cuadrado', ops: [9, -9, 6], resp: 9,
-      expl: 'El paréntesis mete el signo dentro del abrazo: <span class="m">(−3)(−3) = 9</span>.' },
+      expl: 'El paréntesis introduce el signo dentro del abrazo: <span class="m">(−3)(−3) = 9</span>.' },
     { vis: '2 · <span class="abr">3</span><sup>2</sup>', voz: '2 por 3 al cuadrado', ops: [18, 36, 12], resp: 18,
       expl: 'El exponente abraza solo al 3: <span class="m">2 · (3 · 3) = 2 · 9 = 18</span>. Así se evalúa 2<i>x</i>² con <i>x</i> = 3.' },
     { vis: '<span class="abr">(2 · 3)</span><sup>2</sup>', voz: 'paréntesis 2 por 3 cierra paréntesis, al cuadrado', ops: [36, 18, 12], resp: 36,
