@@ -233,6 +233,46 @@ footer a { color: var(--tema-d); }
   body { font-size: 16px; }
 }
 
+/* ---------- Acordeón ---------- */
+.acordeon-barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 8px 16px; margin: 0 0 14px; }
+.acordeon-barra p { margin: 0; color: var(--tema-d); font-weight: 600; }
+section.bloque.acordeon { padding: 0; overflow: hidden; border-left: 6px solid var(--tema); }
+section.bloque.acordeon > h2 { margin: 0; font-size: 23px; }
+.acordeon-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  width: 100%; margin: 0; padding: 18px 24px 8px; border: 0; background: transparent;
+  font: inherit; color: var(--tema-d); text-align: left; cursor: pointer;
+}
+.acordeon-btn:hover { background: var(--tema-bg); }
+.acordeon-btn:hover .acordeon-accion { background: var(--tema-d); }
+.acordeon-titulo { flex: 1; }
+.acordeon-accion {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 15px; font-weight: 700; color: #fff; background: var(--tema);
+  border-radius: 999px; padding: 5px 14px 5px 12px;
+}
+.acordeon-accion::after {
+  content: ""; width: 8px; height: 8px; border-right: 2.5px solid #fff; border-bottom: 2.5px solid #fff;
+  transform: translateY(-2px) rotate(45deg); transition: transform .2s;
+}
+.acordeon-btn[aria-expanded="true"] .acordeon-accion::after { transform: translateY(2px) rotate(-135deg); }
+.acordeon-avance { margin: 0; padding: 0 24px 18px; color: #3d4a48; max-width: none; }
+.acordeon-panel { padding: 4px 26px 24px; border-top: 1px solid var(--borde); margin-top: 0; }
+section.acordeon.abierto .acordeon-avance { padding-bottom: 12px; }
+section.acordeon.abierto { border-left-color: var(--acento); }
+@media (max-width: 600px) {
+  .acordeon-btn { padding: 16px 15px 6px; }
+  .acordeon-avance { padding: 0 15px 16px; }
+  .acordeon-panel { padding: 4px 15px 20px; }
+  section.bloque.acordeon > h2 { font-size: 20px; }
+}
+@media print {
+  .acordeon-panel[hidden] { display: block !important; }
+  .acordeon-accion, .acordeon-barra { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .acordeon-accion::after { transition: none; } }
+
 /* Colores de familia (siempre acompañados de texto: no dependen solo del color) */
 .fam-3 { --fc: #4527a0; --fb: #ede7f6; }
 .fam-2 { --fc: #00332b; --fb: #e0f2f1; }
@@ -314,7 +354,7 @@ footer a { color: var(--tema-d); }
     <div class="regla-oro">Al sumar o restar se operan <strong>solo los coeficientes</strong> (los números). La parte literal, es decir, la <span class="m"><i>x</i></span> con su exponente, <strong>se copia igual</strong>.</div>
   </section>
 
-  <section class="bloque" aria-labelledby="t-trampas">
+  <section class="bloque acordeon" aria-labelledby="t-trampas" data-avance="Los cinco errores que más se repiten al sumar y restar polinomios, cada uno con el ejemplo mal y bien resuelto.">
     <h2 id="t-trampas">Las cinco trampas más frecuentes</h2>
     <p class="intro">Estas son las equivocaciones que más se repiten. En el taller, si caes en una, el mensaje te indicará su número.</p>
     <ul class="trampas">
@@ -351,7 +391,7 @@ footer a { color: var(--tema-d); }
     </ul>
   </section>
 
-  <section class="bloque" aria-labelledby="t-taller">
+  <section class="bloque acordeon" aria-labelledby="t-taller" data-avance="Resuelve paso a paso: quitar paréntesis, agrupar por familias y combinar los coeficientes.">
     <h2 id="t-taller">Taller guiado</h2>
     <p class="intro">Resuelve el ejercicio en tres pasos. Cada paso se comprueba antes de pasar al siguiente.</p>
     <div class="chips" id="chips-op" role="group" aria-label="Operación">
@@ -431,7 +471,7 @@ footer a { color: var(--tema-d); }
     <div class="fila-botones"><button type="button" class="btn sec" id="nuevo">Nuevo ejercicio</button></div>
   </section>
 
-  <section class="bloque" aria-labelledby="t-detective">
+  <section class="bloque acordeon" aria-labelledby="t-detective" data-avance="Nueve resoluciones de otros estudiantes. ¿Eres capaz de encontrar el error?">
     <h2 id="t-detective">Detective de errores</h2>
     <p class="intro">Cada caso muestra una resolución. Algunas tienen un error y otras están bien. Decide qué ocurrió.</p>
     <div id="detective"></div>
@@ -641,6 +681,91 @@ function crearDetective(raiz, casos, categorias) {
 
   iniciar();
 }
+
+/* =========================================================
+   ACORDEÓN ACCESIBLE (patrón WAI-ARIA: botón dentro del h2)
+   Se conserva el encabezado para la navegación con lector
+   de pantalla. Sin JavaScript, todo queda visible.
+   ========================================================= */
+function prepararAcordeones() {
+  var secs = Array.prototype.slice.call(document.querySelectorAll('section.acordeon'));
+  if (!secs.length) { return; }
+  var botones = [];
+
+  function fijar(btn, abierto) {
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    btn.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+    btn.querySelector('.acordeon-accion').textContent = abierto ? 'Cerrar' : 'Abrir';
+    panel.hidden = !abierto;
+    btn.closest('section').classList.toggle('abierto', abierto);
+    actualizarTodo();
+  }
+
+  secs.forEach(function (sec, i) {
+    var h = sec.querySelector(':scope > h2');
+    var panel = document.createElement('div');
+    panel.className = 'acordeon-panel';
+    panel.id = 'panel-' + (h.id || ('s' + i));
+    while (h.nextSibling) { panel.appendChild(h.nextSibling); }
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'acordeon-btn';
+    btn.setAttribute('aria-controls', panel.id);
+    btn.innerHTML = '<span class="acordeon-titulo">' + h.innerHTML + '</span>' +
+      '<span class="acordeon-accion" aria-hidden="true">Abrir</span>';
+    h.innerHTML = '';
+    h.appendChild(btn);
+
+    var av = sec.getAttribute('data-avance');
+    if (av) {
+      var p = document.createElement('p');
+      p.className = 'acordeon-avance';
+      p.id = panel.id + '-avance';
+      p.textContent = av;
+      sec.appendChild(p);
+      btn.setAttribute('aria-describedby', p.id);
+    }
+    sec.appendChild(panel);
+    botones.push(btn);
+    btn.addEventListener('click', function () { fijar(btn, btn.getAttribute('aria-expanded') !== 'true'); });
+    btn.setAttribute('aria-expanded', 'false');
+    panel.hidden = true;
+  });
+
+  /* Botón general: abrir o cerrar todas las secciones */
+  var barra = document.createElement('div');
+  barra.className = 'acordeon-barra';
+  barra.innerHTML = '<p>Cada sección se abre al pulsar su título.</p>' +
+    '<button type="button" class="btn sec" id="acordeon-todo">Abrir todas las secciones</button>';
+  secs[0].parentNode.insertBefore(barra, secs[0]);
+  var todo = barra.querySelector('button');
+  function actualizarTodo() {
+    var abiertas = botones.filter(function (b) { return b.getAttribute('aria-expanded') === 'true'; }).length;
+    todo.textContent = abiertas === botones.length ? 'Cerrar todas las secciones' : 'Abrir todas las secciones';
+  }
+  todo.addEventListener('click', function () {
+    var abrir = botones.some(function (b) { return b.getAttribute('aria-expanded') !== 'true'; });
+    botones.forEach(function (b) { fijar(b, abrir); });
+  });
+
+  /* Si un enlace interno apunta dentro de una sección cerrada, se abre */
+  function abrirHasta(id) {
+    var el = id && document.getElementById(id);
+    if (!el) { return; }
+    var sec = el.closest('section.acordeon');
+    if (sec) {
+      var b = sec.querySelector('.acordeon-btn');
+      if (b.getAttribute('aria-expanded') !== 'true') { fijar(b, true); }
+    }
+  }
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest('a[href^="#"]');
+    if (a) { abrirHasta(a.getAttribute('href').slice(1)); }
+  });
+  if (location.hash) { abrirHasta(location.hash.slice(1)); }
+}
+prepararAcordeones();
 
 (function () {
   'use strict';
