@@ -1,0 +1,768 @@
+<!doctype html>
+<!--
+  Interactivo · Lección 3.2 — Factor común y diferencia de cuadrados
+  Spanish ASE Math · Nivel 4 · Tema 3
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)
+  https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactivo 3.2 · Factor común y diferencia de cuadrados</title>
+    <meta name="author" content="José M. Fernández" />
+    <meta name="description" content="Interactivo de práctica para extraer el factor común, factorizar diferencias de cuadrados y combinar ambas técnicas." />
+    <meta name="license" content="CC BY-NC-SA 4.0" />
+    <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" />
+    <style>
+      :root {
+        --tema: #bf360c;
+        --tema-d: #8c2708;
+        --tema-bg: #fbe9e7;
+        --tema-bg2: #f8d3cc;
+        --acento: #00695c;
+        --ok: #1b5e20;
+        --ok-bg: #e8f5e9;
+        --no: #b71c1c;
+        --no-bg: #ffebee;
+        --txt: #222;
+        --mut: #555;
+        --bg: #f5f7fa;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0; background: var(--bg); color: var(--txt);
+        line-height: 1.6; font-size: 16px;
+      }
+      .contenedor { max-width: 880px; margin: 0 auto; padding: 24px; }
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0;
+        margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0);
+        white-space: nowrap; border: 0;
+      }
+      header.principal {
+        background: linear-gradient(135deg, #8c2708 0%, #bf360c 55%, #d84315 100%);
+        color: #fff; padding: 30px 28px; border-radius: 14px;
+        margin-bottom: 18px; box-shadow: 0 4px 14px rgba(140, 39, 8, 0.28);
+      }
+      header.principal .ruta { font-size: 13px; letter-spacing: 0.4px; text-transform: uppercase; }
+      header.principal h1 { margin: 8px 0 6px; font-size: 24px; font-weight: 700; }
+      header.principal .meta { font-size: 14px; }
+
+      nav.modulos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+      button.tab {
+        flex: 1 1 200px; background: #fff; border: 2px solid var(--tema-bg2);
+        color: var(--tema-d); border-radius: 10px; padding: 11px 14px;
+        font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+        text-align: left; line-height: 1.35;
+      }
+      button.tab:hover { border-color: var(--tema); background: var(--tema-bg); }
+      button.tab[aria-selected="true"] { background: var(--tema); border-color: var(--tema-d); color: #fff; }
+      button.tab:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      button.tab .num { display: block; font-size: 12px; opacity: 0.95; font-weight: 600; }
+
+      section.panel { display: none; }
+      section.panel.activo { display: block; }
+
+      h2.titulo-panel {
+        color: var(--tema-d); font-size: 21px; margin: 6px 0 8px;
+        padding-bottom: 6px; border-bottom: 3px solid var(--tema-bg);
+      }
+      p.intro { color: var(--mut); font-size: 15px; margin: 6px 0 14px; }
+
+      .tarjeta {
+        background: #fff; border-radius: 12px; padding: 20px 24px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07); margin-bottom: 18px;
+      }
+      .marcador {
+        display: inline-block; background: var(--tema-bg); color: var(--tema-d);
+        border-radius: 20px; padding: 5px 16px; font-size: 14px; font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .enunciado {
+        font-size: 24px; font-weight: 700; color: var(--tema-d);
+        text-align: center; margin: 10px 0 18px;
+      }
+      .instruccion { font-size: 15px; margin: 14px 0 6px; }
+
+      .campo {
+        width: 68px; padding: 8px 6px; font-size: 18px; font-family: inherit;
+        text-align: center; border: 2px solid #bdbdbd; border-radius: 8px;
+        background: #fff; color: var(--txt);
+      }
+      .campo:focus { outline: 3px solid var(--tema); outline-offset: 1px; border-color: var(--tema); }
+      .campo.bien { border-color: #2e7d32; background: var(--ok-bg); }
+      .campo.mal { border-color: #c62828; background: var(--no-bg); }
+      .campo.chico { width: 58px; }
+      .campo.mini { width: 44px; padding: 5px 3px; font-size: 15px; }
+
+      .linea-resp {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+        font-size: 21px; font-weight: 700; color: var(--tema-d);
+        justify-content: center; margin: 12px 0;
+      }
+      .linea-resp .txt { font-size: 21px; }
+      .linea-resp .exp { font-size: 14px; color: var(--mut); font-weight: 600; }
+
+      .opciones-bot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 12px 0; }
+      .op-bot {
+        background: #fff; border: 2px solid #cfcfcf; border-radius: 9px;
+        padding: 11px 18px; font-family: inherit; font-size: 15px; font-weight: 600;
+        color: var(--txt); cursor: pointer;
+      }
+      .op-bot:hover { border-color: var(--tema); }
+      .op-bot:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .op-bot.bien { border-color: #2e7d32; background: var(--ok-bg); color: var(--ok); }
+      .op-bot.mal { border-color: #c62828; background: var(--no-bg); color: var(--no); }
+
+      .acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+      .btn {
+        background: var(--tema); color: #fff; border: none; padding: 10px 20px;
+        border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+        font-family: inherit;
+      }
+      .btn:hover { background: var(--tema-d); }
+      .btn:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .btn.sec { background: #546e7a; }
+      .btn.sec:hover { background: #37474f; }
+      .btn.out { background: #fff; color: var(--tema-d); border: 2px solid var(--tema); }
+      .btn.out:hover { background: var(--tema-bg); }
+
+      .fb {
+        margin-top: 14px; padding: 12px 16px; border-radius: 8px;
+        font-size: 15px; font-weight: 600; display: none;
+      }
+      .fb.ok { background: var(--ok-bg); color: var(--ok); border-left: 5px solid #2e7d32; display: block; }
+      .fb.no { background: var(--no-bg); color: var(--no); border-left: 5px solid #c62828; display: block; }
+
+      .solucion {
+        display: none; margin-top: 14px; background: #fafafa;
+        border: 1px solid #e3e3e3; border-left: 5px solid var(--acento);
+        border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 15px;
+      }
+      .solucion.visible { display: block; }
+      .solucion h4 { margin: 0 0 8px; color: #004d40; font-size: 15px; }
+      .solucion .ln { margin: 6px 0; }
+      .solucion .ln b { color: var(--tema-d); }
+
+      .caja-tip {
+        background: var(--ok-bg); border-left: 5px solid #2e7d32;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        color: var(--ok); font-size: 15px;
+      }
+      .caja-atencion {
+        background: #fff8e1; border-left: 5px solid #f9a825;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        font-size: 15px; color: #5c3900;
+      }
+
+      table.cuadrados { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+      table.cuadrados caption { text-align: left; font-weight: 700; color: var(--tema-d); padding-bottom: 6px; }
+      table.cuadrados th, table.cuadrados td { border: 1px solid #e0e0e0; padding: 7px 9px; text-align: center; }
+      table.cuadrados th { background: var(--tema); color: #fff; }
+
+      footer {
+        text-align: center; padding: 22px 10px; color: var(--mut); font-size: 13px;
+        border-top: 1px solid #ddd; margin-top: 24px;
+      }
+      footer a { color: var(--tema-d); }
+
+      @media (max-width: 520px) {
+        .contenedor { padding: 14px; }
+        .enunciado { font-size: 20px; }
+        .campo { width: 58px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; animation: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+      <header class="principal">
+        <div class="ruta">Spanish ASE Math · Nivel 4 · Tema 3 · Lección 3.2</div>
+        <h1>Factorización: factor común y diferencia de cuadrados</h1>
+        <div class="meta">Tres módulos de práctica con verificación inmediata y solución paso a paso</div>
+      </header>
+
+      <nav class="modulos" role="tablist" aria-label="Módulos del interactivo">
+        <button class="tab" role="tab" id="tab-comun" aria-controls="panel-comun" aria-selected="true">
+          <span class="num">Módulo 1</span>Factor común
+        </button>
+        <button class="tab" role="tab" id="tab-cuadrados" aria-controls="panel-cuadrados" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 2</span>Diferencia de cuadrados
+        </button>
+        <button class="tab" role="tab" id="tab-combinar" aria-controls="panel-combinar" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 3</span>Combinar: factor común y luego diferencia de cuadrados
+        </button>
+      </nav>
+
+      <!-- ============ MÓDULO 1 · FACTOR COMÚN ============ -->
+      <section class="panel activo" role="tabpanel" id="panel-comun" aria-labelledby="tab-comun" tabindex="0">
+        <h2 class="titulo-panel">Módulo 1 · Factor común</h2>
+        <p class="intro">El factor común se forma con el máximo común divisor de los coeficientes y la menor potencia de x que aparece en todos los términos. Si en un término ya no queda x, su exponente es 0.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="fc-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="fc-enun"></div>
+
+          <p class="instruccion"><strong>Paso 1.</strong> Escribe el factor común: el número y el exponente de x.</p>
+          <div class="linea-resp">
+            <input class="campo" id="fc-k" inputmode="numeric" autocomplete="off" aria-label="Máximo común divisor de los coeficientes" />
+            <span class="txt">x</span>
+            <span class="exp">elevado a</span>
+            <input class="campo mini" id="fc-e" inputmode="numeric" autocomplete="off" aria-label="Exponente de x en el factor común" />
+          </div>
+
+          <p class="instruccion"><strong>Paso 2.</strong> Escribe lo que queda dentro del paréntesis.</p>
+          <div class="linea-resp" id="fc-dentro"></div>
+
+          <div class="acciones">
+            <button class="btn" id="fc-comprobar">Comprobar</button>
+            <button class="btn sec" id="fc-ver">Ver la solución</button>
+            <button class="btn out" id="fc-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="fc-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="fc-sol"></div>
+        </div>
+
+        <div class="caja-tip">
+          <strong>Comprueba siempre multiplicando.</strong> Si al distribuir el factor común no recuperas el polinomio original, el factor extraído no era el correcto o falló un signo.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 2 · DIFERENCIA DE CUADRADOS ============ -->
+      <section class="panel" role="tabpanel" id="panel-cuadrados" aria-labelledby="tab-cuadrados" tabindex="0">
+        <h2 class="titulo-panel">Módulo 2 · Diferencia de cuadrados</h2>
+        <p class="intro">Un binomio es una diferencia de cuadrados cuando los dos términos son cuadrados perfectos y están <strong>restados</strong>. Entonces a² − b² = (a + b)(a − b).</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="dc-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="dc-enun"></div>
+
+          <p class="instruccion"><strong>Paso 1.</strong> ¿Es una diferencia de cuadrados?</p>
+          <div class="opciones-bot">
+            <button class="op-bot" id="dc-si">Sí, se puede factorizar</button>
+            <button class="op-bot" id="dc-no">No se puede factorizar así</button>
+          </div>
+
+          <div id="dc-paso2" style="display: none">
+            <p class="instruccion"><strong>Paso 2.</strong> Escribe los dos factores.</p>
+            <div class="linea-resp">
+              <span class="txt">(</span>
+              <input class="campo chico" id="dc-a1" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el primer factor" />
+              <span class="txt">x +</span>
+              <input class="campo chico" id="dc-b1" inputmode="numeric" autocomplete="off" aria-label="Término independiente del primer factor" />
+              <span class="txt">)(</span>
+              <input class="campo chico" id="dc-a2" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el segundo factor" />
+              <span class="txt">x &#8722;</span>
+              <input class="campo chico" id="dc-b2" inputmode="numeric" autocomplete="off" aria-label="Término independiente del segundo factor" />
+              <span class="txt">)</span>
+            </div>
+            <div class="acciones">
+              <button class="btn" id="dc-comprobar">Comprobar los factores</button>
+            </div>
+          </div>
+
+          <div class="acciones">
+            <button class="btn sec" id="dc-ver">Ver la solución</button>
+            <button class="btn out" id="dc-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="dc-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="dc-sol"></div>
+        </div>
+
+        <table class="cuadrados">
+          <caption>Cuadrados perfectos de referencia</caption>
+          <thead>
+            <tr>
+              <th scope="col">n</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th>
+              <th scope="col">4</th><th scope="col">5</th><th scope="col">6</th><th scope="col">7</th>
+              <th scope="col">8</th><th scope="col">9</th><th scope="col">10</th>
+              <th scope="col">11</th><th scope="col">12</th><th scope="col">13</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">n²</th><td>1</td><td>4</td><td>9</td><td>16</td><td>25</td><td>36</td>
+              <td>49</td><td>64</td><td>81</td><td>100</td><td>121</td><td>144</td><td>169</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="caja-atencion">
+          <strong>La suma de cuadrados no se factoriza.</strong> x² + 25 no tiene factorización con números reales. Solo la resta produce dos binomios.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 3 · COMBINAR ============ -->
+      <section class="panel" role="tabpanel" id="panel-combinar" aria-labelledby="tab-combinar" tabindex="0">
+        <h2 class="titulo-panel">Módulo 3 · Combinar: factor común y luego diferencia de cuadrados</h2>
+        <p class="intro">El orden nunca cambia: primero se extrae el factor común y después se examina lo que queda dentro del paréntesis. A veces se puede seguir factorizando y a veces no.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="cb-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="cb-enun"></div>
+
+          <p class="instruccion"><strong>Paso 1.</strong> Extrae el factor común.</p>
+          <div class="linea-resp">
+            <input class="campo" id="cb-k" inputmode="numeric" autocomplete="off" aria-label="Número del factor común" />
+            <span class="txt">x</span>
+            <span class="exp">elevado a</span>
+            <input class="campo mini" id="cb-e" inputmode="numeric" autocomplete="off" aria-label="Exponente de x en el factor común" />
+            <span class="txt">(</span>
+            <input class="campo chico" id="cb-i1" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x al cuadrado dentro del paréntesis" />
+            <span class="txt">x²</span>
+            <input class="campo chico" id="cb-i2" inputmode="numeric" autocomplete="off" aria-label="Término independiente dentro del paréntesis, con su signo" />
+            <span class="txt">)</span>
+          </div>
+
+          <p class="instruccion"><strong>Paso 2.</strong> ¿Lo que queda dentro del paréntesis se puede seguir factorizando?</p>
+          <div class="opciones-bot">
+            <button class="op-bot" id="cb-si">Sí, es diferencia de cuadrados</button>
+            <button class="op-bot" id="cb-no">No, ya está factorizado del todo</button>
+          </div>
+
+          <div id="cb-paso3" style="display: none">
+            <p class="instruccion"><strong>Paso 3.</strong> Escribe los dos binomios finales.</p>
+            <div class="linea-resp">
+              <span class="txt">(</span>
+              <input class="campo chico" id="cb-a1" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el primer binomio" />
+              <span class="txt">x +</span>
+              <input class="campo chico" id="cb-b1" inputmode="numeric" autocomplete="off" aria-label="Término independiente del primer binomio" />
+              <span class="txt">)(</span>
+              <input class="campo chico" id="cb-a2" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el segundo binomio" />
+              <span class="txt">x &#8722;</span>
+              <input class="campo chico" id="cb-b2" inputmode="numeric" autocomplete="off" aria-label="Término independiente del segundo binomio" />
+              <span class="txt">)</span>
+            </div>
+            <div class="acciones">
+              <button class="btn" id="cb-comprobar3">Comprobar los binomios</button>
+            </div>
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="cb-comprobar1">Comprobar el paso 1</button>
+            <button class="btn sec" id="cb-ver">Ver la solución</button>
+            <button class="btn out" id="cb-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="cb-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="cb-sol"></div>
+        </div>
+
+        <div class="caja-tip">
+          <strong>Factorización completa.</strong> Una expresión está completamente factorizada cuando ninguno de sus factores admite ya otra descomposición.
+        </div>
+      </section>
+
+      <footer>
+        <p>Spanish ASE Math · Nivel 4 · Tema 3 · Interactivo de la Lección 3.2</p>
+        <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago</p>
+        <p>Obra publicada bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" rel="license noopener noreferrer" target="_blank">Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        'use strict';
+
+        var MENOS = '\u2212';
+        var SUP = { 0: '', 1: '', 2: '\u00b2', 3: '\u00b3', 4: '\u2074', 5: '\u2075' };
+
+        function ri(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+        function elige(arr) { return arr[ri(0, arr.length - 1)]; }
+        function mcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a; }
+        function num(n) { return n < 0 ? MENOS + Math.abs(n) : String(n); }
+        function signo(n) { return (n < 0 ? ' ' + MENOS + ' ' : ' + ') + Math.abs(n); }
+
+        function termino(c, e) {
+          if (e === 0) return String(Math.abs(c));
+          var co = Math.abs(c) === 1 ? '' : String(Math.abs(c));
+          return co + 'x' + SUP[e];
+        }
+        function polinomio(terms) {
+          var s = '';
+          terms.forEach(function (t, i) {
+            if (i === 0) {
+              s += (t.c < 0 ? MENOS + ' ' : '') + termino(t.c, t.e);
+            } else {
+              s += (t.c < 0 ? ' ' + MENOS + ' ' : ' + ') + termino(t.c, t.e);
+            }
+          });
+          return s;
+        }
+
+        function leer(id) {
+          var el = document.getElementById(id);
+          var v = (el.value || '').trim().replace(/[\u2212\u2013\u2014]/g, '-').replace(/\s+/g, '');
+          if (v === '' || !/^-?\d+$/.test(v)) return null;
+          return parseInt(v, 10);
+        }
+        function marcarCampo(id, esperado) {
+          var el = document.getElementById(id);
+          var v = leer(id);
+          var ok = v !== null && v === esperado;
+          el.classList.remove('bien', 'mal');
+          el.classList.add(ok ? 'bien' : 'mal');
+          return ok;
+        }
+        function limpiar(ids) {
+          ids.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.value = '';
+            el.classList.remove('bien', 'mal');
+          });
+        }
+        function fb(id, texto, ok) {
+          var el = document.getElementById(id);
+          el.textContent = texto;
+          el.className = 'fb ' + (ok ? 'ok' : 'no');
+        }
+        function ocultarFb(id) { var el = document.getElementById(id); el.className = 'fb'; el.textContent = ''; }
+        function mostrarSol(id, html) { var el = document.getElementById(id); el.innerHTML = html; el.classList.add('visible'); }
+        function ocultarSol(id) { var el = document.getElementById(id); el.classList.remove('visible'); el.innerHTML = ''; }
+        function enterEn(ids, accion) {
+          ids.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter') { e.preventDefault(); accion(); }
+            });
+          });
+        }
+        function Contador(idMarcador) { this.a = 0; this.t = 0; this.el = document.getElementById(idMarcador); }
+        Contador.prototype.suma = function (acierto) {
+          this.t++; if (acierto) this.a++;
+          this.el.textContent = 'Aciertos: ' + this.a + ' \u00b7 Intentos: ' + this.t;
+        };
+
+        /* =========================================================
+           MÓDULO 1 · FACTOR COMÚN
+           ========================================================= */
+        var fcE = {};
+        var fcCont = new Contador('fc-marcador');
+
+        function fcNuevo() {
+          var k = elige([2, 3, 4, 5, 6, 7, 8, 9, 12]);
+          var e = elige([0, 1, 1, 2]);
+          var n = elige([2, 2, 3]);
+          var coefs = [], exps = [], i, g, intentos = 0;
+          /* los coeficientes internos no pueden compartir otro factor común */
+          do {
+            coefs = []; exps = [];
+            for (i = 0; i < n; i++) {
+              coefs.push(ri(1, 9));
+              exps.push(ri(0, 2));
+            }
+            g = coefs[0];
+            for (i = 1; i < n; i++) { g = mcd(g, coefs[i]); }
+            intentos++;
+          } while (g !== 1 && intentos < 40);
+          if (g !== 1) { coefs[0] = 1; }
+          /* al menos un término sin x adicional, para que el exponente del factor común sea exacto */
+          exps[ri(0, n - 1)] = 0;
+          fcE.k = k; fcE.e = e; fcE.n = n;
+          fcE.coefs = coefs; fcE.exps = exps;
+
+          var visibles = [];
+          for (i = 0; i < n; i++) { visibles.push({ c: k * coefs[i], e: e + exps[i] }); }
+          document.getElementById('fc-enun').textContent = polinomio(visibles);
+
+          /* campos del paréntesis */
+          var cont = document.getElementById('fc-dentro');
+          var html = '<span class="txt">(</span>';
+          for (i = 0; i < n; i++) {
+            if (i > 0) html += '<span class="txt">+</span>';
+            html += '<input class="campo chico" id="fc-ic' + i + '" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del término ' + (i + 1) + ' dentro del paréntesis" />';
+            html += '<span class="txt">x</span><span class="exp">elevado a</span>';
+            html += '<input class="campo mini" id="fc-ie' + i + '" inputmode="numeric" autocomplete="off" aria-label="Exponente de x del término ' + (i + 1) + ' dentro del paréntesis" />';
+          }
+          html += '<span class="txt">)</span>';
+          cont.innerHTML = html;
+
+          limpiar(['fc-k', 'fc-e']);
+          var dinamicos = [];
+          for (i = 0; i < n; i++) { dinamicos.push('fc-ic' + i, 'fc-ie' + i); }
+          enterEn(dinamicos, fcComprobar);
+          ocultarFb('fc-fb');
+          ocultarSol('fc-sol');
+        }
+
+        function fcComprobar() {
+          var todo = marcarCampo('fc-k', fcE.k) & marcarCampo('fc-e', fcE.e);
+          for (var i = 0; i < fcE.n; i++) {
+            todo = todo & marcarCampo('fc-ic' + i, fcE.coefs[i]);
+            todo = todo & marcarCampo('fc-ie' + i, fcE.exps[i]);
+          }
+          todo = !!todo;
+          fcCont.suma(todo);
+          if (todo) {
+            fb('fc-fb', 'Correcto. Al distribuir el factor común se recupera el polinomio original.', true);
+          } else {
+            fb('fc-fb', 'Revisa las casillas en rojo. El número del factor común es el MCD de los coeficientes y el exponente de x es el menor de todos.', false);
+          }
+        }
+
+        function fcVer() {
+          var i, lista = [], dentro = [];
+          for (i = 0; i < fcE.n; i++) {
+            lista.push(fcE.k * fcE.coefs[i]);
+            dentro.push({ c: fcE.coefs[i], e: fcE.exps[i] });
+          }
+          var factor = fcE.k + (fcE.e === 0 ? '' : 'x' + SUP[fcE.e]);
+          mostrarSol('fc-sol',
+            '<h4>Solución paso a paso</h4>' +
+            '<div class="ln"><b>MCD de los coeficientes</b> (' + lista.join(', ') + ') = ' + fcE.k + '</div>' +
+            '<div class="ln"><b>Menor potencia de x</b> presente en todos los términos: exponente ' + fcE.e + '</div>' +
+            '<div class="ln"><b>Factor común:</b> ' + factor + '</div>' +
+            '<div class="ln"><b>Cada término dividido entre el factor común:</b> ' + polinomio(dentro) + '</div>' +
+            '<div class="ln"><b>Resultado:</b> ' + factor + '(' + polinomio(dentro) + ')</div>');
+        }
+
+        document.getElementById('fc-comprobar').addEventListener('click', fcComprobar);
+        document.getElementById('fc-ver').addEventListener('click', fcVer);
+        document.getElementById('fc-nuevo').addEventListener('click', fcNuevo);
+        enterEn(['fc-k', 'fc-e'], fcComprobar);
+
+        /* =========================================================
+           MÓDULO 2 · DIFERENCIA DE CUADRADOS
+           ========================================================= */
+        var dcE = {};
+        var dcCont = new Contador('dc-marcador');
+        var dcIds = ['dc-a1', 'dc-b1', 'dc-a2', 'dc-b2'];
+
+        function dcNuevo() {
+          var m = elige([1, 1, 1, 2, 3, 4, 5, 6]);
+          var p = ri(2, 12);
+          var tipo = elige(['si', 'si', 'suma', 'no-cuadrado', 'no-cuadrado2']);
+          dcE.m = m; dcE.p = p; dcE.tipo = tipo;
+          var txt;
+          if (tipo === 'si') {
+            txt = (m === 1 ? 'x\u00b2' : (m * m) + 'x\u00b2') + ' ' + MENOS + ' ' + (p * p);
+            dcE.esDC = true;
+          } else if (tipo === 'suma') {
+            txt = (m === 1 ? 'x\u00b2' : (m * m) + 'x\u00b2') + ' + ' + (p * p);
+            dcE.esDC = false;
+            dcE.motivo = 'Los dos términos son cuadrados perfectos, pero están sumados. Una suma de cuadrados no se factoriza con números reales.';
+          } else if (tipo === 'no-cuadrado') {
+            var c = elige([2, 3, 5, 6, 7, 8, 10, 12, 15, 18, 20]);
+            txt = (m === 1 ? 'x\u00b2' : (m * m) + 'x\u00b2') + ' ' + MENOS + ' ' + c;
+            dcE.esDC = false;
+            dcE.motivo = 'El número ' + c + ' no es un cuadrado perfecto, así que el binomio no es una diferencia de cuadrados.';
+          } else {
+            var mm = elige([2, 3, 5, 6, 7, 8]);
+            txt = mm + 'x\u00b2 ' + MENOS + ' ' + (p * p);
+            dcE.esDC = false;
+            dcE.motivo = 'El coeficiente ' + mm + ' no es un cuadrado perfecto, así que el primer término no es el cuadrado de nada entero.';
+          }
+          document.getElementById('dc-enun').textContent = txt;
+          document.getElementById('dc-paso2').style.display = 'none';
+          document.getElementById('dc-si').classList.remove('bien', 'mal');
+          document.getElementById('dc-no').classList.remove('bien', 'mal');
+          limpiar(dcIds);
+          ocultarFb('dc-fb');
+          ocultarSol('dc-sol');
+        }
+
+        function dcResponder(dijoSi) {
+          var acierto = (dijoSi === dcE.esDC);
+          var btn = document.getElementById(dijoSi ? 'dc-si' : 'dc-no');
+          btn.classList.remove('bien', 'mal');
+          btn.classList.add(acierto ? 'bien' : 'mal');
+          if (dcE.esDC) {
+            if (acierto) {
+              fb('dc-fb', 'Bien. Ahora escribe los dos factores.', true);
+            } else {
+              dcCont.suma(false);
+              fb('dc-fb', 'Sí lo es: los dos términos son cuadrados perfectos y están restados. Escribe los factores.', false);
+            }
+            document.getElementById('dc-paso2').style.display = 'block';
+            document.getElementById('dc-a1').focus();
+          } else {
+            dcCont.suma(acierto);
+            fb('dc-fb', (acierto ? 'Correcto. ' : 'No lo es. ') + dcE.motivo, acierto);
+          }
+        }
+
+        function dcComprobar() {
+          var ok = marcarCampo('dc-a1', dcE.m) & marcarCampo('dc-b1', dcE.p) &
+                   marcarCampo('dc-a2', dcE.m) & marcarCampo('dc-b2', dcE.p);
+          ok = !!ok;
+          dcCont.suma(ok);
+          if (ok) {
+            fb('dc-fb', 'Correcto. Los dos factores tienen los mismos términos y solo cambia el signo.', true);
+          } else {
+            fb('dc-fb', 'Revisa: en cada factor va la raíz cuadrada de cada término, no el término completo.', false);
+          }
+        }
+
+        function dcVer() {
+          if (dcE.esDC) {
+            var pri = (dcE.m === 1 ? 'x' : dcE.m + 'x');
+            mostrarSol('dc-sol',
+              '<h4>Solución paso a paso</h4>' +
+              '<div class="ln"><b>Raíz del primer término:</b> \u221a(' + (dcE.m === 1 ? '' : dcE.m * dcE.m) + 'x\u00b2) = ' + pri + '</div>' +
+              '<div class="ln"><b>Raíz del segundo término:</b> \u221a' + (dcE.p * dcE.p) + ' = ' + dcE.p + '</div>' +
+              '<div class="ln"><b>Se escriben los dos factores:</b> (' + pri + ' + ' + dcE.p + ')(' + pri + ' ' + MENOS + ' ' + dcE.p + ')</div>' +
+              '<div class="ln"><b>Verificación:</b> al multiplicar, los términos del centro se cancelan y queda el binomio original.</div>');
+          } else {
+            mostrarSol('dc-sol',
+              '<h4>Solución paso a paso</h4>' +
+              '<div class="ln">' + dcE.motivo + '</div>' +
+              '<div class="ln">Para aplicar a\u00b2 ' + MENOS + ' b\u00b2 hacen falta dos condiciones: los dos términos deben ser cuadrados perfectos y deben estar restados.</div>');
+          }
+        }
+
+        document.getElementById('dc-si').addEventListener('click', function () { dcResponder(true); });
+        document.getElementById('dc-no').addEventListener('click', function () { dcResponder(false); });
+        document.getElementById('dc-comprobar').addEventListener('click', dcComprobar);
+        document.getElementById('dc-ver').addEventListener('click', dcVer);
+        document.getElementById('dc-nuevo').addEventListener('click', dcNuevo);
+        enterEn(dcIds, dcComprobar);
+
+        /* =========================================================
+           MÓDULO 3 · COMBINAR
+           ========================================================= */
+        var cbE = {};
+        var cbCont = new Contador('cb-marcador');
+        var cbIds1 = ['cb-k', 'cb-e', 'cb-i1', 'cb-i2'];
+        var cbIds3 = ['cb-a1', 'cb-b1', 'cb-a2', 'cb-b2'];
+
+        function cbNuevo() {
+          var k = elige([2, 3, 4, 5, 6, 7]);
+          var e = elige([0, 0, 1, 1, 2]);
+          var m, p, intentos = 0;
+          /* m y p deben ser coprimos para que el factor común sea exactamente k */
+          do {
+            m = elige([1, 1, 1, 2, 3]);
+            p = ri(2, 10);
+            intentos++;
+          } while (mcd(m, p) !== 1 && intentos < 40);
+          var sigue = elige([true, true, true, false]);
+          cbE.k = k; cbE.e = e; cbE.m = m; cbE.p = p; cbE.sigue = sigue;
+          cbE.i1 = m * m;
+          cbE.i2 = sigue ? -(p * p) : (p * p);
+
+          var t1 = { c: k * cbE.i1, e: e + 2 };
+          var t2 = { c: k * cbE.i2, e: e };
+          document.getElementById('cb-enun').textContent = polinomio([t1, t2]);
+
+          document.getElementById('cb-paso3').style.display = 'none';
+          document.getElementById('cb-si').classList.remove('bien', 'mal');
+          document.getElementById('cb-no').classList.remove('bien', 'mal');
+          limpiar(cbIds1.concat(cbIds3));
+          ocultarFb('cb-fb');
+          ocultarSol('cb-sol');
+        }
+
+        function cbComprobar1() {
+          var ok = marcarCampo('cb-k', cbE.k) & marcarCampo('cb-e', cbE.e) &
+                   marcarCampo('cb-i1', cbE.i1) & marcarCampo('cb-i2', cbE.i2);
+          ok = !!ok;
+          if (ok) {
+            fb('cb-fb', 'Bien extraído. Ahora mira lo que quedó dentro del paréntesis.', true);
+          } else {
+            fb('cb-fb', 'Revisa las casillas en rojo. El término independiente de dentro lleva su propio signo.', false);
+          }
+        }
+
+        function cbResponder(dijoSi) {
+          var acierto = (dijoSi === cbE.sigue);
+          var btn = document.getElementById(dijoSi ? 'cb-si' : 'cb-no');
+          btn.classList.remove('bien', 'mal');
+          btn.classList.add(acierto ? 'bien' : 'mal');
+          if (cbE.sigue) {
+            if (acierto) {
+              fb('cb-fb', 'Correcto: dentro quedó una diferencia de cuadrados. Escribe los binomios.', true);
+            } else {
+              cbCont.suma(false);
+              fb('cb-fb', 'Todavía se puede seguir: lo de dentro es una diferencia de cuadrados.', false);
+            }
+            document.getElementById('cb-paso3').style.display = 'block';
+            document.getElementById('cb-a1').focus();
+          } else {
+            cbCont.suma(acierto);
+            fb('cb-fb', (acierto ? 'Correcto. ' : 'No se puede seguir. ') +
+              'Dentro del paréntesis quedó una suma de cuadrados, y una suma de cuadrados no se factoriza con números reales.', acierto);
+          }
+        }
+
+        function cbComprobar3() {
+          var ok = marcarCampo('cb-a1', cbE.m) & marcarCampo('cb-b1', cbE.p) &
+                   marcarCampo('cb-a2', cbE.m) & marcarCampo('cb-b2', cbE.p);
+          ok = !!ok;
+          cbCont.suma(ok);
+          if (ok) {
+            fb('cb-fb', 'Factorización completa y correcta.', true);
+          } else {
+            fb('cb-fb', 'Revisa: en cada binomio va la raíz cuadrada de cada término de dentro del paréntesis.', false);
+          }
+        }
+
+        function cbVer() {
+          var factor = cbE.k + (cbE.e === 0 ? '' : 'x' + SUP[cbE.e]);
+          var dentro = polinomio([{ c: cbE.i1, e: 2 }, { c: cbE.i2, e: 0 }]);
+          var html = '<h4>Solución paso a paso</h4>' +
+            '<div class="ln"><b>Paso 1. Factor común:</b> ' + factor + '</div>' +
+            '<div class="ln"><b>Queda:</b> ' + factor + '(' + dentro + ')</div>';
+          if (cbE.sigue) {
+            var pri = (cbE.m === 1 ? 'x' : cbE.m + 'x');
+            html += '<div class="ln"><b>Paso 2.</b> Dentro hay una diferencia de cuadrados: raíces ' + pri + ' y ' + cbE.p + '.</div>' +
+              '<div class="ln"><b>Resultado completo:</b> ' + factor + '(' + pri + ' + ' + cbE.p + ')(' + pri + ' ' + MENOS + ' ' + cbE.p + ')</div>';
+          } else {
+            html += '<div class="ln"><b>Paso 2.</b> Dentro quedó una suma de cuadrados: no se puede seguir factorizando.</div>' +
+              '<div class="ln"><b>Resultado completo:</b> ' + factor + '(' + dentro + ')</div>';
+          }
+          mostrarSol('cb-sol', html);
+        }
+
+        document.getElementById('cb-comprobar1').addEventListener('click', cbComprobar1);
+        document.getElementById('cb-si').addEventListener('click', function () { cbResponder(true); });
+        document.getElementById('cb-no').addEventListener('click', function () { cbResponder(false); });
+        document.getElementById('cb-comprobar3').addEventListener('click', cbComprobar3);
+        document.getElementById('cb-ver').addEventListener('click', cbVer);
+        document.getElementById('cb-nuevo').addEventListener('click', cbNuevo);
+        enterEn(cbIds1, cbComprobar1);
+        enterEn(cbIds3, cbComprobar3);
+
+        /* =========================================================
+           NAVEGACIÓN POR MÓDULOS
+           ========================================================= */
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('button.tab'));
+        function activar(id, mover) {
+          tabs.forEach(function (t) {
+            var sel = (t.id === id);
+            t.setAttribute('aria-selected', sel ? 'true' : 'false');
+            t.tabIndex = sel ? 0 : -1;
+            document.getElementById(t.getAttribute('aria-controls')).classList.toggle('activo', sel);
+          });
+          if (mover) document.getElementById(id).focus();
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', '#' + id.replace('tab-', ''));
+          }
+        }
+        tabs.forEach(function (t, idx) {
+          t.addEventListener('click', function () { activar(t.id, false); });
+          t.addEventListener('keydown', function (e) {
+            var i = null;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') i = (idx + 1) % tabs.length;
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') i = (idx - 1 + tabs.length) % tabs.length;
+            if (e.key === 'Home') i = 0;
+            if (e.key === 'End') i = tabs.length - 1;
+            if (i !== null) { e.preventDefault(); activar(tabs[i].id, true); }
+          });
+        });
+
+        fcNuevo();
+        dcNuevo();
+        cbNuevo();
+
+        var hash = (window.location.hash || '').replace('#', '');
+        if (['comun', 'cuadrados', 'combinar'].indexOf(hash) !== -1) { activar('tab-' + hash, false); }
+      })();
+    </script>
+  </body>
+</html>

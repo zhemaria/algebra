@@ -1,0 +1,822 @@
+<!doctype html>
+<!--
+  Interactivo · Lección 3.1 — Multiplicación de binomios
+  Spanish ASE Math · Nivel 4 · Tema 3
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)
+  https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactivo 3.1 · Multiplicación de binomios: área, FOIL e identidades notables</title>
+    <meta name="author" content="José M. Fernández" />
+    <meta name="description" content="Interactivo de práctica para multiplicar binomios con el modelo del área, el método FOIL y las identidades notables." />
+    <meta name="license" content="CC BY-NC-SA 4.0" />
+    <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" />
+    <style>
+      :root {
+        --tema: #bf360c;
+        --tema-d: #8c2708;
+        --tema-bg: #fbe9e7;
+        --tema-bg2: #f8d3cc;
+        --acento: #00695c;
+        --ok: #1b5e20;
+        --ok-bg: #e8f5e9;
+        --no: #b71c1c;
+        --no-bg: #ffebee;
+        --txt: #222;
+        --mut: #555;
+        --bg: #f5f7fa;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0; background: var(--bg); color: var(--txt);
+        line-height: 1.6; font-size: 16px;
+      }
+      .contenedor { max-width: 880px; margin: 0 auto; padding: 24px; }
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0;
+        margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0);
+        white-space: nowrap; border: 0;
+      }
+      header.principal {
+        background: linear-gradient(135deg, #8c2708 0%, #bf360c 55%, #d84315 100%);
+        color: #fff; padding: 30px 28px; border-radius: 14px;
+        margin-bottom: 18px; box-shadow: 0 4px 14px rgba(140, 39, 8, 0.28);
+      }
+      header.principal .ruta { font-size: 13px; letter-spacing: 0.4px; text-transform: uppercase; }
+      header.principal h1 { margin: 8px 0 6px; font-size: 24px; font-weight: 700; }
+      header.principal .meta { font-size: 14px; }
+
+      nav.modulos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+      button.tab {
+        flex: 1 1 190px; background: #fff; border: 2px solid var(--tema-bg2);
+        color: var(--tema-d); border-radius: 10px; padding: 11px 14px;
+        font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+        text-align: left; line-height: 1.35;
+      }
+      button.tab:hover { border-color: var(--tema); background: var(--tema-bg); }
+      button.tab[aria-selected="true"] {
+        background: var(--tema); border-color: var(--tema-d); color: #fff;
+      }
+      button.tab:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      button.tab .num { display: block; font-size: 12px; opacity: 0.95; font-weight: 600; }
+
+      section.panel { display: none; }
+      section.panel.activo { display: block; }
+
+      h2.titulo-panel {
+        color: var(--tema-d); font-size: 21px; margin: 6px 0 8px;
+        padding-bottom: 6px; border-bottom: 3px solid var(--tema-bg);
+      }
+      h3 { color: var(--tema-d); font-size: 16px; margin: 18px 0 6px; }
+      p.intro { color: var(--mut); font-size: 15px; margin: 6px 0 14px; }
+
+      .tarjeta {
+        background: #fff; border-radius: 12px; padding: 20px 24px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07); margin-bottom: 18px;
+      }
+      .marcador {
+        display: inline-block; background: var(--tema-bg); color: var(--tema-d);
+        border-radius: 20px; padding: 5px 16px; font-size: 14px; font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .enunciado {
+        font-size: 22px; font-weight: 700; color: var(--tema-d);
+        text-align: center; margin: 10px 0 18px;
+      }
+      .instruccion { font-size: 15px; margin: 10px 0; }
+
+      .campo {
+        width: 68px; padding: 8px 6px; font-size: 18px; font-family: inherit;
+        text-align: center; border: 2px solid #bdbdbd; border-radius: 8px;
+        background: #fff; color: var(--txt);
+      }
+      .campo:focus { outline: 3px solid var(--tema); outline-offset: 1px; border-color: var(--tema); }
+      .campo.bien { border-color: #2e7d32; background: var(--ok-bg); }
+      .campo.mal { border-color: #c62828; background: var(--no-bg); }
+      .campo.chico { width: 58px; }
+
+      .linea-resp {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+        font-size: 20px; font-weight: 700; color: var(--tema-d);
+        justify-content: center; margin: 14px 0;
+      }
+      .linea-resp .txt { font-size: 20px; }
+
+      .cuadricula {
+        display: grid; grid-template-columns: 78px 1fr 1fr; gap: 6px;
+        max-width: 420px; margin: 16px auto;
+      }
+      .celda-cab {
+        background: var(--tema); color: #fff; border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-size: 17px; padding: 10px 4px; min-height: 46px;
+      }
+      .celda-esq { background: transparent; }
+      .celda {
+        background: var(--tema-bg); border: 2px solid var(--tema-bg2);
+        border-radius: 8px; display: flex; align-items: center;
+        justify-content: center; gap: 4px; padding: 10px 6px; min-height: 62px;
+        font-size: 17px; font-weight: 700; color: var(--tema-d);
+      }
+
+      .pasos-foil { display: grid; gap: 10px; max-width: 460px; margin: 14px auto; }
+      .paso-foil {
+        display: flex; align-items: center; gap: 10px;
+        background: #fafafa; border: 1px solid #e3e3e3; border-radius: 8px;
+        padding: 10px 14px; font-size: 15px;
+      }
+      .paso-foil .letra {
+        background: var(--tema-bg); color: var(--tema-d); width: 30px; height: 30px;
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        font-weight: 700; flex-shrink: 0;
+      }
+      .paso-foil .desc { flex: 1; color: var(--mut); font-size: 14px; }
+      .paso-foil .suf { font-weight: 700; color: var(--tema-d); font-size: 17px; }
+
+      .opciones-bot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 14px 0; }
+      .op-bot {
+        background: #fff; border: 2px solid #cfcfcf; border-radius: 9px;
+        padding: 11px 18px; font-family: inherit; font-size: 15px; font-weight: 600;
+        color: var(--txt); cursor: pointer;
+      }
+      .op-bot:hover { border-color: var(--tema); }
+      .op-bot:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .op-bot.bien { border-color: #2e7d32; background: var(--ok-bg); color: var(--ok); }
+      .op-bot.mal { border-color: #c62828; background: var(--no-bg); color: var(--no); }
+
+      .acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+      .btn {
+        background: var(--tema); color: #fff; border: none; padding: 10px 20px;
+        border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+        font-family: inherit;
+      }
+      .btn:hover { background: var(--tema-d); }
+      .btn:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .btn.sec { background: #546e7a; }
+      .btn.sec:hover { background: #37474f; }
+      .btn.out {
+        background: #fff; color: var(--tema-d); border: 2px solid var(--tema);
+      }
+      .btn.out:hover { background: var(--tema-bg); }
+
+      .fb {
+        margin-top: 14px; padding: 12px 16px; border-radius: 8px;
+        font-size: 15px; font-weight: 600; display: none;
+      }
+      .fb.ok { background: var(--ok-bg); color: var(--ok); border-left: 5px solid #2e7d32; display: block; }
+      .fb.no { background: var(--no-bg); color: var(--no); border-left: 5px solid #c62828; display: block; }
+
+      .solucion {
+        display: none; margin-top: 14px; background: #fafafa;
+        border: 1px solid #e3e3e3; border-left: 5px solid var(--acento);
+        border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 15px;
+      }
+      .solucion.visible { display: block; }
+      .solucion h4 { margin: 0 0 8px; color: #004d40; font-size: 15px; }
+      .solucion .ln { margin: 6px 0; }
+      .solucion .ln b { color: var(--tema-d); }
+
+      .caja-tip {
+        background: var(--ok-bg); border-left: 5px solid #2e7d32;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        color: var(--ok); font-size: 15px;
+      }
+      .caja-atencion {
+        background: #fff8e1; border-left: 5px solid #f9a825;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        font-size: 15px; color: #5c3900;
+      }
+
+      footer {
+        text-align: center; padding: 22px 10px; color: var(--mut); font-size: 13px;
+        border-top: 1px solid #ddd; margin-top: 24px;
+      }
+      footer a { color: var(--tema-d); }
+
+      @media (max-width: 520px) {
+        .contenedor { padding: 14px; }
+        .enunciado { font-size: 19px; }
+        .cuadricula { grid-template-columns: 62px 1fr 1fr; }
+        .campo { width: 60px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; animation: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+      <header class="principal">
+        <div class="ruta">Spanish ASE Math · Nivel 4 · Tema 3 · Lección 3.1</div>
+        <h1>Multiplicación de binomios: del área a las identidades notables</h1>
+        <div class="meta">Cuatro módulos de práctica con verificación inmediata y solución paso a paso</div>
+      </header>
+
+      <nav class="modulos" role="tablist" aria-label="Módulos del interactivo">
+        <button class="tab" role="tab" id="tab-area" aria-controls="panel-area" aria-selected="true">
+          <span class="num">Módulo 1</span>Producto de binomios: modelo del área
+        </button>
+        <button class="tab" role="tab" id="tab-foil" aria-controls="panel-foil" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 2</span>Producto de binomios usando FOIL
+        </button>
+        <button class="tab" role="tab" id="tab-cuadrado" aria-controls="panel-cuadrado" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 3</span>Identidad: el cuadrado de un binomio
+        </button>
+        <button class="tab" role="tab" id="tab-sumadif" aria-controls="panel-sumadif" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 4</span>Identidad: suma por diferencia
+        </button>
+      </nav>
+
+      <!-- ============ MÓDULO 1 · MODELO DEL ÁREA ============ -->
+      <section class="panel activo" role="tabpanel" id="panel-area" aria-labelledby="tab-area" tabindex="0">
+        <h2 class="titulo-panel">Módulo 1 · Producto de binomios: modelo del área</h2>
+        <p class="intro">El producto de dos binomios es el área de un rectángulo. Completa el área de cada una de las cuatro partes y después el área total.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="area-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="area-enun"></div>
+
+          <div class="cuadricula" id="area-grid">
+            <div class="celda-esq"></div>
+            <div class="celda-cab" id="area-cab1"></div>
+            <div class="celda-cab" id="area-cab2"></div>
+            <div class="celda-cab" id="area-cab3"></div>
+            <div class="celda"><input class="campo chico" id="area-c1" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del área de la celda superior izquierda" /><span>x²</span></div>
+            <div class="celda"><input class="campo chico" id="area-c2" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del área de la celda superior derecha" /><span>x</span></div>
+            <div class="celda-cab" id="area-cab4"></div>
+            <div class="celda"><input class="campo chico" id="area-c3" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del área de la celda inferior izquierda" /><span>x</span></div>
+            <div class="celda"><input class="campo chico" id="area-c4" inputmode="numeric" autocomplete="off" aria-label="Área de la celda inferior derecha" /></div>
+          </div>
+
+          <p class="instruccion"><strong>Área total.</strong> Suma las cuatro partes y combina los términos semejantes:</p>
+          <div class="linea-resp">
+            <span class="txt">x² +</span>
+            <input class="campo" id="area-b" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el área total" />
+            <span class="txt">x +</span>
+            <input class="campo" id="area-c" inputmode="numeric" autocomplete="off" aria-label="Término independiente del área total" />
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="area-comprobar">Comprobar</button>
+            <button class="btn sec" id="area-ver">Ver la solución</button>
+            <button class="btn out" id="area-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="area-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="area-sol"></div>
+        </div>
+
+        <div class="caja-tip">
+          <strong>Lo que muestra el dibujo:</strong> las dos celdas del centro contienen términos semejantes (los dos llevan x). Por eso el área total tiene solo tres términos y no cuatro.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 2 · FOIL ============ -->
+      <section class="panel" role="tabpanel" id="panel-foil" aria-labelledby="tab-foil" tabindex="0">
+        <h2 class="titulo-panel">Módulo 2 · Producto de binomios usando FOIL</h2>
+        <p class="intro">Escribe el coeficiente de cada uno de los cuatro productos de FOIL. Los negativos se escriben con el signo menos, por ejemplo −6.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="foil-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="foil-enun"></div>
+
+          <div class="pasos-foil">
+            <div class="paso-foil">
+              <span class="letra" aria-hidden="true">F</span>
+              <span class="desc" id="foil-dF">Primeros</span>
+              <input class="campo chico" id="foil-f" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del producto de los primeros términos" />
+              <span class="suf">x²</span>
+            </div>
+            <div class="paso-foil">
+              <span class="letra" aria-hidden="true">O</span>
+              <span class="desc" id="foil-dO">Externos</span>
+              <input class="campo chico" id="foil-o" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del producto de los términos externos" />
+              <span class="suf">x</span>
+            </div>
+            <div class="paso-foil">
+              <span class="letra" aria-hidden="true">I</span>
+              <span class="desc" id="foil-dI">Internos</span>
+              <input class="campo chico" id="foil-i" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del producto de los términos internos" />
+              <span class="suf">x</span>
+            </div>
+            <div class="paso-foil">
+              <span class="letra" aria-hidden="true">L</span>
+              <span class="desc" id="foil-dL">Últimos</span>
+              <input class="campo chico" id="foil-l" inputmode="numeric" autocomplete="off" aria-label="Producto de los últimos términos" />
+            </div>
+          </div>
+
+          <p class="instruccion"><strong>Resultado.</strong> Combina los dos términos del centro:</p>
+          <div class="linea-resp">
+            <input class="campo" id="foil-ra" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x al cuadrado en el resultado" />
+            <span class="txt">x² +</span>
+            <input class="campo" id="foil-rb" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el resultado" />
+            <span class="txt">x +</span>
+            <input class="campo" id="foil-rc" inputmode="numeric" autocomplete="off" aria-label="Término independiente del resultado" />
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="foil-comprobar">Comprobar</button>
+            <button class="btn sec" id="foil-ver">Ver la solución</button>
+            <button class="btn out" id="foil-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="foil-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="foil-sol"></div>
+        </div>
+
+        <div class="caja-atencion">
+          <strong>Cada término lleva su signo.</strong> Si el binomio es (x − 4), el último término es −4, no 4. Ese signo viaja con el número en los productos O, I y L.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 3 · CUADRADO DE UN BINOMIO ============ -->
+      <section class="panel" role="tabpanel" id="panel-cuadrado" aria-labelledby="tab-cuadrado" tabindex="0">
+        <h2 class="titulo-panel">Módulo 3 · Identidad: el cuadrado de un binomio</h2>
+        <p class="intro">(a + b)² = a² + 2ab + b² &nbsp;·&nbsp; (a − b)² = a² − 2ab + b². Completa las tres piezas: el cuadrado del primero, el doble del producto y el cuadrado del segundo.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="cuad-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="cuad-enun"></div>
+
+          <div class="pasos-foil">
+            <div class="paso-foil">
+              <span class="letra" aria-hidden="true">1</span>
+              <span class="desc">Cuadrado del primero</span>
+              <input class="campo chico" id="cuad-p1" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del cuadrado del primer término" />
+              <span class="suf">x²</span>
+            </div>
+            <div class="paso-foil">
+              <span class="letra" aria-hidden="true">2</span>
+              <span class="desc">Doble del producto (con su signo)</span>
+              <input class="campo chico" id="cuad-p2" inputmode="numeric" autocomplete="off" aria-label="Coeficiente del doble del producto, con su signo" />
+              <span class="suf">x</span>
+            </div>
+            <div class="paso-foil">
+              <span class="letra" aria-hidden="true">3</span>
+              <span class="desc">Cuadrado del segundo</span>
+              <input class="campo chico" id="cuad-p3" inputmode="numeric" autocomplete="off" aria-label="Cuadrado del segundo término" />
+            </div>
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="cuad-comprobar">Comprobar</button>
+            <button class="btn sec" id="cuad-ver">Ver la solución</button>
+            <button class="btn out" id="cuad-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="cuad-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="cuad-sol"></div>
+        </div>
+
+        <div class="caja-atencion">
+          <strong>El error más frecuente:</strong> escribir (x + 5)² como x² + 25. Falta el término del medio, 2ab. Elevar al cuadrado un binomio nunca es elevar al cuadrado cada término por separado.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 4 · SUMA POR DIFERENCIA ============ -->
+      <section class="panel" role="tabpanel" id="panel-sumadif" aria-labelledby="tab-sumadif" tabindex="0">
+        <h2 class="titulo-panel">Módulo 4 · Identidad: suma por diferencia</h2>
+        <p class="intro">Primero decide si el producto es una suma por diferencia. Solo lo es cuando los dos binomios tienen <strong>los mismos términos</strong> y difieren <strong>únicamente en el signo</strong> del segundo.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="sd-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="sd-enun"></div>
+
+          <p class="instruccion" id="sd-preg"><strong>Paso 1.</strong> ¿Se puede aplicar el atajo (a + b)(a − b) = a² − b²?</p>
+          <div class="opciones-bot">
+            <button class="op-bot" id="sd-si">Sí, es suma por diferencia</button>
+            <button class="op-bot" id="sd-no">No, hay que usar FOIL</button>
+          </div>
+
+          <div id="sd-paso2" style="display: none">
+            <p class="instruccion"><strong>Paso 2.</strong> Escribe el resultado con la identidad: el cuadrado del primero menos el cuadrado del segundo.</p>
+            <div class="linea-resp">
+              <input class="campo" id="sd-ra" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x al cuadrado" />
+              <span class="txt">x² −</span>
+              <input class="campo" id="sd-rc" inputmode="numeric" autocomplete="off" aria-label="Término independiente que se resta" />
+            </div>
+            <div class="acciones">
+              <button class="btn" id="sd-comprobar">Comprobar el resultado</button>
+            </div>
+          </div>
+
+          <div class="acciones">
+            <button class="btn sec" id="sd-ver">Ver la solución</button>
+            <button class="btn out" id="sd-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="sd-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="sd-sol"></div>
+        </div>
+
+        <div class="caja-tip">
+          <strong>Por qué funciona:</strong> con FOIL, los productos de los términos externos e internos son opuestos y se cancelan. Queda solo el primero al cuadrado menos el segundo al cuadrado.
+        </div>
+      </section>
+
+      <footer>
+        <p>Spanish ASE Math · Nivel 4 · Tema 3 · Interactivo de la Lección 3.1</p>
+        <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago</p>
+        <p>Obra publicada bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" rel="license noopener noreferrer" target="_blank">Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        'use strict';
+
+        /* ---------- utilidades comunes ---------- */
+        var MENOS = '\u2212';
+        function ri(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+        function rnz(a, b) { var v = 0; while (v === 0) { v = ri(a, b); } return v; }
+        function elige(arr) { return arr[ri(0, arr.length - 1)]; }
+        function signo(n) { return (n < 0 ? ' ' + MENOS + ' ' : ' + ') + Math.abs(n); }
+        function coefX(n) {
+          if (n === 1) return 'x';
+          if (n === -1) return MENOS + 'x';
+          return (n < 0 ? MENOS + Math.abs(n) : n) + 'x';
+        }
+        function binomio(m, p) { return '(' + coefX(m) + signo(p) + ')'; }
+        function num(n) { return n < 0 ? MENOS + Math.abs(n) : String(n); }
+        function leer(id) {
+          var el = document.getElementById(id);
+          var v = (el.value || '').trim().replace(/[\u2212\u2013\u2014]/g, '-').replace(/\s+/g, '');
+          if (v === '' || !/^-?\d+$/.test(v)) return null;
+          return parseInt(v, 10);
+        }
+        function marcarCampo(id, esperado) {
+          var el = document.getElementById(id);
+          var v = leer(id);
+          var ok = v !== null && v === esperado;
+          el.classList.remove('bien', 'mal');
+          el.classList.add(ok ? 'bien' : 'mal');
+          return ok;
+        }
+        function limpiar(ids) {
+          ids.forEach(function (id) {
+            var el = document.getElementById(id);
+            el.value = '';
+            el.classList.remove('bien', 'mal');
+          });
+        }
+        function fb(id, texto, ok) {
+          var el = document.getElementById(id);
+          el.textContent = texto;
+          el.className = 'fb ' + (ok ? 'ok' : 'no');
+        }
+        function ocultarFb(id) {
+          var el = document.getElementById(id);
+          el.className = 'fb';
+          el.textContent = '';
+        }
+        function mostrarSol(id, html) {
+          var el = document.getElementById(id);
+          el.innerHTML = html;
+          el.classList.add('visible');
+        }
+        function ocultarSol(id) {
+          var el = document.getElementById(id);
+          el.classList.remove('visible');
+          el.innerHTML = '';
+        }
+        function enterEn(ids, accion) {
+          ids.forEach(function (id) {
+            document.getElementById(id).addEventListener('keydown', function (e) {
+              if (e.key === 'Enter') { e.preventDefault(); accion(); }
+            });
+          });
+        }
+        function Contador(idMarcador) {
+          this.a = 0; this.t = 0; this.el = document.getElementById(idMarcador);
+        }
+        Contador.prototype.suma = function (acierto) {
+          this.t++;
+          if (acierto) this.a++;
+          this.el.textContent = 'Aciertos: ' + this.a + ' \u00b7 Intentos: ' + this.t;
+        };
+
+        /* =========================================================
+           MÓDULO 1 · MODELO DEL ÁREA
+           ========================================================= */
+        var areaE = {};
+        var areaCont = new Contador('area-marcador');
+        var areaIds = ['area-c1', 'area-c2', 'area-c3', 'area-c4', 'area-b', 'area-c'];
+
+        function areaNuevo() {
+          areaE.p = ri(2, 9);
+          areaE.q = ri(2, 9);
+          while (areaE.q === areaE.p) { areaE.q = ri(2, 9); }
+          document.getElementById('area-enun').textContent =
+            '(x + ' + areaE.p + ')(x + ' + areaE.q + ')';
+          document.getElementById('area-cab1').textContent = 'x';
+          document.getElementById('area-cab2').textContent = String(areaE.q);
+          document.getElementById('area-cab3').textContent = 'x';
+          document.getElementById('area-cab4').textContent = String(areaE.p);
+          limpiar(areaIds);
+          ocultarFb('area-fb');
+          ocultarSol('area-sol');
+        }
+
+        function areaComprobar() {
+          var ok1 = marcarCampo('area-c1', 1);
+          var ok2 = marcarCampo('area-c2', areaE.q);
+          var ok3 = marcarCampo('area-c3', areaE.p);
+          var ok4 = marcarCampo('area-c4', areaE.p * areaE.q);
+          var ok5 = marcarCampo('area-b', areaE.p + areaE.q);
+          var ok6 = marcarCampo('area-c', areaE.p * areaE.q);
+          var todo = ok1 && ok2 && ok3 && ok4 && ok5 && ok6;
+          areaCont.suma(todo);
+          if (todo) {
+            fb('area-fb', 'Correcto. Las cuatro áreas suman x\u00b2 + ' + (areaE.p + areaE.q) + 'x + ' + (areaE.p * areaE.q) + '.', true);
+          } else {
+            fb('area-fb', 'Todavía no. Las casillas en rojo hay que revisarlas. Recuerda que cada celda es el producto de su fila por su columna.', false);
+          }
+        }
+
+        function areaVer() {
+          var p = areaE.p, q = areaE.q;
+          mostrarSol('area-sol',
+            '<h4>Solución paso a paso</h4>' +
+            '<div class="ln"><b>Celda superior izquierda:</b> x \u00b7 x = 1x\u00b2</div>' +
+            '<div class="ln"><b>Celda superior derecha:</b> x \u00b7 ' + q + ' = ' + q + 'x</div>' +
+            '<div class="ln"><b>Celda inferior izquierda:</b> ' + p + ' \u00b7 x = ' + p + 'x</div>' +
+            '<div class="ln"><b>Celda inferior derecha:</b> ' + p + ' \u00b7 ' + q + ' = ' + (p * q) + '</div>' +
+            '<div class="ln"><b>Términos semejantes:</b> ' + q + 'x + ' + p + 'x = ' + (p + q) + 'x</div>' +
+            '<div class="ln"><b>Área total:</b> x\u00b2 + ' + (p + q) + 'x + ' + (p * q) + '</div>');
+        }
+
+        document.getElementById('area-comprobar').addEventListener('click', areaComprobar);
+        document.getElementById('area-ver').addEventListener('click', areaVer);
+        document.getElementById('area-nuevo').addEventListener('click', areaNuevo);
+        enterEn(areaIds, areaComprobar);
+
+        /* =========================================================
+           MÓDULO 2 · FOIL
+           ========================================================= */
+        var foilE = {};
+        var foilCont = new Contador('foil-marcador');
+        var foilIds = ['foil-f', 'foil-o', 'foil-i', 'foil-l', 'foil-ra', 'foil-rb', 'foil-rc'];
+
+        function foilNuevo() {
+          foilE.m = elige([1, 1, 2, 2, 3]);
+          foilE.n = elige([1, 1, 1, 2]);
+          foilE.p = rnz(-9, 9);
+          foilE.q = rnz(-9, 9);
+          document.getElementById('foil-enun').textContent =
+            binomio(foilE.m, foilE.p) + binomio(foilE.n, foilE.q);
+          document.getElementById('foil-dF').textContent =
+            'Primeros: ' + coefX(foilE.m) + ' \u00b7 ' + coefX(foilE.n);
+          document.getElementById('foil-dO').textContent =
+            'Externos: ' + coefX(foilE.m) + ' \u00b7 (' + num(foilE.q) + ')';
+          document.getElementById('foil-dI').textContent =
+            'Internos: (' + num(foilE.p) + ') \u00b7 ' + coefX(foilE.n);
+          document.getElementById('foil-dL').textContent =
+            'Últimos: (' + num(foilE.p) + ') \u00b7 (' + num(foilE.q) + ')';
+          limpiar(foilIds);
+          ocultarFb('foil-fb');
+          ocultarSol('foil-sol');
+        }
+
+        function foilComprobar() {
+          var F = foilE.m * foilE.n, O = foilE.m * foilE.q, I = foilE.p * foilE.n, L = foilE.p * foilE.q;
+          var okF = marcarCampo('foil-f', F);
+          var okO = marcarCampo('foil-o', O);
+          var okI = marcarCampo('foil-i', I);
+          var okL = marcarCampo('foil-l', L);
+          var okA = marcarCampo('foil-ra', F);
+          var okB = marcarCampo('foil-rb', O + I);
+          var okC = marcarCampo('foil-rc', L);
+          var todo = okF && okO && okI && okL && okA && okB && okC;
+          foilCont.suma(todo);
+          if (todo) {
+            fb('foil-fb', 'Correcto. El producto es ' + num(F) + 'x\u00b2' + signo(O + I) + 'x' + signo(L) + '.', true);
+          } else if (okF && okO && okI && okL) {
+            fb('foil-fb', 'Los cuatro productos están bien. Falla la combinación final: los términos del centro se suman (' + num(O) + ' y ' + num(I) + ').', false);
+          } else {
+            fb('foil-fb', 'Revisa las casillas en rojo. Cada término entra en el producto con su propio signo.', false);
+          }
+        }
+
+        function foilVer() {
+          var F = foilE.m * foilE.n, O = foilE.m * foilE.q, I = foilE.p * foilE.n, L = foilE.p * foilE.q;
+          mostrarSol('foil-sol',
+            '<h4>Solución paso a paso</h4>' +
+            '<div class="ln"><b>F</b> ' + coefX(foilE.m) + ' \u00b7 ' + coefX(foilE.n) + ' = ' + num(F) + 'x\u00b2</div>' +
+            '<div class="ln"><b>O</b> ' + coefX(foilE.m) + ' \u00b7 (' + num(foilE.q) + ') = ' + num(O) + 'x</div>' +
+            '<div class="ln"><b>I</b> (' + num(foilE.p) + ') \u00b7 ' + coefX(foilE.n) + ' = ' + num(I) + 'x</div>' +
+            '<div class="ln"><b>L</b> (' + num(foilE.p) + ') \u00b7 (' + num(foilE.q) + ') = ' + num(L) + '</div>' +
+            '<div class="ln"><b>Términos semejantes:</b> ' + num(O) + 'x' + signo(I) + 'x = ' + num(O + I) + 'x</div>' +
+            '<div class="ln"><b>Resultado:</b> ' + num(F) + 'x\u00b2' + signo(O + I) + 'x' + signo(L) + '</div>');
+        }
+
+        document.getElementById('foil-comprobar').addEventListener('click', foilComprobar);
+        document.getElementById('foil-ver').addEventListener('click', foilVer);
+        document.getElementById('foil-nuevo').addEventListener('click', foilNuevo);
+        enterEn(foilIds, foilComprobar);
+
+        /* =========================================================
+           MÓDULO 3 · CUADRADO DE UN BINOMIO
+           ========================================================= */
+        var cuadE = {};
+        var cuadCont = new Contador('cuad-marcador');
+        var cuadIds = ['cuad-p1', 'cuad-p2', 'cuad-p3'];
+
+        function cuadNuevo() {
+          cuadE.m = elige([1, 1, 2, 3, 4, 5]);
+          cuadE.p = ri(2, 9);
+          cuadE.s = elige([1, -1]);
+          document.getElementById('cuad-enun').textContent =
+            '(' + coefX(cuadE.m) + signo(cuadE.s * cuadE.p) + ')\u00b2';
+          limpiar(cuadIds);
+          ocultarFb('cuad-fb');
+          ocultarSol('cuad-sol');
+        }
+
+        function cuadComprobar() {
+          var A = cuadE.m * cuadE.m;
+          var B = cuadE.s * 2 * cuadE.m * cuadE.p;
+          var C = cuadE.p * cuadE.p;
+          var ok1 = marcarCampo('cuad-p1', A);
+          var ok2 = marcarCampo('cuad-p2', B);
+          var ok3 = marcarCampo('cuad-p3', C);
+          var todo = ok1 && ok2 && ok3;
+          cuadCont.suma(todo);
+          if (todo) {
+            fb('cuad-fb', 'Correcto. El desarrollo es ' + num(A) + 'x\u00b2' + signo(B) + 'x + ' + C + '.', true);
+          } else if (ok1 && ok3 && !ok2) {
+            fb('cuad-fb', 'Los cuadrados están bien, pero falla el término del medio. Es el doble del producto de los dos términos, con el signo del binomio.', false);
+          } else {
+            fb('cuad-fb', 'Revisa las casillas en rojo. Al elevar al cuadrado, el coeficiente también se eleva al cuadrado.', false);
+          }
+        }
+
+        function cuadVer() {
+          var A = cuadE.m * cuadE.m;
+          var B = cuadE.s * 2 * cuadE.m * cuadE.p;
+          var C = cuadE.p * cuadE.p;
+          mostrarSol('cuad-sol',
+            '<h4>Solución paso a paso</h4>' +
+            '<div class="ln"><b>Cuadrado del primero:</b> (' + coefX(cuadE.m) + ')\u00b2 = ' + A + 'x\u00b2</div>' +
+            '<div class="ln"><b>Doble del producto:</b> 2 \u00b7 ' + coefX(cuadE.m) + ' \u00b7 ' + cuadE.p + ' = ' + (2 * cuadE.m * cuadE.p) + 'x, con signo ' + (cuadE.s > 0 ? 'más' : 'menos') + ' \u2192 ' + num(B) + 'x</div>' +
+            '<div class="ln"><b>Cuadrado del segundo:</b> ' + cuadE.p + '\u00b2 = ' + C + '</div>' +
+            '<div class="ln"><b>Resultado:</b> ' + A + 'x\u00b2' + signo(B) + 'x + ' + C + '</div>' +
+            '<div class="ln">El último término siempre es positivo: un número negativo elevado al cuadrado da positivo.</div>');
+        }
+
+        document.getElementById('cuad-comprobar').addEventListener('click', cuadComprobar);
+        document.getElementById('cuad-ver').addEventListener('click', cuadVer);
+        document.getElementById('cuad-nuevo').addEventListener('click', cuadNuevo);
+        enterEn(cuadIds, cuadComprobar);
+
+        /* =========================================================
+           MÓDULO 4 · SUMA POR DIFERENCIA
+           ========================================================= */
+        var sdE = {};
+        var sdCont = new Contador('sd-marcador');
+        var sdIds = ['sd-ra', 'sd-rc'];
+
+        function sdNuevo() {
+          var m = elige([1, 1, 2, 3, 4, 5]);
+          var p = ri(2, 11);
+          var tipo = elige(['si', 'si', 'no-mismo-signo', 'no-otro-numero', 'no-otro-coef']);
+          sdE.m = m; sdE.p = p; sdE.tipo = tipo;
+          var txt;
+          if (tipo === 'si') {
+            var orden = elige([1, -1]);
+            txt = binomio(m, orden * p) + binomio(m, -orden * p);
+            sdE.esSD = true;
+          } else if (tipo === 'no-mismo-signo') {
+            txt = binomio(m, p) + binomio(m, p);
+            sdE.esSD = false;
+            sdE.motivo = 'Los dos binomios son iguales: es un cuadrado de binomio, no una suma por diferencia.';
+          } else if (tipo === 'no-otro-numero') {
+            var p2 = p + elige([1, 2, 3]);
+            txt = binomio(m, p) + binomio(m, -p2);
+            sdE.esSD = false;
+            sdE.motivo = 'Los segundos términos no son el mismo número (' + p + ' y ' + p2 + '): hay que multiplicar con FOIL.';
+          } else {
+            var m2 = m + elige([1, 2]);
+            txt = binomio(m, p) + binomio(m2, -p);
+            sdE.esSD = false;
+            sdE.motivo = 'Los primeros términos no son iguales (' + coefX(m) + ' y ' + coefX(m2) + '): hay que multiplicar con FOIL.';
+          }
+          document.getElementById('sd-enun').textContent = txt;
+          document.getElementById('sd-paso2').style.display = 'none';
+          document.getElementById('sd-si').classList.remove('bien', 'mal');
+          document.getElementById('sd-no').classList.remove('bien', 'mal');
+          limpiar(sdIds);
+          ocultarFb('sd-fb');
+          ocultarSol('sd-sol');
+        }
+
+        function sdResponder(dijoSi) {
+          var acierto = (dijoSi === sdE.esSD);
+          var btn = document.getElementById(dijoSi ? 'sd-si' : 'sd-no');
+          btn.classList.remove('bien', 'mal');
+          btn.classList.add(acierto ? 'bien' : 'mal');
+          if (sdE.esSD) {
+            if (acierto) {
+              fb('sd-fb', 'Bien clasificado. Ahora aplica el atajo.', true);
+              document.getElementById('sd-paso2').style.display = 'block';
+              document.getElementById('sd-ra').focus();
+            } else {
+              sdCont.suma(false);
+              fb('sd-fb', 'Míralo otra vez: los dos binomios tienen los mismos términos y solo cambia el signo del segundo. Sí es una suma por diferencia.', false);
+              document.getElementById('sd-paso2').style.display = 'block';
+            }
+          } else {
+            sdCont.suma(acierto);
+            if (acierto) {
+              fb('sd-fb', 'Correcto: aquí no se puede usar el atajo. ' + sdE.motivo, true);
+            } else {
+              fb('sd-fb', 'No es una suma por diferencia. ' + sdE.motivo, false);
+            }
+          }
+        }
+
+        function sdComprobar() {
+          var A = sdE.m * sdE.m, C = sdE.p * sdE.p;
+          var okA = marcarCampo('sd-ra', A);
+          var okC = marcarCampo('sd-rc', C);
+          var todo = okA && okC;
+          sdCont.suma(todo);
+          if (todo) {
+            fb('sd-fb', 'Correcto. El producto es ' + A + 'x\u00b2 ' + MENOS + ' ' + C + '.', true);
+          } else {
+            fb('sd-fb', 'Revisa: se eleva al cuadrado el primer término completo (coeficiente incluido) y también el segundo.', false);
+          }
+        }
+
+        function sdVer() {
+          var A = sdE.m * sdE.m, C = sdE.p * sdE.p;
+          if (sdE.esSD) {
+            mostrarSol('sd-sol',
+              '<h4>Solución paso a paso</h4>' +
+              '<div class="ln"><b>Paso 1.</b> Los dos binomios tienen los mismos términos y solo cambia el signo: sí es suma por diferencia.</div>' +
+              '<div class="ln"><b>Paso 2.</b> Cuadrado del primero: (' + coefX(sdE.m) + ')\u00b2 = ' + A + 'x\u00b2</div>' +
+              '<div class="ln"><b>Paso 3.</b> Cuadrado del segundo: ' + sdE.p + '\u00b2 = ' + C + '</div>' +
+              '<div class="ln"><b>Resultado:</b> ' + A + 'x\u00b2 ' + MENOS + ' ' + C + '</div>');
+          } else {
+            mostrarSol('sd-sol',
+              '<h4>Solución paso a paso</h4>' +
+              '<div class="ln"><b>Paso 1.</b> ' + sdE.motivo + '</div>' +
+              '<div class="ln">El atajo a\u00b2 ' + MENOS + ' b\u00b2 solo sirve cuando los binomios son idénticos salvo el signo del segundo término.</div>');
+          }
+        }
+
+        document.getElementById('sd-si').addEventListener('click', function () { sdResponder(true); });
+        document.getElementById('sd-no').addEventListener('click', function () { sdResponder(false); });
+        document.getElementById('sd-comprobar').addEventListener('click', sdComprobar);
+        document.getElementById('sd-ver').addEventListener('click', sdVer);
+        document.getElementById('sd-nuevo').addEventListener('click', sdNuevo);
+        enterEn(sdIds, sdComprobar);
+
+        /* =========================================================
+           NAVEGACIÓN POR MÓDULOS
+           ========================================================= */
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('button.tab'));
+
+        function activar(id, mover) {
+          tabs.forEach(function (t) {
+            var sel = (t.id === id);
+            t.setAttribute('aria-selected', sel ? 'true' : 'false');
+            t.tabIndex = sel ? 0 : -1;
+            var panel = document.getElementById(t.getAttribute('aria-controls'));
+            panel.classList.toggle('activo', sel);
+          });
+          if (mover) document.getElementById(id).focus();
+          var clave = id.replace('tab-', '');
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', '#' + clave);
+          }
+        }
+
+        tabs.forEach(function (t, idx) {
+          t.addEventListener('click', function () { activar(t.id, false); });
+          t.addEventListener('keydown', function (e) {
+            var i = null;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') i = (idx + 1) % tabs.length;
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') i = (idx - 1 + tabs.length) % tabs.length;
+            if (e.key === 'Home') i = 0;
+            if (e.key === 'End') i = tabs.length - 1;
+            if (i !== null) { e.preventDefault(); activar(tabs[i].id, true); }
+          });
+        });
+
+        /* arranque */
+        areaNuevo();
+        foilNuevo();
+        cuadNuevo();
+        sdNuevo();
+
+        var hash = (window.location.hash || '').replace('#', '');
+        var validos = ['area', 'foil', 'cuadrado', 'sumadif'];
+        if (validos.indexOf(hash) !== -1) {
+          activar('tab-' + hash, false);
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lección 3.2 · Factorización: factor común y diferencia de cuadrados</title>
+    <style>
+      :root {
+        --tema: #bf360c;
+        --tema-d: #8c2708;
+        --tema-bg: #fbe9e7;
+        --tema-bg2: #f8d3cc;
+        --acento: #00695c;
+        --txt: #222;
+        --bg: #f5f7fa;
+        --that: #5e35b1;
+        --that-d: #4527a0;
+        --that-txt: #ffffff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0; background: var(--bg); color: var(--txt);
+        line-height: 1.6; font-size: 16px;
+      }
+      .contenedor { max-width: 880px; margin: 0 auto; padding: 24px; }
+
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0;
+        margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0);
+        white-space: nowrap; border: 0;
+      }
+
+      header.principal {
+        background: var(--tema);
+        background: linear-gradient(135deg, #8c2708 0%, #bf360c 55%, #d84315 100%);
+        color: #fff; padding: 32px 30px; border-radius: 14px;
+        margin-bottom: 22px; box-shadow: 0 4px 14px rgba(140, 39, 8, 0.28);
+      }
+      header.principal .ruta {
+        font-size: 13px; opacity: 0.94; letter-spacing: 0.4px; text-transform: uppercase;
+      }
+      header.principal h1 { margin: 8px 0 6px; font-size: 25px; font-weight: 700; }
+      header.principal .meta { font-size: 14px; opacity: 0.96; }
+
+      h2.seccion {
+        color: var(--tema-d); font-size: 21px; margin: 34px 0 12px;
+        padding-bottom: 6px; border-bottom: 3px solid var(--tema-bg);
+      }
+      h3 { color: var(--tema-d); font-size: 17px; margin: 20px 0 8px; }
+
+      .caja-objetivos {
+        background: var(--tema-bg); border-left: 6px solid var(--tema);
+        padding: 18px 22px; border-radius: 0 10px 10px 0; margin-bottom: 22px;
+      }
+      .caja-objetivos h2 { margin: 0 0 10px; color: var(--tema-d); font-size: 19px; }
+      .caja-objetivos ul { margin: 0; padding-left: 22px; }
+      .caja-objetivos li { margin: 5px 0; }
+
+      .bloque {
+        background: #fff; border-radius: 10px; padding: 4px 24px 18px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.06); margin-bottom: 18px;
+      }
+      p { margin: 10px 0; }
+
+      .formula {
+        text-align: center; font-size: 20px; font-weight: 700;
+        color: var(--tema-d); margin: 14px 0;
+      }
+
+      .ejemplo {
+        background: #fafafa; border: 1px solid #e3e3e3; border-radius: 8px;
+        padding: 14px 18px; margin: 14px 0;
+      }
+      .ejemplo .et {
+        display: inline-block; background: var(--tema); color: #fff;
+        font-size: 12px; font-weight: 700; padding: 3px 12px;
+        border-radius: 12px; margin-bottom: 8px; letter-spacing: 0.4px;
+      }
+      .paso { margin: 7px 0; padding-left: 30px; position: relative; }
+      .paso .n {
+        position: absolute; left: 0; top: 0; background: var(--tema-bg);
+        color: var(--tema-d); width: 22px; height: 22px; border-radius: 50%;
+        font-size: 13px; font-weight: 700; text-align: center; line-height: 22px;
+      }
+
+      .diagrama-wrap { text-align: center; margin: 18px 0; }
+      .diagrama-wrap svg { max-width: 100%; height: auto; }
+
+      .caja-tip {
+        background: #e8f5e9; border-left: 5px solid #2e7d32;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        color: #1b5e20; font-size: 15px;
+      }
+      .caja-tip strong { color: #1b5e20; }
+
+      .caja-atencion {
+        background: #fff8e1; border-left: 5px solid #f9a825;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        font-size: 15px; color: #5c3900;
+      }
+      .caja-atencion strong { color: #5c3900; }
+
+      .enlace-interactivo {
+        display: flex; align-items: flex-start; gap: 14px;
+        background: var(--tema-bg); border: 2px solid var(--tema);
+        border-left: 6px solid var(--tema); border-radius: 10px;
+        padding: 16px 20px; margin: 18px 0; text-decoration: none;
+        color: var(--tema-d); transition: background 0.15s;
+      }
+      .enlace-interactivo:hover { background: var(--tema-bg2); }
+      .enlace-interactivo .ei-icono { font-size: 26px; line-height: 1; flex-shrink: 0; }
+      .enlace-interactivo .ei-titulo { display: block; font-weight: 700; font-size: 16px; color: var(--tema-d); }
+      .enlace-interactivo .ei-sub { display: block; font-size: 14px; color: #333; margin: 4px 0 8px; }
+      .enlace-interactivo .ei-cta {
+        display: inline-block; background: var(--tema); color: #fff;
+        font-size: 14px; font-weight: 700; padding: 6px 16px; border-radius: 7px;
+      }
+
+      .reglas { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      .reglas th, .reglas td { border: 1px solid #e0e0e0; padding: 9px 12px; text-align: left; }
+      .reglas th { background: var(--tema); color: #fff; }
+      .reglas td:first-child { background: var(--tema-bg); font-weight: 600; color: var(--tema-d); }
+
+      .practica {
+        background: var(--tema-bg2); border: 1px dashed var(--tema);
+        border-radius: 10px; padding: 16px 20px; margin: 18px 0;
+      }
+      .practica h3 { margin-top: 0; color: var(--tema-d); }
+      .pregunta { margin: 14px 0; }
+      .pregunta .enun { font-weight: 600; margin-bottom: 8px; }
+      .opciones { display: flex; flex-direction: column; gap: 7px; }
+      .opcion {
+        background: #fff; border: 2px solid #e0e0e0; border-radius: 8px;
+        padding: 9px 14px; cursor: pointer; transition: all 0.15s;
+      }
+      .opcion:hover { border-color: var(--tema); }
+      .opcion.correcta { border-color: #2e7d32; background: #e8f5e9; font-weight: 600; }
+      .opcion.incorrecta { border-color: #c62828; background: #ffebee; }
+      .opcion.elegida { border-color: var(--tema); }
+      .fb { margin-top: 8px; font-size: 14px; font-weight: 600; display: none; }
+      .fb.ok { color: #1b5e20; }
+      .fb.no { color: #c62828; }
+
+      .btn {
+        background: var(--tema); color: #fff; border: none; padding: 9px 20px;
+        border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+        font-family: inherit; margin-top: 8px;
+      }
+      .btn:hover { background: var(--tema-d); }
+      .btn.sec { background: #546e7a; }
+      .btn.sec:hover { background: #37474f; }
+
+      .btnTQ {
+        display: inline-block; background: var(--that); color: var(--that-txt);
+        border: 2px solid var(--that-d); text-decoration: none; padding: 9px 20px;
+        border-radius: 8px; font-size: 14px; font-weight: 700; font-family: inherit;
+        cursor: pointer; margin-top: 8px; transition: background 0.15s;
+      }
+      .btnTQ:hover, .btnTQ:focus { background: var(--that-d); }
+      .btnTQ:visited { color: var(--that-txt); }
+      .btnTQ:focus-visible { outline: 3px solid var(--that-d); outline-offset: 2px; }
+      .btnTQ .ext { margin-left: 4px; }
+
+      .modalidad { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+      .modo { flex: 1; min-width: 230px; border-radius: 9px; padding: 14px 16px; font-size: 14px; }
+      .modo-pres { background: #e3f2fd; border-left: 5px solid #1565c0; }
+      .modo-pres strong { color: #0d47a1; }
+      .modo-virt { background: #f3e5f5; border-left: 5px solid #6a1b9a; }
+      .modo-virt strong { color: #4a148c; }
+      .modo h3 { margin: 0 0 6px; font-size: 15px; }
+      .modo-pres h3 { color: #0d47a1; }
+      .modo-virt h3 { color: #4a148c; }
+
+      .actividad { margin-bottom: 18px; }
+      .actividad > .titulo-act {
+        font-weight: 700; color: var(--tema-d); font-size: 15px;
+        background: var(--tema-bg); padding: 7px 14px; border-radius: 7px;
+      }
+
+      details.quiz-acordeon {
+        background: #fff; border: 2px solid var(--tema); border-radius: 12px;
+        margin: 22px 0; overflow: hidden;
+      }
+      details.quiz-acordeon > summary {
+        list-style: none; cursor: pointer; display: flex; align-items: center;
+        gap: 12px; padding: 16px 24px; background: var(--tema-bg);
+      }
+      details.quiz-acordeon > summary::-webkit-details-marker { display: none; }
+      details.quiz-acordeon > summary .chevron-q {
+        font-size: 16px; color: var(--tema-d); transition: transform 0.2s; flex-shrink: 0;
+      }
+      details.quiz-acordeon[open] > summary .chevron-q { transform: rotate(90deg); }
+      details.quiz-acordeon > summary h2 { margin: 0; color: var(--tema-d); font-size: 20px; }
+      .quiz-inner { padding: 6px 24px 20px; }
+      #resultado-quiz {
+        font-size: 17px; font-weight: 700; margin: 14px 0; padding: 12px;
+        border-radius: 8px; text-align: center; display: none;
+      }
+      #resultado-quiz.aprob { background: #e8f5e9; color: #1b5e20; }
+      #resultado-quiz.repro { background: #ffebee; color: #b71c1c; }
+
+      .caja-tarea {
+        background: #ede7f6; border-left: 6px solid #5e35b1;
+        padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 20px 0;
+      }
+      .caja-tarea h2 { margin-top: 0; color: #4527a0; }
+
+      .rubrica { margin: 22px 0; overflow-x: auto; }
+      .rubrica h2 { color: var(--tema-d); }
+      table.tabla-rubrica {
+        width: 100%; border-collapse: collapse; font-size: 13px; background: #fff;
+        border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+      }
+      table.tabla-rubrica th, table.tabla-rubrica td {
+        border: 1px solid #e0e0e0; padding: 8px 10px; vertical-align: top;
+      }
+      table.tabla-rubrica th {
+        background: var(--tema); color: #fff; font-size: 12px;
+        text-transform: uppercase; letter-spacing: 0.3px;
+      }
+      table.tabla-rubrica td:first-child {
+        background: var(--tema-bg); font-weight: 600; color: var(--tema-d);
+      }
+
+      .cierre {
+        background: #263238; color: #eceff1; border-radius: 12px;
+        padding: 22px 26px; margin: 24px 0 10px;
+      }
+      .cierre h2 { color: #fff; margin-top: 0; }
+      .cierre strong { color: #9bff8f; }
+
+
+      .enlace-interactivo + .enlace-interactivo { margin-top: -6px; }
+      .nota-brightspace {
+        font-size: 14px; color: #4527a0; margin: 6px 0 0;
+      }
+      footer {
+        text-align: center; padding: 20px; color: #555; font-size: 13px;
+        border-top: 1px solid #ddd; margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+      <header class="principal">
+        <div class="ruta">Spanish ASE Math · Nivel 4 · Tema 3 · Multiplicación y factorización</div>
+        <h1>Lección 3.2 · Factorización: factor común y diferencia de cuadrados</h1>
+        <div class="meta">4 horas (2 sincrónicas + 2 asincrónicas) · NRS 4–5 · Brightspace D2L</div>
+      </header>
+
+      <div class="caja-objetivos">
+        <h2>Objetivos de la lección</h2>
+        <ul>
+          <li>Extraer el factor común de todos los términos de un polinomio.</li>
+          <li>Factorizar diferencias de cuadrados perfectos con a² − b² = (a + b)(a − b).</li>
+          <li>Combinar el factor común y la diferencia de cuadrados en una misma expresión.</li>
+          <li>Verificar la factorización expandiendo para obtener el polinomio original.</li>
+        </ul>
+      </div>
+
+      <div class="bloque">
+        <p><strong>Conexión con la lección anterior.</strong> En la Lección 3.1 se multiplicaron binomios para obtener un polinomio. <strong>Factorizar es el camino inverso</strong>: partir del polinomio y descubrir qué factores lo produjeron. Por eso la mejor manera de comprobar una factorización es <strong>volver a multiplicar</strong>: si se obtiene el polinomio original, la factorización es correcta.</p>
+      </div>
+
+      <h2 class="seccion">1. Factorizar es deshacer la multiplicación</h2>
+      <div class="bloque">
+        <p><strong>Factorizar</strong> un polinomio significa escribirlo como un producto. Es lo contrario de multiplicar:</p>
+
+        <div class="diagrama-wrap">
+          <svg width="440" height="120" viewBox="0 0 440 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama de doble flecha. A la izquierda, el producto factorizado tres por x más dos. A la derecha, el polinomio tres x más seis. La flecha hacia la derecha indica multiplicar; la flecha hacia la izquierda indica factorizar.">
+            <rect x="20" y="40" width="150" height="44" rx="8" fill="#fbe9e7" stroke="#bf360c" stroke-width="2"/>
+            <text x="95" y="68" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" font-weight="700" fill="#8c2708">3(x + 2)</text>
+            <rect x="270" y="40" width="150" height="44" rx="8" fill="#fbe9e7" stroke="#bf360c" stroke-width="2"/>
+            <text x="345" y="68" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" font-weight="700" fill="#8c2708">3x + 6</text>
+            <line x1="175" y1="52" x2="265" y2="52" stroke="#00695c" stroke-width="2.5"/>
+            <polygon points="265,52 256,47 256,57" fill="#00695c"/>
+            <text x="220" y="44" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#00695c">multiplicar</text>
+            <line x1="265" y1="74" x2="175" y2="74" stroke="#bf360c" stroke-width="2.5"/>
+            <polygon points="175,74 184,69 184,79" fill="#bf360c"/>
+            <text x="220" y="96" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700" fill="#8c2708">factorizar</text>
+          </svg>
+        </div>
+
+        <div class="caja-tip">
+          <strong>Verificar siempre:</strong> después de factorizar, multiplica los factores. Si el resultado es el polinomio original, la respuesta es correcta. Esta comprobación elimina casi todos los errores.
+        </div>
+      </div>
+
+      <!-- INTERACTIVOS — reemplazar AQUI_VA_URL por la URL de GitHub del interactivo de la Lección 3.2.
+           El texto tras la almohadilla abre directamente el módulo correspondiente. -->
+
+      <h2 class="seccion">2. Factor común</h2>
+      <div class="bloque">
+        <p>El primer paso de cualquier factorización es buscar un <strong>factor común</strong> a todos los términos. Se extrae:</p>
+        <ul>
+          <li>El <strong>máximo común divisor (MCD)</strong> de los coeficientes.</li>
+          <li>La variable con el <strong>menor exponente</strong> que aparezca en todos los términos.</li>
+        </ul>
+
+        <div class="ejemplo">
+          <span class="et">Ejemplo 1</span>
+          <p>Factorizar 6x + 9.</p>
+          <div class="paso"><span class="n">1</span> MCD de 6 y 9: es 3.</div>
+          <div class="paso"><span class="n">2</span> Se saca el 3: 6x + 9 = 3(2x + 3).</div>
+          <div class="paso"><span class="n">3</span> Verificación: 3(2x + 3) = 6x + 9. Correcto.</div>
+          <p><strong>Respuesta:</strong> 3(2x + 3).</p>
+        </div>
+
+        <div class="ejemplo">
+          <span class="et">Ejemplo 2 · Con variable</span>
+          <p>Factorizar 4x² + 8x.</p>
+          <div class="paso"><span class="n">1</span> MCD de 4 y 8: es 4. La variable común con menor exponente: x.</div>
+          <div class="paso"><span class="n">2</span> Se saca 4x: 4x² + 8x = 4x(x + 2).</div>
+          <div class="paso"><span class="n">3</span> Verificación: 4x(x + 2) = 4x² + 8x. Correcto.</div>
+          <p><strong>Respuesta:</strong> 4x(x + 2).</p>
+        </div>
+
+        <div class="ejemplo">
+          <span class="et">Ejemplo 3</span>
+          <p>Factorizar 10x³ − 15x².</p>
+          <div class="paso"><span class="n">1</span> MCD de 10 y 15: es 5. Variable con menor exponente: x².</div>
+          <div class="paso"><span class="n">2</span> Se saca 5x²: 10x³ − 15x² = 5x²(2x − 3).</div>
+          <p><strong>Respuesta:</strong> 5x²(2x − 3).</p>
+        </div>
+      </div>
+
+      <div class="practica">
+        <h3>Práctica interactiva 1 · Factor común</h3>
+        <p>Selecciona la factorización correcta.</p>
+
+        <div class="pregunta" data-correcta="b">
+          <div class="enun">1. 6x + 9</div>
+          <div class="opciones">
+            <div class="opcion" data-op="a">2(3x + 4)</div>
+            <div class="opcion" data-op="b">3(2x + 3)</div>
+            <div class="opcion" data-op="c">3(2x + 9)</div>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="pregunta" data-correcta="a">
+          <div class="enun">2. 4x² + 8x</div>
+          <div class="opciones">
+            <div class="opcion" data-op="a">4x(x + 2)</div>
+            <div class="opcion" data-op="b">2x(2x + 4)</div>
+            <div class="opcion" data-op="c">4(x² + 2x)</div>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="pregunta" data-correcta="b">
+          <div class="enun">3. 10x³ − 15x²</div>
+          <div class="opciones">
+            <div class="opcion" data-op="a">5x(2x² − 3x)</div>
+            <div class="opcion" data-op="b">5x²(2x − 3)</div>
+            <div class="opcion" data-op="c">5x²(2x − 15)</div>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <a class="enlace-interactivo" href="AQUI_VA_URL#comun" target="_blank" rel="noopener noreferrer"
+         aria-label="Abrir el módulo de factor común en GEDparaHispanos (se abre en una pestaña nueva)">
+        <span class="ei-icono" aria-hidden="true">🔗</span>
+        <span class="ei-cuerpo">
+          <span class="ei-titulo">Interactivo 1 · Factor común</span>
+          <span class="ei-sub">Halla el MCD de los coeficientes y la menor potencia de x, extrae el factor común y comprueba lo que queda dentro del paréntesis.</span>
+          <span class="ei-cta">Abrir el interactivo <span aria-hidden="true">›</span></span>
+        </span>
+      </a>
+
+      <h2 class="seccion">3. Diferencia de cuadrados</h2>
+      <div class="bloque">
+        <p>Un binomio de la forma a² − b² (un cuadrado menos otro cuadrado) se factoriza con la identidad vista en la Lección 3.1, ahora al revés:</p>
+        <p class="formula">a² − b² = (a + b)(a − b)</p>
+
+        <p>Conviene reconocer los <strong>cuadrados perfectos</strong>:</p>
+        <table class="reglas">
+          <caption class="sr-only">Lista de cuadrados perfectos del 1 al 15.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Número</th>
+              <th scope="col">1</th><th scope="col">2</th><th scope="col">3</th>
+              <th scope="col">4</th><th scope="col">5</th><th scope="col">6</th>
+              <th scope="col">7</th><th scope="col">8</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Su cuadrado</td>
+              <td>1</td><td>4</td><td>9</td><td>16</td>
+              <td>25</td><td>36</td><td>49</td><td>64</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="ejemplo">
+          <span class="et">Ejemplo 4</span>
+          <p>Factorizar x² − 9.</p>
+          <div class="paso"><span class="n">1</span> Se reconoce: x² es el cuadrado de x; 9 es el cuadrado de 3.</div>
+          <div class="paso"><span class="n">2</span> Se aplica la identidad: x² − 9 = (x + 3)(x − 3).</div>
+          <div class="paso"><span class="n">3</span> Verificación: (x + 3)(x − 3) = x² − 9. Correcto.</div>
+          <p><strong>Respuesta:</strong> (x + 3)(x − 3).</p>
+        </div>
+
+        <div class="ejemplo">
+          <span class="et">Ejemplo 5 · Con coeficiente</span>
+          <p>Factorizar 4x² − 25.</p>
+          <div class="paso"><span class="n">1</span> 4x² es el cuadrado de 2x; 25 es el cuadrado de 5.</div>
+          <div class="paso"><span class="n">2</span> Se aplica la identidad: 4x² − 25 = (2x + 5)(2x − 5).</div>
+          <p><strong>Respuesta:</strong> (2x + 5)(2x − 5).</p>
+        </div>
+
+        <div class="caja-atencion">
+          <strong>Solo restas, no sumas:</strong> la diferencia de cuadrados requiere un signo menos. Una <em>suma</em> de cuadrados como x² + 9 no se factoriza con números reales. El binomio también debe ser de dos cuadrados perfectos.
+        </div>
+      </div>
+
+      <div class="practica">
+        <h3>Práctica interactiva 2 · Diferencia de cuadrados</h3>
+        <p>Selecciona la factorización correcta.</p>
+
+        <div class="pregunta" data-correcta="a">
+          <div class="enun">1. x² − 9</div>
+          <div class="opciones">
+            <div class="opcion" data-op="a">(x + 3)(x − 3)</div>
+            <div class="opcion" data-op="b">(x − 3)(x − 3)</div>
+            <div class="opcion" data-op="c">(x + 9)(x − 1)</div>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="pregunta" data-correcta="b">
+          <div class="enun">2. x² − 49</div>
+          <div class="opciones">
+            <div class="opcion" data-op="a">(x + 7)(x + 7)</div>
+            <div class="opcion" data-op="b">(x + 7)(x − 7)</div>
+            <div class="opcion" data-op="c">(x − 7)(x − 7)</div>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="pregunta" data-correcta="c">
+          <div class="enun">3. 9x² − 1</div>
+          <div class="opciones">
+            <div class="opcion" data-op="a">(3x − 1)(3x − 1)</div>
+            <div class="opcion" data-op="b">(9x + 1)(x − 1)</div>
+            <div class="opcion" data-op="c">(3x + 1)(3x − 1)</div>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <a class="enlace-interactivo" href="AQUI_VA_URL#cuadrados" target="_blank" rel="noopener noreferrer"
+         aria-label="Abrir el módulo de diferencia de cuadrados en GEDparaHispanos (se abre en una pestaña nueva)">
+        <span class="ei-icono" aria-hidden="true">🔗</span>
+        <span class="ei-cuerpo">
+          <span class="ei-titulo">Interactivo 2 · Diferencia de cuadrados</span>
+          <span class="ei-sub">Decide primero si el binomio es una diferencia de cuadrados y después escribe los dos factores. Incluye sumas de cuadrados y números que no son cuadrados perfectos.</span>
+          <span class="ei-cta">Abrir el interactivo <span aria-hidden="true">›</span></span>
+        </span>
+      </a>
+
+      <h2 class="seccion">4. Combinar: factor común y luego diferencia de cuadrados</h2>
+      <div class="bloque">
+        <p>La regla de oro es <strong>sacar siempre primero el factor común</strong>. Después se revisa si lo que queda dentro del paréntesis es una diferencia de cuadrados.</p>
+
+        <div class="ejemplo">
+          <span class="et">Ejemplo 6</span>
+          <p>Factorizar 2x² − 50 completamente.</p>
+          <div class="paso"><span class="n">1</span> Factor común 2: 2x² − 50 = 2(x² − 25).</div>
+          <div class="paso"><span class="n">2</span> Dentro hay una diferencia de cuadrados: x² − 25 = (x + 5)(x − 5).</div>
+          <div class="paso"><span class="n">3</span> Resultado completo: 2(x + 5)(x − 5).</div>
+          <p><strong>Respuesta:</strong> 2(x + 5)(x − 5).</p>
+        </div>
+
+        <div class="caja-tip">
+          <strong>"Completamente" significa hasta el final:</strong> una factorización está completa cuando ningún factor se puede seguir factorizando. Por eso, tras sacar el factor común, siempre se revisa si el binomio que queda es una diferencia de cuadrados.
+        </div>
+      </div>
+
+      <a class="enlace-interactivo" href="AQUI_VA_URL#combinar" target="_blank" rel="noopener noreferrer"
+         aria-label="Abrir el módulo de factorización combinada en GEDparaHispanos (se abre en una pestaña nueva)">
+        <span class="ei-icono" aria-hidden="true">🔗</span>
+        <span class="ei-cuerpo">
+          <span class="ei-titulo">Interactivo 3 · Combinar: factor común y luego diferencia de cuadrados</span>
+          <span class="ei-sub">Extrae el factor común, decide si lo que queda se puede seguir factorizando y llega a la factorización completa.</span>
+          <span class="ei-cta">Abrir el interactivo <span aria-hidden="true">›</span></span>
+        </span>
+      </a>
+
+      <h2 class="seccion">5. Práctica guiada en clase</h2>
+      <div class="bloque">
+        <p>Las siguientes tres actividades se realizan durante las horas sincrónicas. Cada una se presenta en doble modalidad.</p>
+
+        <div class="actividad">
+          <div class="titulo-act">Actividad 1 · El detective de factores</div>
+          <div class="modalidad">
+            <div class="modo modo-pres">
+              <h3><span aria-hidden="true">🏫</span> Presencial</h3>
+              El docente presenta ocho polinomios. Antes de factorizar, los estudiantes identifican qué técnica aplicar: ¿solo factor común, solo diferencia de cuadrados, o ambas? Luego factorizan y verifican expandiendo.
+            </div>
+            <div class="modo modo-virt">
+              <h3><span aria-hidden="true">💻</span> En línea</h3>
+              Cada estudiante clasifica los polinomios en un documento compartido según la técnica, factoriza al menos cuatro y publica la verificación por expansión de uno de ellos en el chat.
+            </div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <div class="titulo-act">Actividad 2 · Siempre verifico</div>
+          <div class="modalidad">
+            <div class="modo modo-pres">
+              <h3><span aria-hidden="true">🏫</span> Presencial</h3>
+              En parejas, un estudiante factoriza y el otro verifica expandiendo. Si no coincide con el polinomio original, juntos localizan el error. Después intercambian roles.
+            </div>
+            <div class="modo modo-virt">
+              <h3><span aria-hidden="true">💻</span> En línea</h3>
+              En salas pequeñas, cada grupo factoriza una lista y registra al lado la verificación por expansión, marcando en verde las que coinciden con el original.
+            </div>
+          </div>
+        </div>
+
+        <div class="actividad">
+          <div class="titulo-act">Actividad 3 · Cuando vale cero</div>
+          <div class="modalidad">
+            <div class="modo modo-pres">
+              <h3><span aria-hidden="true">🏫</span> Presencial</h3>
+              El docente factoriza x² − 25 = (x + 5)(x − 5) y pregunta: ¿qué valores de x hacen que el resultado sea cero? El grupo descubre que x = 5 y x = −5, anticipando la resolución de ecuaciones del Tema 4.
+            </div>
+            <div class="modo modo-virt">
+              <h3><span aria-hidden="true">💻</span> En línea</h3>
+              Cada estudiante factoriza una diferencia de cuadrados y determina qué valores de x anulan cada factor, comentando en el chat la conexión con las soluciones de una ecuación.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <details class="quiz-acordeon">
+        <summary>
+          <span class="chevron-q" aria-hidden="true">▶</span>
+          <h2>Quiz de la lección 3.2</h2>
+        </summary>
+        <div class="quiz-inner">
+          <p>Diez preguntas. Al finalizar se marca cada respuesta y se puede reintentar las veces necesarias. Para aprobar se requieren al menos 7 respuestas correctas.</p>
+          <div id="quiz-cuerpo"></div>
+          <div id="resultado-quiz"></div>
+          <button class="btn" id="btn-corregir">Corregir quiz</button>
+          <button class="btn sec" id="btn-reintentar" style="display: none">Intentar de nuevo</button>
+        </div>
+      </details>
+
+      <div class="caja-tarea">
+        <h2>Tarea asincrónica</h2>
+        <p><strong>1) Práctica previa (ThatQuiz).</strong> Antes de la tarea calificada, repasa con estos ejercicios autocorregibles de factor común y diferencia de cuadrados:</p>
+        <p><a class="btnTQ" href="aquí va el enlace" target="_blank" rel="noopener">Ir a ThatQuiz <span class="ext" aria-hidden="true">&#8599;</span></a></p>
+        <p><strong>2) Tarea calificada (MyOpenMath).</strong> Realiza los ejercicios asignados sobre extraer el factor común, factorizar diferencias de cuadrados y combinar ambas técnicas en MyOpenMath antes de la próxima sesión.</p>
+        <p class="nota-brightspace">El enlace a la tarea se encuentra en Brightspace, justo debajo de esta lección.</p>
+      </div>
+
+      <div class="rubrica">
+        <h2>Rúbrica analítica de la lección</h2>
+        <p>Tres criterios evaluados en cuatro niveles de desempeño.</p>
+        <table class="tabla-rubrica">
+          <caption class="sr-only">Rúbrica analítica con tres criterios y cuatro niveles de desempeño.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Criterio</th>
+              <th scope="col">Inicial (1)</th>
+              <th scope="col">En desarrollo (2)</th>
+              <th scope="col">Competente (3)</th>
+              <th scope="col">Destacado (4)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Extraer el factor común</td>
+              <td>No identifica el factor común o lo saca incompleto.</td>
+              <td>Saca el MCD numérico, pero olvida la variable.</td>
+              <td>Extrae el MCD de coeficientes y variables correctamente.</td>
+              <td>Extrae el factor común con fluidez y revisa lo que queda dentro.</td>
+            </tr>
+            <tr>
+              <td>Diferencia de cuadrados</td>
+              <td>No reconoce la diferencia de cuadrados.</td>
+              <td>La reconoce, pero factoriza con signos incorrectos.</td>
+              <td>Identifica y factoriza la diferencia de cuadrados correctamente.</td>
+              <td>La factoriza con seguridad y distingue cuándo no aplica (suma de cuadrados).</td>
+            </tr>
+            <tr>
+              <td>Verificar por expansión</td>
+              <td>No verifica el resultado.</td>
+              <td>Verifica, pero comete errores al expandir.</td>
+              <td>Verifica expandiendo y obtiene el polinomio original.</td>
+              <td>Verifica siempre y factoriza por completo, combinando técnicas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cierre">
+        <h2>Cierre y enlace con la próxima lección</h2>
+        <p>En esta lección se aprendió a <strong>factorizar</strong> extrayendo el <strong>factor común</strong> y reconociendo la <strong>diferencia de cuadrados</strong> a² − b² = (a + b)(a − b), verificando siempre por expansión.</p>
+        <p>En la <strong>Lección 3.3 · Factorización de trinomios (a = 1 y a ≠ 1)</strong> se factorizarán expresiones de tres términos como x² + 7x + 12, buscando dos números cuyo producto y suma cumplan las condiciones, y se extenderá la técnica a trinomios con coeficiente principal distinto de 1. Recuerda: el primer paso siempre será buscar el factor común.</p>
+      </div>
+
+      <footer>Spanish ASE Math · Nivel 4 · Lección 3.2 — Preparado para Prof. José M. Fernández (Truman College, CCC) · Brightspace D2L</footer>
+    </div>
+
+    <script>
+      (function () {
+        /* ---- Práctica de opciones (selección múltiple) ---- */
+        var preguntasOp = document.querySelectorAll('.practica .pregunta[data-correcta]');
+        preguntasOp.forEach(function (preg) {
+          var correcta = preg.getAttribute('data-correcta');
+          var opciones = preg.querySelectorAll('.opcion');
+          var fb = preg.querySelector('.fb');
+          opciones.forEach(function (op) {
+            op.addEventListener('click', function () {
+              opciones.forEach(function (o) { o.classList.remove('correcta', 'incorrecta', 'elegida'); });
+              var elegida = op.getAttribute('data-op');
+              if (elegida === correcta) {
+                op.classList.add('correcta');
+                fb.textContent = '¡Correcto! Bien razonado.';
+                fb.className = 'fb ok';
+              } else {
+                op.classList.add('incorrecta');
+                opciones.forEach(function (o) {
+                  if (o.getAttribute('data-op') === correcta) o.classList.add('correcta');
+                });
+                fb.textContent = 'Revisa: la opción marcada en verde es la correcta.';
+                fb.className = 'fb no';
+              }
+              fb.style.display = 'block';
+            });
+          });
+        });
+
+        /* ---- Quiz ---- */
+        var preguntasQuiz = [
+          {enun: '1. Factor común de 6x + 15.', ops: ['2(3x + 5)', '3(2x + 5)', '6(x + 15)', '3(2x + 15)'], correcta: 1},
+          {enun: '2. Factor común de 8x² + 12x.', ops: ['4x(2x + 3)', '2x(4x + 6)', '4(2x² + 3x)', '4x(2x + 12)'], correcta: 0},
+          {enun: '3. Factor común de 10x³ − 15x².', ops: ['5x(2x² − 3x)', '5x²(2x − 3)', '5x²(2x − 15)', '10x²(x − 15)'], correcta: 1},
+          {enun: '4. Factor común de 9x + 27.', ops: ['3(3x + 9)', '9(x + 27)', '9(x + 3)', '9x(1 + 3)'], correcta: 2},
+          {enun: '5. Factoriza x² − 16.', ops: ['(x − 4)(x − 4)', '(x + 4)(x − 4)', '(x + 8)(x − 2)', '(x + 4)(x + 4)'], correcta: 1},
+          {enun: '6. Factoriza x² − 81.', ops: ['(x + 9)(x − 9)', '(x − 9)(x − 9)', '(x + 9)(x + 9)', '(x + 27)(x − 3)'], correcta: 0},
+          {enun: '7. Factoriza 4x² − 9.', ops: ['(4x + 3)(x − 3)', '(2x − 3)(2x − 3)', '(2x + 3)(2x − 3)', '(2x + 9)(2x − 1)'], correcta: 2},
+          {enun: '8. Factoriza 25x² − 1.', ops: ['(5x − 1)(5x − 1)', '(25x + 1)(x − 1)', '(5x + 1)(5x − 1)', '(5x + 1)(5x + 1)'], correcta: 2},
+          {enun: '9. Factoriza completamente 2x² − 50.', ops: ['2(x² − 25)', '2(x + 5)(x − 5)', '(2x + 10)(x − 5)', '2(x − 5)(x − 5)'], correcta: 1},
+          {enun: '10. Factoriza completamente 3x² − 12.', ops: ['3(x² − 4)', '(3x + 6)(x − 2)', '3(x + 2)(x − 2)', '3(x − 2)(x − 2)'], correcta: 2}
+        ];
+
+        var cuerpo = document.getElementById('quiz-cuerpo');
+        preguntasQuiz.forEach(function (p, i) {
+          var div = document.createElement('div');
+          div.className = 'pregunta';
+          div.setAttribute('data-idx', i);
+          var enun = document.createElement('div');
+          enun.className = 'enun';
+          enun.textContent = p.enun;
+          div.appendChild(enun);
+          var cont = document.createElement('div');
+          cont.className = 'opciones';
+          p.ops.forEach(function (texto, j) {
+            var op = document.createElement('div');
+            op.className = 'opcion';
+            op.setAttribute('data-j', j);
+            op.textContent = texto;
+            op.addEventListener('click', function () {
+              if (div.getAttribute('data-bloqueado') === 'si') return;
+              cont.querySelectorAll('.opcion').forEach(function (o) { o.classList.remove('elegida'); });
+              op.classList.add('elegida');
+              div.setAttribute('data-elegida', j);
+            });
+            cont.appendChild(op);
+          });
+          div.appendChild(cont);
+          var fb = document.createElement('div');
+          fb.className = 'fb';
+          div.appendChild(fb);
+          cuerpo.appendChild(div);
+        });
+
+        var btnCorregir = document.getElementById('btn-corregir');
+        var btnReintentar = document.getElementById('btn-reintentar');
+        var resultado = document.getElementById('resultado-quiz');
+
+        btnCorregir.addEventListener('click', function () {
+          var aciertos = 0;
+          var divs = cuerpo.querySelectorAll('.pregunta');
+          divs.forEach(function (div, i) {
+            var elegida = div.getAttribute('data-elegida');
+            var fb = div.querySelector('.fb');
+            var opciones = div.querySelectorAll('.opcion');
+            div.setAttribute('data-bloqueado', 'si');
+            opciones.forEach(function (o) { o.classList.remove('correcta', 'incorrecta'); });
+            if (elegida === null) {
+              fb.textContent = 'No se respondió esta pregunta.';
+              fb.className = 'fb no';
+              fb.style.display = 'block';
+              opciones[preguntasQuiz[i].correcta].classList.add('correcta');
+              return;
+            }
+            var idxElegida = parseInt(elegida, 10);
+            if (idxElegida === preguntasQuiz[i].correcta) {
+              aciertos++;
+              opciones[idxElegida].classList.add('correcta');
+              fb.textContent = '¡Correcto!';
+              fb.className = 'fb ok';
+            } else {
+              opciones[idxElegida].classList.add('incorrecta');
+              opciones[preguntasQuiz[i].correcta].classList.add('correcta');
+              fb.textContent = 'Incorrecto. La respuesta correcta está marcada en verde.';
+              fb.className = 'fb no';
+            }
+            fb.style.display = 'block';
+          });
+
+          resultado.style.display = 'block';
+          if (aciertos >= 7) {
+            resultado.className = 'aprob';
+            resultado.textContent = 'Resultado: ' + aciertos + ' de 10 correctas. ¡Aprobado! Puedes continuar a la Lección 3.3.';
+          } else {
+            resultado.className = 'repro';
+            resultado.textContent = 'Resultado: ' + aciertos + ' de 10 correctas. Repasa la lección e intenta de nuevo (se requieren 7).';
+          }
+          btnCorregir.style.display = 'none';
+          btnReintentar.style.display = 'inline-block';
+        });
+
+        btnReintentar.addEventListener('click', function () {
+          var divs = cuerpo.querySelectorAll('.pregunta');
+          divs.forEach(function (div) {
+            div.removeAttribute('data-elegida');
+            div.removeAttribute('data-bloqueado');
+            div.querySelectorAll('.opcion').forEach(function (o) { o.classList.remove('correcta', 'incorrecta', 'elegida'); });
+            var fb = div.querySelector('.fb');
+            fb.style.display = 'none';
+            fb.textContent = '';
+          });
+          resultado.style.display = 'none';
+          btnReintentar.style.display = 'none';
+          btnCorregir.style.display = 'inline-block';
+        });
+      })();
+    </script>
+  </body>
+</html>

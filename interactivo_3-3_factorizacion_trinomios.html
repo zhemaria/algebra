@@ -1,0 +1,833 @@
+<!doctype html>
+<!--
+  Interactivo · Lección 3.3 — Factorización de trinomios
+  Spanish ASE Math · Nivel 4 · Tema 3
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)
+  https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactivo 3.3 · Factorización de trinomios: método ac y aspa simple</title>
+    <meta name="author" content="José M. Fernández" />
+    <meta name="description" content="Interactivo de práctica para factorizar trinomios con a = 1, con a distinto de 1 por el método ac y por el aspa simple, y para la factorización completa." />
+    <meta name="license" content="CC BY-NC-SA 4.0" />
+    <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" />
+    <style>
+      :root {
+        --tema: #bf360c;
+        --tema-d: #8c2708;
+        --tema-bg: #fbe9e7;
+        --tema-bg2: #f8d3cc;
+        --acento: #00695c;
+        --ok: #1b5e20;
+        --ok-bg: #e8f5e9;
+        --no: #b71c1c;
+        --no-bg: #ffebee;
+        --txt: #222;
+        --mut: #555;
+        --bg: #f5f7fa;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0; background: var(--bg); color: var(--txt);
+        line-height: 1.6; font-size: 16px;
+      }
+      .contenedor { max-width: 880px; margin: 0 auto; padding: 24px; }
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0;
+        margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0);
+        white-space: nowrap; border: 0;
+      }
+      header.principal {
+        background: linear-gradient(135deg, #8c2708 0%, #bf360c 55%, #d84315 100%);
+        color: #fff; padding: 30px 28px; border-radius: 14px;
+        margin-bottom: 18px; box-shadow: 0 4px 14px rgba(140, 39, 8, 0.28);
+      }
+      header.principal .ruta { font-size: 13px; letter-spacing: 0.4px; text-transform: uppercase; }
+      header.principal h1 { margin: 8px 0 6px; font-size: 24px; font-weight: 700; }
+      header.principal .meta { font-size: 14px; }
+
+      nav.modulos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+      button.tab {
+        flex: 1 1 200px; background: #fff; border: 2px solid var(--tema-bg2);
+        color: var(--tema-d); border-radius: 10px; padding: 11px 14px;
+        font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+        text-align: left; line-height: 1.35;
+      }
+      button.tab:hover { border-color: var(--tema); background: var(--tema-bg); }
+      button.tab[aria-selected="true"] { background: var(--tema); border-color: var(--tema-d); color: #fff; }
+      button.tab:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      button.tab .num { display: block; font-size: 12px; opacity: 0.95; font-weight: 600; }
+
+      section.panel { display: none; }
+      section.panel.activo { display: block; }
+
+      h2.titulo-panel {
+        color: var(--tema-d); font-size: 21px; margin: 6px 0 8px;
+        padding-bottom: 6px; border-bottom: 3px solid var(--tema-bg);
+      }
+      p.intro { color: var(--mut); font-size: 15px; margin: 6px 0 14px; }
+
+      .tarjeta {
+        background: #fff; border-radius: 12px; padding: 20px 24px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07); margin-bottom: 18px;
+      }
+      .marcador {
+        display: inline-block; background: var(--tema-bg); color: var(--tema-d);
+        border-radius: 20px; padding: 5px 16px; font-size: 14px; font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .enunciado {
+        font-size: 24px; font-weight: 700; color: var(--tema-d);
+        text-align: center; margin: 10px 0 18px;
+      }
+      .instruccion { font-size: 15px; margin: 14px 0 6px; }
+      .instruccion .paso-num { color: var(--tema-d); font-weight: 700; }
+
+      .campo {
+        width: 68px; padding: 8px 6px; font-size: 18px; font-family: inherit;
+        text-align: center; border: 2px solid #bdbdbd; border-radius: 8px;
+        background: #fff; color: var(--txt);
+      }
+      .campo:focus { outline: 3px solid var(--tema); outline-offset: 1px; border-color: var(--tema); }
+      .campo.bien { border-color: #2e7d32; background: var(--ok-bg); }
+      .campo.mal { border-color: #c62828; background: var(--no-bg); }
+      .campo.chico { width: 58px; }
+
+      .linea-resp {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+        font-size: 21px; font-weight: 700; color: var(--tema-d);
+        justify-content: center; margin: 12px 0;
+      }
+      .linea-resp .txt { font-size: 21px; }
+      .linea-resp .et { font-size: 15px; color: var(--mut); font-weight: 600; }
+
+      .ruta-sel { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 16px; }
+      .ruta-bot {
+        flex: 1 1 240px; background: #fff; border: 2px solid var(--tema-bg2);
+        border-radius: 10px; padding: 12px 16px; font-family: inherit;
+        font-size: 14px; font-weight: 700; color: var(--tema-d); cursor: pointer;
+        text-align: left; line-height: 1.35;
+      }
+      .ruta-bot span { display: block; font-weight: 500; color: var(--mut); font-size: 13px; margin-top: 3px; }
+      .ruta-bot:hover { border-color: var(--tema); }
+      .ruta-bot:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .ruta-bot[aria-pressed="true"] { background: var(--tema); border-color: var(--tema-d); color: #fff; }
+      .ruta-bot[aria-pressed="true"] span { color: #fdece8; }
+
+      .opciones-bot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 12px 0; }
+      .op-bot {
+        background: #fff; border: 2px solid #cfcfcf; border-radius: 9px;
+        padding: 11px 18px; font-family: inherit; font-size: 15px; font-weight: 600;
+        color: var(--txt); cursor: pointer;
+      }
+      .op-bot:hover { border-color: var(--tema); }
+      .op-bot:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .op-bot.bien { border-color: #2e7d32; background: var(--ok-bg); color: var(--ok); }
+      .op-bot.mal { border-color: #c62828; background: var(--no-bg); color: var(--no); }
+
+      .acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+      .btn {
+        background: var(--tema); color: #fff; border: none; padding: 10px 20px;
+        border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+        font-family: inherit;
+      }
+      .btn:hover { background: var(--tema-d); }
+      .btn:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .btn.sec { background: #546e7a; }
+      .btn.sec:hover { background: #37474f; }
+      .btn.out { background: #fff; color: var(--tema-d); border: 2px solid var(--tema); }
+      .btn.out:hover { background: var(--tema-bg); }
+
+      .fb {
+        margin-top: 14px; padding: 12px 16px; border-radius: 8px;
+        font-size: 15px; font-weight: 600; display: none;
+      }
+      .fb.ok { background: var(--ok-bg); color: var(--ok); border-left: 5px solid #2e7d32; display: block; }
+      .fb.no { background: var(--no-bg); color: var(--no); border-left: 5px solid #c62828; display: block; }
+
+      .solucion {
+        display: none; margin-top: 14px; background: #fafafa;
+        border: 1px solid #e3e3e3; border-left: 5px solid var(--acento);
+        border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 15px;
+      }
+      .solucion.visible { display: block; }
+      .solucion h4 { margin: 0 0 8px; color: #004d40; font-size: 15px; }
+      .solucion .ln { margin: 6px 0; }
+      .solucion .ln b { color: var(--tema-d); }
+
+      .pares {
+        display: none; margin-top: 12px; background: var(--tema-bg);
+        border-radius: 8px; padding: 12px 16px; font-size: 14px;
+      }
+      .pares.visible { display: block; }
+      .pares table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+      .pares caption { text-align: left; font-weight: 700; color: var(--tema-d); padding-bottom: 4px; }
+      .pares th, .pares td { border: 1px solid var(--tema-bg2); padding: 5px 8px; text-align: center; background: #fff; }
+      .pares th { background: var(--tema); color: #fff; }
+
+      .caja-tip {
+        background: var(--ok-bg); border-left: 5px solid #2e7d32;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        color: var(--ok); font-size: 15px;
+      }
+      .caja-atencion {
+        background: #fff8e1; border-left: 5px solid #f9a825;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        font-size: 15px; color: #5c3900;
+      }
+
+      footer {
+        text-align: center; padding: 22px 10px; color: var(--mut); font-size: 13px;
+        border-top: 1px solid #ddd; margin-top: 24px;
+      }
+      footer a { color: var(--tema-d); }
+
+      @media (max-width: 520px) {
+        .contenedor { padding: 14px; }
+        .enunciado { font-size: 20px; }
+        .campo { width: 58px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; animation: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+      <header class="principal">
+        <div class="ruta">Spanish ASE Math · Nivel 4 · Tema 3 · Lección 3.3</div>
+        <h1>Factorización de trinomios: dos números, método ac y aspa simple</h1>
+        <div class="meta">Tres módulos de práctica con verificación inmediata y solución paso a paso</div>
+      </header>
+
+      <nav class="modulos" role="tablist" aria-label="Módulos del interactivo">
+        <button class="tab" role="tab" id="tab-simple" aria-controls="panel-simple" aria-selected="true">
+          <span class="num">Módulo 1</span>Trinomios con a = 1: dos números
+        </button>
+        <button class="tab" role="tab" id="tab-ac" aria-controls="panel-ac" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 2</span>Trinomios con a ≠ 1: método ac y aspa simple
+        </button>
+        <button class="tab" role="tab" id="tab-completa" aria-controls="panel-completa" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 3</span>Casos especiales y factorización completa
+        </button>
+      </nav>
+
+      <!-- ============ MÓDULO 1 · a = 1 ============ -->
+      <section class="panel activo" role="tabpanel" id="panel-simple" aria-labelledby="tab-simple" tabindex="0">
+        <h2 class="titulo-panel">Módulo 1 · Trinomios con a = 1: dos números</h2>
+        <p class="intro">Busca dos números que <strong>multiplicados</strong> den el término independiente y <strong>sumados</strong> den el coeficiente de x. Escribe los negativos con el signo menos delante.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="s1-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="s1-enun"></div>
+
+          <p class="instruccion"><span class="paso-num">Paso 1.</span> <span id="s1-guia"></span></p>
+          <div class="linea-resp">
+            <span class="et">número 1</span>
+            <input class="campo" id="s1-n1" inputmode="numeric" autocomplete="off" aria-label="Primer número buscado" />
+            <span class="et">número 2</span>
+            <input class="campo" id="s1-n2" inputmode="numeric" autocomplete="off" aria-label="Segundo número buscado" />
+          </div>
+
+          <p class="instruccion"><span class="paso-num">Paso 2.</span> Escribe los dos binomios.</p>
+          <div class="linea-resp">
+            <span class="txt">( x +</span>
+            <input class="campo" id="s1-b1" inputmode="numeric" autocomplete="off" aria-label="Término independiente del primer binomio" />
+            <span class="txt">)( x +</span>
+            <input class="campo" id="s1-b2" inputmode="numeric" autocomplete="off" aria-label="Término independiente del segundo binomio" />
+            <span class="txt">)</span>
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="s1-comprobar">Comprobar</button>
+            <button class="btn sec" id="s1-pares">Ver los pares de factores</button>
+            <button class="btn sec" id="s1-ver">Ver la solución</button>
+            <button class="btn out" id="s1-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="pares" id="s1-tabla"></div>
+          <div class="fb" id="s1-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="s1-sol"></div>
+        </div>
+
+        <div class="caja-tip">
+          <strong>Los signos avisan.</strong> Si el término independiente es positivo, los dos números tienen el mismo signo (el del coeficiente de x). Si es negativo, uno es positivo y el otro negativo.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 2 · a ≠ 1 ============ -->
+      <section class="panel" role="tabpanel" id="panel-ac" aria-labelledby="tab-ac" tabindex="0">
+        <h2 class="titulo-panel">Módulo 2 · Trinomios con a ≠ 1: el método ac y el aspa simple</h2>
+        <p class="intro">Los dos caminos empiezan igual —hay que hallar dos números que multiplicados den a · c y sumados den b— y llegan al mismo resultado. Elige con cuál quieres trabajar y compara.</p>
+
+        <div class="ruta-sel">
+          <button class="ruta-bot" id="ruta-ac" aria-pressed="true">
+            Método ac (agrupación)
+            <span>Se parte el término del medio en dos y se agrupa de dos en dos.</span>
+          </button>
+          <button class="ruta-bot" id="ruta-aspa" aria-pressed="false">
+            Aspa simple (multiplicar y dividir por a)
+            <span>Se multiplica y divide por el coeficiente de x², se factoriza como si a = 1 y se simplifica.</span>
+          </button>
+        </div>
+
+        <div class="tarjeta">
+          <div class="marcador" id="s2-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="s2-enun"></div>
+
+          <p class="instruccion"><span class="paso-num">Paso 1.</span> Calcula el producto a · c.</p>
+          <div class="linea-resp">
+            <span class="et" id="s2-guia-ac"></span>
+            <input class="campo" id="s2-ac" inputmode="numeric" autocomplete="off" aria-label="Producto de a por c" />
+          </div>
+
+          <p class="instruccion"><span class="paso-num">Paso 2.</span> <span id="s2-guia2"></span></p>
+          <div class="linea-resp">
+            <span class="et">número 1</span>
+            <input class="campo" id="s2-n1" inputmode="numeric" autocomplete="off" aria-label="Primer número buscado" />
+            <span class="et">número 2</span>
+            <input class="campo" id="s2-n2" inputmode="numeric" autocomplete="off" aria-label="Segundo número buscado" />
+          </div>
+
+          <p class="instruccion"><span class="paso-num">Paso 3.</span> <span id="s2-guia3"></span></p>
+          <div class="linea-resp">
+            <span class="txt">(</span>
+            <input class="campo chico" id="s2-a1" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el primer factor" />
+            <span class="txt">x +</span>
+            <input class="campo chico" id="s2-b1" inputmode="numeric" autocomplete="off" aria-label="Término independiente del primer factor" />
+            <span class="txt">)(</span>
+            <input class="campo chico" id="s2-a2" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el segundo factor" />
+            <span class="txt">x +</span>
+            <input class="campo chico" id="s2-b2" inputmode="numeric" autocomplete="off" aria-label="Término independiente del segundo factor" />
+            <span class="txt">)</span>
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="s2-comprobar">Comprobar</button>
+            <button class="btn sec" id="s2-ver">Ver la solución</button>
+            <button class="btn out" id="s2-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="s2-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="s2-sol"></div>
+        </div>
+
+        <div class="caja-atencion">
+          <strong>El aspa simple no cambia el trinomio.</strong> Multiplicar y dividir por el mismo número deja la expresión igual. Por eso, al final, el divisor tiene que desaparecer al simplificar: si no desaparece, hubo un error en los dos números.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 3 · FACTORIZACIÓN COMPLETA ============ -->
+      <section class="panel" role="tabpanel" id="panel-completa" aria-labelledby="tab-completa" tabindex="0">
+        <h2 class="titulo-panel">Módulo 3 · Casos especiales y factorización completa</h2>
+        <p class="intro">El orden de trabajo es siempre el mismo: primero el factor común, después el trinomio. Y hay trinomios que no se pueden factorizar con números enteros.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="s3-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="s3-enun"></div>
+
+          <p class="instruccion"><span class="paso-num">Paso 1.</span> ¿Cuál es el factor común numérico? Si no hay ninguno, escribe 1.</p>
+          <div class="linea-resp">
+            <input class="campo" id="s3-k" inputmode="numeric" autocomplete="off" aria-label="Factor común numérico" />
+            <span class="txt">(</span>
+            <span class="txt" id="s3-dentro">…</span>
+            <span class="txt">)</span>
+          </div>
+
+          <p class="instruccion"><span class="paso-num">Paso 2.</span> ¿Qué es el trinomio que queda dentro del paréntesis?</p>
+          <div class="opciones-bot">
+            <button class="op-bot" id="s3-op-cuad">Un cuadrado perfecto</button>
+            <button class="op-bot" id="s3-op-norm">Un trinomio que sí se factoriza</button>
+            <button class="op-bot" id="s3-op-primo">No se puede factorizar</button>
+          </div>
+
+          <div id="s3-paso3" style="display: none">
+            <p class="instruccion"><span class="paso-num">Paso 3.</span> Escribe los dos binomios finales.</p>
+            <div class="linea-resp">
+              <span class="txt">(</span>
+              <input class="campo chico" id="s3-a1" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el primer binomio" />
+              <span class="txt">x +</span>
+              <input class="campo chico" id="s3-b1" inputmode="numeric" autocomplete="off" aria-label="Término independiente del primer binomio" />
+              <span class="txt">)(</span>
+              <input class="campo chico" id="s3-a2" inputmode="numeric" autocomplete="off" aria-label="Coeficiente de x en el segundo binomio" />
+              <span class="txt">x +</span>
+              <input class="campo chico" id="s3-b2" inputmode="numeric" autocomplete="off" aria-label="Término independiente del segundo binomio" />
+              <span class="txt">)</span>
+            </div>
+            <div class="acciones">
+              <button class="btn" id="s3-comprobar3">Comprobar los binomios</button>
+            </div>
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="s3-comprobar1">Comprobar el factor común</button>
+            <button class="btn sec" id="s3-ver">Ver la solución</button>
+            <button class="btn out" id="s3-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="s3-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="s3-sol"></div>
+        </div>
+
+        <div class="caja-tip">
+          <strong>Verifica multiplicando.</strong> Al expandir los factores, incluido el factor común, debe reaparecer el trinomio original. Esa comprobación elimina casi todos los errores.
+        </div>
+      </section>
+
+      <footer>
+        <p>Spanish ASE Math · Nivel 4 · Tema 3 · Interactivo de la Lección 3.3</p>
+        <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago</p>
+        <p>Obra publicada bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" rel="license noopener noreferrer" target="_blank">Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        'use strict';
+
+        var MENOS = '\u2212';
+
+        function ri(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+        function rnz(a, b) { var v = 0; while (v === 0) { v = ri(a, b); } return v; }
+        function elige(arr) { return arr[ri(0, arr.length - 1)]; }
+        function mcd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = b; b = a % b; a = t; } return a; }
+        function num(n) { return n < 0 ? MENOS + Math.abs(n) : String(n); }
+        function signo(n) { return (n < 0 ? ' ' + MENOS + ' ' : ' + ') + Math.abs(n); }
+        function coefX(n) {
+          if (n === 1) return 'x';
+          if (n === -1) return MENOS + 'x';
+          return num(n) + 'x';
+        }
+        function trinomio(a, b, c) {
+          var s = (a === 1 ? 'x\u00b2' : (a === -1 ? MENOS + 'x\u00b2' : num(a) + 'x\u00b2'));
+          if (b !== 0) { s += (b < 0 ? ' ' + MENOS + ' ' : ' + ') + (Math.abs(b) === 1 ? 'x' : Math.abs(b) + 'x'); }
+          if (c !== 0) { s += (c < 0 ? ' ' + MENOS + ' ' : ' + ') + Math.abs(c); }
+          return s;
+        }
+        function factor(a, b) { return '(' + coefX(a) + signo(b) + ')'; }
+
+        function leer(id) {
+          var el = document.getElementById(id);
+          var v = (el.value || '').trim().replace(/[\u2212\u2013\u2014]/g, '-').replace(/\s+/g, '');
+          if (v === '' || !/^-?\d+$/.test(v)) return null;
+          return parseInt(v, 10);
+        }
+        function pinta(id, ok) {
+          var el = document.getElementById(id);
+          el.classList.remove('bien', 'mal');
+          el.classList.add(ok ? 'bien' : 'mal');
+        }
+        function marcarCampo(id, esperado) {
+          var v = leer(id);
+          var ok = v !== null && v === esperado;
+          pinta(id, ok);
+          return ok;
+        }
+        /* comprueba un par de casillas sin importar el orden */
+        function marcarPar(id1, id2, e1, e2) {
+          var v1 = leer(id1), v2 = leer(id2);
+          var ok = (v1 !== null && v2 !== null) &&
+            ((v1 === e1 && v2 === e2) || (v1 === e2 && v2 === e1));
+          pinta(id1, ok); pinta(id2, ok);
+          return ok;
+        }
+        /* comprueba dos factores (coef, término) sin importar el orden de los factores */
+        function marcarFactores(ids, f1, f2) {
+          var v = ids.map(leer);
+          if (v.indexOf(null) !== -1) { ids.forEach(function (id) { pinta(id, false); }); return false; }
+          var directo = (v[0] === f1[0] && v[1] === f1[1] && v[2] === f2[0] && v[3] === f2[1]);
+          var cruzado = (v[0] === f2[0] && v[1] === f2[1] && v[2] === f1[0] && v[3] === f1[1]);
+          var ok = directo || cruzado;
+          ids.forEach(function (id) { pinta(id, ok); });
+          return ok;
+        }
+        function limpiar(ids) {
+          ids.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.value = '';
+            el.classList.remove('bien', 'mal');
+          });
+        }
+        function fb(id, texto, ok) {
+          var el = document.getElementById(id);
+          el.textContent = texto;
+          el.className = 'fb ' + (ok ? 'ok' : 'no');
+        }
+        function ocultarFb(id) { var el = document.getElementById(id); el.className = 'fb'; el.textContent = ''; }
+        function mostrarSol(id, html) { var el = document.getElementById(id); el.innerHTML = html; el.classList.add('visible'); }
+        function ocultarSol(id) { var el = document.getElementById(id); el.classList.remove('visible'); el.innerHTML = ''; }
+        function enterEn(ids, accion) {
+          ids.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter') { e.preventDefault(); accion(); }
+            });
+          });
+        }
+        function Contador(idMarcador) { this.a = 0; this.t = 0; this.el = document.getElementById(idMarcador); }
+        Contador.prototype.suma = function (acierto) {
+          this.t++; if (acierto) this.a++;
+          this.el.textContent = 'Aciertos: ' + this.a + ' \u00b7 Intentos: ' + this.t;
+        };
+        /* ¿existe un par de enteros con producto p y suma s? */
+        function buscaPar(p, s) {
+          var lim = Math.abs(p);
+          for (var d = 1; d <= lim; d++) {
+            if (p % d === 0) {
+              var pares = [[d, p / d], [-d, -(p / d)]];
+              for (var k = 0; k < 2; k++) {
+                if (pares[k][0] + pares[k][1] === s) return pares[k];
+              }
+            }
+          }
+          return null;
+        }
+
+        /* =========================================================
+           MÓDULO 1 · TRINOMIOS CON a = 1
+           ========================================================= */
+        var s1E = {};
+        var s1Cont = new Contador('s1-marcador');
+        var s1Ids = ['s1-n1', 's1-n2', 's1-b1', 's1-b2'];
+
+        function s1Nuevo() {
+          var p = rnz(-9, 9), q = rnz(-9, 9);
+          while (p === q && Math.abs(p) > 6) { q = rnz(-9, 9); }
+          s1E.p = p; s1E.q = q;
+          s1E.b = p + q; s1E.c = p * q;
+          document.getElementById('s1-enun').textContent = trinomio(1, s1E.b, s1E.c);
+          document.getElementById('s1-guia').textContent =
+            'Dos números que multiplicados den ' + num(s1E.c) + ' y sumados den ' + num(s1E.b) + '.';
+          limpiar(s1Ids);
+          document.getElementById('s1-tabla').classList.remove('visible');
+          ocultarFb('s1-fb');
+          ocultarSol('s1-sol');
+        }
+
+        function s1Comprobar() {
+          var okN = marcarPar('s1-n1', 's1-n2', s1E.p, s1E.q);
+          var okB = marcarPar('s1-b1', 's1-b2', s1E.p, s1E.q);
+          var todo = okN && okB;
+          s1Cont.suma(todo);
+          if (todo) {
+            fb('s1-fb', 'Correcto. ' + trinomio(1, s1E.b, s1E.c) + ' = ' + factor(1, s1E.p) + factor(1, s1E.q) + '.', true);
+          } else if (okN && !okB) {
+            fb('s1-fb', 'Los dos números están bien. Esos mismos números son los que van dentro de los binomios, con su signo.', false);
+          } else {
+            fb('s1-fb', 'Todavía no. Comprueba las dos condiciones a la vez: el producto debe dar ' + num(s1E.c) + ' y la suma ' + num(s1E.b) + '.', false);
+          }
+        }
+
+        function s1Pares() {
+          var c = s1E.c, filas = '', d;
+          for (d = 1; d <= Math.abs(c); d++) {
+            if (c % d === 0) {
+              var a1 = d, b1 = c / d;
+              filas += '<tr><td>' + num(a1) + ' y ' + num(b1) + '</td><td>' + num(a1 + b1) + '</td></tr>';
+              filas += '<tr><td>' + num(-a1) + ' y ' + num(-b1) + '</td><td>' + num(-a1 - b1) + '</td></tr>';
+            }
+          }
+          var tabla = document.getElementById('s1-tabla');
+          tabla.innerHTML = '<table><caption>Pares de números cuyo producto es ' + num(c) + '</caption>' +
+            '<thead><tr><th scope="col">Par</th><th scope="col">Suma</th></tr></thead><tbody>' + filas + '</tbody></table>' +
+            '<p style="margin:8px 0 0">Busca en la columna de la derecha la suma ' + num(s1E.b) + '.</p>';
+          tabla.classList.add('visible');
+        }
+
+        function s1Ver() {
+          mostrarSol('s1-sol',
+            '<h4>Solución paso a paso</h4>' +
+            '<div class="ln"><b>Se buscan dos números:</b> producto ' + num(s1E.c) + ', suma ' + num(s1E.b) + '.</div>' +
+            '<div class="ln"><b>Son ' + num(s1E.p) + ' y ' + num(s1E.q) + ':</b> ' +
+              num(s1E.p) + ' \u00b7 ' + num(s1E.q) + ' = ' + num(s1E.c) + ' y ' +
+              num(s1E.p) + ' + (' + num(s1E.q) + ') = ' + num(s1E.b) + '.</div>' +
+            '<div class="ln"><b>Se escriben los binomios:</b> ' + factor(1, s1E.p) + factor(1, s1E.q) + '</div>' +
+            '<div class="ln"><b>Verificación:</b> al multiplicar con FOIL se recupera ' + trinomio(1, s1E.b, s1E.c) + '.</div>');
+        }
+
+        document.getElementById('s1-comprobar').addEventListener('click', s1Comprobar);
+        document.getElementById('s1-pares').addEventListener('click', s1Pares);
+        document.getElementById('s1-ver').addEventListener('click', s1Ver);
+        document.getElementById('s1-nuevo').addEventListener('click', s1Nuevo);
+        enterEn(s1Ids, s1Comprobar);
+
+        /* =========================================================
+           MÓDULO 2 · TRINOMIOS CON a ≠ 1 (método ac / aspa simple)
+           ========================================================= */
+        var s2E = {};
+        var s2Ruta = 'ac';
+        var s2Cont = new Contador('s2-marcador');
+        var s2Ids = ['s2-ac', 's2-n1', 's2-n2', 's2-a1', 's2-b1', 's2-a2', 's2-b2'];
+
+        function s2Nuevo() {
+          var a1, b1, a2, b2, a, b, c, intentos = 0;
+          do {
+            a1 = elige([2, 2, 3, 3, 4, 5]);
+            a2 = elige([1, 1, 1, 2, 3]);
+            b1 = rnz(-7, 7);
+            b2 = rnz(-7, 7);
+            a = a1 * a2; b = a1 * b2 + a2 * b1; c = b1 * b2;
+            intentos++;
+          } while (
+            (mcd(a1, b1) !== 1 || mcd(a2, b2) !== 1 ||
+             a < 2 || Math.abs(b) > 40 || Math.abs(c) > 49 ||
+             mcd(mcd(a, b), c) !== 1) && intentos < 200
+          );
+          s2E.a1 = a1; s2E.b1 = b1; s2E.a2 = a2; s2E.b2 = b2;
+          s2E.a = a; s2E.b = b; s2E.c = c;
+          s2E.m = a1 * b2; s2E.n = a2 * b1;
+
+          document.getElementById('s2-enun').textContent = trinomio(a, b, c);
+          document.getElementById('s2-guia-ac').textContent = 'a \u00b7 c = ' + num(a) + ' \u00b7 (' + num(c) + ') =';
+          s2Textos();
+          limpiar(s2Ids);
+          ocultarFb('s2-fb');
+          ocultarSol('s2-sol');
+        }
+
+        function s2Textos() {
+          var g2 = document.getElementById('s2-guia2');
+          var g3 = document.getElementById('s2-guia3');
+          g2.textContent = 'Halla dos números que multiplicados den a \u00b7 c y sumados den ' + num(s2E.b) + ' (el coeficiente de x).';
+          if (s2Ruta === 'ac') {
+            g3.textContent = 'Parte el término del medio con esos dos números, agrupa de dos en dos y escribe los factores.';
+          } else {
+            g3.textContent = 'Escribe (' + num(s2E.a) + 'x + n\u00famero 1)(' + num(s2E.a) + 'x + n\u00famero 2) dividido entre ' + num(s2E.a) + ', simplifica y escribe los factores.';
+          }
+        }
+
+        function s2Comprobar() {
+          var okAC = marcarCampo('s2-ac', s2E.a * s2E.c);
+          var okN = marcarPar('s2-n1', 's2-n2', s2E.m, s2E.n);
+          var okF = marcarFactores(['s2-a1', 's2-b1', 's2-a2', 's2-b2'],
+            [s2E.a1, s2E.b1], [s2E.a2, s2E.b2]);
+          var todo = okAC && okN && okF;
+          s2Cont.suma(todo);
+          if (todo) {
+            fb('s2-fb', 'Correcto. ' + trinomio(s2E.a, s2E.b, s2E.c) + ' = ' + factor(s2E.a1, s2E.b1) + factor(s2E.a2, s2E.b2) + '.', true);
+          } else if (okAC && okN && !okF) {
+            fb('s2-fb', 'Los dos números están bien; falla el paso final. ' +
+              (s2Ruta === 'ac'
+                ? 'Al agrupar debe aparecer el mismo binomio en los dos grupos.'
+                : 'Después de dividir entre ' + num(s2E.a) + ' hay que simplificar los paréntesis.'), false);
+          } else if (okAC && !okN) {
+            fb('s2-fb', 'El producto a \u00b7 c está bien. Ahora busca dos números con ese producto que además sumen ' + num(s2E.b) + '.', false);
+          } else {
+            fb('s2-fb', 'Revisa las casillas en rojo. Empieza por calcular a \u00b7 c con su signo.', false);
+          }
+        }
+
+        function s2Ver() {
+          var a = s2E.a, b = s2E.b, c = s2E.c, m = s2E.m, n = s2E.n;
+          var html = '<h4>Solución paso a paso</h4>';
+          html += '<div class="ln"><b>Paso 1.</b> a \u00b7 c = ' + num(a) + ' \u00b7 (' + num(c) + ') = ' + num(a * c) + '</div>';
+          html += '<div class="ln"><b>Paso 2.</b> Dos números con producto ' + num(a * c) + ' y suma ' + num(b) + ': ' + num(m) + ' y ' + num(n) + '</div>';
+          if (s2Ruta === 'ac') {
+            html += '<div class="ln"><b>Paso 3.</b> Se parte el término del medio: ' +
+              trinomio(a, 0, 0) + signo(m) + 'x' + signo(n) + 'x' + signo(c) + '</div>';
+            html += '<div class="ln"><b>Paso 4.</b> Se agrupa de dos en dos y se extrae el factor común de cada grupo.</div>';
+            html += '<div class="ln"><b>Resultado:</b> ' + factor(s2E.a1, s2E.b1) + factor(s2E.a2, s2E.b2) + '</div>';
+          } else {
+            html += '<div class="ln"><b>Paso 3.</b> Se multiplica y se divide por ' + num(a) + ':&nbsp; ' +
+              trinomio(a, b, c) + ' = [ (' + num(a) + 'x)\u00b2 ' + (b < 0 ? MENOS + ' ' + Math.abs(b) : '+ ' + b) +
+              '(' + num(a) + 'x) ' + (c < 0 ? MENOS + ' ' + Math.abs(a * c) : '+ ' + (a * c)) + ' ] \u00f7 ' + num(a) + '</div>';
+            html += '<div class="ln"><b>Paso 4.</b> Se factoriza como si el coeficiente fuera 1, usando los dos números del paso 2:&nbsp; ' +
+              '[ (' + num(a) + 'x' + signo(m) + ')(' + num(a) + 'x' + signo(n) + ') ] \u00f7 ' + num(a) + '</div>';
+            var g1 = mcd(a, m), g2 = mcd(a, n);
+            html += '<div class="ln"><b>Paso 5.</b> Se simplifica: del primer paréntesis sale el factor ' + g1 +
+              ' y del segundo el factor ' + g2 + '; su producto es ' + (g1 * g2) + ', que cancela el divisor ' + num(a) + '.</div>';
+            html += '<div class="ln"><b>Resultado:</b> ' + factor(s2E.a1, s2E.b1) + factor(s2E.a2, s2E.b2) + '</div>';
+          }
+          html += '<div class="ln"><b>Verificación:</b> al multiplicar los factores se recupera ' + trinomio(a, b, c) + '.</div>';
+          mostrarSol('s2-sol', html);
+        }
+
+        function s2CambiaRuta(r) {
+          s2Ruta = r;
+          document.getElementById('ruta-ac').setAttribute('aria-pressed', r === 'ac' ? 'true' : 'false');
+          document.getElementById('ruta-aspa').setAttribute('aria-pressed', r === 'aspa' ? 'true' : 'false');
+          s2Textos();
+          ocultarSol('s2-sol');
+        }
+
+        document.getElementById('ruta-ac').addEventListener('click', function () { s2CambiaRuta('ac'); });
+        document.getElementById('ruta-aspa').addEventListener('click', function () { s2CambiaRuta('aspa'); });
+        document.getElementById('s2-comprobar').addEventListener('click', s2Comprobar);
+        document.getElementById('s2-ver').addEventListener('click', s2Ver);
+        document.getElementById('s2-nuevo').addEventListener('click', s2Nuevo);
+        enterEn(s2Ids, s2Comprobar);
+
+        /* =========================================================
+           MÓDULO 3 · FACTORIZACIÓN COMPLETA
+           ========================================================= */
+        var s3E = {};
+        var s3Cont = new Contador('s3-marcador');
+        var s3Ids3 = ['s3-a1', 's3-b1', 's3-a2', 's3-b2'];
+
+        function s3Nuevo() {
+          var tipo = elige(['comun', 'comun', 'cuadrado', 'cuadrado', 'primo']);
+          var k, p, q, m, s, a, b, c, intentos = 0;
+          if (tipo === 'comun') {
+            k = elige([2, 3, 4, 5]);
+            do {
+              p = rnz(-8, 8); q = rnz(-8, 8); intentos++;
+            } while ((p === q || p + q === 0) && intentos < 60);
+            a = 1; b = p + q; c = p * q;
+            s3E.f1 = [1, p]; s3E.f2 = [1, q];
+            s3E.clase = 'norm';
+          } else if (tipo === 'cuadrado') {
+            k = elige([1, 1, 2, 3]);
+            do {
+              m = elige([1, 1, 2, 3]);
+              p = ri(2, 7);
+              intentos++;
+            } while (mcd(m, p) !== 1 && intentos < 60);
+            s = elige([1, -1]);
+            a = m * m; b = s * 2 * m * p; c = p * p;
+            s3E.f1 = [m, s * p]; s3E.f2 = [m, s * p];
+            s3E.clase = 'cuad';
+          } else {
+            k = elige([1, 1, 2]);
+            do {
+              b = rnz(-9, 9); c = rnz(-9, 9);
+              intentos++;
+            } while (buscaPar(c, b) !== null && intentos < 200);
+            a = 1;
+            s3E.f1 = null; s3E.f2 = null;
+            s3E.clase = 'primo';
+          }
+          s3E.k = k; s3E.a = a; s3E.b = b; s3E.c = c;
+          document.getElementById('s3-enun').textContent = trinomio(k * a, k * b, k * c);
+          document.getElementById('s3-dentro').textContent = trinomio(a, b, c);
+          document.getElementById('s3-paso3').style.display = 'none';
+          ['s3-op-cuad', 's3-op-norm', 's3-op-primo'].forEach(function (id) {
+            document.getElementById(id).classList.remove('bien', 'mal');
+          });
+          limpiar(['s3-k'].concat(s3Ids3));
+          ocultarFb('s3-fb');
+          ocultarSol('s3-sol');
+        }
+
+        function s3Comprobar1() {
+          var ok = marcarCampo('s3-k', s3E.k);
+          if (ok) {
+            fb('s3-fb', s3E.k === 1
+              ? 'Correcto: aquí no hay factor común. Pasa al paso 2.'
+              : 'Correcto. Con el factor común fuera queda ' + trinomio(s3E.a, s3E.b, s3E.c) + '. Pasa al paso 2.', true);
+          } else {
+            fb('s3-fb', 'Revisa el MCD de los tres coeficientes. Si vale 1, escribe 1.', false);
+          }
+        }
+
+        function s3Clasificar(clase) {
+          var ids = { cuad: 's3-op-cuad', norm: 's3-op-norm', primo: 's3-op-primo' };
+          var acierto = (clase === s3E.clase);
+          var btn = document.getElementById(ids[clase]);
+          btn.classList.remove('bien', 'mal');
+          btn.classList.add(acierto ? 'bien' : 'mal');
+          if (s3E.clase === 'primo') {
+            s3Cont.suma(acierto);
+            fb('s3-fb', acierto
+              ? 'Correcto: no hay dos enteros que multipliquen ' + num(s3E.c) + ' y sumen ' + num(s3E.b) + '. El trinomio es primo.'
+              : 'Búscalo bien: no existe ningún par de enteros con producto ' + num(s3E.c) + ' y suma ' + num(s3E.b) + '. Es un trinomio primo.', acierto);
+            document.getElementById('s3-paso3').style.display = 'none';
+          } else {
+            if (!acierto) {
+              s3Cont.suma(false);
+              fb('s3-fb', s3E.clase === 'cuad'
+                ? 'Fíjate otra vez: el primero y el último son cuadrados perfectos y el del medio es el doble del producto. Es un cuadrado perfecto.'
+                : 'No es un cuadrado perfecto, pero sí se factoriza. Escribe los binomios.', false);
+            } else {
+              fb('s3-fb', 'Bien clasificado. Escribe ahora los dos binomios.', true);
+            }
+            document.getElementById('s3-paso3').style.display = 'block';
+            document.getElementById('s3-a1').focus();
+          }
+        }
+
+        function s3Comprobar3() {
+          if (s3E.clase === 'primo') { return; }
+          var ok = marcarFactores(s3Ids3, s3E.f1, s3E.f2);
+          s3Cont.suma(ok);
+          if (ok) {
+            fb('s3-fb', 'Factorización completa y correcta: ' +
+              (s3E.k === 1 ? '' : s3E.k) + factor(s3E.f1[0], s3E.f1[1]) + factor(s3E.f2[0], s3E.f2[1]) + '.', true);
+          } else {
+            fb('s3-fb', 'Revisa los binomios. Recuerda comprobar multiplicando: debe reaparecer ' + trinomio(s3E.a, s3E.b, s3E.c) + '.', false);
+          }
+        }
+
+        function s3Ver() {
+          var html = '<h4>Solución paso a paso</h4>';
+          html += '<div class="ln"><b>Paso 1. Factor común:</b> ' + s3E.k +
+            (s3E.k === 1 ? ' (no hay factor común numérico)' : ' \u2192 ' + s3E.k + '(' + trinomio(s3E.a, s3E.b, s3E.c) + ')') + '</div>';
+          if (s3E.clase === 'primo') {
+            html += '<div class="ln"><b>Paso 2.</b> No existen dos enteros con producto ' + num(s3E.c) + ' y suma ' + num(s3E.b) + '.</div>';
+            html += '<div class="ln"><b>Resultado:</b> ' + (s3E.k === 1 ? trinomio(s3E.a, s3E.b, s3E.c) : s3E.k + '(' + trinomio(s3E.a, s3E.b, s3E.c) + ')') +
+              '. El trinomio de dentro es primo: no se factoriza con números enteros.</div>';
+          } else {
+            if (s3E.clase === 'cuad') {
+              html += '<div class="ln"><b>Paso 2.</b> Es un cuadrado perfecto: ' +
+                trinomio(s3E.a, s3E.b, s3E.c) + ' = ' + factor(s3E.f1[0], s3E.f1[1]) + '\u00b2</div>';
+            } else {
+              html += '<div class="ln"><b>Paso 2.</b> Dos números con producto ' + num(s3E.c) + ' y suma ' + num(s3E.b) + ': ' +
+                num(s3E.f1[1]) + ' y ' + num(s3E.f2[1]) + '</div>';
+            }
+            html += '<div class="ln"><b>Resultado completo:</b> ' +
+              (s3E.k === 1 ? '' : s3E.k) + factor(s3E.f1[0], s3E.f1[1]) + factor(s3E.f2[0], s3E.f2[1]) + '</div>';
+          }
+          mostrarSol('s3-sol', html);
+        }
+
+        document.getElementById('s3-comprobar1').addEventListener('click', s3Comprobar1);
+        document.getElementById('s3-op-cuad').addEventListener('click', function () { s3Clasificar('cuad'); });
+        document.getElementById('s3-op-norm').addEventListener('click', function () { s3Clasificar('norm'); });
+        document.getElementById('s3-op-primo').addEventListener('click', function () { s3Clasificar('primo'); });
+        document.getElementById('s3-comprobar3').addEventListener('click', s3Comprobar3);
+        document.getElementById('s3-ver').addEventListener('click', s3Ver);
+        document.getElementById('s3-nuevo').addEventListener('click', s3Nuevo);
+        enterEn(['s3-k'], s3Comprobar1);
+        enterEn(s3Ids3, s3Comprobar3);
+
+        /* =========================================================
+           NAVEGACIÓN POR MÓDULOS
+           ========================================================= */
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('button.tab'));
+        function activar(id, mover) {
+          tabs.forEach(function (t) {
+            var sel = (t.id === id);
+            t.setAttribute('aria-selected', sel ? 'true' : 'false');
+            t.tabIndex = sel ? 0 : -1;
+            document.getElementById(t.getAttribute('aria-controls')).classList.toggle('activo', sel);
+          });
+          if (mover) document.getElementById(id).focus();
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', '#' + id.replace('tab-', ''));
+          }
+        }
+        tabs.forEach(function (t, idx) {
+          t.addEventListener('click', function () { activar(t.id, false); });
+          t.addEventListener('keydown', function (e) {
+            var i = null;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') i = (idx + 1) % tabs.length;
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') i = (idx - 1 + tabs.length) % tabs.length;
+            if (e.key === 'Home') i = 0;
+            if (e.key === 'End') i = tabs.length - 1;
+            if (i !== null) { e.preventDefault(); activar(tabs[i].id, true); }
+          });
+        });
+
+        s1Nuevo();
+        s2Nuevo();
+        s3Nuevo();
+
+        var hash = (window.location.hash || '').replace('#', '');
+        if (['simple', 'ac', 'completa'].indexOf(hash) !== -1) { activar('tab-' + hash, false); }
+      })();
+    </script>
+  </body>
+</html>
