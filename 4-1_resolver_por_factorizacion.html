@@ -1,0 +1,790 @@
+<!doctype html>
+<!--
+  Interactivo · Lección 4.1 — Resolver ecuaciones cuadráticas por factorización
+  Spanish ASE Math · Nivel 4 · Tema 4
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)
+  https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+-->
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactivo 4.1 · Resolver ecuaciones cuadráticas por factorización</title>
+    <meta name="author" content="José M. Fernández" />
+    <meta name="description" content="Interactivo de práctica para resolver ecuaciones cuadráticas por factorización: Propiedad del Producto Cero, los cinco pasos con forma estándar previa y problemas aplicados de área." />
+    <meta name="license" content="CC BY-NC-SA 4.0" />
+    <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" />
+    <style>
+      :root {
+        --tema: #880e4f;
+        --tema-d: #5c0733;
+        --tema-bg: #fce4ec;
+        --tema-bg2: #f8bbd0;
+        --acento: #00695c;
+        --ok: #1b5e20;
+        --ok-bg: #e8f5e9;
+        --no: #b71c1c;
+        --no-bg: #ffebee;
+        --txt: #222;
+        --mut: #555;
+        --bg: #f5f7fa;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0; background: var(--bg); color: var(--txt);
+        line-height: 1.6; font-size: 16px;
+      }
+      .contenedor { max-width: 880px; margin: 0 auto; padding: 24px; }
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0;
+        margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0);
+        white-space: nowrap; border: 0;
+      }
+      header.principal {
+        background: linear-gradient(135deg, #4a052a 0%, #880e4f 55%, #ad1457 100%);
+        color: #fff; padding: 30px 28px; border-radius: 14px;
+        margin-bottom: 18px; box-shadow: 0 4px 14px rgba(92, 7, 51, 0.28);
+      }
+      header.principal .ruta { font-size: 13px; letter-spacing: 0.4px; text-transform: uppercase; }
+      header.principal h1 { margin: 8px 0 6px; font-size: 24px; font-weight: 700; }
+      header.principal .meta { font-size: 14px; }
+
+      nav.modulos { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+      button.tab {
+        flex: 1 1 200px; background: #fff; border: 2px solid var(--tema-bg2);
+        color: var(--tema-d); border-radius: 10px; padding: 11px 14px;
+        font-family: inherit; font-size: 14px; font-weight: 700; cursor: pointer;
+        text-align: left; line-height: 1.35;
+      }
+      button.tab:hover { border-color: var(--tema); background: var(--tema-bg); }
+      button.tab[aria-selected="true"] { background: var(--tema); border-color: var(--tema-d); color: #fff; }
+      button.tab:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      button.tab .num { display: block; font-size: 12px; opacity: 0.95; font-weight: 600; }
+
+      section.panel { display: none; }
+      section.panel.activo { display: block; }
+
+      h2.titulo-panel {
+        color: var(--tema-d); font-size: 21px; margin: 6px 0 8px;
+        padding-bottom: 6px; border-bottom: 3px solid var(--tema-bg);
+      }
+      h3.titulo-tarjeta { color: var(--tema-d); font-size: 17px; margin: 0 0 10px; }
+      p.intro { color: var(--mut); font-size: 15px; margin: 6px 0 14px; }
+
+      .tarjeta {
+        background: #fff; border-radius: 12px; padding: 20px 24px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07); margin-bottom: 18px;
+      }
+      .marcador {
+        display: inline-block; background: var(--tema-bg); color: var(--tema-d);
+        border-radius: 20px; padding: 5px 16px; font-size: 14px; font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .enunciado {
+        font-size: 24px; font-weight: 700; color: var(--tema-d);
+        text-align: center; margin: 10px 0 18px;
+      }
+      .enunciado.texto { font-size: 17px; font-weight: 600; text-align: left; color: var(--txt); line-height: 1.55; }
+      .instruccion { font-size: 15px; margin: 14px 0 6px; }
+      .instruccion .paso-num { color: var(--tema-d); font-weight: 700; }
+
+      .campo {
+        width: 68px; padding: 8px 6px; font-size: 18px; font-family: inherit;
+        text-align: center; border: 2px solid #757575; border-radius: 8px;
+        background: #fff; color: var(--txt);
+      }
+      .campo:focus { outline: 3px solid var(--tema); outline-offset: 1px; border-color: var(--tema); }
+      .campo.bien { border-color: #2e7d32; background: var(--ok-bg); }
+      .campo.mal { border-color: #c62828; background: var(--no-bg); }
+      .campo.chico { width: 58px; }
+
+      .linea-resp {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+        font-size: 21px; font-weight: 700; color: var(--tema-d);
+        justify-content: center; margin: 12px 0;
+      }
+      .linea-resp .txt { font-size: 21px; }
+      .linea-resp .et { font-size: 15px; color: var(--mut); font-weight: 600; }
+
+      .opciones-bot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 12px 0; }
+      .op-bot {
+        background: #fff; border: 2px solid #757575; border-radius: 9px;
+        padding: 11px 18px; font-family: inherit; font-size: 15px; font-weight: 600;
+        color: var(--txt); cursor: pointer;
+      }
+      .op-bot:hover { border-color: var(--tema); }
+      .op-bot:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .op-bot.bien { border-color: #2e7d32; background: var(--ok-bg); color: var(--ok); }
+      .op-bot.mal { border-color: #c62828; background: var(--no-bg); color: var(--no); }
+
+      .acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+      .btn {
+        background: var(--tema); color: #fff; border: none; padding: 10px 20px;
+        border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;
+        font-family: inherit;
+      }
+      .btn:hover { background: var(--tema-d); }
+      .btn:focus-visible { outline: 3px solid var(--tema-d); outline-offset: 2px; }
+      .btn.sec { background: #546e7a; }
+      .btn.sec:hover { background: #37474f; }
+      .btn.out { background: #fff; color: var(--tema-d); border: 2px solid var(--tema); }
+      .btn.out:hover { background: var(--tema-bg); }
+
+      .fb {
+        margin-top: 14px; padding: 12px 16px; border-radius: 8px;
+        font-size: 15px; font-weight: 600; display: none;
+      }
+      .fb.ok { background: var(--ok-bg); color: var(--ok); border-left: 5px solid #2e7d32; display: block; }
+      .fb.no { background: var(--no-bg); color: var(--no); border-left: 5px solid #c62828; display: block; }
+
+      .solucion {
+        display: none; margin-top: 14px; background: #fafafa;
+        border: 1px solid #e3e3e3; border-left: 5px solid var(--acento);
+        border-radius: 0 8px 8px 0; padding: 14px 18px; font-size: 15px;
+      }
+      .solucion.visible { display: block; }
+      .solucion h4 { margin: 0 0 8px; color: #004d40; font-size: 15px; }
+      .solucion .ln { margin: 6px 0; }
+      .solucion .ln b { color: var(--tema-d); }
+
+      .caja-tip {
+        background: var(--ok-bg); border-left: 5px solid #2e7d32;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        color: var(--ok); font-size: 15px;
+      }
+      .caja-atencion {
+        background: #fff8e1; border-left: 5px solid #f9a825;
+        padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0;
+        font-size: 15px; color: #5c3900;
+      }
+
+      footer {
+        text-align: center; padding: 22px 10px; color: var(--mut); font-size: 13px;
+        border-top: 1px solid #ddd; margin-top: 24px;
+      }
+      footer a { color: var(--tema-d); }
+
+      @media (max-width: 520px) {
+        .contenedor { padding: 14px; }
+        .enunciado { font-size: 20px; }
+        .campo { width: 58px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; animation: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="contenedor">
+      <header class="principal">
+        <div class="ruta">Spanish ASE Math · Nivel 4 · Tema 4 · Lección 4.1</div>
+        <h1>Resolver ecuaciones cuadráticas por factorización</h1>
+        <div class="meta">Tres módulos de práctica con verificación inmediata y solución paso a paso</div>
+      </header>
+
+      <nav class="modulos" role="tablist" aria-label="Módulos del interactivo">
+        <button class="tab" role="tab" id="tab-cero" aria-controls="panel-cero" aria-selected="true">
+          <span class="num">Módulo 1</span>La Propiedad del Producto Cero
+        </button>
+        <button class="tab" role="tab" id="tab-pasos" aria-controls="panel-pasos" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 2</span>Los cinco pasos: de la ecuación a las soluciones
+        </button>
+        <button class="tab" role="tab" id="tab-aplica" aria-controls="panel-aplica" aria-selected="false" tabindex="-1">
+          <span class="num">Módulo 3</span>Problemas aplicados: interpretar la solución
+        </button>
+      </nav>
+
+      <!-- ============ MÓDULO 1 · PROPIEDAD DEL PRODUCTO CERO ============ -->
+      <section class="panel activo" role="tabpanel" id="panel-cero" aria-labelledby="tab-cero" tabindex="0">
+        <h2 class="titulo-panel">Módulo 1 · La Propiedad del Producto Cero</h2>
+        <p class="intro">Si <strong>A · B = 0</strong>, entonces <strong>A = 0</strong> o <strong>B = 0</strong>. La propiedad solo se puede aplicar cuando el producto está igualado a <strong>cero</strong>.</p>
+
+        <div class="tarjeta">
+          <h3 class="titulo-tarjeta">Primera parte · ¿Se puede aplicar ya la propiedad?</h3>
+          <div class="marcador" id="a1-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="a1-enun"></div>
+          <p class="instruccion"><span class="paso-num">Decide.</span> Observa a qué número está igualado el producto.</p>
+          <div class="opciones-bot">
+            <button class="op-bot" id="a1-si">Sí, ya puedo igualar cada factor a cero</button>
+            <button class="op-bot" id="a1-no">No, primero hay que llevarla a forma estándar</button>
+          </div>
+          <div class="acciones">
+            <button class="btn out" id="a1-nuevo">Otra ecuación</button>
+          </div>
+          <div class="fb" id="a1-fb" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="tarjeta">
+          <h3 class="titulo-tarjeta">Segunda parte · De los factores a las soluciones</h3>
+          <div class="marcador" id="s1-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="s1-enun"></div>
+
+          <p class="instruccion"><span class="paso-num">Paso único.</span> <span id="s1-guia"></span></p>
+          <div class="linea-resp">
+            <span class="txt">x =</span>
+            <input class="campo" id="s1-x1" inputmode="numeric" autocomplete="off" aria-label="Primera solución" />
+            <span class="txt">o&nbsp;&nbsp;x =</span>
+            <input class="campo" id="s1-x2" inputmode="numeric" autocomplete="off" aria-label="Segunda solución" />
+          </div>
+          <p class="intro">El orden no importa. Si los dos factores son iguales, escribe la misma solución en las dos casillas.</p>
+
+          <div class="acciones">
+            <button class="btn" id="s1-comprobar">Comprobar</button>
+            <button class="btn sec" id="s1-ver">Ver la solución</button>
+            <button class="btn out" id="s1-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="s1-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="s1-sol"></div>
+        </div>
+
+        <div class="caja-tip">
+          <strong>La clave es el cero.</strong> Si un producto da 12, hay muchas parejas de números posibles. Si da 0, no hay alternativa: alguno de los factores tiene que valer cero.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 2 · LOS CINCO PASOS ============ -->
+      <section class="panel" role="tabpanel" id="panel-pasos" aria-labelledby="tab-pasos" tabindex="0">
+        <h2 class="titulo-panel">Módulo 2 · Los cinco pasos: de la ecuación a las soluciones</h2>
+        <p class="intro">Lleva la ecuación a la forma estándar <strong>x² + bx + c = 0</strong>, factoriza e iguala cada factor a cero. Escribe <strong>0</strong> en la casilla del término que no aparece.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="s2-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado" id="s2-enun"></div>
+
+          <p class="instruccion"><span class="paso-num">Paso 1.</span> <span id="s2-guia"></span></p>
+          <div class="linea-resp">
+            <span class="txt">x² +</span>
+            <input class="campo chico" id="s2-b" inputmode="numeric" autocomplete="off" aria-label="Coeficiente b de la forma estándar" />
+            <span class="txt">x +</span>
+            <input class="campo chico" id="s2-c" inputmode="numeric" autocomplete="off" aria-label="Término independiente c de la forma estándar" />
+            <span class="txt">= 0</span>
+          </div>
+
+          <p class="instruccion"><span class="paso-num">Paso 2.</span> Factoriza el lado izquierdo.</p>
+          <div class="linea-resp">
+            <span class="txt">( x +</span>
+            <input class="campo chico" id="s2-p" inputmode="numeric" autocomplete="off" aria-label="Término independiente del primer binomio" />
+            <span class="txt">)( x +</span>
+            <input class="campo chico" id="s2-q" inputmode="numeric" autocomplete="off" aria-label="Término independiente del segundo binomio" />
+            <span class="txt">) = 0</span>
+          </div>
+
+          <p class="instruccion"><span class="paso-num">Pasos 3 y 4.</span> Iguala cada factor a cero y resuelve.</p>
+          <div class="linea-resp">
+            <span class="txt">x =</span>
+            <input class="campo" id="s2-x1" inputmode="numeric" autocomplete="off" aria-label="Primera solución" />
+            <span class="txt">o&nbsp;&nbsp;x =</span>
+            <input class="campo" id="s2-x2" inputmode="numeric" autocomplete="off" aria-label="Segunda solución" />
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="s2-comprobar">Comprobar</button>
+            <button class="btn sec" id="s2-ver">Ver la solución</button>
+            <button class="btn out" id="s2-nuevo">Otro ejercicio</button>
+          </div>
+          <div class="fb" id="s2-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="s2-sol"></div>
+        </div>
+
+        <div class="caja-atencion">
+          <strong>No dividas entre x.</strong> En una ecuación como x² = 5x, dividir ambos lados entre x hace perder la solución x = 0. Se pasa todo a un lado y se saca factor común.
+        </div>
+      </section>
+
+      <!-- ============ MÓDULO 3 · PROBLEMAS APLICADOS ============ -->
+      <section class="panel" role="tabpanel" id="panel-aplica" aria-labelledby="tab-aplica" tabindex="0">
+        <h2 class="titulo-panel">Módulo 3 · Problemas aplicados: interpretar la solución</h2>
+        <p class="intro">Plantea la ecuación, resuélvela por factorización y decide después cuál de las dos soluciones tiene sentido en la situación real.</p>
+
+        <div class="tarjeta">
+          <div class="marcador" id="s3-marcador" role="status" aria-live="polite">Aciertos: 0 · Intentos: 0</div>
+          <div class="enunciado texto" id="s3-enun"></div>
+
+          <p class="instruccion"><span class="paso-num">Paso 1.</span> <span id="s3-guia"></span></p>
+          <div class="linea-resp">
+            <span class="txt">x² +</span>
+            <input class="campo chico" id="s3-b" inputmode="numeric" autocomplete="off" aria-label="Coeficiente b de la ecuación planteada" />
+            <span class="txt">x +</span>
+            <input class="campo chico" id="s3-c" inputmode="numeric" autocomplete="off" aria-label="Término independiente c de la ecuación planteada" />
+            <span class="txt">= 0</span>
+          </div>
+
+          <p class="instruccion"><span class="paso-num">Pasos 2 a 4.</span> Factoriza y halla las dos soluciones.</p>
+          <div class="linea-resp">
+            <span class="txt">x =</span>
+            <input class="campo" id="s3-x1" inputmode="numeric" autocomplete="off" aria-label="Primera solución" />
+            <span class="txt">o&nbsp;&nbsp;x =</span>
+            <input class="campo" id="s3-x2" inputmode="numeric" autocomplete="off" aria-label="Segunda solución" />
+          </div>
+
+          <div class="acciones">
+            <button class="btn" id="s3-comprobar">Comprobar el planteamiento</button>
+            <button class="btn sec" id="s3-ver">Ver la solución</button>
+            <button class="btn out" id="s3-nuevo">Otro problema</button>
+          </div>
+
+          <div id="s3-paso5" style="display: none">
+            <p class="instruccion"><span class="paso-num">Paso 5.</span> <span id="s3-guia5"></span></p>
+            <div class="opciones-bot" id="s3-opciones"></div>
+          </div>
+
+          <div class="fb" id="s3-fb" role="status" aria-live="polite"></div>
+          <div class="solucion" id="s3-sol"></div>
+        </div>
+
+        <div class="caja-tip">
+          <strong>Interpreta el contexto.</strong> Las longitudes, las áreas y los tiempos no pueden ser negativos. Una solución algebraica correcta puede no ser una respuesta válida del problema.
+        </div>
+      </section>
+
+      <footer>
+        <p>Spanish ASE Math · Nivel 4 · Tema 4 · Interactivo de la Lección 4.1</p>
+        <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago</p>
+        <p>Obra publicada bajo licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" rel="license noopener noreferrer" target="_blank">Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        'use strict';
+
+        var MENOS = '\u2212';
+
+        function ri(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+        function rnz(a, b) { var v = 0; while (v === 0) { v = ri(a, b); } return v; }
+        function elige(arr) { return arr[ri(0, arr.length - 1)]; }
+        function num(n) { return n < 0 ? MENOS + Math.abs(n) : String(n); }
+        function signo(n) { return (n < 0 ? ' ' + MENOS + ' ' : ' + ') + Math.abs(n); }
+        function coefX(n) {
+          if (n === 1) return 'x';
+          if (n === -1) return MENOS + 'x';
+          return num(n) + 'x';
+        }
+        function trinomio(b, c) {
+          var s = 'x\u00b2';
+          if (b !== 0) { s += (b < 0 ? ' ' + MENOS + ' ' : ' + ') + (Math.abs(b) === 1 ? 'x' : Math.abs(b) + 'x'); }
+          if (c !== 0) { s += (c < 0 ? ' ' + MENOS + ' ' : ' + ') + Math.abs(c); }
+          return s;
+        }
+        function factor(b) { return b === 0 ? 'x' : '(x' + signo(b) + ')'; }
+
+        function leer(id) {
+          var el = document.getElementById(id);
+          var v = (el.value || '').trim().replace(/[\u2212\u2013\u2014]/g, '-').replace(/\s+/g, '');
+          if (v === '' || !/^-?\d+$/.test(v)) return null;
+          return parseInt(v, 10);
+        }
+        function pinta(id, ok) {
+          var el = document.getElementById(id);
+          el.classList.remove('bien', 'mal');
+          el.classList.add(ok ? 'bien' : 'mal');
+        }
+        function marcarCampo(id, esperado) {
+          var v = leer(id);
+          var ok = v !== null && v === esperado;
+          pinta(id, ok);
+          return ok;
+        }
+        /* comprueba un par de casillas sin importar el orden */
+        function marcarPar(id1, id2, e1, e2) {
+          var v1 = leer(id1), v2 = leer(id2);
+          var ok = (v1 !== null && v2 !== null) &&
+            ((v1 === e1 && v2 === e2) || (v1 === e2 && v2 === e1));
+          pinta(id1, ok); pinta(id2, ok);
+          return ok;
+        }
+        function limpiar(ids) {
+          ids.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.value = '';
+            el.classList.remove('bien', 'mal');
+          });
+        }
+        function fb(id, texto, ok) {
+          var el = document.getElementById(id);
+          el.textContent = texto;
+          el.className = 'fb ' + (ok ? 'ok' : 'no');
+        }
+        function ocultarFb(id) { var el = document.getElementById(id); el.className = 'fb'; el.textContent = ''; }
+        function mostrarSol(id, html) { var el = document.getElementById(id); el.innerHTML = html; el.classList.add('visible'); }
+        function ocultarSol(id) { var el = document.getElementById(id); el.classList.remove('visible'); el.innerHTML = ''; }
+        function enterEn(ids, accion) {
+          ids.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('keydown', function (e) {
+              if (e.key === 'Enter') { e.preventDefault(); accion(); }
+            });
+          });
+        }
+        function Contador(idMarcador) { this.a = 0; this.t = 0; this.el = document.getElementById(idMarcador); }
+        Contador.prototype.suma = function (acierto) {
+          this.t++; if (acierto) this.a++;
+          this.el.textContent = 'Aciertos: ' + this.a + ' \u00b7 Intentos: ' + this.t;
+        };
+
+        /* líneas comunes de verificación */
+        function lineaVerificacion(b, c, x) {
+          var val = x * x + b * x + c;
+          return 'x = ' + num(x) + ': (' + num(x) + ')\u00b2' +
+            (b === 0 ? '' : signo(b) + '(' + num(x) + ')') +
+            (c === 0 ? '' : signo(c)) + ' = ' + val;
+        }
+
+        /* =========================================================
+           MÓDULO 1 · PRIMERA PARTE: ¿se puede aplicar la propiedad?
+           ========================================================= */
+        var a1C = new Contador('a1-marcador');
+        var a1E = null;
+
+        function a1Nuevo() {
+          var p = rnz(-9, 9), q = rnz(-9, 9);
+          var cero = ri(0, 1) === 1;
+          var rhs = cero ? 0 : rnz(2, 12);
+          var forma = elige(['dos', 'dos', 'comun']);
+          var texto = (forma === 'comun' ? 'x' + factor(p) : factor(p) + factor(q)) + ' = ' + num(rhs);
+          a1E = { cero: cero, rhs: rhs, texto: texto };
+          document.getElementById('a1-enun').textContent = texto;
+          document.getElementById('a1-si').classList.remove('bien', 'mal');
+          document.getElementById('a1-no').classList.remove('bien', 'mal');
+          ocultarFb('a1-fb');
+        }
+
+        function a1Responder(dice) {
+          if (!a1E) return;
+          var ok = (dice === 'si') === a1E.cero;
+          document.getElementById(dice === 'si' ? 'a1-si' : 'a1-no').classList.add(ok ? 'bien' : 'mal');
+          a1C.suma(ok);
+          if (a1E.cero) {
+            fb('a1-fb', ok
+              ? 'Correcto. El producto está igualado a cero, así que cada factor puede igualarse a cero.'
+              : 'El producto ya está igualado a cero: sí se puede aplicar la propiedad directamente.', ok);
+          } else {
+            fb('a1-fb', ok
+              ? ('Correcto. El producto está igualado a ' + a1E.rhs + ', no a cero: primero hay que multiplicar, pasar todo a un lado y volver a factorizar.')
+              : ('El producto está igualado a ' + a1E.rhs + '. La propiedad solo funciona con el cero, así que todavía no se puede aplicar.'), ok);
+          }
+        }
+
+        document.getElementById('a1-si').addEventListener('click', function () { a1Responder('si'); });
+        document.getElementById('a1-no').addEventListener('click', function () { a1Responder('no'); });
+        document.getElementById('a1-nuevo').addEventListener('click', a1Nuevo);
+
+        /* =========================================================
+           MÓDULO 1 · SEGUNDA PARTE: de los factores a las soluciones
+           ========================================================= */
+        var s1C = new Contador('s1-marcador');
+        var s1Ids = ['s1-x1', 's1-x2'];
+        var s1E = null;
+
+        function s1Nuevo() {
+          var tipo = elige(['dos', 'dos', 'dos', 'comun', 'doble']);
+          var p, q, texto, x1, x2;
+          if (tipo === 'comun') {
+            p = 0; q = rnz(-9, 9);
+            texto = 'x' + factor(q) + ' = 0';
+            x1 = 0; x2 = -q;
+          } else if (tipo === 'doble') {
+            p = rnz(-9, 9); q = p;
+            texto = factor(p) + factor(q) + ' = 0';
+            x1 = -p; x2 = -p;
+          } else {
+            p = rnz(-9, 9);
+            q = rnz(-9, 9);
+            while (q === p) { q = rnz(-9, 9); }
+            texto = factor(p) + factor(q) + ' = 0';
+            x1 = -p; x2 = -q;
+          }
+          s1E = { tipo: tipo, p: p, q: q, x1: x1, x2: x2, texto: texto };
+          document.getElementById('s1-enun').textContent = texto;
+          document.getElementById('s1-guia').textContent =
+            'Iguala cada factor a cero y resuelve las dos ecuaciones lineales.';
+          limpiar(s1Ids);
+          ocultarFb('s1-fb');
+          ocultarSol('s1-sol');
+        }
+
+        function s1Comprobar() {
+          if (!s1E) return;
+          var ok = marcarPar('s1-x1', 's1-x2', s1E.x1, s1E.x2);
+          s1C.suma(ok);
+          if (ok) {
+            fb('s1-fb', s1E.tipo === 'doble'
+              ? 'Correcto. Los dos factores son iguales, así que la ecuación tiene una sola solución distinta.'
+              : (s1E.tipo === 'comun'
+                ? 'Correcto. El factor x también se iguala a cero: por eso x = 0 es solución.'
+                : 'Correcto. Cada factor igualado a cero aporta una solución.'), true);
+          } else {
+            fb('s1-fb', 'Todavía no. Iguala a cero cada factor por separado y despeja x en cada ecuación.', false);
+          }
+        }
+
+        function s1Ver() {
+          if (!s1E) return;
+          var f1 = s1E.tipo === 'comun' ? 'x' : factor(s1E.p);
+          var f2 = factor(s1E.q);
+          var html = '<h4>Solución paso a paso</h4>';
+          html += '<div class="ln"><b>Ecuación.</b> ' + s1E.texto + '</div>';
+          html += '<div class="ln"><b>Propiedad del Producto Cero.</b> ' + f1 + ' = 0 o ' + f2 + ' = 0</div>';
+          html += '<div class="ln"><b>Soluciones.</b> x = ' + num(s1E.x1) + ' o x = ' + num(s1E.x2) +
+            (s1E.tipo === 'doble' ? ' (una sola solución distinta)' : '') + '</div>';
+          mostrarSol('s1-sol', html);
+        }
+
+        document.getElementById('s1-comprobar').addEventListener('click', s1Comprobar);
+        document.getElementById('s1-ver').addEventListener('click', s1Ver);
+        document.getElementById('s1-nuevo').addEventListener('click', s1Nuevo);
+        enterEn(s1Ids, s1Comprobar);
+
+        /* =========================================================
+           MÓDULO 2 · LOS CINCO PASOS
+           ========================================================= */
+        var s2C = new Contador('s2-marcador');
+        var s2Ids = ['s2-b', 's2-c', 's2-p', 's2-q', 's2-x1', 's2-x2'];
+        var s2E = null;
+
+        function s2Nuevo() {
+          var tipo = elige(['estandar', 'estandar', 'mueve', 'mueve', 'cuadrados', 'comun']);
+          var r1, r2, b, c, texto, guia;
+
+          if (tipo === 'cuadrados') {
+            r1 = ri(2, 12); r2 = -r1;
+            b = 0; c = -r1 * r1;
+            texto = 'x\u00b2 = ' + (r1 * r1);
+            guia = 'Pasa el número al otro lado. El coeficiente de x vale 0.';
+          } else if (tipo === 'comun') {
+            r1 = 0; r2 = rnz(-9, 9);
+            b = -r2; c = 0;
+            texto = 'x\u00b2 = ' + coefX(r2);
+            guia = 'Pasa el término con x al lado izquierdo. El término independiente vale 0.';
+          } else {
+            r1 = rnz(-8, 8);
+            r2 = rnz(-8, 8);
+            if (tipo === 'mueve') {
+              while (r2 === -r1) { r2 = rnz(-8, 8); }
+            }
+            b = -(r1 + r2);
+            c = r1 * r2;
+            if (tipo === 'mueve') {
+              texto = 'x\u00b2' + (b === 0 ? '' : (b < 0 ? ' ' + MENOS + ' ' : ' + ') + (Math.abs(b) === 1 ? 'x' : Math.abs(b) + 'x')) +
+                ' = ' + num(-c);
+              guia = 'Pasa todos los términos a la izquierda para igualar la ecuación a cero.';
+            } else {
+              texto = trinomio(b, c) + ' = 0';
+              guia = 'La ecuación ya está en forma estándar: copia los valores de b y de c.';
+            }
+          }
+
+          s2E = { tipo: tipo, b: b, c: c, p: -r1, q: -r2, x1: r1, x2: r2, texto: texto };
+          document.getElementById('s2-enun').textContent = texto;
+          document.getElementById('s2-guia').textContent = guia;
+          limpiar(s2Ids);
+          ocultarFb('s2-fb');
+          ocultarSol('s2-sol');
+        }
+
+        function s2Comprobar() {
+          if (!s2E) return;
+          var ok1 = marcarCampo('s2-b', s2E.b) && marcarCampo('s2-c', s2E.c);
+          var ok2 = marcarPar('s2-p', 's2-q', s2E.p, s2E.q);
+          var ok3 = marcarPar('s2-x1', 's2-x2', s2E.x1, s2E.x2);
+          var ok = ok1 && ok2 && ok3;
+          s2C.suma(ok);
+          if (ok) {
+            fb('s2-fb', 'Correcto. Forma estándar, factorización y soluciones: los cinco pasos completos. Sustituye las dos soluciones para verificarlas.', true);
+          } else if (!ok1) {
+            fb('s2-fb', 'Revisa el paso 1. Pasa todos los términos al lado izquierdo y escribe 0 en el término que no aparezca.', false);
+          } else if (!ok2) {
+            fb('s2-fb', 'La forma estándar está bien. Revisa el paso 2: busca dos números que multiplicados den c y sumados den b.', false);
+          } else {
+            fb('s2-fb', 'La factorización está bien. Revisa los pasos 3 y 4: iguala cada binomio a cero y despeja x.', false);
+          }
+        }
+
+        function s2Ver() {
+          if (!s2E) return;
+          var html = '<h4>Los cinco pasos</h4>';
+          html += '<div class="ln"><b>Paso 1.</b> Forma estándar: ' + trinomio(s2E.b, s2E.c) + ' = 0</div>';
+          html += '<div class="ln"><b>Paso 2.</b> Factorización: ' +
+            (s2E.p === 0 ? 'x' : factor(s2E.p)) + (s2E.q === 0 ? 'x' : factor(s2E.q)) + ' = 0</div>';
+          html += '<div class="ln"><b>Paso 3.</b> ' +
+            (s2E.p === 0 ? 'x' : 'x' + signo(s2E.p)) + ' = 0 o ' +
+            (s2E.q === 0 ? 'x' : 'x' + signo(s2E.q)) + ' = 0</div>';
+          html += '<div class="ln"><b>Paso 4.</b> x = ' + num(s2E.x1) + ' o x = ' + num(s2E.x2) + '</div>';
+          html += '<div class="ln"><b>Paso 5.</b> Verificación: ' + lineaVerificacion(s2E.b, s2E.c, s2E.x1) +
+            ' y ' + lineaVerificacion(s2E.b, s2E.c, s2E.x2) + '</div>';
+          mostrarSol('s2-sol', html);
+        }
+
+        document.getElementById('s2-comprobar').addEventListener('click', s2Comprobar);
+        document.getElementById('s2-ver').addEventListener('click', s2Ver);
+        document.getElementById('s2-nuevo').addEventListener('click', s2Nuevo);
+        enterEn(s2Ids, s2Comprobar);
+
+        /* =========================================================
+           MÓDULO 3 · PROBLEMAS APLICADOS
+           ========================================================= */
+        var s3C = new Contador('s3-marcador');
+        var s3Ids = ['s3-b', 's3-c', 's3-x1', 's3-x2'];
+        var s3E = null;
+        var s3Resuelto = false;
+
+        function s3Nuevo() {
+          var ctx = elige(['rect', 'tri', 'cons']);
+          var r, d, area, texto, guia, guia5, respuesta, b, c;
+
+          if (ctx === 'rect') {
+            r = ri(3, 12); d = ri(2, 9);
+            area = r * (r + d);
+            b = d; c = -area;
+            texto = 'El área de un rectángulo es de ' + area + ' m\u00b2. El largo mide ' + d +
+              ' m más que el ancho. ¿Cuánto mide cada lado?';
+            guia = 'Llama x al ancho. El largo es x + ' + d + ' y el área es x(x + ' + d + ') = ' + area +
+              '. Escribe esa ecuación en forma estándar.';
+            guia5 = 'Una de las dos soluciones no puede ser una medida. ¿Cuál es el ancho del rectángulo?';
+            respuesta = 'El ancho mide ' + r + ' m y el largo, ' + (r + d) + ' m.';
+          } else if (ctx === 'tri') {
+            do {
+              r = ri(3, 12); d = ri(2, 9);
+            } while ((r * (r + d)) % 2 !== 0);
+            area = r * (r + d) / 2;
+            b = d; c = -(2 * area);
+            texto = 'Un triángulo tiene un área de ' + area + ' cm\u00b2. La base mide ' + d +
+              ' cm más que la altura. ¿Cuánto miden la altura y la base?';
+            guia = 'Llama x a la altura. Como el área es (base × altura) ÷ 2, entonces x(x + ' + d + ') = ' +
+              (2 * area) + '. Escribe esa ecuación en forma estándar.';
+            guia5 = 'Una altura no puede ser negativa. ¿Cuál es la altura del triángulo?';
+            respuesta = 'La altura mide ' + r + ' cm y la base, ' + (r + d) + ' cm.';
+          } else {
+            r = ri(4, 14); d = 1;
+            area = r * (r + 1);
+            b = 1; c = -area;
+            texto = 'El producto de dos números enteros positivos consecutivos es ' + area +
+              '. ¿Cuáles son esos números?';
+            guia = 'Llama x al número menor. El siguiente es x + 1 y su producto es x(x + 1) = ' + area +
+              '. Escribe esa ecuación en forma estándar.';
+            guia5 = 'El problema pide números positivos. ¿Cuál es el número menor?';
+            respuesta = 'Los números son ' + r + ' y ' + (r + 1) + '.';
+          }
+
+          s3E = {
+            ctx: ctx, b: b, c: c, d: d, area: area,
+            valida: r, descartada: -(r + d),
+            respuesta: respuesta, texto: texto
+          };
+          s3Resuelto = false;
+
+          document.getElementById('s3-enun').textContent = texto;
+          document.getElementById('s3-guia').textContent = guia;
+          document.getElementById('s3-guia5').textContent = guia5;
+          document.getElementById('s3-paso5').style.display = 'none';
+          document.getElementById('s3-opciones').innerHTML = '';
+          limpiar(s3Ids);
+          ocultarFb('s3-fb');
+          ocultarSol('s3-sol');
+        }
+
+        function s3MostrarOpciones() {
+          var cont = document.getElementById('s3-opciones');
+          cont.innerHTML = '';
+          var valores = [s3E.valida, s3E.descartada];
+          if (ri(0, 1) === 1) { valores.reverse(); }
+          valores.forEach(function (v) {
+            var b = document.createElement('button');
+            b.className = 'op-bot';
+            b.type = 'button';
+            b.textContent = 'x = ' + num(v);
+            b.addEventListener('click', function () { s3Elegir(v, b); });
+            cont.appendChild(b);
+          });
+          document.getElementById('s3-paso5').style.display = 'block';
+        }
+
+        function s3Elegir(v, boton) {
+          if (!s3E) return;
+          var ok = v === s3E.valida;
+          boton.classList.add(ok ? 'bien' : 'mal');
+          s3C.suma(ok);
+          if (ok) {
+            fb('s3-fb', 'Correcto. ' + s3E.respuesta + ' La otra solución resuelve la ecuación, pero no tiene sentido en el problema.', true);
+          } else {
+            fb('s3-fb', 'Esa solución es válida en la ecuación, pero no en el contexto: no existen longitudes ni cantidades negativas aquí.', false);
+          }
+        }
+
+        function s3Comprobar() {
+          if (!s3E || s3Resuelto) return;
+          var ok1 = marcarCampo('s3-b', s3E.b) && marcarCampo('s3-c', s3E.c);
+          var ok2 = marcarPar('s3-x1', 's3-x2', s3E.valida, s3E.descartada);
+          if (ok1 && ok2) {
+            s3Resuelto = true;
+            fb('s3-fb', 'Planteamiento y soluciones correctos. Ahora decide cuál de las dos tiene sentido en el problema.', true);
+            s3MostrarOpciones();
+          } else if (!ok1) {
+            fb('s3-fb', 'Revisa el planteamiento. Multiplica el lado izquierdo y pasa el número al otro lado para igualar a cero.', false);
+          } else {
+            fb('s3-fb', 'La ecuación está bien planteada. Factorízala y vuelve a hallar las dos soluciones.', false);
+          }
+        }
+
+        function s3Ver() {
+          if (!s3E) return;
+          var p = -s3E.valida, q = -s3E.descartada;
+          var html = '<h4>Solución paso a paso</h4>';
+          html += '<div class="ln"><b>Paso 1.</b> Forma estándar: ' + trinomio(s3E.b, s3E.c) + ' = 0</div>';
+          html += '<div class="ln"><b>Paso 2.</b> Factorización: ' + factor(p) + factor(q) + ' = 0</div>';
+          html += '<div class="ln"><b>Paso 3.</b> x' + signo(p) + ' = 0 o x' + signo(q) + ' = 0</div>';
+          html += '<div class="ln"><b>Paso 4.</b> x = ' + num(s3E.valida) + ' o x = ' + num(s3E.descartada) + '</div>';
+          html += '<div class="ln"><b>Paso 5.</b> Se descarta x = ' + num(s3E.descartada) +
+            ' porque no tiene sentido en la situación. ' + s3E.respuesta + '</div>';
+          mostrarSol('s3-sol', html);
+          if (!s3Resuelto) { s3Resuelto = true; s3MostrarOpciones(); }
+        }
+
+        document.getElementById('s3-comprobar').addEventListener('click', s3Comprobar);
+        document.getElementById('s3-ver').addEventListener('click', s3Ver);
+        document.getElementById('s3-nuevo').addEventListener('click', s3Nuevo);
+        enterEn(s3Ids, s3Comprobar);
+
+        /* =========================================================
+           NAVEGACIÓN POR MÓDULOS
+           ========================================================= */
+        var tabs = Array.prototype.slice.call(document.querySelectorAll('button.tab'));
+        function activar(id, mover) {
+          tabs.forEach(function (t) {
+            var sel = (t.id === id);
+            t.setAttribute('aria-selected', sel ? 'true' : 'false');
+            t.tabIndex = sel ? 0 : -1;
+            document.getElementById(t.getAttribute('aria-controls')).classList.toggle('activo', sel);
+          });
+          if (mover) document.getElementById(id).focus();
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', '#' + id.replace('tab-', ''));
+          }
+        }
+        tabs.forEach(function (t, idx) {
+          t.addEventListener('click', function () { activar(t.id, false); });
+          t.addEventListener('keydown', function (e) {
+            var i = null;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') i = (idx + 1) % tabs.length;
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') i = (idx - 1 + tabs.length) % tabs.length;
+            if (e.key === 'Home') i = 0;
+            if (e.key === 'End') i = tabs.length - 1;
+            if (i !== null) { e.preventDefault(); activar(tabs[i].id, true); }
+          });
+        });
+
+        a1Nuevo();
+        s1Nuevo();
+        s2Nuevo();
+        s3Nuevo();
+
+        var hash = (window.location.hash || '').replace('#', '');
+        if (['cero', 'pasos', 'aplica'].indexOf(hash) !== -1) { activar('tab-' + hash, false); }
+      })();
+    </script>
+  </body>
+</html>
