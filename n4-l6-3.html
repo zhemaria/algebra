@@ -1,0 +1,994 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 6.3 — Método gráfico, aplicaciones y modelado con sistemas
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #grafico · #conectar · #traducir · #equilibrio
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 6.3: método gráfico y modelado con sistemas</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 6.3 del Nivel 4: resolver sistemas gráficamente, conectar la gráfica con el álgebra, traducir problemas verbales y calcular el punto de equilibrio.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#4e342e; --tema-d:#3e2723; --tema-bg:#efebe9; --tema-bg2:#d7ccc8;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:210px;}
+  .campo input[type="number"]{width:110px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .centrado{text-align:center;}
+
+  .sistema{display:inline-block;border-left:5px solid var(--tema);padding:6px 0 6px 16px;margin:14px 0;
+           font-size:19px;font-weight:700;color:var(--tema-d);text-align:left;}
+  .sistema span{display:block;}
+  .sistema .resultado{color:#1b5e20;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{max-width:100%;height:auto;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:4px;display:inline-block;}
+  .m1{background:#4e342e;}
+  .m2{background:#00695c;}
+  .mp{background:#b71c1c;}
+  .mg{background:#1b5e20;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campo input[type="range"]{width:100%;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 6 · Sistemas de ecuaciones lineales</div>
+    <h1>Lección 6.3 · Método gráfico, aplicaciones y modelado con sistemas</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#grafico">El método gráfico: mover las rectas</a></li>
+      <li><a href="#conectar">Conectar lo gráfico con lo algebraico</a></li>
+      <li><a href="#traducir">Traducir un problema verbal a un sistema</a></li>
+      <li><a href="#equilibrio">Modelado: el punto de equilibrio</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="grafico" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>El método gráfico: mover las rectas</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Resolver gráficamente es dibujar las dos rectas y mirar dónde se cruzan. Mueve las pendientes y los interceptos
+      y observa cómo se desplaza el punto de cruce. Prueba también a igualar las dos pendientes.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="g-m1">Recta 1 · pendiente m = <span class="valor-rango" id="g-m1-val">1</span></label>
+            <input type="range" id="g-m1" min="-5" max="5" step="1" value="1">
+          </div>
+          <div class="campo">
+            <label for="g-b1">Recta 1 · intercepto b = <span class="valor-rango" id="g-b1-val">1</span></label>
+            <input type="range" id="g-b1" min="-8" max="8" step="1" value="1">
+          </div>
+        </div>
+        <div class="campos" style="margin-top:12px;">
+          <div class="campo">
+            <label for="g-m2">Recta 2 · pendiente m = <span class="valor-rango" id="g-m2-val">-1</span></label>
+            <input type="range" id="g-m2" min="-5" max="5" step="1" value="-1">
+          </div>
+          <div class="campo">
+            <label for="g-b2">Recta 2 · intercepto b = <span class="valor-rango" id="g-b2-val">5</span></label>
+            <input type="range" id="g-b2" min="-8" max="8" step="1" value="5">
+          </div>
+        </div>
+      </div>
+
+      <div class="centrado"><div class="sistema" id="g-sistema"></div></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="g-veredicto"></div>
+        <div class="linea" id="g-detalle"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="g-svg" viewBox="0 0 520 380" role="img" aria-labelledby="g-svg-t g-svg-d">
+          <title id="g-svg-t">Las dos rectas y su punto de cruce</title>
+          <desc id="g-svg-d">Gráfica de las dos rectas con los valores elegidos de pendiente e intercepto.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m1" aria-hidden="true"></span> Recta 1</span>
+          <span><span class="muestra m2" aria-hidden="true"></span> Recta 2</span>
+        </div>
+        <p class="pie-grafica" id="g-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>La gráfica muestra, el álgebra precisa.</strong> Si el cruce cae entre dos marcas de la cuadrícula, leerlo
+        a ojo da un valor aproximado. Por eso en el GED conviene graficar para entender y resolver por sustitución o
+        eliminación para responder.
+      </div>
+
+      <h3>Practica: lee la gráfica</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun">¿Cuál es la solución del sistema que se ve en la gráfica?</div>
+        <div class="grafica">
+          <svg id="p1-svg" viewBox="0 0 520 380" role="img" aria-labelledby="p1-svg-t p1-svg-d">
+            <title id="p1-svg-t">Gráfica del ejercicio</title>
+            <desc id="p1-svg-d">Dos rectas que se cruzan en un punto de coordenadas enteras.</desc>
+          </svg>
+          <p class="pie-grafica" id="p1-svg-texto"></p>
+        </div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otra gráfica</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="conectar">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Conectar lo gráfico con lo algebraico</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Para saber cuántas soluciones tiene un sistema no hace falta dibujarlo: basta con poner las dos ecuaciones en
+      la forma <strong>y = mx + b</strong> y comparar las pendientes y los interceptos.</p>
+
+      <table class="reglas">
+        <caption>Cómo se reconoce cada tipo de sistema comparando m y b.</caption>
+        <thead><tr><th scope="col">Pendientes</th><th scope="col">Interceptos</th><th scope="col">Las rectas</th><th scope="col">Tipo</th></tr></thead>
+        <tbody>
+          <tr><td>Distintas</td><td>Cualquiera</td><td>Se cruzan una vez</td><td>Independiente: una solución</td></tr>
+          <tr><td>Iguales</td><td>Distintos</td><td>Paralelas</td><td>Inconsistente: ninguna</td></tr>
+          <tr><td>Iguales</td><td>Iguales</td><td>La misma recta</td><td>Dependiente: infinitas</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="c-sistema">Sistema en forma estándar</label>
+          <select id="c-sistema"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="c-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="c-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="c-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="centrado"><div class="sistema" id="c-visual" aria-live="polite"></div></div>
+      <div class="pasos" id="c-pasos" aria-live="polite"></div>
+
+      <div class="grafica">
+        <svg id="c-svg" viewBox="0 0 520 380" role="img" aria-labelledby="c-svg-t c-svg-d">
+          <title id="c-svg-t">Las dos rectas del sistema</title>
+          <desc id="c-svg-d">Comprobación gráfica del tipo de sistema.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m1" aria-hidden="true"></span> Primera ecuación</span>
+          <span><span class="muestra m2" aria-hidden="true"></span> Segunda ecuación</span>
+        </div>
+        <p class="pie-grafica" id="c-svg-texto"></p>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Despejar y es el paso que abre todo:</strong> con las ecuaciones en forma y = mx + b se grafica de
+        inmediato, se compara el tipo de sistema de un vistazo y se pueden usar las funciones de la calculadora.
+      </div>
+
+      <h3>Practica: de la forma estándar al tipo de sistema</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="traducir">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Traducir un problema verbal a un sistema</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Traducir es la parte que más puntos vale y la que menos se practica. Casi todas las frases del examen repiten
+      unos pocos moldes; una vez reconocidos, el sistema se escribe casi solo.</p>
+
+      <table class="reglas">
+        <caption>Frases frecuentes en el examen y su traducción al lenguaje algebraico.</caption>
+        <thead><tr><th scope="col">La frase dice…</th><th scope="col">Se escribe…</th><th scope="col">Cuidado con</th></tr></thead>
+        <tbody>
+          <tr><td>«a cuesta $3 más que n»</td><td>a = n + 3</td><td>El «más» va del lado del que es mayor.</td></tr>
+          <tr><td>«x es el doble de y»</td><td>x = 2y</td><td>No es 2x = y; el doble se escribe junto al menor.</td></tr>
+          <tr><td>«en total hay 20»</td><td>x + y = 20</td><td>Es cantidad, no valor.</td></tr>
+          <tr><td>«en total cuestan $75»</td><td>8x + 5y = 75</td><td>Aquí van los precios como coeficientes.</td></tr>
+          <tr><td>«la diferencia es 4»</td><td>x − y = 4</td><td>Conviene decir cuál es el mayor.</td></tr>
+          <tr><td>«dentro de 10 años»</td><td>(x + 10) y (y + 10)</td><td>Los dos envejecen, no solo uno.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="t-caso">Problema verbal</label>
+          <select id="t-caso"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="t-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="t-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="t-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div id="t-enunciado" class="panel" style="background:#fff;"></div>
+      <div class="centrado"><div class="sistema" id="t-visual" aria-live="polite"></div></div>
+      <div class="pasos" id="t-pasos" aria-live="polite"></div>
+
+      <h3>Practica: elige el planteamiento correcto</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otra frase</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="equilibrio">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Modelado: el punto de equilibrio</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Un negocio tiene <strong>costos</strong> (los fijos, que se pagan aunque no se venda nada, más los variables por
+      cada unidad) e <strong>ingresos</strong> (el precio de venta por cada unidad). El <strong>punto de equilibrio</strong>
+      es donde las dos rectas se cruzan: ni se gana ni se pierde.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="q-fijo">Costos fijos: $<span class="valor-rango" id="q-fijo-val">100</span></label>
+            <input type="range" id="q-fijo" min="0" max="500" step="20" value="100">
+          </div>
+          <div class="campo">
+            <label for="q-var">Costo por unidad: $<span class="valor-rango" id="q-var-val">5</span></label>
+            <input type="range" id="q-var" min="0" max="20" step="1" value="5">
+          </div>
+          <div class="campo">
+            <label for="q-precio">Precio de venta: $<span class="valor-rango" id="q-precio-val">10</span></label>
+            <input type="range" id="q-precio" min="0" max="30" step="1" value="10">
+          </div>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="q-aviso" role="alert"></div>
+
+      <div class="centrado"><div class="sistema" id="q-sistema"></div></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="q-ecuacion"></div>
+        <div class="linea veredicto" id="q-punto"></div>
+        <div class="linea" id="q-interpreta"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="q-svg" viewBox="0 0 560 380" role="img" aria-labelledby="q-svg-t q-svg-d">
+          <title id="q-svg-t">Costos, ingresos y punto de equilibrio</title>
+          <desc id="q-svg-d">Gráfica de la recta de costos y la de ingresos, con la zona de pérdida y la de ganancia.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra mp" aria-hidden="true"></span> Costos</span>
+          <span><span class="muestra mg" aria-hidden="true"></span> Ingresos</span>
+        </div>
+        <p class="pie-grafica" id="q-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Prueba a poner el precio de venta por debajo del costo por unidad.</strong> Las dos rectas dejan de
+        cruzarse en la zona de ventas positivas: cada unidad vendida pierde dinero, así que no hay punto de equilibrio
+        por mucho que se venda.
+      </div>
+
+      <h3>Practica: punto de equilibrio</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 6.3 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function textoRecta(m, b){
+  if (m === 0) return "y = " + b;
+  var s = "y = ";
+  s += (m === 1 ? "x" : m === -1 ? "−x" : (m < 0 ? "−" + Math.abs(m) : m) + "x");
+  if (b !== 0) s += (b < 0 ? " − " + Math.abs(b) : " + " + b);
+  return s;
+}
+
+/* Gráfica de dos rectas y = mx + b */
+function dibujaRectas(svg, r1, r2, punto){
+  limpiaSVG(svg);
+  var W = 520, H = 380, m = 40, R = 8;
+  var cx = punto ? Math.round(punto[0]) : 0, cy = punto ? Math.round(punto[1]) : 0;
+  cx = Math.max(-6, Math.min(6, cx)); cy = Math.max(-6, Math.min(6, cy));
+  var x0 = cx - R, x1 = cx + R, y0 = cy - R, y1 = cy + R;
+
+  function px(x){ return m + (x - x0)/(x1 - x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - y0)/(y1 - y0) * (H - 2*m); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  for (var gx = x0; gx <= x1; gx += 2)
+    crea("line", {x1:px(gx), y1:m, x2:px(gx), y2:H-m, stroke:"#e6e6e6", "stroke-width":1});
+  for (var gy = y0; gy <= y1; gy += 2)
+    crea("line", {x1:m, y1:py(gy), x2:W-m, y2:py(gy), stroke:"#e6e6e6", "stroke-width":1});
+  crea("line", {x1:m, y1:py(0), x2:W-m, y2:py(0), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(0), y1:m, x2:px(0), y2:H-m, stroke:"#555", "stroke-width":2});
+  crea("text", {x:W-m, y:py(0)-8, "text-anchor":"end", "font-size":13, fill:"#555"}, "x");
+  crea("text", {x:px(0)+8, y:m+12, "font-size":13, fill:"#555"}, "y");
+  for (var tx = x0 + 2; tx <= x1 - 2; tx += 4)
+    if (tx !== 0) crea("text", {x:px(tx), y:py(0)+16, "text-anchor":"middle", "font-size":12, fill:"#555"}, tx);
+  for (var ty = y0 + 2; ty <= y1 - 2; ty += 4)
+    if (ty !== 0) crea("text", {x:px(0)-8, y:py(ty)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, ty);
+
+  function recta(r, color, ancho, guion){
+    var attrs = {x1:px(x0), y1:py(r.m*x0 + r.b), x2:px(x1), y2:py(r.m*x1 + r.b),
+                 stroke:color, "stroke-width":ancho};
+    if (guion) attrs["stroke-dasharray"] = guion;
+    crea("line", attrs);
+  }
+  recta(r1, "#4e342e", 5);
+  recta(r2, "#00695c", 3, "10 7");
+
+  if (punto && Math.abs(punto[0]) <= 14 && Math.abs(punto[1]) <= 14){
+    crea("circle", {cx:px(punto[0]), cy:py(punto[1]), r:8, fill:"#fff", stroke:"#3e2723", "stroke-width":3});
+    crea("text", {x:px(punto[0])+12, y:py(punto[1])-12, "font-size":14, "font-weight":"bold", fill:"#3e2723"},
+         "(" + redondea(punto[0],2) + ", " + redondea(punto[1],2) + ")");
+  }
+}
+
+/* Motor común del paso a paso */
+function montaStepper(cfg){
+  var idx = 0, pasos = [], k = 0;
+  function agrega(i){
+    var div = document.createElement("div");
+    div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + pasos[i];
+    $(cfg.pasos).appendChild(div);
+  }
+  function reinicia(){
+    idx = parseInt($(cfg.sel).value, 10) || 0;
+    pasos = cfg.banco[idx].pasos; k = 0;
+    $(cfg.pasos).innerHTML = "";
+    $(cfg.sig).disabled = false;
+    $(cfg.sig).textContent = "Mostrar el primer paso";
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], 0);
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], 0);
+  }
+  function siguiente(){
+    if (k >= pasos.length) return;
+    agrega(k); k++;
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], k);
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], k);
+    $(cfg.sig).textContent = k >= pasos.length ? "No quedan más pasos" : "Siguiente paso";
+    if (k >= pasos.length) $(cfg.sig).disabled = true;
+  }
+  function todo(){
+    $(cfg.pasos).innerHTML = "";
+    pasos.forEach(function(t,i){ agrega(i); });
+    k = pasos.length;
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], k);
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], k);
+    $(cfg.sig).textContent = "No quedan más pasos";
+    $(cfg.sig).disabled = true;
+  }
+  var sel = $(cfg.sel);
+  cfg.banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+  sel.addEventListener("change", reinicia);
+  $(cfg.sig).addEventListener("click", siguiente);
+  $(cfg.todo).addEventListener("click", todo);
+  $(cfg.reset).addEventListener("click", reinicia);
+  reinicia();
+}
+function pintaEtapas(e, k){ return e.etapas[Math.min(k, e.etapas.length - 1)]; }
+
+/* Motor común de práctica */
+function creaPractica(banco, ids, extra){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = (extra && extra.prefijo ? extra.prefijo : "") + p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Explorador gráfico
+   ============================================================ */
+function actualizaGrafico(){
+  var m1 = parseFloat($("g-m1").value), b1 = parseFloat($("g-b1").value);
+  var m2 = parseFloat($("g-m2").value), b2 = parseFloat($("g-b2").value);
+  $("g-m1-val").textContent = m1; $("g-b1-val").textContent = b1;
+  $("g-m2-val").textContent = m2; $("g-b2-val").textContent = b2;
+
+  $("g-sistema").innerHTML = "<span>" + textoRecta(m1,b1) + "</span><span>" + textoRecta(m2,b2) + "</span>";
+
+  var ver = $("g-veredicto"), det = $("g-detalle"), punto = null;
+  if (m1 === m2 && b1 === b2){
+    ver.textContent = "Sistema dependiente: infinitas soluciones.";
+    det.textContent = "Las dos ecuaciones tienen la misma pendiente y el mismo intercepto, así que son la misma recta. Cualquier punto de esa recta cumple las dos.";
+    $("g-svg-texto").textContent = "Solo se ve una línea: la segunda recta, a trazos, está dibujada encima de la primera.";
+  } else if (m1 === m2){
+    ver.textContent = "Sistema inconsistente: no tiene solución.";
+    det.textContent = "Misma pendiente (" + m1 + ") pero distinto intercepto: las rectas son paralelas y nunca se cruzan.";
+    $("g-svg-texto").textContent = "Las dos rectas avanzan con la misma inclinación, separadas por " + Math.abs(b1-b2) + " unidades.";
+  } else {
+    var x = (b2 - b1)/(m1 - m2), y = m1*x + b1;
+    punto = [x, y];
+    ver.textContent = "Sistema independiente: una solución, (" + redondea(x,2) + ", " + redondea(y,2) + ").";
+    det.textContent = "Al igualar las dos expresiones de y: " + m1 + "x + " + b1 + " = " + m2 + "x + " + b2 +
+                      ", de donde x = " + redondea(x,2) + " y y = " + redondea(y,2) + "." +
+                      (Number.isInteger(x) && Number.isInteger(y) ? "" : " Este cruce no cae en un punto de la cuadrícula: leerlo a ojo daría solo una aproximación.");
+    $("g-svg-texto").textContent = "Las rectas se cruzan en (" + redondea(x,2) + ", " + redondea(y,2) + ").";
+  }
+  dibujaRectas($("g-svg"), {m:m1,b:b1}, {m:m2,b:b2}, punto);
+}
+
+/* Práctica 1 · leer la gráfica */
+var p1Estado = {x:0, y:0, resuelta:false, aciertos:0, total:0};
+function nuevaGrafica(){
+  var x = aleatorio(-4,4), y = aleatorio(-4,4);
+  var m1 = aleatorio(-3,3), m2 = aleatorio(-3,3);
+  while (m2 === m1) m2 = aleatorio(-3,3);
+  var b1 = y - m1*x, b2 = y - m2*x;
+  p1Estado.x = x; p1Estado.y = y; p1Estado.resuelta = false;
+
+  dibujaRectas($("p1-svg"), {m:m1,b:b1}, {m:m2,b:b2}, null);
+  $("p1-svg-texto").textContent = "Rectas " + textoRecta(m1,b1) + " y " + textoRecta(m2,b2) + ".";
+
+  var correctas = "(" + x + ", " + y + ")";
+  var opciones = [correctas, "(" + y + ", " + x + ")", "(" + (x+1) + ", " + (y-1) + ")"];
+  if (y === x) opciones[1] = "(" + (x-1) + ", " + (y+2) + ")";
+  var cont = $("p1-opciones"); cont.innerHTML = "";
+  opciones.forEach(function(texto){
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+    btn.setAttribute("aria-pressed","false");
+    btn.addEventListener("click", function(){ respondeGrafica(btn, texto === correctas, correctas, m1, b1, m2, b2); });
+    cont.appendChild(btn);
+  });
+  $("p1-fb").className = "fb"; $("p1-fb").textContent = "";
+}
+function respondeGrafica(btn, acierto, correcta, m1, b1, m2, b2){
+  if (p1Estado.resuelta) return;
+  p1Estado.resuelta = true; p1Estado.total++;
+  Array.prototype.forEach.call($("p1-opciones").children, function(b){
+    b.disabled = true;
+    if (b.textContent === correcta) b.className = "opcion correcta";
+    else if (b === btn) b.className = "opcion incorrecta";
+  });
+  btn.setAttribute("aria-pressed","true");
+  var comprueba = "Comprobación: en " + correcta + ", " + textoRecta(m1,b1) + " y " + textoRecta(m2,b2) + " dan el mismo valor de y.";
+  if (acierto){
+    p1Estado.aciertos++;
+    $("p1-fb").className = "fb bien";
+    $("p1-fb").textContent = "✓ Correcto. " + comprueba;
+  } else {
+    $("p1-fb").className = "fb mal";
+    $("p1-fb").textContent = "✗ Todavía no. La solución es " + correcta + ". Recuerda que en un par ordenado primero va la x (el desplazamiento horizontal) y después la y. " + comprueba;
+  }
+  $("p1-marcador").textContent = "Aciertos: " + p1Estado.aciertos + " de " + p1Estado.total;
+}
+
+/* ============================================================
+   MÓDULO 2 · De la forma estándar al tipo
+   ============================================================ */
+var ESTANDAR = [
+  { etiqueta:"2x + y = 5 ; x − y = 1",
+    r1:{m:-2,b:5}, r2:{m:1,b:-1}, punto:[2,1],
+    etapas:["<span>2x + y = 5</span><span>x − y = 1</span>",
+            "<span>y = −2x + 5</span><span>x − y = 1</span>",
+            "<span>y = −2x + 5</span><span>y = x − 1</span>",
+            "<span>y = −2x + 5</span><span>y = x − 1</span>",
+            '<span>y = −2x + 5</span><span>y = x − 1</span><span class="resultado">Independiente: (2, 1)</span>'],
+    pasos:[
+      "Despejar y en la primera ecuación: de 2x + y = 5 sale <strong>y = −2x + 5</strong>.",
+      "Despejar y en la segunda: de x − y = 1 sale −y = 1 − x, y al cambiar los signos, <strong>y = x − 1</strong>.",
+      "Comparar las pendientes: −2 y 1 son <strong>distintas</strong>, así que las rectas se cruzan una sola vez.",
+      "Conclusión: sistema <strong>independiente</strong>. El cruce está en (2, 1), como confirma la gráfica."
+    ],
+    grafica:"Las rectas se cruzan en (2, 1)." },
+  { etiqueta:"x + y = 4 ; 2x + 2y = 10",
+    r1:{m:-1,b:4}, r2:{m:-1,b:5}, punto:null,
+    etapas:["<span>x + y = 4</span><span>2x + 2y = 10</span>",
+            "<span>y = −x + 4</span><span>2x + 2y = 10</span>",
+            "<span>y = −x + 4</span><span>y = −x + 5</span>",
+            "<span>y = −x + 4</span><span>y = −x + 5</span>",
+            '<span>y = −x + 4</span><span>y = −x + 5</span><span style="color:#b71c1c;">Inconsistente: sin solución</span>'],
+    pasos:[
+      "Despejar y en la primera: <strong>y = −x + 4</strong>.",
+      "Despejar y en la segunda: 2y = −2x + 10, y dividiendo entre 2, <strong>y = −x + 5</strong>.",
+      "Comparar: las pendientes son <strong>iguales</strong> (−1 y −1) pero los interceptos son distintos (4 y 5).",
+      "Conclusión: rectas <strong>paralelas</strong>, sistema inconsistente, sin solución."
+    ],
+    grafica:"Las dos rectas nunca se tocan: van separadas por una unidad." },
+  { etiqueta:"3x − y = 2 ; 6x − 2y = 4",
+    r1:{m:3,b:-2}, r2:{m:3,b:-2}, punto:null,
+    etapas:["<span>3x − y = 2</span><span>6x − 2y = 4</span>",
+            "<span>y = 3x − 2</span><span>6x − 2y = 4</span>",
+            "<span>y = 3x − 2</span><span>y = 3x − 2</span>",
+            "<span>y = 3x − 2</span><span>y = 3x − 2</span>",
+            '<span>y = 3x − 2</span><span>y = 3x − 2</span><span class="resultado">Dependiente: infinitas</span>'],
+    pasos:[
+      "Despejar y en la primera: −y = 2 − 3x, o sea <strong>y = 3x − 2</strong>.",
+      "Despejar y en la segunda: −2y = 4 − 6x, y dividiendo entre −2, <strong>y = 3x − 2</strong>.",
+      "Comparar: misma pendiente <strong>y</strong> mismo intercepto. Las dos ecuaciones dicen exactamente lo mismo.",
+      "Conclusión: sistema <strong>dependiente</strong>, con infinitas soluciones: todos los puntos de esa recta."
+    ],
+    grafica:"Solo se ve una línea: la segunda recta, a trazos, cae justo encima de la primera." },
+  { etiqueta:"x + 2y = 6 ; y = x − 3",
+    r1:{m:-0.5,b:3}, r2:{m:1,b:-3}, punto:[4,1],
+    etapas:["<span>x + 2y = 6</span><span>y = x − 3</span>",
+            "<span>y = −0.5x + 3</span><span>y = x − 3</span>",
+            "<span>y = −0.5x + 3</span><span>y = x − 3</span>",
+            "<span>y = −0.5x + 3</span><span>y = x − 3</span>",
+            '<span>y = −0.5x + 3</span><span>y = x − 3</span><span class="resultado">Independiente: (4, 1)</span>'],
+    pasos:[
+      "Despejar y en la primera: 2y = −x + 6, y dividiendo entre 2, <strong>y = −0.5x + 3</strong>. La pendiente puede ser fraccionaria sin ningún problema.",
+      "La segunda ya viene despejada: <strong>y = x − 3</strong>.",
+      "Comparar: −0.5 y 1 son pendientes distintas, así que hay un único cruce.",
+      "Conclusión: sistema <strong>independiente</strong>, con solución (4, 1)."
+    ],
+    grafica:"Las rectas se cruzan en (4, 1)." }
+];
+var BANCO_P2 = [
+  { q:"y = 2x + 3 ; y = 2x − 1. ¿Qué tipo de sistema es?",
+    ops:["Inconsistente: paralelas","Dependiente","Independiente"], ok:0,
+    exp:"Misma pendiente (2) y distinto intercepto: paralelas, sin solución." },
+  { q:"y = 4x + 1 ; y = −x + 6. ¿Qué tipo de sistema es?",
+    ops:["Independiente: se cruzan","Inconsistente","Dependiente"], ok:0,
+    exp:"Pendientes distintas (4 y −1): las rectas se cruzan en un punto." },
+  { q:"y = 3x − 2 ; 6x − 2y = 4. ¿Qué tipo de sistema es?",
+    ops:["Dependiente: la misma recta","Inconsistente","Independiente"], ok:0,
+    exp:"Al despejar la segunda queda y = 3x − 2: misma pendiente y mismo intercepto." },
+  { q:"Al despejar y en 2x + y = 5, ¿qué se obtiene?",
+    ops:["y = −2x + 5","y = 2x + 5","y = 5 + 2x"], ok:0,
+    exp:"Se resta 2x en los dos lados: el término pasa al otro lado con el signo cambiado." },
+  { q:"Al despejar y en x − y = 1, ¿qué se obtiene?",
+    ops:["y = x − 1","y = 1 − x","y = −x − 1"], ok:0,
+    exp:"De x − y = 1 sale −y = 1 − x, y al multiplicar todo por −1, y = x − 1." },
+  { q:"Dos rectas tienen la misma pendiente y el mismo intercepto. ¿Cuántas soluciones tiene el sistema?",
+    ops:["Infinitas","Una","Ninguna"], ok:0,
+    exp:"Son la misma recta, así que todos sus puntos son solución." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Traducir problemas verbales
+   ============================================================ */
+var VERBALES = [
+  { etiqueta:"Boletos de adulto y de niño",
+    enunciado:"Un boleto de adulto cuesta $3 más que uno de niño. Dos adultos y tres niños pagan $26 en total. ¿Cuánto cuesta cada boleto?",
+    etapas:["", "<span>a = n + 3</span>", "<span>a = n + 3</span><span>2a + 3n = 26</span>",
+            "<span>a = n + 3</span><span>2(n + 3) + 3n = 26</span>",
+            '<span class="resultado">n = 4, a = 7</span>',
+            '<span class="resultado">Niño $4 · Adulto $7</span>'],
+    pasos:[
+      "Nombrar: sea <strong>a</strong> el precio del boleto de adulto y <strong>n</strong> el del boleto de niño.",
+      "«El de adulto cuesta $3 más que el de niño» → <strong>a = n + 3</strong>. El «más» se suma del lado del que es más caro.",
+      "«Dos adultos y tres niños pagan $26» → <strong>2a + 3n = 26</strong>. Aquí las cantidades son los coeficientes.",
+      "Como a ya está despejada, conviene sustitución: 2(n + 3) + 3n = 26.",
+      "Resolver: 2n + 6 + 3n = 26, o sea 5n = 20, entonces <strong>n = 4</strong> y a = 4 + 3 = <strong>7</strong>.",
+      "Releer la pregunta: el boleto de niño cuesta <strong>$4</strong> y el de adulto, <strong>$7</strong>. Comprobación: 2(7) + 3(4) = 14 + 12 = 26 ✓."
+    ]},
+  { etiqueta:"La suma y el doble",
+    enunciado:"La suma de dos números es 15 y uno de ellos es el doble del otro. ¿Cuáles son?",
+    etapas:["", "<span>x + y = 15</span>", "<span>x + y = 15</span><span>x = 2y</span>",
+            "<span>2y + y = 15</span>", '<span class="resultado">y = 5, x = 10</span>',
+            '<span class="resultado">Los números son 10 y 5</span>'],
+    pasos:[
+      "Nombrar: sea <strong>x</strong> el número mayor y <strong>y</strong> el menor.",
+      "«La suma es 15» → <strong>x + y = 15</strong>.",
+      "«Uno es el doble del otro» → <strong>x = 2y</strong>. El doble se escribe junto al número menor; poner 2x = y invertiría el problema.",
+      "Sustituir: 2y + y = 15.",
+      "Resolver: 3y = 15, entonces <strong>y = 5</strong> y x = 2(5) = <strong>10</strong>.",
+      "Releer: los números son <strong>10 y 5</strong>. Comprobación: 10 + 5 = 15 ✓ y 10 es el doble de 5 ✓."
+    ]},
+  { etiqueta:"El terreno rectangular",
+    enunciado:"El largo de un terreno mide 2 metros más que el doble del ancho, y el perímetro es de 34 metros. ¿Cuánto mide cada lado?",
+    etapas:["", "<span>L = 2A + 2</span>", "<span>L = 2A + 2</span><span>2L + 2A = 34</span>",
+            "<span>L = 2A + 2</span><span>L + A = 17</span>",
+            '<span class="resultado">A = 5, L = 12</span>',
+            '<span class="resultado">Largo 12 m · Ancho 5 m</span>'],
+    pasos:[
+      "Nombrar: sea <strong>L</strong> el largo y <strong>A</strong> el ancho, en metros.",
+      "«2 metros más que el doble del ancho» → <strong>L = 2A + 2</strong>. Primero el doble, después el «más 2».",
+      "El perímetro de un rectángulo es 2L + 2A → <strong>2L + 2A = 34</strong>.",
+      "Simplificar dividiendo entre 2: <strong>L + A = 17</strong>. Números más pequeños, menos errores.",
+      "Sustituir: (2A + 2) + A = 17, o sea 3A = 15, entonces <strong>A = 5</strong> y L = 2(5) + 2 = <strong>12</strong>.",
+      "Releer: el largo mide <strong>12 m</strong> y el ancho, <strong>5 m</strong>. Comprobación: 2(12) + 2(5) = 34 ✓."
+    ]},
+  { etiqueta:"Autos y motos",
+    enunciado:"En un estacionamiento hay 20 vehículos entre autos y motos, y se cuentan 70 ruedas en total. ¿Cuántos hay de cada tipo?",
+    etapas:["", "<span>c + m = 20</span>", "<span>c + m = 20</span><span>4c + 2m = 70</span>",
+            "<span>c + m = 20</span><span>2c + m = 35</span>",
+            '<span class="resultado">c = 15, m = 5</span>',
+            '<span class="resultado">15 autos y 5 motos</span>'],
+    pasos:[
+      "Nombrar: sea <strong>c</strong> el número de autos y <strong>m</strong> el de motos.",
+      "Ecuación de cantidad: hay 20 vehículos → <strong>c + m = 20</strong>.",
+      "Ecuación de ruedas: cada auto tiene 4 y cada moto 2 → <strong>4c + 2m = 70</strong>. Cuidado: esto cuenta ruedas, no vehículos.",
+      "Simplificar la segunda dividiendo entre 2: <strong>2c + m = 35</strong>.",
+      "Restar la primera: (2c + m) − (c + m) = 35 − 20, o sea <strong>c = 15</strong>, y entonces m = 5.",
+      "Releer: hay <strong>15 autos y 5 motos</strong>. Comprobación: 4(15) + 2(5) = 60 + 10 = 70 ruedas ✓."
+    ]}
+];
+var BANCO_P3 = [
+  { q:"«x más y es igual a 10; x menos y es igual a 2.» El sistema es:",
+    ops:["x + y = 10 ; x − y = 2","x + y = 2 ; x − y = 10","x · y = 10 ; x − y = 2"], ok:0,
+    exp:"Cada frase se traduce en el mismo orden en que está escrita." },
+  { q:"«El boleto de adulto (a) cuesta $2 más que el de niño (n).» La ecuación es:",
+    ops:["a = n + 2","n = a + 2","a + n = 2"], ok:0,
+    exp:"El adulto es el caro, así que el «más 2» se suma al lado del niño para igualarlo." },
+  { q:"«Dos cafés (c) y un té (t) cuestan $8.» La ecuación es:",
+    ops:["2c + t = 8","c + 2t = 8","2c + 2t = 8"], ok:0,
+    exp:"Las cantidades van como coeficientes de cada precio." },
+  { q:"«x es el doble de y.» La ecuación es:",
+    ops:["x = 2y","2x = y","x + y = 2"], ok:0,
+    exp:"El mayor queda solo a la izquierda: x vale dos veces lo que vale y." },
+  { q:"«Hay 20 vehículos y 70 ruedas; los autos tienen 4 y las motos 2.» La segunda ecuación es:",
+    ops:["4c + 2m = 70","c + m = 70","4c + 2m = 20"], ok:0,
+    exp:"La de cantidad es c + m = 20; la de ruedas lleva 4 y 2 como coeficientes." },
+  { q:"«Dentro de 10 años el padre tendrá el doble que el hijo.» Se escribe:",
+    ops:["p + 10 = 2(h + 10)","p + 10 = 2h","p = 2h + 10"], ok:0,
+    exp:"Los dos cumplen 10 años más, así que el paréntesis del hijo también lleva el +10." }
+];
+
+/* ============================================================
+   MÓDULO 4 · Punto de equilibrio
+   ============================================================ */
+function dibujaEquilibrio(svg, fijo, variable, precio, xEq){
+  limpiaSVG(svg);
+  var W = 560, H = 380, mIzq = 62, mDer = 24, mSup = 24, mInf = 46;
+  var xMax = xEq && isFinite(xEq) && xEq > 0 ? Math.ceil(xEq * 2 / 5) * 5 : 40;
+  if (xMax < 10) xMax = 10;
+  var yMax = Math.max(fijo + variable*xMax, precio*xMax, 10);
+
+  function px(x){ return mIzq + x/xMax * (W - mIzq - mDer); }
+  function py(y){ return H - mInf - y/(yMax*1.05) * (H - mSup - mInf); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  // zonas de pérdida y ganancia
+  if (xEq && isFinite(xEq) && xEq > 0 && xEq < xMax){
+    crea("rect", {x:px(0), y:mSup, width:px(xEq)-px(0), height:H-mInf-mSup, fill:"#ffebee"});
+    crea("rect", {x:px(xEq), y:mSup, width:px(xMax)-px(xEq), height:H-mInf-mSup, fill:"#e8f5e9"});
+    crea("text", {x:(px(0)+px(xEq))/2, y:mSup+18, "text-anchor":"middle", "font-size":13,
+                  "font-weight":"bold", fill:"#b71c1c"}, "pérdida");
+    crea("text", {x:(px(xEq)+px(xMax))/2, y:mSup+18, "text-anchor":"middle", "font-size":13,
+                  "font-weight":"bold", fill:"#1b5e20"}, "ganancia");
+  }
+  crea("line", {x1:mIzq, y1:H-mInf, x2:W-mDer, y2:H-mInf, stroke:"#555", "stroke-width":2});
+  crea("line", {x1:mIzq, y1:mSup, x2:mIzq, y2:H-mInf, stroke:"#555", "stroke-width":2});
+  crea("text", {x:(W+mIzq)/2, y:H-10, "text-anchor":"middle", "font-size":14, fill:"#555"}, "unidades vendidas");
+  crea("text", {x:16, y:H/2, "text-anchor":"middle", "font-size":14, fill:"#555",
+                transform:"rotate(-90 16 " + (H/2) + ")"}, "dólares");
+
+  var pasoX = Math.max(5, Math.round(xMax/8/5)*5);
+  for (var x = 0; x <= xMax; x += pasoX){
+    crea("line", {x1:px(x), y1:H-mInf, x2:px(x), y2:H-mInf+6, stroke:"#555", "stroke-width":2});
+    crea("text", {x:px(x), y:H-mInf+22, "text-anchor":"middle", "font-size":12, fill:"#555"}, x);
+  }
+  var pasoY = Math.pow(10, Math.floor(Math.log(yMax)/Math.LN10)) / 2;
+  if (pasoY < 1) pasoY = 1;
+  for (var y = 0; y <= yMax; y += pasoY){
+    crea("line", {x1:mIzq-6, y1:py(y), x2:mIzq, y2:py(y), stroke:"#555", "stroke-width":2});
+    crea("text", {x:mIzq-10, y:py(y)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, y);
+  }
+  // costos e ingresos
+  crea("line", {x1:px(0), y1:py(fijo), x2:px(xMax), y2:py(fijo + variable*xMax),
+                stroke:"#b71c1c", "stroke-width":4});
+  crea("line", {x1:px(0), y1:py(0), x2:px(xMax), y2:py(precio*xMax),
+                stroke:"#1b5e20", "stroke-width":4, "stroke-dasharray":"10 6"});
+
+  if (xEq && isFinite(xEq) && xEq > 0 && xEq <= xMax){
+    var yEq = precio*xEq;
+    crea("circle", {cx:px(xEq), cy:py(yEq), r:8, fill:"#fff", stroke:"#3e2723", "stroke-width":3});
+    crea("text", {x:px(xEq)+12, y:py(yEq)-12, "font-size":13, "font-weight":"bold", fill:"#3e2723"},
+         xEq + " unidades · $" + redondea(yEq,2));
+  }
+}
+function actualizaEquilibrio(){
+  var f = parseFloat($("q-fijo").value), v = parseFloat($("q-var").value), p = parseFloat($("q-precio").value);
+  $("q-fijo-val").textContent = f; $("q-var-val").textContent = v; $("q-precio-val").textContent = p;
+
+  $("q-sistema").innerHTML = "<span>C = " + f + " + " + v + "x</span><span>I = " + p + "x</span>";
+
+  var aviso = $("q-aviso");
+  if (p <= v){
+    aviso.innerHTML = p === v
+      ? "<strong>El precio de venta es igual al costo por unidad.</strong> Cada unidad vendida deja $0 de margen, así que los costos fijos de $" + f + " no se recuperan nunca: las rectas son paralelas y no hay punto de equilibrio."
+      : "<strong>El precio de venta es menor que el costo por unidad.</strong> Cada unidad vendida pierde $" + (v - p) + ", así que vender más aumenta la pérdida: no existe punto de equilibrio.";
+    aviso.className = "caja-aviso visible";
+    $("q-ecuacion").textContent = "Al igualar C = I: " + f + " + " + v + "x = " + p + "x, de donde " + f + " = " + (p - v) + "x.";
+    $("q-punto").textContent = "No hay punto de equilibrio con estos valores.";
+    $("q-interpreta").textContent = "Para que exista, el precio de venta tiene que superar al costo por unidad: solo así cada venta deja margen para ir cubriendo los costos fijos.";
+    dibujaEquilibrio($("q-svg"), f, v, p, null);
+    $("q-svg-texto").textContent = "La recta de ingresos nunca alcanza a la de costos.";
+    return;
+  }
+  aviso.className = "caja-aviso";
+  var x = f/(p - v), y = p*x;
+  $("q-ecuacion").textContent = "Al igualar C = I: " + f + " + " + v + "x = " + p + "x, o sea " + f + " = " + (p - v) + "x.";
+  $("q-punto").textContent = "Punto de equilibrio: " + redondea(x,2) + " unidades, con $" + redondea(y,2) + " de costos y de ingresos.";
+  $("q-interpreta").textContent = "Cada unidad deja un margen de $" + (p - v) + ", y hacen falta " + redondea(x,2) +
+    " unidades para cubrir los $" + f + " de costos fijos. Vendiendo menos hay pérdida; vendiendo más, ganancia.";
+  dibujaEquilibrio($("q-svg"), f, v, p, x);
+  $("q-svg-texto").textContent = "Las dos rectas se cruzan en " + redondea(x,2) +
+    " unidades. A la izquierda de ese punto los costos van por encima de los ingresos; a la derecha, al revés.";
+}
+var BANCO_P4 = [
+  { q:"Costos C = 100 + 5x e ingresos I = 10x. ¿Cuál es el punto de equilibrio?",
+    ops:["20 unidades","10 unidades","100 unidades"], ok:0,
+    exp:"100 + 5x = 10x da 100 = 5x, entonces x = 20 unidades." },
+  { q:"Costos C = 60 + 4x e ingresos I = 10x. ¿Cuál es el punto de equilibrio?",
+    ops:["10 unidades","6 unidades","15 unidades"], ok:0,
+    exp:"60 + 4x = 10x da 60 = 6x, entonces x = 10 unidades." },
+  { q:"Costos C = 500 + 20x e ingresos I = 45x. ¿Cuál es el punto de equilibrio?",
+    ops:["20 unidades","25 unidades","15 unidades"], ok:0,
+    exp:"500 = 25x, entonces x = 20 unidades." },
+  { q:"Por debajo del punto de equilibrio, ¿qué ocurre?",
+    ops:["Hay pérdida: los costos superan a los ingresos","Hay ganancia","No pasa nada"], ok:0,
+    exp:"A la izquierda del cruce la recta de costos va por encima de la de ingresos." },
+  { q:"Si el precio de venta es menor que el costo por unidad, ¿hay punto de equilibrio?",
+    ops:["No: cada venta aumenta la pérdida","Sí, vendiendo mucho","Sí, si los costos fijos son bajos"], ok:0,
+    exp:"Sin margen positivo por unidad, los ingresos nunca alcanzan a los costos, por mucho que se venda." },
+  { q:"¿Qué representa el margen p − v en este modelo?",
+    ops:["Lo que deja cada unidad para cubrir los costos fijos","El costo fijo","El total de ventas"], ok:0,
+    exp:"El punto de equilibrio es justamente los costos fijos divididos entre ese margen." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+["g-m1","g-b1","g-m2","g-b2"].forEach(function(id){ $(id).addEventListener("input", actualizaGrafico); });
+actualizaGrafico();
+$("p1-nuevo").addEventListener("click", nuevaGrafica);
+nuevaGrafica();
+
+montaStepper({ sel:"c-sistema", banco:ESTANDAR, visual:"c-visual", pasos:"c-pasos",
+  sig:"c-siguiente", todo:"c-todo", reset:"c-reiniciar", pinta:pintaEtapas,
+  alCambiar:function(e, k){
+    dibujaRectas($("c-svg"), e.r1, e.r2, k >= 4 ? e.punto : null);
+    $("c-svg-texto").textContent = k >= 3 ? e.grafica : "Las dos rectas del sistema; la conclusión aparece al final de los pasos.";
+  }});
+
+montaStepper({ sel:"t-caso", banco:VERBALES, visual:"t-visual", pasos:"t-pasos",
+  sig:"t-siguiente", todo:"t-todo", reset:"t-reiniciar", pinta:pintaEtapas,
+  alCambiar:function(e){ $("t-enunciado").innerHTML = "<strong>Problema:</strong> " + e.enunciado; }});
+
+["q-fijo","q-var","q-precio"].forEach(function(id){ $(id).addEventListener("input", actualizaEquilibrio); });
+actualizaEquilibrio();
+
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>
