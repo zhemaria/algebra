@@ -1,0 +1,1039 @@
+<!doctype html>
+<!--
+  Repaso del Nivel 3 · Matemáticas — Índice de prácticas interactivas
+  Spanish ASE Math 3 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Cada enlace apunta a la parte exacta del interactivo, no solo a la página.
+  Anclas: #tema-1 … #tema-8 abren un tema; #leccion-2-1 … #leccion-8-2 llevan a una lección.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repaso del Nivel 3 · Índice de prácticas interactivas</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Índice de repaso del Nivel 3 de Matemáticas: 98 prácticas interactivas organizadas por tema y lección, con enlace directo a cada una.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --txt:#222; --bg:#f5f7fa; --gris:#555; --acento:#00695c;
+    --t1:#1a237e; --t2:#004d40; --t3:#bf360c;
+    --t4:#880e4f; --t5:#37474f; --t6:#4e342e; --t7:#006064; --t8:#b71c1c;
+    --marco:#424242; --marco-d:#212121; --marco-bg:#eceff1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);
+       line-height:1.6;font-size:16px;}
+  .contenedor{max-width:940px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+           clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--marco);color:#fff;padding:30px 28px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 10px;font-size:26px;font-weight:700;}
+  header.principal p{margin:6px 0 0;font-size:15px;}
+
+  .buscador{background:#fff;border:2px solid var(--marco-bg);border-radius:12px;padding:18px 20px;margin-bottom:20px;}
+  .buscador label{display:block;font-weight:700;color:var(--marco-d);margin-bottom:6px;}
+  .buscador input{width:100%;max-width:520px;padding:10px 12px;font-size:16px;font-family:inherit;
+                  border:2px solid #767676;border-radius:8px;}
+  .buscador input:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  .buscador .pista{font-size:14px;color:var(--gris);margin-top:8px;}
+  .buscador .contador{font-size:14px;color:var(--marco-d);font-weight:700;margin-top:10px;}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  button{font-family:inherit;font-size:15px;cursor:pointer;background:#fff;color:var(--marco-d);
+         border:2px solid var(--marco);border-radius:8px;padding:8px 18px;font-weight:700;}
+  button:hover{background:var(--marco-bg);}
+
+  details.tema{background:#fff;border-radius:12px;margin-bottom:14px;overflow:hidden;
+               border:2px solid #e3e3e3;border-left-width:10px;scroll-margin-top:12px;}
+  details.tema > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 18px;color:#fff;}
+  details.tema > summary::-webkit-details-marker{display:none;}
+  details.tema > summary:focus-visible{outline:3px solid #ffd54f;outline-offset:-5px;}
+  details.tema > summary h2{margin:0;font-size:19px;flex:1;line-height:1.35;}
+  .cuenta{font-size:14px;font-weight:600;white-space:nowrap;background:rgba(0,0,0,.28);padding:3px 10px;border-radius:20px;}
+  .flecha{font-size:14px;transition:transform .2s;}
+  details.tema[open] > summary .flecha{transform:rotate(90deg);}
+  @media (prefers-reduced-motion:reduce){ .flecha{transition:none;} }
+  nav.indice{background:#fff;border:2px solid var(--marco-bg);border-radius:12px;padding:16px 20px;margin-bottom:16px;}
+  nav.indice h2{margin:0 0 8px;font-size:17px;color:var(--marco-d);}
+  nav.indice ol{margin:0;padding-left:22px;columns:2 280px;column-gap:28px;}
+  nav.indice li{margin:5px 0;}
+  nav.indice a{color:var(--marco-d);font-weight:600;}
+  h3.leccion{scroll-margin-top:12px;}
+  .tema-cuerpo{padding:6px 20px 18px;}
+  details.t1{border-left-color:var(--t1);} .t1 > summary{background:var(--t1);}
+  details.t2{border-left-color:var(--t2);} .t2 > summary{background:var(--t2);}
+  details.t3{border-left-color:var(--t3);} .t3 > summary{background:var(--t3);}
+  details.t4{border-left-color:var(--t4);} .t4 > summary{background:var(--t4);}
+  details.t5{border-left-color:var(--t5);} .t5 > summary{background:var(--t5);}
+  details.t6{border-left-color:var(--t6);} .t6 > summary{background:var(--t6);}
+  details.t7{border-left-color:var(--t7);} .t7 > summary{background:var(--t7);}
+  details.t8{border-left-color:var(--t8);} .t8 > summary{background:var(--t8);}
+
+  h3.leccion{font-size:16px;margin:18px 0 8px;color:var(--txt);border-bottom:2px solid #eee;padding-bottom:5px;}
+  h3.leccion a{color:inherit;}
+  ul.modulos{list-style:none;margin:0;padding:0;display:grid;gap:10px;
+             grid-template-columns:repeat(auto-fill,minmax(270px,1fr));}
+  ul.modulos li a{display:block;height:100%;text-decoration:none;color:var(--txt);
+                  border:2px solid #d8d8d8;border-radius:10px;padding:12px 14px;background:#fff;}
+  ul.modulos li a:hover{border-color:var(--acento);background:#f2fbfa;}
+  ul.modulos .titulo{display:block;font-weight:700;color:var(--marco-d);font-size:15px;}
+  ul.modulos .desc{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
+  ul.modulos .abrir{display:block;font-size:13px;font-weight:700;color:var(--acento);margin-top:8px;}
+  li.oculto,details.oculto,h3.oculto,ul.oculto{display:none;}
+  .nota-leccion{font-size:14px;color:var(--gris);margin:14px 0 4px;font-style:italic;}
+
+  .sin-resultados{display:none;background:#fff8e1;border:2px solid #f9a825;border-left:8px solid #f9a825;
+                  border-radius:10px;padding:16px 20px;color:#5c3900;font-size:15px;}
+  .sin-resultados.visible{display:block;}
+
+  .caja-nota{background:#e8f5e9;border-left:5px solid #1b5e20;padding:12px 16px;border-radius:0 8px 8px 0;
+             margin:18px 0;font-size:15px;color:#1b5e20;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--marco);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--marco-d);}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Spanish ASE Math 3 · GEDparaHispanos</div>
+    <h1>Repaso del Nivel 3: índice de prácticas interactivas</h1>
+    <p>Las prácticas de los ocho temas del nivel, reunidas en un solo sitio. Cada enlace abre directamente la
+    práctica que necesitas, no la página entera. Si el informe del simulacro señaló un tema, búscalo aquí y ve al grano.</p>
+  </header>
+
+  <div class="buscador">
+    <label for="filtro">Busca el tema que quieres repasar</label>
+    <input type="text" id="filtro" placeholder="por ejemplo: exponente cero, hipotenusa, cuartil, sin reemplazo" autocomplete="off">
+    <p class="pista">Escribe una palabra y se abren solo los temas que la contienen. Sirven tanto los nombres técnicos
+      («intercuartílico», «permutación») como las palabras corrientes («sombra», «caramelos», «tanque»).</p>
+    <p class="contador" id="contador" role="status"></p>
+  </div>
+
+  <div class="sin-resultados" id="sin-resultados">
+    No hay ninguna práctica con esa palabra. Prueba con un término más corto o borra la búsqueda.
+  </div>
+
+  <nav class="indice" aria-labelledby="t-indice">
+    <h2 id="t-indice">Ir directamente a un tema</h2>
+    <ol id="indice"></ol>
+  </nav>
+
+  <div class="fila-btn" style="margin:0 0 14px;">
+    <button type="button" id="abrir-todo">Abrir todos los temas</button>
+    <button type="button" id="cerrar-todo">Cerrar todos los temas</button>
+  </div>
+
+  <div id="lista"></div>
+
+  <div class="caja-nota">
+    <strong>Cómo usar este índice después del simulacro:</strong> revisa el informe diagnóstico, localiza aquí los
+    temas que te salieron flojos y trabaja solo esos. Cada práctica es corta y se puede repetir cuantas veces quieras,
+    porque los ejercicios se generan de nuevo cada vez.
+  </div>
+
+  <footer class="pie">
+    <p><strong>Repaso del Nivel 3 · Matemáticas · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+var BASE = "https://zhemaria.github.io/algebra/";
+var TEMAS = [
+ {
+  "n": 1,
+  "clase": "t1",
+  "titulo": "Tema 1 · Exponentes",
+  "lecciones": [
+   {
+    "id": "n3-l1-1.html",
+    "num": "1-1",
+    "titulo": "Lección 1.1 · Regla del producto, potencia de potencia y potencia de un producto",
+    "modulos": [
+     {
+      "ancla": "notacion",
+      "titulo": "La notación exponencial",
+      "desc": "Base, exponente y forma desarrollada; potencias de números negativos con y sin paréntesis.",
+      "claves": "base exponente potencia negativo parentesis desarrollada"
+     },
+     {
+      "ancla": "producto",
+      "titulo": "La regla del producto",
+      "desc": "Misma base: se suman los exponentes, con coeficientes y bases distintas.",
+      "claves": "regla producto multiplicar misma base sumar exponentes"
+     },
+     {
+      "ancla": "potencia-potencia",
+      "titulo": "La potencia de una potencia",
+      "desc": "Los exponentes se multiplican; cuándo sumar y cuándo multiplicar.",
+      "claves": "potencia de potencia multiplicar exponentes"
+     },
+     {
+      "ancla": "potencia-producto",
+      "titulo": "La potencia de un producto",
+      "desc": "El exponente se reparte a cada factor, coeficiente incluido.",
+      "claves": "potencia de un producto repartir exponente coeficiente"
+     },
+     {
+      "ancla": "tres-reglas",
+      "titulo": "Las tres reglas juntas",
+      "desc": "Expresiones mixtas con marcador por regla.",
+      "claves": "tres reglas mezcla exponentes"
+     }
+    ]
+   },
+   {
+    "id": "n3-l1-2.html",
+    "num": "1-2",
+    "titulo": "Lección 1.2 · Regla del cociente, exponente cero y exponentes negativos",
+    "modulos": [
+     {
+      "ancla": "cociente",
+      "titulo": "La regla del cociente",
+      "desc": "Misma base en la división: se restan los exponentes.",
+      "claves": "regla cociente division restar exponentes"
+     },
+     {
+      "ancla": "cero",
+      "titulo": "El exponente cero",
+      "desc": "Por qué a⁰ = 1, y las trampas como 3x⁰ y −5⁰.",
+      "claves": "exponente cero uno"
+     },
+     {
+      "ancla": "negativos",
+      "titulo": "Los exponentes negativos",
+      "desc": "Pasar el factor al otro lado de la fracción.",
+      "claves": "exponente negativo fraccion reciproco"
+     },
+     {
+      "ancla": "cinco-reglas",
+      "titulo": "Las cinco reglas de los exponentes",
+      "desc": "¿Qué regla se aplicó en cada paso?",
+      "claves": "cinco reglas exponentes identificar"
+     },
+     {
+      "ancla": "verificar",
+      "titulo": "Verificar con valores numéricos",
+      "desc": "Sustituir un número para comprobar una simplificación.",
+      "claves": "verificar sustituir valor comprobar exponentes"
+     }
+    ]
+   },
+   {
+    "id": "n3-l1-3.html",
+    "num": "1-3",
+    "titulo": "Lección 1.3 · Simplificar expresiones exponenciales con múltiples reglas",
+    "modulos": [
+     {
+      "ancla": "orden",
+      "titulo": "Un orden para simplificar",
+      "desc": "Un orden de pasos para simplificar, con los ejemplos de la lección.",
+      "claves": "orden simplificar pasos exponentes"
+     },
+     {
+      "ancla": "fracciones",
+      "titulo": "Fracciones con exponentes negativos",
+      "desc": "Expresiones racionales con exponentes negativos, en forma final.",
+      "claves": "fracciones exponentes negativos forma final"
+     },
+     {
+      "ancla": "arbitro",
+      "titulo": "El árbitro de exponentes",
+      "desc": "Resoluciones con un error escondido (o sin error).",
+      "claves": "arbitro error encontrar exponentes"
+     },
+     {
+      "ancla": "completa",
+      "titulo": "Una expresión completa, paso a paso",
+      "desc": "Una expresión completa paso a paso, con comprobación.",
+      "claves": "expresion completa paso a paso exponentes"
+     },
+     {
+      "ancla": "comprobacion",
+      "titulo": "Comprobación del Tema 1",
+      "desc": "La comprobación del Tema 1, con informe por bloque.",
+      "claves": "comprobacion tema 1 examen exponentes",
+      "url": "https://zhemaria.github.io/interactivos/exponentes_comprobacion/"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 2,
+  "clase": "t2",
+  "titulo": "Tema 2 · Notación científica",
+  "lecciones": [
+   {
+    "id": "n3-l2-1.html",
+    "num": "2-1",
+    "titulo": "Lección 2.1 · Conversión decimal ↔ científica y órdenes de magnitud",
+    "modulos": [
+     {
+      "ancla": "grandes",
+      "titulo": "De decimal a científica: números grandes",
+      "desc": "Mover el punto a la izquierda y contar los lugares.",
+      "claves": "notacion cientifica numeros grandes exponente positivo punto decimal"
+     },
+     {
+      "ancla": "pequenos",
+      "titulo": "De decimal a científica: números pequeños",
+      "desc": "Números menores que 1 y exponentes negativos.",
+      "claves": "notacion cientifica numeros pequenos exponente negativo"
+     },
+     {
+      "ancla": "a-decimal",
+      "titulo": "De científica a decimal",
+      "desc": "De a × 10ⁿ a número decimal, con ceros de relleno.",
+      "claves": "cientifica a decimal ceros relleno"
+     },
+     {
+      "ancla": "magnitud",
+      "titulo": "Orden de magnitud y comparación",
+      "desc": "Ordenar datos reales y decir cuántas veces mayor es uno que otro.",
+      "claves": "orden de magnitud comparar ordenar veces mayor"
+     }
+    ]
+   },
+   {
+    "id": "n3-l2-2.html",
+    "num": "2-2",
+    "titulo": "Lección 2.2 · Multiplicación y división en notación científica",
+    "modulos": [
+     {
+      "ancla": "multiplicar",
+      "titulo": "Multiplicar en tres pasos",
+      "desc": "Coeficientes por un lado, potencias de 10 por otro.",
+      "claves": "multiplicar notacion cientifica tres pasos"
+     },
+     {
+      "ancla": "ajustar",
+      "titulo": "Ajustar el coeficiente",
+      "desc": "Cuando el coeficiente queda fuera de 1 ≤ a < 10.",
+      "claves": "ajustar coeficiente forma valida"
+     },
+     {
+      "ancla": "dividir",
+      "titulo": "Dividir en notación científica",
+      "desc": "Dividir coeficientes y restar exponentes.",
+      "claves": "dividir notacion cientifica"
+     },
+     {
+      "ancla": "real",
+      "titulo": "Un cálculo real",
+      "desc": "La luz, la población, los archivos y los latidos.",
+      "claves": "problemas contexto luz poblacion bytes corazon celulas"
+     }
+    ]
+   },
+   {
+    "id": "n3-l2-3.html",
+    "num": "2-3",
+    "titulo": "Lección 2.3 · Suma, resta y aplicaciones en ciencia y tecnología",
+    "modulos": [
+     {
+      "ancla": "sumar",
+      "titulo": "Sumar con exponentes iguales",
+      "desc": "Con la misma potencia de 10, la potencia se conserva.",
+      "claves": "sumar notacion cientifica exponentes iguales"
+     },
+     {
+      "ancla": "igualar",
+      "titulo": "Igualar los exponentes",
+      "desc": "Reescribir un término antes de sumar o restar.",
+      "claves": "igualar exponentes reescribir"
+     },
+     {
+      "ancla": "restar",
+      "titulo": "Restar en notación científica",
+      "desc": "Incluye diferencias que obligan a reajustar.",
+      "claves": "restar notacion cientifica"
+     },
+     {
+      "ancla": "aplicaciones",
+      "titulo": "Aplicaciones en ciencia y tecnología",
+      "desc": "Las cuatro operaciones en ciencia y tecnología.",
+      "claves": "aplicaciones ciencia tecnologia masa tierra luna sonda"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 3,
+  "clase": "t3",
+  "titulo": "Tema 3 · Radicales y números reales",
+  "lecciones": [
+   {
+    "id": "n3-l3-1.html",
+    "num": "3-1",
+    "titulo": "Lección 3.1 · Simplificar radicales: factorización en cuadrados perfectos",
+    "modulos": [
+     {
+      "ancla": "producto",
+      "titulo": "La propiedad del producto de radicales",
+      "desc": "Partir el radical con la tabla de cuadrados perfectos.",
+      "claves": "propiedad producto radicales cuadrados perfectos"
+     },
+     {
+      "ancla": "numericos",
+      "titulo": "Simplificar radicales numéricos",
+      "desc": "El mayor cuadrado perfecto, paso a paso.",
+      "claves": "simplificar radicales raiz cuadrada"
+     },
+     {
+      "ancla": "variables",
+      "titulo": "Radicales con variables",
+      "desc": "Exponentes pares fuera, sobrante dentro.",
+      "claves": "radicales variables exponente par impar"
+     },
+     {
+      "ancla": "verificar",
+      "titulo": "Verificar el resultado",
+      "desc": "¿Correcta, sin terminar o incorrecta? Con decimales.",
+      "claves": "verificar radical calculadora decimal"
+     }
+    ]
+   },
+   {
+    "id": "n3-l3-2.html",
+    "num": "3-2",
+    "titulo": "Lección 3.2 · Operaciones con radicales: suma, resta y multiplicación",
+    "modulos": [
+     {
+      "ancla": "semejantes",
+      "titulo": "Sumar y restar radicales semejantes",
+      "desc": "Se combinan como términos semejantes.",
+      "claves": "sumar restar radicales semejantes"
+     },
+     {
+      "ancla": "simplificar-primero",
+      "titulo": "¿Semejantes o no? Simplificar primero",
+      "desc": "Radicales que solo se combinan después de simplificar.",
+      "claves": "simplificar primero radicales combinar"
+     },
+     {
+      "ancla": "multiplicar",
+      "titulo": "Multiplicar radicales",
+      "desc": "Unir bajo un radical y simplificar; distributiva.",
+      "claves": "multiplicar radicales producto"
+     },
+     {
+      "ancla": "aproximar",
+      "titulo": "Aproximar radicales",
+      "desc": "Acorralar la raíz entre enteros y décimas.",
+      "claves": "aproximar radical raiz decima estimar"
+     }
+    ]
+   },
+   {
+    "id": "n3-l3-3.html",
+    "num": "3-3",
+    "titulo": "Lección 3.3 · El sistema de números reales",
+    "modulos": [
+     {
+      "ancla": "clasificar",
+      "titulo": "El sistema de los números reales",
+      "desc": "Naturales, enteros, racionales, irracionales y reales.",
+      "claves": "sistema numeros reales conjuntos naturales enteros racionales irracionales"
+     },
+     {
+      "ancla": "racional-irracional",
+      "titulo": "¿Racional o irracional?",
+      "desc": "Decimales que terminan, se repiten o no; raíces exactas.",
+      "claves": "racional irracional decimal periodico pi"
+     },
+     {
+      "ancla": "recta",
+      "titulo": "Ubicar irracionales en la recta numérica",
+      "desc": "Colocar √n y π en la recta numérica.",
+      "claves": "ubicar irracionales recta numerica"
+     },
+     {
+      "ancla": "periodicos",
+      "titulo": "Decimales periódicos a fracciones",
+      "desc": "De decimal periódico a fracción, paso a paso.",
+      "claves": "decimal periodico fraccion convertir"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 4,
+  "clase": "t4",
+  "titulo": "Tema 4 · Expresiones y ecuaciones lineales",
+  "lecciones": [
+   {
+    "id": "n3-l4-1.html",
+    "num": "4-1",
+    "titulo": "Lección 4.1 · Variables, expresiones algebraicas y traducción",
+    "modulos": [
+     {
+      "ancla": "vocabulario",
+      "titulo": "Variables, términos y coeficientes",
+      "desc": "Término, coeficiente, variable y constante.",
+      "claves": "variables terminos coeficientes constante partes expresion"
+     },
+     {
+      "ancla": "traducir",
+      "titulo": "Traducir entre palabras y álgebra",
+      "desc": "De palabras a álgebra y de álgebra a palabras.",
+      "claves": "traducir palabras algebra frases"
+     },
+     {
+      "ancla": "semejantes",
+      "titulo": "Combinar términos semejantes",
+      "desc": "Clasificar por familias y combinar.",
+      "claves": "terminos semejantes combinar familias reducir"
+     },
+     {
+      "ancla": "distributiva",
+      "titulo": "La propiedad distributiva",
+      "desc": "El modelo de área y la distribución con signos.",
+      "claves": "propiedad distributiva parentesis modelo area"
+     },
+     {
+      "ancla": "evaluar",
+      "titulo": "Evaluar expresiones",
+      "desc": "Sustituir con paréntesis y respetar el orden de operaciones.",
+      "claves": "evaluar expresiones sustituir orden operaciones pemdas"
+     }
+    ]
+   },
+   {
+    "id": "n3-l4-2.html",
+    "num": "4-2",
+    "titulo": "Lección 4.2 · Resolver ecuaciones lineales",
+    "modulos": [
+     {
+      "ancla": "balanza",
+      "titulo": "La ecuación como una balanza",
+      "desc": "Lo que se hace de un lado se hace del otro.",
+      "claves": "ecuacion balanza equilibrio operacion inversa"
+     },
+     {
+      "ancla": "pasos",
+      "titulo": "Ecuaciones de uno y varios pasos",
+      "desc": "La estrategia de cinco pasos, con paréntesis.",
+      "claves": "resolver ecuaciones pasos despejar"
+     },
+     {
+      "ancla": "ambos-lados",
+      "titulo": "Variables en ambos lados",
+      "desc": "Reunir las x en un solo lado.",
+      "claves": "variables ambos lados ecuacion"
+     },
+     {
+      "ancla": "verificar",
+      "titulo": "Verificar la solución",
+      "desc": "Sustituir y comprobar que los dos lados coinciden.",
+      "claves": "verificar solucion sustituir"
+     }
+    ]
+   },
+   {
+    "id": "n3-l4-3.html",
+    "num": "4-3",
+    "titulo": "Lección 4.3 · Ecuaciones con fracciones, decimales y casos especiales",
+    "modulos": [
+     {
+      "ancla": "fracciones",
+      "titulo": "Limpiar fracciones con el MCM",
+      "desc": "Multiplicar toda la ecuación por el MCM.",
+      "claves": "ecuaciones fracciones mcm limpiar"
+     },
+     {
+      "ancla": "decimales",
+      "titulo": "Limpiar decimales con una potencia de 10",
+      "desc": "Multiplicar por 10, 100 o 1000.",
+      "claves": "ecuaciones decimales potencia de 10"
+     },
+     {
+      "ancla": "casos-especiales",
+      "titulo": "¿Una, ninguna o infinitas soluciones?",
+      "desc": "Reconocer 5 = 9 y 6 = 6.",
+      "claves": "una ninguna infinitas soluciones identidad contradiccion"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 5,
+  "clase": "t5",
+  "titulo": "Tema 5 · Inecuaciones y fórmulas",
+  "lecciones": [
+   {
+    "id": "n3-l5-1.html",
+    "num": "5-1",
+    "titulo": "Lección 5.1 · Resolver inecuaciones lineales y graficar en la recta numérica",
+    "modulos": [
+     {
+      "ancla": "resolver",
+      "titulo": "Resolver como una ecuación",
+      "desc": "Los mismos pasos que una ecuación, y su gráfica.",
+      "claves": "resolver inecuacion desigualdad"
+     },
+     {
+      "ancla": "invertir",
+      "titulo": "La regla crítica: invertir el signo",
+      "desc": "Qué pasa al multiplicar o dividir por un negativo.",
+      "claves": "invertir signo desigualdad negativo"
+     },
+     {
+      "ancla": "graficar",
+      "titulo": "Graficar en la recta numérica",
+      "desc": "Punto abierto o cerrado y dirección de la flecha.",
+      "claves": "graficar recta numerica punto abierto cerrado"
+     },
+     {
+      "ancla": "prueba",
+      "titulo": "Verificar con un valor de prueba",
+      "desc": "Elegir un número y comprobarlo en la inecuación original.",
+      "claves": "valor de prueba verificar inecuacion"
+     }
+    ]
+   },
+   {
+    "id": "n3-l5-2.html",
+    "num": "5-2",
+    "titulo": "Lección 5.2 · Inecuaciones con simplificación y problemas verbales",
+    "modulos": [
+     {
+      "ancla": "simplificar",
+      "titulo": "Inecuaciones que requieren simplificar",
+      "desc": "Distribuir y combinar antes de despejar.",
+      "claves": "inecuaciones simplificar distributiva"
+     },
+     {
+      "ancla": "vocabulario",
+      "titulo": "El vocabulario de las inecuaciones",
+      "desc": "«Al menos», «como máximo», «no excede» y su signo.",
+      "claves": "vocabulario al menos como maximo no excede a lo sumo"
+     },
+     {
+      "ancla": "contexto",
+      "titulo": "Problemas de presupuesto y tiempo",
+      "desc": "Plantear, resolver e interpretar con enteros.",
+      "claves": "problemas presupuesto tiempo ventas taxi ascensor"
+     }
+    ]
+   },
+   {
+    "id": "n3-l5-3.html",
+    "num": "5-3",
+    "titulo": "Lección 5.3 · Despeje de fórmulas literales",
+    "modulos": [
+     {
+      "ancla": "despejar",
+      "titulo": "La estrategia de cuatro pasos",
+      "desc": "Con números y con letras, en paralelo.",
+      "claves": "despejar formula estrategia cuatro pasos"
+     },
+     {
+      "ancla": "comunes",
+      "titulo": "Fórmulas comunes",
+      "desc": "d = rt, A = bh, V = lwh, I = Prt.",
+      "claves": "formulas comunes distancia area volumen interes"
+     },
+     {
+      "ancla": "dos-pasos",
+      "titulo": "Fórmulas de dos pasos",
+      "desc": "°F y °C, y = mx + b, P = 2l + 2w.",
+      "claves": "formulas dos pasos temperatura perimetro recta"
+     },
+     {
+      "ancla": "aplicar",
+      "titulo": "Aplicar la fórmula despejada",
+      "desc": "Despejar primero o sustituir primero.",
+      "claves": "aplicar formula despejada sustituir"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 6,
+  "clase": "t6",
+  "titulo": "Tema 6 · Geometría: ángulos, Pitágoras y semejanza",
+  "lecciones": [
+   {
+    "id": "n3-l6-1.html",
+    "num": "6-1",
+    "titulo": "Lección 6.1 · Ángulos y paralelas cortadas por una transversal",
+    "modulos": [
+     {
+      "ancla": "basicos",
+      "titulo": "Relaciones básicas entre ángulos",
+      "desc": "Complementarios, suplementarios y opuestos por el vértice.",
+      "claves": "angulos complementarios suplementarios opuestos vertice"
+     },
+     {
+      "ancla": "transversal",
+      "titulo": "Paralelas cortadas por una transversal",
+      "desc": "Los ocho ángulos entre paralelas.",
+      "claves": "paralelas transversal secante correspondientes alternos internos"
+     },
+     {
+      "ancla": "calcular",
+      "titulo": "Calcular ángulos desconocidos",
+      "desc": "Con el diagrama y con una ecuación.",
+      "claves": "calcular angulos ecuacion"
+     },
+     {
+      "ancla": "triangulo",
+      "titulo": "La suma de los ángulos de un triángulo",
+      "desc": "180° y el ángulo exterior.",
+      "claves": "suma angulos triangulo exterior"
+     }
+    ]
+   },
+   {
+    "id": "n3-l6-2.html",
+    "num": "6-2",
+    "titulo": "Lección 6.2 · Teorema de Pitágoras: aplicaciones y converso",
+    "modulos": [
+     {
+      "ancla": "teorema",
+      "titulo": "El triángulo rectángulo y el teorema",
+      "desc": "La demostración con cuadrados; identificar la hipotenusa.",
+      "claves": "pitagoras teorema catetos hipotenusa cuadrados"
+     },
+     {
+      "ancla": "hipotenusa",
+      "titulo": "Calcular la hipotenusa",
+      "desc": "Exacta o aproximada a la décima.",
+      "claves": "calcular hipotenusa pitagoras"
+     },
+     {
+      "ancla": "cateto",
+      "titulo": "Calcular un cateto",
+      "desc": "Restar, no sumar.",
+      "claves": "calcular cateto pitagoras restar"
+     },
+     {
+      "ancla": "triples",
+      "titulo": "Triples pitagóricos",
+      "desc": "3-4-5, 5-12-13 y sus múltiplos.",
+      "claves": "triples pitagoricos multiplos"
+     },
+     {
+      "ancla": "converso",
+      "titulo": "El converso del teorema",
+      "desc": "¿Forman un triángulo rectángulo?",
+      "claves": "converso pitagoras rectangulo escuadra"
+     }
+    ]
+   },
+   {
+    "id": "n3-l6-3.html",
+    "num": "6-3",
+    "titulo": "Lección 6.3 · Semejanza de figuras y dibujos a escala (Thales)",
+    "modulos": [
+     {
+      "ancla": "semejantes",
+      "titulo": "Figuras semejantes",
+      "desc": "Factor de escala; lados proporcionales y ángulos iguales.",
+      "claves": "figuras semejantes factor escala semejanza"
+     },
+     {
+      "ancla": "proporcion",
+      "titulo": "Hallar un lado con una proporción",
+      "desc": "Plantear la proporción y la multiplicación cruzada.",
+      "claves": "proporcion lado desconocido multiplicacion cruzada"
+     },
+     {
+      "ancla": "escala",
+      "titulo": "Dibujos a escala",
+      "desc": "Mapas (1 cm = k km) y planos (1:n).",
+      "claves": "dibujos escala mapa plano"
+     },
+     {
+      "ancla": "thales",
+      "titulo": "El teorema de Thales: medidas indirectas",
+      "desc": "La sombra del árbol y del edificio.",
+      "claves": "thales tales sombra altura medida indirecta"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 7,
+  "clase": "t7",
+  "titulo": "Tema 7 · Volumen y estadística",
+  "lecciones": [
+   {
+    "id": "n3-l7-1.html",
+    "num": "7-1",
+    "titulo": "Lección 7.1 · Volumen de prismas y cilindros",
+    "modulos": [
+     {
+      "ancla": "prismas",
+      "titulo": "Volumen de prismas",
+      "desc": "La caja por capas; prismas triangulares.",
+      "claves": "volumen prismas caja cubo"
+     },
+     {
+      "ancla": "cilindros",
+      "titulo": "Volumen de cilindros",
+      "desc": "πr²h, exacto o con 3.14.",
+      "claves": "volumen cilindro pi radio diametro"
+     },
+     {
+      "ancla": "despejar",
+      "titulo": "Despejar la altura o el radio",
+      "desc": "Conocido el volumen, hallar la altura o el radio.",
+      "claves": "despejar altura radio volumen"
+     },
+     {
+      "ancla": "capacidad",
+      "titulo": "Capacidad y almacenamiento",
+      "desc": "Litros, galones y conversión de unidades.",
+      "claves": "capacidad litros galones tanque piscina"
+     }
+    ]
+   },
+   {
+    "id": "n3-l7-2.html",
+    "num": "7-2",
+    "titulo": "Lección 7.2 · Diagramas de caja y bigotes",
+    "modulos": [
+     {
+      "ancla": "cinco-valores",
+      "titulo": "Los cinco valores clave",
+      "desc": "Mínimo, cuartiles, mediana y máximo.",
+      "claves": "cinco valores cuartiles mediana minimo maximo"
+     },
+     {
+      "ancla": "construir",
+      "titulo": "Construir el diagrama",
+      "desc": "Escribir los cinco valores y ver formarse la caja.",
+      "claves": "construir diagrama caja bigotes leer"
+     },
+     {
+      "ancla": "iqr",
+      "titulo": "El rango intercuartílico",
+      "desc": "Qué mide y por qué no le afectan los extremos.",
+      "claves": "rango intercuartilico iqr dispersion porcentaje"
+     },
+     {
+      "ancla": "atipicos",
+      "titulo": "Valores atípicos",
+      "desc": "La regla de 1.5 × IQR.",
+      "claves": "valores atipicos outliers limite"
+     },
+     {
+      "ancla": "comparar",
+      "titulo": "Interpretar y comparar",
+      "desc": "Dos diagramas lado a lado.",
+      "claves": "comparar diagramas caja mediana variabilidad"
+     }
+    ]
+   },
+   {
+    "id": "n3-l7-3.html",
+    "num": "7-3",
+    "titulo": "Lección 7.3 · Histogramas: construir, interpretar y comparar",
+    "modulos": [
+     {
+      "ancla": "construir",
+      "titulo": "Construir un histograma",
+      "desc": "Contar frecuencias y dibujar las barras.",
+      "claves": "construir histograma frecuencias intervalos"
+     },
+     {
+      "ancla": "forma",
+      "titulo": "La forma de la distribución",
+      "desc": "Simétrica, sesgada, uniforme o bimodal.",
+      "claves": "forma distribucion sesgada simetrica bimodal"
+     },
+     {
+      "ancla": "comparar",
+      "titulo": "Histograma frente a diagrama de caja",
+      "desc": "Los mismos datos en histograma y en caja.",
+      "claves": "histograma diagrama caja comparar mediana"
+     },
+     {
+      "ancla": "elegir",
+      "titulo": "Elegir la representación más informativa",
+      "desc": "Qué gráfica responde mejor cada pregunta.",
+      "claves": "elegir grafica representacion barras"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 8,
+  "clase": "t8",
+  "titulo": "Tema 8 · Conteo y probabilidad",
+  "lecciones": [
+   {
+    "id": "n3-l8-1.html",
+    "num": "8-1",
+    "titulo": "Lección 8.1 · Principio del conteo, permutaciones y combinaciones",
+    "modulos": [
+     {
+      "ancla": "principio",
+      "titulo": "El principio fundamental del conteo",
+      "desc": "El árbol de opciones que crece.",
+      "claves": "principio fundamental conteo arbol multiplicar"
+     },
+     {
+      "ancla": "factorial",
+      "titulo": "El factorial",
+      "desc": "n! y cocientes de factoriales.",
+      "claves": "factorial"
+     },
+     {
+      "ancla": "permutaciones",
+      "titulo": "Permutaciones: el orden importa",
+      "desc": "Podios, cargos, claves y filas.",
+      "claves": "permutaciones orden importa"
+     },
+     {
+      "ancla": "combinaciones",
+      "titulo": "Combinaciones: el orden no importa",
+      "desc": "Comités, equipos y apretones de manos.",
+      "claves": "combinaciones orden no importa"
+     },
+     {
+      "ancla": "decidir",
+      "titulo": "¿Importa el orden?",
+      "desc": "¿Permutación, combinación o principio del conteo?",
+      "claves": "decidir importa el orden"
+     }
+    ]
+   },
+   {
+    "id": "n3-l8-2.html",
+    "num": "8-2",
+    "titulo": "Lección 8.2 · Probabilidad compuesta: con y sin reemplazo",
+    "modulos": [
+     {
+      "ancla": "simple",
+      "titulo": "Probabilidad de un evento",
+      "desc": "Casos favorables entre casos posibles; simuladores.",
+      "claves": "probabilidad evento simple dados baraja ruleta"
+     },
+     {
+      "ancla": "con-reemplazo",
+      "titulo": "Dos eventos con reemplazo",
+      "desc": "La bolsa que no cambia.",
+      "claves": "con reemplazo independientes probabilidad compuesta bolsa caramelos"
+     },
+     {
+      "ancla": "sin-reemplazo",
+      "titulo": "Dos eventos sin reemplazo",
+      "desc": "La bolsa que pierde un elemento.",
+      "claves": "sin reemplazo dependientes probabilidad compuesta bolsa caramelos"
+     },
+     {
+      "ancla": "arbol",
+      "titulo": "Del árbol a la tabla",
+      "desc": "El interactivo de dos extracciones.",
+      "claves": "arbol tabla dos extracciones"
+     },
+     {
+      "ancla": "tres-formas",
+      "titulo": "Fracción, decimal y porcentaje",
+      "desc": "Fracción, decimal y porcentaje.",
+      "claves": "fraccion decimal porcentaje probabilidad convertir"
+     }
+    ]
+   }
+  ]
+ }
+];
+
+function normaliza(t){
+  return t.toLowerCase().replace(/[áàä]/g,"a").replace(/[éèë]/g,"e").replace(/[íìï]/g,"i")
+          .replace(/[óòö]/g,"o").replace(/[úùü]/g,"u").replace(/ñ/g,"n").replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,"");
+}
+function numLeccion(l){ var p = l.num.split("-"); return +p[0]*100 + +p[1]; }
+
+function construye(){
+  var html = "", ind = "";
+  TEMAS.forEach(function(t){
+    var total = t.lecciones.reduce(function(s, l){ return s + l.modulos.length; }, 0);
+    ind += '<li><a href="#tema-' + t.n + '">' + t.titulo + '</a> (' + total + ')</li>';
+    html += '<details class="tema ' + t.clase + '" id="tema-' + t.n + '" data-total="' + total + '">' +
+            '<summary><h2>' + t.titulo + '</h2><span class="cuenta">' + total + ' prácticas</span><span class="flecha" aria-hidden="true">▶</span></summary><div class="tema-cuerpo">';
+    t.lecciones.slice().sort(function(a, b){ return numLeccion(a) - numLeccion(b); }).forEach(function(l){
+      var urlL = BASE + l.id;
+      html += '<h3 class="leccion" id="leccion-' + l.num + '"><a href="' + urlL + '" target="_blank" rel="noopener noreferrer">' + l.titulo + '</a></h3><ul class="modulos">';
+      l.modulos.forEach(function(md){
+        var texto = normaliza(md.titulo + " " + md.desc + " " + md.claves + " " + l.titulo + " " + t.titulo).replace(/"/g, "");
+        var url = md.url || (urlL + "#" + md.ancla);
+        html += '<li data-busca="' + texto + '"><a href="' + url + '" target="_blank" rel="noopener noreferrer">' +
+                '<span class="titulo">' + md.titulo + '</span><span class="desc">' + md.desc + '</span>' +
+                '<span class="abrir">Abrir esta práctica <span aria-hidden="true">›</span></span></a></li>';
+      });
+      html += '</ul>';
+    });
+    if (t.n === 8) html += '<p class="nota-leccion">La Lección 8.3 (proyecto final y estrategias para el GED) no lleva interactivo propio.</p>';
+    html += '</div></details>';
+  });
+  document.getElementById("lista").innerHTML = html;
+  document.getElementById("indice").innerHTML = ind;
+}
+
+var ESTADO = null;   /* temas abiertos antes de empezar a buscar */
+function temas(){ return document.querySelectorAll("details.tema"); }
+function filtra(){
+  var q = normaliza(document.getElementById("filtro").value.trim()), visibles = 0, total = 0;
+  if (q && !ESTADO){ ESTADO = []; temas().forEach(function(d){ ESTADO.push(d.open); }); }
+  temas().forEach(function(d, i){
+    var enTema = 0;
+    d.querySelectorAll("ul.modulos").forEach(function(ul){
+      var enLec = 0;
+      ul.querySelectorAll("li").forEach(function(li){
+        total++;
+        var ok = !q || li.getAttribute("data-busca").indexOf(q) !== -1;
+        li.className = ok ? "" : "oculto"; if (ok){ visibles++; enLec++; enTema++; }
+      });
+      ul.className = enLec ? "modulos" : "modulos oculto";
+      ul.previousElementSibling.className = enLec ? "leccion" : "leccion oculto";
+    });
+    var tot = +d.getAttribute("data-total");
+    d.querySelector(".cuenta").textContent = q ? enTema + " de " + tot : tot + " prácticas";
+    d.classList.toggle("oculto", !!q && enTema === 0);
+    if (q) d.open = enTema > 0;
+  });
+  if (!q && ESTADO){ temas().forEach(function(d, i){ d.open = ESTADO[i]; }); ESTADO = null; }
+  document.getElementById("contador").textContent = q ? (visibles === 1 ? "Se muestra 1 práctica de " : "Se muestran " + visibles + " prácticas de ") + total + "." : "Hay " + total + " prácticas disponibles en todo el nivel.";
+  document.getElementById("sin-resultados").className = (q && visibles === 0) ? "sin-resultados visible" : "sin-resultados";
+}
+function abreDesdeAncla(){
+  var h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
+  var el = document.getElementById(h); if (!el) return;
+  var d = el.tagName.toLowerCase() === "details" ? el : el.closest("details.tema");
+  if (d) d.open = true;
+  el.scrollIntoView({ block: "start" });
+}
+
+construye();
+document.getElementById("filtro").addEventListener("input", filtra);
+document.getElementById("abrir-todo").addEventListener("click", function(){ temas().forEach(function(d){ d.open = true; }); });
+document.getElementById("cerrar-todo").addEventListener("click", function(){ temas().forEach(function(d){ d.open = false; }); });
+document.querySelectorAll("#indice a").forEach(function(a){
+  a.addEventListener("click", function(e){ e.preventDefault(); history.replaceState(null, "", a.getAttribute("href")); abreDesdeAncla(); });
+});
+window.addEventListener("hashchange", abreDesdeAncla);
+filtra();
+abreDesdeAncla();
+</script>
+</body>
+</html>
