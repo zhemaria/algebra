@@ -1,0 +1,1207 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 6.3 — Conversiones entre el sistema inglés y el métrico
+  Nivel 2 · Spanish ASE Math 2 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #consultorio · #factores · #fraccion-conversion · #temperatura
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 6.3: conversiones entre el sistema inglés y el métrico</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 6.3 del Nivel 2: conversiones en el consultorio y la farmacia, la tabla de factores, el método de la fracción de conversión y la temperatura.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+
+  :root{
+    --tema:#4e342e; --tema-d:#3e2723; --tema-bg:#efebe9; --tema-bg2:#d7ccc8;
+    --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#0a3a82;border-color:#0a3a82;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:96px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* fracción algebraica */
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 6px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 8px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;
+                 text-decoration-color:#b71c1c;color:#b71c1c;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  .campos-sci .campo input[type="text"]{width:120px;}
+  .campos-sci .campo input.corto{width:84px;}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campos.campos-sci{flex-direction:row;align-items:flex-end;flex-wrap:nowrap;gap:10px;} }
+
+  .btn:disabled,.btn-sec:disabled{background:#eeeeee;color:#424242;border-color:#9e9e9e;cursor:not-allowed;}
+  input:disabled,select:disabled{background:#f3f3f3;cursor:not-allowed;}
+  .campo input[type="text"]{width:150px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input.ancho{width:230px;}
+  .campo input.corto{width:96px;}
+  .enun .ex, .opcion .ex, .salida .ex, .lista-orden .ex{font-size:18px;}
+  .ex{white-space:nowrap;}
+  sup{font-size:.72em;}
+
+  .centro{text-align:center;}
+
+  /* radicales */
+  .rad{white-space:nowrap;}
+  .rad .rc{border-top:2px solid currentColor;padding:0 3px 0 2px;margin-left:1px;}
+  .fracc{display:inline-block;text-align:center;vertical-align:middle;margin:0 3px;line-height:1.15;}
+  .fracc .fa{display:block;padding:0 4px;border-bottom:2px solid currentColor;}
+  .fracc .fb2{display:block;padding:0 4px;}
+  .periodo{text-decoration:overline;}
+  .grande{font-size:22px;font-weight:700;}
+  .estado{text-align:center;font-size:18px;margin:10px 0;color:var(--tema-d);}
+
+  /* tabla de cuadrados */
+  .cuadros{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin:12px 0;}
+  .cuadro{border:2px solid var(--tema-bg2);border-radius:8px;background:#fff;text-align:center;padding:4px 2px;font-size:14px;}
+  .cuadro strong{display:block;font-size:18px;color:var(--txt);}
+  .cuadro.divide{background:var(--tema-bg);border-color:var(--tema);}
+  .cuadro.mayor{background:var(--tema);border-color:var(--tema-d);}
+  .cuadro.mayor, .cuadro.mayor strong{color:#fff;}
+
+  /* botones de elección dentro de un panel */
+  .elecciones{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+  .eleccion{background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:8px;padding:8px 14px;font-weight:700;font-size:16px;}
+  .eleccion:hover{background:var(--tema-bg);}
+  .eleccion[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .eleccion:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* casillas de selección múltiple */
+  .casillas{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+  .casilla{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #767676;border-radius:8px;padding:8px 12px;font-size:16px;cursor:pointer;}
+  .casilla input{width:20px;height:20px;accent-color:var(--tema);}
+  .casilla.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .casilla.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .casilla:focus-within{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* diagrama y recta */
+  .diagrama{max-width:560px;margin:10px auto;display:block;width:100%;height:auto;}
+  .recta-svg{width:100%;max-width:680px;height:auto;display:block;margin:8px auto;overflow:visible;}
+  input[type="range"]{width:100%;accent-color:var(--tema);}
+  input[type="range"]:focus-visible{outline:3px solid var(--acento);outline-offset:4px;}
+
+  /* expresiones algebraicas */
+  .alg{white-space:nowrap;}
+  .fam-x{background:#e3f2fd;color:#0d47a1;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-y{background:#e8f5e9;color:#1b5e20;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-x2{background:#f3e5f5;color:#4a148c;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-k{background:#fff8e1;color:#5c3900;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fila-term{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid #d8d8d8;border-radius:8px;padding:8px 12px;margin:6px 0;}
+  .fila-term .t{min-width:70px;font-size:18px;font-weight:700;}
+  .fila-term.bien{border-color:var(--ok);background:var(--ok-bg);}
+  .fila-term.mal{border-color:var(--mal);background:var(--mal-bg);}
+  .balanza{width:100%;max-width:620px;height:auto;display:block;margin:6px auto;}
+  .comparar{width:100%;border-collapse:collapse;margin:12px 0;font-size:16px;}
+  .comparar caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  .comparar th,.comparar td{border:1px solid #c8c8c8;padding:8px 10px;text-align:center;}
+  .comparar th{background:var(--tema-bg);color:var(--tema-d);}
+  .comparar td.si{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .comparar td.no{background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .tabla-scroll{overflow-x:auto;}
+  .fila-term select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+
+  .lado-a-lado{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  .lado-a-lado > div{background:#fff;border:1px solid #d8d8d8;border-radius:10px;padding:12px 14px;}
+  .lado-a-lado h4{margin:0 0 8px;font-size:16px;color:var(--tema-d);}
+  @media (max-width:640px){ .lado-a-lado{grid-template-columns:1fr;} }
+  .verdad{font-weight:700;}
+  .verdad.si{color:var(--ok);} .verdad.no{color:var(--mal);}
+
+  .figura{width:100%;max-width:640px;height:auto;display:block;margin:8px auto;}
+  .figura .ang{cursor:pointer;}
+  .figura .ang:focus{outline:none;}
+  .figura .ang:focus-visible circle, .figura .ang:focus-visible rect{stroke:#0d47a1;stroke-width:4;}
+  .lista-angulos{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0;}
+  .leyenda-c{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:14px;margin:6px 0;}
+  .leyenda-c span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:-2px;}
+  .leyenda-c .l-sel::before{background:#0d47a1;} .leyenda-c .l-ig::before{background:#1b5e20;} .leyenda-c .l-sup::before{background:#b71c1c;}
+
+  .datos{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+  .dato{min-width:40px;text-align:center;padding:6px 8px;border:2px solid var(--tema-bg2);border-radius:8px;background:#fff;font-weight:700;font-size:17px;}
+  .dato.med{background:var(--tema);border-color:var(--tema-d);color:#fff;}
+  .dato.q{background:#fff8e1;border-color:#f9a825;color:#5c3900;}
+  .dato.baja{border-color:#90caf9;} .dato.alta{border-color:#a5d6a7;}
+  .dato.atip{background:#ffebee;border-color:#b71c1c;color:#b71c1c;}
+  .tabla-frec input{width:70px;padding:6px 8px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .tabla-frec td.bien input{border-color:var(--ok);background:var(--ok-bg);} .tabla-frec td.mal input{border-color:var(--mal);background:var(--mal-bg);}
+
+  .tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:12px 0;}
+  a.tarjeta-ext{display:block;background:#fff;border:2px solid var(--tema-bg2);border-left:8px solid var(--tema);border-radius:10px;padding:14px 16px;color:var(--txt);text-decoration:none;}
+  a.tarjeta-ext:hover{background:var(--tema-bg);}
+  a.tarjeta-ext strong{display:block;color:var(--tema-d);font-size:17px;margin-bottom:4px;}
+  a.tarjeta-ext .ir{display:block;margin-top:8px;font-weight:700;color:var(--acento);}
+  .slots{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0;}
+  .slot{min-width:84px;text-align:center;border:2px solid var(--tema);border-radius:10px;padding:8px;background:#fff;}
+  .slot strong{display:block;font-size:24px;color:var(--tema-d);}
+  .slot span{font-size:13px;color:var(--gris);}
+  .arreglos{font-family:Consolas,'Courier New',monospace;font-size:16px;display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;max-height:220px;overflow-y:auto;}
+  .arreglos span{background:#fff;border:1px solid #d8d8d8;border-radius:6px;padding:3px 8px;}
+  .arreglos span.grupo{background:var(--tema-bg);border-color:var(--tema-bg2);}
+
+  /* ordenar */
+  .lista-orden{list-style:none;margin:12px 0;padding:0;counter-reset:ord;}
+  .lista-orden li{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #d8d8d8;border-radius:8px;padding:8px 12px;margin:8px 0;counter-increment:ord;}
+  .lista-orden li::before{content:counter(ord);background:var(--tema-bg);color:var(--tema-d);width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
+  .lista-orden li.bien{border-color:var(--ok);background:var(--ok-bg);}
+  .lista-orden li.mal{border-color:var(--mal);background:var(--mal-bg);}
+  .lista-orden .nombre{flex:1;font-weight:700;font-size:20px;}
+  .lista-orden .flechas{display:flex;gap:6px;}
+  .lista-orden .flechas button{background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:6px;width:40px;height:36px;font-weight:700;}
+  .lista-orden .flechas button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  .signos{display:flex;gap:10px;margin:8px 0;}
+  .signos button{min-width:64px;font-size:24px;font-weight:700;background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:8px;padding:4px 14px;}
+  .signos button[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .signos button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  table.patron td,table.patron th{text-align:center;}
+  table.patron tr.nueva td{background:#fff8e1;}
+
+  .fr3{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:center;font-size:22px;font-weight:700;margin:10px 0;}
+  .tarjetas-c{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin:10px 0;}
+  .tarjetas-c button{background:#fff;border:2px solid var(--tema-bg2);border-radius:10px;padding:10px 4px;font-size:18px;font-weight:700;color:var(--tema-d);min-height:58px;}
+  .tarjetas-c button[aria-pressed="true"]{background:var(--tema);color:#fff;border-color:var(--tema-d);}
+  .tarjetas-c button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+  mark.op-act{background:#fff3e0;color:inherit;border-radius:5px;padding:0 3px;outline:2px solid #bf360c;}
+  .expr-paso{font-size:20px;margin:6px 0 2px;line-height:2.2;}
+  .expr-grande{font-size:24px;font-weight:700;line-height:2.2;}
+  .n1{color:#0d47a1;font-weight:700;} .n2{color:#1b5e20;font-weight:700;} .n3{color:#6a1b9a;font-weight:700;}
+  .piramide{display:grid;gap:6px;max-width:560px;margin:12px auto;}
+  .piramide div{margin:0 auto;border-radius:8px;padding:8px 12px;color:#fff;font-weight:700;text-align:center;}
+  .piramide .pz1{width:40%;background:#7f2408;} .piramide .pz2{width:60%;background:#bf360c;} .piramide .pz3{width:80%;background:#e64a19;} .piramide .pz4{width:100%;background:#ff7043;color:#3e1200;}
+  .piramide span{display:block;font-weight:400;font-size:14px;}
+
+  .grupos{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0;}
+  .grupo{border:2px dashed var(--tema-bg2);border-radius:10px;padding:6px 8px;display:flex;flex-wrap:wrap;gap:3px;max-width:180px;justify-content:center;}
+  .ico{font-size:22px;line-height:1;}
+  .tableros{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+  .tablero{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:12px 14px;}
+  .tablero h4{margin:0 0 6px;color:var(--tema-d);font-size:16px;}
+  .barra-v{height:22px;background:var(--tema);border-radius:4px;transition:width .2s;}
+  @media (prefers-reduced-motion:reduce){.barra-v{transition:none;}}
+
+  .tabla-frec input, .tabla-dep input{width:100px;padding:6px 8px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .tabla-dep td.bien input{border-color:var(--ok);background:var(--ok-bg);} .tabla-dep td.mal input{border-color:var(--mal);background:var(--mal-bg);}
+  .cadena{font-size:20px;line-height:2.6;}
+  .cadena .tach{text-decoration:line-through;text-decoration-color:#b71c1c;text-decoration-thickness:2px;}
+  .termo{display:flex;gap:24px;align-items:center;justify-content:center;flex-wrap:wrap;}
+
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 2 · Tema 6 · Matemáticas financieras y conversiones</div>
+    <h1>Lección 6.3 · Conversiones entre el sistema inglés y el métrico</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#consultorio">En el consultorio y en la farmacia</a></li>
+      <li><a href="#factores">La tabla de factores de conversión</a></li>
+      <li><a href="#fraccion-conversion">El método de la fracción de conversión</a></li>
+      <li><a href="#temperatura">La temperatura: un caso especial</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 · #consultorio ============ -->
+  <details class="modulo" id="consultorio" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>En el consultorio y en la farmacia</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En Estados Unidos se usa el sistema inglés (libras, pulgadas, galones); en casi todo el resto del mundo, el métrico
+      (kilogramos, centímetros, litros). En el consultorio el peso suele anotarse en libras, pero muchas dosis de medicamentos
+      se calculan por kilogramo.</p>
+
+      <h3>De libras a kilogramos</h3>
+      <div class="panel">
+        <div class="campo"><label for="cs-lb">Peso (libras): <span id="cs-lbv"></span></label><input type="range" id="cs-lb" min="10" max="300" step="5" value="165"></div>
+        <div class="salida" id="cs-salida" aria-live="polite"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Para comprobar:</strong> un kilogramo es un poco más de 2 libras, así que el peso en kilos es un poco menos de la mitad
+        del peso en libras (libras ÷ 2.2).
+      </div>
+
+      <h3>Practica: en el consultorio</h3>
+      <div class="practica" id="p1">
+        <div class="enun" id="p1-enun"></div>
+        <div class="campos"><div class="campo"><label for="p1-r">Resultado</label><input type="text" autocomplete="off" class="ancho" id="p1-r"></div></div>
+        <p class="nota">Redondea a una cifra decimal, por ejemplo 74.9.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p1-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p1-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 · #factores ============ -->
+  <details class="modulo" id="factores">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>La tabla de factores de conversión</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <div class="tableros">
+        <table class="reglas">
+          <caption>Entre los dos sistemas</caption>
+          <thead><tr><th scope="col">Magnitud</th><th scope="col">Equivalencia</th></tr></thead>
+          <tbody>
+            <tr><td>Longitud</td><td>1 in = 2.54 cm</td></tr>
+            <tr><td>Longitud</td><td>1 mi ≈ 1.609 km</td></tr>
+            <tr><td>Peso</td><td>1 lb ≈ 454 g</td></tr>
+            <tr><td>Capacidad</td><td>1 gal ≈ 3.785 L</td></tr>
+          </tbody>
+        </table>
+        <table class="reglas">
+          <caption>Dentro de cada sistema</caption>
+          <thead><tr><th scope="col">Inglés</th><th scope="col">Métrico</th></tr></thead>
+          <tbody>
+            <tr><td>1 ft = 12 in</td><td>1 m = 100 cm</td></tr>
+            <tr><td>1 yd = 3 ft</td><td>1 km = 1,000 m</td></tr>
+            <tr><td>1 mi = 5,280 ft</td><td>1 kg = 1,000 g</td></tr>
+            <tr><td>1 lb = 16 oz · 1 gal = 4 qt</td><td>1 L = 1,000 mL</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="caja-tip">
+        <strong>Para estimar:</strong> un metro es un poco más que una yarda; un kilogramo, un poco más de 2 libras; un litro, un
+        poco más que un cuarto de galón; un kilómetro, unas 0.6 millas.
+      </div>
+
+      <h3>Practica: ¿tiene sentido?</h3>
+      <div class="practica" id="p2">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 · #fraccion-conversion ============ -->
+  <details class="modulo" id="fraccion-conversion">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>El método de la fracción de conversión</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Como 1 in y 2.54 cm son la misma longitud, la fracción 2.54 cm / 1 in vale 1: multiplicar por ella cambia la unidad, no la
+      cantidad. <strong>Regla de oro: la unidad que se quiere eliminar va abajo</strong>, para que se cancele. Si no hay un factor
+      directo, se encadenan varias fracciones.</p>
+
+      <h3>Arma la cadena</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="fc-m">Magnitud</label><select id="fc-m"><option value="long">Longitud</option><option value="peso">Peso</option><option value="cap">Capacidad</option></select></div>
+          <div class="campo"><label for="fc-x">Cantidad</label><input type="text" class="corto" id="fc-x" value="6"></div>
+          <div class="campo"><label for="fc-de">De</label><select id="fc-de"></select></div>
+          <div class="campo"><label for="fc-a">A</label><select id="fc-a"></select></div>
+        </div>
+      </div>
+      <div class="caja-aviso" id="fc-aviso" role="alert"></div>
+      <div class="salida" id="fc-salida" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>Error frecuente:</strong> poner la fracción al revés. 10 km × 1.609 da 16.09 «millas», más que los kilómetros, cuando
+        las millas son más largas. Si la unidad nueva es más grande, el número tiene que salir más pequeño.
+      </div>
+
+      <h3>Practica: convierte</h3>
+      <div class="practica" id="p3">
+        <div class="enun" id="p3-enun"></div>
+        <div class="campos"><div class="campo"><label for="p3-r">Resultado</label><input type="text" autocomplete="off" class="ancho" id="p3-r"></div></div>
+        <p class="nota">Redondea a dos cifras decimales, por ejemplo 30.48.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p3-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p3-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 · #temperatura ============ -->
+  <details class="modulo" id="temperatura">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>La temperatura: un caso especial</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>La temperatura no se convierte con un solo factor, porque las dos escalas no empiezan en el mismo cero: el agua se
+      congela a 0 °C, que son 32 °F. Por eso se resta o se suma 32, respetando el orden de operaciones.</p>
+      <div class="formula">°C = (°F − 32) × 5 ÷ 9 &nbsp;&nbsp;&nbsp; °F = °C × 9 ÷ 5 + 32</div>
+
+      <h3>Los dos termómetros</h3>
+      <div class="panel">
+        <div class="campos"><div class="campo"><label for="tm-dir">Convertir</label><select id="tm-dir"><option value="fc">de °F a °C</option><option value="cf">de °C a °F</option></select></div>
+        <div class="campo" style="flex:1;min-width:200px;"><label for="tm-v">Temperatura: <span id="tm-vv"></span></label><input type="range" id="tm-v" min="-40" max="220" value="98.6" step="0.2"></div></div>
+        <div id="tm-svg"></div>
+        <div class="salida" id="tm-salida" aria-live="polite"></div>
+      </div>
+
+      <h3>Practica: temperatura</h3>
+      <div class="practica" id="p4">
+        <div class="enun" id="p4-enun"></div>
+        <div class="campos"><div class="campo"><label for="p4-r">Grados</label><input type="text" autocomplete="off" class="ancho" id="p4-r"></div></div>
+        <p class="nota">Redondea a una cifra decimal si hace falta; usa el signo menos para temperaturas bajo cero.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p4-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p4-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Nivel 2 · Tema 6 · Matemáticas financieras y conversiones · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Motor común del Tema 3 · Radicales y números reales
+   Los radicales se guardan como k√r con k y r enteros, y las
+   fracciones como p/q reducidas, así que las cuentas son exactas.
+   ============================================================ */
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function elige(lista){ return lista[aleatorio(0, lista.length-1)]; }
+function baraja(lista){
+  var a = lista.slice();
+  for (var i = a.length-1; i > 0; i--){ var j = aleatorio(0,i); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+/* ============================================================
+   Práctica de opción múltiple.
+   gen() devuelve { enun, opciones:[{html, clave}], correcta: clave, bien, mal }
+   Las claves repetidas se descartan antes de mostrar.
+   ============================================================ */
+function creaPracticaOM(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false };
+  function pinta(){
+    var q, intentos = 0;
+    do { q = gen(); intentos++; } while (intentos < 50 && !valida(q));
+    est.actual = q; est.resuelta = false;
+    $(pre + "-enun").innerHTML = q.enun;
+    var cont = $(pre + "-opciones"); cont.innerHTML = "";
+    (q.enOrden ? q.opciones.slice() : baraja(q.opciones)).forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opcion"; b.innerHTML = o.html;
+      b.setAttribute("data-clave", o.clave); b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function(){ responde(b); });
+      cont.appendChild(b);
+    });
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function valida(q){
+    var vistas = {}, hay = 0;
+    q.opciones = q.opciones.filter(function(o){ if (vistas[o.clave]) return false; vistas[o.clave] = 1; return true; });
+    q.opciones.forEach(function(o){ if (o.clave === q.correcta) hay++; });
+    return hay === 1 && q.opciones.length >= 3;
+  }
+  function responde(btn){
+    if (est.resuelta) return;
+    est.resuelta = true; est.total++;
+    var q = est.actual, ok = btn.getAttribute("data-clave") === q.correcta;
+    Array.prototype.forEach.call($(pre + "-opciones").children, function(b){
+      b.disabled = true;
+      if (b.getAttribute("data-clave") === q.correcta) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed", "true");
+    var fb = $(pre + "-fb");
+    if (ok){ est.aciertos++; fb.className = "fb bien"; fb.innerHTML = "✓ Correcto. " + q.bien; }
+    else { fb.className = "fb mal"; fb.innerHTML = "✗ Todavía no. " + (q.porClave && q.porClave[btn.getAttribute("data-clave")] ? q.porClave[btn.getAttribute("data-clave")] + " " : "") + q.mal; }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  return { pinta: pinta, estado: est };
+}
+
+/* ============================================================
+   Navegación por anclas
+   ============================================================ */
+function abrePorHash(){
+  var h = decodeURIComponent(window.location.hash.replace("#",""));
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+function iniciaNavegacion(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(){
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el && el.tagName.toLowerCase() === "details") el.open = true;
+    });
+  });
+  $("abrir-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+  });
+  $("cerrar-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+  });
+  window.addEventListener("hashchange", abrePorHash);
+  abrePorHash();
+}
+
+
+/* ============================================================
+   Radicales, fracciones y formato
+   ============================================================ */
+function mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a; }
+function esCuadrado(n){ if (n < 0) return false; var s = Math.round(Math.sqrt(n)); return s * s === n; }
+/* √n = k√r con el mayor cuadrado perfecto posible */
+function simplRad(n){
+  for (var s = Math.floor(Math.sqrt(n)); s >= 1; s--) if (n % (s*s) === 0) return { k: s, r: n / (s*s) };
+  return { k: 1, r: n };
+}
+function libreCuadrados(n){ return simplRad(n).k === 1; }
+/* cuadrados perfectos mayores que 1 que dividen a n */
+function cuadradosQueDividen(n){
+  var l = []; for (var s = 2; s*s <= n; s++) if (n % (s*s) === 0) l.push(s); return l;
+}
+function aprox(x, d){ return (Math.round(x * Math.pow(10, d)) / Math.pow(10, d)).toFixed(d).replace("-", "−"); }
+function supH(k){ return '<sup>' + k + '</sup>'; }
+
+/* Radical k√r en HTML, con lectura para lector de pantalla */
+function radVis(k, r){
+  if (r === 1) return String(k);
+  if (k === 0) return "0";
+  var pre = k === 1 ? "" : (k === -1 ? "−" : String(k).replace("-","−"));
+  return pre + '<span class="rad">√<span class="rc">' + r + '</span></span>';
+}
+function radVoz(k, r){
+  if (r === 1) return String(k).replace("-","menos ");
+  if (k === 0) return "0";
+  var pre = k === 1 ? "" : (k === -1 ? "menos " : String(k).replace("-","menos ") + " por ");
+  return pre + "raíz cuadrada de " + r;
+}
+function radHTML(k, r){ return envuelve(radVis(k, r), radVoz(k, r)); }
+function envuelve(vis, voz){ return '<span class="ex" aria-hidden="true">' + vis + '</span><span class="sr-only">' + voz + '</span>'; }
+function radClave(k, r){ return k + "r" + r; }
+/* opción de radical para la práctica de opción múltiple */
+function opRad(k, r){ return { html: radHTML(k, r), clave: radClave(k, r) }; }
+
+/* Fracciones */
+function reduce(p, q){ if (q < 0){ p = -p; q = -q; } var g = mcd(p, q) || 1; return { p: p / g, q: q / g }; }
+function fracVis(p, q){
+  if (q === 1) return String(p).replace("-","−");
+  return (p < 0 ? "−" : "") + '<span class="fracc"><span class="fa">' + Math.abs(p) + '</span><span class="fb2">' + q + '</span></span>';
+}
+function fracVoz(p, q){ return q === 1 ? String(p).replace("-","menos ") : (p < 0 ? "menos " : "") + Math.abs(p) + " sobre " + q; }
+function fracHTML(p, q){ return envuelve(fracVis(p, q), fracVoz(p, q)); }
+/* Lee "6/9", "3", "-2/5" → {p,q} sin reducir; null si no es válido */
+function leeFraccion(t){
+  var s = String(t).trim().replace(/\s+/g, "").replace(/−/g, "-");
+  var m = s.match(/^(-?\d+)(?:\/(\d+))?$/); if (!m) return null;
+  var q = m[2] === undefined ? 1 : parseInt(m[2], 10); if (q === 0) return null;
+  return { p: parseInt(m[1], 10), q: q };
+}
+function leeDecimal(t){
+  var s = String(t).trim().replace(/\s+/g, "").replace(/−/g, "-");
+  if (/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s)) s = s.replace(/,/g, "");
+  else if (s.indexOf(".") < 0 && /^-?\d+,\d+$/.test(s)) s = s.replace(",", ".");
+  if (!/^-?(\d+\.?\d*|\.\d+)$/.test(s)) return null;
+  return parseFloat(s);
+}
+/* Decimal periódico en texto: entero, parte no periódica, periodo */
+function periodicoHTML(ent, noRep, per){
+  var vis = ent + "." + noRep + per + per + per + "…";
+  var voz = ent + " punto " + (noRep ? noRep.split("").join(" ") + ", y después " : "") + "el grupo " + per.split("").join(" ") + " repetido sin fin";
+  return envuelve(vis, voz);
+}
+
+/* ============================================================
+   Práctica escrita de radicales: k √ r
+   gen() devuelve { enun, k, r, explica }
+   ============================================================ */
+function creaPracticaRad(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    [pre + "-k", pre + "-r"].forEach(function(id){ $(id).value = ""; $(id).disabled = false; $(id).classList.remove("error"); });
+    $(pre + "-comprobar").disabled = false;
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb");
+    var kt = $(pre + "-k").value.trim(), rt = $(pre + "-r").value.trim();
+    if (kt === "") kt = "1";
+    var okK = /^\d+$/.test(kt), okR = /^\d+$/.test(rt);
+    $(pre + "-k").classList.toggle("error", !okK); $(pre + "-r").classList.toggle("error", !okR);
+    if (!okK || !okR){ fb.className = "fb mal"; fb.innerHTML = "Escribe números enteros: el coeficiente (fuera del radical) y el radicando (dentro). Si no hay coeficiente, déjalo vacío o escribe 1."; return; }
+    var k = parseInt(kt, 10), r = parseInt(rt, 10);
+    est.intentos++;
+    if (k === q.k && r === q.r){
+      est.resuelta = true; est.total++; est.aciertos++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ Correcto: " + radHTML(q.k, q.r) + ". " + (q.explica || "");
+      bloquea();
+    } else {
+      var msg;
+      if (k*k*r === q.k*q.k*q.r) msg = "Tiene el mismo valor, pero todavía se puede simplificar: " + radHTML(1, r) + " contiene un cuadrado perfecto.";
+      else if (r === q.r) msg = "El radicando está bien; revisa el coeficiente.";
+      else if (k === q.k) msg = "El coeficiente está bien; revisa lo que queda dentro del radical.";
+      else msg = "Todavía no. Busca el mayor cuadrado perfecto que divide al radicando.";
+      if (est.intentos >= 2){
+        est.resuelta = true; est.total++;
+        fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " La respuesta es " + radHTML(q.k, q.r) + ". " + (q.explica || "");
+        bloquea();
+      } else { fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " Tienes un intento más."; }
+    }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  function bloquea(){ $(pre + "-k").disabled = true; $(pre + "-r").disabled = true; $(pre + "-comprobar").disabled = true; }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  [pre + "-k", pre + "-r"].forEach(function(id){ $(id).addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); }); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est };
+  (window.__prac = window.__prac || {})[pre] = obj;
+  return obj;
+}
+
+/* ============================================================
+   Práctica escrita libre (un solo campo)
+   gen() devuelve { enun, evalua(texto) → {estado:"bien"|"mal"|"invalido", msg}, solucion, correcta (texto de prueba) }
+   ============================================================ */
+function creaPracticaLibre(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    $(pre + "-r").value = ""; $(pre + "-r").disabled = false; $(pre + "-r").classList.remove("error");
+    $(pre + "-comprobar").disabled = false;
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb"), res = q.evalua($(pre + "-r").value);
+    $(pre + "-r").classList.toggle("error", res.estado === "invalido");
+    if (res.estado === "invalido"){ fb.className = "fb mal"; fb.innerHTML = res.msg; return; }
+    est.intentos++;
+    if (res.estado === "bien"){
+      est.resuelta = true; est.total++; est.aciertos++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ " + res.msg + " " + (q.solucion || "");
+      bloquea();
+    } else if (est.intentos >= 2){
+      est.resuelta = true; est.total++;
+      fb.className = "fb mal"; fb.innerHTML = "✗ " + res.msg + " " + (q.solucion || "");
+      bloquea();
+    } else { fb.className = "fb mal"; fb.innerHTML = "✗ " + res.msg + " Tienes un intento más."; }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  function bloquea(){ $(pre + "-r").disabled = true; $(pre + "-comprobar").disabled = true; }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  $(pre + "-r").addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est };
+  (window.__libre = window.__libre || {})[pre] = obj;
+  return obj;
+}
+
+/* Recta numérica en SVG: de a a b, con marcas cada 'paso' y rótulos en los enteros */
+function rectaSVG(a, b, paso, marcas, titulo){
+  var W = 640, H = 150, x0 = 30, x1 = W - 30, y = 92;
+  function X(v){ return x0 + (v - a) * (x1 - x0) / (b - a); }
+  var s = '<svg class="recta-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + titulo + '">';
+  s += '<line x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '" stroke="#424242" stroke-width="2"/>';
+  var n = Math.round((b - a) / paso);
+  for (var i = 0; i <= n; i++){
+    var v = a + i * paso, entero = Math.abs(v - Math.round(v)) < 1e-9, xv = X(v);
+    s += '<line x1="' + xv + '" y1="' + (y - (entero ? 10 : 5)) + '" x2="' + xv + '" y2="' + (y + (entero ? 10 : 5)) + '" stroke="#424242" stroke-width="' + (entero ? 2 : 1) + '"/>';
+    if (entero) s += '<text x="' + xv + '" y="' + (y + 38) + '" text-anchor="middle" font-size="24" fill="#222">' + Math.round(v) + '</text>';
+  }
+  (marcas || []).forEach(function(m){
+    var xm = X(m.v), col = m.color || "#bf360c";
+    s += '<path d="M' + xm + ' ' + (y - 4) + ' l-11 -18 h22 z" fill="' + col + '"/>';
+    s += '<text x="' + xm + '" y="' + (y - (m.alto ? 58 : 28)) + '" text-anchor="middle" font-size="22" font-weight="700" fill="' + col + '">' + m.txt + '</text>';
+  });
+  return s + '</svg>';
+}
+
+/* ============================================================
+   Motor algebraico del Tema 4
+   Fracciones exactas {n, d} y ecuaciones lineales ax + b = cx + d
+   ============================================================ */
+function fr(n, d){ if (d === undefined) d = 1; if (d < 0){ n = -n; d = -d; } var g = mcd(n, d) || 1; return { n: n / g, d: d / g }; }
+function fsum(a, b){ return fr(a.n*b.d + b.n*a.d, a.d*b.d); }
+function fres(a, b){ return fr(a.n*b.d - b.n*a.d, a.d*b.d); }
+function fmul(a, b){ return fr(a.n*b.n, a.d*b.d); }
+function fdiv(a, b){ return fr(a.n*b.d, a.d*b.n); }
+function fneg(a){ return fr(-a.n, a.d); }
+function figual(a, b){ return a.n === b.n && a.d === b.d; }
+function fcero(a){ return a.n === 0; }
+function fent(a){ return a.d === 1; }
+function fval(a){ return a.n / a.d; }
+function mcm(a, b){ return a / mcd(a, b) * b; }
+function menos(t){ return String(t).replace(/-/g, "−"); }
+/* Texto plano de una fracción (para claves y mensajes cortos) */
+function fTxt(a){ return a.d === 1 ? menos(a.n) : menos(a.n) + "/" + a.d; }
+/* ¿Se puede escribir con decimales exactos? */
+function fDecimal(a){
+  var d = a.d; while (d % 2 === 0) d /= 2; while (d % 5 === 0) d /= 5;
+  if (d !== 1) return null;
+  for (var k = 0; k <= 6; k++){ var p = Math.pow(10, k); if ((p * a.n) % a.d === 0) return menos((a.n / a.d).toFixed(k)); }
+  return null;
+}
+function fHTML(a, modo){
+  if (modo === "dec"){ var s = fDecimal(a); if (s !== null) return s; }
+  return fracHTML(a.n, a.d);
+}
+function numVoz(a){ return a.d === 1 ? String(a.n).replace("-", "menos ") : fracVoz(a.n, a.d); }
+
+/* ------------------------------------------------------------
+   Un lado de una ecuación: { x: fr, k: fr }
+   modo "frac" escribe x/2 o 3x/4; modo "dec" escribe 0.25x
+   ------------------------------------------------------------ */
+function L(x, k){ return { x: x.n !== undefined ? x : fr(x), k: k.n !== undefined ? k : fr(k) }; }
+function termXVis(c, modo, primero){
+  var neg = c.n < 0, a = fr(Math.abs(c.n), c.d), cuerpo;
+  if (modo === "dec" && a.d !== 1 && fDecimal(a) !== null) cuerpo = fDecimal(a) + "x";
+  else if (a.d === 1) cuerpo = (a.n === 1 ? "" : a.n) + "x";
+  else cuerpo = '<span class="fracc"><span class="fa">' + (a.n === 1 ? "" : a.n) + 'x</span><span class="fb2">' + a.d + '</span></span>';
+  return (neg ? (primero ? "−" : " − ") : (primero ? "" : " + ")) + cuerpo;
+}
+function termXVoz(c, primero){
+  var neg = c.n < 0, a = fr(Math.abs(c.n), c.d), cuerpo;
+  if (a.d === 1) cuerpo = (a.n === 1 ? "" : a.n + " ") + "x";
+  else cuerpo = (a.n === 1 ? "" : a.n + " ") + "x sobre " + a.d;
+  return (neg ? (primero ? "menos " : " menos ") : (primero ? "" : " más ")) + cuerpo;
+}
+function constVis(c, modo, primero){
+  var neg = c.n < 0, a = fr(Math.abs(c.n), c.d);
+  var cuerpo = (modo === "dec" && fDecimal(a) !== null) ? fDecimal(a) : (a.d === 1 ? String(a.n) : fracVis(a.n, a.d));
+  return (neg ? (primero ? "−" : " − ") : (primero ? "" : " + ")) + cuerpo;
+}
+function constVoz(c, primero){
+  var neg = c.n < 0, a = fr(Math.abs(c.n), c.d), cuerpo = a.d === 1 ? String(a.n) : fracVoz(a.n, a.d);
+  return (neg ? (primero ? "menos " : " menos ") : (primero ? "" : " más ")) + cuerpo;
+}
+function ladoVis(l, modo){
+  var s = "";
+  if (!fcero(l.x)) s += termXVis(l.x, modo, true);
+  if (!fcero(l.k) || s === "") s += constVis(l.k, modo, s === "");
+  return s;
+}
+function ladoVoz(l){
+  var s = "";
+  if (!fcero(l.x)) s += termXVoz(l.x, true);
+  if (!fcero(l.k) || s === "") s += constVoz(l.k, s === "");
+  return s;
+}
+function ecHTML(izq, der, modo){ return envuelve(ladoVis(izq, modo) + " = " + ladoVis(der, modo), ladoVoz(izq) + " es igual a " + ladoVoz(der)); }
+function ladoHTML(l, modo){ return envuelve(ladoVis(l, modo), ladoVoz(l)); }
+function evalLado(l, v){ return fsum(fmul(l.x, v), l.k); }
+/* Solución: { tipo: "una"|"ninguna"|"infinitas", x } */
+function resuelve(izq, der){
+  var a = fres(izq.x, der.x), b = fres(der.k, izq.k);
+  if (fcero(a)) return { tipo: fcero(b) ? "infinitas" : "ninguna" };
+  return { tipo: "una", x: fdiv(b, a) };
+}
+function numVis(v, modo){ return (modo === "dec" && fDecimal(v) !== null) ? fDecimal(v) : fracVis(v.n, v.d); }
+function xIgual(v, modo){ return envuelve("x = " + numVis(v, modo), "x igual a " + numVoz(v)); }
+function numHTML(v, modo){ return envuelve(numVis(v, modo), numVoz(v)); }
+function opX(v, modo){ return { html: xIgual(v, modo), clave: "x" + v.n + "/" + v.d }; }
+
+/* ------------------------------------------------------------
+   Polinomios de la Lección 4.1: lista de términos {c, v}
+   v ∈ "x2", "x", "y", "" (constante)
+   ------------------------------------------------------------ */
+var VAR_VIS = { x2: 'x<sup>2</sup>', x: "x", y: "y", "": "" };
+var VAR_VOZ = { x2: "x al cuadrado", x: "x", y: "y", "": "" };
+function termVis(t, primero){
+  var neg = t.c < 0, a = Math.abs(t.c), cuerpo = t.v === "" ? String(a) : (a === 1 ? "" : a) + VAR_VIS[t.v];
+  return (neg ? (primero ? "−" : " − ") : (primero ? "" : " + ")) + cuerpo;
+}
+function termVoz(t, primero){
+  var neg = t.c < 0, a = Math.abs(t.c), cuerpo = t.v === "" ? String(a) : (a === 1 ? "" : a + " ") + VAR_VOZ[t.v];
+  return (neg ? (primero ? "menos " : " menos ") : (primero ? "" : " más ")) + cuerpo;
+}
+function polVis(p){ if (!p.length) return "0"; return p.map(function(t, i){ return termVis(t, i === 0); }).join(""); }
+function polVoz(p){ if (!p.length) return "0"; return p.map(function(t, i){ return termVoz(t, i === 0); }).join(""); }
+function polHTML(p){ return envuelve(polVis(p), polVoz(p)); }
+function polClave(p){ return p.map(function(t){ return t.c + t.v; }).join("|") || "0"; }
+function opPol(p){ return { html: polHTML(p), clave: polClave(p) }; }
+var ORDEN_VAR = ["x2", "x", "y", ""];
+/* Reduce términos semejantes y ordena: x², x, y, constante */
+function reducePol(p){
+  var s = {}; p.forEach(function(t){ s[t.v] = (s[t.v] || 0) + t.c; });
+  return ORDEN_VAR.filter(function(v){ return s[v]; }).map(function(v){ return { c: s[v], v: v }; });
+}
+function tm(c, v){ return { c: c, v: v || "" }; }
+
+/* Práctica numérica de una respuesta (usa creaPracticaLibre) */
+function evaluaNumero(txt, esperado, pistas){
+  var f = leeFraccion(txt), dcm = leeDecimal(txt);
+  if (!f && dcm === null) return { estado: "invalido", msg: "Escribe un número entero, un decimal o una fracción como 3/4." };
+  var v = f ? fr(f.p, f.q) : null;
+  var ok = v ? figual(v, esperado) : Math.abs(dcm - fval(esperado)) < 1e-9;
+  if (ok) return { estado: "bien", msg: "Correcto." };
+  if (pistas){ for (var i = 0; i < pistas.length; i++){ var pv = pistas[i]; if ((v && figual(v, pv.v)) || (!v && Math.abs(dcm - fval(pv.v)) < 1e-9)) return { estado: "mal", msg: pv.msg }; } }
+  return { estado: "mal", msg: "Todavía no." };
+}
+
+function vozAuto(vis){
+  return vis.replace(/<sup>2<\/sup>/g, " al cuadrado").replace(/<span class="fracc"><span class="fa">(.*?)<\/span><span class="fb2">(.*?)<\/span><\/span>/g, "$1 sobre $2")
+            .replace(/<[^>]+>/g, "").replace(/−/g, "menos ").replace(/·/g, " por ");
+}
+function auto(vis){ return envuelve(vis, vozAuto(vis)); }
+function nz(){ var n = aleatorio(1,9); return Math.random() < 0.5 ? -n : n; }
+
+/* ============================================================
+   Utilidades de geometría para SVG (ángulos en grados,
+   medidos en sentido antihorario con el eje y hacia arriba)
+   ============================================================ */
+function rad(g){ return g * Math.PI / 180; }
+function punto(cx, cy, r, g){ return [cx + r * Math.cos(rad(g)), cy - r * Math.sin(rad(g))]; }
+function f1(x){ return Math.round(x * 10) / 10; }
+function linea(p, q, color, ancho, extra){ return '<line x1="' + f1(p[0]) + '" y1="' + f1(p[1]) + '" x2="' + f1(q[0]) + '" y2="' + f1(q[1]) + '" stroke="' + (color || "#424242") + '" stroke-width="' + (ancho || 2) + '"' + (extra || "") + '/>'; }
+function texto(p, t, tam, color, peso, anc){ return '<text x="' + f1(p[0]) + '" y="' + f1(p[1]) + '" text-anchor="' + (anc || "middle") + '" dominant-baseline="middle" font-size="' + (tam || 18) + '" font-weight="' + (peso || 700) + '" fill="' + (color || "#222") + '">' + t + '</text>'; }
+/* Arco del ángulo que va de g1 a g2 (antihorario) */
+function arco(cx, cy, r, g1, g2, color, relleno){
+  var a = punto(cx, cy, r, g1), b = punto(cx, cy, r, g2), grande = ((g2 - g1 + 360) % 360) > 180 ? 1 : 0;
+  var d = "M" + f1(cx) + " " + f1(cy) + " L" + f1(a[0]) + " " + f1(a[1]) + " A" + r + " " + r + " 0 " + grande + " 0 " + f1(b[0]) + " " + f1(b[1]) + " Z";
+  return '<path d="' + d + '" fill="' + (relleno || "none") + '" stroke="' + (color || "#424242") + '" stroke-width="2"/>';
+}
+function marcaRecta(p, g, t, color){
+  var a = punto(p[0], p[1], t, g), b = punto(a[0], a[1], t, g + 90), c = punto(p[0], p[1], t, g + 90);
+  return '<path d="M' + f1(a[0]) + ' ' + f1(a[1]) + ' L' + f1(b[0]) + ' ' + f1(b[1]) + ' L' + f1(c[0]) + ' ' + f1(c[1]) + '" fill="none" stroke="' + (color || "#424242") + '" stroke-width="2"/>';
+}
+function gr(n){ return menos(n) + "°"; }
+function P(){ return polVis(Array.prototype.slice.call(arguments)); }
+function leeEntero(t){ var s = String(t).trim().replace(/−/g, "-").replace(/^\+/, ""); return /^-?\d+$/.test(s) ? parseInt(s, 10) : null; }
+function pasoAPaso(pre, pasos){
+  var S = { pasos: pasos, visto: 0 };
+  function pinta(){
+    var h = "";
+    for (var i = 0; i < S.visto; i++) h += '<div class="paso"><span class="n" aria-hidden="true">' + (i === S.pasos.length-1 ? "✓" : i+1) + '</span>' + S.pasos[i] + '</div>';
+    $(pre + "-pasos").innerHTML = h;
+    var b = $(pre + "-sig"); b.disabled = S.visto >= S.pasos.length; $(pre + "-todo").disabled = b.disabled;
+    b.textContent = S.visto === 0 ? "Mostrar el primer paso" : (b.disabled ? "Ya se ven todos los pasos" : "Mostrar el siguiente paso");
+  }
+  S.pinta = pinta;
+  S.carga = function(p){ S.pasos = p; S.visto = 0; pinta(); };
+  $(pre + "-sig").addEventListener("click", function(){ if (S.visto < S.pasos.length){ S.visto++; pinta(); } });
+  $(pre + "-todo").addEventListener("click", function(){ S.visto = S.pasos.length; pinta(); });
+  pinta();
+  return S;
+}
+
+/* ============================================================
+   Conteo y probabilidad
+   ============================================================ */
+function fact(n){ var r = 1; for (var i = 2; i <= n; i++) r *= i; return r; }
+function perm(n, r){ var p = 1; for (var i = 0; i < r; i++) p *= (n - i); return p; }
+function comb(n, r){ return perm(n, r) / fact(r); }
+function nv(x){ return menos(parseFloat(Number(x).toFixed(4)).toString()); }
+function evaluaDec(t, esperado, pistas, tol){
+  var v = leeDecimal(t); if (v === null){ var f = leeFraccion(t); if (f) v = f.p / f.q; }
+  if (v === null) return { estado: "invalido", msg: "Escribe un número entero." };
+  if (Math.abs(v - esperado) <= (tol || 1e-6)) return { estado: "bien", msg: "Correcto." };
+  for (var i = 0; i < (pistas || []).length; i++) if (Math.abs(v - pistas[i].v) <= 1e-6) return { estado: "mal", msg: pistas[i].msg };
+  return { estado: "mal", msg: "Todavía no." };
+}
+/* Probabilidad escrita como fracción, decimal o porcentaje */
+function leeProb(t){
+  var s = String(t).trim().replace(/\s+/g, "");
+  var pc = s.match(/^(\d+(?:\.\d+)?)%$/); if (pc) return parseFloat(pc[1]) / 100;
+  var f = leeFraccion(s); if (f) return f.p / f.q;
+  var d = leeDecimal(s); return d;
+}
+function evaluaProb(t, p, pistas){
+  var v = leeProb(t);
+  if (v === null) return { estado: "invalido", msg: "Escribe la probabilidad como fracción (3/8), decimal (0.375) o porcentaje (37.5%)." };
+  if (Math.abs(v - fval(p)) < 0.0006) return { estado: "bien", msg: "Correcto." };
+  if (v > 1) return { estado: "mal", msg: "Una probabilidad nunca pasa de 1 (100 %): probablemente se sumó cuando había que multiplicar." };
+  for (var i = 0; i < (pistas || []).length; i++) if (Math.abs(v - fval(pistas[i].v)) < 0.0006) return { estado: "mal", msg: pistas[i].msg };
+  return { estado: "mal", msg: "Todavía no." };
+}
+
+/* ============================================================
+   Enteros: recta numérica, fichas de dos colores y práctica
+   en dos pasos (signo y valor)
+   ============================================================ */
+function ent(n){ return menos(n); }
+function par(n){ return n < 0 ? "(" + menos(n) + ")" : String(n); }
+function azarEnt(a, b, sinCero){ var n; do { n = aleatorio(a, b); } while (sinCero && n === 0); return n; }
+
+/* Recta de enteros: marcas = [{ v, txt, color, arriba }], saltos = [{ de, a, txt, color }], tramo = { de, a, color } */
+function rectaEnt(lo, hi, marcas, saltos, voz, tramo){
+  var W = 660, H = 170, x0 = 26, x1 = W - 26, y = 112;
+  function X(v){ return x0 + (v - lo) * (x1 - x0) / (hi - lo); }
+  var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">';
+  s += linea([x0 - 12, y], [x1 + 12, y], "#424242", 2) + '<path d="M' + (x0 - 18) + ' ' + y + ' l10 -6 v12 z" fill="#424242"/><path d="M' + (x1 + 18) + ' ' + y + ' l-10 -6 v12 z" fill="#424242"/>';
+  if (tramo) s += linea([X(tramo.de), y], [X(tramo.a), y], tramo.color || "#1a237e", 7);
+  var paso = (hi - lo) > 24 ? 5 : ((hi - lo) > 14 ? 2 : 1);
+  for (var v = lo; v <= hi; v++){
+    s += linea([X(v), y - (v === 0 ? 11 : 7)], [X(v), y + (v === 0 ? 11 : 7)], "#424242", v === 0 ? 3 : 1.5);
+    if (v % paso === 0 || v === 0) s += texto([X(v), y + 28], ent(v), v === 0 ? 17 : 15, "#222", v === 0 ? 700 : 400);
+  }
+  (saltos || []).forEach(function(sl, i){
+    var xa = X(sl.de), xb = X(sl.a), alto = 34 + 10*(i % 2), col = sl.color || "#1a237e", mx = (xa + xb)/2;
+    s += '<path d="M' + f1(xa) + ' ' + (y - 6) + ' Q' + f1(mx) + ' ' + (y - 6 - 2*alto) + ' ' + f1(xb) + ' ' + (y - 6) + '" fill="none" stroke="' + col + '" stroke-width="3"/>';
+    var dir = xb > xa ? -1 : 1;
+    s += '<path d="M' + f1(xb) + ' ' + (y - 6) + ' l' + (dir*9) + ' -12 l' + (-dir*3) + ' 0 z" fill="' + col + '" stroke="' + col + '" stroke-width="2"/>';
+    if (sl.txt) s += texto([mx, y - 10 - alto], sl.txt, 17, col);
+  });
+  (marcas || []).forEach(function(m){
+    s += '<circle cx="' + f1(X(m.v)) + '" cy="' + y + '" r="8" fill="' + (m.color || "#b71c1c") + '"/>';
+    if (m.txt) s += texto([X(m.v), m.abajo ? y + 50 : y - 22], m.txt, 16, m.color || "#b71c1c");
+  });
+  return s + '</svg>';
+}
+
+/* Fichas: a y b enteros; si empareja, se tachan los pares cero */
+function fichasSVG(a, b, empareja, voz){
+  var filas = [a, b], s = "", W = 660, r = 15, dx = 36, H = 150;
+  var pos = Math.max(a, 0) + Math.max(b, 0), neg = Math.max(-a, 0) + Math.max(-b, 0), pares = Math.min(pos, neg);
+  s += '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">';
+  var usadosP = 0, usadosN = 0;
+  filas.forEach(function(v, fi){
+    var y = 40 + fi*64, n = Math.abs(v);
+    s += texto([30, y], ent(v), 18, "#222", 700);
+    for (var i = 0; i < n; i++){
+      var x = 80 + i*dx, posit = v > 0, cero = false;
+      if (empareja){ if (posit && usadosP < pares){ cero = true; usadosP++; } else if (!posit && usadosN < pares){ cero = true; usadosN++; } }
+      var fill = posit ? "#fbc02d" : "#c62828", col = posit ? "#3e2723" : "#fff";
+      s += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + (cero ? "#eeeeee" : fill) + '" stroke="' + (cero ? "#9e9e9e" : "#424242") + '" stroke-width="2"/>';
+      s += texto([x, y + 1], posit ? "+" : "−", 20, cero ? "#9e9e9e" : col);
+      if (cero) s += linea([x - 12, y + 12], [x + 12, y - 12], "#757575", 2);
+    }
+  });
+  return s + '</svg>';
+}
+
+/* Práctica en dos pasos: el signo y el valor absoluto. gen() → { enun, res, explica } */
+function creaSignoValor(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0, signo: null };
+  function marca(sg){ est.signo = sg; [pre + "-mas", pre + "-menos"].forEach(function(id){ $(id).setAttribute("aria-pressed", (id === pre + "-mas") === (sg === "+") && sg ? "true" : "false"); }); }
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0; marca(null);
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    $(pre + "-v").value = ""; $(pre + "-v").disabled = false; $(pre + "-comprobar").disabled = false;
+    [pre + "-mas", pre + "-menos"].forEach(function(id){ $(id).disabled = false; });
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb"), v = leeEntero($(pre + "-v").value);
+    if (v !== null) v = Math.abs(v);
+    if (v === null || (!est.signo && q.res !== 0)){ fb.className = "fb mal"; fb.innerHTML = "Elige el signo del resultado (paso 1) y escribe su valor sin signo (paso 2)."; return; }
+    est.intentos++;
+    var okS = q.res === 0 || est.signo === (q.res > 0 ? "+" : "−"), okV = v === Math.abs(q.res), msg;
+    if (okS && okV){ est.resuelta = true; est.total++; est.aciertos++; fb.className = "fb bien"; fb.innerHTML = "✓ Correcto: " + ent(q.res) + ". " + (q.explica || ""); }
+    else {
+      msg = !okS && okV ? "El valor está bien, pero el signo no." : (okS && !okV ? "El signo está bien; revisa el valor." : "Revisa el signo y el valor.");
+      if (est.intentos >= 2){ est.resuelta = true; est.total++; fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " El resultado es " + ent(q.res) + ". " + (q.explica || ""); }
+      else { fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " Tienes un intento más."; }
+    }
+    if (est.resuelta){ $(pre + "-v").disabled = true; $(pre + "-comprobar").disabled = true; [pre + "-mas", pre + "-menos"].forEach(function(id){ $(id).disabled = true; }); }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  $(pre + "-mas").addEventListener("click", function(){ if (!est.resuelta) marca("+"); });
+  $(pre + "-menos").addEventListener("click", function(){ if (!est.resuelta) marca("−"); });
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  $(pre + "-v").addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est };
+  (window.__sv = window.__sv || {})[pre] = obj;
+  return obj;
+}
+function numLibre(res, pistas){ return function(t){ return evaluaDec(t, res, pistas); }; }
+
+/* ---------- Fracciones con signo ---------- */
+/* Lee "−3/4", "3/4", "5", "−2 3/4" (número mixto) o un decimal */
+function leeFrMixta(t){
+  var s = String(t).trim().replace(/−/g, "-").replace(/\s+/g, " ");
+  var m = s.match(/^(-?)(\d+) (\d+)\/(\d+)$/);
+  if (m){ var q = +m[4]; if (!q) return null; var v = fr(+m[2]*q + +m[3], q); return m[1] ? fneg(v) : v; }
+  var f = leeFraccion(s.replace(/ /g, "")); if (f) return fr(f.p, f.q);
+  var d = leeDecimal(s); if (d !== null){ for (var k = 0; k <= 6; k++){ var p10 = Math.pow(10, k); if (Math.abs(Math.round(d*p10) - d*p10) < 1e-9) return fr(Math.round(d*p10), p10); } }
+  return null;
+}
+function evaluaFr(t, obj, pistas){
+  var v = leeFrMixta(t);
+  if (!v) return { estado: "invalido", msg: "Escribe una fracción como −7/12 o 3/10 (el signo menos va delante). También vale un entero o un número mixto como −2 3/4." };
+  if (figual(v, obj)){ var f = leeFraccion(String(t).trim().replace(/−/g, "-").replace(/\s+/g, "")); var nota = f && mcd(f.p, f.q) > 1 ? " Simplificada queda " + fracHTML(obj.n, obj.d) + "." : ""; return { estado: "bien", msg: "Correcto." + nota }; }
+  for (var i = 0; i < (pistas || []).length; i++) if (figual(v, pistas[i].v)) return { estado: "mal", msg: pistas[i].msg };
+  return { estado: "mal", msg: "Todavía no." };
+}
+function frTxt(v){ return v.d === 1 ? String(v.n).replace("-", "-") : v.n + "/" + v.d; }
+function fh(v){ return fracHTML(v.n, v.d); }
+function fp(v){ return v.n < 0 ? "(" + fh(v) + ")" : fh(v); }
+
+/* Respuesta numérica que admite $ y comas de miles */
+function numL(res, pistas, tol){
+  return function(t){ var s = String(t).replace(/\$/g, "").trim(); return evaluaDec(s, res, pistas, tol); };
+}
+function dinero(x){ return "$" + (Math.round(x*100) % 100 === 0 ? String(Math.round(x)) : x.toFixed(2)); }
+
+/* Dinero con comas de miles */
+function usd(x){ var neg = x < 0; x = Math.abs(Math.round(x*100)/100); var e = Math.floor(x), c = Math.round((x - e)*100); return (neg ? "−" : "") + "$" + String(e).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (c ? "." + (c < 10 ? "0" : "") + c : ""); }
+function miles(x){ return String(nv(x)).replace(/^(-?\d+)/, function(m){ return m.replace(/\B(?=(\d{3})+(?!\d))/g, ","); }); }
+/* Barras año por año: valores[k] (total) y base (parte fija, opcional) */
+function barrasAnios(vals, base, voz, colB, colV){
+  var W = 640, H = 240, x0 = 60, x1 = 620, yb = 200, mx = Math.max.apply(null, vals), n = vals.length, w = (x1 - x0) / n * 0.72, s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">';
+  function Y(v){ return yb - v * 170 / mx; }
+  vals.forEach(function(v, k){
+    var x = x0 + (x1 - x0) * k / n + (x1 - x0) / n * 0.14;
+    s += '<rect x="' + f1(x) + '" y="' + f1(Y(v)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(v)) + '" fill="' + (colV || "#a1887f") + '"/>';
+    if (base !== null && base !== undefined) s += '<rect x="' + f1(x) + '" y="' + f1(Y(Math.min(base, v))) + '" width="' + f1(w) + '" height="' + f1(yb - Y(Math.min(base, v))) + '" fill="' + (colB || "#4e342e") + '"/>';
+    s += texto([x + w/2, yb + 16], k, 13, "#424242", 400);
+  });
+  s += linea([x0, yb], [x1, yb], "#424242", 2) + texto([(x0 + x1)/2, H - 4], "Año", 13, "#424242", 700) + texto([x0 - 6, Y(mx)], usd(mx), 12, "#424242", 400, "end");
+  return s + '</svg>';
+}
+
+/* ---------- Motor de conversiones ---------- */
+var UNI = { long: ["in", "ft", "yd", "mi", "cm", "m", "km"], peso: ["oz", "lb", "g", "kg"], cap: ["qt", "gal", "mL", "L"] };
+var NOMBRE = { in: "pulgadas", ft: "pies", yd: "yardas", mi: "millas", cm: "centímetros", m: "metros", km: "kilómetros", oz: "onzas", lb: "libras", g: "gramos", kg: "kilogramos", qt: "cuartos", gal: "galones", mL: "mililitros", L: "litros" };
+var ARISTAS = [["in","cm",2.54],["mi","km",1.609],["lb","g",454],["gal","L",3.785],["ft","in",12],["yd","ft",3],["mi","ft",5280],["lb","oz",16],["gal","qt",4],["m","cm",100],["km","m",1000],["kg","g",1000],["L","mL",1000]];
+function vecinos(u){ var v = []; ARISTAS.forEach(function(a){ if (a[0] === u) v.push([a[1], a[2], a]); else if (a[1] === u) v.push([a[0], 1/a[2], a]); }); return v; }
+function camino(de, a){
+  var cola = [[de]], vistos = {}; vistos[de] = true;
+  while (cola.length){ var r = cola.shift(), u = r[r.length - 1]; if (u === a) return r; vecinos(u).forEach(function(v){ if (!vistos[v[0]]){ vistos[v[0]] = true; cola.push(r.concat([v[0]])); } }); }
+  return null;
+}
+function arista(u, v){ for (var i = 0; i < ARISTAS.length; i++){ var e = ARISTAS[i]; if (e[0] === u && e[1] === v) return { arriba: [e[2], v], abajo: [1, u], f: e[2] }; if (e[1] === u && e[0] === v) return { arriba: [1, v], abajo: [e[2], u], f: 1/e[2] }; } }
+function convertir(x, de, a){ var c = camino(de, a), v = x, pasos = []; for (var i = 0; i < c.length - 1; i++){ var e = arista(c[i], c[i+1]); v *= e.f; pasos.push(e); } return { v: v, pasos: pasos, camino: c }; }
+function fracU(e){ return '<span class="fracc"><span class="fa">' + miles(e.arriba[0]) + ' ' + e.arriba[1] + '</span><span class="fb2">' + miles(e.abajo[0]) + ' <span class="tach">' + e.abajo[1] + '</span></span></span>'; }
+function cadenaHTML(x, de, R){
+  var h = miles(x) + ' <span class="tach">' + de + '</span>';
+  R.pasos.forEach(function(e){ h += ' × ' + fracU(e); });
+  var voz = miles(x) + " " + NOMBRE[de] + R.pasos.map(function(e){ return " por " + miles(e.arriba[0]) + " " + NOMBRE[e.arriba[1]] + " sobre " + miles(e.abajo[0]) + " " + NOMBRE[e.abajo[1]]; }).join("");
+  return envuelve(h, voz);
+}
+function redon(v, d){ var p = Math.pow(10, d); return Math.round(v*p)/p; }
+
+/* MÓDULO 1 */
+function pintaCS(){
+  var lb = +$("cs-lb").value, g = lb*454, kg = g/1000;
+  $("cs-lbv").textContent = lb;
+  $("cs-salida").innerHTML = '<div class="linea cadena">' + cadenaHTML(lb, "lb", convertir(lb, "lb", "kg")) + ' = ' + miles(redon(kg, 2)) + ' kg</div>' +
+    '<div class="linea">De libras a gramos: ' + lb + ' × 454 = ' + miles(g) + ' g. De gramos a kilogramos: ' + miles(g) + ' ÷ 1,000 = ' + miles(redon(kg, 2)) + ' kg.</div>' +
+    '<div class="linea">Comprobación: ' + lb + ' ÷ 2.2 ≈ ' + nv(redon(lb/2.2, 1)) + ' kg. ✓</div>';
+}
+function genCS(){
+  var t = aleatorio(1,3), res, enun, sol, p = [];
+  if (t === 1){ var lb = aleatorio(20, 250); res = redon(lb*0.454, 1); enun = "Un paciente pesa " + lb + " libras. ¿Cuántos kilogramos son? (1 lb ≈ 454 g)"; sol = lb + " × 454 = " + miles(lb*454) + " g = " + nv(redon(lb*0.454, 2)) + " kg ≈ " + nv(res) + " kg."; p.push({ v: redon(lb/0.454, 1), msg: "Se dividió en vez de multiplicar: el número de kilogramos debe ser menor que el de libras." }, { v: lb*454, msg: "Ese es el peso en gramos. Falta dividir entre 1,000." }); }
+  else if (t === 2){ var kg = aleatorio(3, 40); res = redon(kg*1000/454, 1); enun = "Un bebé pesa " + kg + " kg. ¿Cuántas libras son, aproximadamente? (1 lb ≈ 454 g)"; sol = kg + " kg = " + miles(kg*1000) + " g; " + miles(kg*1000) + " ÷ 454 ≈ " + nv(res) + " lb."; p.push({ v: redon(kg*0.454, 1), msg: "La fracción está al revés: de kilogramos a libras el número debe crecer." }); }
+  else { var lb2 = 5*aleatorio(4, 40), dosis = elige([2, 5, 10, 15]), kg2 = lb2*0.454; res = redon(dosis*kg2, 1); enun = "Una receta indica " + dosis + " mg de un medicamento por cada kilogramo de peso. El paciente pesa " + lb2 + " lb. ¿Cuántos miligramos le corresponden? (1 lb ≈ 454 g; redondea a la décima)"; sol = lb2 + " lb × 0.454 = " + nv(redon(kg2, 3)) + " kg; × " + dosis + " = " + nv(res) + " mg."; p.push({ v: dosis*lb2, msg: "Primero hay que pasar el peso a kilogramos." }); }
+  return { enun: enun, correcta: nv(res), solucion: sol, evalua: numL(res, p, 0.051) };
+}
+
+/* MÓDULO 2 */
+function genSentido(){
+  var casos = [[10, "km", "mi"], [5, "kg", "lb"], [2, "L", "qt"], [12, "in", "cm"], [3, "gal", "L"], [100, "m", "yd"], [26.2, "mi", "km"], [150, "lb", "kg"]];
+  var c = elige(casos), R = convertir(c[0], c[1], c[2]), bien = redon(R.v, 2), inv = redon(c[0] / R.v * c[0], 2);
+  var o = [bien, inv, redon(c[0], 2), redon(bien*10, 2)].filter(function(x, i, a){ return a.indexOf(x) === i; }).map(function(x){ return { html: miles(x) + " " + c[2], clave: "v" + x }; });
+  var pc = {}; pc["v" + inv] = "Así sale con la fracción al revés.";
+  var ex = "La unidad " + (R.v < c[0] ? "nueva es más grande, así que el número sale más pequeño" : "nueva es más pequeña, así que el número sale más grande") + ": " + miles(c[0]) + " " + c[1] + " ≈ " + miles(bien) + " " + c[2] + ".";
+  return { enun: "¿Cuál de estos resultados tiene sentido para " + miles(c[0]) + " " + NOMBRE[c[1]] + " convertidos a " + NOMBRE[c[2]] + "?", opciones: o, correcta: "v" + bien, porClave: pc, bien: ex, mal: ex };
+}
+
+/* MÓDULO 3 */
+function llenaUnidades(){
+  var m = $("fc-m").value, de = $("fc-de"), a = $("fc-a");
+  de.innerHTML = UNI[m].map(function(u){ return '<option value="' + u + '">' + NOMBRE[u] + ' (' + u + ')</option>'; }).join(""); a.innerHTML = de.innerHTML;
+  var def = { long: ["ft", "m"], peso: ["lb", "kg"], cap: ["gal", "L"] }[m]; de.value = def[0]; a.value = def[1];
+}
+function pintaFC(){
+  var x = leeDecimal($("fc-x").value), de = $("fc-de").value, a = $("fc-a").value, av = $("fc-aviso");
+  if (x === null || x < 0){ av.className = "caja-aviso visible"; av.textContent = "Escribe una cantidad positiva."; $("fc-salida").innerHTML = ""; return; }
+  av.className = "caja-aviso"; av.textContent = "";
+  if (de === a){ $("fc-salida").innerHTML = '<div class="linea">Las dos unidades son iguales: no hay nada que convertir.</div>'; return; }
+  var R = convertir(x, de, a), parcial = x, h = '<div class="linea cadena">' + cadenaHTML(x, de, R) + ' = <strong>' + miles(redon(R.v, 4)) + ' ' + a + '</strong></div>';
+  h += '<div class="linea">Camino: ' + R.camino.map(function(u){ return NOMBRE[u]; }).join(" → ") + '. Cada fracción tiene abajo la unidad que se cancela (tachada).</div>';
+  R.pasos.forEach(function(e){ var ant = parcial; parcial *= e.f; h += '<div class="linea">' + miles(redon(ant, 4)) + ' ' + e.abajo[1] + (e.f >= 1 ? ' × ' + miles(e.arriba[0]) : ' ÷ ' + miles(e.abajo[0])) + ' = ' + miles(redon(parcial, 4)) + ' ' + e.arriba[1] + '</div>'; });
+  $("fc-salida").innerHTML = h;
+}
+var PARES = [[12, "in", "cm"], [10, "km", "mi"], [3, "gal", "L"], [6, "ft", "m"], [2, "mi", "m"], [5, "yd", "m"], [250, "cm", "in"], [8, "L", "gal"], [3, "lb", "kg"], [500, "g", "oz"], [2, "kg", "lb"], [20, "m", "ft"], [5, "qt", "L"], [1500, "mL", "qt"]];
+function genFC(){
+  var c = elige(PARES), x = c[0] * elige([1, 2, 3, 0.5, 1.5]), R = convertir(x, c[1], c[2]), res = redon(R.v, 2), inv = x * x / R.v;
+  return { enun: "Convierte " + miles(x) + " " + NOMBRE[c[1]] + " a " + NOMBRE[c[2]] + ".", correcta: nv(res), solucion: cadenaHTML(x, c[1], R) + " ≈ " + miles(res) + " " + c[2] + ".",
+    evalua: numL(res, [{ v: redon(inv, 2), msg: "Parece que alguna fracción quedó al revés: la unidad que se elimina va abajo.", tol: Math.max(0.02, Math.abs(inv)*0.005) }], Math.max(0.011, Math.abs(res)*0.002)) };
+}
+
+/* MÓDULO 4 */
+function aC(f){ return (f - 32) * 5 / 9; }
+function aF(c){ return c * 9 / 5 + 32; }
+function pintaTM(){
+  var dir = $("tm-dir").value, sl = $("tm-v");
+  if (dir === "fc"){ sl.min = -40; sl.max = 220; } else { sl.min = -40; sl.max = 105; }
+  var v = +sl.value; if (v > +sl.max) { v = +sl.max; sl.value = v; }
+  var F = dir === "fc" ? v : aF(v), C = dir === "fc" ? aC(v) : v;
+  $("tm-vv").textContent = nv(redon(v, 1)) + (dir === "fc" ? " °F" : " °C");
+  function termo(x, lo, hi, et){ var y0 = 220, y1 = 20, y = y0 - (x - lo) / (hi - lo) * (y0 - y1); return '<g><rect x="' + et.x + '" y="' + y1 + '" width="22" height="' + (y0 - y1) + '" rx="11" fill="#fff" stroke="#3e2723" stroke-width="2"/><rect x="' + (et.x + 4) + '" y="' + f1(y) + '" width="14" height="' + f1(y0 - y) + '" rx="7" fill="#c62828"/><circle cx="' + (et.x + 11) + '" cy="' + (y0 + 12) + '" r="16" fill="#c62828"/>' + texto([et.x + 11, 262], et.t, 16, "#3e2723") + texto([et.x + 34, y], nv(redon(x, 1)) + et.u, 16, "#3e2723", 700, "start") + '</g>'; }
+  $("tm-svg").innerHTML = '<svg class="figura" style="max-width:420px" viewBox="0 0 420 272" role="img" aria-label="' + nv(redon(F, 1)) + ' grados Fahrenheit son ' + nv(redon(C, 1)) + ' grados Celsius.">' + termo(F, -40, 220, { x: 80, t: "°F", u: " °F" }) + termo(C, -40, 105, { x: 260, t: "°C", u: " °C" }) + '</svg>';
+  $("tm-salida").innerHTML = dir === "fc"
+    ? '<div class="linea">Paréntesis primero: ' + nv(redon(F, 1)) + ' − 32 = ' + nv(redon(F - 32, 2)) + '. Después × 5 ÷ 9: ' + nv(redon((F - 32)*5, 2)) + ' ÷ 9 ≈ ' + nv(redon(C, 1)) + '.</div><div class="linea veredicto">' + nv(redon(F, 1)) + ' °F ≈ ' + nv(redon(C, 1)) + ' °C</div>'
+    : '<div class="linea">Multiplicación y división primero: ' + nv(redon(C, 1)) + ' × 9 ÷ 5 = ' + nv(redon(C*9/5, 2)) + '. Después + 32 = ' + nv(redon(F, 1)) + '.</div><div class="linea veredicto">' + nv(redon(C, 1)) + ' °C ≈ ' + nv(redon(F, 1)) + ' °F</div>';
+}
+function genTM(){
+  var fc = Math.random() < 0.5, enun, res, sol, p = [];
+  if (fc){ var F = elige([98.6, 32, 212, 50, 68, 77, 104, 14, -4, 86, 59, 23]); res = redon(aC(F), 1); enun = "Convierte " + nv(F) + " °F a grados Celsius."; sol = "(" + nv(F) + " − 32) × 5 ÷ 9 = " + nv(redon(F - 32, 2)) + " × 5 ÷ 9 ≈ " + nv(res) + " °C."; p.push({ v: redon(F - 32*5/9, 1), msg: "Primero se resta 32 (dentro del paréntesis) y después se multiplica por 5 ÷ 9." }, { v: redon(F*5/9 - 32, 1), msg: "El 32 se resta antes de multiplicar." }); }
+  else { var C = elige([37, 20, 0, 100, 25, 30, -10, 15, 40, -5, 10]); res = redon(aF(C), 1); enun = "Convierte " + nv(C) + " °C a grados Fahrenheit."; sol = nv(C) + " × 9 ÷ 5 + 32 = " + nv(redon(C*9/5, 2)) + " + 32 = " + nv(res) + " °F."; p.push({ v: redon((C + 32)*9/5, 1), msg: "Se suma 32 al final, después de multiplicar por 9 ÷ 5." }, { v: redon(aC(C), 1), msg: "Esa es la fórmula de °F a °C. Para ir a Fahrenheit: × 9 ÷ 5 + 32." }); }
+  return { enun: enun, correcta: nv(res), solucion: sol, evalua: numL(res, p, 0.051) };
+}
+
+/* Arranque */
+$("cs-lb").addEventListener("input", pintaCS); pintaCS();
+creaPracticaLibre("p1", genCS);
+creaPracticaOM("p2", genSentido);
+$("fc-m").addEventListener("change", function(){ llenaUnidades(); pintaFC(); }); ["fc-de","fc-a"].forEach(function(id){ $(id).addEventListener("change", pintaFC); }); $("fc-x").addEventListener("input", pintaFC);
+llenaUnidades(); pintaFC();
+creaPracticaLibre("p3", genFC);
+$("tm-dir").addEventListener("change", function(){ $("tm-v").value = $("tm-dir").value === "fc" ? 98.6 : 20; pintaTM(); }); $("tm-v").addEventListener("input", pintaTM); pintaTM();
+creaPracticaLibre("p4", genTM);
+iniciaNavegacion();
+
+</script>
+</body>
+</html>
