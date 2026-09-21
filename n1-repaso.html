@@ -1,0 +1,1006 @@
+<!doctype html>
+<!--
+  Repaso del Nivel 1 · Matemáticas — Índice de prácticas interactivas
+  Spanish ASE Math 1 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Cada enlace apunta a la parte exacta del interactivo, no solo a la página.
+  Anclas: #tema-1 … #tema-8 abren un tema; #leccion-1-1 … #leccion-8-3 llevan a una lección.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repaso del Nivel 1 · Índice de prácticas interactivas</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Índice de repaso del Nivel 1 de Matemáticas: 91 prácticas interactivas organizadas por tema y lección, con enlace directo a cada una.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --txt:#222; --bg:#f5f7fa; --gris:#555; --acento:#00695c;
+    --t1:#1a237e; --t2:#004d40; --t3:#bf360c;
+    --t4:#880e4f; --t5:#37474f; --t6:#4e342e; --t7:#006064; --t8:#b71c1c;
+    --marco:#424242; --marco-d:#212121; --marco-bg:#eceff1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);
+       line-height:1.6;font-size:16px;}
+  .contenedor{max-width:940px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+           clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--marco);color:#fff;padding:30px 28px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 10px;font-size:26px;font-weight:700;}
+  header.principal p{margin:6px 0 0;font-size:15px;}
+
+  .buscador{background:#fff;border:2px solid var(--marco-bg);border-radius:12px;padding:18px 20px;margin-bottom:20px;}
+  .buscador label{display:block;font-weight:700;color:var(--marco-d);margin-bottom:6px;}
+  .buscador input{width:100%;max-width:520px;padding:10px 12px;font-size:16px;font-family:inherit;
+                  border:2px solid #767676;border-radius:8px;}
+  .buscador input:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  .buscador .pista{font-size:14px;color:var(--gris);margin-top:8px;}
+  .buscador .contador{font-size:14px;color:var(--marco-d);font-weight:700;margin-top:10px;}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  button{font-family:inherit;font-size:15px;cursor:pointer;background:#fff;color:var(--marco-d);
+         border:2px solid var(--marco);border-radius:8px;padding:8px 18px;font-weight:700;}
+  button:hover{background:var(--marco-bg);}
+
+  details.tema{background:#fff;border-radius:12px;margin-bottom:14px;overflow:hidden;
+               border:2px solid #e3e3e3;border-left-width:10px;scroll-margin-top:12px;}
+  details.tema > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 18px;color:#fff;}
+  details.tema > summary::-webkit-details-marker{display:none;}
+  details.tema > summary:focus-visible{outline:3px solid #ffd54f;outline-offset:-5px;}
+  details.tema > summary h2{margin:0;font-size:19px;flex:1;line-height:1.35;}
+  .cuenta{font-size:14px;font-weight:600;white-space:nowrap;background:rgba(0,0,0,.28);padding:3px 10px;border-radius:20px;}
+  .flecha{font-size:14px;transition:transform .2s;}
+  details.tema[open] > summary .flecha{transform:rotate(90deg);}
+  @media (prefers-reduced-motion:reduce){ .flecha{transition:none;} }
+  nav.indice{background:#fff;border:2px solid var(--marco-bg);border-radius:12px;padding:16px 20px;margin-bottom:16px;}
+  nav.indice h2{margin:0 0 8px;font-size:17px;color:var(--marco-d);}
+  nav.indice ol{margin:0;padding-left:22px;columns:2 280px;column-gap:28px;}
+  nav.indice li{margin:5px 0;}
+  nav.indice a{color:var(--marco-d);font-weight:600;}
+  h3.leccion{scroll-margin-top:12px;}
+  .tema-cuerpo{padding:6px 20px 18px;}
+  details.t1{border-left-color:var(--t1);} .t1 > summary{background:var(--t1);}
+  details.t2{border-left-color:var(--t2);} .t2 > summary{background:var(--t2);}
+  details.t3{border-left-color:var(--t3);} .t3 > summary{background:var(--t3);}
+  details.t4{border-left-color:var(--t4);} .t4 > summary{background:var(--t4);}
+  details.t5{border-left-color:var(--t5);} .t5 > summary{background:var(--t5);}
+  details.t6{border-left-color:var(--t6);} .t6 > summary{background:var(--t6);}
+  details.t7{border-left-color:var(--t7);} .t7 > summary{background:var(--t7);}
+  details.t8{border-left-color:var(--t8);} .t8 > summary{background:var(--t8);}
+
+  h3.leccion{font-size:16px;margin:18px 0 8px;color:var(--txt);border-bottom:2px solid #eee;padding-bottom:5px;}
+  h3.leccion a{color:inherit;}
+  ul.modulos{list-style:none;margin:0;padding:0;display:grid;gap:10px;
+             grid-template-columns:repeat(auto-fill,minmax(270px,1fr));}
+  ul.modulos li a{display:block;height:100%;text-decoration:none;color:var(--txt);
+                  border:2px solid #d8d8d8;border-radius:10px;padding:12px 14px;background:#fff;}
+  ul.modulos li a:hover{border-color:var(--acento);background:#f2fbfa;}
+  ul.modulos .titulo{display:block;font-weight:700;color:var(--marco-d);font-size:15px;}
+  ul.modulos .desc{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
+  ul.modulos .abrir{display:block;font-size:13px;font-weight:700;color:var(--acento);margin-top:8px;}
+  li.oculto,details.oculto,h3.oculto,ul.oculto{display:none;}
+  .nota-leccion{font-size:14px;color:var(--gris);margin:14px 0 4px;font-style:italic;}
+
+  .sin-resultados{display:none;background:#fff8e1;border:2px solid #f9a825;border-left:8px solid #f9a825;
+                  border-radius:10px;padding:16px 20px;color:#5c3900;font-size:15px;}
+  .sin-resultados.visible{display:block;}
+
+  .caja-nota{background:#e8f5e9;border-left:5px solid #1b5e20;padding:12px 16px;border-radius:0 8px 8px 0;
+             margin:18px 0;font-size:15px;color:#1b5e20;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--marco);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--marco-d);}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Spanish ASE Math 1 · GEDparaHispanos</div>
+    <h1>Repaso del Nivel 1: índice de prácticas interactivas</h1>
+    <p>Las prácticas de los ocho temas del nivel, reunidas en un solo sitio. Cada enlace abre directamente la
+    práctica que necesita, no la página entera. Si el informe del simulacro señaló un tema, búsquelo aquí y vaya al grano.</p>
+  </header>
+
+  <div class="caja-nota" style="margin-bottom:14px;"><strong>Rutas transversales:</strong> la geometría y la estadística continúan en los Niveles 2 y 3. Para verlas completas, en orden, abra la <a href="https://zhemaria.github.io/algebra/ruta-geometria.html" target="_blank" rel="noopener noreferrer">Ruta de Geometría</a> o la <a href="https://zhemaria.github.io/algebra/ruta-estadistica.html" target="_blank" rel="noopener noreferrer">Ruta de Estadística y probabilidad</a> (Niveles 1 a 3).</div>
+
+  <div class="buscador">
+    <label for="filtro">Busque el tema que quiere repasar</label>
+    <input type="text" id="filtro" placeholder="por ejemplo: redondear, residuo, número mixto, perímetro" autocomplete="off">
+    <p class="pista">Escriba una palabra y se abren solo los temas que la contienen. Sirven tanto los nombres técnicos
+      («residuo», «denominador») como las palabras corrientes («reloj», «receta», «cerca»).</p>
+    <p class="contador" id="contador" role="status"></p>
+  </div>
+
+  <div class="sin-resultados" id="sin-resultados">
+    No hay ninguna práctica con esa palabra. Pruebe con un término más corto o borre la búsqueda.
+  </div>
+
+  <nav class="indice" aria-labelledby="t-indice">
+    <h2 id="t-indice">Ir directamente a un tema</h2>
+    <ol id="indice"></ol>
+  </nav>
+
+  <div class="fila-btn" style="margin:0 0 14px;">
+    <button type="button" id="abrir-todo">Abrir todos los temas</button>
+    <button type="button" id="cerrar-todo">Cerrar todos los temas</button>
+  </div>
+
+  <div id="lista"></div>
+
+  <div class="caja-nota">
+    <strong>Cómo usar este índice después del simulacro:</strong> revise el informe diagnóstico, localice aquí los
+    temas que le salieron flojos y trabaje solo esos. Cada práctica es corta y se puede repetir cuantas veces quiera,
+    porque los ejercicios se generan de nuevo cada vez.
+  </div>
+
+  <footer class="pie">
+    <p><strong>Repaso del Nivel 1 · Matemáticas · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+var BASE = "https://zhemaria.github.io/algebra/";
+var TEMAS = [
+ {
+  "n": 1,
+  "clase": "t1",
+  "titulo": "Tema 1 · Números enteros: valor posicional, suma y resta",
+  "lecciones": [
+   {
+    "id": "n1-l1-1.html",
+    "num": "1-1",
+    "titulo": "Lección 1.1 · Valor posicional y números enteros",
+    "modulos": [
+     {
+      "ancla": "valor-posicional",
+      "titulo": "La tabla de valor posicional",
+      "desc": "Cuánto vale cada cifra según su lugar, hasta los millones.",
+      "claves": "valor posicional tabla unidades decenas centenas millares millones leer escribir numeros en palabras comparar mayor menor ordenar redondear vecino"
+     },
+     {
+      "ancla": "leer-escribir",
+      "titulo": "Leer y escribir números",
+      "desc": "De cifras a palabras y de palabras a cifras.",
+      "claves": "valor posicional tabla unidades decenas centenas millares millones leer escribir numeros en palabras comparar mayor menor ordenar redondear vecino"
+     },
+     {
+      "ancla": "comparar",
+      "titulo": "Comparar y ordenar",
+      "desc": "Comparar cifra por cifra desde la izquierda; los signos < y >.",
+      "claves": "valor posicional tabla unidades decenas centenas millares millones leer escribir numeros en palabras comparar mayor menor ordenar redondear vecino"
+     },
+     {
+      "ancla": "redondear",
+      "titulo": "Redondear",
+      "desc": "A la decena, la centena y el millar, con la recta a la vista.",
+      "claves": "valor posicional tabla unidades decenas centenas millares millones leer escribir numeros en palabras comparar mayor menor ordenar redondear vecino"
+     }
+    ]
+   },
+   {
+    "id": "n1-l1-2.html",
+    "num": "1-2",
+    "titulo": "Lección 1.2 · Suma y resta de números enteros",
+    "modulos": [
+     {
+      "ancla": "sumar",
+      "titulo": "Sumar con reagrupación («llevar»)",
+      "desc": "«Llevar» columna por columna, paso a paso.",
+      "claves": "sumar restar llevar pedir prestado reagrupar columna ceros verificar operacion inversa"
+     },
+     {
+      "ancla": "restar",
+      "titulo": "Restar con reagrupación («pedir prestado»)",
+      "desc": "«Pedir prestado», incluso cuando hay ceros.",
+      "claves": "sumar restar llevar pedir prestado reagrupar columna ceros verificar operacion inversa"
+     },
+     {
+      "ancla": "verificar",
+      "titulo": "Verificar con la operación inversa",
+      "desc": "La resta se comprueba sumando, y la suma restando.",
+      "claves": "sumar restar llevar pedir prestado reagrupar columna ceros verificar operacion inversa"
+     }
+    ]
+   },
+   {
+    "id": "n1-l1-3.html",
+    "num": "1-3",
+    "titulo": "Lección 1.3 · Suma y resta en problemas verbales",
+    "modulos": [
+     {
+      "ancla": "palabras-clave",
+      "titulo": "Las palabras clave",
+      "desc": "«En total», «cuántos más», «quedan»: ¿suma o resta?",
+      "claves": "problemas verbales palabras clave suma resta cuatro pasos dato que sobra dos operaciones"
+     },
+     {
+      "ancla": "cuatro-pasos",
+      "titulo": "El método de los 4 pasos",
+      "desc": "Entender, planear, resolver y comprobar.",
+      "claves": "problemas verbales palabras clave suma resta cuatro pasos dato que sobra dos operaciones"
+     },
+     {
+      "ancla": "sumo-o-resto",
+      "titulo": "¿Sumo o resto?",
+      "desc": "Decidir la operación antes de calcular.",
+      "claves": "problemas verbales palabras clave suma resta cuatro pasos dato que sobra dos operaciones"
+     },
+     {
+      "ancla": "dos-operaciones",
+      "titulo": "Problemas de dos operaciones",
+      "desc": "Una suma y una resta en el mismo problema.",
+      "claves": "problemas verbales palabras clave suma resta cuatro pasos dato que sobra dos operaciones"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 2,
+  "clase": "t2",
+  "titulo": "Tema 2 · Multiplicación y división",
+  "lecciones": [
+   {
+    "id": "n1-l2-1.html",
+    "num": "2-1",
+    "titulo": "Lección 2.1 · Multiplicación de números enteros",
+    "modulos": [
+     {
+      "ancla": "significado",
+      "titulo": "¿Qué significa multiplicar?",
+      "desc": "Grupos iguales y arreglos en filas y columnas.",
+      "claves": "multiplicar arreglo filas tablas del 12 propiedades conmutativa asociativa distributiva un digito dos digitos parciales estimar bingo"
+     },
+     {
+      "ancla": "tablas-propiedades",
+      "titulo": "Las tablas y las propiedades",
+      "desc": "Conmutativa, asociativa, por 0 y por 1; la tabla interactiva.",
+      "claves": "multiplicar arreglo filas tablas del 12 propiedades conmutativa asociativa distributiva un digito dos digitos parciales estimar bingo"
+     },
+     {
+      "ancla": "un-digito",
+      "titulo": "Multiplicar por un dígito",
+      "desc": "Paso a paso, llevando.",
+      "claves": "multiplicar arreglo filas tablas del 12 propiedades conmutativa asociativa distributiva un digito dos digitos parciales estimar bingo"
+     },
+     {
+      "ancla": "dos-digitos",
+      "titulo": "Multiplicar por dos dígitos",
+      "desc": "Los dos productos parciales y la suma final.",
+      "claves": "multiplicar arreglo filas tablas del 12 propiedades conmutativa asociativa distributiva un digito dos digitos parciales estimar bingo"
+     },
+     {
+      "ancla": "estimar",
+      "titulo": "Verificar con la estimación",
+      "desc": "Redondear primero para saber si el resultado tiene sentido.",
+      "claves": "multiplicar arreglo filas tablas del 12 propiedades conmutativa asociativa distributiva un digito dos digitos parciales estimar bingo"
+     },
+     {
+      "ancla": "bingo",
+      "titulo": "Bingo de multiplicación",
+      "desc": "El juego de las tablas, como repaso libre.",
+      "claves": "multiplicar arreglo filas tablas del 12 propiedades conmutativa asociativa distributiva un digito dos digitos parciales estimar bingo",
+      "url": "https://zhemaria.github.io/games/bingo_multi/"
+     }
+    ]
+   },
+   {
+    "id": "n1-l2-2.html",
+    "num": "2-2",
+    "titulo": "Lección 2.2 · División de números enteros",
+    "modulos": [
+     {
+      "ancla": "significado",
+      "titulo": "¿Qué significa dividir?",
+      "desc": "Repartir en partes iguales y hacer grupos.",
+      "claves": "dividir repartir dividendo divisor cociente residuo division larga dmsr que hago con el residuo"
+     },
+     {
+      "ancla": "dmsr",
+      "titulo": "La división larga (DMSR)",
+      "desc": "Dividir, multiplicar, restar y bajar, paso a paso.",
+      "claves": "dividir repartir dividendo divisor cociente residuo division larga dmsr que hago con el residuo"
+     },
+     {
+      "ancla": "residuo",
+      "titulo": "El residuo",
+      "desc": "Cuando la división no es exacta, y cómo comprobarla.",
+      "claves": "dividir repartir dividendo divisor cociente residuo division larga dmsr que hago con el residuo"
+     },
+     {
+      "ancla": "que-hago",
+      "titulo": "¿Qué hago con el residuo?",
+      "desc": "Redondear hacia arriba, ignorarlo o usarlo, según el problema.",
+      "claves": "dividir repartir dividendo divisor cociente residuo division larga dmsr que hago con el residuo"
+     }
+    ]
+   },
+   {
+    "id": "n1-l2-3.html",
+    "num": "2-3",
+    "titulo": "Lección 2.3 · Multiplicación y división en problemas verbales",
+    "modulos": [
+     {
+      "ancla": "palabras-clave",
+      "titulo": "Palabras clave: multiplicar o dividir",
+      "desc": "«Cada uno», «por», «repartir», «en total»: ¿multiplico o divido?",
+      "claves": "multiplicar o dividir palabras clave cuatro pasos propiedades atajo calculo mental"
+     },
+     {
+      "ancla": "cuatro-pasos",
+      "titulo": "Los 4 pasos, otra vez",
+      "desc": "El método aplicado a multiplicar y dividir.",
+      "claves": "multiplicar o dividir palabras clave cuatro pasos propiedades atajo calculo mental"
+     },
+     {
+      "ancla": "propiedades-atajo",
+      "titulo": "Las propiedades como atajo",
+      "desc": "Reordenar y agrupar para calcular de cabeza.",
+      "claves": "multiplicar o dividir palabras clave cuatro pasos propiedades atajo calculo mental"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 3,
+  "clase": "t3",
+  "titulo": "Tema 3 · Decimales",
+  "lecciones": [
+   {
+    "id": "n1-l3-1.html",
+    "num": "3-1",
+    "titulo": "Lección 3.1 · Decimales: leer, escribir, comparar y redondear",
+    "modulos": [
+     {
+      "ancla": "valor-posicional",
+      "titulo": "El valor posicional después del punto",
+      "desc": "Décimos, centésimos y milésimos.",
+      "claves": "decimales decimas centesimas milesimas valor posicional leer comparar recta redondear dinero"
+     },
+     {
+      "ancla": "comparar",
+      "titulo": "Comparar y ordenar decimales",
+      "desc": "Igualar cifras con ceros y ubicarlos en la recta.",
+      "claves": "decimales decimas centesimas milesimas valor posicional leer comparar recta redondear dinero"
+     },
+     {
+      "ancla": "redondear",
+      "titulo": "Redondear decimales",
+      "desc": "Al entero, a la décima y a la centésima; el dinero.",
+      "claves": "decimales decimas centesimas milesimas valor posicional leer comparar recta redondear dinero"
+     }
+    ]
+   },
+   {
+    "id": "n1-l3-2.html",
+    "num": "3-2",
+    "titulo": "Lección 3.2 · Operaciones con decimales",
+    "modulos": [
+     {
+      "ancla": "sumar-restar",
+      "titulo": "Sumar y restar: alinear el punto",
+      "desc": "Columnas bien alineadas y ceros de relleno.",
+      "claves": "sumar restar decimales alinear punto multiplicar contar lugares dividir mover el punto"
+     },
+     {
+      "ancla": "multiplicar",
+      "titulo": "Multiplicar: contar los lugares",
+      "desc": "Se multiplica sin punto y se cuentan los decimales.",
+      "claves": "sumar restar decimales alinear punto multiplicar contar lugares dividir mover el punto"
+     },
+     {
+      "ancla": "dividir",
+      "titulo": "Dividir: mover el punto",
+      "desc": "Hacer entero el divisor y mover el punto en los dos.",
+      "claves": "sumar restar decimales alinear punto multiplicar contar lugares dividir mover el punto"
+     }
+    ]
+   },
+   {
+    "id": "n1-l3-3.html",
+    "num": "3-3",
+    "titulo": "Lección 3.3 · Decimales en contexto y equivalencias",
+    "modulos": [
+     {
+      "ancla": "fraccion-a-decimal",
+      "titulo": "De fracción a decimal",
+      "desc": "Dividir el numerador entre el denominador.",
+      "claves": "fraccion a decimal decimal a fraccion periodico equivalencias tarjetas compras cambio"
+     },
+     {
+      "ancla": "decimal-a-fraccion",
+      "titulo": "De decimal a fracción",
+      "desc": "Leer el decimal y simplificar.",
+      "claves": "fraccion a decimal decimal a fraccion periodico equivalencias tarjetas compras cambio"
+     },
+     {
+      "ancla": "equivalencias",
+      "titulo": "Equivalencias que conviene memorizar",
+      "desc": "1/2, 1/4, 3/4, 1/5, 1/10 y sus decimales.",
+      "claves": "fraccion a decimal decimal a fraccion periodico equivalencias tarjetas compras cambio"
+     },
+     {
+      "ancla": "contexto",
+      "titulo": "Decimales en la vida real",
+      "desc": "Compras, cambio, recibos y medidas.",
+      "claves": "fraccion a decimal decimal a fraccion periodico equivalencias tarjetas compras cambio"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 4,
+  "clase": "t4",
+  "titulo": "Tema 4 · Fracciones",
+  "lecciones": [
+   {
+    "id": "n1-l4-1.html",
+    "num": "4-1",
+    "titulo": "Lección 4.1 · Fracciones equivalentes, simplificar y comparar",
+    "modulos": [
+     {
+      "ancla": "que-es",
+      "titulo": "¿Qué es una fracción?",
+      "desc": "Partes de un todo, en barras y en la recta numérica.",
+      "claves": "fraccion numerador denominador barra recta equivalentes simplificar comparar"
+     },
+     {
+      "ancla": "equivalentes",
+      "titulo": "Fracciones equivalentes",
+      "desc": "Ampliar multiplicando arriba y abajo por el mismo número.",
+      "claves": "fraccion numerador denominador barra recta equivalentes simplificar comparar"
+     },
+     {
+      "ancla": "simplificar",
+      "titulo": "Simplificar una fracción",
+      "desc": "Dividir entre el máximo común divisor.",
+      "claves": "fraccion numerador denominador barra recta equivalentes simplificar comparar"
+     },
+     {
+      "ancla": "comparar",
+      "titulo": "Comparar fracciones",
+      "desc": "Mismo denominador, producto cruzado y la recta.",
+      "claves": "fraccion numerador denominador barra recta equivalentes simplificar comparar"
+     }
+    ]
+   },
+   {
+    "id": "n1-l4-2.html",
+    "num": "4-2",
+    "titulo": "Lección 4.2 · Suma y resta de fracciones",
+    "modulos": [
+     {
+      "ancla": "mismo-denominador",
+      "titulo": "Con el mismo denominador",
+      "desc": "Se suman los numeradores; el denominador se queda.",
+      "claves": "sumar restar fracciones mismo denominador denominador comun simplificar resultado"
+     },
+     {
+      "ancla": "distinto-denominador",
+      "titulo": "Con denominadores distintos",
+      "desc": "Buscar el denominador común, con barras de colores.",
+      "claves": "sumar restar fracciones mismo denominador denominador comun simplificar resultado"
+     },
+     {
+      "ancla": "simplificar-resultado",
+      "titulo": "Simplificar el resultado",
+      "desc": "Dejar la respuesta en su forma más simple.",
+      "claves": "sumar restar fracciones mismo denominador denominador comun simplificar resultado"
+     }
+    ]
+   },
+   {
+    "id": "n1-l4-3.html",
+    "num": "4-3",
+    "titulo": "Lección 4.3 · Multiplicación y división de fracciones",
+    "modulos": [
+     {
+      "ancla": "multiplicar",
+      "titulo": "Multiplicar: en línea recta",
+      "desc": "Numerador por numerador, denominador por denominador.",
+      "claves": "multiplicar fracciones reciproco dividir voltear receta porciones de"
+     },
+     {
+      "ancla": "reciproco",
+      "titulo": "El recíproco",
+      "desc": "La fracción volteada.",
+      "claves": "multiplicar fracciones reciproco dividir voltear receta porciones de"
+     },
+     {
+      "ancla": "dividir",
+      "titulo": "Dividir: voltear y multiplicar",
+      "desc": "La segunda fracción se voltea.",
+      "claves": "multiplicar fracciones reciproco dividir voltear receta porciones de"
+     },
+     {
+      "ancla": "contexto",
+      "titulo": "Fracciones en la vida real",
+      "desc": "Recetas, «la mitad de», «cuántos pedazos».",
+      "claves": "multiplicar fracciones reciproco dividir voltear receta porciones de"
+     }
+    ]
+   },
+   {
+    "id": "n1-l4-4.html",
+    "num": "4-4",
+    "titulo": "Lección 4.4 · Operaciones con números mixtos",
+    "modulos": [
+     {
+      "ancla": "convertir",
+      "titulo": "Mixto e impropio",
+      "desc": "Convertir en las dos direcciones.",
+      "claves": "numeros mixtos numero mixto impropia fraccion impropia convertir multiplicar dividir sumar restar prestado carpinteria fracciomania"
+     },
+     {
+      "ancla": "multiplicar-dividir",
+      "titulo": "Multiplicar y dividir mixtos",
+      "desc": "Primero se pasan a impropias.",
+      "claves": "numeros mixtos numero mixto impropia fraccion impropia convertir multiplicar dividir sumar restar prestado carpinteria fracciomania"
+     },
+     {
+      "ancla": "sumar-restar",
+      "titulo": "Sumar y restar mixtos",
+      "desc": "Enteros con enteros y fracciones con fracciones; reagrupar.",
+      "claves": "numeros mixtos numero mixto impropia fraccion impropia convertir multiplicar dividir sumar restar prestado carpinteria fracciomania"
+     },
+     {
+      "ancla": "contexto",
+      "titulo": "Mixtos en la vida real",
+      "desc": "Medidas de carpintería, recetas y tiempo.",
+      "claves": "numeros mixtos numero mixto impropia fraccion impropia convertir multiplicar dividir sumar restar prestado carpinteria fracciomania"
+     },
+     {
+      "ancla": "fracciomania",
+      "titulo": "Fracciomanía",
+      "desc": "El juego de fracciones, como repaso del tema.",
+      "claves": "numeros mixtos numero mixto impropia fraccion impropia convertir multiplicar dividir sumar restar prestado carpinteria fracciomania",
+      "url": "https://zhemaria.github.io/interactivos/fraccion_operacion/"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 5,
+  "clase": "t5",
+  "titulo": "Tema 5 · Patrones y primeros pasos en álgebra",
+  "lecciones": [
+   {
+    "id": "n1-l5-1.html",
+    "num": "5-1",
+    "titulo": "Lección 5.1 · Patrones numéricos y de figuras",
+    "modulos": [
+     {
+      "ancla": "numericos",
+      "titulo": "Patrones numéricos",
+      "desc": "Encontrar la regla: sumar, restar, multiplicar.",
+      "claves": "patrones secuencia regla termino figuras que crecen tabla entrada salida maquina"
+     },
+     {
+      "ancla": "figuras",
+      "titulo": "Patrones de figuras",
+      "desc": "Figuras que crecen: ¿cuántas piezas lleva la siguiente?",
+      "claves": "patrones secuencia regla termino figuras que crecen tabla entrada salida maquina"
+     },
+     {
+      "ancla": "entrada-salida",
+      "titulo": "Tablas de entrada y salida",
+      "desc": "La máquina de la regla: descubrirla y usarla.",
+      "claves": "patrones secuencia regla termino figuras que crecen tabla entrada salida maquina"
+     }
+    ]
+   },
+   {
+    "id": "n1-l5-2.html",
+    "num": "5-2",
+    "titulo": "Lección 5.2 · Lenguaje algebraico e incógnitas simples",
+    "modulos": [
+     {
+      "ancla": "traducir",
+      "titulo": "Traducir palabras a símbolos",
+      "desc": "«Un número más 5», «el doble de un número».",
+      "claves": "lenguaje algebraico incognita traducir ecuacion balanza operacion inversa despejar verificar sustituir"
+     },
+     {
+      "ancla": "balanza",
+      "titulo": "La ecuación como una balanza",
+      "desc": "Lo mismo de los dos lados.",
+      "claves": "lenguaje algebraico incognita traducir ecuacion balanza operacion inversa despejar verificar sustituir"
+     },
+     {
+      "ancla": "operacion-inversa",
+      "titulo": "Resolver con la operación inversa",
+      "desc": "Deshacer para despejar la incógnita.",
+      "claves": "lenguaje algebraico incognita traducir ecuacion balanza operacion inversa despejar verificar sustituir"
+     },
+     {
+      "ancla": "verificar",
+      "titulo": "Verificar la solución",
+      "desc": "Sustituir y ver si la igualdad se cumple.",
+      "claves": "lenguaje algebraico incognita traducir ecuacion balanza operacion inversa despejar verificar sustituir"
+     }
+    ]
+   },
+   {
+    "id": "n1-l5-3.html",
+    "num": "5-3",
+    "titulo": "Lección 5.3 · Problemas verbales de un paso",
+    "modulos": [
+     {
+      "ancla": "palabras-clave",
+      "titulo": "Mapa de palabras clave",
+      "desc": "Las cuatro operaciones y sus palabras.",
+      "claves": "problemas de un paso ecuacion palabras clave cuatro operaciones"
+     },
+     {
+      "ancla": "cuatro-pasos",
+      "titulo": "Los 4 pasos, con ecuación",
+      "desc": "Plantear la ecuación del problema y resolverla.",
+      "claves": "problemas de un paso ecuacion palabras clave cuatro operaciones"
+     },
+     {
+      "ancla": "cada-operacion",
+      "titulo": "Un problema de cada operación",
+      "desc": "Práctica mezclada de suma, resta, multiplicación y división.",
+      "claves": "problemas de un paso ecuacion palabras clave cuatro operaciones"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 6,
+  "clase": "t6",
+  "titulo": "Tema 6 · Medición",
+  "lecciones": [
+   {
+    "id": "n1-l6-1.html",
+    "num": "6-1",
+    "titulo": "Lección 6.1 · Sistema inglés: longitud, peso y capacidad",
+    "modulos": [
+     {
+      "ancla": "longitud",
+      "titulo": "Longitud",
+      "desc": "Pulgadas, pies, yardas y millas; leer una regla.",
+      "claves": "sistema ingles pulgadas pies yardas millas regla onzas libras toneladas tazas pintas cuartos galones convertir"
+     },
+     {
+      "ancla": "peso-capacidad",
+      "titulo": "Peso y capacidad",
+      "desc": "Onzas, libras, tazas, cuartos y galones.",
+      "claves": "sistema ingles pulgadas pies yardas millas regla onzas libras toneladas tazas pintas cuartos galones convertir"
+     },
+     {
+      "ancla": "convertir",
+      "titulo": "Convertir entre unidades",
+      "desc": "A una unidad menor se multiplica; a una mayor, se divide.",
+      "claves": "sistema ingles pulgadas pies yardas millas regla onzas libras toneladas tazas pintas cuartos galones convertir"
+     }
+    ]
+   },
+   {
+    "id": "n1-l6-2.html",
+    "num": "6-2",
+    "titulo": "Lección 6.2 · Sistema métrico, tiempo y temperatura",
+    "modulos": [
+     {
+      "ancla": "metrico",
+      "titulo": "El sistema métrico",
+      "desc": "Todo de diez en diez: metros, gramos y litros.",
+      "claves": "sistema metrico kilo centi mili escalera metros gramos litros hora reloj duracion am pm temperatura fahrenheit celsius termometro"
+     },
+     {
+      "ancla": "escalera",
+      "titulo": "La escalera métrica",
+      "desc": "Subir y bajar escalones moviendo el punto.",
+      "claves": "sistema metrico kilo centi mili escalera metros gramos litros hora reloj duracion am pm temperatura fahrenheit celsius termometro"
+     },
+     {
+      "ancla": "hora",
+      "titulo": "Leer la hora y calcular duraciones",
+      "desc": "El reloj, a.m. y p.m., y cuánto tiempo pasó.",
+      "claves": "sistema metrico kilo centi mili escalera metros gramos litros hora reloj duracion am pm temperatura fahrenheit celsius termometro"
+     },
+     {
+      "ancla": "temperatura",
+      "titulo": "Fahrenheit y Celsius",
+      "desc": "Leer termómetros en las dos escalas.",
+      "claves": "sistema metrico kilo centi mili escalera metros gramos litros hora reloj duracion am pm temperatura fahrenheit celsius termometro"
+     }
+    ]
+   },
+   {
+    "id": "n1-l6-3.html",
+    "num": "6-3",
+    "titulo": "Lección 6.3 · Problemas aplicados de medición",
+    "modulos": [
+     {
+      "ancla": "referencia",
+      "titulo": "La hoja de referencia de medidas",
+      "desc": "Las equivalencias que hay que tener a mano.",
+      "claves": "hoja de referencia medidas problemas de medicion viaje trabajo horarios"
+     },
+     {
+      "ancla": "metodo",
+      "titulo": "El método para problemas de medición",
+      "desc": "Unidades iguales antes de operar.",
+      "claves": "hoja de referencia medidas problemas de medicion viaje trabajo horarios"
+     },
+     {
+      "ancla": "viaje-trabajo",
+      "titulo": "Problemas de viaje y de trabajo",
+      "desc": "Distancias, horarios, turnos y materiales.",
+      "claves": "hoja de referencia medidas problemas de medicion viaje trabajo horarios"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 7,
+  "clase": "t7",
+  "titulo": "Tema 7 · Geometría",
+  "lecciones": [
+   {
+    "id": "n1-l7-1.html",
+    "num": "7-1",
+    "titulo": "Lección 7.1 · Clasificación de figuras 2D",
+    "modulos": [
+     {
+      "ancla": "angulos",
+      "titulo": "Los tipos de ángulo",
+      "desc": "Recto, agudo, obtuso y llano.",
+      "claves": "angulos agudo recto obtuso llano poligonos triangulo cuadrilatero pentagono hexagono equilatero isosceles escaleno cuadrado rectangulo rombo paralelogramo trapecio arbol de decision"
+     },
+     {
+      "ancla": "poligonos",
+      "titulo": "Polígonos por número de lados",
+      "desc": "Triángulo, cuadrilátero, pentágono, hexágono…",
+      "claves": "angulos agudo recto obtuso llano poligonos triangulo cuadrilatero pentagono hexagono equilatero isosceles escaleno cuadrado rectangulo rombo paralelogramo trapecio arbol de decision"
+     },
+     {
+      "ancla": "triangulos",
+      "titulo": "Triángulos por sus lados",
+      "desc": "Equilátero, isósceles y escaleno.",
+      "claves": "angulos agudo recto obtuso llano poligonos triangulo cuadrilatero pentagono hexagono equilatero isosceles escaleno cuadrado rectangulo rombo paralelogramo trapecio arbol de decision"
+     },
+     {
+      "ancla": "cuadrilateros",
+      "titulo": "Cuadriláteros",
+      "desc": "Cuadrado, rectángulo, rombo, paralelogramo y trapecio.",
+      "claves": "angulos agudo recto obtuso llano poligonos triangulo cuadrilatero pentagono hexagono equilatero isosceles escaleno cuadrado rectangulo rombo paralelogramo trapecio arbol de decision"
+     },
+     {
+      "ancla": "reto",
+      "titulo": "Reto: ¿qué figura es?",
+      "desc": "El árbol de decisión de los cuadriláteros.",
+      "claves": "angulos agudo recto obtuso llano poligonos triangulo cuadrilatero pentagono hexagono equilatero isosceles escaleno cuadrado rectangulo rombo paralelogramo trapecio arbol de decision"
+     }
+    ]
+   },
+   {
+    "id": "n1-l7-2.html",
+    "num": "7-2",
+    "titulo": "Lección 7.2 · Perímetro de polígonos",
+    "modulos": [
+     {
+      "ancla": "que-es",
+      "titulo": "¿Qué es el perímetro?",
+      "desc": "La vuelta completa alrededor de una figura.",
+      "claves": "perimetro sumar lados cuadrado rectangulo hallar lado cerca marco zocalo"
+     },
+     {
+      "ancla": "sumar-lados",
+      "titulo": "Sumar todos los lados",
+      "desc": "Incluidos los lados que no tienen número.",
+      "claves": "perimetro sumar lados cuadrado rectangulo hallar lado cerca marco zocalo"
+     },
+     {
+      "ancla": "formulas",
+      "titulo": "Cuadrado y rectángulo",
+      "desc": "P = 4 × lado y P = 2 × (largo + ancho).",
+      "claves": "perimetro sumar lados cuadrado rectangulo hallar lado cerca marco zocalo"
+     },
+     {
+      "ancla": "hallar-lado",
+      "titulo": "Hallar un lado",
+      "desc": "Conocido el perímetro, el lado que falta.",
+      "claves": "perimetro sumar lados cuadrado rectangulo hallar lado cerca marco zocalo"
+     },
+     {
+      "ancla": "problemas",
+      "titulo": "Problemas de perímetro",
+      "desc": "Cercas, marcos, zócalos y listones.",
+      "claves": "perimetro sumar lados cuadrado rectangulo hallar lado cerca marco zocalo"
+     }
+    ]
+   },
+   {
+    "id": "n1-l7-3.html",
+    "num": "7-3",
+    "titulo": "Lección 7.3 · Área de rectángulos y triángulos",
+    "modulos": [
+     {
+      "ancla": "que-es",
+      "titulo": "¿Qué es el área?",
+      "desc": "Contar cuadritos: unidades cuadradas.",
+      "claves": "area cuadritos unidades cuadradas rectangulo cuadrado triangulo base altura perimetro o area alfombra"
+     },
+     {
+      "ancla": "rectangulo",
+      "titulo": "Rectángulo y cuadrado",
+      "desc": "Largo por ancho.",
+      "claves": "area cuadritos unidades cuadradas rectangulo cuadrado triangulo base altura perimetro o area alfombra"
+     },
+     {
+      "ancla": "triangulo",
+      "titulo": "Triángulo",
+      "desc": "La mitad del rectángulo: base por altura entre 2.",
+      "claves": "area cuadritos unidades cuadradas rectangulo cuadrado triangulo base altura perimetro o area alfombra"
+     },
+     {
+      "ancla": "perimetro-o-area",
+      "titulo": "¿Perímetro o área?",
+      "desc": "Decidir qué pide el problema.",
+      "claves": "area cuadritos unidades cuadradas rectangulo cuadrado triangulo base altura perimetro o area alfombra"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "n": 8,
+  "clase": "t8",
+  "titulo": "Tema 8 · Datos",
+  "lecciones": [
+   {
+    "id": "n1-l8-1.html",
+    "num": "8-1",
+    "titulo": "Lección 8.1 · Leer e interpretar tablas de datos",
+    "modulos": [
+     {
+      "ancla": "leer-tabla",
+      "titulo": "Cómo leer una tabla",
+      "desc": "Título, filas, columnas y unidades.",
+      "claves": "tablas de datos fila columna localizar comparar diferencia total promedio maximo minimo describir"
+     },
+     {
+      "ancla": "comparar-calcular",
+      "titulo": "Comparar y calcular",
+      "desc": "Diferencias, totales y el mayor y el menor.",
+      "claves": "tablas de datos fila columna localizar comparar diferencia total promedio maximo minimo describir"
+     },
+     {
+      "ancla": "describir",
+      "titulo": "Describir los datos con palabras",
+      "desc": "Frases que cuentan lo que dice la tabla.",
+      "claves": "tablas de datos fila columna localizar comparar diferencia total promedio maximo minimo describir"
+     }
+    ]
+   },
+   {
+    "id": "n1-l8-2.html",
+    "num": "8-2",
+    "titulo": "Lección 8.2 · Gráficas de barras y de líneas",
+    "modulos": [
+     {
+      "ancla": "cinco-pasos",
+      "titulo": "Leer una gráfica en 5 pasos",
+      "desc": "Título, ejes, escala, datos y conclusión.",
+      "claves": "graficas barras lineas titulo ejes escala valores tendencia creciente decreciente estable construir"
+     },
+     {
+      "ancla": "barras",
+      "titulo": "La gráfica de barras",
+      "desc": "Comparar categorías.",
+      "claves": "graficas barras lineas titulo ejes escala valores tendencia creciente decreciente estable construir"
+     },
+     {
+      "ancla": "lineas",
+      "titulo": "La gráfica de líneas",
+      "desc": "Ver tendencias en el tiempo.",
+      "claves": "graficas barras lineas titulo ejes escala valores tendencia creciente decreciente estable construir"
+     },
+     {
+      "ancla": "construir",
+      "titulo": "Construir una gráfica",
+      "desc": "Levantar las barras a partir de una tabla, y los constructores de barras y de líneas.",
+      "claves": "graficas barras lineas titulo ejes escala valores tendencia creciente decreciente estable construir"
+     }
+    ]
+   }
+  ]
+ }
+];
+
+function normaliza(t){
+  return t.toLowerCase().replace(/[áàä]/g,"a").replace(/[éèë]/g,"e").replace(/[íìï]/g,"i")
+          .replace(/[óòö]/g,"o").replace(/[úùü]/g,"u").replace(/ñ/g,"n").replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,"");
+}
+function numLeccion(l){ var p = l.num.split("-"); return +p[0]*100 + +p[1]; }
+
+function construye(){
+  var html = "", ind = "";
+  TEMAS.forEach(function(t){
+    var total = t.lecciones.reduce(function(s, l){ return s + l.modulos.length; }, 0);
+    ind += '<li><a href="#tema-' + t.n + '">' + t.titulo + '</a> (' + total + ')</li>';
+    html += '<details class="tema ' + t.clase + '" id="tema-' + t.n + '" data-total="' + total + '">' +
+            '<summary><h2>' + t.titulo + '</h2><span class="cuenta">' + total + ' prácticas</span><span class="flecha" aria-hidden="true">▶</span></summary><div class="tema-cuerpo">';
+    t.lecciones.slice().sort(function(a, b){ return numLeccion(a) - numLeccion(b); }).forEach(function(l){
+      var urlL = BASE + l.id;
+      html += '<h3 class="leccion" id="leccion-' + l.num + '"><a href="' + urlL + '" target="_blank" rel="noopener noreferrer">' + l.titulo + '</a></h3><ul class="modulos">';
+      l.modulos.forEach(function(md){
+        var texto = normaliza(md.titulo + " " + md.desc + " " + md.claves + " " + l.titulo + " " + t.titulo).replace(/"/g, "");
+        var url = md.url || (urlL + "#" + md.ancla);
+        html += '<li data-busca="' + texto + '"><a href="' + url + '" target="_blank" rel="noopener noreferrer">' +
+                '<span class="titulo">' + md.titulo + '</span><span class="desc">' + md.desc + '</span>' +
+                '<span class="abrir">Abrir esta práctica <span aria-hidden="true">›</span></span></a></li>';
+      });
+      html += '</ul>';
+    });
+    html += '</div></details>';
+  });
+  document.getElementById("lista").innerHTML = html;
+  document.getElementById("indice").innerHTML = ind;
+}
+
+var ESTADO = null;   /* temas abiertos antes de empezar a buscar */
+function temas(){ return document.querySelectorAll("details.tema"); }
+function filtra(){
+  var q = normaliza(document.getElementById("filtro").value.trim()), visibles = 0, total = 0;
+  if (q && !ESTADO){ ESTADO = []; temas().forEach(function(d){ ESTADO.push(d.open); }); }
+  temas().forEach(function(d, i){
+    var enTema = 0;
+    d.querySelectorAll("ul.modulos").forEach(function(ul){
+      var enLec = 0;
+      ul.querySelectorAll("li").forEach(function(li){
+        total++;
+        var ok = !q || li.getAttribute("data-busca").indexOf(q) !== -1;
+        li.className = ok ? "" : "oculto"; if (ok){ visibles++; enLec++; enTema++; }
+      });
+      ul.className = enLec ? "modulos" : "modulos oculto";
+      ul.previousElementSibling.className = enLec ? "leccion" : "leccion oculto";
+    });
+    var tot = +d.getAttribute("data-total");
+    d.querySelector(".cuenta").textContent = q ? enTema + " de " + tot : tot + " prácticas";
+    d.classList.toggle("oculto", !!q && enTema === 0);
+    if (q) d.open = enTema > 0;
+  });
+  if (!q && ESTADO){ temas().forEach(function(d, i){ d.open = ESTADO[i]; }); ESTADO = null; }
+  document.getElementById("contador").textContent = q ? (visibles === 1 ? "Se muestra 1 práctica de " : "Se muestran " + visibles + " prácticas de ") + total + "." : "Hay " + total + " prácticas disponibles en todo el nivel.";
+  document.getElementById("sin-resultados").className = (q && visibles === 0) ? "sin-resultados visible" : "sin-resultados";
+}
+function abreDesdeAncla(){
+  var h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
+  var el = document.getElementById(h); if (!el) return;
+  var d = el.tagName.toLowerCase() === "details" ? el : el.closest("details.tema");
+  if (d) d.open = true;
+  el.scrollIntoView({ block: "start" });
+}
+
+construye();
+document.getElementById("filtro").addEventListener("input", filtra);
+document.getElementById("abrir-todo").addEventListener("click", function(){ temas().forEach(function(d){ d.open = true; }); });
+document.getElementById("cerrar-todo").addEventListener("click", function(){ temas().forEach(function(d){ d.open = false; }); });
+document.querySelectorAll("#indice a").forEach(function(a){
+  a.addEventListener("click", function(e){ e.preventDefault(); history.replaceState(null, "", a.getAttribute("href")); abreDesdeAncla(); });
+});
+window.addEventListener("hashchange", abreDesdeAncla);
+filtra();
+abreDesdeAncla();
+</script>
+</body>
+</html>
