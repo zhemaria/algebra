@@ -1,0 +1,919 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 7.2 — Relaciones vs. funciones, notación f(x) y dominio/rango
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #maquina · #linea-vertical · #notacion · #dominio-rango
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 7.2: funciones, notación f(x), dominio y rango</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 7.2 del Nivel 4: la máquina de funciones, la prueba de la línea vertical, evaluar f(x) y hallar dominio y rango.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:110px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input[type="range"]{width:240px;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .centrado{text-align:center;}
+
+  /* máquina de funciones */
+  .maquina{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:18px 0;}
+  .caja-maq{border:3px solid var(--tema);border-radius:12px;padding:14px 20px;min-width:108px;text-align:center;background:#fff;}
+  .caja-maq .rot{display:block;font-size:13px;color:var(--gris);text-transform:uppercase;letter-spacing:.4px;}
+  .caja-maq .val{display:block;font-size:24px;font-weight:700;color:var(--tema-d);}
+  .caja-regla{background:var(--tema);color:#fff;border-color:var(--tema-d);min-width:170px;}
+  .caja-regla .rot{color:#e0f7fa;}
+  .caja-regla .val{color:#fff;font-size:20px;}
+  .flecha{font-size:26px;color:var(--tema-d);font-weight:700;}
+  .caja-doble{border-color:#b71c1c;}
+  .caja-doble .val{color:#b71c1c;font-size:19px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:520px;height:auto;max-height:52vh;
+               border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campo input[type="range"]{width:100%;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 7 · Sistemas de desigualdades y funciones</div>
+    <h1>Lección 7.2 · Relaciones vs. funciones, notación f(x) y dominio/rango</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#maquina">La máquina de funciones</a></li>
+      <li><a href="#linea-vertical">La prueba de la línea vertical</a></li>
+      <li><a href="#notacion">La notación f(x): evaluar funciones</a></li>
+      <li><a href="#dominio-rango">Dominio y rango</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="maquina" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La máquina de funciones</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Una función es una máquina: entra un número, se le aplica una regla y sale un resultado. La condición que lo
+      decide todo es que <strong>cada entrada produzca una sola salida</strong>. Mete varios valores y ve cómo se llena
+      la tabla de pares.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:230px;">
+            <label for="m-regla">Regla de la máquina</label>
+            <select id="m-regla"></select>
+          </div>
+          <div class="campo">
+            <label for="m-x">Entrada x</label>
+            <input type="number" id="m-x" value="4" step="1">
+          </div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="m-procesar">Procesar la entrada</button>
+          <button type="button" class="btn-sec" id="m-limpiar">Vaciar la tabla</button>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="m-aviso" role="alert"></div>
+
+      <div class="maquina" id="m-visual" aria-live="polite"></div>
+      <div class="pasos" id="m-pasos"></div>
+      <div id="m-tabla"></div>
+
+      <div class="caja-tip">
+        <strong>La tabla que vas llenando es la función:</strong> cada fila es un par (entrada, salida). Si alguna vez
+        la misma entrada apareciera con dos salidas distintas, la máquina estaría descompuesta y eso ya no sería una función.
+      </div>
+
+      <h3>La máquina descompuesta</h3>
+      <p>Esta otra máquina aplica la regla «la raíz cuadrada, con signo más o menos». Pruébala y mira qué sale:</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="m-rota-x">Entrada x</label>
+            <input type="number" id="m-rota-x" value="9" step="1" min="0">
+          </div>
+        </div>
+      </div>
+      <div class="maquina" id="m-rota-visual" aria-live="polite"></div>
+      <div class="salida"><div class="linea" id="m-rota-texto"></div></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="linea-vertical">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>La prueba de la línea vertical</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En una gráfica, la condición «una entrada, una sola salida» se comprueba pasando una <strong>línea vertical</strong>
+      por todo el dibujo. Si en alguna posición la línea corta la gráfica en <strong>dos o más puntos</strong>, esa
+      relación no es función. Mueve la línea y cuenta los cortes.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:250px;">
+            <label for="lv-grafica">Relación</label>
+            <select id="lv-grafica"></select>
+          </div>
+          <div class="campo">
+            <label for="lv-x">Posición de la línea: x = <span class="valor-rango" id="lv-x-val">0</span></label>
+            <input type="range" id="lv-x" min="-6" max="6" step="0.5" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="lv-cortes"></div>
+        <div class="linea veredicto" id="lv-veredicto"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="lv-svg" viewBox="0 0 520 320" role="img" aria-labelledby="lv-svg-t lv-svg-d">
+          <title id="lv-svg-t">Relación y línea vertical</title>
+          <desc id="lv-svg-d">Gráfica de la relación con una línea vertical móvil que muestra cuántos puntos corta.</desc>
+        </svg>
+        <p class="pie-grafica" id="lv-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Basta con una sola posición mala.</strong> No hace falta que la línea corte dos veces en todas partes:
+        si hay <em>un</em> valor de x con dos salidas, ya no es función. Por eso conviene recorrer la línea de
+        izquierda a derecha en vez de mirar solo el centro.
+      </div>
+
+      <h3>Practica: ¿función o no?</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="notacion">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>La notación f(x): evaluar funciones</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>f(x) se lee «f de x» y nombra la <strong>salida</strong> para la entrada x. Evaluar es sustituir el valor y
+      simplificar. Escribe el número entre paréntesis siempre: es lo que evita los errores de signo.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:230px;">
+            <label for="n-funcion">Función</label>
+            <select id="n-funcion"></select>
+          </div>
+          <div class="campo">
+            <label for="n-x">Evaluar en x =</label>
+            <input type="number" id="n-x" value="-2" step="1">
+          </div>
+        </div>
+        <p class="nota">Prueba con números negativos: ahí es donde se pierde la mitad de los puntos del examen.</p>
+      </div>
+
+      <div class="caja-aviso" id="n-aviso" role="alert"></div>
+      <div class="pasos" id="n-pasos" aria-live="polite"></div>
+
+      <div class="grafica">
+        <svg id="n-svg" viewBox="0 0 520 400" role="img" aria-labelledby="n-svg-t n-svg-d">
+          <title id="n-svg-t">La función y el punto evaluado</title>
+          <desc id="n-svg-d">Gráfica de la función con el punto correspondiente al valor evaluado.</desc>
+        </svg>
+        <p class="pie-grafica" id="n-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>f(x) no significa f por x.</strong> El paréntesis no es una multiplicación: indica cuál es la entrada.
+        f(3) no es «f veces 3», es «la salida de la máquina cuando entra el 3».
+      </div>
+
+      <h3>Practica: evalúa f(x)</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="dominio-rango">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Dominio y rango</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>El <strong>dominio</strong> son todas las entradas posibles (los valores de x). El <strong>rango</strong>,
+      todas las salidas (los valores de y). En un conjunto de puntos basta con listar las primeras coordenadas y las
+      segundas; en una gráfica hay que mirar hasta dónde llega a lo ancho y hasta dónde a lo alto.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="d-relacion">Relación</label>
+          <select id="d-relacion"></select>
+        </div>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="d-dominio"></div>
+        <div class="linea" id="d-rango"></div>
+        <div class="linea" id="d-comentario"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="d-svg" viewBox="0 0 520 400" role="img" aria-labelledby="d-svg-t d-svg-d">
+          <title id="d-svg-t">Gráfica de la relación</title>
+          <desc id="d-svg-d">Gráfica de la relación elegida, para leer el dominio a lo ancho y el rango a lo alto.</desc>
+        </svg>
+        <p class="pie-grafica" id="d-svg-texto"></p>
+      </div>
+
+      <h3>Clasificar funciones por su forma</h3>
+      <table class="reglas">
+        <caption>Tipos de función según su forma algebraica, con la pista que las delata.</caption>
+        <thead><tr><th scope="col">Tipo</th><th scope="col">Forma</th><th scope="col">Cómo se reconoce</th></tr></thead>
+        <tbody>
+          <tr><td>Lineal</td><td>f(x) = mx + b</td><td>La x aparece sola, sin exponente.</td></tr>
+          <tr><td>Cuadrática</td><td>f(x) = ax² + bx + c</td><td>Hay un x²; su gráfica es una parábola.</td></tr>
+          <tr><td>Exponencial</td><td>f(x) = a · bˣ</td><td>La x está en el exponente, no en la base.</td></tr>
+          <tr><td>Racional</td><td>f(x) = fracción con x abajo</td><td>La variable aparece en el denominador.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="caja-tip">
+        <strong>El dominio se lee a lo ancho y el rango a lo alto.</strong> Con f(x) = x² la gráfica se extiende a lo
+        ancho sin límite (dominio: todos los reales), pero nunca baja del eje x (rango: y ≥ 0).
+      </div>
+
+      <h3>Practica: dominio, rango y tipo</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 7.2 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function llenaSelect(sel, banco){
+  banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+
+/* ============================================================
+   Plano cartesiano genérico
+   opciones: {rango, curvas:[{puntos:[[x,y]..]}], puntos:[[x,y]..],
+              lineaVertical:x, marca:[x,y], cortes:[[x,y]..]}
+   ============================================================ */
+function dibujaPlano(svg, opciones){
+  opciones = opciones || {};
+  limpiaSVG(svg);
+  var caja = (svg.getAttribute("viewBox") || "0 0 520 400").split(/\s+/);
+  var W = parseFloat(caja[2]) || 520, H = parseFloat(caja[3]) || 400, m = 44;
+  var r = opciones.rango || {x0:-7, x1:7, y0:-7, y1:7};
+
+  function px(x){ return m + (x - r.x0)/(r.x1 - r.x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - r.y0)/(r.y1 - r.y0) * (H - 2*m); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  for (var gx = Math.ceil(r.x0); gx <= r.x1; gx++)
+    crea("line", {x1:px(gx), y1:m, x2:px(gx), y2:H-m, stroke:"#ececec", "stroke-width":1});
+  for (var gy = Math.ceil(r.y0); gy <= r.y1; gy++)
+    crea("line", {x1:m, y1:py(gy), x2:W-m, y2:py(gy), stroke:"#ececec", "stroke-width":1});
+  crea("line", {x1:m, y1:py(0), x2:W-m, y2:py(0), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(0), y1:m, x2:px(0), y2:H-m, stroke:"#555", "stroke-width":2});
+  crea("text", {x:W-m, y:py(0)-8, "text-anchor":"end", "font-size":13, fill:"#555"}, "x");
+  crea("text", {x:px(0)+8, y:m+12, "font-size":13, fill:"#555"}, "y");
+  for (var tx = Math.ceil(r.x0); tx <= r.x1; tx += 2)
+    if (tx !== 0) crea("text", {x:px(tx), y:py(0)+16, "text-anchor":"middle", "font-size":12, fill:"#555"}, tx);
+  for (var ty = Math.ceil(r.y0); ty <= r.y1; ty += 2)
+    if (ty !== 0) crea("text", {x:px(0)-8, y:py(ty)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, ty);
+
+  (opciones.curvas || []).forEach(function(c){
+    if (!c.puntos.length) return;
+    var d = c.puntos.map(function(p,i){ return (i ? "L" : "M") + px(p[0]).toFixed(1) + " " + py(p[1]).toFixed(1); }).join(" ");
+    crea("path", {d:d, fill:"none", stroke:"#006064", "stroke-width":3});
+  });
+
+  (opciones.puntos || []).forEach(function(p){
+    crea("circle", {cx:px(p[0]), cy:py(p[1]), r:7, fill:"#006064", stroke:"#fff", "stroke-width":2});
+  });
+
+  if (opciones.lineaVertical !== undefined && opciones.lineaVertical !== null){
+    var xv = opciones.lineaVertical;
+    crea("line", {x1:px(xv), y1:m, x2:px(xv), y2:H-m, stroke:"#b71c1c", "stroke-width":3, "stroke-dasharray":"8 5"});
+    var xEt = Math.min(Math.max(px(xv), m + 34), W - m - 34);
+    crea("text", {x:xEt, y:m - 14, "text-anchor":"middle", "font-size":14, "font-weight":"bold",
+                  fill:"#b71c1c", stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, "x = " + xv);
+  }
+  (opciones.cortes || []).forEach(function(p){
+    crea("circle", {cx:px(p[0]), cy:py(p[1]), r:8, fill:"#b71c1c", stroke:"#fff", "stroke-width":3});
+  });
+  if (opciones.marca){
+    crea("circle", {cx:px(opciones.marca[0]), cy:py(opciones.marca[1]), r:8, fill:"#fff", stroke:"#00363a", "stroke-width":3});
+    crea("text", {x:px(opciones.marca[0])+12, y:py(opciones.marca[1])-12, "font-size":13,
+                  "font-weight":"bold", fill:"#00363a"},
+         "(" + redondea(opciones.marca[0],2) + ", " + redondea(opciones.marca[1],2) + ")");
+  }
+}
+
+/* Motor común de práctica */
+function creaPractica(banco, ids){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   Banco de funciones (módulos 1 y 3)
+   ============================================================ */
+var FUNCIONES = [
+  { etiqueta:"f(x) = 2x − 3", f:function(x){ return 2*x - 3; },
+    pasos:function(x){ return [
+      "Sustituir la entrada entre paréntesis: f(" + x + ") = 2(" + x + ") − 3.",
+      "Multiplicar: 2(" + x + ") = " + (2*x) + ", así que queda " + (2*x) + " − 3.",
+      "Restar: <strong>f(" + x + ") = " + (2*x - 3) + "</strong>."
+    ]; } },
+  { etiqueta:"f(x) = x² + 1", f:function(x){ return x*x + 1; },
+    pasos:function(x){ return [
+      "Sustituir entre paréntesis: f(" + x + ") = (" + x + ")² + 1. El paréntesis es imprescindible con números negativos.",
+      "Elevar al cuadrado: (" + x + ")² = " + (x*x) + ". Ojo: el cuadrado de un negativo es positivo.",
+      "Sumar 1: <strong>f(" + x + ") = " + (x*x + 1) + "</strong>."
+    ]; } },
+  { etiqueta:"f(x) = 4x", f:function(x){ return 4*x; },
+    pasos:function(x){ return [
+      "Sustituir: f(" + x + ") = 4(" + x + ").",
+      "Multiplicar: <strong>f(" + x + ") = " + (4*x) + "</strong>. Fíjate en que 4(3) es 12, no 43."
+    ]; } },
+  { etiqueta:"f(x) = x + 5", f:function(x){ return x + 5; },
+    pasos:function(x){ return [
+      "Sustituir: f(" + x + ") = (" + x + ") + 5.",
+      "Sumar: <strong>f(" + x + ") = " + (x + 5) + "</strong>."
+    ]; } },
+  { etiqueta:"f(x) = −3x + 2", f:function(x){ return -3*x + 2; },
+    pasos:function(x){ return [
+      "Sustituir: f(" + x + ") = −3(" + x + ") + 2.",
+      "Multiplicar respetando los signos: −3(" + x + ") = " + (-3*x) + ".",
+      "Sumar 2: <strong>f(" + x + ") = " + (-3*x + 2) + "</strong>."
+    ]; } },
+  { etiqueta:"f(x) = x² − 2x", f:function(x){ return x*x - 2*x; },
+    pasos:function(x){ return [
+      "Sustituir en los dos sitios donde aparece la x: f(" + x + ") = (" + x + ")² − 2(" + x + ").",
+      "Calcular cada parte: (" + x + ")² = " + (x*x) + " y 2(" + x + ") = " + (2*x) + ".",
+      "Restar: <strong>f(" + x + ") = " + (x*x) + " − (" + (2*x) + ") = " + (x*x - 2*x) + "</strong>."
+    ]; } }
+];
+function curvaDe(f, r, paso){
+  var puntos = [];
+  for (var x = r.x0; x <= r.x1 + 1e-9; x += (paso || 0.1)){
+    var y = f(x);
+    if (isFinite(y) && y >= r.y0 - 20 && y <= r.y1 + 20) puntos.push([x, y]);
+  }
+  return puntos;
+}
+
+/* ============================================================
+   MÓDULO 1 · Máquina de funciones
+   ============================================================ */
+var registro = [];
+function cajaMaquina(rot, val, clase){
+  return '<div class="caja-maq ' + (clase || "") + '"><span class="rot">' + rot +
+         '</span><span class="val">' + val + '</span></div>';
+}
+function pintaMaquina(entrada, regla, salida){
+  $("m-visual").innerHTML =
+    cajaMaquina("entrada", entrada === null ? "x" : entrada) +
+    '<span class="flecha" aria-hidden="true">→</span>' +
+    cajaMaquina("regla", regla, "caja-regla") +
+    '<span class="flecha" aria-hidden="true">→</span>' +
+    cajaMaquina("salida", salida === null ? "f(x)" : salida);
+}
+function pintaTabla(){
+  if (!registro.length){ $("m-tabla").innerHTML = ""; return; }
+  var filas = registro.map(function(p){
+    return "<tr><td>" + p[0] + "</td><td>" + p[1] + "</td><td>(" + p[0] + ", " + p[1] + ")</td></tr>";
+  }).join("");
+  $("m-tabla").innerHTML =
+    '<table class="reglas"><caption>Pares (entrada, salida) generados por la máquina.</caption>' +
+    '<thead><tr><th scope="col">Entrada x</th><th scope="col">Salida f(x)</th><th scope="col">Par ordenado</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+}
+function procesaEntrada(){
+  var fn = FUNCIONES[parseInt($("m-regla").value,10) || 0];
+  var x = parseFloat($("m-x").value);
+  if (isNaN(x)){
+    $("m-aviso").innerHTML = "<strong>Falta la entrada.</strong> Escribe un número en la casilla de entrada para que la máquina pueda procesarlo.";
+    $("m-aviso").className = "caja-aviso visible";
+    return;
+  }
+  $("m-aviso").className = "caja-aviso";
+  var y = fn.f(x);
+  pintaMaquina(x, fn.etiqueta.replace("f(x) = ", ""), redondea(y,3));
+  $("m-pasos").innerHTML = fn.pasos(x).map(function(t,i){
+    return '<div class="paso"><span class="n" aria-hidden="true">' + (i+1) + '</span>' + t + "</div>";
+  }).join("");
+
+  var repetida = null;
+  registro.forEach(function(p){ if (p[0] === x && p[1] !== redondea(y,3)) repetida = p; });
+  var ya = registro.some(function(p){ return p[0] === x && p[1] === redondea(y,3); });
+  if (!ya) registro.push([x, redondea(y,3)]);
+  pintaTabla();
+  if (repetida){
+    $("m-aviso").innerHTML = "<strong>La misma entrada con dos salidas distintas.</strong> Eso solo puede pasar si cambiaste la regla a mitad de camino: una función no puede dar dos resultados para el mismo valor de x.";
+    $("m-aviso").className = "caja-aviso visible";
+  }
+}
+function actualizaRota(){
+  var x = parseFloat($("m-rota-x").value);
+  if (isNaN(x) || x < 0){
+    $("m-rota-visual").innerHTML = cajaMaquina("entrada", isNaN(x) ? "?" : x) +
+      '<span class="flecha" aria-hidden="true">→</span>' + cajaMaquina("regla", "±√x", "caja-regla") +
+      '<span class="flecha" aria-hidden="true">→</span>' + cajaMaquina("salida", "—", "caja-doble");
+    $("m-rota-texto").innerHTML = isNaN(x)
+      ? "Escribe un número para probar la máquina."
+      : "Con un número negativo la raíz cuadrada no existe entre los números reales, así que la máquina no devuelve nada: ese valor queda fuera del dominio.";
+    return;
+  }
+  var r = Math.sqrt(x);
+  $("m-rota-visual").innerHTML = cajaMaquina("entrada", x) +
+    '<span class="flecha" aria-hidden="true">→</span>' + cajaMaquina("regla", "±√x", "caja-regla") +
+    '<span class="flecha" aria-hidden="true">→</span>' +
+    cajaMaquina("salida", x === 0 ? "0" : "+" + redondea(r,3) + " y −" + redondea(r,3), "caja-doble");
+  $("m-rota-texto").innerHTML = x === 0
+    ? "Con la entrada 0 sale una sola cosa, el 0. Pero basta con que <em>otra</em> entrada dé dos salidas para que la relación deje de ser función."
+    : "La entrada " + x + " produce <strong>dos salidas distintas</strong>: +" + redondea(r,3) + " y −" + redondea(r,3) +
+      ". Por eso esta relación <strong>no es una función</strong>: una máquina de funciones tiene que dar un único resultado por cada entrada.";
+}
+
+/* ============================================================
+   MÓDULO 2 · Prueba de la línea vertical
+   ============================================================ */
+var RELACIONES = [
+  { etiqueta:"y = x + 1 (recta)", esFuncion:true,
+    ramas:[function(x){ return x + 1; }],
+    comentario:"Cada valor de x da una sola altura: la línea vertical corta siempre en un punto." },
+  { etiqueta:"y = x² − 2 (parábola)", esFuncion:true,
+    ramas:[function(x){ return x*x - 2; }],
+    comentario:"Aunque la parábola tenga dos ramas hacia arriba, para cada x hay un solo punto." },
+  { etiqueta:"y = |x| (valor absoluto)", esFuncion:true,
+    ramas:[function(x){ return Math.abs(x); }],
+    comentario:"La V también pasa la prueba: un solo punto por cada valor de x." },
+  { etiqueta:"x² + y² = 25 (circunferencia)", esFuncion:false,
+    ramas:[function(x){ return Math.abs(x) <= 5 ? Math.sqrt(25 - x*x) : NaN; },
+           function(x){ return Math.abs(x) <= 5 ? -Math.sqrt(25 - x*x) : NaN; }],
+    comentario:"Entre x = −5 y x = 5 la línea vertical corta en dos puntos: arriba y abajo. No es función." },
+  { etiqueta:"x = y² − 3 (parábola acostada)", esFuncion:false,
+    ramas:[function(x){ return x >= -3 ? Math.sqrt(x + 3) : NaN; },
+           function(x){ return x >= -3 ? -Math.sqrt(x + 3) : NaN; }],
+    comentario:"A partir de x = −3 cada valor de x tiene dos salidas: la parábola acostada no es función." },
+  { etiqueta:"x = 2 (recta vertical)", esFuncion:false, vertical:2,
+    ramas:[],
+    comentario:"En x = 2 la línea vertical coincide con la gráfica entera: infinitos puntos para una sola entrada." }
+];
+function itemLV(){ return RELACIONES[parseInt($("lv-grafica").value,10) || 0]; }
+function actualizaLineaVertical(){
+  var rel = itemLV();
+  var xv = parseFloat($("lv-x").value);
+  $("lv-x-val").textContent = xv;
+  var rango = {x0:-7, x1:7, y0:-5, y1:5};
+
+  var curvas = rel.ramas.map(function(f){
+    var puntos = [], actual = [];
+    for (var x = rango.x0; x <= rango.x1 + 1e-9; x += 0.05){
+      var y = f(x);
+      if (isFinite(y) && y >= rango.y0 - 2 && y <= rango.y1 + 2) actual.push([x,y]);
+      else if (actual.length){ puntos.push(actual); actual = []; }
+    }
+    if (actual.length) puntos.push(actual);
+    return puntos;
+  });
+  var trozos = [];
+  curvas.forEach(function(lista){ lista.forEach(function(t){ trozos.push({puntos:t}); }); });
+  if (rel.vertical !== undefined)
+    trozos.push({puntos:[[rel.vertical, rango.y0],[rel.vertical, rango.y1]]});
+
+  var cortes = [];
+  rel.ramas.forEach(function(f){
+    var y = f(xv);
+    if (isFinite(y) && y >= rango.y0 && y <= rango.y1) cortes.push([xv, y]);
+  });
+  var infinitos = (rel.vertical !== undefined && Math.abs(xv - rel.vertical) < 1e-9);
+
+  dibujaPlano($("lv-svg"), {rango:rango, curvas:trozos, lineaVertical:xv, cortes:cortes});
+
+  var n = cortes.length;
+  $("lv-cortes").innerHTML = infinitos
+    ? "En x = " + xv + " la línea vertical se superpone con la gráfica: <strong>infinitos cortes</strong>."
+    : "En x = " + xv + " la línea vertical corta la gráfica en <strong>" + n + "</strong> punto" + (n === 1 ? "" : "s") +
+      (n === 0 ? ": ahí la relación no está definida." : ".");
+  var ver = $("lv-veredicto");
+  ver.textContent = rel.esFuncion
+    ? "✓ Es una función: no hay ninguna posición donde la línea corte más de una vez."
+    : "✗ No es una función: existen posiciones donde la línea corta más de una vez.";
+  ver.className = "linea veredicto " + (rel.esFuncion ? "bien" : "mal");
+  $("lv-svg-texto").textContent = rel.comentario;
+}
+var BANCO_P2 = [
+  { q:"Una línea vertical corta la gráfica en dos puntos. ¿Es función?",
+    ops:["No","Sí","Solo si es una parábola"], ok:0,
+    exp:"Dos cortes significan dos salidas para la misma entrada, y eso rompe la definición de función." },
+  { q:"La gráfica de y = x² − 2, ¿es función?", ops:["Sí","No","Solo para x positivos"], ok:0,
+    exp:"Cada x da una sola y. La parábola abierta hacia arriba pasa la prueba sin problemas." },
+  { q:"La circunferencia x² + y² = 25, ¿es función?", ops:["No","Sí","Solo la mitad de arriba"], ok:0,
+    exp:"Para x = 3, por ejemplo, hay dos puntos: (3, 4) y (3, −4). No pasa la prueba." },
+  { q:"La recta vertical x = 2, ¿es función?", ops:["No","Sí","Depende del rango"], ok:0,
+    exp:"Para la entrada x = 2 hay infinitas salidas, y para las demás no hay ninguna." },
+  { q:"La relación {(1, 2), (1, 5), (3, 4)}, ¿es función?", ops:["No: el 1 tiene dos salidas","Sí","Solo si se ordena"], ok:0,
+    exp:"La entrada 1 aparece con salida 2 y con salida 5: la misma entrada da dos resultados distintos." },
+  { q:"La relación {(1, 2), (3, 2), (5, 2)}, ¿es función?", ops:["Sí","No: se repite la salida","Solo si las salidas cambian"], ok:0,
+    exp:"Repetir la <em>salida</em> está permitido; lo prohibido es repetir la entrada con salidas distintas." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Evaluar f(x)
+   ============================================================ */
+function actualizaEvaluacion(){
+  var fn = FUNCIONES[parseInt($("n-funcion").value,10) || 0];
+  var x = parseFloat($("n-x").value);
+  if (isNaN(x)){
+    $("n-aviso").innerHTML = "<strong>Falta el valor.</strong> Escribe el número en el que quieres evaluar la función.";
+    $("n-aviso").className = "caja-aviso visible";
+    $("n-pasos").innerHTML = "";
+    return;
+  }
+  $("n-aviso").className = "caja-aviso";
+  $("n-pasos").innerHTML = fn.pasos(x).map(function(t,i){
+    return '<div class="paso"><span class="n" aria-hidden="true">' + (i+1) + '</span>' + t + "</div>";
+  }).join("");
+
+  var rango = {x0:-7, x1:7, y0:-7, y1:9};
+  var puntos = [], actual = [];
+  for (var t = rango.x0; t <= rango.x1 + 1e-9; t += 0.05){
+    var y = fn.f(t);
+    if (isFinite(y) && y >= rango.y0 - 2 && y <= rango.y1 + 2) actual.push([t,y]);
+    else if (actual.length){ puntos.push({puntos:actual}); actual = []; }
+  }
+  if (actual.length) puntos.push({puntos:actual});
+  var fx = fn.f(x);
+  dibujaPlano($("n-svg"), {rango:rango, curvas:puntos,
+    marca: (fx >= rango.y0 && fx <= rango.y1) ? [x, fx] : null});
+  $("n-svg-texto").textContent = (fx >= rango.y0 && fx <= rango.y1)
+    ? "El punto marcado es (" + x + ", " + redondea(fx,2) + "): la entrada en el eje x y la salida en el eje y."
+    : "El resultado f(" + x + ") = " + redondea(fx,2) + " queda fuera de la parte visible de la gráfica.";
+}
+var BANCO_P3 = [
+  { q:"f(x) = 4x. ¿Cuánto vale f(3)?", ops:["12","7","43"], ok:0,
+    exp:"f(3) = 4(3) = 12. El 43 sale de pegar los dígitos en vez de multiplicar." },
+  { q:"f(x) = x + 5. ¿Cuánto vale f(−2)?", ops:["3","7","−3"], ok:0,
+    exp:"f(−2) = (−2) + 5 = 3." },
+  { q:"f(x) = x². ¿Cuánto vale f(4)?", ops:["16","8","4"], ok:0,
+    exp:"f(4) = 4² = 16. El 8 sale de multiplicar por 2 en vez de elevar al cuadrado." },
+  { q:"f(x) = x² + 1. ¿Cuánto vale f(−2)?", ops:["5","−3","−5"], ok:0,
+    exp:"f(−2) = (−2)² + 1 = 4 + 1 = 5. El cuadrado de un negativo es positivo." },
+  { q:"f(x) = 2x − 3. ¿Cuánto vale f(0)?", ops:["−3","0","3"], ok:0,
+    exp:"f(0) = 2(0) − 3 = −3. Evaluar en 0 siempre deja el término independiente." },
+  { q:"f(x) = −3x + 2. ¿Cuánto vale f(−1)?", ops:["5","−1","1"], ok:0,
+    exp:"f(−1) = −3(−1) + 2 = 3 + 2 = 5. Menos por menos da más." },
+  { q:"¿Qué significa f(3)?", ops:["La salida de la función cuando la entrada es 3","f multiplicado por 3","La pendiente en 3"], ok:0,
+    exp:"El paréntesis indica la entrada; no es una multiplicación." }
+];
+
+/* ============================================================
+   MÓDULO 4 · Dominio y rango
+   ============================================================ */
+var RELACIONES_DR = [
+  { etiqueta:"Puntos {(1, 2), (3, 4), (5, 6)}",
+    puntos:[[1,2],[3,4],[5,6]],
+    dominio:"{1, 3, 5}", rango:"{2, 4, 6}",
+    comentario:"Con un conjunto de puntos basta con listar las primeras coordenadas (dominio) y las segundas (rango)." },
+  { etiqueta:"Puntos {(0, 1), (2, 3), (4, 5)}",
+    puntos:[[0,1],[2,3],[4,5]],
+    dominio:"{0, 2, 4}", rango:"{1, 3, 5}",
+    comentario:"Los valores se escriben en orden y sin repetir." },
+  { etiqueta:"Puntos {(−2, 4), (−1, 1), (0, 0), (1, 1), (2, 4)}",
+    puntos:[[-2,4],[-1,1],[0,0],[1,1],[2,4]],
+    dominio:"{−2, −1, 0, 1, 2}", rango:"{0, 1, 4}",
+    comentario:"El 1 y el 4 aparecen dos veces como salida, pero en el rango se escriben una sola vez. Repetir salidas está permitido; repetir entradas con salidas distintas, no." },
+  { etiqueta:"f(x) = 2x − 3 (lineal)",
+    f:function(x){ return 2*x - 3; },
+    dominio:"todos los números reales", rango:"todos los números reales",
+    comentario:"La recta se extiende sin límite a lo ancho y a lo alto: no hay entradas prohibidas ni salidas inalcanzables." },
+  { etiqueta:"f(x) = x² (cuadrática)",
+    f:function(x){ return x*x; },
+    dominio:"todos los números reales", rango:"y ≥ 0",
+    comentario:"A lo ancho no hay límite, pero la parábola nunca baja del eje x: ninguna salida es negativa." },
+  { etiqueta:"f(x) = x² + 1 (cuadrática desplazada)",
+    f:function(x){ return x*x + 1; },
+    dominio:"todos los números reales", rango:"y ≥ 1",
+    comentario:"La misma parábola subida una unidad: el punto más bajo pasa de 0 a 1, y con él el rango." },
+  { etiqueta:"f(x) = 1/x (racional)",
+    f:function(x){ return 1/x; },
+    dominio:"todos los reales menos x = 0", rango:"todos los reales menos y = 0",
+    comentario:"Aquí vuelve el valor excluido del Tema 5: x = 0 anula el denominador. Y por más grande que sea x, la salida nunca llega a ser exactamente 0." }
+];
+function actualizaDominioRango(){
+  var e = RELACIONES_DR[parseInt($("d-relacion").value,10) || 0];
+  $("d-dominio").innerHTML = "<strong>Dominio (entradas, eje x):</strong> " + e.dominio + ".";
+  $("d-rango").innerHTML = "<strong>Rango (salidas, eje y):</strong> " + e.rango + ".";
+  $("d-comentario").textContent = e.comentario;
+
+  var rango = {x0:-7, x1:7, y0:-7, y1:9};
+  if (e.puntos){
+    dibujaPlano($("d-svg"), {rango:rango, puntos:e.puntos});
+    $("d-svg-texto").textContent = "Los puntos de la relación. El dominio se lee en las posiciones horizontales y el rango, en las verticales.";
+  } else {
+    var trozos = [], actual = [];
+    for (var x = rango.x0; x <= rango.x1 + 1e-9; x += 0.05){
+      var y = e.f(x);
+      if (isFinite(y) && Math.abs(y) < 1e6 && y >= rango.y0 - 2 && y <= rango.y1 + 2) actual.push([x,y]);
+      else if (actual.length){ trozos.push({puntos:actual}); actual = []; }
+    }
+    if (actual.length) trozos.push({puntos:actual});
+    dibujaPlano($("d-svg"), {rango:rango, curvas:trozos});
+    $("d-svg-texto").textContent = "Gráfica de " + e.etiqueta + ". El dominio se lee a lo ancho y el rango, a lo alto.";
+  }
+}
+var BANCO_P4 = [
+  { q:"Para los puntos {(0, 1), (2, 3), (4, 5)}, ¿cuál es el dominio?",
+    ops:["{0, 2, 4}","{1, 3, 5}","{0, 1, 2, 3, 4, 5}"], ok:0,
+    exp:"El dominio son las entradas, es decir, las primeras coordenadas." },
+  { q:"Para los mismos puntos, ¿cuál es el rango?",
+    ops:["{1, 3, 5}","{0, 2, 4}","{5}"], ok:0,
+    exp:"El rango son las salidas: las segundas coordenadas." },
+  { q:"¿Cuál es el rango de f(x) = x²?",
+    ops:["y ≥ 0","todos los reales","y > 0"], ok:0,
+    exp:"Ningún cuadrado es negativo, y el 0 sí se alcanza (en x = 0), así que el rango incluye el cero." },
+  { q:"¿Cuál es el dominio de f(x) = 1/x?",
+    ops:["Todos los reales menos x = 0","Todos los reales","x > 0"], ok:0,
+    exp:"x = 0 anularía el denominador, y la división entre cero no está definida." },
+  { q:"f(x) = 3ˣ, ¿qué tipo de función es?",
+    ops:["Exponencial","Cuadrática","Lineal"], ok:0,
+    exp:"La x está en el exponente: eso es lo que define una función exponencial." },
+  { q:"f(x) = 5x − 2, ¿qué tipo de función es?",
+    ops:["Lineal","Cuadrática","Racional"], ok:0,
+    exp:"La x aparece sola, sin exponente ni denominador: su gráfica es una recta." },
+  { q:"f(x) = x² − 4x + 1, ¿qué tipo de función es?",
+    ops:["Cuadrática","Lineal","Exponencial"], ok:0,
+    exp:"El término x² manda: la gráfica es una parábola." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+llenaSelect($("m-regla"), FUNCIONES);
+pintaMaquina(null, "2x − 3", null);
+$("m-regla").addEventListener("change", function(){
+  var fn = FUNCIONES[parseInt($("m-regla").value,10) || 0];
+  registro = []; pintaTabla();
+  $("m-pasos").innerHTML = "";
+  pintaMaquina(null, fn.etiqueta.replace("f(x) = ", ""), null);
+});
+$("m-procesar").addEventListener("click", procesaEntrada);
+$("m-limpiar").addEventListener("click", function(){ registro = []; pintaTabla(); });
+$("m-rota-x").addEventListener("input", actualizaRota);
+actualizaRota();
+
+llenaSelect($("lv-grafica"), RELACIONES);
+$("lv-grafica").addEventListener("change", actualizaLineaVertical);
+$("lv-x").addEventListener("input", actualizaLineaVertical);
+actualizaLineaVertical();
+
+llenaSelect($("n-funcion"), FUNCIONES);
+$("n-funcion").addEventListener("change", actualizaEvaluacion);
+$("n-x").addEventListener("input", actualizaEvaluacion);
+actualizaEvaluacion();
+
+llenaSelect($("d-relacion"), RELACIONES_DR);
+$("d-relacion").addEventListener("change", actualizaDominioRango);
+actualizaDominioRango();
+
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>
