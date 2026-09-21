@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Repaso del Nivel 4 · Índice de prácticas interactivas</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Índice de repaso del Nivel 4 de Matemáticas: 44 prácticas interactivas organizadas por tema y lección, con enlace directo a cada una.">
+<meta name="description" content="Índice de repaso del Nivel 4 de Matemáticas: 70 prácticas interactivas organizadas por tema y lección, con enlace directo a cada una.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
@@ -47,18 +47,34 @@
          border:2px solid var(--marco);border-radius:8px;padding:8px 18px;font-weight:700;}
   button:hover{background:var(--marco-bg);}
 
-  section.tema{background:#fff;border-radius:12px;margin-bottom:18px;overflow:hidden;
-               border:2px solid #e3e3e3;border-left-width:10px;}
-  section.tema h2{margin:0;padding:14px 20px;font-size:19px;color:#fff;}
+  /* ---------- Acordeón de temas (details/summary nativo) ---------- */
+  details.tema{background:#fff;border-radius:12px;margin-bottom:12px;overflow:hidden;
+               border:2px solid #e3e3e3;border-left-width:10px;scroll-margin-top:12px;}
+  details.tema > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;
+               padding:12px 18px;color:#fff;}
+  details.tema > summary::-webkit-details-marker{display:none;}
+  details.tema > summary:focus-visible{outline:3px solid #ffd54f;outline-offset:-5px;}
+  details.tema > summary h2{margin:0;font-size:18px;flex:1;line-height:1.35;}
+  details.tema > summary .cuenta{font-size:14px;font-weight:600;white-space:nowrap;
+               background:rgba(0,0,0,.28);padding:3px 10px;border-radius:20px;}
+  details.tema > summary .flecha{font-size:14px;transition:transform .2s;}
+  details.tema[open] > summary .flecha{transform:rotate(90deg);}
+  @media (prefers-reduced-motion:reduce){ details.tema > summary .flecha{transition:none;} }
   .tema-cuerpo{padding:6px 20px 18px;}
-  .t1{border-left-color:var(--t1);} .t1 h2{background:var(--t1);}
-  .t2{border-left-color:var(--t2);} .t2 h2{background:var(--t2);}
-  .t3{border-left-color:var(--t3);} .t3 h2{background:var(--t3);}
-  .t4{border-left-color:var(--t4);} .t4 h2{background:var(--t4);}
-  .t5{border-left-color:var(--t5);} .t5 h2{background:var(--t5);}
-  .t6{border-left-color:var(--t6);} .t6 h2{background:var(--t6);}
-  .t7{border-left-color:var(--t7);} .t7 h2{background:var(--t7);}
-  .t8{border-left-color:var(--t8);} .t8 h2{background:var(--t8);}
+
+  nav.indice-temas{background:#fff;border:2px solid var(--marco-bg);border-radius:12px;padding:14px 20px;margin-bottom:16px;}
+  nav.indice-temas h2{font-size:16px;margin:0 0 8px;color:var(--marco-d);}
+  nav.indice-temas ol{margin:0;padding-left:22px;columns:2 260px;column-gap:28px;font-size:15px;}
+  nav.indice-temas li{margin:3px 0;break-inside:avoid;}
+  nav.indice-temas a{color:var(--marco-d);}
+  .t1{border-left-color:var(--t1);} .t1 > summary{background:var(--t1);}
+  .t2{border-left-color:var(--t2);} .t2 > summary{background:var(--t2);}
+  .t3{border-left-color:var(--t3);} .t3 > summary{background:var(--t3);}
+  .t4{border-left-color:var(--t4);} .t4 > summary{background:var(--t4);}
+  .t5{border-left-color:var(--t5);} .t5 > summary{background:var(--t5);}
+  .t6{border-left-color:var(--t6);} .t6 > summary{background:var(--t6);}
+  .t7{border-left-color:var(--t7);} .t7 > summary{background:var(--t7);}
+  .t8{border-left-color:var(--t8);} .t8 > summary{background:var(--t8);}
 
   h3.leccion{font-size:16px;margin:18px 0 8px;color:var(--txt);border-bottom:2px solid #eee;padding-bottom:5px;}
   h3.leccion a{color:inherit;}
@@ -70,7 +86,7 @@
   ul.modulos .titulo{display:block;font-weight:700;color:var(--marco-d);font-size:15px;}
   ul.modulos .desc{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
   ul.modulos .abrir{display:block;font-size:13px;font-weight:700;color:var(--acento);margin-top:8px;}
-  li.oculto,section.oculto,h3.oculto{display:none;}
+  li.oculto,details.oculto,h3.oculto,ul.oculto{display:none;}
 
   .sin-resultados{display:none;background:#fff8e1;border:2px solid #f9a825;border-left:8px solid #f9a825;
                   border-radius:10px;padding:16px 20px;color:#5c3900;font-size:15px;}
@@ -91,7 +107,8 @@
     <div class="ruta">Spanish ASE Math 4 · GEDparaHispanos</div>
     <h1>Repaso del Nivel 4: índice de prácticas interactivas</h1>
     <p>Las prácticas de los ocho temas del nivel, reunidas en un solo sitio. Cada enlace abre directamente la
-    práctica que necesitas, no la página entera. Si el informe del simulacro señaló un tema, búscalo aquí y ve al grano.</p>
+    práctica que necesitas, no la página entera. Si el informe del simulacro señaló un tema, búscalo aquí y ve al grano.
+    Los temas están plegados: pulsa el nombre de uno para desplegar sus prácticas.</p>
   </header>
 
   <div class="buscador">
@@ -102,6 +119,8 @@
       («discriminante», «eliminación») como las palabras corrientes («bote», «monedas», «préstamo»).</p>
     <div class="fila-btn">
       <button type="button" id="limpiar">Ver todo otra vez</button>
+      <button type="button" id="abrir-todo">Abrir todos los temas</button>
+      <button type="button" id="cerrar-todo">Cerrar todos los temas</button>
     </div>
     <p class="contador" id="contador" role="status"></p>
   </div>
@@ -109,6 +128,11 @@
   <div class="sin-resultados" id="sin-resultados">
     No hay ninguna práctica con esa palabra. Prueba con un término más corto o pulsa «Ver todo otra vez».
   </div>
+
+  <nav class="indice-temas" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Ir directamente a un tema</h2>
+    <ol id="indice-temas"></ol>
+  </nav>
 
   <div id="lista"></div>
 
@@ -446,13 +470,28 @@ var TEMAS = [
 ];
 
 /* ---------- Construcción de la lista ---------- */
+function numLeccion(l){                     /* "Lección 3.2 · ..." -> 3.2 */
+  var m = l.titulo.match(/(\d+)\.(\d+)/);
+  return m ? parseInt(m[1],10)*100 + parseInt(m[2],10) : 0;
+}
+function cuentaTema(t){
+  var n = 0; t.lecciones.forEach(function(l){ n += l.modulos.length; }); return n;
+}
 function construye(){
   var contenedor = document.getElementById("lista");
-  var html = "";
+  var indice = document.getElementById("indice-temas");
+  var html = "", htmlIndice = "";
   TEMAS.forEach(function(t){
-    html += '<section class="tema ' + t.clase + '" data-tema="' + t.n + '">';
-    html += "<h2>" + t.titulo + "</h2><div class=\"tema-cuerpo\">";
-    t.lecciones.forEach(function(l){
+    var n = cuentaTema(t);
+    var tituloCorto = t.titulo.replace(/^Tema \d+ · /, "");
+    htmlIndice += '<li><a href="#tema-' + t.n + '">' + tituloCorto + "</a> (" + n + ")</li>";
+    html += '<details class="tema ' + t.clase + '" id="tema-' + t.n + '" data-tema="' + t.n + '">';
+    html += '<summary><h2>' + t.titulo + "</h2>" +
+            '<span class="cuenta" data-total="' + n + '">' + n + " prácticas</span>" +
+            '<span class="flecha" aria-hidden="true">▶</span></summary>';
+    html += '<div class="tema-cuerpo">';
+    t.lecciones.slice().sort(function(a,b){ return numLeccion(a) - numLeccion(b); })
+     .forEach(function(l){
       var urlLeccion = l.url || (BASE + l.id);
       html += '<h3 class="leccion" data-leccion="' + (l.id || l.url) + '">' +
               '<a href="' + urlLeccion + '" target="_blank" rel="noopener noreferrer">' + l.titulo + "</a></h3>";
@@ -469,9 +508,10 @@ function construye(){
       });
       html += "</ul>";
     });
-    html += "</div></section>";
+    html += "</div></details>";
   });
   contenedor.innerHTML = html;
+  indice.innerHTML = htmlIndice;
 }
 
 /* ---------- Normalizar para buscar sin acentos ---------- */
@@ -481,31 +521,61 @@ function normaliza(t){
     .replace(/[óòö]/g,"o").replace(/[úùü]/g,"u").replace(/ñ/g,"n");
 }
 
+var estadoPrevio = null;   /* qué temas estaban abiertos antes de empezar a buscar */
+
+function temas(){ return document.querySelectorAll("details.tema"); }
+
 function filtra(){
   var q = normaliza(document.getElementById("filtro").value.trim());
   var visibles = 0, total = 0;
 
-  document.querySelectorAll("section.tema").forEach(function(sec){
-    var algoEnTema = false;
+  if (q && estadoPrevio === null){
+    estadoPrevio = [];
+    temas().forEach(function(d){ estadoPrevio.push(d.open); });
+  }
+
+  temas().forEach(function(sec, i){
+    var enTema = 0;
     sec.querySelectorAll("ul.modulos").forEach(function(ul){
       var algoEnLeccion = false;
       ul.querySelectorAll("li").forEach(function(li){
         total++;
         var coincide = !q || normaliza(li.getAttribute("data-busca")).indexOf(q) !== -1;
         li.className = coincide ? "" : "oculto";
-        if (coincide){ visibles++; algoEnLeccion = true; algoEnTema = true; }
+        if (coincide){ visibles++; enTema++; algoEnLeccion = true; }
       });
       ul.className = algoEnLeccion ? "modulos" : "modulos oculto";
       var titulo = ul.previousElementSibling;
       if (titulo) titulo.className = algoEnLeccion ? "leccion" : "leccion oculto";
     });
-    sec.className = "tema " + sec.getAttribute("data-tema").replace(/^/, "t") + (algoEnTema ? "" : " oculto");
+    sec.className = "tema t" + sec.getAttribute("data-tema") + (enTema ? "" : " oculto");
+    var cuenta = sec.querySelector(".cuenta");
+    var n = parseInt(cuenta.getAttribute("data-total"), 10);
+    if (q){
+      sec.open = enTema > 0;                       /* al buscar, se despliegan los temas con coincidencias */
+      cuenta.textContent = enTema + " de " + n;
+    } else {
+      cuenta.textContent = n + " prácticas";
+      if (estadoPrevio !== null) sec.open = estadoPrevio[i];
+    }
   });
+  if (!q) estadoPrevio = null;
 
   document.getElementById("contador").textContent = q
     ? "Se muestran " + visibles + " prácticas de " + total + "."
     : "Hay " + total + " prácticas disponibles en todo el nivel.";
   document.getElementById("sin-resultados").className = (q && visibles === 0) ? "sin-resultados visible" : "sin-resultados";
+}
+
+/* Abrir el tema indicado en la dirección (#tema-5) y llevar la vista hasta él */
+function abreDesdeAncla(){
+  var h = decodeURIComponent(location.hash.slice(1));
+  if (!/^tema-\d+$/.test(h)) return;
+  var d = document.getElementById(h);
+  if (!d) return;
+  d.open = true;
+  d.scrollIntoView({ block:"start" });
+  d.querySelector("summary").focus({ preventScroll:true });
 }
 
 construye();
@@ -515,7 +585,22 @@ document.getElementById("limpiar").addEventListener("click", function(){
   filtra();
   document.getElementById("filtro").focus();
 });
+document.getElementById("abrir-todo").addEventListener("click", function(){
+  temas().forEach(function(d){ d.open = true; });
+});
+document.getElementById("cerrar-todo").addEventListener("click", function(){
+  temas().forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abreDesdeAncla);
+document.getElementById("indice-temas").addEventListener("click", function(e){
+  var enlace = e.target.closest("a");
+  if (!enlace) return;
+  e.preventDefault();
+  history.replaceState(null, "", enlace.getAttribute("href"));
+  abreDesdeAncla();       /* funciona también si se pulsa dos veces el mismo tema */
+});
 filtra();
+abreDesdeAncla();
 </script>
 </body>
 </html>

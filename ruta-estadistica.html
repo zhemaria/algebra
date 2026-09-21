@@ -1,0 +1,704 @@
+<!doctype html>
+<!--
+  Repaso del Nivel 1 · Matemáticas — Índice de prácticas interactivas
+  Spanish ASE Math 1 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Cada enlace apunta a la parte exacta del interactivo, no solo a la página.
+  Anclas: #tema-1 … #tema-8 abren un tema; #leccion-1-1 … #leccion-8-3 llevan a una lección.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruta de Estadística y probabilidad · Niveles 1 a 3 · GEDparaHispanos</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Ruta transversal de Estadística y probabilidad: las 45 prácticas interactivas de los Niveles 1, 2 y 3 de Matemáticas de GEDparaHispanos, ordenadas por subtema de lo más sencillo a lo más avanzado.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --txt:#222; --bg:#f5f7fa; --gris:#555; --acento:#00695c;
+    --t1:#1a237e; --t2:#004d40; --t3:#bf360c;
+    --t4:#880e4f; --t5:#37474f; --t6:#4e342e; --t7:#006064; --t8:#b71c1c;
+    --marco:#424242; --marco-d:#212121; --marco-bg:#eceff1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);
+       line-height:1.6;font-size:16px;}
+  .contenedor{max-width:940px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+           clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--marco);color:#fff;padding:30px 28px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 10px;font-size:26px;font-weight:700;}
+  header.principal p{margin:6px 0 0;font-size:15px;}
+
+  .buscador{background:#fff;border:2px solid var(--marco-bg);border-radius:12px;padding:18px 20px;margin-bottom:20px;}
+  .buscador label{display:block;font-weight:700;color:var(--marco-d);margin-bottom:6px;}
+  .buscador input{width:100%;max-width:520px;padding:10px 12px;font-size:16px;font-family:inherit;
+                  border:2px solid #767676;border-radius:8px;}
+  .buscador input:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  .buscador .pista{font-size:14px;color:var(--gris);margin-top:8px;}
+  .buscador .contador{font-size:14px;color:var(--marco-d);font-weight:700;margin-top:10px;}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  button{font-family:inherit;font-size:15px;cursor:pointer;background:#fff;color:var(--marco-d);
+         border:2px solid var(--marco);border-radius:8px;padding:8px 18px;font-weight:700;}
+  button:hover{background:var(--marco-bg);}
+
+  details.tema{background:#fff;border-radius:12px;margin-bottom:14px;overflow:hidden;
+               border:2px solid #e3e3e3;border-left-width:10px;scroll-margin-top:12px;}
+  details.tema > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:12px 18px;color:#fff;}
+  details.tema > summary::-webkit-details-marker{display:none;}
+  details.tema > summary:focus-visible{outline:3px solid #ffd54f;outline-offset:-5px;}
+  details.tema > summary h2{margin:0;font-size:19px;flex:1;line-height:1.35;}
+  .cuenta{font-size:14px;font-weight:600;white-space:nowrap;background:rgba(0,0,0,.28);padding:3px 10px;border-radius:20px;}
+  .flecha{font-size:14px;transition:transform .2s;}
+  details.tema[open] > summary .flecha{transform:rotate(90deg);}
+  @media (prefers-reduced-motion:reduce){ .flecha{transition:none;} }
+  nav.indice{background:#fff;border:2px solid var(--marco-bg);border-radius:12px;padding:16px 20px;margin-bottom:16px;}
+  nav.indice h2{margin:0 0 8px;font-size:17px;color:var(--marco-d);}
+  nav.indice ol{margin:0;padding-left:22px;columns:2 280px;column-gap:28px;}
+  nav.indice li{margin:5px 0;}
+  nav.indice a{color:var(--marco-d);font-weight:600;}
+  h3.leccion{scroll-margin-top:12px;}
+  .tema-cuerpo{padding:6px 20px 18px;}
+  details.t1{border-left-color:var(--t1);} .t1 > summary{background:var(--t1);}
+  details.t2{border-left-color:var(--t2);} .t2 > summary{background:var(--t2);}
+  details.t3{border-left-color:var(--t3);} .t3 > summary{background:var(--t3);}
+  details.t4{border-left-color:var(--t4);} .t4 > summary{background:var(--t4);}
+  details.t5{border-left-color:var(--t5);} .t5 > summary{background:var(--t5);}
+  details.t6{border-left-color:var(--t6);} .t6 > summary{background:var(--t6);}
+  details.t7{border-left-color:var(--t7);} .t7 > summary{background:var(--t7);}
+  details.t8{border-left-color:var(--t8);} .t8 > summary{background:var(--t8);}
+
+  h3.leccion{font-size:16px;margin:18px 0 8px;color:var(--txt);border-bottom:2px solid #eee;padding-bottom:5px;}
+  h3.leccion a{color:inherit;}
+  ul.modulos{list-style:none;margin:0;padding:0;display:grid;gap:10px;
+             grid-template-columns:repeat(auto-fill,minmax(270px,1fr));}
+  ul.modulos li a{display:block;height:100%;text-decoration:none;color:var(--txt);
+                  border:2px solid #d8d8d8;border-radius:10px;padding:12px 14px;background:#fff;}
+  ul.modulos li a:hover{border-color:var(--acento);background:#f2fbfa;}
+  ul.modulos .titulo{display:block;font-weight:700;color:var(--marco-d);font-size:15px;}
+  ul.modulos .desc{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
+  ul.modulos .abrir{display:block;font-size:13px;font-weight:700;color:var(--acento);margin-top:8px;}
+  li.oculto,details.oculto,h3.oculto,ul.oculto{display:none;}
+  .nota-leccion{font-size:14px;color:var(--gris);margin:14px 0 4px;font-style:italic;}
+
+  .sin-resultados{display:none;background:#fff8e1;border:2px solid #f9a825;border-left:8px solid #f9a825;
+                  border-radius:10px;padding:16px 20px;color:#5c3900;font-size:15px;}
+  .sin-resultados.visible{display:block;}
+
+  .caja-nota{background:#e8f5e9;border-left:5px solid #1b5e20;padding:12px 16px;border-radius:0 8px 8px 0;
+             margin:18px 0;font-size:15px;color:#1b5e20;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--marco);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--marco-d);}
+
+  details.tema > summary{background:#8f2a0a;}
+  header.principal{background:#6d1f06;}
+  .ruta-mapa{padding-left:0 !important;}
+  details.tema{border-left-color:#8f2a0a;}
+  .nivel{display:inline-block;font-size:12px;font-weight:700;color:#fff;border-radius:999px;padding:2px 10px;margin-bottom:4px;}
+  .nivel.n1{background:#00695c;} .nivel.n2{background:#1565c0;} .nivel.n3{background:#6a1b9a;}
+  .origen{display:block;font-size:13px;color:#555;margin-top:2px;}
+  .intro-sub{margin:4px 0 10px;color:#333;}
+  .ruta-mapa{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 4px;padding:0;list-style:none;}
+  .ruta-mapa li{display:flex;align-items:center;gap:6px;}
+  .ruta-mapa a{display:inline-block;background:#fff;border:2px solid #8f2a0a;color:#6d1f06;border-radius:999px;padding:6px 12px;font-weight:700;text-decoration:none;font-size:15px;}
+  .ruta-mapa a:hover,.ruta-mapa a:focus-visible{background:#fbe9e7;}
+  .ruta-mapa .sep{color:#8f2a0a;font-weight:700;}
+  .leyenda{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 0;font-size:14px;align-items:center;}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Rutas transversales · GEDparaHispanos</div>
+    <h1>Ruta de Estadística y probabilidad: de los Niveles 1 a 3</h1>
+    <p>La estadística y la probabilidad se estudian en tres niveles, y cada uno se apoya en el anterior: primero se leen tablas y gráficas, después se resumen los datos y, al final, se calcula lo que puede pasar. Aquí están todas sus prácticas en un
+    solo camino, ordenadas por subtema de lo más sencillo a lo más avanzado. Cada tarjeta dice de qué nivel viene: si algo
+    le cuesta, empiece por la tarjeta anterior. No es retroceder; es afirmar la base.</p>
+  </header>
+
+  <nav class="indice" aria-labelledby="t-ruta">
+    <h2 id="t-ruta">El camino, paso a paso</h2>
+    <ol class="ruta-mapa" id="mapa"></ol>
+    <div class="leyenda" aria-label="Colores de los niveles"><span class="nivel n1">Nivel 1</span><span class="nivel n2">Nivel 2</span><span class="nivel n3">Nivel 3</span></div>
+  </nav>
+
+  <div class="buscador">
+    <label for="filtro">Busque lo que quiere repasar</label>
+    <input type="text" id="filtro" placeholder="por ejemplo: mediana, gráfica de barras, dado, combinaciones" autocomplete="off">
+    <p class="pista">Escriba una palabra y se abren solo los subtemas que la contienen. Sirven tanto los nombres técnicos
+      («mediana», «permutación») como las palabras corrientes («presupuesto», «dado», «baraja»).</p>
+    <p class="contador" id="contador" role="status"></p>
+  </div>
+
+  <div class="sin-resultados" id="sin-resultados">
+    No hay ninguna práctica con esa palabra. Pruebe con un término más corto o borre la búsqueda.
+  </div>
+
+  <div class="fila-btn" style="margin:0 0 14px;">
+    <button type="button" id="abrir-todo">Abrir todos los subtemas</button>
+    <button type="button" id="cerrar-todo">Cerrar todos los subtemas</button>
+  </div>
+
+  <div id="lista"></div>
+
+  <div class="caja-nota">
+    <strong>Cómo usar esta ruta:</strong> si se prepara para el examen GED, recórrala de arriba abajo. Si solo necesita un tema,
+    vaya directo a su subtema. Cada práctica es corta y se puede repetir cuantas veces quiera, porque los ejercicios se
+    generan de nuevo cada vez. Las prácticas se abren en una pestaña nueva y conservan el estilo de su nivel.
+  </div>
+
+  <div class="caja-nota"><strong>Otras rutas:</strong> <a href="https://zhemaria.github.io/algebra/ruta-geometria.html" target="_blank" rel="noopener noreferrer">Ruta de Geometría (Niveles 1 a 3)</a>.</div>
+
+  <footer class="pie">
+    <p><strong>Ruta de Estadística y probabilidad · Matemáticas · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+var SUB = [
+ {
+  "slug": "antes",
+  "titulo": "Para empezar: fracciones, decimales y porcentajes",
+  "intro": "La probabilidad y los gráficos usan las tres formas de escribir una parte.",
+  "mods": [
+   {
+    "titulo": "De fracción a decimal",
+    "desc": "Dividir el numerador entre el denominador.",
+    "claves": "fraccion a decimal decimal a fraccion periodico equivalencias tarjetas compras cambio",
+    "nivel": 1,
+    "lec": "3.3",
+    "lectit": "Decimales en contexto y equivalencias",
+    "url": "https://zhemaria.github.io/algebra/n1-l3-3.html#fraccion-a-decimal"
+   },
+   {
+    "titulo": "Equivalencias que conviene memorizar",
+    "desc": "1/2, 1/4, 3/4, 1/5, 1/10 y sus decimales.",
+    "claves": "fraccion a decimal decimal a fraccion periodico equivalencias tarjetas compras cambio",
+    "nivel": 1,
+    "lec": "3.3",
+    "lectit": "Decimales en contexto y equivalencias",
+    "url": "https://zhemaria.github.io/algebra/n1-l3-3.html#equivalencias"
+   },
+   {
+    "titulo": "Fracción, decimal y porcentaje",
+    "desc": "Pasar de una forma a otra.",
+    "claves": "porcentaje cuadricula 100 conversiones fraccion decimal parte total cambio porcentual aumento descuento impuesto propina comision",
+    "nivel": 2,
+    "lec": "5.1",
+    "lectit": "Porcentajes: concepto y cálculo",
+    "url": "https://zhemaria.github.io/algebra/n2-l5-1.html#conversiones"
+   },
+   {
+    "titulo": "Los tres tipos de problemas",
+    "desc": "Hallar la parte, el porcentaje o el total.",
+    "claves": "porcentaje cuadricula 100 conversiones fraccion decimal parte total cambio porcentual aumento descuento impuesto propina comision",
+    "nivel": 2,
+    "lec": "5.1",
+    "lectit": "Porcentajes: concepto y cálculo",
+    "url": "https://zhemaria.github.io/algebra/n2-l5-1.html#tres-tipos"
+   }
+  ]
+ },
+ {
+  "slug": "tablas",
+  "titulo": "Tablas de datos",
+  "intro": "Leer, comparar y describir lo que dice una tabla.",
+  "mods": [
+   {
+    "titulo": "Cómo leer una tabla",
+    "desc": "Título, filas, columnas y unidades.",
+    "claves": "tablas de datos fila columna localizar comparar diferencia total promedio maximo minimo describir",
+    "nivel": 1,
+    "lec": "8.1",
+    "lectit": "Leer e interpretar tablas de datos",
+    "url": "https://zhemaria.github.io/algebra/n1-l8-1.html#leer-tabla"
+   },
+   {
+    "titulo": "Comparar y calcular",
+    "desc": "Diferencias, totales y el mayor y el menor.",
+    "claves": "tablas de datos fila columna localizar comparar diferencia total promedio maximo minimo describir",
+    "nivel": 1,
+    "lec": "8.1",
+    "lectit": "Leer e interpretar tablas de datos",
+    "url": "https://zhemaria.github.io/algebra/n1-l8-1.html#comparar-calcular"
+   },
+   {
+    "titulo": "Describir los datos con palabras",
+    "desc": "Frases que cuentan lo que dice la tabla.",
+    "claves": "tablas de datos fila columna localizar comparar diferencia total promedio maximo minimo describir",
+    "nivel": 1,
+    "lec": "8.1",
+    "lectit": "Leer e interpretar tablas de datos",
+    "url": "https://zhemaria.github.io/algebra/n1-l8-1.html#describir"
+   }
+  ]
+ },
+ {
+  "slug": "barras-lineas",
+  "titulo": "Gráficas de barras y de líneas",
+  "intro": "Comparar cantidades y ver tendencias en el tiempo.",
+  "mods": [
+   {
+    "titulo": "Leer una gráfica en 5 pasos",
+    "desc": "Título, ejes, escala, datos y conclusión.",
+    "claves": "graficas barras lineas titulo ejes escala valores tendencia creciente decreciente estable construir",
+    "nivel": 1,
+    "lec": "8.2",
+    "lectit": "Gráficas de barras y de líneas",
+    "url": "https://zhemaria.github.io/algebra/n1-l8-2.html#cinco-pasos"
+   },
+   {
+    "titulo": "La gráfica de barras",
+    "desc": "Comparar categorías.",
+    "claves": "graficas barras lineas titulo ejes escala valores tendencia creciente decreciente estable construir",
+    "nivel": 1,
+    "lec": "8.2",
+    "lectit": "Gráficas de barras y de líneas",
+    "url": "https://zhemaria.github.io/algebra/n1-l8-2.html#barras"
+   },
+   {
+    "titulo": "La gráfica de líneas",
+    "desc": "Ver tendencias en el tiempo.",
+    "claves": "graficas barras lineas titulo ejes escala valores tendencia creciente decreciente estable construir",
+    "nivel": 1,
+    "lec": "8.2",
+    "lectit": "Gráficas de barras y de líneas",
+    "url": "https://zhemaria.github.io/algebra/n1-l8-2.html#lineas"
+   },
+   {
+    "titulo": "Construir una gráfica",
+    "desc": "Levantar las barras a partir de una tabla, y los constructores de barras y de líneas.",
+    "claves": "graficas barras lineas titulo ejes escala valores tendencia creciente decreciente estable construir",
+    "nivel": 1,
+    "lec": "8.2",
+    "lectit": "Gráficas de barras y de líneas",
+    "url": "https://zhemaria.github.io/algebra/n1-l8-2.html#construir"
+   }
+  ]
+ },
+ {
+  "slug": "circulares",
+  "titulo": "Gráficos circulares",
+  "intro": "Cómo se reparte un total: porcentaje, ángulo y valor.",
+  "mods": [
+   {
+    "titulo": "Qué es un gráfico circular",
+    "desc": "Las partes de un todo.",
+    "claves": "grafico circular pie chart sector angulo central porcentaje presupuesto",
+    "nivel": 2,
+    "lec": "8.2",
+    "lectit": "Gráficos circulares: leer, interpretar y construir",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-2.html#que-es"
+   },
+   {
+    "titulo": "El ángulo central de cada sector",
+    "desc": "Porcentaje × 360°.",
+    "claves": "grafico circular pie chart sector angulo central porcentaje presupuesto",
+    "nivel": 2,
+    "lec": "8.2",
+    "lectit": "Gráficos circulares: leer, interpretar y construir",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-2.html#angulo"
+   },
+   {
+    "titulo": "Porcentaje, ángulo y valor",
+    "desc": "Pasar de cualquiera de los tres a los otros dos.",
+    "claves": "grafico circular pie chart sector angulo central porcentaje presupuesto",
+    "nivel": 2,
+    "lec": "8.2",
+    "lectit": "Gráficos circulares: leer, interpretar y construir",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-2.html#convertir"
+   },
+   {
+    "titulo": "Construir un gráfico circular",
+    "desc": "El interactivo existente, paso a paso.",
+    "claves": "grafico circular pie chart sector angulo central porcentaje presupuesto",
+    "nivel": 2,
+    "lec": "8.2",
+    "lectit": "Gráficos circulares: leer, interpretar y construir",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-2.html#construir"
+   },
+   {
+    "titulo": "Leer e interpretar gráficos reales",
+    "desc": "Preguntas de tipo examen sobre un gráfico.",
+    "claves": "grafico circular pie chart sector angulo central porcentaje presupuesto",
+    "nivel": 2,
+    "lec": "8.2",
+    "lectit": "Gráficos circulares: leer, interpretar y construir",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-2.html#leer"
+   }
+  ]
+ },
+ {
+  "slug": "medidas",
+  "titulo": "Media, mediana, moda y rango",
+  "intro": "Resumir un conjunto de datos con un solo número.",
+  "mods": [
+   {
+    "titulo": "Las cuatro medidas en una mirada",
+    "desc": "Qué dice cada una del mismo conjunto de datos.",
+    "claves": "media promedio mediana moda rango atipico media ponderada nota final",
+    "nivel": 2,
+    "lec": "8.1",
+    "lectit": "Media, mediana, moda, rango y media ponderada",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-1.html#medidas"
+   },
+   {
+    "titulo": "La media aritmética",
+    "desc": "Repartir en partes iguales.",
+    "claves": "media promedio mediana moda rango atipico media ponderada nota final",
+    "nivel": 2,
+    "lec": "8.1",
+    "lectit": "Media, mediana, moda, rango y media ponderada",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-1.html#media"
+   },
+   {
+    "titulo": "La mediana",
+    "desc": "Ordenar y buscar el centro, con cantidad par e impar.",
+    "claves": "media promedio mediana moda rango atipico media ponderada nota final",
+    "nivel": 2,
+    "lec": "8.1",
+    "lectit": "Media, mediana, moda, rango y media ponderada",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-1.html#mediana"
+   },
+   {
+    "titulo": "La moda y el rango",
+    "desc": "El más repetido y la distancia entre extremos.",
+    "claves": "media promedio mediana moda rango atipico media ponderada nota final",
+    "nivel": 2,
+    "lec": "8.1",
+    "lectit": "Media, mediana, moda, rango y media ponderada",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-1.html#moda-rango"
+   },
+   {
+    "titulo": "Cuando la media engaña",
+    "desc": "Qué le pasa a la media y a la mediana con un valor atípico.",
+    "claves": "media promedio mediana moda rango atipico media ponderada nota final",
+    "nivel": 2,
+    "lec": "8.1",
+    "lectit": "Media, mediana, moda, rango y media ponderada",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-1.html#atipicos"
+   },
+   {
+    "titulo": "La media ponderada",
+    "desc": "El punto de equilibrio de una balanza.",
+    "claves": "media promedio mediana moda rango atipico media ponderada nota final",
+    "nivel": 2,
+    "lec": "8.1",
+    "lectit": "Media, mediana, moda, rango y media ponderada",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-1.html#ponderada"
+   }
+  ]
+ },
+ {
+  "slug": "caja",
+  "titulo": "Diagramas de caja y bigotes",
+  "intro": "Los cinco valores clave, el rango intercuartílico y los atípicos.",
+  "mods": [
+   {
+    "titulo": "Los cinco valores clave",
+    "desc": "Mínimo, cuartiles, mediana y máximo.",
+    "claves": "cinco valores cuartiles mediana minimo maximo",
+    "nivel": 3,
+    "lec": "7.2",
+    "lectit": "Diagramas de caja y bigotes",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-2.html#cinco-valores"
+   },
+   {
+    "titulo": "Construir el diagrama",
+    "desc": "Escribir los cinco valores y ver formarse la caja.",
+    "claves": "construir diagrama caja bigotes leer",
+    "nivel": 3,
+    "lec": "7.2",
+    "lectit": "Diagramas de caja y bigotes",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-2.html#construir"
+   },
+   {
+    "titulo": "El rango intercuartílico",
+    "desc": "Qué mide y por qué no le afectan los extremos.",
+    "claves": "rango intercuartilico iqr dispersion porcentaje",
+    "nivel": 3,
+    "lec": "7.2",
+    "lectit": "Diagramas de caja y bigotes",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-2.html#iqr"
+   },
+   {
+    "titulo": "Valores atípicos",
+    "desc": "La regla de 1.5 × IQR.",
+    "claves": "valores atipicos outliers limite",
+    "nivel": 3,
+    "lec": "7.2",
+    "lectit": "Diagramas de caja y bigotes",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-2.html#atipicos"
+   },
+   {
+    "titulo": "Interpretar y comparar",
+    "desc": "Dos diagramas lado a lado.",
+    "claves": "comparar diagramas caja mediana variabilidad",
+    "nivel": 3,
+    "lec": "7.2",
+    "lectit": "Diagramas de caja y bigotes",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-2.html#comparar"
+   }
+  ]
+ },
+ {
+  "slug": "histogramas",
+  "titulo": "Histogramas y la forma de los datos",
+  "intro": "Cómo se distribuyen los datos y qué gráfico conviene.",
+  "mods": [
+   {
+    "titulo": "Construir un histograma",
+    "desc": "Contar frecuencias y dibujar las barras.",
+    "claves": "construir histograma frecuencias intervalos",
+    "nivel": 3,
+    "lec": "7.3",
+    "lectit": "Histogramas: construir, interpretar y comparar",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-3.html#construir"
+   },
+   {
+    "titulo": "La forma de la distribución",
+    "desc": "Simétrica, sesgada, uniforme o bimodal.",
+    "claves": "forma distribucion sesgada simetrica bimodal",
+    "nivel": 3,
+    "lec": "7.3",
+    "lectit": "Histogramas: construir, interpretar y comparar",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-3.html#forma"
+   },
+   {
+    "titulo": "Histograma frente a diagrama de caja",
+    "desc": "Los mismos datos en histograma y en caja.",
+    "claves": "histograma diagrama caja comparar mediana",
+    "nivel": 3,
+    "lec": "7.3",
+    "lectit": "Histogramas: construir, interpretar y comparar",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-3.html#comparar"
+   },
+   {
+    "titulo": "Elegir la representación más informativa",
+    "desc": "Qué gráfica responde mejor cada pregunta.",
+    "claves": "elegir grafica representacion barras",
+    "nivel": 3,
+    "lec": "7.3",
+    "lectit": "Histogramas: construir, interpretar y comparar",
+    "url": "https://zhemaria.github.io/algebra/n3-l7-3.html#elegir"
+   }
+  ]
+ },
+ {
+  "slug": "probabilidad",
+  "titulo": "Probabilidad simple",
+  "intro": "Casos favorables entre casos totales.",
+  "mods": [
+   {
+    "titulo": "La definición de probabilidad simple",
+    "desc": "Casos favorables entre casos posibles.",
+    "claves": "probabilidad simple espacio muestral favorables imposible seguro dado moneda urna baraja experimental teorica",
+    "nivel": 2,
+    "lec": "8.3",
+    "lectit": "Probabilidad simple",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-3.html#definicion"
+   },
+   {
+    "titulo": "Fracción, decimal y porcentaje",
+    "desc": "La misma probabilidad de tres maneras.",
+    "claves": "probabilidad simple espacio muestral favorables imposible seguro dado moneda urna baraja experimental teorica",
+    "nivel": 2,
+    "lec": "8.3",
+    "lectit": "Probabilidad simple",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-3.html#tres-formas"
+   },
+   {
+    "titulo": "Cálculos típicos",
+    "desc": "Dados, monedas, bolsas y ruletas.",
+    "claves": "probabilidad simple espacio muestral favorables imposible seguro dado moneda urna baraja experimental teorica",
+    "nivel": 2,
+    "lec": "8.3",
+    "lectit": "Probabilidad simple",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-3.html#calculos"
+   },
+   {
+    "titulo": "Experimento y teoría",
+    "desc": "Lanzar un dado cientos de veces, y los simuladores de dados, baraja y ruleta.",
+    "claves": "probabilidad simple espacio muestral favorables imposible seguro dado moneda urna baraja experimental teorica",
+    "nivel": 2,
+    "lec": "8.3",
+    "lectit": "Probabilidad simple",
+    "url": "https://zhemaria.github.io/algebra/n2-l8-3.html#experimento"
+   },
+   {
+    "titulo": "Probabilidad de un evento",
+    "desc": "Casos favorables entre casos posibles; simuladores.",
+    "claves": "probabilidad evento simple dados baraja ruleta",
+    "nivel": 3,
+    "lec": "8.2",
+    "lectit": "Probabilidad compuesta: con y sin reemplazo",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-2.html#simple"
+   }
+  ]
+ },
+ {
+  "slug": "conteo",
+  "titulo": "Conteo: permutaciones y combinaciones",
+  "intro": "Cuántas maneras hay, y si el orden importa.",
+  "mods": [
+   {
+    "titulo": "El principio fundamental del conteo",
+    "desc": "El árbol de opciones que crece.",
+    "claves": "principio fundamental conteo arbol multiplicar",
+    "nivel": 3,
+    "lec": "8.1",
+    "lectit": "Principio del conteo, permutaciones y combinaciones",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-1.html#principio"
+   },
+   {
+    "titulo": "El factorial",
+    "desc": "n! y cocientes de factoriales.",
+    "claves": "factorial",
+    "nivel": 3,
+    "lec": "8.1",
+    "lectit": "Principio del conteo, permutaciones y combinaciones",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-1.html#factorial"
+   },
+   {
+    "titulo": "Permutaciones: el orden importa",
+    "desc": "Podios, cargos, claves y filas.",
+    "claves": "permutaciones orden importa",
+    "nivel": 3,
+    "lec": "8.1",
+    "lectit": "Principio del conteo, permutaciones y combinaciones",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-1.html#permutaciones"
+   },
+   {
+    "titulo": "Combinaciones: el orden no importa",
+    "desc": "Comités, equipos y apretones de manos.",
+    "claves": "combinaciones orden no importa",
+    "nivel": 3,
+    "lec": "8.1",
+    "lectit": "Principio del conteo, permutaciones y combinaciones",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-1.html#combinaciones"
+   },
+   {
+    "titulo": "¿Importa el orden?",
+    "desc": "¿Permutación, combinación o principio del conteo?",
+    "claves": "decidir importa el orden",
+    "nivel": 3,
+    "lec": "8.1",
+    "lectit": "Principio del conteo, permutaciones y combinaciones",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-1.html#decidir"
+   }
+  ]
+ },
+ {
+  "slug": "compuesta",
+  "titulo": "Probabilidad compuesta",
+  "intro": "Dos eventos seguidos, con y sin reemplazo.",
+  "mods": [
+   {
+    "titulo": "Dos eventos con reemplazo",
+    "desc": "La bolsa que no cambia.",
+    "claves": "con reemplazo independientes probabilidad compuesta bolsa caramelos",
+    "nivel": 3,
+    "lec": "8.2",
+    "lectit": "Probabilidad compuesta: con y sin reemplazo",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-2.html#con-reemplazo"
+   },
+   {
+    "titulo": "Dos eventos sin reemplazo",
+    "desc": "La bolsa que pierde un elemento.",
+    "claves": "sin reemplazo dependientes probabilidad compuesta bolsa caramelos",
+    "nivel": 3,
+    "lec": "8.2",
+    "lectit": "Probabilidad compuesta: con y sin reemplazo",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-2.html#sin-reemplazo"
+   },
+   {
+    "titulo": "Del árbol a la tabla",
+    "desc": "El interactivo de dos extracciones.",
+    "claves": "arbol tabla dos extracciones",
+    "nivel": 3,
+    "lec": "8.2",
+    "lectit": "Probabilidad compuesta: con y sin reemplazo",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-2.html#arbol"
+   },
+   {
+    "titulo": "Fracción, decimal y porcentaje",
+    "desc": "Fracción, decimal y porcentaje.",
+    "claves": "fraccion decimal porcentaje probabilidad convertir",
+    "nivel": 3,
+    "lec": "8.2",
+    "lectit": "Probabilidad compuesta: con y sin reemplazo",
+    "url": "https://zhemaria.github.io/algebra/n3-l8-2.html#tres-formas"
+   }
+  ]
+ }
+];
+
+function normaliza(t){
+  return t.toLowerCase().replace(/[áàä]/g,"a").replace(/[éèë]/g,"e").replace(/[íìï]/g,"i")
+          .replace(/[óòö]/g,"o").replace(/[úùü]/g,"u").replace(/ñ/g,"n").replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,"");
+}
+function construye(){
+  var html = "", mapa = "";
+  SUB.forEach(function(t, k){
+    var total = t.mods.length;
+    mapa += '<li>' + (k ? '<span class="sep" aria-hidden="true">→</span>' : '') + '<a href="#' + t.slug + '">' + (k ? k + ". " : "") + (k ? t.titulo : "Para empezar") + '</a></li>';
+    html += '<details class="tema" id="' + t.slug + '" data-total="' + total + '">' +
+            '<summary><h2>' + (k ? k + ". " : "") + t.titulo + '</h2><span class="cuenta">' + total + ' prácticas</span><span class="flecha" aria-hidden="true">▶</span></summary><div class="tema-cuerpo"><p class="intro-sub">' + t.intro + '</p><ul class="modulos">';
+    t.mods.forEach(function(md){
+      var texto = normaliza(md.titulo + " " + md.desc + " " + md.claves + " " + md.lectit + " " + t.titulo + " nivel " + md.nivel).replace(/"/g, "");
+      html += '<li data-busca="' + texto + '"><a href="' + md.url + '" target="_blank" rel="noopener noreferrer">' +
+              '<span class="nivel n' + md.nivel + '">Nivel ' + md.nivel + '</span>' +
+              '<span class="titulo">' + md.titulo + '</span><span class="desc">' + md.desc + '</span>' +
+              '<span class="origen">Lección ' + md.lec + ' · ' + md.lectit + '</span>' +
+              '<span class="abrir">Abrir esta práctica <span aria-hidden="true">›</span></span></a></li>';
+    });
+    html += '</ul></div></details>';
+  });
+  document.getElementById("lista").innerHTML = html;
+  document.getElementById("mapa").innerHTML = mapa;
+}
+var ESTADO = null;
+function temas(){ return document.querySelectorAll("details.tema"); }
+function filtra(){
+  var q = normaliza(document.getElementById("filtro").value.trim()), visibles = 0, total = 0;
+  if (q && !ESTADO){ ESTADO = []; temas().forEach(function(d){ ESTADO.push(d.open); }); }
+  temas().forEach(function(d){
+    var en = 0;
+    d.querySelectorAll("ul.modulos li").forEach(function(li){ total++; var ok = !q || li.getAttribute("data-busca").indexOf(q) !== -1; li.className = ok ? "" : "oculto"; if (ok){ visibles++; en++; } });
+    var tot = +d.getAttribute("data-total");
+    d.querySelector(".cuenta").textContent = q ? en + " de " + tot : tot + " prácticas";
+    d.classList.toggle("oculto", !!q && en === 0);
+    if (q) d.open = en > 0;
+  });
+  if (!q && ESTADO){ temas().forEach(function(d, i){ d.open = ESTADO[i]; }); ESTADO = null; }
+  document.getElementById("contador").textContent = q ? (visibles === 1 ? "Se muestra 1 práctica de " : "Se muestran " + visibles + " prácticas de ") + total + "." : "Hay " + total + " prácticas en la ruta, de los Niveles 1, 2 y 3.";
+  document.getElementById("sin-resultados").className = (q && visibles === 0) ? "sin-resultados visible" : "sin-resultados";
+}
+function abreDesdeAncla(){
+  var h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
+  var el = document.getElementById(h); if (!el) return;
+  if (el.tagName.toLowerCase() === "details") el.open = true;
+  el.scrollIntoView({ block: "start" });
+}
+construye();
+document.getElementById("filtro").addEventListener("input", filtra);
+document.getElementById("abrir-todo").addEventListener("click", function(){ temas().forEach(function(d){ d.open = true; }); });
+document.getElementById("cerrar-todo").addEventListener("click", function(){ temas().forEach(function(d){ d.open = false; }); });
+document.getElementById("mapa").addEventListener("click", function(e){ var a = e.target.closest("a"); if (!a) return; var d = document.getElementById(a.getAttribute("href").slice(1)); if (d) d.open = true; });
+window.addEventListener("hashchange", abreDesdeAncla);
+filtra(); abreDesdeAncla();
+</script>
+</body>
+</html>
