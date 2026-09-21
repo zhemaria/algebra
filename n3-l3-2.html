@@ -1,0 +1,1001 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 3.2 — Operaciones con radicales: suma, resta y multiplicación
+  Nivel 3 · Spanish ASE Math 3 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #semejantes · #simplificar-primero · #multiplicar · #aproximar
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 3.2: operaciones con radicales</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 3.2 del Nivel 3: sumar y restar radicales semejantes, simplificar antes de combinar, multiplicar radicales y aproximarlos.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+
+  :root{
+    --tema:#bf360c; --tema-d:#8a2508; --tema-bg:#fbe9e7; --tema-bg2:#ffccbc;
+    --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#0a3a82;border-color:#0a3a82;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:96px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* fracción algebraica */
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 6px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 8px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;
+                 text-decoration-color:#b71c1c;color:#b71c1c;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  .campos-sci .campo input[type="text"]{width:120px;}
+  .campos-sci .campo input.corto{width:84px;}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campos.campos-sci{flex-direction:row;align-items:flex-end;flex-wrap:nowrap;gap:10px;} }
+
+  .btn:disabled,.btn-sec:disabled{background:#eeeeee;color:#424242;border-color:#9e9e9e;cursor:not-allowed;}
+  input:disabled,select:disabled{background:#f3f3f3;cursor:not-allowed;}
+  .campo input[type="text"]{width:150px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input.ancho{width:230px;}
+  .campo input.corto{width:96px;}
+  .enun .ex, .opcion .ex, .salida .ex, .lista-orden .ex{font-size:18px;}
+  .ex{white-space:nowrap;}
+  sup{font-size:.72em;}
+
+  .centro{text-align:center;}
+
+  /* radicales */
+  .rad{white-space:nowrap;}
+  .rad .rc{border-top:2px solid currentColor;padding:0 3px 0 2px;margin-left:1px;}
+  .fracc{display:inline-block;text-align:center;vertical-align:middle;margin:0 3px;line-height:1.15;}
+  .fracc .fa{display:block;padding:0 4px;border-bottom:2px solid currentColor;}
+  .fracc .fb2{display:block;padding:0 4px;}
+  .periodo{text-decoration:overline;}
+  .grande{font-size:22px;font-weight:700;}
+  .estado{text-align:center;font-size:18px;margin:10px 0;color:var(--tema-d);}
+
+  /* tabla de cuadrados */
+  .cuadros{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin:12px 0;}
+  .cuadro{border:2px solid var(--tema-bg2);border-radius:8px;background:#fff;text-align:center;padding:4px 2px;font-size:14px;}
+  .cuadro strong{display:block;font-size:18px;color:var(--txt);}
+  .cuadro.divide{background:var(--tema-bg);border-color:var(--tema);}
+  .cuadro.mayor{background:var(--tema);border-color:var(--tema-d);}
+  .cuadro.mayor, .cuadro.mayor strong{color:#fff;}
+
+  /* botones de elección dentro de un panel */
+  .elecciones{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+  .eleccion{background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:8px;padding:8px 14px;font-weight:700;font-size:16px;}
+  .eleccion:hover{background:var(--tema-bg);}
+  .eleccion[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .eleccion:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* casillas de selección múltiple */
+  .casillas{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+  .casilla{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #767676;border-radius:8px;padding:8px 12px;font-size:16px;cursor:pointer;}
+  .casilla input{width:20px;height:20px;accent-color:var(--tema);}
+  .casilla.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .casilla.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .casilla:focus-within{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* diagrama y recta */
+  .diagrama{max-width:560px;margin:10px auto;display:block;width:100%;height:auto;}
+  .recta-svg{width:100%;max-width:680px;height:auto;display:block;margin:8px auto;overflow:visible;}
+  input[type="range"]{width:100%;accent-color:var(--tema);}
+  input[type="range"]:focus-visible{outline:3px solid var(--acento);outline-offset:4px;}
+
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 3 · Tema 3 · Radicales y números reales</div>
+    <h1>Lección 3.2 · Operaciones con radicales: suma, resta y multiplicación</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#semejantes">Sumar y restar radicales semejantes</a></li>
+      <li><a href="#simplificar-primero">¿Semejantes o no? Simplificar primero</a></li>
+      <li><a href="#multiplicar">Multiplicar radicales</a></li>
+      <li><a href="#aproximar">Aproximar radicales</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 · #semejantes ============ -->
+  <details class="modulo" id="semejantes" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Sumar y restar radicales semejantes</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Los radicales se combinan igual que los términos semejantes del álgebra. Así como 3x + 5x = 8x, también
+      3√2 + 5√2 = 8√2: se suman los coeficientes y la parte irracional <strong>se conserva</strong>.</p>
+      <div class="formula">3√2 + 5√2 = 8√2 &nbsp; (igual que 3x + 5x = 8x)</div>
+
+      <h3>¿Se pueden combinar?</h3>
+      <p>Arma dos términos y observa si se combinan. La línea de decimales comprueba el resultado.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="sm-a">Primer coeficiente</label><input type="text" inputmode="numeric" class="corto" id="sm-a" value="3"></div>
+          <div class="campo"><label for="sm-r1">Primer radicando</label><input type="text" inputmode="numeric" class="corto" id="sm-r1" value="2"></div>
+          <div class="campo"><label for="sm-op">Operación</label><select id="sm-op"><option value="+">+ sumar</option><option value="−">− restar</option></select></div>
+          <div class="campo"><label for="sm-b">Segundo coeficiente</label><input type="text" inputmode="numeric" class="corto" id="sm-b" value="5"></div>
+          <div class="campo"><label for="sm-r2">Segundo radicando</label><input type="text" inputmode="numeric" class="corto" id="sm-r2" value="2"></div>
+        </div>
+        <p class="nota">Prueba después con radicandos distintos, por ejemplo 2 y 3.</p>
+      </div>
+      <div class="caja-aviso" id="sm-aviso" role="alert"></div>
+      <div class="salida" id="sm-salida" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>No se combinan partes distintas:</strong> √2 + √3 no es √5 ni 2√5. Como tienen distinta parte irracional,
+        no son semejantes y la suma se deja indicada: √2 + √3.
+      </div>
+
+      <h3>Practica: sumar y restar</h3>
+      <div class="practica" id="p1">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 · #simplificar-primero ============ -->
+  <details class="modulo" id="simplificar-primero">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>¿Semejantes o no? Simplificar primero</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>A veces dos radicales no parecen semejantes, pero al simplificarlos resulta que sí lo son. Por eso, antes de
+      decidir, conviene simplificar cada radical. Recuerda que √2 es lo mismo que 1√2.</p>
+
+      <h3>Paso a paso</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="sp-sel">Expresión</label><select id="sp-sel"></select></div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="sp-sig">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="sp-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="sp-azar">Otra al azar</button>
+        </div>
+      </div>
+      <div class="fraccion-grande" id="sp-expr"></div>
+      <div class="pasos" id="sp-pasos" aria-live="polite"></div>
+
+      <h3>Practica: simplifica y combina</h3>
+      <div class="practica" id="p2">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <h3>Escríbelo tú: el resultado en un solo término</h3>
+      <div class="practica" id="p3">
+        <div class="enun" id="p3-enun"></div>
+        <div class="campos campos-sci">
+          <div class="campo"><label for="p3-k">Coeficiente</label><input type="text" inputmode="numeric" autocomplete="off" class="corto" id="p3-k"></div>
+          <div class="campo" aria-hidden="true" style="font-size:24px;font-weight:700;padding-bottom:6px;">√</div>
+          <div class="campo"><label for="p3-r">Radicando</label><input type="text" inputmode="numeric" autocomplete="off" class="corto" id="p3-r"></div>
+        </div>
+        <p class="nota">Por ejemplo, para 6√2 escribe 6 y 2. Si no queda coeficiente (como en √15), deja vacío el primer campo. Si no queda radical (como en √36 = 6), escribe 1 como radicando.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p3-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p3-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 · #multiplicar ============ -->
+  <details class="modulo" id="multiplicar">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Multiplicar radicales</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Para multiplicar se usa la propiedad del producto en la otra dirección: el producto de las raíces es la raíz
+      del producto. Los coeficientes de fuera se multiplican entre sí, y al final se simplifica.</p>
+      <div class="formula">√a · √b = √(a · b)</div>
+
+      <h3>Unir y simplificar</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="mu-k1">Coeficiente del primero</label><input type="text" inputmode="numeric" class="corto" id="mu-k1" value="1"></div>
+          <div class="campo"><label for="mu-a">Radicando del primero</label><input type="text" inputmode="numeric" class="corto" id="mu-a" value="6"></div>
+          <div class="campo"><label for="mu-k2">Coeficiente del segundo</label><input type="text" inputmode="numeric" class="corto" id="mu-k2" value="1"></div>
+          <div class="campo"><label for="mu-b">Radicando del segundo</label><input type="text" inputmode="numeric" class="corto" id="mu-b" value="2"></div>
+        </div>
+        <div class="fila-btn"><button type="button" class="btn-sec" id="mu-azar">Otro ejemplo</button></div>
+      </div>
+      <div class="caja-aviso" id="mu-aviso" role="alert"></div>
+      <div class="salida" id="mu-salida" aria-live="polite"></div>
+
+      <div class="caja-tip">
+        <strong>Una raíz por sí misma:</strong> √a · √a = √(a · a) = a. Por ejemplo, √7 · √7 = 7. Esta idea aparece
+        a menudo al distribuir: √2 · (√2 + 5) = 2 + 5√2.
+      </div>
+
+      <h3>Practica: multiplicar</h3>
+      <div class="practica" id="p4">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 · #aproximar ============ -->
+  <details class="modulo" id="aproximar">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Aproximar radicales</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Un radical que no es exacto no tiene un decimal que termine, pero se puede <strong>acorralar</strong> entre dos
+      números usando cuadrados perfectos: como 16 &lt; 20 &lt; 25, √20 está entre 4 y 5. Después se afina a la décima.</p>
+
+      <h3>Acorralar la raíz</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="ap-n">Radicando (de 2 a 200)</label><input type="text" inputmode="numeric" class="corto" id="ap-n" value="20"></div>
+        </div>
+        <div class="fila-btn"><button type="button" class="btn-sec" id="ap-azar">Otro número</button></div>
+      </div>
+      <div class="caja-aviso" id="ap-aviso" role="alert"></div>
+      <div id="ap-recta"></div>
+      <div class="salida" id="ap-salida" aria-live="polite"></div>
+
+      <h3>Practica: estimar</h3>
+      <div class="practica" id="p5">
+        <div class="enun" id="p5-enun"></div>
+        <div class="opciones" id="p5-opciones"></div>
+        <div class="fb" id="p5-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p5-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p5-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <h3>Escríbelo tú: aproxima a la décima</h3>
+      <div class="practica" id="p6">
+        <div class="enun" id="p6-enun"></div>
+        <div class="campos"><div class="campo"><label for="p6-r">Aproximación a la décima</label><input type="text" autocomplete="off" class="ancho" id="p6-r"></div></div>
+        <p class="nota">Escribe un decimal con una cifra después del punto, por ejemplo 4.5. Puedes usar la calculadora para comprobar.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p6-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p6-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p6-fb" role="status"></div>
+        <p class="marcador" id="p6-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Estimar para verificar:</strong> si una suma de radicales da 3√3, puedes comprobar que 3√3 ≈ 5.20 y
+        compararlo con el decimal de la expresión original. Si coinciden, la operación es correcta.
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Nivel 3 · Tema 3 · Radicales y números reales · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Motor común del Tema 3 · Radicales y números reales
+   Los radicales se guardan como k√r con k y r enteros, y las
+   fracciones como p/q reducidas, así que las cuentas son exactas.
+   ============================================================ */
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function elige(lista){ return lista[aleatorio(0, lista.length-1)]; }
+function baraja(lista){
+  var a = lista.slice();
+  for (var i = a.length-1; i > 0; i--){ var j = aleatorio(0,i); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+/* ============================================================
+   Práctica de opción múltiple.
+   gen() devuelve { enun, opciones:[{html, clave}], correcta: clave, bien, mal }
+   Las claves repetidas se descartan antes de mostrar.
+   ============================================================ */
+function creaPracticaOM(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false };
+  function pinta(){
+    var q, intentos = 0;
+    do { q = gen(); intentos++; } while (intentos < 50 && !valida(q));
+    est.actual = q; est.resuelta = false;
+    $(pre + "-enun").innerHTML = q.enun;
+    var cont = $(pre + "-opciones"); cont.innerHTML = "";
+    baraja(q.opciones).forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opcion"; b.innerHTML = o.html;
+      b.setAttribute("data-clave", o.clave); b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function(){ responde(b); });
+      cont.appendChild(b);
+    });
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function valida(q){
+    var vistas = {}, hay = 0;
+    q.opciones = q.opciones.filter(function(o){ if (vistas[o.clave]) return false; vistas[o.clave] = 1; return true; });
+    q.opciones.forEach(function(o){ if (o.clave === q.correcta) hay++; });
+    return hay === 1 && q.opciones.length >= 3;
+  }
+  function responde(btn){
+    if (est.resuelta) return;
+    est.resuelta = true; est.total++;
+    var q = est.actual, ok = btn.getAttribute("data-clave") === q.correcta;
+    Array.prototype.forEach.call($(pre + "-opciones").children, function(b){
+      b.disabled = true;
+      if (b.getAttribute("data-clave") === q.correcta) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed", "true");
+    var fb = $(pre + "-fb");
+    if (ok){ est.aciertos++; fb.className = "fb bien"; fb.innerHTML = "✓ Correcto. " + q.bien; }
+    else { fb.className = "fb mal"; fb.innerHTML = "✗ Todavía no. " + (q.porClave && q.porClave[btn.getAttribute("data-clave")] ? q.porClave[btn.getAttribute("data-clave")] + " " : "") + q.mal; }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  return { pinta: pinta, estado: est };
+}
+
+/* ============================================================
+   Navegación por anclas
+   ============================================================ */
+function abrePorHash(){
+  var h = decodeURIComponent(window.location.hash.replace("#",""));
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+function iniciaNavegacion(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(){
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el && el.tagName.toLowerCase() === "details") el.open = true;
+    });
+  });
+  $("abrir-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+  });
+  $("cerrar-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+  });
+  window.addEventListener("hashchange", abrePorHash);
+  abrePorHash();
+}
+
+
+/* ============================================================
+   Radicales, fracciones y formato
+   ============================================================ */
+function mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a; }
+function esCuadrado(n){ if (n < 0) return false; var s = Math.round(Math.sqrt(n)); return s * s === n; }
+/* √n = k√r con el mayor cuadrado perfecto posible */
+function simplRad(n){
+  for (var s = Math.floor(Math.sqrt(n)); s >= 1; s--) if (n % (s*s) === 0) return { k: s, r: n / (s*s) };
+  return { k: 1, r: n };
+}
+function libreCuadrados(n){ return simplRad(n).k === 1; }
+/* cuadrados perfectos mayores que 1 que dividen a n */
+function cuadradosQueDividen(n){
+  var l = []; for (var s = 2; s*s <= n; s++) if (n % (s*s) === 0) l.push(s); return l;
+}
+function aprox(x, d){ return (Math.round(x * Math.pow(10, d)) / Math.pow(10, d)).toFixed(d).replace("-", "−"); }
+function supH(k){ return '<sup>' + k + '</sup>'; }
+
+/* Radical k√r en HTML, con lectura para lector de pantalla */
+function radVis(k, r){
+  if (r === 1) return String(k);
+  if (k === 0) return "0";
+  var pre = k === 1 ? "" : (k === -1 ? "−" : String(k).replace("-","−"));
+  return pre + '<span class="rad">√<span class="rc">' + r + '</span></span>';
+}
+function radVoz(k, r){
+  if (r === 1) return String(k).replace("-","menos ");
+  if (k === 0) return "0";
+  var pre = k === 1 ? "" : (k === -1 ? "menos " : String(k).replace("-","menos ") + " por ");
+  return pre + "raíz cuadrada de " + r;
+}
+function radHTML(k, r){ return envuelve(radVis(k, r), radVoz(k, r)); }
+function envuelve(vis, voz){ return '<span class="ex" aria-hidden="true">' + vis + '</span><span class="sr-only">' + voz + '</span>'; }
+function radClave(k, r){ return k + "r" + r; }
+/* opción de radical para la práctica de opción múltiple */
+function opRad(k, r){ return { html: radHTML(k, r), clave: radClave(k, r) }; }
+
+/* Fracciones */
+function reduce(p, q){ if (q < 0){ p = -p; q = -q; } var g = mcd(p, q) || 1; return { p: p / g, q: q / g }; }
+function fracVis(p, q){
+  if (q === 1) return String(p).replace("-","−");
+  return (p < 0 ? "−" : "") + '<span class="fracc"><span class="fa">' + Math.abs(p) + '</span><span class="fb2">' + q + '</span></span>';
+}
+function fracVoz(p, q){ return q === 1 ? String(p).replace("-","menos ") : (p < 0 ? "menos " : "") + Math.abs(p) + " sobre " + q; }
+function fracHTML(p, q){ return envuelve(fracVis(p, q), fracVoz(p, q)); }
+/* Lee "6/9", "3", "-2/5" → {p,q} sin reducir; null si no es válido */
+function leeFraccion(t){
+  var s = String(t).trim().replace(/\s+/g, "").replace(/−/g, "-");
+  var m = s.match(/^(-?\d+)(?:\/(\d+))?$/); if (!m) return null;
+  var q = m[2] === undefined ? 1 : parseInt(m[2], 10); if (q === 0) return null;
+  return { p: parseInt(m[1], 10), q: q };
+}
+function leeDecimal(t){
+  var s = String(t).trim().replace(/\s+/g, "").replace(/−/g, "-");
+  if (s.indexOf(".") < 0 && /^-?\d+,\d+$/.test(s)) s = s.replace(",", ".");
+  if (!/^-?(\d+\.?\d*|\.\d+)$/.test(s)) return null;
+  return parseFloat(s);
+}
+/* Decimal periódico en texto: entero, parte no periódica, periodo */
+function periodicoHTML(ent, noRep, per){
+  var vis = ent + "." + noRep + per + per + per + "…";
+  var voz = ent + " punto " + (noRep ? noRep.split("").join(" ") + ", y después " : "") + "el grupo " + per.split("").join(" ") + " repetido sin fin";
+  return envuelve(vis, voz);
+}
+
+/* ============================================================
+   Práctica escrita de radicales: k √ r
+   gen() devuelve { enun, k, r, explica }
+   ============================================================ */
+function creaPracticaRad(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    [pre + "-k", pre + "-r"].forEach(function(id){ $(id).value = ""; $(id).disabled = false; $(id).classList.remove("error"); });
+    $(pre + "-comprobar").disabled = false;
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb");
+    var kt = $(pre + "-k").value.trim(), rt = $(pre + "-r").value.trim();
+    if (kt === "") kt = "1";
+    var okK = /^\d+$/.test(kt), okR = /^\d+$/.test(rt);
+    $(pre + "-k").classList.toggle("error", !okK); $(pre + "-r").classList.toggle("error", !okR);
+    if (!okK || !okR){ fb.className = "fb mal"; fb.innerHTML = "Escribe números enteros: el coeficiente (fuera del radical) y el radicando (dentro). Si no hay coeficiente, déjalo vacío o escribe 1."; return; }
+    var k = parseInt(kt, 10), r = parseInt(rt, 10);
+    est.intentos++;
+    if (k === q.k && r === q.r){
+      est.resuelta = true; est.total++; est.aciertos++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ Correcto: " + radHTML(q.k, q.r) + ". " + (q.explica || "");
+      bloquea();
+    } else {
+      var msg;
+      if (k*k*r === q.k*q.k*q.r) msg = "Tiene el mismo valor, pero todavía se puede simplificar: " + radHTML(1, r) + " contiene un cuadrado perfecto.";
+      else if (r === q.r) msg = "El radicando está bien; revisa el coeficiente.";
+      else if (k === q.k) msg = "El coeficiente está bien; revisa lo que queda dentro del radical.";
+      else msg = "Todavía no. Busca el mayor cuadrado perfecto que divide al radicando.";
+      if (est.intentos >= 2){
+        est.resuelta = true; est.total++;
+        fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " La respuesta es " + radHTML(q.k, q.r) + ". " + (q.explica || "");
+        bloquea();
+      } else { fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " Tienes un intento más."; }
+    }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  function bloquea(){ $(pre + "-k").disabled = true; $(pre + "-r").disabled = true; $(pre + "-comprobar").disabled = true; }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  [pre + "-k", pre + "-r"].forEach(function(id){ $(id).addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); }); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est };
+  (window.__prac = window.__prac || {})[pre] = obj;
+  return obj;
+}
+
+/* ============================================================
+   Práctica escrita libre (un solo campo)
+   gen() devuelve { enun, evalua(texto) → {estado:"bien"|"mal"|"invalido", msg}, solucion, correcta (texto de prueba) }
+   ============================================================ */
+function creaPracticaLibre(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    $(pre + "-r").value = ""; $(pre + "-r").disabled = false; $(pre + "-r").classList.remove("error");
+    $(pre + "-comprobar").disabled = false;
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb"), res = q.evalua($(pre + "-r").value);
+    $(pre + "-r").classList.toggle("error", res.estado === "invalido");
+    if (res.estado === "invalido"){ fb.className = "fb mal"; fb.innerHTML = res.msg; return; }
+    est.intentos++;
+    if (res.estado === "bien"){
+      est.resuelta = true; est.total++; est.aciertos++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ " + res.msg + " " + (q.solucion || "");
+      bloquea();
+    } else if (est.intentos >= 2){
+      est.resuelta = true; est.total++;
+      fb.className = "fb mal"; fb.innerHTML = "✗ " + res.msg + " " + (q.solucion || "");
+      bloquea();
+    } else { fb.className = "fb mal"; fb.innerHTML = "✗ " + res.msg + " Tienes un intento más."; }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  function bloquea(){ $(pre + "-r").disabled = true; $(pre + "-comprobar").disabled = true; }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  $(pre + "-r").addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est };
+  (window.__libre = window.__libre || {})[pre] = obj;
+  return obj;
+}
+
+/* Recta numérica en SVG: de a a b, con marcas cada 'paso' y rótulos en los enteros */
+function rectaSVG(a, b, paso, marcas, titulo){
+  var W = 640, H = 150, x0 = 30, x1 = W - 30, y = 92;
+  function X(v){ return x0 + (v - a) * (x1 - x0) / (b - a); }
+  var s = '<svg class="recta-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + titulo + '">';
+  s += '<line x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '" stroke="#424242" stroke-width="2"/>';
+  var n = Math.round((b - a) / paso);
+  for (var i = 0; i <= n; i++){
+    var v = a + i * paso, entero = Math.abs(v - Math.round(v)) < 1e-9, xv = X(v);
+    s += '<line x1="' + xv + '" y1="' + (y - (entero ? 10 : 5)) + '" x2="' + xv + '" y2="' + (y + (entero ? 10 : 5)) + '" stroke="#424242" stroke-width="' + (entero ? 2 : 1) + '"/>';
+    if (entero) s += '<text x="' + xv + '" y="' + (y + 38) + '" text-anchor="middle" font-size="24" fill="#222">' + Math.round(v) + '</text>';
+  }
+  (marcas || []).forEach(function(m){
+    var xm = X(m.v), col = m.color || "#bf360c";
+    s += '<path d="M' + xm + ' ' + (y - 4) + ' l-11 -18 h22 z" fill="' + col + '"/>';
+    s += '<text x="' + xm + '" y="' + (y - (m.alto ? 58 : 28)) + '" text-anchor="middle" font-size="22" font-weight="700" fill="' + col + '">' + m.txt + '</text>';
+  });
+  return s + '</svg>';
+}
+
+/* Expresiones con varios términos: lista de {k, r}; r = 1 es un número entero */
+function exprVis(t){
+  if (!t.length) return "0";
+  return t.map(function(x, i){
+    if (i === 0) return radVis(x.k, x.r);
+    return (x.k < 0 ? " − " : " + ") + radVis(Math.abs(x.k), x.r);
+  }).join("");
+}
+function exprVoz(t){
+  if (!t.length) return "0";
+  return t.map(function(x, i){
+    if (i === 0) return radVoz(x.k, x.r);
+    return (x.k < 0 ? " menos " : " más ") + radVoz(Math.abs(x.k), x.r);
+  }).join("");
+}
+function exprHTML(t){ return envuelve(exprVis(t), exprVoz(t)); }
+function exprClave(t){ return t.map(function(x){ return x.k + "r" + x.r; }).join("|") || "0"; }
+function opExpr(t){ return { html: exprHTML(t), clave: exprClave(t) }; }
+function T(k, r){ return { k: k, r: r }; }
+/* Combina términos semejantes (ya simplificados) conservando el orden de aparición */
+function combina(t){
+  var orden = [], suma = {};
+  t.forEach(function(x){ if (!(x.r in suma)){ suma[x.r] = 0; orden.push(x.r); } suma[x.r] += x.k; });
+  return orden.filter(function(r){ return suma[r] !== 0; }).map(function(r){ return T(suma[r], r); });
+}
+function simplTermino(x){ var s = simplRad(x.r); return T(x.k * s.k, s.r); }
+function valor(t){ return t.reduce(function(a, x){ return a + x.k * Math.sqrt(x.r); }, 0); }
+function entero(id, min, max){ var s = $(id).value.trim(); if (!/^\d+$/.test(s)) return null; var n = parseInt(s,10); return (n < min || n > max) ? null : n; }
+
+/* ============================================================
+   MÓDULO 1 · ¿Se pueden combinar?
+   ============================================================ */
+function pintaSM(){
+  var a = entero("sm-a",1,20), r1 = entero("sm-r1",2,200), b = entero("sm-b",1,20), r2 = entero("sm-r2",2,200), op = $("sm-op").value, av = $("sm-aviso");
+  if (a === null || r1 === null || b === null || r2 === null){
+    av.className = "caja-aviso visible"; av.textContent = "Usa coeficientes enteros de 1 a 20 y radicandos enteros de 2 a 200.";
+    $("sm-salida").innerHTML = ""; return;
+  }
+  av.className = "caja-aviso"; av.textContent = "";
+  var sg = op === "+" ? 1 : -1, orig = [T(a, r1), T(sg*b, r2)], html = '<div class="linea grande">' + exprHTML(orig) + '</div>';
+  if (r1 === r2){
+    var c = a + sg*b, res = c === 0 ? [] : [T(c, r1)];
+    html += '<div class="linea">Tienen la misma parte irracional, ' + radHTML(1, r1) + ': se ' + (op === "+" ? "suman" : "restan") + ' los coeficientes, ' + a + ' ' + op + ' ' + b + ' = ' + String(c).replace("-","−") + '.</div>';
+    html += '<div class="linea">Es como ' + a + 'x ' + op + ' ' + b + 'x = ' + (c === 0 ? '0' : String(c).replace("-","−") + 'x') + '.</div>';
+    html += '<div class="linea veredicto">✓ ' + exprHTML(orig) + ' = ' + exprHTML(res) + '</div>';
+    html += '<div class="linea nota">Comprobación: ' + aprox(valor(orig), 3) + ' y ' + aprox(valor(res), 3) + ' coinciden.</div>';
+  } else {
+    var s1 = simplRad(r1), s2 = simplRad(r2);
+    html += '<div class="linea veredicto">La parte irracional es distinta (' + radHTML(1,r1) + ' y ' + radHTML(1,r2) + '): no son semejantes y se deja indicado.</div>';
+    if (op === "+"){
+      var trampa = [T(a + b, r1 + r2)];
+      html += '<div class="linea">El error de «sumar todo» daría ' + exprHTML(trampa) + ' ≈ ' + aprox(valor(trampa), 3) + ', pero ' + exprHTML(orig) + ' ≈ ' + aprox(valor(orig), 3) + '. No coinciden.</div>';
+    } else html += '<div class="linea">Valor aproximado: ' + exprHTML(orig) + ' ≈ ' + aprox(valor(orig), 3) + '.</div>';
+    if (s1.r === s2.r) html += '<div class="linea"><strong>Pero ojo:</strong> si simplificas, ' + radHTML(1,r1) + ' = ' + radHTML(s1.k, s1.r) + ' y ' + radHTML(1,r2) + ' = ' + radHTML(s2.k, s2.r) +
+                               '. ¡Sí son semejantes! Esto es lo que se trabaja en el <a href="#simplificar-primero">módulo 2</a>.</div>';
+  }
+  $("sm-salida").innerHTML = html;
+}
+
+var BASES = [2,3,5,6,7,10,11];
+function genSemej(){
+  var t = aleatorio(1,4), r = elige(BASES), a = aleatorio(1,9), b = aleatorio(1,9), o, pc = {}, correcta, bien;
+  if (t === 1 || t === 4){ /* suma semejante (t 4: coeficiente 1 implícito) */
+    if (t === 4) a = 1;
+    var res = [T(a + b, r)]; o = [opExpr(res)];
+    var d1 = opExpr([T(a + b, 2*r)]); o.push(d1); pc[d1.clave] = "La parte irracional se conserva: no se suman los radicandos.";
+    var d2 = opExpr([T(a * b, r)]); o.push(d2); pc[d2.clave] = "Los coeficientes se suman, no se multiplican.";
+    var d3 = { html: String(a + b), clave: "n" + (a+b) }; o.push(d3); pc[d3.clave] = "El radical no desaparece al sumar: se conserva " + radHTML(1, r) + ".";
+    if (t === 4){ var d4 = opExpr([T(b, r)]); o.push(d4); pc[d4.clave] = radHTML(1, r) + " vale como 1" + radHTML(1, r) + ": su coeficiente es 1, no 0."; }
+    correcta = o[0].clave; bien = "Se suman los coeficientes, " + a + " + " + b + " = " + (a + b) + ", y se conserva " + radHTML(1, r) + ".";
+    return { enun: "Calcula " + exprHTML([T(a, r), T(b, r)]) + ".", opciones: [o[0]].concat(baraja(o.slice(1)).slice(0,3)), correcta: correcta, porClave: pc, bien: bien, mal: "La respuesta es " + exprHTML(res) + "." };
+  }
+  if (t === 2){ /* resta semejante */
+    if (a === b) a = b + aleatorio(1,4);
+    if (a < b){ var x = a; a = b; b = x; }
+    var res2 = [T(a - b, r)]; o = [opExpr(res2)];
+    var e1 = { html: String(a - b), clave: "n" + (a-b) }; o.push(e1); pc[e1.clave] = "El radical no desaparece al restar: se conserva " + radHTML(1, r) + ".";
+    var e2 = opExpr([T(a + b, r)]); o.push(e2); pc[e2.clave] = "Es una resta: los coeficientes se restan.";
+    var e3 = { html: "No se pueden restar", clave: "ind" }; o.push(e3); pc.ind = "Sí se pueden: tienen la misma parte irracional.";
+    return { enun: "Calcula " + exprHTML([T(a, r), T(-b, r)]) + ".", opciones: o, correcta: o[0].clave, porClave: pc,
+      bien: "Se restan los coeficientes, " + a + " − " + b + " = " + (a - b) + ", y se conserva " + radHTML(1, r) + ".", mal: "La respuesta es " + exprHTML(res2) + "." };
+  }
+  /* no semejantes */
+  var r2 = elige(BASES.filter(function(z){ return z !== r; })); a = elige([1,1,2,3]); b = elige([1,1,2,4]);
+  var orig = [T(a, r), T(b, r2)];
+  o = [{ html: "Se deja indicado: " + exprHTML(orig), clave: "ind" }];
+  var f1 = opExpr([T(a + b, r + r2)]); o.push(f1); pc[f1.clave] = "No se pueden sumar radicandos distintos.";
+  var f2 = opExpr([T(a + b, r)]); o.push(f2); pc[f2.clave] = "Solo se combinan términos con la misma parte irracional.";
+  var f3 = opExpr([T(a * b, r * r2)]); o.push(f3); pc[f3.clave] = "Eso sería una multiplicación, no una suma.";
+  return { enun: "Calcula " + exprHTML(orig) + ".", opciones: o, correcta: "ind", porClave: pc,
+    bien: "La parte irracional es distinta, así que no son semejantes. Compruébalo: " + aprox(valor(orig),3) + " no es igual a " + aprox(valor([T(a+b, r+r2)]),3) + ".",
+    mal: "Como " + radHTML(1, r) + " y " + radHTML(1, r2) + " son distintos, la suma se deja indicada." };
+}
+
+/* ============================================================
+   MÓDULO 2 · Simplificar primero
+   ============================================================ */
+var SP = { lista: [ [1,8,1,1,2], [1,12,1,1,27], [1,50,-1,1,18], [1,20,1,1,45], [1,8,1,1,3], [1,75,-1,1,12], [3,8,1,1,32], [1,12,1,1,3] ], pasos: [], visto: 0 };
+function exprOriginal(e){ return [T(e[0], e[1]), T(e[2]*e[3], e[4])]; }
+function llenaSP(){
+  var sel = $("sp-sel"); sel.innerHTML = "";
+  SP.lista.forEach(function(e, i){ var o = document.createElement("option"); o.value = i; o.textContent = exprVis(exprOriginal(e)).replace(/<[^>]+>/g, ""); sel.appendChild(o); });
+}
+function resuelveSP(e){
+  var orig = exprOriginal(e), simp = orig.map(simplTermino), res = combina(simp);
+  return { orig: orig, simp: simp, res: res, semej: simp[0].r === simp[1].r };
+}
+function preparaSP(){
+  var e = SP.lista[parseInt($("sp-sel").value, 10)], R = resuelveSP(e);
+  SP.pasos = []; SP.visto = 0;
+  $("sp-expr").innerHTML = '<span class="grande">' + exprHTML(R.orig) + '</span>';
+  R.orig.forEach(function(x, i){
+    var s = simplRad(x.r), k = Math.abs(x.k), txt = (i === 0 ? "Primer" : "Segundo") + " término: ";
+    if (s.k === 1) txt += radHTML(k, x.r) + " ya está simple.";
+    else if (k === 1) txt += radHTML(1, x.r) + " = √(" + (s.k*s.k) + " · " + s.r + ") = " + radHTML(s.k, s.r) + ".";
+    else txt += radHTML(k, x.r) + " = " + k + " · " + radHTML(s.k, s.r) + " = " + radHTML(k*s.k, s.r) + ".";
+    SP.pasos.push(txt);
+  });
+  if (R.semej) SP.pasos.push("Ahora los dos términos tienen " + radHTML(1, R.simp[0].r) + ": son semejantes. Se combinan los coeficientes: " + exprHTML(R.simp) + " = " + exprHTML(R.res) + ".");
+  else SP.pasos.push("Después de simplificar, la parte irracional sigue siendo distinta (" + radHTML(1, R.simp[0].r) + " y " + radHTML(1, R.simp[1].r) + "): no son semejantes.");
+  SP.pasos.push('<span class="veredicto">Resultado: ' + exprHTML(R.orig) + ' = ' + exprHTML(R.semej ? R.res : R.simp) + '</span>' + (R.semej ? "" : " (se deja indicado)"));
+  pintaSP();
+}
+function pintaSP(){
+  var html = "";
+  for (var i = 0; i < SP.visto; i++) html += '<div class="paso"><span class="n" aria-hidden="true">' + (i === SP.pasos.length-1 ? "✓" : i+1) + '</span>' + SP.pasos[i] + '</div>';
+  $("sp-pasos").innerHTML = html;
+  var b = $("sp-sig"); b.disabled = SP.visto >= SP.pasos.length; $("sp-todo").disabled = b.disabled;
+  b.textContent = SP.visto === 0 ? "Mostrar el primer paso" : (b.disabled ? "Ya se ven todos los pasos" : "Mostrar el siguiente paso");
+}
+function exprAzar(semejantes){
+  var b = elige([2,3,5,6,7]), s1 = aleatorio(1,5), s2 = aleatorio(1,5), k1 = elige([1,1,1,2,3]), k2 = elige([1,1,1,2]);
+  if (s1 === 1 && s2 === 1) s1 = aleatorio(2,5);
+  var b2 = semejantes ? b : elige([2,3,5,6,7].filter(function(z){ return z !== b; }));
+  var sg = Math.random() < 0.6 ? 1 : -1;
+  if (sg < 0 && k1*s1 < k2*s2){ var t = s1; s1 = s2; s2 = t; var u = k1; k1 = k2; k2 = u; }
+  return [k1, s1*s1*b, sg, k2, s2*s2*b2];
+}
+function azarSP(){ SP.lista.push(exprAzar(Math.random() < 0.8)); llenaSP(); $("sp-sel").value = SP.lista.length - 1; preparaSP(); }
+
+function genSimplCombina(){
+  var e = exprAzar(Math.random() < 0.75), R = resuelveSP(e), o, pc = {};
+  var enun = "Calcula " + exprHTML(R.orig) + ". Simplifica primero cada radical.";
+  if (R.semej){
+    o = [opExpr(R.res)];
+    if (e[2] > 0 && e[0] === 1 && e[3] === 1){ var d1 = opRad(1, e[1] + e[4]); o.push(d1); pc[d1.clave] = "Los radicandos no se suman: primero se simplifica cada radical."; }
+    var d2 = { html: "No se pueden combinar", clave: "ind" }; o.push(d2); pc.ind = "Sí se pueden: después de simplificar, los dos tienen " + radHTML(1, R.simp[0].r) + ".";
+    if (R.res.length){ var d3 = opExpr([T(R.res[0].k + (R.res[0].k > 0 ? 1 : -1), R.res[0].r)]); o.push(d3); pc[d3.clave] = "Revisa los coeficientes después de simplificar."; }
+    var d4 = opExpr([T(e[0] + e[2]*e[3], R.simp[0].r)]); o.push(d4); pc[d4.clave] = "Faltó usar los coeficientes que salen al simplificar.";
+    return { enun: enun, opciones: [o[0]].concat(baraja(o.slice(1)).slice(0,3)), correcta: o[0].clave, porClave: pc,
+      bien: exprHTML(R.orig) + " = " + exprHTML(R.simp) + " = " + exprHTML(R.res) + ".", mal: "Se simplifica: " + exprHTML(R.simp) + " = " + exprHTML(R.res) + "." };
+  }
+  o = [{ html: "Se deja indicado: " + exprHTML(R.simp), clave: "ind" }];
+  var f1 = opExpr([T(Math.abs(R.simp[0].k) + Math.abs(R.simp[1].k), R.simp[0].r)]); o.push(f1); pc[f1.clave] = "Después de simplificar, la parte irracional sigue siendo distinta: no se combinan.";
+  var f2 = opExpr([T(Math.abs(R.simp[0].k) + Math.abs(R.simp[1].k), R.simp[0].r + R.simp[1].r)]); o.push(f2); pc[f2.clave] = "No se suman radicandos distintos.";
+  var f3 = { html: "Se deja indicado: " + exprHTML(R.orig), clave: "orig" }; o.push(f3); pc.orig = "Se deja indicado, sí, pero primero hay que simplificar cada radical.";
+  return { enun: enun, opciones: o, correcta: "ind", porClave: pc,
+    bien: "Simplificado queda " + exprHTML(R.simp) + ", y como la parte irracional es distinta, se deja indicado.",
+    mal: "Se simplifica a " + exprHTML(R.simp) + ", que no se puede combinar." };
+}
+function genEscribeSP(){
+  var e, R;
+  do { e = exprAzar(true); R = resuelveSP(e); } while (!R.res.length || R.res[0].k <= 0);
+  return { enun: "Calcula " + exprHTML(R.orig) + " y escribe el resultado como un solo término.", k: R.res[0].k, r: R.res[0].r,
+    explica: exprHTML(R.orig) + " = " + exprHTML(R.simp) + " = " + exprHTML(R.res) + "." };
+}
+
+/* ============================================================
+   MÓDULO 3 · Multiplicar
+   ============================================================ */
+var MU_COLA = [[1,3,1,5],[1,2,1,2],[2,3,4,6],[1,8,1,2]];
+function pintaMU(){
+  var k1 = entero("mu-k1",1,20), a = entero("mu-a",1,200), k2 = entero("mu-k2",1,20), b = entero("mu-b",1,200), av = $("mu-aviso");
+  if (k1 === null || a === null || k2 === null || b === null){
+    av.className = "caja-aviso visible"; av.textContent = "Usa coeficientes enteros de 1 a 20 y radicandos enteros de 1 a 200.";
+    $("mu-salida").innerHTML = ""; return;
+  }
+  av.className = "caja-aviso"; av.textContent = "";
+  var s = simplRad(a*b), kf = k1*k2*s.k, html = '<div class="linea grande">(' + radHTML(k1, a) + ')(' + radHTML(k2, b) + ') = ' + radHTML(kf, s.r) + '</div>';
+  html += '<div class="linea">Coeficientes: ' + k1 + ' · ' + k2 + ' = ' + (k1*k2) + '. Radicandos: ' + radHTML(1,a) + ' · ' + radHTML(1,b) + ' = ' + radHTML(1, a*b) + '.</div>';
+  if (a === b) html += '<div class="linea">Es una raíz por sí misma: ' + radHTML(1,a) + ' · ' + radHTML(1,a) + ' = ' + a + '.</div>';
+  else if (s.k > 1) html += '<div class="linea">Se simplifica: ' + radHTML(1, a*b) + ' = ' + radHTML(s.k, s.r) + ', y ' + (k1*k2) + ' · ' + radHTML(s.k, s.r) + ' = ' + radHTML(kf, s.r) + '.</div>';
+  else html += '<div class="linea">' + (a*b) + ' no tiene cuadrados perfectos: ' + radHTML(1, a*b) + ' ya está simple.</div>';
+  html += '<div class="linea nota">Comprobación: ' + aprox(k1*Math.sqrt(a)*k2*Math.sqrt(b), 3) + ' y ' + aprox(kf*Math.sqrt(s.r), 3) + '.</div>';
+  $("mu-salida").innerHTML = html;
+}
+function azarMU(){
+  var e = MU_COLA.length ? MU_COLA.shift() : [elige([1,1,2,3]), aleatorio(2,15), elige([1,1,2,5]), aleatorio(2,15)];
+  $("mu-k1").value = e[0]; $("mu-a").value = e[1]; $("mu-k2").value = e[2]; $("mu-b").value = e[3]; pintaMU();
+}
+function genMultiplicar(){
+  var t = aleatorio(1,5), o, pc = {}, a, b, enun, res, bien;
+  if (t === 1){ /* √a·√a */
+    a = aleatorio(2,15); while (esCuadrado(a)) a++;
+    o = [{ html: String(a), clave: "n" + a }];
+    var d1 = opRad(1, a); o.push(d1); pc[d1.clave] = "√a · √a no es √a: el radical desaparece.";
+    var d2 = { html: String(a*a), clave: "n" + a*a }; o.push(d2); pc[d2.clave] = "√a · √a = √(a²) = a, no a².";
+    var d3 = opRad(2, a); o.push(d3); pc[d3.clave] = "Eso sería √a + √a. Aquí se multiplica.";
+    return { enun: "Calcula " + radHTML(1,a) + " · " + radHTML(1,a) + ".", opciones: o, correcta: o[0].clave, porClave: pc,
+      bien: radHTML(1,a) + " · " + radHTML(1,a) + " = " + radHTML(1, a*a) + " = " + a + ".", mal: "La respuesta es " + a + ": una raíz por sí misma da el radicando." };
+  }
+  if (t === 5){ /* distribuir */
+    a = elige([2,3,5,6,7]); var c = aleatorio(2,9);
+    res = [T(a, 1), T(c, a)];
+    o = [opExpr(res)];
+    var f1 = opExpr([T(a,1), T(c,1)]); o.push(f1); pc[f1.clave] = radHTML(1,a) + " · " + c + " es " + radHTML(c,a) + ": el radical se conserva.";
+    var f2 = opExpr([T(a + c, a)]); o.push(f2); pc[f2.clave] = a + " y " + radHTML(c,a) + " no son semejantes: no se combinan.";
+    var f3 = opExpr([T(2*a, 1), T(c, a)]); o.push(f3); pc[f3.clave] = radHTML(1,a) + " · " + radHTML(1,a) + " = " + a + ", no " + (2*a) + ".";
+    return { enun: "Calcula " + radHTML(1,a) + " · (" + radHTML(1,a) + " + " + c + ").", opciones: o, correcta: o[0].clave, porClave: pc,
+      bien: "Se distribuye: " + radHTML(1,a) + " · " + radHTML(1,a) + " = " + a + " y " + radHTML(1,a) + " · " + c + " = " + radHTML(c,a) + ".",
+      mal: "La respuesta es " + exprHTML(res) + "." };
+  }
+  var k1 = t === 4 ? aleatorio(2,5) : 1, k2 = t === 4 ? aleatorio(2,5) : 1;
+  do { a = aleatorio(2,12); b = aleatorio(2,12); } while (a === b || esCuadrado(a) || esCuadrado(b) || (t === 2 && !libreCuadrados(a*b)) || (t === 3 && libreCuadrados(a*b)));
+  var s = simplRad(a*b), kf = k1*k2*s.k;
+  o = [opRad(kf, s.r)];
+  var g1 = opRad(k1*k2, a + b); o.push(g1); pc[g1.clave] = "Los radicandos se multiplican, no se suman.";
+  var g2 = { html: String(k1*k2*a*b), clave: "n" + k1*k2*a*b }; o.push(g2); pc[g2.clave] = "El producto sigue dentro del radical: " + radHTML(1, a*b) + ".";
+  if (s.k > 1){ var g3 = opRad(k1*k2, a*b); o.push(g3); pc[g3.clave] = "El valor es correcto, pero " + radHTML(1, a*b) + " todavía se puede simplificar."; }
+  if (t === 4){ var g4 = opRad((k1 + k2)*s.k, s.r); o.push(g4); pc[g4.clave] = "Los coeficientes de fuera se multiplican, no se suman."; }
+  o.push(opRad(kf + 1, s.r));
+  return { enun: "Calcula " + (t === 4 ? "(" + radHTML(k1,a) + ")(" + radHTML(k2,b) + ")" : radHTML(1,a) + " · " + radHTML(1,b)) + ". Simplifica el resultado.",
+    opciones: [o[0]].concat(baraja(o.slice(1)).slice(0,3)), correcta: o[0].clave, porClave: pc,
+    bien: "Se unen bajo un radical: " + radHTML(k1*k2, a*b) + (s.k > 1 ? ", y se simplifica a " + radHTML(kf, s.r) : "") + ".",
+    mal: "La respuesta es " + radHTML(kf, s.r) + "." };
+}
+
+/* ============================================================
+   MÓDULO 4 · Aproximar
+   ============================================================ */
+function pintaAP(){
+  var n = entero("ap-n",2,200), av = $("ap-aviso");
+  if (n === null){ av.className = "caja-aviso visible"; av.textContent = "Escribe un número entero de 2 a 200."; $("ap-salida").innerHTML = ""; $("ap-recta").innerHTML = ""; return; }
+  av.className = "caja-aviso"; av.textContent = "";
+  var raiz = Math.sqrt(n), a = Math.floor(raiz + 1e-12), html;
+  if (esCuadrado(n)){
+    $("ap-recta").innerHTML = rectaSVG(Math.max(0, a-1), a+1, 0.1, [{ v: a, txt: "√" + n }], "Recta numérica: la raíz de " + n + " cae exactamente en " + a);
+    $("ap-salida").innerHTML = '<div class="linea veredicto">' + n + ' es un cuadrado perfecto: ' + radHTML(1,n) + ' = ' + a + ' exactamente. Prueba con un número que no lo sea.</div>';
+    return;
+  }
+  var d = Math.floor(raiz * 10 + 1e-9), t0 = d / 10, t1 = (d + 1) / 10;
+  html = '<div class="linea"><strong>Entre qué enteros:</strong> ' + (a*a) + ' &lt; ' + n + ' &lt; ' + ((a+1)*(a+1)) + ', así que ' + radHTML(1,n) + ' está entre ' + a + ' y ' + (a+1) + '.</div>';
+  html += '<div class="linea"><strong>Entre qué décimas:</strong> ' + t0.toFixed(1) + '² = ' + (d*d/100).toFixed(2) + ' y ' + t1.toFixed(1) + '² = ' + ((d+1)*(d+1)/100).toFixed(2) +
+          '. Como ' + n + ' queda en medio, ' + radHTML(1,n) + ' está entre ' + t0.toFixed(1) + ' y ' + t1.toFixed(1) + '.</div>';
+  html += '<div class="linea veredicto">Con la calculadora: ' + radHTML(1,n) + ' ≈ ' + aprox(raiz, 3) + ', que redondeado a la décima es ' + aprox(raiz, 1) + '.</div>';
+  $("ap-recta").innerHTML = rectaSVG(a, a+1, 0.1, [{ v: raiz, txt: "√" + n }], "Recta numérica de " + a + " a " + (a+1) + " con la raíz de " + n + " cerca de " + aprox(raiz, 1));
+  $("ap-salida").innerHTML = html;
+}
+function azarAP(){ var n; do { n = aleatorio(2,200); } while (esCuadrado(n)); $("ap-n").value = n; pintaAP(); }
+
+function genEstimar(){
+  if (Math.random() < 0.55){
+    var n; do { n = aleatorio(2,150); } while (esCuadrado(n));
+    var a = Math.floor(Math.sqrt(n)), o = [], pc = {};
+    [a-1, a, a+1, a+2].forEach(function(i){ if (i >= 0) o.push({ html: "Entre " + i + " y " + (i+1), clave: "e" + i }); });
+    var ok = "e" + a, lista = [o.filter(function(x){ return x.clave === ok; })[0]].concat(o.filter(function(x){ return x.clave !== ok; })).slice(0,4);
+    return { enun: "¿Entre qué dos enteros consecutivos está " + radHTML(1,n) + "?", opciones: lista, correcta: ok, porClave: pc,
+      bien: (a*a) + " < " + n + " < " + ((a+1)*(a+1)) + ", así que " + radHTML(1,n) + " está entre " + a + " y " + (a+1) + ".",
+      mal: "Busca los cuadrados perfectos que rodean a " + n + ": " + (a*a) + " y " + ((a+1)*(a+1)) + "." };
+  }
+  var k = aleatorio(2,6), r = elige([2,3,5,6,7]), v = k*Math.sqrt(r), op2 = [], pc2 = {};
+  op2.push({ html: "≈ " + aprox(v,2), clave: "a" + aprox(v,2) });
+  var w1 = aprox(Math.sqrt(k*r),2); op2.push({ html: "≈ " + w1, clave: "a" + w1 }); pc2["a" + w1] = "Eso es " + radHTML(1, k*r) + ": el coeficiente queda fuera y multiplica a la raíz.";
+  var w2 = aprox(k + Math.sqrt(r),2); op2.push({ html: "≈ " + w2, clave: "a" + w2 }); pc2["a" + w2] = "El coeficiente multiplica a la raíz, no se le suma.";
+  var w3 = aprox(k*r,2); op2.push({ html: "≈ " + w3, clave: "a" + w3 }); pc2["a" + w3] = "Falta sacar la raíz: " + radHTML(1, r) + " no es " + r + ".";
+  return { enun: "¿Cuál es el valor aproximado de " + radHTML(k, r) + "?", opciones: op2, correcta: op2[0].clave, porClave: pc2,
+    bien: radHTML(1,r) + " ≈ " + aprox(Math.sqrt(r),3) + ", y " + k + " × " + aprox(Math.sqrt(r),3) + " ≈ " + aprox(v,2) + ".",
+    mal: "Se multiplica el coeficiente por la raíz: " + k + " × " + aprox(Math.sqrt(r),3) + " ≈ " + aprox(v,2) + "." };
+}
+function genDecima(){
+  var n; do { n = aleatorio(2,150); } while (esCuadrado(n));
+  var raiz = Math.sqrt(n), bueno = aprox(raiz, 1), a = Math.floor(raiz);
+  return { enun: "Aproxima " + radHTML(1,n) + " a la décima.", correcta: bueno,
+    solucion: radHTML(1,n) + " ≈ " + aprox(raiz,3) + ", que redondeado a la décima es " + bueno + ".",
+    evalua: function(txt){
+      var v = leeDecimal(txt);
+      if (v === null) return { estado: "invalido", msg: "Escribe un número decimal, por ejemplo " + (a + 0.5).toFixed(1) + "." };
+      if (Math.abs(v - parseFloat(bueno)) < 1e-9) return { estado: "bien", msg: "Correcto." };
+      if (Math.abs(v - raiz) <= 0.1) return { estado: "mal", msg: "Casi: estás a menos de una décima, pero no es el redondeo correcto." };
+      if (v >= a && v <= a + 1) return { estado: "mal", msg: "Vas bien con el entero (" + a + "); afina la décima elevando al cuadrado tu estimación." };
+      return { estado: "mal", msg: "Primero acorrala: " + (a*a) + " < " + n + " < " + ((a+1)*(a+1)) + ", así que la raíz está entre " + a + " y " + (a+1) + "." };
+    } };
+}
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+["sm-a","sm-r1","sm-b","sm-r2"].forEach(function(id){ $(id).addEventListener("input", pintaSM); });
+$("sm-op").addEventListener("change", pintaSM);
+pintaSM();
+creaPracticaOM("p1", genSemej);
+
+llenaSP();
+$("sp-sel").addEventListener("change", preparaSP);
+$("sp-sig").addEventListener("click", function(){ if (SP.visto < SP.pasos.length){ SP.visto++; pintaSP(); } });
+$("sp-todo").addEventListener("click", function(){ SP.visto = SP.pasos.length; pintaSP(); });
+$("sp-azar").addEventListener("click", azarSP);
+preparaSP();
+creaPracticaOM("p2", genSimplCombina);
+creaPracticaRad("p3", genEscribeSP);
+
+["mu-k1","mu-a","mu-k2","mu-b"].forEach(function(id){ $(id).addEventListener("input", pintaMU); });
+$("mu-azar").addEventListener("click", azarMU);
+pintaMU();
+creaPracticaOM("p4", genMultiplicar);
+
+$("ap-n").addEventListener("input", pintaAP);
+$("ap-azar").addEventListener("click", azarAP);
+pintaAP();
+creaPracticaOM("p5", genEstimar);
+creaPracticaLibre("p6", genDecima);
+
+iniciaNavegacion();
+
+</script>
+</body>
+</html>

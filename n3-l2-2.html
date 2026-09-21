@@ -1,0 +1,940 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 2.2 — Multiplicación y división en notación científica
+  Nivel 3 · Spanish ASE Math 3 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #multiplicar · #ajustar · #dividir · #real
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 2.2: multiplicación y división en notación científica</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 2.2 del Nivel 3: multiplicar y dividir en notación científica, ajustar el coeficiente y resolver problemas de contexto.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+
+  :root{
+    --tema:#004d40; --tema-d:#00332b; --tema-bg:#e0f2f1; --tema-bg2:#b2dfdb;
+    --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#0a3a82;border-color:#0a3a82;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:96px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* fracción algebraica */
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 6px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 8px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;
+                 text-decoration-color:#b71c1c;color:#b71c1c;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  .campos-sci .campo input[type="text"]{width:120px;}
+  .campos-sci .campo input.corto{width:84px;}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campos.campos-sci{flex-direction:row;align-items:flex-end;flex-wrap:nowrap;gap:10px;} }
+
+  .btn:disabled,.btn-sec:disabled{background:#eeeeee;color:#424242;border-color:#9e9e9e;cursor:not-allowed;}
+  input:disabled,select:disabled{background:#f3f3f3;cursor:not-allowed;}
+  .campo input[type="text"]{width:150px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input.ancho{width:230px;}
+  .campo input.corto{width:96px;}
+  .enun .ex, .opcion .ex, .salida .ex, .lista-orden .ex{font-size:18px;}
+  .ex{white-space:nowrap;}
+  sup{font-size:.72em;}
+
+  /* recorrido del punto decimal */
+  .recorrido{display:flex;justify-content:center;align-items:flex-end;flex-wrap:wrap;gap:3px;margin:26px 0 10px;font-family:Consolas,'Courier New',monospace;}
+  .celda{position:relative;width:34px;height:46px;border:2px solid var(--tema-bg2);border-radius:6px;background:#fff;
+         display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--txt);}
+  .celda.saltado{background:var(--tema-bg);border-color:var(--tema);}
+  .celda.relleno{background:#fff8e1;border-color:#f9a825;border-style:dashed;color:var(--avi);}
+  .celda .marca{position:absolute;top:-22px;left:0;right:0;text-align:center;font-size:13px;color:var(--tema-d);font-family:'Segoe UI',system-ui,sans-serif;}
+  .punto{width:14px;height:46px;display:flex;align-items:flex-end;justify-content:center;font-size:34px;line-height:1;
+         font-weight:900;color:#b71c1c;}
+  .punto.oculto{visibility:hidden;}
+  .leyenda{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:14px;color:var(--gris);margin:4px 0 8px;}
+  .leyenda span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:6px;vertical-align:-2px;border:2px solid var(--tema-bg2);}
+  .leyenda .l-salto::before{background:var(--tema-bg);border-color:var(--tema);}
+  .leyenda .l-relleno::before{background:#fff8e1;border-color:#f9a825;border-style:dashed;}
+  .estado{text-align:center;font-size:18px;margin:10px 0;color:var(--tema-d);}
+  .estado .grande{font-size:22px;font-weight:700;}
+  @media (prefers-reduced-motion:no-preference){ .celda{transition:background .25s,border-color .25s;} }
+
+  /* ordenar */
+  .lista-orden{list-style:none;margin:12px 0;padding:0;counter-reset:ord;}
+  .lista-orden li{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff;border:2px solid #d8d8d8;border-radius:8px;
+                  padding:8px 12px;margin:8px 0;counter-increment:ord;}
+  .lista-orden li::before{content:counter(ord);background:var(--tema-bg);color:var(--tema-d);width:26px;height:26px;border-radius:50%;
+                  display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
+  .lista-orden li.bien{border-color:var(--ok);background:var(--ok-bg);}
+  .lista-orden li.mal{border-color:var(--mal);background:var(--mal-bg);}
+  .lista-orden .nombre{flex:1;min-width:160px;font-weight:600;}
+  .lista-orden .flechas{display:flex;gap:6px;}
+  .lista-orden .flechas button{background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:6px;width:40px;height:36px;font-weight:700;}
+  .lista-orden .flechas button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* suma en columnas */
+  .columnas{font-family:Consolas,'Courier New',monospace;font-size:22px;text-align:right;display:inline-block;margin:6px auto;
+            padding:10px 18px;background:#fff;border:1px solid #d8d8d8;border-radius:8px;line-height:1.5;}
+  .columnas .raya{border-top:3px solid var(--tema);}
+  .centro{text-align:center;}
+
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 3 · Tema 2 · Notación científica</div>
+    <h1>Lección 2.2 · Multiplicación y división en notación científica</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#multiplicar">Multiplicar en tres pasos</a></li>
+      <li><a href="#ajustar">Ajustar el coeficiente</a></li>
+      <li><a href="#dividir">Dividir en notación científica</a></li>
+      <li><a href="#real">Un cálculo real</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 · #multiplicar ============ -->
+  <details class="modulo" id="multiplicar" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Multiplicar en tres pasos</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Para multiplicar dos números en notación científica, los coeficientes y las potencias de 10 se trabajan
+      <strong>por separado</strong> y después se reúnen:</p>
+      <div class="pasos">
+        <div class="paso"><span class="n" aria-hidden="true">1</span>Se <strong>multiplican los coeficientes</strong>.</div>
+        <div class="paso"><span class="n" aria-hidden="true">2</span>Se <strong>suman los exponentes</strong> de las potencias de 10 (regla del producto).</div>
+        <div class="paso"><span class="n" aria-hidden="true">3</span>Se verifica que el coeficiente quede entre 1 y 10, y se <strong>ajusta</strong> si hace falta.</div>
+      </div>
+
+      <h3>Calculadora de tres pasos</h3>
+      <p>Escribe dos números en notación científica, o pide un ejemplo, y revela los pasos uno por uno. Intenta anticipar cada paso antes de mostrarlo.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="cm-a">Primer coeficiente</label><input type="text" inputmode="decimal" id="cm-a" value="3"></div>
+          <div class="campo"><label for="cm-m">Primer exponente</label><input type="text" id="cm-m" value="4" class="corto"></div>
+          <div class="campo"><label for="cm-b">Segundo coeficiente</label><input type="text" inputmode="decimal" id="cm-b" value="2"></div>
+          <div class="campo"><label for="cm-n">Segundo exponente</label><input type="text" id="cm-n" value="5" class="corto"></div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="cm-sig">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="cm-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="cm-azar">Otro ejemplo</button>
+        </div>
+      </div>
+      <div class="caja-aviso" id="cm-aviso" role="alert"></div>
+      <div class="fraccion-grande" id="cm-expr"></div>
+      <div class="pasos" id="cm-pasos" aria-live="polite"></div>
+
+      <h3>Practica: multiplicar</h3>
+      <div class="practica" id="p1">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 · #ajustar ============ -->
+  <details class="modulo" id="ajustar">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Ajustar el coeficiente</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Al multiplicar o dividir, el coeficiente puede salir <strong>de 10 en adelante</strong> (como 20 × 10<sup>5</sup>)
+      o <strong>menor que 1</strong> (como 0.5 × 10<sup>−3</sup>). El valor es correcto, pero todavía no es notación
+      científica válida. Para arreglarlo se mueve el punto del coeficiente y se compensa con el exponente.</p>
+      <table class="reglas">
+        <caption>Cómo se compensa el exponente al ajustar el coeficiente</caption>
+        <thead><tr><th scope="col">Si el coeficiente…</th><th scope="col">El punto se mueve</th><th scope="col">El exponente</th></tr></thead>
+        <tbody>
+          <tr><td>es 10 o más</td><td>a la izquierda</td><td>sube un número por cada lugar</td></tr>
+          <tr><td>es menor que 1</td><td>a la derecha</td><td>baja un número por cada lugar</td></tr>
+        </tbody>
+      </table>
+
+      <h3>El ajustador</h3>
+      <p>Mueve el punto del coeficiente y observa cómo el exponente compensa cada movimiento.</p>
+      <div class="panel">
+        <div class="estado" id="aj-estado" aria-live="polite"></div>
+        <div class="fila-btn" style="justify-content:center;">
+          <button type="button" class="btn" id="aj-izq">← Punto a la izquierda</button>
+          <button type="button" class="btn" id="aj-der">Punto a la derecha →</button>
+          <button type="button" class="btn-sec" id="aj-nuevo">Otro coeficiente</button>
+        </div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Lo que pierde uno lo gana el otro:</strong> si el coeficiente se hace 10 veces más pequeño, la potencia
+        de 10 se hace 10 veces más grande. Por eso el valor del número no cambia al ajustar.
+      </div>
+
+      <h3>Practica: escríbelo en notación científica válida</h3>
+      <div class="practica" id="p2">
+        <div class="enun" id="p2-enun"></div>
+        
+        <div class="campos campos-sci">
+          <div class="campo"><label for="p2-c">Coeficiente</label><input type="text" inputmode="decimal" autocomplete="off" id="p2-c"></div>
+          <div class="campo" aria-hidden="true" style="font-size:20px;font-weight:700;padding-bottom:8px;white-space:nowrap;">× 10</div>
+          <div class="campo"><label for="p2-e">Exponente</label><input type="text" autocomplete="off" id="p2-e" class="corto"></div>
+        </div>
+        <p class="nota">Usa punto decimal (4.5, no 4,5). Para un exponente negativo escribe el signo menos: −3 o -3.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p2-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p2-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 · #dividir ============ -->
+  <details class="modulo" id="dividir">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Dividir en notación científica</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>La división sigue la misma lógica con las operaciones inversas:</p>
+      <div class="pasos">
+        <div class="paso"><span class="n" aria-hidden="true">1</span>Se <strong>dividen los coeficientes</strong>.</div>
+        <div class="paso"><span class="n" aria-hidden="true">2</span>Se <strong>restan los exponentes</strong>: el del numerador menos el del denominador (regla del cociente).</div>
+        <div class="paso"><span class="n" aria-hidden="true">3</span>Se verifica y se <strong>ajusta</strong> el coeficiente. En la división suele quedar menor que 1.</div>
+      </div>
+
+      <h3>Calculadora de tres pasos para dividir</h3>
+      <p>El primer número es el dividendo (numerador) y el segundo, el divisor (denominador).</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="cd-a">Coeficiente del dividendo</label><input type="text" inputmode="decimal" id="cd-a" value="3"></div>
+          <div class="campo"><label for="cd-m">Exponente del dividendo</label><input type="text" id="cd-m" value="4" class="corto"></div>
+          <div class="campo"><label for="cd-b">Coeficiente del divisor</label><input type="text" inputmode="decimal" id="cd-b" value="6"></div>
+          <div class="campo"><label for="cd-n">Exponente del divisor</label><input type="text" id="cd-n" value="7" class="corto"></div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="cd-sig">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="cd-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="cd-azar">Otro ejemplo</button>
+        </div>
+      </div>
+      <div class="caja-aviso" id="cd-aviso" role="alert"></div>
+      <div class="fraccion-grande" id="cd-expr"></div>
+      <div class="pasos" id="cd-pasos" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>Error frecuente:</strong> dejar el resultado como 0.5 × 10<sup>−3</sup>. El cálculo está bien, pero no
+        es notación científica válida hasta que el coeficiente quede entre 1 y 10: 5 × 10<sup>−4</sup>.
+      </div>
+
+      <h3>Practica: dividir</h3>
+      <div class="practica" id="p3">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 · #real ============ -->
+  <details class="modulo" id="real">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Un cálculo real</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En los problemas de contexto, lo primero es decidir la operación. Una pista útil:</p>
+      <ul>
+        <li><strong>Multiplicar</strong> cuando se repite una cantidad muchas veces: velocidad por tiempo, cantidad por día por número de días.</li>
+        <li><strong>Dividir</strong> cuando se reparte un total o se pregunta «cuántos caben» o «cuánto por cada uno».</li>
+      </ul>
+      <p>Después se aplican los tres pasos y se escribe el resultado en notación científica válida, con su unidad.</p>
+
+      <h3>Practica: problemas de ciencia y tecnología</h3>
+      <div class="practica" id="p4">
+        <div class="enun" id="p4-enun"></div>
+        <div class="campos"><div class="campo" style="margin-bottom:10px;"><label for="p4-op">¿Qué operación resuelve el problema?</label>
+          <select id="p4-op"><option value="">Elige una operación</option><option value="×">Multiplicar</option><option value="÷">Dividir</option></select></div></div>
+        <div class="campos campos-sci">
+          <div class="campo"><label for="p4-c">Coeficiente</label><input type="text" inputmode="decimal" autocomplete="off" id="p4-c"></div>
+          <div class="campo" aria-hidden="true" style="font-size:20px;font-weight:700;padding-bottom:8px;white-space:nowrap;">× 10</div>
+          <div class="campo"><label for="p4-e">Exponente</label><input type="text" autocomplete="off" id="p4-e" class="corto"></div>
+        </div>
+        <p class="nota">Usa punto decimal (4.5, no 4,5). Para un exponente negativo escribe el signo menos: −3 o -3.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p4-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p4-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <div class="caja-tip">
+        <strong>En el examen:</strong> resuelve primero a mano y usa la calculadora para confirmar. En la TI-30XS, la
+        notación científica se escribe con la tecla que dice ×10<sup>n</sup>: 3 × 10<sup>5</sup> se teclea como 3, esa tecla, y 5.
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Nivel 3 · Tema 2 · Notación científica · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Motor común del Tema 2 · Notación científica
+   Los números se guardan como m × 10^e con m entero (BigInt),
+   así que todas las cuentas son exactas: no hay errores de
+   redondeo del tipo 0.1 + 0.2 = 0.30000000000000004.
+   ============================================================ */
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function elige(lista){ return lista[aleatorio(0, lista.length-1)]; }
+function baraja(lista){
+  var a = lista.slice();
+  for (var i = a.length-1; i > 0; i--){ var j = aleatorio(0,i); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+var DIEZ = BigInt(10);
+function pot10(k){ var r = BigInt(1); for (var i = 0; i < k; i++) r *= DIEZ; return r; }
+
+function N(m, e){ return normaliza({ m: BigInt(m), e: e || 0 }); }
+function normaliza(n){
+  var m = n.m, e = n.e;
+  if (m === BigInt(0)) return { m: BigInt(0), e: 0 };
+  while (m % DIEZ === BigInt(0)){ m /= DIEZ; e++; }
+  return { m: m, e: e };
+}
+/* "4.5" → 45 × 10^-1 ; admite signo y coma decimal si no hay punto */
+function leeNumero(txt){
+  if (txt === null || txt === undefined) return null;
+  var s = String(txt).trim().replace(/\s+/g, "").replace(/−/g, "-");
+  if (s.indexOf(".") < 0 && /^-?\d+,\d+$/.test(s) && !/^-?\d{1,3}(,\d{3})+$/.test(s)) s = s.replace(",", ".");
+  s = s.replace(/,/g, "");
+  if (!/^-?(\d+\.?\d*|\.\d+)$/.test(s)) return null;
+  var neg = s.charAt(0) === "-"; if (neg) s = s.slice(1);
+  var p = s.indexOf("."), dec = 0;
+  if (p >= 0){ dec = s.length - p - 1; s = s.slice(0,p) + s.slice(p+1); }
+  if (s === "") return null;
+  var m = BigInt(s); if (neg) m = -m;
+  return normaliza({ m: m, e: -dec });
+}
+function sci(c, exp){ var n = leeNumero(String(c)); return normaliza({ m: n.m, e: n.e + exp }); }
+function mul(a,b){ return normaliza({ m: a.m*b.m, e: a.e+b.e }); }
+function alinea(a,b){
+  var e = Math.min(a.e, b.e);
+  return [a.m * pot10(a.e - e), b.m * pot10(b.e - e), e];
+}
+function suma(a,b){ var t = alinea(a,b); return normaliza({ m: t[0]+t[1], e: t[2] }); }
+function resta(a,b){ var t = alinea(a,b); return normaliza({ m: t[0]-t[1], e: t[2] }); }
+function compara(a,b){ var t = alinea(a,b); return t[0] < t[1] ? -1 : (t[0] > t[1] ? 1 : 0); }
+function igual(a,b){ return compara(a,b) === 0; }
+function porPot(n, k){ return normaliza({ m: n.m, e: n.e + k }); }
+/* División exacta si existe con pocas cifras; si no, aproximada a 4 cifras significativas */
+function divide(a,b){
+  for (var k = 0; k <= 12; k++){
+    var num = a.m * pot10(k);
+    if (num % b.m === BigInt(0)) return { n: normaliza({ m: num / b.m, e: a.e - b.e - k }), exacta: true };
+  }
+  var escala = 30, q = (a.m * pot10(escala)) / b.m;
+  var n = normaliza({ m: q, e: a.e - b.e - escala });
+  var s = abs(n.m).toString();
+  if (s.length > 4){
+    var corte = s.length - 4, base = pot10(corte), m = abs(n.m);
+    var r = m / base; if ((m % base) * BigInt(2) >= base) r += BigInt(1);
+    n = normaliza({ m: (n.m < 0 ? -r : r), e: n.e + corte });
+  }
+  return { n: n, exacta: false };
+}
+function abs(m){ return m < 0 ? -m : m; }
+function esCero(n){ return n.m === BigInt(0); }
+function exponenteSci(n){ return n.e + abs(n.m).toString().length - 1; }
+/* coeficiente de n cuando se escribe con la potencia 10^k (sin comas) */
+function coefCon(n, k){ return plano(porPot(n, -k)); }
+function aSci(n){
+  if (esCero(n)) return { c: "0", e: 0 };
+  var k = exponenteSci(n);
+  return { c: coefCon(n, k), e: k };
+}
+/* número en decimal, sin separadores */
+function plano(n){
+  var neg = n.m < 0, s = abs(n.m).toString(), r;
+  if (n.e >= 0) r = s + "0".repeat(n.e);
+  else {
+    var d = -n.e;
+    if (s.length <= d) s = "0".repeat(d - s.length + 1) + s;
+    r = s.slice(0, s.length - d) + "." + s.slice(s.length - d);
+  }
+  return (neg ? "-" : "") + r;
+}
+/* número en decimal con comas de miles (formato de EE. UU., como en las lecciones) */
+function conComas(n){
+  var s = plano(n), neg = s.charAt(0) === "-"; if (neg) s = s.slice(1);
+  var p = s.indexOf("."), ent = p < 0 ? s : s.slice(0,p), dec = p < 0 ? "" : s.slice(p);
+  ent = ent.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return (neg ? "−" : "") + ent + dec;
+}
+function signo(txt){ return String(txt).replace(/^-/, "−"); }
+function expTexto(k){ return k < 0 ? "−" + (-k) : String(k); }
+function par(k){ return k < 0 ? "(" + expTexto(k) + ")" : expTexto(k); }
+function expVoz(k){ return k < 0 ? "menos " + (-k) : String(k); }
+var SUP = { "0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹","-":"⁻","−":"⁻" };
+function supTexto(k){ return String(k).split("").map(function(ch){ return SUP[ch] || ch; }).join(""); }
+/* texto plano, para lugares donde no cabe HTML */
+function sciTexto(c, k){ return signo(c) + " × 10" + supTexto(k); }
+/* HTML con lectura para lector de pantalla */
+function sciHTML(c, k){
+  return '<span class="ex" aria-hidden="true">' + signo(c) + ' × 10<sup>' + expTexto(k) + '</sup></span>' +
+         '<span class="sr-only">' + signo(c).replace("−","menos ") + ' por 10 elevado a ' + expVoz(k) + '</span>';
+}
+function potHTML(k){
+  return '<span class="ex" aria-hidden="true">10<sup>' + expTexto(k) + '</sup></span>' +
+         '<span class="sr-only">10 elevado a ' + expVoz(k) + '</span>';
+}
+function numSciHTML(n){ var s = aSci(n); return sciHTML(s.c, s.e); }
+function numSciTexto(n){ var s = aSci(n); return sciTexto(s.c, s.e); }
+function esValida(c){ var n = leeNumero(c); if (!n) return false; var a = abs(n.m); if (a === BigInt(0)) return false;
+  var x = normaliza({ m: a, e: n.e }); return compara(x, N(1)) >= 0 && compara(x, N(10)) < 0; }
+/* coeficiente aleatorio con 1 a 3 cifras significativas, entre 1 y 9.99 */
+function coefAzar(cifras){
+  cifras = cifras || aleatorio(1,3);
+  var d = String(aleatorio(1,9));
+  for (var i = 1; i < cifras; i++) d += String(i === cifras-1 ? aleatorio(1,9) : aleatorio(0,9));
+  return plano(normaliza({ m: BigInt(d), e: -(cifras-1) }));
+}
+
+/* ============================================================
+   Práctica de opción múltiple.
+   gen() devuelve { enun, opciones:[{html, clave}], correcta: clave, bien, mal }
+   Las claves repetidas se descartan antes de mostrar.
+   ============================================================ */
+function creaPracticaOM(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false };
+  function pinta(){
+    var q, intentos = 0;
+    do { q = gen(); intentos++; } while (intentos < 50 && !valida(q));
+    est.actual = q; est.resuelta = false;
+    $(pre + "-enun").innerHTML = q.enun;
+    var cont = $(pre + "-opciones"); cont.innerHTML = "";
+    baraja(q.opciones).forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opcion"; b.innerHTML = o.html;
+      b.setAttribute("data-clave", o.clave); b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function(){ responde(b); });
+      cont.appendChild(b);
+    });
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function valida(q){
+    var vistas = {}, hay = 0;
+    q.opciones = q.opciones.filter(function(o){ if (vistas[o.clave]) return false; vistas[o.clave] = 1; return true; });
+    q.opciones.forEach(function(o){ if (o.clave === q.correcta) hay++; });
+    return hay === 1 && q.opciones.length >= 3;
+  }
+  function responde(btn){
+    if (est.resuelta) return;
+    est.resuelta = true; est.total++;
+    var q = est.actual, ok = btn.getAttribute("data-clave") === q.correcta;
+    Array.prototype.forEach.call($(pre + "-opciones").children, function(b){
+      b.disabled = true;
+      if (b.getAttribute("data-clave") === q.correcta) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed", "true");
+    var fb = $(pre + "-fb");
+    if (ok){ est.aciertos++; fb.className = "fb bien"; fb.innerHTML = "✓ Correcto. " + q.bien; }
+    else { fb.className = "fb mal"; fb.innerHTML = "✗ Todavía no. " + (q.porClave && q.porClave[btn.getAttribute("data-clave")] ? q.porClave[btn.getAttribute("data-clave")] + " " : "") + q.mal; }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  return { pinta: pinta, estado: est };
+}
+
+/* ============================================================
+   Práctica de respuesta escrita en notación científica.
+   gen() devuelve { enun, resp (Num), explica, diagnostico(valorAlumno, coef, exp) opcional,
+                    operacion (opcional: "×","÷","+","−") }
+   ============================================================ */
+function creaPracticaSci(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    $(pre + "-c").value = ""; $(pre + "-e").value = "";
+    $(pre + "-c").disabled = false; $(pre + "-e").disabled = false; $(pre + "-comprobar").disabled = false;
+    $(pre + "-c").classList.remove("error"); $(pre + "-e").classList.remove("error");
+    if ($(pre + "-op")){ $(pre + "-op").value = ""; $(pre + "-op").disabled = false; }
+    if ($(pre + "-r")){ $(pre + "-r").value = ""; $(pre + "-r").disabled = false; $(pre + "-r").classList.remove("error"); }
+    if (est.actual.alPintar) est.actual.alPintar();
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb");
+    var ctxt = $(pre + "-c").value, etxt = $(pre + "-e").value.trim().replace("−","-");
+    var c = leeNumero(ctxt), okE = /^-?\d+$/.test(etxt);
+    $(pre + "-c").classList.toggle("error", !c); $(pre + "-e").classList.toggle("error", !okE);
+    if ($(pre + "-op") && q.operacion){
+      if (!$(pre + "-op").value){ fb.className = "fb mal"; fb.innerHTML = "Elige primero la operación que resuelve el problema."; return; }
+    }
+    if (!c || !okE){
+      fb.className = "fb mal";
+      fb.innerHTML = "Escribe el coeficiente con punto decimal (por ejemplo, 4.5) y el exponente como un número entero (por ejemplo, 6 o −3).";
+      return;
+    }
+    var k = parseInt(etxt, 10), valor = porPot(c, k), bien = igual(valor, q.resp), valido = esValida(ctxt);
+    var fallaPrevio = q.previo ? q.previo() : null;
+    var opOk = !($(pre + "-op") && q.operacion) || $(pre + "-op").value === q.operacion;
+    est.intentos++;
+    if (bien && valido && opOk && !fallaPrevio){
+      est.resuelta = true; est.total++; est.aciertos++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ Correcto: " + numSciHTML(q.resp) + ". " + (q.explica || "");
+      bloquea();
+    } else {
+      var msg;
+      if (fallaPrevio) msg = fallaPrevio;
+      else if (!opOk) msg = "Revisa la operación: " + (q.porQueOp || "vuelve a leer qué pide la pregunta.");
+      else if (bien && !valido) msg = "El valor es correcto, pero todavía no está en notación científica válida: el coeficiente tiene que quedar entre 1 y 10 (1 ≤ a < 10).";
+      else if (q.diagnostico) msg = q.diagnostico(valor, c, k) || "Todavía no. Revisa el coeficiente y el exponente.";
+      else if (igual(valor, porPot(q.resp, 1)) || igual(valor, porPot(q.resp, -1))) msg = "Casi: el valor queda 10 veces más grande o más pequeño. Revisa el exponente.";
+      else if (esValida(ctxt) && k === aSci(q.resp).e) msg = "El exponente está bien; revisa el coeficiente.";
+      else if (esValida(ctxt) && igual(c, leeNumero(aSci(q.resp).c))) msg = "El coeficiente está bien; revisa el exponente.";
+      else msg = "Todavía no. Revisa el coeficiente y el exponente.";
+      if (est.intentos >= 2){
+        est.resuelta = true; est.total++;
+        fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " La respuesta es " + numSciHTML(q.resp) + ". " + (q.explica || "");
+        bloquea();
+      } else {
+        fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " Tienes un intento más.";
+      }
+    }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  function bloquea(){
+    $(pre + "-c").disabled = true; $(pre + "-e").disabled = true; $(pre + "-comprobar").disabled = true;
+    if ($(pre + "-op")) $(pre + "-op").disabled = true;
+    if ($(pre + "-r")) $(pre + "-r").disabled = true;
+  }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  [pre + "-c", pre + "-e"].forEach(function(id){
+    $(id).addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); });
+  });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est, comprueba: comprueba };
+  (window.__prac = window.__prac || {})[pre] = obj;
+  return obj;
+}
+
+/* Opciones típicas: construye una opción a partir de coeficiente y exponente escritos tal cual */
+function op(c, k){ return { html: sciHTML(c, k), clave: signo(c) + "e" + k }; }
+function opNum(n){ var s = aSci(n); return op(s.c, s.e); }
+function claveNum(n){ var s = aSci(n); return signo(s.c) + "e" + s.e; }
+
+/* ============================================================
+   Navegación por anclas
+   ============================================================ */
+function abrePorHash(){
+  var h = decodeURIComponent(window.location.hash.replace("#",""));
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+function iniciaNavegacion(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(){
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el && el.tagName.toLowerCase() === "details") el.open = true;
+    });
+  });
+  $("abrir-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+  });
+  $("cerrar-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+  });
+  window.addEventListener("hashchange", abrePorHash);
+  abrePorHash();
+}
+
+/* Bloques de HTML reutilizables */
+function htmlPracticaOM(pre, titulo){
+  return '<h3>' + titulo + '</h3><div class="practica" id="' + pre + '">' +
+    '<div class="enun" id="' + pre + '-enun"></div><div class="opciones" id="' + pre + '-opciones"></div>' +
+    '<div class="fb" id="' + pre + '-fb" role="status"></div>' +
+    '<div class="fila-btn"><button type="button" class="btn" id="' + pre + '-nuevo">Otro ejercicio</button></div>' +
+    '<p class="marcador" id="' + pre + '-marcador">Aciertos: 0 de 0</p></div>';
+}
+
+/* ============================================================
+   MÓDULOS 1 y 3 · Calculadora de tres pasos (× y ÷)
+   ============================================================ */
+function creaCalculadora(pre, divide_, ejemplos, genEjemplo){
+  var C = { pasos: [], visto: 0, cola: ejemplos.slice() };
+  function lee(){
+    var a = $(pre + "-a").value.trim(), b = $(pre + "-b").value.trim();
+    var m = $(pre + "-m").value.trim().replace("−","-"), n = $(pre + "-n").value.trim().replace("−","-");
+    var av = $(pre + "-aviso");
+    var okE = /^-?\d{1,2}$/.test(m) && /^-?\d{1,2}$/.test(n);
+    if (!leeNumero(a) || !leeNumero(b) || !okE){
+      av.className = "caja-aviso visible";
+      av.textContent = "Escribe los coeficientes con punto decimal y los exponentes como números enteros (entre −99 y 99).";
+      return null;
+    }
+    if (!esValida(a) || !esValida(b)){
+      av.className = "caja-aviso visible";
+      av.textContent = "Cada número tiene que estar en notación científica: su coeficiente debe ser mayor o igual que 1 y menor que 10.";
+      return null;
+    }
+    av.className = "caja-aviso"; av.textContent = "";
+    return { a: plano(leeNumero(a)), b: plano(leeNumero(b)), m: parseInt(m,10), n: parseInt(n,10) };
+  }
+  function prepara(){
+    var d = lee(); C.pasos = []; C.visto = 0;
+    $(pre + "-pasos").innerHTML = "";
+    if (!d){ $(pre + "-expr").innerHTML = ""; actualizaBoton(); return; }
+    var A = leeNumero(d.a), B = leeNumero(d.b), p, exacta = true, s, signoOp;
+    if (divide_){ var r = divide(A, B); p = r.n; exacta = r.exacta; s = d.m - d.n; signoOp = " ÷ "; }
+    else { p = mul(A, B); s = d.m + d.n; signoOp = " × "; }
+    var pc = plano(p), aprox = exacta ? " = " : " ≈ ";
+    var expr = divide_ ? "(" + sciHTML(d.a, d.m) + ") ÷ (" + sciHTML(d.b, d.n) + ")"
+                       : "(" + sciHTML(d.a, d.m) + ")(" + sciHTML(d.b, d.n) + ")";
+    $(pre + "-expr").innerHTML = expr;
+    C.pasos.push("<strong>Coeficientes:</strong> " + d.a + signoOp + d.b + aprox + pc + ".");
+    C.pasos.push("<strong>Potencias de 10:</strong> se " + (divide_ ? "restan" : "suman") + " los exponentes, " +
+      expTexto(d.m) + (divide_ ? " − " : " + ") + par(d.n) + " = " + expTexto(s) +
+      ". Resultado parcial: " + sciHTML(pc, s) + ".");
+    var j = exponenteSci(p), final = porPot(p, s);
+    if (j === 0) C.pasos.push("<strong>Ajustar:</strong> el coeficiente " + pc + " ya está entre 1 y 10, así que no hace falta ajustar.");
+    else if (j > 0) C.pasos.push("<strong>Ajustar:</strong> " + pc + " es 10 o más. Se reescribe " + pc + " = " + sciHTML(coefCon(p, j), j) +
+      ", y ese exponente se suma: " + expTexto(s) + " + " + j + " = " + expTexto(s + j) + ".");
+    else C.pasos.push("<strong>Ajustar:</strong> " + pc + " es menor que 1. Se reescribe " + pc + " = " + sciHTML(coefCon(p, j), j) +
+      ", y ese exponente se suma: " + expTexto(s) + " + " + par(j) + " = " + expTexto(s + j) + ".");
+    C.pasos.push('<span class="veredicto">Resultado: ' + expr + aprox + numSciHTML(final) + '</span>' +
+      (exacta ? "" : " <span class=\"nota\">(redondeado a cuatro cifras significativas)</span>"));
+    actualizaBoton();
+  }
+  function pinta(){
+    var html = "";
+    for (var i = 0; i < C.visto; i++){
+      html += '<div class="paso">' + (i < 3 ? '<span class="n" aria-hidden="true">' + (i+1) + '</span>' : '<span class="n" aria-hidden="true">✓</span>') + C.pasos[i] + '</div>';
+    }
+    $(pre + "-pasos").innerHTML = html;
+    actualizaBoton();
+  }
+  function actualizaBoton(){
+    var b = $(pre + "-sig");
+    b.disabled = !C.pasos.length || C.visto >= C.pasos.length;
+    b.textContent = C.visto === 0 ? "Mostrar el primer paso" : (C.visto >= C.pasos.length ? "Ya se ven todos los pasos" : "Mostrar el siguiente paso");
+    $(pre + "-todo").disabled = b.disabled;
+  }
+  $(pre + "-sig").addEventListener("click", function(){ if (C.visto < C.pasos.length){ C.visto++; pinta(); } });
+  $(pre + "-todo").addEventListener("click", function(){ C.visto = C.pasos.length; pinta(); });
+  $(pre + "-azar").addEventListener("click", function(){
+    var e = C.cola.length ? C.cola.shift() : genEjemplo();
+    $(pre + "-a").value = e[0]; $(pre + "-m").value = expTexto(e[1]); $(pre + "-b").value = e[2]; $(pre + "-n").value = expTexto(e[3]);
+    prepara();
+  });
+  ["-a","-m","-b","-n"].forEach(function(s){ $(pre + s).addEventListener("input", prepara); });
+  prepara();
+  return C;
+}
+
+/* Generadores de pares con coeficiente exacto */
+function parMultiplicar(){
+  var a = coefAzar(aleatorio(1,2)), b = coefAzar(aleatorio(1,2));
+  while (a === "1") a = coefAzar(aleatorio(1,2));
+  while (b === "1") b = coefAzar(aleatorio(1,2));
+  while (abs(mul(leeNumero(a), leeNumero(b)).m).toString().length > 3) b = coefAzar(1);
+  return [a, aleatorio(-6,9), b, aleatorio(-6,9)];
+}
+var DIVISORES = ["2","4","5","8","2.5","1.6","3","6","1.5","1.2"];
+function parDividir(ajuste){
+  if (ajuste === undefined) ajuste = Math.random() < 0.5;
+  for (var t = 0; t < 200; t++){
+    var b = elige(DIVISORES), q = ajuste ? plano(sci(coefAzar(aleatorio(1,2)), -1)) : coefAzar(aleatorio(1,2));
+    var a = mul(leeNumero(q), leeNumero(b));
+    if (esValida(plano(a)) && abs(a.m).toString().length <= 3) return [plano(a), aleatorio(-6,9), b, aleatorio(-6,9)];
+  }
+  return ["3", 4, "6", 7];
+}
+
+/* Práctica 1 · multiplicar */
+function genMultiplicar(){
+  var pp = parMultiplicar(), a = pp[0], m = pp[1], b = pp[2], n = pp[3];
+  var p = mul(leeNumero(a), leeNumero(b)), j = exponenteSci(p), res = porPot(p, m + n), rs = aSci(res);
+  var o = [opNum(res)], pc = {};
+  var mulExp = op(rs.c, m*n + j); o.push(mulExp); pc[mulExp.clave] = "En el producto de potencias de 10 los exponentes se suman, no se multiplican.";
+  var sumaC = opNum(porPot(suma(leeNumero(a), leeNumero(b)), m + n)); o.push(sumaC); pc[sumaC.clave] = "Los coeficientes se multiplican, no se suman.";
+  if (j > 0){
+    var sinAj = op(plano(p), m + n); o.push(sinAj); pc[sinAj.clave] = "Ese valor es correcto, pero el coeficiente no está entre 1 y 10: falta ajustar.";
+    var olvido = op(rs.c, m + n); o.push(olvido); pc[olvido.clave] = "Al pasar el coeficiente a la forma válida, el exponente también tiene que subir.";
+  }
+  var uno = op(rs.c, rs.e + 1); o.push(uno);
+  var enun = "Calcula (" + sciHTML(a, m) + ")(" + sciHTML(b, n) + ").";
+  return {
+    enun: enun, opciones: [o[0]].concat(baraja(o.slice(1)).slice(0,3)), correcta: o[0].clave, porClave: pc,
+    bien: "Coeficientes: " + a + " × " + b + " = " + plano(p) + ". Exponentes: " + expTexto(m) + " + " + par(n) + " = " + expTexto(m+n) + "." +
+          (j > 0 ? " Como " + plano(p) + " es 10 o más, se ajusta y el exponente sube a " + expTexto(rs.e) + "." : ""),
+    mal: "La respuesta es " + numSciHTML(res) + "."
+  };
+}
+
+/* ============================================================
+   MÓDULO 2 · El ajustador
+   ============================================================ */
+var AJ = { c: null, k: 0, s: 0, cola: [["20",5],["0.5",-3]] };
+var MALOS = ["20","45","345","12.5","60","0.5","0.04","0.25","0.8","250","0.075","18"];
+function cargaAJ(x){ AJ.c = leeNumero(x[0]); AJ.k = x[1]; AJ.s = 0; pintaAJ(); }
+function pintaAJ(){
+  var actual = porPot(AJ.c, -AJ.s), ca = plano(actual), ex = AJ.k + AJ.s, ok = esValida(ca);
+  var origen = sciHTML(plano(AJ.c), AJ.k), linea = '<span class="grande">' + origen + (AJ.s ? ' = ' + sciHTML(ca, ex) : '') + '</span>';
+  var msg;
+  if (AJ.s === 0) msg = "El coeficiente " + plano(AJ.c) + (compara(AJ.c, N(10)) >= 0 ? " es 10 o más." : " es menor que 1.") + " ¿Hacia dónde tiene que ir el punto?";
+  else if (ok) msg = "✓ Notación científica válida. El punto se movió " + Math.abs(AJ.s) + (Math.abs(AJ.s) === 1 ? " lugar " : " lugares ") +
+       (AJ.s > 0 ? "a la izquierda y el exponente subió " : "a la derecha y el exponente bajó ") + Math.abs(AJ.s) + ".";
+  else if (compara(actual, N(10)) >= 0) msg = "El coeficiente " + ca + " es 10 o más: el punto tiene que ir a la izquierda.";
+  else msg = "El coeficiente " + ca + " es menor que 1: el punto tiene que ir a la derecha.";
+  $("aj-estado").innerHTML = linea + "<br>" + msg;
+  $("aj-izq").disabled = ok || AJ.s >= 6;
+  $("aj-der").disabled = ok || AJ.s <= -6;
+}
+function azarAJ(){ return [elige(MALOS), aleatorio(-8,9)]; }
+
+/* Práctica 2 · escribir en forma válida */
+function genAjuste(){
+  var c = elige(MALOS), k = aleatorio(-8,9), resp = porPot(leeNumero(c), k), j = exponenteSci(leeNumero(c)), rs = aSci(resp);
+  return {
+    enun: "Escribe " + sciHTML(c, k) + " en notación científica válida.",
+    resp: resp,
+    explica: "El punto del coeficiente se mueve " + Math.abs(j) + (Math.abs(j) === 1 ? " lugar " : " lugares ") + (j > 0 ? "a la izquierda, así que el exponente sube " : "a la derecha, así que el exponente baja ") +
+             Math.abs(j) + ": " + expTexto(k) + (j > 0 ? " + " : " − ") + Math.abs(j) + " = " + expTexto(rs.e) + ".",
+    diagnostico: function(valor, cc, kk){
+      if (igual(cc, leeNumero(rs.c)) && kk === k - j) return "El coeficiente está bien, pero el exponente se movió al revés: si el coeficiente se achica, el exponente sube, y al contrario.";
+      if (igual(cc, leeNumero(rs.c)) && kk === k) return "El coeficiente está bien, pero falta compensar el exponente.";
+      return null;
+    }
+  };
+}
+
+/* Práctica 3 · dividir */
+function genDividir(){
+  var pp = parDividir(), a = pp[0], m = pp[1], b = pp[2], n = pp[3];
+  var q = divide(leeNumero(a), leeNumero(b)).n, j = exponenteSci(q), res = porPot(q, m - n), rs = aSci(res);
+  var o = [opNum(res)], pc = {};
+  var sumaE = op(rs.c, m + n + j); o.push(sumaE); pc[sumaE.clave] = "En la división los exponentes se restan, no se suman.";
+  var alReves = op(rs.c, n - m + j); o.push(alReves); pc[alReves.clave] = "La resta va en orden: exponente del numerador menos exponente del denominador.";
+  if (j < 0){
+    var sinAj = op(plano(q), m - n); o.push(sinAj); pc[sinAj.clave] = "Ese valor es correcto, pero " + plano(q) + " es menor que 1: falta ajustar.";
+    var olvido = op(rs.c, m - n); o.push(olvido); pc[olvido.clave] = "Al pasar el coeficiente a la forma válida, el exponente también tiene que bajar.";
+  }
+  o.push(op(rs.c, rs.e - 1));
+  return {
+    enun: "Calcula (" + sciHTML(a, m) + ") ÷ (" + sciHTML(b, n) + ").",
+    opciones: [o[0]].concat(baraja(o.slice(1)).slice(0,3)), correcta: o[0].clave, porClave: pc,
+    bien: "Coeficientes: " + a + " ÷ " + b + " = " + plano(q) + ". Exponentes: " + expTexto(m) + " − " + par(n) + " = " + expTexto(m - n) + "." +
+          (j < 0 ? " Como " + plano(q) + " es menor que 1, se ajusta y el exponente baja a " + expTexto(rs.e) + "." : ""),
+    mal: "La respuesta es " + numSciHTML(res) + "."
+  };
+}
+
+/* ============================================================
+   MÓDULO 4 · Problemas de contexto
+   ============================================================ */
+function genReal(){
+  var t = aleatorio(1,5), A, B, c, k;
+  if (t === 1){
+    c = coefAzar(aleatorio(1,2)); k = aleatorio(1,4); B = sci(c, k);
+    return { operacion: "×", resp: mul(sci("3",5), B),
+      enun: "La luz viaja a " + sciHTML("3",5) + " kilómetros por segundo. ¿Qué distancia recorre en " + sciHTML(c,k) + " segundos? Da la respuesta en kilómetros.",
+      porQueOp: "la distancia es velocidad por tiempo: se multiplica.",
+      explica: "Distancia = velocidad × tiempo: (" + sciHTML("3",5) + ")(" + sciHTML(c,k) + ") km." };
+  }
+  if (t === 2){
+    var d = sci(coefAzar(1), aleatorio(1,3)), ar = sci(coefAzar(aleatorio(1,2)), aleatorio(2,5)), P = mul(d, ar);
+    return { operacion: "÷", resp: d,
+      enun: "Una región tiene " + numSciHTML(P) + " habitantes y un área de " + numSciHTML(ar) + " kilómetros cuadrados. ¿Cuántos habitantes hay, en promedio, por kilómetro cuadrado?",
+      porQueOp: "«por kilómetro cuadrado» pide repartir la población entre el área: se divide.",
+      explica: "Densidad = población ÷ área." };
+  }
+  if (t === 3){
+    var cnt = sci(coefAzar(1), aleatorio(3,7)), f = sci(coefAzar(1), aleatorio(3,7)), D = mul(cnt, f);
+    return { operacion: "÷", resp: cnt,
+      enun: "Un disco guarda " + numSciHTML(D) + " bytes y cada archivo ocupa " + numSciHTML(f) + " bytes. ¿Cuántos archivos caben en el disco?",
+      porQueOp: "«cuántos caben» reparte la capacidad entre el tamaño de cada archivo: se divide.",
+      explica: "Cantidad de archivos = capacidad ÷ tamaño de cada archivo." };
+  }
+  if (t === 4){
+    var lat = elige([["1",5],["1.1",5],["1.2",5]]), dias = elige([["3",1,"30 días"],["3.65",2,"365 días, es decir, un año"],["7",0,"una semana (7 días)"]]);
+    return { operacion: "×", resp: mul(sci(lat[0],lat[1]), sci(dias[0],dias[1])),
+      enun: "Un corazón humano late unas " + sciHTML(lat[0],lat[1]) + " veces al día. ¿Cuántas veces late en " + dias[2] + "? Escribe el resultado en notación científica.",
+      porQueOp: "se repite la misma cantidad cada día: se multiplica.",
+      explica: "Latidos totales = latidos por día × número de días." };
+  }
+  var cel = sci(coefAzar(1), -aleatorio(4,6)), n = sci(coefAzar(1), aleatorio(2,4)), L = mul(cel, n);
+  return { operacion: "÷", resp: n,
+    enun: "Una célula mide " + numSciHTML(cel) + " metros de ancho. ¿Cuántas células, puestas en fila, cubren " + numSciHTML(L) + " metros?",
+    porQueOp: "«cuántas caben» en una longitud: se divide la longitud total entre el ancho de una célula.",
+    explica: "Cantidad = longitud total ÷ ancho de una célula." };
+}
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+creaCalculadora("cm", false, [["5",3,"4",2]], parMultiplicar);
+creaCalculadora("cd", true, [["8",7,"2",3]], function(){ return parDividir(); });
+creaPracticaOM("p1", genMultiplicar);
+
+$("aj-izq").addEventListener("click", function(){ AJ.s++; pintaAJ(); });
+$("aj-der").addEventListener("click", function(){ AJ.s--; pintaAJ(); });
+$("aj-nuevo").addEventListener("click", function(){ cargaAJ(AJ.cola.length ? AJ.cola.shift() : azarAJ()); });
+cargaAJ(AJ.cola.shift());
+creaPracticaSci("p2", genAjuste);
+
+creaPracticaOM("p3", genDividir);
+creaPracticaSci("p4", genReal);
+
+iniciaNavegacion();
+
+</script>
+</body>
+</html>
