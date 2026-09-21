@@ -1,0 +1,1097 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 5.3 — Despeje de fórmulas literales
+  Nivel 3 · Spanish ASE Math 3 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #despejar · #comunes · #dos-pasos · #aplicar
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 5.3: despeje de fórmulas literales</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 5.3 del Nivel 3: la estrategia para despejar, fórmulas comunes del GED, fórmulas de dos pasos y aplicar la fórmula despejada.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+
+  :root{
+    --tema:#37474f; --tema-d:#263238; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
+    --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#0a3a82;border-color:#0a3a82;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:96px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* fracción algebraica */
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 6px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 8px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;
+                 text-decoration-color:#b71c1c;color:#b71c1c;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  .campos-sci .campo input[type="text"]{width:120px;}
+  .campos-sci .campo input.corto{width:84px;}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campos.campos-sci{flex-direction:row;align-items:flex-end;flex-wrap:nowrap;gap:10px;} }
+
+  .btn:disabled,.btn-sec:disabled{background:#eeeeee;color:#424242;border-color:#9e9e9e;cursor:not-allowed;}
+  input:disabled,select:disabled{background:#f3f3f3;cursor:not-allowed;}
+  .campo input[type="text"]{width:150px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input.ancho{width:230px;}
+  .campo input.corto{width:96px;}
+  .enun .ex, .opcion .ex, .salida .ex, .lista-orden .ex{font-size:18px;}
+  .ex{white-space:nowrap;}
+  sup{font-size:.72em;}
+
+  .centro{text-align:center;}
+
+  /* radicales */
+  .rad{white-space:nowrap;}
+  .rad .rc{border-top:2px solid currentColor;padding:0 3px 0 2px;margin-left:1px;}
+  .fracc{display:inline-block;text-align:center;vertical-align:middle;margin:0 3px;line-height:1.15;}
+  .fracc .fa{display:block;padding:0 4px;border-bottom:2px solid currentColor;}
+  .fracc .fb2{display:block;padding:0 4px;}
+  .periodo{text-decoration:overline;}
+  .grande{font-size:22px;font-weight:700;}
+  .estado{text-align:center;font-size:18px;margin:10px 0;color:var(--tema-d);}
+
+  /* tabla de cuadrados */
+  .cuadros{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin:12px 0;}
+  .cuadro{border:2px solid var(--tema-bg2);border-radius:8px;background:#fff;text-align:center;padding:4px 2px;font-size:14px;}
+  .cuadro strong{display:block;font-size:18px;color:var(--txt);}
+  .cuadro.divide{background:var(--tema-bg);border-color:var(--tema);}
+  .cuadro.mayor{background:var(--tema);border-color:var(--tema-d);}
+  .cuadro.mayor, .cuadro.mayor strong{color:#fff;}
+
+  /* botones de elección dentro de un panel */
+  .elecciones{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+  .eleccion{background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:8px;padding:8px 14px;font-weight:700;font-size:16px;}
+  .eleccion:hover{background:var(--tema-bg);}
+  .eleccion[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .eleccion:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* casillas de selección múltiple */
+  .casillas{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+  .casilla{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #767676;border-radius:8px;padding:8px 12px;font-size:16px;cursor:pointer;}
+  .casilla input{width:20px;height:20px;accent-color:var(--tema);}
+  .casilla.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .casilla.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .casilla:focus-within{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* diagrama y recta */
+  .diagrama{max-width:560px;margin:10px auto;display:block;width:100%;height:auto;}
+  .recta-svg{width:100%;max-width:680px;height:auto;display:block;margin:8px auto;overflow:visible;}
+  input[type="range"]{width:100%;accent-color:var(--tema);}
+  input[type="range"]:focus-visible{outline:3px solid var(--acento);outline-offset:4px;}
+
+  /* expresiones algebraicas */
+  .alg{white-space:nowrap;}
+  .fam-x{background:#e3f2fd;color:#0d47a1;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-y{background:#e8f5e9;color:#1b5e20;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-x2{background:#f3e5f5;color:#4a148c;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-k{background:#fff8e1;color:#5c3900;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fila-term{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid #d8d8d8;border-radius:8px;padding:8px 12px;margin:6px 0;}
+  .fila-term .t{min-width:70px;font-size:18px;font-weight:700;}
+  .fila-term.bien{border-color:var(--ok);background:var(--ok-bg);}
+  .fila-term.mal{border-color:var(--mal);background:var(--mal-bg);}
+  .balanza{width:100%;max-width:620px;height:auto;display:block;margin:6px auto;}
+  .comparar{width:100%;border-collapse:collapse;margin:12px 0;font-size:16px;}
+  .comparar caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  .comparar th,.comparar td{border:1px solid #c8c8c8;padding:8px 10px;text-align:center;}
+  .comparar th{background:var(--tema-bg);color:var(--tema-d);}
+  .comparar td.si{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .comparar td.no{background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .tabla-scroll{overflow-x:auto;}
+  .fila-term select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+
+  .lado-a-lado{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  .lado-a-lado > div{background:#fff;border:1px solid #d8d8d8;border-radius:10px;padding:12px 14px;}
+  .lado-a-lado h4{margin:0 0 8px;font-size:16px;color:var(--tema-d);}
+  @media (max-width:640px){ .lado-a-lado{grid-template-columns:1fr;} }
+  .verdad{font-weight:700;}
+  .verdad.si{color:var(--ok);} .verdad.no{color:var(--mal);}
+
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 3 · Tema 5 · Inecuaciones y fórmulas</div>
+    <h1>Lección 5.3 · Despeje de fórmulas literales</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#despejar">La estrategia de cuatro pasos</a></li>
+      <li><a href="#comunes">Fórmulas comunes</a></li>
+      <li><a href="#dos-pasos">Fórmulas de dos pasos</a></li>
+      <li><a href="#aplicar">Aplicar la fórmula despejada</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 · #despejar ============ -->
+  <details class="modulo" id="despejar" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La estrategia de cuatro pasos</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p><strong>Despejar</strong> una variable es reescribir la fórmula para que esa letra quede sola de un lado. La clave:
+      las demás letras se tratan <strong>como si fueran números</strong>. Por eso despejar una fórmula es lo mismo que
+      resolver una ecuación que ya sabes resolver.</p>
+      <div class="pasos">
+        <div class="paso"><span class="n" aria-hidden="true">1</span>Identificar qué variable se quiere despejar.</div>
+        <div class="paso"><span class="n" aria-hidden="true">2</span>Aislarla con operaciones inversas, tratando las demás letras como números.</div>
+        <div class="paso"><span class="n" aria-hidden="true">3</span>Simplificar el resultado, con fracción si hace falta.</div>
+        <div class="paso"><span class="n" aria-hidden="true">4</span>Verificar que la variable buscada quedó sola de un lado.</div>
+      </div>
+
+      <h3>Con números y con letras, en paralelo</h3>
+      <p>A la izquierda, una ecuación con números; a la derecha, la fórmula. Los pasos son los mismos.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;"><label for="pl-sel">Fórmula y variable</label><select id="pl-sel"></select></div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="pl-sig">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="pl-todo">Mostrar todos los pasos</button>
+        </div>
+      </div>
+      <div id="pl-pasos" aria-live="polite"></div>
+
+      <h3>Practica: despeja la variable</h3>
+      <div class="practica" id="p1">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 · #comunes ============ -->
+  <details class="modulo" id="comunes">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Fórmulas comunes</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Estas fórmulas aparecen mucho en el examen. En cada una se puede despejar cualquiera de sus letras.</p>
+      <table class="reglas">
+        <caption>Fórmulas de uso frecuente</caption>
+        <thead><tr><th scope="col">Contexto</th><th scope="col">Fórmula</th><th scope="col">Significado de las letras</th></tr></thead>
+        <tbody>
+          <tr><td>Distancia</td><td>d = rt</td><td>d: distancia, r: rapidez, t: tiempo</td></tr>
+          <tr><td>Área de un rectángulo</td><td>A = bh</td><td>b: base, h: altura</td></tr>
+          <tr><td>Volumen de una caja</td><td>V = lwh</td><td>l: largo, w: ancho, h: altura</td></tr>
+          <tr><td>Interés simple</td><td>I = Prt</td><td>P: capital, r: tasa, t: tiempo en años</td></tr>
+          <tr><td>Perímetro de un triángulo</td><td>P = a + b + c</td><td>a, b, c: los tres lados</td></tr>
+          <tr><td>Fuerza</td><td>F = ma</td><td>m: masa, a: aceleración</td></tr>
+        </tbody>
+      </table>
+
+      <div class="caja-tip">
+        <strong>Si la letra está multiplicada</strong> por otras, se divide entre todas ellas: en I = Prt, P = I/(rt).
+        <strong>Si está sumada</strong>, se restan las demás: en P = a + b + c, c = P − a − b.
+      </div>
+
+      <h3>Practica: ¿qué fórmula necesitas?</h3>
+      <div class="practica" id="p2">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 · #dos-pasos ============ -->
+  <details class="modulo" id="dos-pasos">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Fórmulas de dos pasos</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Algunas fórmulas necesitan más de una operación. Se deshacen en <strong>orden inverso</strong>, igual que las
+      ecuaciones de dos pasos: primero se quita lo que está sumado o restado, y al final lo que multiplica.</p>
+
+      <h3>Paso a paso</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;"><label for="dp-sel">Fórmula y variable</label><select id="dp-sel"></select></div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="dp-sig">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="dp-todo">Mostrar todos los pasos</button>
+        </div>
+      </div>
+      <div class="fraccion-grande" id="dp-expr"></div>
+      <div class="pasos" id="dp-pasos" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>El paréntesis importa:</strong> C = (5/9)(F − 32) no es lo mismo que C = (5/9)F − 32. Primero se resta
+        32 a toda la F y después se multiplica el resultado completo.
+      </div>
+
+      <h3>Practica: despeja en dos pasos</h3>
+      <div class="practica" id="p3">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 · #aplicar ============ -->
+  <details class="modulo" id="aplicar">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Aplicar la fórmula despejada</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Hay dos caminos para calcular una letra: <strong>despejar primero</strong> y sustituir después, o
+      <strong>sustituir primero</strong> y resolver la ecuación que queda. Los dos dan el mismo resultado. Despejar primero
+      conviene cuando hay que calcular muchas veces, porque la fórmula despejada sirve para todos los casos.</p>
+
+      <h3>Dos caminos, el mismo resultado</h3>
+      <div class="panel">
+        <div class="estado" id="ca-enun"></div>
+        <div class="fila-btn" style="justify-content:center;"><button type="button" class="btn-sec" id="ca-nuevo">Otro problema</button></div>
+      </div>
+      <div class="lado-a-lado" id="ca-caminos" aria-live="polite"></div>
+
+      <h3>Practica: calcula con la fórmula</h3>
+      <div class="practica" id="p4">
+        <div class="enun" id="p4-enun"></div>
+        <div class="campos"><div class="campo"><label for="p4-r">Resultado</label><input type="text" autocomplete="off" class="ancho" id="p4-r"></div></div>
+        <p class="nota">Escribe solo el número, sin unidades. Puede ser decimal o fracción.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p4-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p4-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Nivel 3 · Tema 5 · Inecuaciones y fórmulas · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Motor común del Tema 3 · Radicales y números reales
+   Los radicales se guardan como k√r con k y r enteros, y las
+   fracciones como p/q reducidas, así que las cuentas son exactas.
+   ============================================================ */
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function elige(lista){ return lista[aleatorio(0, lista.length-1)]; }
+function baraja(lista){
+  var a = lista.slice();
+  for (var i = a.length-1; i > 0; i--){ var j = aleatorio(0,i); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+/* ============================================================
+   Práctica de opción múltiple.
+   gen() devuelve { enun, opciones:[{html, clave}], correcta: clave, bien, mal }
+   Las claves repetidas se descartan antes de mostrar.
+   ============================================================ */
+function creaPracticaOM(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false };
+  function pinta(){
+    var q, intentos = 0;
+    do { q = gen(); intentos++; } while (intentos < 50 && !valida(q));
+    est.actual = q; est.resuelta = false;
+    $(pre + "-enun").innerHTML = q.enun;
+    var cont = $(pre + "-opciones"); cont.innerHTML = "";
+    baraja(q.opciones).forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opcion"; b.innerHTML = o.html;
+      b.setAttribute("data-clave", o.clave); b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function(){ responde(b); });
+      cont.appendChild(b);
+    });
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function valida(q){
+    var vistas = {}, hay = 0;
+    q.opciones = q.opciones.filter(function(o){ if (vistas[o.clave]) return false; vistas[o.clave] = 1; return true; });
+    q.opciones.forEach(function(o){ if (o.clave === q.correcta) hay++; });
+    return hay === 1 && q.opciones.length >= 3;
+  }
+  function responde(btn){
+    if (est.resuelta) return;
+    est.resuelta = true; est.total++;
+    var q = est.actual, ok = btn.getAttribute("data-clave") === q.correcta;
+    Array.prototype.forEach.call($(pre + "-opciones").children, function(b){
+      b.disabled = true;
+      if (b.getAttribute("data-clave") === q.correcta) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed", "true");
+    var fb = $(pre + "-fb");
+    if (ok){ est.aciertos++; fb.className = "fb bien"; fb.innerHTML = "✓ Correcto. " + q.bien; }
+    else { fb.className = "fb mal"; fb.innerHTML = "✗ Todavía no. " + (q.porClave && q.porClave[btn.getAttribute("data-clave")] ? q.porClave[btn.getAttribute("data-clave")] + " " : "") + q.mal; }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  return { pinta: pinta, estado: est };
+}
+
+/* ============================================================
+   Navegación por anclas
+   ============================================================ */
+function abrePorHash(){
+  var h = decodeURIComponent(window.location.hash.replace("#",""));
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+function iniciaNavegacion(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(){
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el && el.tagName.toLowerCase() === "details") el.open = true;
+    });
+  });
+  $("abrir-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+  });
+  $("cerrar-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+  });
+  window.addEventListener("hashchange", abrePorHash);
+  abrePorHash();
+}
+
+
+/* ============================================================
+   Radicales, fracciones y formato
+   ============================================================ */
+function mcd(a, b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a; }
+function esCuadrado(n){ if (n < 0) return false; var s = Math.round(Math.sqrt(n)); return s * s === n; }
+/* √n = k√r con el mayor cuadrado perfecto posible */
+function simplRad(n){
+  for (var s = Math.floor(Math.sqrt(n)); s >= 1; s--) if (n % (s*s) === 0) return { k: s, r: n / (s*s) };
+  return { k: 1, r: n };
+}
+function libreCuadrados(n){ return simplRad(n).k === 1; }
+/* cuadrados perfectos mayores que 1 que dividen a n */
+function cuadradosQueDividen(n){
+  var l = []; for (var s = 2; s*s <= n; s++) if (n % (s*s) === 0) l.push(s); return l;
+}
+function aprox(x, d){ return (Math.round(x * Math.pow(10, d)) / Math.pow(10, d)).toFixed(d).replace("-", "−"); }
+function supH(k){ return '<sup>' + k + '</sup>'; }
+
+/* Radical k√r en HTML, con lectura para lector de pantalla */
+function radVis(k, r){
+  if (r === 1) return String(k);
+  if (k === 0) return "0";
+  var pre = k === 1 ? "" : (k === -1 ? "−" : String(k).replace("-","−"));
+  return pre + '<span class="rad">√<span class="rc">' + r + '</span></span>';
+}
+function radVoz(k, r){
+  if (r === 1) return String(k).replace("-","menos ");
+  if (k === 0) return "0";
+  var pre = k === 1 ? "" : (k === -1 ? "menos " : String(k).replace("-","menos ") + " por ");
+  return pre + "raíz cuadrada de " + r;
+}
+function radHTML(k, r){ return envuelve(radVis(k, r), radVoz(k, r)); }
+function envuelve(vis, voz){ return '<span class="ex" aria-hidden="true">' + vis + '</span><span class="sr-only">' + voz + '</span>'; }
+function radClave(k, r){ return k + "r" + r; }
+/* opción de radical para la práctica de opción múltiple */
+function opRad(k, r){ return { html: radHTML(k, r), clave: radClave(k, r) }; }
+
+/* Fracciones */
+function reduce(p, q){ if (q < 0){ p = -p; q = -q; } var g = mcd(p, q) || 1; return { p: p / g, q: q / g }; }
+function fracVis(p, q){
+  if (q === 1) return String(p).replace("-","−");
+  return (p < 0 ? "−" : "") + '<span class="fracc"><span class="fa">' + Math.abs(p) + '</span><span class="fb2">' + q + '</span></span>';
+}
+function fracVoz(p, q){ return q === 1 ? String(p).replace("-","menos ") : (p < 0 ? "menos " : "") + Math.abs(p) + " sobre " + q; }
+function fracHTML(p, q){ return envuelve(fracVis(p, q), fracVoz(p, q)); }
+/* Lee "6/9", "3", "-2/5" → {p,q} sin reducir; null si no es válido */
+function leeFraccion(t){
+  var s = String(t).trim().replace(/\s+/g, "").replace(/−/g, "-");
+  var m = s.match(/^(-?\d+)(?:\/(\d+))?$/); if (!m) return null;
+  var q = m[2] === undefined ? 1 : parseInt(m[2], 10); if (q === 0) return null;
+  return { p: parseInt(m[1], 10), q: q };
+}
+function leeDecimal(t){
+  var s = String(t).trim().replace(/\s+/g, "").replace(/−/g, "-");
+  if (s.indexOf(".") < 0 && /^-?\d+,\d+$/.test(s)) s = s.replace(",", ".");
+  if (!/^-?(\d+\.?\d*|\.\d+)$/.test(s)) return null;
+  return parseFloat(s);
+}
+/* Decimal periódico en texto: entero, parte no periódica, periodo */
+function periodicoHTML(ent, noRep, per){
+  var vis = ent + "." + noRep + per + per + per + "…";
+  var voz = ent + " punto " + (noRep ? noRep.split("").join(" ") + ", y después " : "") + "el grupo " + per.split("").join(" ") + " repetido sin fin";
+  return envuelve(vis, voz);
+}
+
+/* ============================================================
+   Práctica escrita de radicales: k √ r
+   gen() devuelve { enun, k, r, explica }
+   ============================================================ */
+function creaPracticaRad(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    [pre + "-k", pre + "-r"].forEach(function(id){ $(id).value = ""; $(id).disabled = false; $(id).classList.remove("error"); });
+    $(pre + "-comprobar").disabled = false;
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb");
+    var kt = $(pre + "-k").value.trim(), rt = $(pre + "-r").value.trim();
+    if (kt === "") kt = "1";
+    var okK = /^\d+$/.test(kt), okR = /^\d+$/.test(rt);
+    $(pre + "-k").classList.toggle("error", !okK); $(pre + "-r").classList.toggle("error", !okR);
+    if (!okK || !okR){ fb.className = "fb mal"; fb.innerHTML = "Escribe números enteros: el coeficiente (fuera del radical) y el radicando (dentro). Si no hay coeficiente, déjalo vacío o escribe 1."; return; }
+    var k = parseInt(kt, 10), r = parseInt(rt, 10);
+    est.intentos++;
+    if (k === q.k && r === q.r){
+      est.resuelta = true; est.total++; est.aciertos++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ Correcto: " + radHTML(q.k, q.r) + ". " + (q.explica || "");
+      bloquea();
+    } else {
+      var msg;
+      if (k*k*r === q.k*q.k*q.r) msg = "Tiene el mismo valor, pero todavía se puede simplificar: " + radHTML(1, r) + " contiene un cuadrado perfecto.";
+      else if (r === q.r) msg = "El radicando está bien; revisa el coeficiente.";
+      else if (k === q.k) msg = "El coeficiente está bien; revisa lo que queda dentro del radical.";
+      else msg = "Todavía no. Busca el mayor cuadrado perfecto que divide al radicando.";
+      if (est.intentos >= 2){
+        est.resuelta = true; est.total++;
+        fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " La respuesta es " + radHTML(q.k, q.r) + ". " + (q.explica || "");
+        bloquea();
+      } else { fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " Tienes un intento más."; }
+    }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  function bloquea(){ $(pre + "-k").disabled = true; $(pre + "-r").disabled = true; $(pre + "-comprobar").disabled = true; }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  [pre + "-k", pre + "-r"].forEach(function(id){ $(id).addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); }); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est };
+  (window.__prac = window.__prac || {})[pre] = obj;
+  return obj;
+}
+
+/* ============================================================
+   Práctica escrita libre (un solo campo)
+   gen() devuelve { enun, evalua(texto) → {estado:"bien"|"mal"|"invalido", msg}, solucion, correcta (texto de prueba) }
+   ============================================================ */
+function creaPracticaLibre(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    $(pre + "-r").value = ""; $(pre + "-r").disabled = false; $(pre + "-r").classList.remove("error");
+    $(pre + "-comprobar").disabled = false;
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb"), res = q.evalua($(pre + "-r").value);
+    $(pre + "-r").classList.toggle("error", res.estado === "invalido");
+    if (res.estado === "invalido"){ fb.className = "fb mal"; fb.innerHTML = res.msg; return; }
+    est.intentos++;
+    if (res.estado === "bien"){
+      est.resuelta = true; est.total++; est.aciertos++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ " + res.msg + " " + (q.solucion || "");
+      bloquea();
+    } else if (est.intentos >= 2){
+      est.resuelta = true; est.total++;
+      fb.className = "fb mal"; fb.innerHTML = "✗ " + res.msg + " " + (q.solucion || "");
+      bloquea();
+    } else { fb.className = "fb mal"; fb.innerHTML = "✗ " + res.msg + " Tienes un intento más."; }
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  function bloquea(){ $(pre + "-r").disabled = true; $(pre + "-comprobar").disabled = true; }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  $(pre + "-r").addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est };
+  (window.__libre = window.__libre || {})[pre] = obj;
+  return obj;
+}
+
+/* Recta numérica en SVG: de a a b, con marcas cada 'paso' y rótulos en los enteros */
+function rectaSVG(a, b, paso, marcas, titulo){
+  var W = 640, H = 150, x0 = 30, x1 = W - 30, y = 92;
+  function X(v){ return x0 + (v - a) * (x1 - x0) / (b - a); }
+  var s = '<svg class="recta-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + titulo + '">';
+  s += '<line x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '" stroke="#424242" stroke-width="2"/>';
+  var n = Math.round((b - a) / paso);
+  for (var i = 0; i <= n; i++){
+    var v = a + i * paso, entero = Math.abs(v - Math.round(v)) < 1e-9, xv = X(v);
+    s += '<line x1="' + xv + '" y1="' + (y - (entero ? 10 : 5)) + '" x2="' + xv + '" y2="' + (y + (entero ? 10 : 5)) + '" stroke="#424242" stroke-width="' + (entero ? 2 : 1) + '"/>';
+    if (entero) s += '<text x="' + xv + '" y="' + (y + 38) + '" text-anchor="middle" font-size="24" fill="#222">' + Math.round(v) + '</text>';
+  }
+  (marcas || []).forEach(function(m){
+    var xm = X(m.v), col = m.color || "#bf360c";
+    s += '<path d="M' + xm + ' ' + (y - 4) + ' l-11 -18 h22 z" fill="' + col + '"/>';
+    s += '<text x="' + xm + '" y="' + (y - (m.alto ? 58 : 28)) + '" text-anchor="middle" font-size="22" font-weight="700" fill="' + col + '">' + m.txt + '</text>';
+  });
+  return s + '</svg>';
+}
+
+/* ============================================================
+   Motor algebraico del Tema 4
+   Fracciones exactas {n, d} y ecuaciones lineales ax + b = cx + d
+   ============================================================ */
+function fr(n, d){ if (d === undefined) d = 1; if (d < 0){ n = -n; d = -d; } var g = mcd(n, d) || 1; return { n: n / g, d: d / g }; }
+function fsum(a, b){ return fr(a.n*b.d + b.n*a.d, a.d*b.d); }
+function fres(a, b){ return fr(a.n*b.d - b.n*a.d, a.d*b.d); }
+function fmul(a, b){ return fr(a.n*b.n, a.d*b.d); }
+function fdiv(a, b){ return fr(a.n*b.d, a.d*b.n); }
+function fneg(a){ return fr(-a.n, a.d); }
+function figual(a, b){ return a.n === b.n && a.d === b.d; }
+function fcero(a){ return a.n === 0; }
+function fent(a){ return a.d === 1; }
+function fval(a){ return a.n / a.d; }
+function mcm(a, b){ return a / mcd(a, b) * b; }
+function menos(t){ return String(t).replace(/-/g, "−"); }
+/* Texto plano de una fracción (para claves y mensajes cortos) */
+function fTxt(a){ return a.d === 1 ? menos(a.n) : menos(a.n) + "/" + a.d; }
+/* ¿Se puede escribir con decimales exactos? */
+function fDecimal(a){
+  var d = a.d; while (d % 2 === 0) d /= 2; while (d % 5 === 0) d /= 5;
+  if (d !== 1) return null;
+  for (var k = 0; k <= 6; k++){ var p = Math.pow(10, k); if ((p * a.n) % a.d === 0) return menos((a.n / a.d).toFixed(k)); }
+  return null;
+}
+function fHTML(a, modo){
+  if (modo === "dec"){ var s = fDecimal(a); if (s !== null) return s; }
+  return fracHTML(a.n, a.d);
+}
+function numVoz(a){ return a.d === 1 ? String(a.n).replace("-", "menos ") : fracVoz(a.n, a.d); }
+
+/* ------------------------------------------------------------
+   Un lado de una ecuación: { x: fr, k: fr }
+   modo "frac" escribe x/2 o 3x/4; modo "dec" escribe 0.25x
+   ------------------------------------------------------------ */
+function L(x, k){ return { x: x.n !== undefined ? x : fr(x), k: k.n !== undefined ? k : fr(k) }; }
+function termXVis(c, modo, primero){
+  var neg = c.n < 0, a = fr(Math.abs(c.n), c.d), cuerpo;
+  if (modo === "dec" && a.d !== 1 && fDecimal(a) !== null) cuerpo = fDecimal(a) + "x";
+  else if (a.d === 1) cuerpo = (a.n === 1 ? "" : a.n) + "x";
+  else cuerpo = '<span class="fracc"><span class="fa">' + (a.n === 1 ? "" : a.n) + 'x</span><span class="fb2">' + a.d + '</span></span>';
+  return (neg ? (primero ? "−" : " − ") : (primero ? "" : " + ")) + cuerpo;
+}
+function termXVoz(c, primero){
+  var neg = c.n < 0, a = fr(Math.abs(c.n), c.d), cuerpo;
+  if (a.d === 1) cuerpo = (a.n === 1 ? "" : a.n + " ") + "x";
+  else cuerpo = (a.n === 1 ? "" : a.n + " ") + "x sobre " + a.d;
+  return (neg ? (primero ? "menos " : " menos ") : (primero ? "" : " más ")) + cuerpo;
+}
+function constVis(c, modo, primero){
+  var neg = c.n < 0, a = fr(Math.abs(c.n), c.d);
+  var cuerpo = (modo === "dec" && fDecimal(a) !== null) ? fDecimal(a) : (a.d === 1 ? String(a.n) : fracVis(a.n, a.d));
+  return (neg ? (primero ? "−" : " − ") : (primero ? "" : " + ")) + cuerpo;
+}
+function constVoz(c, primero){
+  var neg = c.n < 0, a = fr(Math.abs(c.n), c.d), cuerpo = a.d === 1 ? String(a.n) : fracVoz(a.n, a.d);
+  return (neg ? (primero ? "menos " : " menos ") : (primero ? "" : " más ")) + cuerpo;
+}
+function ladoVis(l, modo){
+  var s = "";
+  if (!fcero(l.x)) s += termXVis(l.x, modo, true);
+  if (!fcero(l.k) || s === "") s += constVis(l.k, modo, s === "");
+  return s;
+}
+function ladoVoz(l){
+  var s = "";
+  if (!fcero(l.x)) s += termXVoz(l.x, true);
+  if (!fcero(l.k) || s === "") s += constVoz(l.k, s === "");
+  return s;
+}
+function ecHTML(izq, der, modo){ return envuelve(ladoVis(izq, modo) + " = " + ladoVis(der, modo), ladoVoz(izq) + " es igual a " + ladoVoz(der)); }
+function ladoHTML(l, modo){ return envuelve(ladoVis(l, modo), ladoVoz(l)); }
+function evalLado(l, v){ return fsum(fmul(l.x, v), l.k); }
+/* Solución: { tipo: "una"|"ninguna"|"infinitas", x } */
+function resuelve(izq, der){
+  var a = fres(izq.x, der.x), b = fres(der.k, izq.k);
+  if (fcero(a)) return { tipo: fcero(b) ? "infinitas" : "ninguna" };
+  return { tipo: "una", x: fdiv(b, a) };
+}
+function numVis(v, modo){ return (modo === "dec" && fDecimal(v) !== null) ? fDecimal(v) : fracVis(v.n, v.d); }
+function xIgual(v, modo){ return envuelve("x = " + numVis(v, modo), "x igual a " + numVoz(v)); }
+function numHTML(v, modo){ return envuelve(numVis(v, modo), numVoz(v)); }
+function opX(v, modo){ return { html: xIgual(v, modo), clave: "x" + v.n + "/" + v.d }; }
+
+/* ------------------------------------------------------------
+   Polinomios de la Lección 4.1: lista de términos {c, v}
+   v ∈ "x2", "x", "y", "" (constante)
+   ------------------------------------------------------------ */
+var VAR_VIS = { x2: 'x<sup>2</sup>', x: "x", y: "y", "": "" };
+var VAR_VOZ = { x2: "x al cuadrado", x: "x", y: "y", "": "" };
+function termVis(t, primero){
+  var neg = t.c < 0, a = Math.abs(t.c), cuerpo = t.v === "" ? String(a) : (a === 1 ? "" : a) + VAR_VIS[t.v];
+  return (neg ? (primero ? "−" : " − ") : (primero ? "" : " + ")) + cuerpo;
+}
+function termVoz(t, primero){
+  var neg = t.c < 0, a = Math.abs(t.c), cuerpo = t.v === "" ? String(a) : (a === 1 ? "" : a + " ") + VAR_VOZ[t.v];
+  return (neg ? (primero ? "menos " : " menos ") : (primero ? "" : " más ")) + cuerpo;
+}
+function polVis(p){ if (!p.length) return "0"; return p.map(function(t, i){ return termVis(t, i === 0); }).join(""); }
+function polVoz(p){ if (!p.length) return "0"; return p.map(function(t, i){ return termVoz(t, i === 0); }).join(""); }
+function polHTML(p){ return envuelve(polVis(p), polVoz(p)); }
+function polClave(p){ return p.map(function(t){ return t.c + t.v; }).join("|") || "0"; }
+function opPol(p){ return { html: polHTML(p), clave: polClave(p) }; }
+var ORDEN_VAR = ["x2", "x", "y", ""];
+/* Reduce términos semejantes y ordena: x², x, y, constante */
+function reducePol(p){
+  var s = {}; p.forEach(function(t){ s[t.v] = (s[t.v] || 0) + t.c; });
+  return ORDEN_VAR.filter(function(v){ return s[v]; }).map(function(v){ return { c: s[v], v: v }; });
+}
+function tm(c, v){ return { c: c, v: v || "" }; }
+
+/* Práctica numérica de una respuesta (usa creaPracticaLibre) */
+function evaluaNumero(txt, esperado, pistas){
+  var f = leeFraccion(txt), dcm = leeDecimal(txt);
+  if (!f && dcm === null) return { estado: "invalido", msg: "Escribe un número entero, un decimal o una fracción como 3/4." };
+  var v = f ? fr(f.p, f.q) : null;
+  var ok = v ? figual(v, esperado) : Math.abs(dcm - fval(esperado)) < 1e-9;
+  if (ok) return { estado: "bien", msg: "Correcto." };
+  if (pistas){ for (var i = 0; i < pistas.length; i++){ var pv = pistas[i]; if ((v && figual(v, pv.v)) || (!v && Math.abs(dcm - fval(pv.v)) < 1e-9)) return { estado: "mal", msg: pv.msg }; } }
+  return { estado: "mal", msg: "Todavía no." };
+}
+
+function vozAuto(vis){
+  return vis.replace(/<sup>2<\/sup>/g, " al cuadrado").replace(/<span class="fracc"><span class="fa">(.*?)<\/span><span class="fb2">(.*?)<\/span><\/span>/g, "$1 sobre $2")
+            .replace(/<[^>]+>/g, "").replace(/−/g, "menos ").replace(/·/g, " por ");
+}
+function auto(vis){ return envuelve(vis, vozAuto(vis)); }
+function nz(){ var n = aleatorio(1,9); return Math.random() < 0.5 ? -n : n; }
+
+/* ============================================================
+   Desigualdades
+   ============================================================ */
+var REL_VOZ = { "<": "es menor que", ">": "es mayor que", "≤": "es menor o igual que", "≥": "es mayor o igual que" };
+var REL_INV = { "<": ">", ">": "<", "≤": "≥", "≥": "≤" };
+var REL_ESTRICTO = { "<": true, ">": true, "≤": false, "≥": false };
+function relVis(r){ return r === "<" ? "&lt;" : (r === ">" ? "&gt;" : r); }
+function ineqHTML(izq, r, der, modo){
+  return envuelve(ladoVis(izq, modo) + " " + relVis(r) + " " + ladoVis(der, modo), ladoVoz(izq) + " " + REL_VOZ[r] + " " + ladoVoz(der));
+}
+function solHTML(r, v){ return envuelve("x " + relVis(r) + " " + numVis(v), "x " + REL_VOZ[r] + " " + numVoz(v)); }
+function opSol(r, v){ return { html: solHTML(r, v), clave: r + v.n + "/" + v.d }; }
+function cumple(a, r, b){ var d = fval(a) - fval(b); return r === "<" ? d < -1e-12 : (r === ">" ? d > 1e-12 : (r === "≤" ? d <= 1e-12 : d >= -1e-12)); }
+/* Resuelve izq r der: devuelve { r, v, invierte } o un caso especial */
+function resuelveIneq(izq, r, der){
+  var A = fres(izq.x, der.x), K = fres(der.k, izq.k);
+  if (fcero(A)) return { especial: true, siempre: cumple(fr(0), r, K) };
+  var inv = A.n < 0;
+  return { r: inv ? REL_INV[r] : r, v: fdiv(K, A), invierte: inv, A: A, K: K };
+}
+
+/* Recta numérica con la solución: punto abierto o cerrado y rayo */
+function ineqSVG(v, r, opciones){
+  opciones = opciones || {};
+  var c = fval(v), lo = Math.floor(c) - 5, hi = Math.floor(c) + 5;
+  var W = 640, H = 110, x0 = 30, x1 = W - 30, y = 52, col = opciones.color || "#0d47a1";
+  function X(t){ return x0 + (t - lo) * (x1 - x0) / (hi - lo); }
+  var s = '<svg class="recta-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + (opciones.voz || ("Recta numérica: x " + REL_VOZ[r] + " " + numVoz(v))) + '">';
+  s += '<line x1="' + (x0 - 14) + '" y1="' + y + '" x2="' + (x1 + 14) + '" y2="' + y + '" stroke="#424242" stroke-width="2"/>';
+  s += '<path d="M' + (x0 - 22) + ' ' + y + ' l12 -7 v14 z" fill="#424242"/><path d="M' + (x1 + 22) + ' ' + y + ' l-12 -7 v14 z" fill="#424242"/>';
+  for (var t = lo; t <= hi; t++){
+    s += '<line x1="' + X(t) + '" y1="' + (y - 9) + '" x2="' + X(t) + '" y2="' + (y + 9) + '" stroke="#424242" stroke-width="2"/>';
+    s += '<text x="' + X(t) + '" y="' + (y + 36) + '" text-anchor="middle" font-size="22" fill="#222">' + menos(t) + '</text>';
+  }
+  if (r){
+    var derecha = r === ">" || r === "≥", xc = X(c), fin = derecha ? x1 + 18 : x0 - 18;
+    s += '<line x1="' + xc + '" y1="' + y + '" x2="' + fin + '" y2="' + y + '" stroke="' + col + '" stroke-width="8"/>';
+    s += '<path d="M' + (derecha ? fin + 12 : fin - 12) + ' ' + y + ' l' + (derecha ? -18 : 18) + ' -12 v24 z" fill="' + col + '"/>';
+    s += '<circle cx="' + xc + '" cy="' + y + '" r="11" fill="' + (REL_ESTRICTO[r] ? "#ffffff" : col) + '" stroke="' + col + '" stroke-width="4"/>';
+  }
+  if (opciones.marca !== undefined){
+    var xm = X(opciones.marca);
+    s += '<path d="M' + xm + ' ' + (y - 16) + ' l-9 -16 h18 z" fill="#b71c1c"/>';
+  }
+  return s + '</svg>';
+}
+
+/* Práctica escrita de una desigualdad: signo + número
+   gen() devuelve { enun, r, v (fr), explica, invierte } */
+function creaPracticaDesig(pre, gen){
+  var est = { aciertos: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    $(pre + "-s").value = ""; $(pre + "-v").value = "";
+    [pre + "-s", pre + "-v", pre + "-comprobar"].forEach(function(id){ $(id).disabled = false; });
+    $(pre + "-v").classList.remove("error");
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb"), r = $(pre + "-s").value, t = $(pre + "-v").value;
+    var f = leeFraccion(t), dcm = leeDecimal(t), v = f ? fr(f.p, f.q) : (dcm !== null ? fr(Math.round(dcm * 1000), 1000) : null);
+    $(pre + "-v").classList.toggle("error", !v);
+    if (!r || !v){ fb.className = "fb mal"; fb.innerHTML = "Elige el signo y escribe el número límite."; return; }
+    est.intentos++;
+    var okV = figual(v, q.v), okR = r === q.r, msg;
+    if (okV && okR){
+      est.resuelta = true; est.total++; est.aciertos++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ Correcto: " + solHTML(q.r, q.v) + ". " + (q.explica || "");
+    } else {
+      if (okV && r === REL_INV[q.r]) msg = q.invierte ? "El número está bien, pero se dividió o multiplicó por un negativo: el signo tiene que invertirse." : "El número está bien, pero aquí el signo no se invierte: no se multiplicó ni se dividió por un negativo.";
+      else if (okV) msg = "El número está bien; revisa si el límite se incluye (≤, ≥) o no (<, >).";
+      else if (okR) msg = "El signo está bien; revisa el número límite.";
+      else msg = "Todavía no. Resuelve como una ecuación y fíjate en el signo al final.";
+      if (est.intentos >= 2){ est.resuelta = true; est.total++; fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " La respuesta es " + solHTML(q.r, q.v) + ". " + (q.explica || ""); }
+      else { fb.className = "fb mal"; fb.innerHTML = "✗ " + msg + " Tienes un intento más."; }
+    }
+    if (est.resuelta) [pre + "-s", pre + "-v", pre + "-comprobar"].forEach(function(id){ $(id).disabled = true; });
+    $(pre + "-marcador").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  $(pre + "-v").addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta();
+  var obj = { pinta: pinta, estado: est };
+  (window.__desig = window.__desig || {})[pre] = obj;
+  return obj;
+}
+function P(){ return polVis(Array.prototype.slice.call(arguments)); }
+function leeEntero(t){ var s = String(t).trim().replace(/−/g, "-").replace(/^\+/, ""); return /^-?\d+$/.test(s) ? parseInt(s, 10) : null; }
+
+var RELS = ["<", ">", "≤", "≥"];
+/* Pasos para resolver izq r der, con la regla del signo */
+function pasosIneq(izq, r, der){
+  var pasos = [], li = izq, ld = der, rel = r;
+  if (!fcero(ld.x)){
+    var nx = fres(li.x, ld.x);
+    pasos.push("Se resta " + ladoHTML(L(ld.x, 0)) + " en ambos lados para reunir las x: " + ineqHTML(L(nx, li.k), rel, L(0, ld.k)) + ".");
+    li = L(nx, li.k); ld = L(0, ld.k);
+  }
+  if (!fcero(li.k)){
+    var nk = fres(ld.k, li.k);
+    pasos.push((li.k.n > 0 ? "Se resta " + fTxt(li.k) : "Se suma " + fTxt(fneg(li.k))) + " en ambos lados (sumar o restar nunca invierte el signo): " + ineqHTML(L(li.x, 0), rel, L(0, nk)) + ".");
+    li = L(li.x, 0); ld = L(0, nk);
+  }
+  var v = fdiv(ld.k, li.x);
+  if (!figual(li.x, fr(1))){
+    if (li.x.n < 0){ rel = REL_INV[rel]; pasos.push("Se divide entre " + fTxt(li.x) + ". <strong>Es un número negativo, así que el signo se invierte</strong>: " + solHTML(rel, v) + "."); }
+    else pasos.push("Se divide entre " + fTxt(li.x) + " (positivo: el signo no cambia): " + solHTML(rel, v) + ".");
+  }
+  return { pasos: pasos, r: rel, v: v, invierte: li.x.n < 0 };
+}
+
+function Q(a, b){ return '<span class="fracc"><span class="fa">' + a + '</span><span class="fb2">' + b + '</span></span>'; }
+var R59 = Q(5, 9), R95 = Q(9, 5), MEDIO = Q(1, 2);
+
+/* ============================================================
+   Banco de despejes de una operación
+   ============================================================ */
+var UNA = [
+  { f: "d = rt", v: "t", res: "t = " + Q("d","r"), op: "La t está multiplicada por r: se divide entre r en ambos lados.",
+    num: ["120 = 40t", "se divide entre 40", "t = " + Q(120,40) + " = 3"], mal: ["t = dr", "t = " + Q("r","d"), "t = d − r"], hallar: "el tiempo t, conocidas la distancia y la rapidez" },
+  { f: "d = rt", v: "r", res: "r = " + Q("d","t"), op: "La r está multiplicada por t: se divide entre t en ambos lados.",
+    num: ["150 = 3r", "se divide entre 3", "r = " + Q(150,3) + " = 50"], mal: ["r = dt", "r = " + Q("t","d"), "r = d − t"], hallar: "la rapidez r, conocidos la distancia y el tiempo" },
+  { f: "A = bh", v: "h", res: "h = " + Q("A","b"), op: "La h está multiplicada por b: se divide entre b en ambos lados.",
+    num: ["24 = 6h", "se divide entre 6", "h = " + Q(24,6) + " = 4"], mal: ["h = Ab", "h = " + Q("b","A"), "h = A − b"], hallar: "la altura h de un rectángulo, conocidos el área y la base" },
+  { f: "V = lwh", v: "h", res: "h = " + Q("V","lw"), op: "La h está multiplicada por l y por w: se divide entre el producto lw.",
+    num: ["60 = 5 · 3 · h", "se divide entre 15", "h = " + Q(60,15) + " = 4"], mal: ["h = Vlw", "h = " + Q("V","l") + " − w", "h = " + Q("lw","V")], hallar: "la altura h de una caja, conocidos el volumen, el largo y el ancho" },
+  { f: "I = Prt", v: "P", res: "P = " + Q("I","rt"), op: "La P está multiplicada por r y por t: se divide entre el producto rt.",
+    num: ["90 = P · 0.05 · 3", "se divide entre 0.15", "P = " + Q(90,"0.15") + " = 600"], mal: ["P = Irt", "P = " + Q("rt","I"), "P = I − rt"], hallar: "el capital P, conocidos el interés, la tasa y el tiempo" },
+  { f: "I = Prt", v: "r", res: "r = " + Q("I","Pt"), op: "La r está multiplicada por P y por t: se divide entre el producto Pt.",
+    num: ["90 = 600 · r · 3", "se divide entre 1800", "r = " + Q(90,1800) + " = 0.05"], mal: ["r = IPt", "r = " + Q("Pt","I"), "r = " + Q("I","P") + " − t"], hallar: "la tasa de interés r, conocidos el interés, el capital y el tiempo" },
+  { f: "I = Prt", v: "t", res: "t = " + Q("I","Pr"), op: "La t está multiplicada por P y por r: se divide entre el producto Pr.",
+    num: ["90 = 600 · 0.05 · t", "se divide entre 30", "t = " + Q(90,30) + " = 3"], mal: ["t = IPr", "t = " + Q("Pr","I"), "t = I − Pr"], hallar: "el tiempo t de una inversión, conocidos el interés, el capital y la tasa" },
+  { f: "P = a + b + c", v: "c", res: "c = P − a − b", op: "A la c se le suman a y b: se restan a y b en ambos lados.",
+    num: ["20 = 6 + 5 + c", "se restan 6 y 5", "c = 20 − 6 − 5 = 9"], mal: ["c = P + a + b", "c = " + Q("P","ab"), "c = P − a + b"], hallar: "el tercer lado c de un triángulo, conocidos el perímetro y los otros dos lados" },
+  { f: "F = ma", v: "a", res: "a = " + Q("F","m"), op: "La a está multiplicada por m: se divide entre m en ambos lados.",
+    num: ["50 = 10a", "se divide entre 10", "a = " + Q(50,10) + " = 5"], mal: ["a = Fm", "a = " + Q("m","F"), "a = F − m"], hallar: "la aceleración a, conocidas la fuerza y la masa" }
+];
+function etiqueta(d){ return "En " + d.f + ", despejar " + d.v; }
+
+/* MÓDULO 1 · Paralelo números y letras */
+var PL = { visto: 0, total: 4 };
+function llenaPL(){
+  var sel = $("pl-sel");
+  UNA.forEach(function(d, i){ var o = document.createElement("option"); o.value = i; o.textContent = etiqueta(d); sel.appendChild(o); });
+}
+function pintaPL(){
+  var d = UNA[+$("pl-sel").value], filas = [
+    ["Identificar", "Se quiere dejar sola la " + d.v + " en " + auto(d.num[0]) + ".", "Se quiere dejar sola la " + d.v + " en " + auto(d.f) + "."],
+    ["Aislar", "Operación inversa: " + d.num[1] + " en ambos lados.", d.op],
+    ["Simplificar", auto(d.num[2]) + ".", auto(d.res) + "."],
+    ["Verificar", "La " + d.v + " quedó sola y del otro lado solo hay números.", "La " + d.v + " quedó sola y del otro lado no aparece ninguna " + d.v + "."]
+  ], h = "";
+  for (var i = 0; i < PL.visto; i++){
+    h += '<p><strong>Paso ' + (i+1) + ' · ' + filas[i][0] + '</strong></p><div class="lado-a-lado"><div><p class="nota">Con números</p>' + filas[i][1] +
+         '</div><div><p class="nota">Con letras</p>' + filas[i][2] + '</div></div>';
+  }
+  $("pl-pasos").innerHTML = h;
+  var b = $("pl-sig"); b.disabled = PL.visto >= PL.total; $("pl-todo").disabled = b.disabled;
+  b.textContent = PL.visto === 0 ? "Mostrar el primer paso" : (b.disabled ? "Ya se ven todos los pasos" : "Mostrar el siguiente paso");
+}
+function genDespejar(){
+  var d = elige(UNA), o = [{ html: auto(d.res), clave: "b" }].concat(d.mal.map(function(m, i){ return { html: auto(m), clave: "m" + i }; })), pc = {};
+  pc.m0 = "Si la letra está multiplicada, se divide; no se multiplica.";
+  pc.m1 = "La fracción quedó al revés: lo que estaba solo (" + d.f.split(" = ")[0] + ") va arriba.";
+  return { enun: "En " + auto(d.f) + ", despeja " + d.v + ".", opciones: o, correcta: "b", porClave: pc, bien: d.op, mal: d.op + " Queda " + auto(d.res) + "." };
+}
+function genNecesitas(){
+  var d = elige(UNA), otras = baraja(UNA.filter(function(x){ return x !== d && x.res !== d.res; })).slice(0, 2);
+  var o = [{ html: auto(d.res), clave: "b" }, { html: auto(d.mal[1]), clave: "inv" }].concat(otras.map(function(x, i){ return { html: auto(x.res), clave: "o" + i }; }));
+  var pc = { inv: "La fracción está al revés." };
+  return { enun: "¿Qué fórmula despejada sirve para hallar " + d.hallar + "? (La fórmula original es " + auto(d.f) + ".)", opciones: o, correcta: "b", porClave: pc,
+    bien: "Se despeja " + d.v + " en " + auto(d.f) + ": " + auto(d.res) + ".", mal: "Se despeja " + d.v + " en " + auto(d.f) + ": " + auto(d.res) + "." };
+}
+
+/* ============================================================
+   MÓDULO 3 · Fórmulas de dos pasos
+   ============================================================ */
+var DOS = [
+  { f: "F = " + R95 + "C + 32", v: "C", res: "C = " + R59 + "(F − 32)",
+    pasos: ["Se quita primero lo que está sumado: se resta 32 en ambos lados. Queda " + auto("F − 32 = " + R95 + "C") + ".",
+            "Para deshacer la multiplicación por " + R95 + " se multiplica por su recíproco, " + R59 + ", en ambos lados. Queda " + auto(R59 + "(F − 32) = C") + "."],
+    mal: ["C = " + R59 + "F − 32", "C = " + R95 + "(F − 32)", "C = " + R59 + "(F + 32)"] },
+  { f: "y = mx + b", v: "b", res: "b = y − mx",
+    pasos: ["La b está sumada: se resta mx en ambos lados. Queda " + auto("y − mx = b") + "."],
+    mal: ["b = y + mx", "b = " + Q("y","mx"), "b = mx − y"] },
+  { f: "y = mx + b", v: "x", res: "x = " + Q("y − b","m"),
+    pasos: ["Se quita primero lo que está sumado: se resta b en ambos lados. Queda " + auto("y − b = mx") + ".",
+            "La x está multiplicada por m: se divide entre m en ambos lados. Queda " + auto(Q("y − b","m") + " = x") + "."],
+    mal: ["x = " + Q("y","m") + " − b", "x = " + Q("y + b","m"), "x = m(y − b)"] },
+  { f: "P = 2l + 2w", v: "l", res: "l = " + Q("P − 2w", 2),
+    pasos: ["Se quita primero lo que está sumado: se resta 2w en ambos lados. Queda " + auto("P − 2w = 2l") + ".",
+            "La l está multiplicada por 2: se divide entre 2 en ambos lados. Queda " + auto(Q("P − 2w", 2) + " = l") + "."],
+    mal: ["l = " + Q("P",2) + " − 2w", "l = " + Q("P + 2w", 2), "l = P − w"] },
+  { f: "A = " + MEDIO + "bh", v: "h", res: "h = " + Q("2A","b"),
+    pasos: ["Para deshacer el " + MEDIO + " se multiplica por 2 en ambos lados. Queda " + auto("2A = bh") + ".",
+            "La h está multiplicada por b: se divide entre b. Queda " + auto(Q("2A","b") + " = h") + "."],
+    mal: ["h = " + Q("A","2b"), "h = " + Q("A","b"), "h = 2Ab"] }
+];
+var DP = { pasos: [], visto: 0 };
+function llenaDP(){
+  var sel = $("dp-sel");
+  DOS.forEach(function(d, i){ var o = document.createElement("option"); o.value = i; o.textContent = ("En " + d.f + ", despejar " + d.v).replace(/<span class="fracc"><span class="fa">(.*?)<\/span><span class="fb2">(.*?)<\/span><\/span>/g, "($1/$2)"); sel.appendChild(o); });
+}
+function preparaDP(){
+  var d = DOS[+$("dp-sel").value];
+  DP.pasos = ["Se quiere dejar sola la " + d.v + "."].concat(d.pasos).concat(['<span class="veredicto">Resultado: ' + auto(d.res) + '</span>']); DP.visto = 0;
+  $("dp-expr").innerHTML = '<span class="grande">' + auto(d.f) + '</span>';
+  pintaDP();
+}
+function pintaDP(){
+  var h = "";
+  for (var i = 0; i < DP.visto; i++) h += '<div class="paso"><span class="n" aria-hidden="true">' + (i === DP.pasos.length-1 ? "✓" : i+1) + '</span>' + DP.pasos[i] + '</div>';
+  $("dp-pasos").innerHTML = h;
+  var b = $("dp-sig"); b.disabled = DP.visto >= DP.pasos.length; $("dp-todo").disabled = b.disabled;
+  b.textContent = DP.visto === 0 ? "Mostrar el primer paso" : (b.disabled ? "Ya se ven todos los pasos" : "Mostrar el siguiente paso");
+}
+function genDosPasos(){
+  var d = elige(DOS), o = [{ html: auto(d.res), clave: "b" }].concat(d.mal.map(function(m, i){ return { html: auto(m), clave: "m" + i }; })), pc = {};
+  pc.m0 = "El orden importa: primero se quita lo que está sumado o restado, y después se deshace la multiplicación de todo lo que queda.";
+  return { enun: "En " + auto(d.f) + ", despeja " + d.v + ".", opciones: o, correcta: "b", porClave: pc, bien: d.pasos.join(" "), mal: d.pasos.join(" ") };
+}
+
+/* ============================================================
+   MÓDULO 4 · Aplicar: dos caminos
+   ============================================================ */
+function problemaFormula(){
+  var t = aleatorio(1,6);
+  if (t === 1){ var r = elige([40,45,50,55,60,65]), tt = aleatorio(2,6), d = r*tt;
+    return { txt: "Un auto recorrió " + d + " millas a " + r + " millas por hora. ¿Cuántas horas tardó?", f: "d = rt", des: "t = " + Q("d","r"),
+      sust: d + " = " + r + "t", res: fr(tt), unidad: "horas", cuenta: "t = " + Q(d, r) + " = " + tt, resuelve: "se divide entre " + r + " en ambos lados" }; }
+  if (t === 2){ var Pc = elige([500,800,1000,1200,2000]), rr = elige([2,3,4,5,6]), ti = aleatorio(2,5), I = Pc*rr*ti/100;
+    return { txt: "Una inversión de $" + Pc + " produjo $" + I + " de interés simple en " + ti + " años. ¿Cuál fue la tasa de interés anual? Da la respuesta en decimal (por ejemplo, 0.04).", f: "I = Prt", des: "r = " + Q("I","Pt"),
+      sust: I + " = " + Pc + " · r · " + ti, res: fr(rr, 100), unidad: "(es decir, " + rr + " %)", cuenta: "r = " + Q(I, Pc*ti) + " = " + (rr/100), resuelve: "se multiplica " + Pc + " · " + ti + " = " + (Pc*ti) + " y se divide entre " + (Pc*ti) + " en ambos lados" }; }
+  if (t === 3){ var C = elige([-10,0,5,10,15,20,25,30,35,40,100]), F = 9*C/5 + 32;
+    return { txt: "El termómetro marca " + F + " °F. ¿Cuántos grados Celsius son?", f: "F = " + R95 + "C + 32", des: "C = " + R59 + "(F − 32)",
+      sust: F + " = " + R95 + "C + 32", res: fr(C), unidad: "°C", cuenta: "C = " + R59 + "(" + F + " − 32) = " + R59 + " · " + (F - 32) + " = " + C, resuelve: "se resta 32 en ambos lados y se multiplica por " + R59 }; }
+  if (t === 4){ var w = aleatorio(3,12), l = w + aleatorio(2,10), Pp = 2*l + 2*w;
+    return { txt: "Un rectángulo tiene un perímetro de " + Pp + " cm y un ancho de " + w + " cm. ¿Cuánto mide el largo?", f: "P = 2l + 2w", des: "l = " + Q("P − 2w", 2),
+      sust: Pp + " = 2l + " + (2*w), res: fr(l), unidad: "cm", cuenta: "l = " + Q(Pp + " − " + (2*w), 2) + " = " + Q(Pp - 2*w, 2) + " = " + l, resuelve: "se resta " + (2*w) + " en ambos lados y se divide entre 2" }; }
+  if (t === 5){ var lv = aleatorio(3,10), wv = aleatorio(2,8), hv = aleatorio(2,9), V = lv*wv*hv;
+    return { txt: "Una caja tiene un volumen de " + V + " pulgadas cúbicas, un largo de " + lv + " y un ancho de " + wv + " pulgadas. ¿Cuánto mide la altura?", f: "V = lwh", des: "h = " + Q("V","lw"),
+      sust: V + " = " + lv + " · " + wv + " · h", res: fr(hv), unidad: "pulgadas", cuenta: "h = " + Q(V, lv*wv) + " = " + hv, resuelve: "se multiplica " + lv + " · " + wv + " = " + (lv*wv) + " y se divide entre " + (lv*wv) + " en ambos lados" }; }
+  var m = elige([2,3,4,5,-2]), b = nz(), x = aleatorio(-4,8), y = m*x + b;
+  return { txt: "En la recta y = " + P(tm(m,"x"), tm(b)) + ", ¿cuánto vale x cuando y = " + menos(y) + "?", f: "y = mx + b", des: "x = " + Q("y − b","m"),
+    sust: menos(y) + " = " + P(tm(m,"x"), tm(b)), res: fr(x), unidad: "", cuenta: "x = " + Q("(" + menos(y) + ") − (" + menos(b) + ")", menos(m)) + " = " + Q(menos(y - b), menos(m)) + " = " + menos(x), resuelve: (b > 0 ? "se resta " + b : "se suma " + (-b)) + " en ambos lados y se divide entre " + menos(m) };
+}
+var CA = { cola: [] };
+function nuevoCA(){
+  var q = problemaFormula();
+  $("ca-enun").textContent = q.txt;
+  $("ca-caminos").innerHTML =
+    '<div><p><strong>Despejar primero</strong></p><p>Fórmula: ' + auto(q.f) + '.</p><p>Se despeja: ' + auto(q.des) + '.</p><p>Se sustituye: ' + auto(q.cuenta) + '.</p></div>' +
+    '<div><p><strong>Sustituir primero</strong></p><p>Fórmula: ' + auto(q.f) + '.</p><p>Se sustituye: ' + auto(q.sust) + '.</p><p>Se resuelve la ecuación: ' + auto(q.resuelve) + '. El resultado es ' + numHTML(q.res, "dec") + '.</p></div>';
+}
+function genAplicar(){
+  var q = problemaFormula();
+  return { enun: q.txt, correcta: fDecimal(q.res) ? fDecimal(q.res).replace("−","-") : fTxt(q.res),
+    solucion: "Con " + auto(q.des) + ": " + auto(q.cuenta) + " " + q.unidad + ".",
+    evalua: function(t){ return evaluaNumero(t, q.res, []); } };
+}
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+llenaPL();
+$("pl-sel").addEventListener("change", function(){ PL.visto = 0; pintaPL(); });
+$("pl-sig").addEventListener("click", function(){ if (PL.visto < PL.total){ PL.visto++; pintaPL(); } });
+$("pl-todo").addEventListener("click", function(){ PL.visto = PL.total; pintaPL(); });
+pintaPL();
+creaPracticaOM("p1", genDespejar);
+creaPracticaOM("p2", genNecesitas);
+
+llenaDP();
+$("dp-sel").addEventListener("change", preparaDP);
+$("dp-sig").addEventListener("click", function(){ if (DP.visto < DP.pasos.length){ DP.visto++; pintaDP(); } });
+$("dp-todo").addEventListener("click", function(){ DP.visto = DP.pasos.length; pintaDP(); });
+preparaDP();
+creaPracticaOM("p3", genDosPasos);
+
+$("ca-nuevo").addEventListener("click", nuevoCA);
+nuevoCA();
+creaPracticaLibre("p4", genAplicar);
+
+iniciaNavegacion();
+
+</script>
+</body>
+</html>
