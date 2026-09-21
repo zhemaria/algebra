@@ -1,0 +1,924 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 1.3 — Ecuaciones de la recta: pendiente-intercepto, punto-pendiente y forma estándar
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #pendiente-intercepto · #punto-pendiente · #formas · #paralelas
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 1.3: ecuaciones de la recta</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 1.3 del Nivel 4: la forma pendiente-intercepto, la forma punto-pendiente, la conversión entre las tres formas y las rectas paralelas y perpendiculares.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#1a237e; --tema-d:#10174f; --tema-bg:#e8eaf6; --tema-bg2:#c5cae9;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:190px;}
+  .campo input[type="number"]{width:100px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .centrado{text-align:center;}
+
+  .ecuacion{display:inline-block;border-left:5px solid var(--tema);padding:6px 0 6px 16px;margin:14px 0;
+            font-size:19px;font-weight:700;color:var(--tema-d);text-align:left;}
+  .ecuacion span{display:block;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:560px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:4px;display:inline-block;}
+  .m1{background:#1a237e;}
+  .m2{background:#00695c;}
+  .m-avance{background:#bf360c;}
+  .m-subida{background:#00695c;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas tr.destacada td{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campo input[type="range"]{width:100%;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 1 · Geometría analítica</div>
+    <h1>Lección 1.3 · Ecuaciones de la recta: pendiente-intercepto, punto-pendiente y forma estándar</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#pendiente-intercepto">La forma pendiente-intercepto: y = mx + b</a></li>
+      <li><a href="#punto-pendiente">La forma punto-pendiente</a></li>
+      <li><a href="#formas">Convertir entre las tres formas</a></li>
+      <li><a href="#paralelas">Rectas paralelas y perpendiculares</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="pendiente-intercepto" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La forma pendiente-intercepto: y = mx + b</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En y = mx + b los dos números dicen todo lo que hay que saber de la recta: <strong>m</strong> es la pendiente
+      —cuánto sube o baja por cada unidad hacia la derecha— y <strong>b</strong> es el intercepto en y, el punto
+      (0, b) por donde cruza el eje vertical. Mueve los dos y míralo.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="s-m">Pendiente m = <span class="valor-rango" id="s-m-val">2</span></label>
+            <input type="range" id="s-m" min="-5" max="5" step="0.5" value="2">
+          </div>
+          <div class="campo">
+            <label for="s-b">Intercepto b = <span class="valor-rango" id="s-b-val">1</span></label>
+            <input type="range" id="s-b" min="-8" max="8" step="1" value="1">
+          </div>
+        </div>
+      </div>
+
+      <div class="centrado"><div class="ecuacion" id="s-ecuacion"></div></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="s-lectura"></div>
+        <div class="linea" id="s-triangulo"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="s-svg" viewBox="0 0 560 360" role="img" aria-labelledby="s-svg-t s-svg-d">
+          <title id="s-svg-t">La recta y = mx + b</title>
+          <desc id="s-svg-d">Gráfica de la recta con el intercepto marcado y el triángulo que muestra el avance y la elevación.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m-avance" aria-hidden="true"></span> Avance (1 unidad a la derecha)</span>
+          <span><span class="muestra m-subida" aria-hidden="true"></span> Elevación (lo que sube o baja)</span>
+        </div>
+        <p class="pie-grafica" id="s-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Con m = 0 la recta se acuesta.</strong> No sube ni baja: es horizontal, y su ecuación queda y = b.
+        No es un error ni una recta «sin pendiente»: su pendiente vale cero.
+      </div>
+
+      <h3>Practica: pendiente e intercepto</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="punto-pendiente">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>La forma punto-pendiente</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Cuando el punto conocido no es el intercepto, la forma pendiente-intercepto no sirve de entrada. Ahí entra
+      la <strong>forma punto-pendiente</strong>, que admite cualquier punto de la recta:</p>
+      <p class="formula">y − y₁ = m(x − x₁)</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="q-caso">Caso que se va a resolver</label>
+          <select id="q-caso"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="q-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="q-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="q-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div id="q-enunciado" class="panel" style="background:#fff;"></div>
+      <div class="pasos" id="q-pasos" aria-live="polite"></div>
+
+      <div class="grafica">
+        <svg id="q-svg" viewBox="0 0 560 360" role="img" aria-labelledby="q-svg-t q-svg-d">
+          <title id="q-svg-t">La recta y los puntos dados</title>
+          <desc id="q-svg-d">Gráfica de la recta obtenida, con los puntos del enunciado marcados.</desc>
+        </svg>
+        <p class="pie-grafica" id="q-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Con dos puntos, primero la pendiente.</strong> La forma punto-pendiente necesita un valor de m, así que
+        con dos puntos el paso cero siempre es calcular (y₂ − y₁) / (x₂ − x₁). Da igual cuál de los dos puntos se use
+        después: la recta que sale es la misma.
+      </div>
+
+      <h3>Practica: escribe la ecuación</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="formas">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Convertir entre las tres formas</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Las tres formas describen <strong>la misma recta</strong>; cambia solo el traje. Conviene saber pasar de una a
+      otra, porque cada una sirve para algo distinto.</p>
+
+      <table class="reglas">
+        <caption>Las tres formas y para qué sirve cada una.</caption>
+        <thead><tr><th scope="col">Forma</th><th scope="col">Expresión</th><th scope="col">Cuándo conviene</th></tr></thead>
+        <tbody>
+          <tr><td>Pendiente-intercepto</td><td>y = mx + b</td><td>Para graficar: m y b se leen de un vistazo.</td></tr>
+          <tr><td>Punto-pendiente</td><td>y − y₁ = m(x − x₁)</td><td>Para escribir la recta desde un punto cualquiera.</td></tr>
+          <tr><td>Estándar</td><td>Ax + By = C</td><td>Formato del GED y de los sistemas de ecuaciones.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="c-caso">Conversión</label>
+          <select id="c-caso"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="c-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="c-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="c-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="centrado"><div class="ecuacion" id="c-visual" aria-live="polite"></div></div>
+      <div class="pasos" id="c-pasos" aria-live="polite"></div>
+
+      <div class="caja-tip">
+        <strong>Comprobación que nunca falla:</strong> elige un valor de x, por ejemplo x = 2, y evalúa las dos formas.
+        Si ambas dan la misma y, la conversión está bien hecha.
+      </div>
+
+      <h3>Practica: convierte la ecuación</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="paralelas">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Rectas paralelas y perpendiculares</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>La relación entre dos rectas se decide mirando solo las pendientes: <strong>iguales</strong> quiere decir
+      paralelas; <strong>recíprocas negativas</strong> —producto igual a −1— quiere decir perpendiculares.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="r-par">Par de rectas</label>
+          <select id="r-par"></select>
+        </div>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="r-pendientes"></div>
+        <div class="linea veredicto" id="r-veredicto"></div>
+        <div class="linea" id="r-explica"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="r-svg" viewBox="0 0 560 360" role="img" aria-labelledby="r-svg-t r-svg-d">
+          <title id="r-svg-t">Las dos rectas</title>
+          <desc id="r-svg-d">Gráfica de las dos rectas del par elegido.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m1" aria-hidden="true"></span> Primera recta</span>
+          <span><span class="muestra m2" aria-hidden="true"></span> Segunda recta</span>
+        </div>
+        <p class="pie-grafica" id="r-svg-texto"></p>
+      </div>
+
+      <h3>Calculadora de la recíproca negativa</h3>
+      <p>Escribe una pendiente como fracción y obtén la perpendicular. Para un número entero, deja el denominador en 1.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="r-num">Numerador de m</label>
+            <input type="number" id="r-num" value="2" step="1">
+          </div>
+          <div class="campo">
+            <label for="r-den">Denominador de m</label>
+            <input type="number" id="r-den" value="3" step="1">
+          </div>
+        </div>
+      </div>
+      <div class="caja-aviso" id="r-aviso" role="alert"></div>
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="r-reciproca"></div>
+        <div class="linea" id="r-comprobacion"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Dos movimientos, no uno.</strong> La perpendicular se halla invirtiendo la fracción <em>y</em> cambiando
+        el signo. Quedarse a medio camino —invertir sin cambiar el signo— es el error más frecuente de esta sección.
+      </div>
+
+      <h3>Practica: paralelas y perpendiculares</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 1.3 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function mcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=b; b=a%b; a=t; } return a || 1; }
+function fraccion(num, den){
+  if (den < 0){ num = -num; den = -den; }
+  var g = mcd(num, den);
+  num /= g; den /= g;
+  return den === 1 ? String(num) : (num < 0 ? "−" + Math.abs(num) : num) + "/" + den;
+}
+function textoRecta(m, b){
+  if (m === 0) return "y = " + b;
+  var s = "y = ";
+  if (m === 1) s += "x";
+  else if (m === -1) s += "−x";
+  else if (Math.abs(m % 1) === 0.5) s += "(" + fraccion(m*2, 2) + ")x";
+  else s += (m < 0 ? "−" + Math.abs(m) : m) + "x";
+  if (b !== 0) s += (b < 0 ? " − " + Math.abs(b) : " + " + b);
+  return s;
+}
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function llenaSelect(sel, banco){
+  banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+
+/* Plano cartesiano */
+function dibujaPlano(svg, opciones){
+  opciones = opciones || {};
+  limpiaSVG(svg);
+  var caja = (svg.getAttribute("viewBox") || "0 0 560 360").split(/\s+/);
+  var W = parseFloat(caja[2]) || 560, H = parseFloat(caja[3]) || 360, m = 44;
+  var r = opciones.rango || {x0:-8, x1:8, y0:-8, y1:8};
+
+  function px(x){ return m + (x - r.x0)/(r.x1 - r.x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - r.y0)/(r.y1 - r.y0) * (H - 2*m); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  for (var gx = Math.ceil(r.x0); gx <= r.x1; gx++)
+    crea("line", {x1:px(gx), y1:m, x2:px(gx), y2:H-m, stroke:"#ececec", "stroke-width":1});
+  for (var gy = Math.ceil(r.y0); gy <= r.y1; gy++)
+    crea("line", {x1:m, y1:py(gy), x2:W-m, y2:py(gy), stroke:"#ececec", "stroke-width":1});
+  crea("line", {x1:m, y1:py(0), x2:W-m, y2:py(0), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(0), y1:m, x2:px(0), y2:H-m, stroke:"#555", "stroke-width":2});
+  crea("text", {x:W-m, y:py(0)-8, "text-anchor":"end", "font-size":13, fill:"#555"}, "x");
+  crea("text", {x:px(0)+8, y:m+12, "font-size":13, fill:"#555"}, "y");
+  for (var tx = Math.ceil(r.x0); tx <= r.x1; tx += 2)
+    if (tx !== 0) crea("text", {x:px(tx), y:py(0)+16, "text-anchor":"middle", "font-size":12, fill:"#555"}, tx);
+  for (var ty = Math.ceil(r.y0); ty <= r.y1; ty += 2)
+    if (ty !== 0) crea("text", {x:px(0)-8, y:py(ty)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, ty);
+
+  (opciones.rectas || []).forEach(function(rc){
+    var attrs = {x1:px(r.x0), y1:py(rc.m*r.x0 + rc.b), x2:px(r.x1), y2:py(rc.m*r.x1 + rc.b),
+                 stroke:(rc.color || "#1a237e"), "stroke-width":(rc.ancho || 4)};
+    if (rc.guion) attrs["stroke-dasharray"] = rc.guion;
+    crea("line", attrs);
+  });
+
+  if (opciones.triangulo){
+    var t = opciones.triangulo;
+    crea("line", {x1:px(t.x0), y1:py(t.y0), x2:px(t.x1), y2:py(t.y0), stroke:"#bf360c", "stroke-width":4});
+    crea("line", {x1:px(t.x1), y1:py(t.y0), x2:px(t.x1), y2:py(t.y1), stroke:"#00695c", "stroke-width":4});
+    crea("text", {x:(px(t.x0)+px(t.x1))/2, y:py(t.y0)+18, "text-anchor":"middle", "font-size":13,
+                  "font-weight":"bold", fill:"#bf360c", stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, t.etiquetaX);
+    crea("text", {x:px(t.x1)+8, y:(py(t.y0)+py(t.y1))/2, "font-size":13,
+                  "font-weight":"bold", fill:"#00695c", stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, t.etiquetaY);
+  }
+  (opciones.marcas || []).forEach(function(mk){
+    crea("circle", {cx:px(mk.p[0]), cy:py(mk.p[1]), r:8, fill:"#fff", stroke:(mk.color || "#10174f"), "stroke-width":3});
+    if (mk.etiqueta)
+      crea("text", {x:px(mk.p[0]), y:py(mk.p[1]) - 15, "text-anchor":"middle", "font-size":13, "font-weight":"bold",
+                    fill:(mk.color || "#10174f"), stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, mk.etiqueta);
+  });
+}
+
+/* Motor del paso a paso */
+function montaStepper(cfg){
+  var idx = 0, pasos = [], k = 0;
+  function agrega(i){
+    var div = document.createElement("div");
+    div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + pasos[i];
+    $(cfg.pasos).appendChild(div);
+  }
+  function reinicia(){
+    idx = parseInt($(cfg.sel).value, 10) || 0;
+    pasos = cfg.banco[idx].pasos; k = 0;
+    $(cfg.pasos).innerHTML = "";
+    $(cfg.sig).disabled = false;
+    $(cfg.sig).textContent = "Mostrar el primer paso";
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], 0);
+  }
+  function siguiente(){
+    if (k >= pasos.length) return;
+    agrega(k); k++;
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], k);
+    $(cfg.sig).textContent = k >= pasos.length ? "No quedan más pasos" : "Siguiente paso";
+    if (k >= pasos.length) $(cfg.sig).disabled = true;
+  }
+  function todo(){
+    $(cfg.pasos).innerHTML = "";
+    pasos.forEach(function(t,i){ agrega(i); });
+    k = pasos.length;
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], k);
+    $(cfg.sig).textContent = "No quedan más pasos";
+    $(cfg.sig).disabled = true;
+  }
+  llenaSelect($(cfg.sel), cfg.banco);
+  $(cfg.sel).addEventListener("change", reinicia);
+  $(cfg.sig).addEventListener("click", siguiente);
+  $(cfg.todo).addEventListener("click", todo);
+  $(cfg.reset).addEventListener("click", reinicia);
+  reinicia();
+}
+
+/* Motor de práctica */
+function creaPractica(banco, ids){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Pendiente-intercepto
+   ============================================================ */
+function actualizaRecta(){
+  var m = parseFloat($("s-m").value), b = parseFloat($("s-b").value);
+  $("s-m-val").textContent = m; $("s-b-val").textContent = b;
+
+  $("s-ecuacion").innerHTML = "<span>" + textoRecta(m,b) + "</span>";
+  $("s-lectura").innerHTML = m === 0
+    ? "<strong>Pendiente 0:</strong> la recta es horizontal y su ecuación se escribe simplemente y = " + b + "."
+    : "<strong>Lectura directa:</strong> la pendiente es " + m + ", así que la recta " +
+      (m > 0 ? "sube" : "baja") + " " + Math.abs(m) + " unidad" + (Math.abs(m) === 1 ? "" : "es") +
+      " por cada unidad hacia la derecha; y el intercepto es " + b + ", así que pasa por el punto (0, " + b + ").";
+  $("s-triangulo").innerHTML = m === 0
+    ? "No hay elevación que dibujar: la recta no sube ni baja."
+    : "<strong>El triángulo de la gráfica:</strong> desde (0, " + b + ") se avanza 1 a la derecha y se " +
+      (m > 0 ? "sube " : "baja ") + Math.abs(m) + ", llegando a (1, " + (b + m) + ").";
+
+  var rectas = [{m:m, b:b}];
+  var opciones = {rango:{x0:-8, x1:8, y0:-8, y1:8}, rectas:rectas,
+                  marcas:[{p:[0,b], etiqueta:"(0, " + b + ")"}]};
+  if (m !== 0 && Math.abs(b + m) <= 8)
+    opciones.triangulo = {x0:0, y0:b, x1:1, y1:b + m, etiquetaX:"1", etiquetaY:(m > 0 ? "+" : "") + m};
+  dibujaPlano($("s-svg"), opciones);
+  $("s-svg-texto").textContent = "Recta " + textoRecta(m,b) + ", con el intercepto marcado en (0, " + b + ").";
+}
+var BANCO_P1 = [
+  { q:"Pendiente 4 e intercepto en y igual a −2. La ecuación es:", ops:["y = 4x − 2","y = −2x + 4","y = 4x + 2"], ok:0,
+    exp:"m va multiplicando a la x y b va suelto: y = 4x − 2." },
+  { q:"¿Cuál es la pendiente de y = −5x + 7?", ops:["−5","7","5"], ok:0,
+    exp:"La pendiente es el coeficiente de x, con su signo incluido." },
+  { q:"¿Cuál es el intercepto en y de y = 7x − 4?", ops:["−4","7","4"], ok:0,
+    exp:"El término suelto es el intercepto: la recta cruza el eje y en (0, −4)." },
+  { q:"Recta de pendiente 2 que pasa por (0, 4):", ops:["y = 2x + 4","y = 4x + 2","y = 2x − 4"], ok:0,
+    exp:"Como el punto tiene x = 0, es directamente el intercepto: b = 4." },
+  { q:"¿Qué significa que una recta tenga pendiente negativa?",
+    ops:["Que baja al avanzar hacia la derecha","Que está por debajo del eje x","Que no tiene intercepto"], ok:0,
+    exp:"El signo indica la dirección: positiva sube, negativa baja." },
+  { q:"La recta y = 5 tiene pendiente:", ops:["0","5","No tiene"], ok:0,
+    exp:"Es horizontal: no sube ni baja, así que su pendiente es 0. El 5 es el intercepto." }
+];
+
+/* ============================================================
+   MÓDULO 2 · Punto-pendiente
+   ============================================================ */
+var CASOS = [
+  { etiqueta:"Pendiente 3 y punto (2, 5)",
+    enunciado:"Escribir la ecuación de la recta de pendiente 3 que pasa por el punto (2, 5).",
+    m:3, b:-1, puntos:[[2,5]],
+    pasos:[
+      "Identificar los datos: m = 3 y el punto (x₁, y₁) = (2, 5).",
+      "Sustituir en la forma punto-pendiente: y − 5 = 3(x − 2).",
+      "Distribuir el 3: y − 5 = 3x − 6.",
+      "Despejar y sumando 5 a los dos lados: <strong>y = 3x − 1</strong>.",
+      "Comprobar con el punto dado: 3(2) − 1 = 5 ✓."
+    ]},
+  { etiqueta:"Puntos (1, 2) y (3, 8)",
+    enunciado:"Escribir la ecuación de la recta que pasa por (1, 2) y (3, 8).",
+    m:3, b:-1, puntos:[[1,2],[3,8]],
+    pasos:[
+      "Con dos puntos, primero la pendiente: m = (8 − 2) / (3 − 1) = 6 / 2 = <strong>3</strong>.",
+      "Elegir uno cualquiera de los dos puntos, por ejemplo (1, 2), y sustituir: y − 2 = 3(x − 1).",
+      "Distribuir: y − 2 = 3x − 3.",
+      "Despejar y: <strong>y = 3x − 1</strong>.",
+      "Comprobar con el otro punto: 3(3) − 1 = 8 ✓. Usar el otro punto desde el principio habría dado lo mismo."
+    ]},
+  { etiqueta:"Pendiente −2 y punto (4, 1)",
+    enunciado:"Escribir la ecuación de la recta de pendiente −2 que pasa por (4, 1).",
+    m:-2, b:9, puntos:[[4,1]],
+    pasos:[
+      "Datos: m = −2 y el punto (4, 1).",
+      "Sustituir: y − 1 = −2(x − 4). Cuidado con el signo del paréntesis.",
+      "Distribuir: y − 1 = −2x + 8. Menos por menos da más.",
+      "Despejar y: <strong>y = −2x + 9</strong>.",
+      "Comprobar: −2(4) + 9 = 1 ✓."
+    ]},
+  { etiqueta:"Puntos (2, 1) y (6, 9)",
+    enunciado:"Escribir la ecuación de la recta que pasa por (2, 1) y (6, 9).",
+    m:2, b:-3, puntos:[[2,1],[6,9]],
+    pasos:[
+      "Pendiente: m = (9 − 1) / (6 − 2) = 8 / 4 = <strong>2</strong>.",
+      "Sustituir con (2, 1): y − 1 = 2(x − 2).",
+      "Distribuir: y − 1 = 2x − 4.",
+      "Despejar y: <strong>y = 2x − 3</strong>.",
+      "Comprobar con (6, 9): 2(6) − 3 = 9 ✓."
+    ]},
+  { etiqueta:"Pendiente 1/2 y punto (4, 3)",
+    enunciado:"Escribir la ecuación de la recta de pendiente 1/2 que pasa por (4, 3).",
+    m:0.5, b:1, puntos:[[4,3]],
+    pasos:[
+      "Datos: m = 1/2 y el punto (4, 3). Una pendiente fraccionaria no cambia el procedimiento.",
+      "Sustituir: y − 3 = (1/2)(x − 4).",
+      "Distribuir: y − 3 = (1/2)x − 2.",
+      "Despejar y: <strong>y = (1/2)x + 1</strong>.",
+      "Comprobar: (1/2)(4) + 1 = 3 ✓."
+    ]},
+  { etiqueta:"Puntos (0, −2) y (4, 6)",
+    enunciado:"Escribir la ecuación de la recta que pasa por (0, −2) y (4, 6).",
+    m:2, b:-2, puntos:[[0,-2],[4,6]],
+    pasos:[
+      "Pendiente: m = (6 − (−2)) / (4 − 0) = 8 / 4 = <strong>2</strong>. Ojo con el doble signo del numerador.",
+      "Aquí uno de los puntos tiene x = 0, así que es el propio intercepto: b = −2.",
+      "Se puede escribir directamente en forma pendiente-intercepto: <strong>y = 2x − 2</strong>.",
+      "Con la forma punto-pendiente se llega a lo mismo: y + 2 = 2(x − 0).",
+      "Comprobar con (4, 6): 2(4) − 2 = 6 ✓."
+    ]}
+];
+function pintaCaso(e, k){
+  var marcas = e.puntos.map(function(p){ return {p:p, etiqueta:"(" + p[0] + ", " + p[1] + ")"}; });
+  var rectas = k >= e.pasos.length - 1 ? [{m:e.m, b:e.b}] : [];
+  dibujaPlano($("q-svg"), {rango:{x0:-8, x1:10, y0:-8, y1:10}, rectas:rectas, marcas:marcas});
+  $("q-svg-texto").textContent = rectas.length
+    ? "Recta " + textoRecta(e.m, e.b) + ", que pasa por " + (e.puntos.length > 1 ? "los dos puntos" : "el punto") + " del enunciado."
+    : "Por ahora solo " + (e.puntos.length > 1 ? "los dos puntos dados" : "el punto dado") + "; la recta aparece al terminar los pasos.";
+}
+var BANCO_P2 = [
+  { q:"Recta de pendiente 4 que pasa por (1, 3). En forma pendiente-intercepto es:",
+    ops:["y = 4x − 1","y = 4x + 3","y = 3x + 4"], ok:0,
+    exp:"y − 3 = 4(x − 1) da y − 3 = 4x − 4, así que y = 4x − 1." },
+  { q:"¿Cuál es la pendiente de la recta que pasa por (2, 1) y (6, 9)?",
+    ops:["2","4","8"], ok:0,
+    exp:"(9 − 1) / (6 − 2) = 8 / 4 = 2." },
+  { q:"Recta que pasa por (0, −2) y (4, 6):", ops:["y = 2x − 2","y = 2x + 2","y = (1/2)x − 2"], ok:0,
+    exp:"La pendiente es 2 y, como un punto tiene x = 0, el intercepto es −2." },
+  { q:"Recta de pendiente −2 que pasa por (4, 1):", ops:["y = −2x + 9","y = −2x − 7","y = 2x − 7"], ok:0,
+    exp:"y − 1 = −2(x − 4) da y − 1 = −2x + 8, así que y = −2x + 9." },
+  { q:"Con dos puntos dados, ¿cuál es el primer paso?",
+    ops:["Calcular la pendiente","Sustituir en y = mx + b","Dibujar la recta"], ok:0,
+    exp:"La forma punto-pendiente necesita m, así que sin la pendiente no se puede empezar." },
+  { q:"En y − y₁ = m(x − x₁), ¿qué son x₁ e y₁?",
+    ops:["Las coordenadas de un punto conocido de la recta","La pendiente y el intercepto","Dos puntos distintos"], ok:0,
+    exp:"Son las coordenadas del punto que se conoce; puede ser cualquiera de la recta." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Conversión entre formas
+   ============================================================ */
+var CONVERSIONES = [
+  { etiqueta:"y = 2x + 3  →  forma estándar",
+    inicial:"y = 2x + 3", final:"2x − y = −3",
+    pasos:[
+      "La forma estándar es Ax + By = C, con A, B y C enteros y A positivo.",
+      "Pasar el término con x al lado izquierdo restando 2x en los dos lados: −2x + y = 3.",
+      "A quedó negativo, así que se multiplica toda la ecuación por −1: <strong>2x − y = −3</strong>.",
+      "Comprobar con x = 2: en la original, y = 7; en la estándar, 2(2) − 7 = −3 ✓."
+    ]},
+  { etiqueta:"2x + 3y = 12  →  pendiente-intercepto",
+    inicial:"2x + 3y = 12", final:"y = −(2/3)x + 4",
+    pasos:[
+      "El objetivo es dejar la y sola a la izquierda.",
+      "Restar 2x en los dos lados: 3y = −2x + 12.",
+      "Dividir <em>todo</em> entre 3: <strong>y = −(2/3)x + 4</strong>. Cada término se divide, también el 12.",
+      "Lectura: pendiente −2/3 e intercepto 4. Una pendiente fraccionaria es perfectamente normal.",
+      "Comprobar con x = 3: −(2/3)(3) + 4 = 2, y en la original 2(3) + 3(2) = 12 ✓."
+    ]},
+  { etiqueta:"4x + 2y = 10  →  pendiente-intercepto",
+    inicial:"4x + 2y = 10", final:"y = −2x + 5",
+    pasos:[
+      "Restar 4x en los dos lados: 2y = −4x + 10.",
+      "Dividir todo entre 2: <strong>y = −2x + 5</strong>.",
+      "Lectura: la recta baja 2 por cada unidad y cruza el eje y en 5.",
+      "Comprobar con x = 1: −2(1) + 5 = 3, y en la original 4(1) + 2(3) = 10 ✓."
+    ]},
+  { etiqueta:"6x + 3y = 9  →  pendiente-intercepto",
+    inicial:"6x + 3y = 9", final:"y = −2x + 3",
+    pasos:[
+      "Restar 6x: 3y = −6x + 9.",
+      "Dividir todo entre 3: <strong>y = −2x + 3</strong>.",
+      "Aquí los tres números eran múltiplos de 3, así que no quedaron fracciones.",
+      "Comprobar con x = 0: y = 3, y en la original 3(3) = 9 ✓."
+    ]},
+  { etiqueta:"y = −3x + 5  →  forma estándar",
+    inicial:"y = −3x + 5", final:"3x + y = 5",
+    pasos:[
+      "Pasar el término con x al lado izquierdo sumando 3x: 3x + y = 5.",
+      "A ya es positivo y los tres números son enteros: <strong>3x + y = 5</strong>. No hace falta nada más.",
+      "Comprobar con x = 1: en la original y = 2; en la estándar, 3(1) + 2 = 5 ✓."
+    ]},
+  { etiqueta:"y = (1/2)x − 4  →  forma estándar",
+    inicial:"y = (1/2)x − 4", final:"x − 2y = 8",
+    pasos:[
+      "La forma estándar pide enteros, y aquí hay una fracción: primero hay que quitarla.",
+      "Multiplicar toda la ecuación por 2: 2y = x − 8.",
+      "Pasar la x a la izquierda: −x + 2y = −8.",
+      "Multiplicar por −1 para que A sea positivo: <strong>x − 2y = 8</strong>.",
+      "Comprobar con x = 4: en la original y = −2; en la estándar, 4 − 2(−2) = 8 ✓."
+    ]}
+];
+function pintaConversion(e, k){
+  var html = "<span>" + e.inicial + "</span>";
+  if (k >= e.pasos.length - 1) html += '<span style="color:#1b5e20;">' + e.final + "</span>";
+  return html;
+}
+var BANCO_P3 = [
+  { q:"La forma pendiente-intercepto de 4x + 2y = 10 es:", ops:["y = −2x + 5","y = 4x + 5","y = 2x − 5"], ok:0,
+    exp:"2y = −4x + 10 y, dividiendo entre 2, y = −2x + 5." },
+  { q:"La forma pendiente-intercepto de 2x + y = 8 es:", ops:["y = −2x + 8","y = 2x + 8","y = 2x − 8"], ok:0,
+    exp:"Al pasar 2x al otro lado cambia de signo: y = −2x + 8." },
+  { q:"La forma estándar de y = 3x + 5, con A positivo, es:", ops:["3x − y = −5","3x + y = 5","−3x + y = 5"], ok:0,
+    exp:"−3x + y = 5 tiene A negativo; multiplicando por −1 queda 3x − y = −5." },
+  { q:"La forma pendiente-intercepto de 6x + 3y = 9 es:", ops:["y = −2x + 3","y = 6x + 3","y = 2x − 3"], ok:0,
+    exp:"3y = −6x + 9 y, dividiendo entre 3, y = −2x + 3." },
+  { q:"La forma pendiente-intercepto de 2x + 3y = 12 es:", ops:["y = −(2/3)x + 4","y = −2x + 4","y = (2/3)x + 12"], ok:0,
+    exp:"3y = −2x + 12 y, dividiendo entre 3, y = −(2/3)x + 4. La pendiente puede ser fracción." },
+  { q:"Al dividir 3y = −6x + 9 entre 3, ¿qué queda?", ops:["y = −2x + 3","y = −6x + 3","y = −2x + 9"], ok:0,
+    exp:"Se divide cada término, también el número de la derecha." }
+];
+
+/* ============================================================
+   MÓDULO 4 · Paralelas y perpendiculares
+   ============================================================ */
+var PARES = [
+  { etiqueta:"y = 2x + 1  y  y = 2x − 4", m1:2, b1:1, m2:2, b2:-4, tipo:"paralelas" },
+  { etiqueta:"y = 2x + 1  y  y = −(1/2)x + 3", m1:2, b1:1, m2:-0.5, b2:3, tipo:"perpendiculares" },
+  { etiqueta:"y = 3x − 2  y  y = −3x + 2", m1:3, b1:-2, m2:-3, b2:2, tipo:"ninguna" },
+  { etiqueta:"y = (2/3)x  y  y = −(3/2)x + 4", m1:2/3, b1:0, m2:-1.5, b2:4, tipo:"perpendiculares" },
+  { etiqueta:"y = −3x + 2  y  y = −3x − 7", m1:-3, b1:2, m2:-3, b2:-7, tipo:"paralelas" },
+  { etiqueta:"y = 4x + 1  y  y = (1/4)x", m1:4, b1:1, m2:0.25, b2:0, tipo:"ninguna" }
+];
+function actualizaPar(){
+  var e = PARES[parseInt($("r-par").value,10) || 0];
+  var producto = e.m1 * e.m2;
+  $("r-pendientes").innerHTML = "<strong>Las pendientes:</strong> m₁ = " + redondea(e.m1,4) +
+    " y m₂ = " + redondea(e.m2,4) + ". Su producto es " + redondea(producto,4) + ".";
+  var ver = $("r-veredicto");
+  if (e.tipo === "paralelas"){
+    ver.textContent = "Son rectas paralelas.";
+    $("r-explica").textContent = "Tienen la misma pendiente y distinto intercepto: avanzan con la misma inclinación y nunca se cruzan.";
+  } else if (e.tipo === "perpendiculares"){
+    ver.textContent = "Son rectas perpendiculares.";
+    $("r-explica").textContent = "Las pendientes son recíprocas negativas y su producto da exactamente −1: se cruzan formando un ángulo recto.";
+  } else {
+    ver.textContent = "No son ni paralelas ni perpendiculares.";
+    $("r-explica").textContent = "Las pendientes son distintas, así que se cruzan, pero su producto no es −1, así que el cruce no forma ángulo recto. Cambiar solo el signo, o solo invertir, no basta.";
+  }
+  dibujaPlano($("r-svg"), {rango:{x0:-8, x1:8, y0:-8, y1:8},
+    rectas:[{m:e.m1, b:e.b1, color:"#1a237e", ancho:4},
+            {m:e.m2, b:e.b2, color:"#00695c", ancho:3, guion:"10 7"}]});
+  $("r-svg-texto").textContent = e.tipo === "paralelas"
+    ? "Las dos rectas mantienen la misma separación en todo el recorrido."
+    : (e.tipo === "perpendiculares" ? "Las dos rectas se cortan formando un ángulo recto."
+       : "Las dos rectas se cortan, pero no en ángulo recto.");
+}
+function actualizaReciproca(){
+  var num = parseFloat($("r-num").value), den = parseFloat($("r-den").value);
+  if (isNaN(num) || isNaN(den) || den === 0 || num === 0){
+    $("r-aviso").innerHTML = den === 0
+      ? "<strong>El denominador no puede ser 0.</strong> Una fracción con denominador cero no existe, y una recta vertical no tiene pendiente definida."
+      : (num === 0
+        ? "<strong>Con numerador 0 la pendiente es 0:</strong> la recta es horizontal, y su perpendicular es una recta vertical, que no tiene pendiente definida."
+        : "<strong>Faltan datos.</strong> Escribe el numerador y el denominador de la pendiente.");
+    $("r-aviso").className = "caja-aviso visible";
+    $("r-num").classList.toggle("error", isNaN(num) || num === 0);
+    $("r-den").classList.toggle("error", isNaN(den) || den === 0);
+    $("r-reciproca").textContent = "";
+    $("r-comprobacion").textContent = "";
+    return;
+  }
+  $("r-aviso").className = "caja-aviso";
+  $("r-num").classList.remove("error"); $("r-den").classList.remove("error");
+
+  var m = fraccion(num, den);
+  var perp = fraccion(-den, num);
+  $("r-reciproca").innerHTML = "Si m = " + m + ", la pendiente perpendicular es <strong>" + perp + "</strong>.";
+  $("r-comprobacion").innerHTML = "Los dos movimientos: se invierte la fracción (" + fraccion(den, num) +
+    ") y se le cambia el signo (" + perp + "). Comprobación: (" + m + ") × (" + perp + ") = −1 ✓.";
+}
+var BANCO_P4 = [
+  { q:"La pendiente de una recta perpendicular a y = 4x + 1 es:", ops:["−1/4","4","1/4"], ok:0,
+    exp:"Se invierte (1/4) y se cambia el signo (−1/4). Solo invertir no basta." },
+  { q:"¿Qué recta es paralela a y = −3x + 2?", ops:["y = −3x − 7","y = 3x + 2","y = (1/3)x − 1"], ok:0,
+    exp:"Paralelas es la misma pendiente; el intercepto puede ser cualquiera." },
+  { q:"¿Qué relación tienen y = 4x + 1 e y = −(1/4)x + 9?", ops:["Perpendiculares","Paralelas","Ninguna"], ok:0,
+    exp:"4 × (−1/4) = −1, así que se cortan en ángulo recto." },
+  { q:"La pendiente perpendicular a m = 2/3 es:", ops:["−3/2","3/2","−2/3"], ok:0,
+    exp:"Invertir da 3/2 y cambiar el signo da −3/2." },
+  { q:"Escribe la recta paralela a y = 3x − 2 que pasa por (0, 5):", ops:["y = 3x + 5","y = −3x + 5","y = 5x + 3"], ok:0,
+    exp:"Misma pendiente, 3, y como el punto tiene x = 0, el intercepto es 5." },
+  { q:"Dos rectas tienen pendientes 5 y −5. ¿Qué son?",
+    ops:["Ni paralelas ni perpendiculares","Perpendiculares","Paralelas"], ok:0,
+    exp:"5 × (−5) = −25, no −1. Cambiar solo el signo no las hace perpendiculares." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+["s-m","s-b"].forEach(function(id){ $(id).addEventListener("input", actualizaRecta); });
+actualizaRecta();
+
+montaStepper({ sel:"q-caso", banco:CASOS, pasos:"q-pasos",
+  sig:"q-siguiente", todo:"q-todo", reset:"q-reiniciar",
+  alCambiar:function(e, k){
+    $("q-enunciado").innerHTML = "<strong>Problema:</strong> " + e.enunciado;
+    pintaCaso(e, k);
+  }});
+
+montaStepper({ sel:"c-caso", banco:CONVERSIONES, pasos:"c-pasos",
+  sig:"c-siguiente", todo:"c-todo", reset:"c-reiniciar",
+  alCambiar:function(e, k){ $("c-visual").innerHTML = pintaConversion(e, k); }});
+
+llenaSelect($("r-par"), PARES);
+$("r-par").addEventListener("change", actualizaPar);
+actualizaPar();
+["r-num","r-den"].forEach(function(id){ $(id).addEventListener("input", actualizaReciproca); });
+actualizaReciproca();
+
+creaPractica(BANCO_P1, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

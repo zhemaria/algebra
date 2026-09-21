@@ -1,0 +1,915 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 8.1 — Funciones cuadráticas: la parábola, el vértice y los interceptos
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #parabola · #vertice · #interceptos · #maximo
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 8.1: la parábola, el vértice y los interceptos</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 8.1 del Nivel 4: la forma de la parábola, el vértice y el eje de simetría, los interceptos con los ejes y los problemas de máximo y mínimo.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#b71c1c; --tema-d:#7f0000; --tema-bg:#ffebee; --tema-bg2:#ffcdd2;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:180px;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .centrado{text-align:center;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:560px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:4px;display:inline-block;}
+  .m-curva{background:#b71c1c;}
+  .m-eje{background:repeating-linear-gradient(90deg,#00695c 0 7px,transparent 7px 12px);}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:#fff5f5;color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:#fff5f5;border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campo input[type="range"]{width:100%;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 8 · Modelado de funciones</div>
+    <h1>Lección 8.1 · Funciones cuadráticas: la parábola, el vértice y los interceptos</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#parabola">La parábola y su forma</a></li>
+      <li><a href="#vertice">El vértice y el eje de simetría</a></li>
+      <li><a href="#interceptos">Los interceptos con los ejes</a></li>
+      <li><a href="#maximo">Máximo y mínimo en contexto</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="parabola" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La parábola y su forma</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>La gráfica de f(x) = ax² + bx + c es una <strong>parábola</strong>. Los tres coeficientes hacen cosas distintas
+      y conviene separarlas: mueve uno a la vez y observa qué cambia.</p>
+
+      <table class="reglas">
+        <caption>Qué controla cada coeficiente.</caption>
+        <thead><tr><th scope="col">Coeficiente</th><th scope="col">Qué decide</th></tr></thead>
+        <tbody>
+          <tr><td>a</td><td>Hacia dónde abre (positivo, hacia arriba; negativo, hacia abajo) y cuán estrecha es: cuanto mayor es |a|, más cerrada.</td></tr>
+          <tr><td>b</td><td>Desplaza el vértice hacia los lados, junto con a.</td></tr>
+          <tr><td>c</td><td>Es el intercepto con el eje y: la altura por donde cruza.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="f-a">a = <span class="valor-rango" id="f-a-val">1</span></label>
+            <input type="range" id="f-a" min="-3" max="3" step="0.5" value="1">
+          </div>
+          <div class="campo">
+            <label for="f-b">b = <span class="valor-rango" id="f-b-val">-4</span></label>
+            <input type="range" id="f-b" min="-8" max="8" step="1" value="-4">
+          </div>
+          <div class="campo">
+            <label for="f-c">c = <span class="valor-rango" id="f-c-val">3</span></label>
+            <input type="range" id="f-c" min="-8" max="8" step="1" value="3">
+          </div>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="f-aviso" role="alert"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="f-ecuacion"></div>
+        <div class="linea" id="f-forma"></div>
+        <div class="linea" id="f-datos"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="f-svg" viewBox="0 0 560 360" role="img" aria-labelledby="f-svg-t f-svg-d">
+          <title id="f-svg-t">La parábola</title>
+          <desc id="f-svg-d">Gráfica de la parábola con los coeficientes elegidos, con el vértice y el eje de simetría marcados.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m-curva" aria-hidden="true"></span> La parábola</span>
+          <span><span class="muestra m-eje" aria-hidden="true"></span> Eje de simetría</span>
+        </div>
+        <p class="pie-grafica" id="f-svg-texto"></p>
+      </div>
+
+      <h3>Practica: ¿hacia dónde abre?</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="vertice">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>El vértice y el eje de simetría</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>El <strong>vértice</strong> es el punto más alto o más bajo de la parábola. Su x sale de una fórmula y su y
+      se obtiene evaluando. El <strong>eje de simetría</strong> es la recta vertical que pasa por el vértice y parte
+      la parábola en dos mitades iguales.</p>
+      <p class="formula">x del vértice = −b / (2a) &nbsp;·&nbsp; eje de simetría: x = −b / (2a)</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="v-funcion">Función</label>
+          <select id="v-funcion"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="v-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="v-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="v-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="pasos" id="v-pasos" aria-live="polite"></div>
+
+      <div class="grafica">
+        <svg id="v-svg" viewBox="0 0 560 360" role="img" aria-labelledby="v-svg-t v-svg-d">
+          <title id="v-svg-t">Vértice y eje de simetría</title>
+          <desc id="v-svg-d">Gráfica con el vértice marcado, el eje de simetría y dos puntos simétricos a la misma altura.</desc>
+        </svg>
+        <p class="pie-grafica" id="v-svg-texto"></p>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Los dos puntos verdes están a la misma altura</strong> y a la misma distancia del eje, uno a cada lado.
+        Esa es la simetría: si conoces un punto de la parábola, el reflejo sale gratis.
+      </div>
+
+      <div class="caja-atencion">
+        <strong>El signo de la fórmula engaña.</strong> En x = −b/(2a), la b entra con su propio signo. Si b = −4, entonces
+        −b = +4. Escribirlo con paréntesis, −(−4)/(2·1), evita el error más repetido de esta lección.
+      </div>
+
+      <h3>Practica: vértice y eje</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="interceptos">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Los interceptos con los ejes</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Los <strong>interceptos</strong> son los puntos donde la parábola cruza los ejes. El del eje y siempre existe
+      y es inmediato; los del eje x pueden ser dos, uno o ninguno, y eso ya lo decide el discriminante del Tema 4.</p>
+
+      <table class="reglas">
+        <caption>Cómo se hallan los interceptos de una parábola.</caption>
+        <thead><tr><th scope="col">Intercepto</th><th scope="col">Cómo se halla</th><th scope="col">Cuántos hay</th></tr></thead>
+        <tbody>
+          <tr><td>Con el eje y</td><td>Evaluar f(0), que da justo el valor de c: el punto (0, c).</td><td>Siempre uno.</td></tr>
+          <tr><td>Con el eje x</td><td>Resolver ax² + bx + c = 0 factorizando o con la fórmula cuadrática.</td><td>Dos, uno o ninguno, según el discriminante.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="i-funcion">Función</label>
+          <select id="i-funcion"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="i-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="i-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="i-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="pasos" id="i-pasos" aria-live="polite"></div>
+
+      <div class="grafica">
+        <svg id="i-svg" viewBox="0 0 560 360" role="img" aria-labelledby="i-svg-t i-svg-d">
+          <title id="i-svg-t">Interceptos de la parábola</title>
+          <desc id="i-svg-d">Gráfica con los puntos donde la parábola cruza el eje x y el eje y.</desc>
+        </svg>
+        <p class="pie-grafica" id="i-svg-texto"></p>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Hallar los interceptos con el eje x es resolver una ecuación cuadrática:</strong> lo mismo que hiciste
+        en la Lección 4.3, pero ahora con el dibujo delante. Los ceros de la función y las soluciones de la ecuación
+        son la misma cosa vista de dos maneras.
+      </div>
+
+      <h3>Practica: interceptos</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="maximo">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Máximo y mínimo en contexto</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Cuando un problema pregunta «¿cuál es el máximo?» o «¿cuál es el costo mínimo?», la respuesta está en el
+      <strong>vértice</strong>. Si a es negativo hay máximo; si a es positivo, mínimo. Y hay que leer bien qué piden:
+      el valor de <strong>x</strong> (cuándo o con cuánto) o el valor de <strong>f(x)</strong> (cuánto vale).</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;">
+            <label for="x-caso">Situación</label>
+            <select id="x-caso"></select>
+          </div>
+          <div class="campo">
+            <label for="x-valor">Probar con x = <span class="valor-rango" id="x-valor-val">0</span></label>
+            <input type="range" id="x-valor" min="0" max="10" step="0.5" value="0">
+          </div>
+        </div>
+      </div>
+
+      <div id="x-enunciado" class="panel" style="background:#fff;"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="x-formula"></div>
+        <div class="linea veredicto" id="x-optimo"></div>
+        <div class="linea" id="x-prueba"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="x-svg" viewBox="0 0 560 360" role="img" aria-labelledby="x-svg-t x-svg-d">
+          <title id="x-svg-t">La función del problema</title>
+          <desc id="x-svg-d">Gráfica del modelo con el vértice marcado y el valor que se está probando.</desc>
+        </svg>
+        <p class="pie-grafica" id="x-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Lee qué te piden.</strong> «¿A los cuántos segundos alcanza la altura máxima?» se responde con la x del
+        vértice; «¿cuál es la altura máxima?» se responde con la y. Es el mismo punto, pero dos respuestas distintas.
+      </div>
+
+      <h3>Practica: máximo y mínimo</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 8.1 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function llenaSelect(sel, banco){
+  banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+function termino(coef, variable){
+  if (coef === 0) return "";
+  var c = Math.abs(coef) === 1 && variable ? "" : Math.abs(coef);
+  return (coef < 0 ? " − " : " + ") + c + variable;
+}
+function expresionCuadratica(a,b,c){
+  return (a < 0 ? "−" : "") + (Math.abs(a) === 1 ? "" : Math.abs(a)) + "x²" + termino(b, "x") + termino(c, "");
+}
+function textoCuadratica(a,b,c,nombre){
+  return (nombre || "f(x)") + " = " + expresionCuadratica(a,b,c);
+}
+function pasoBonito(span, objetivo){
+  var bruto = span / objetivo;
+  var mag = Math.pow(10, Math.floor(Math.log(bruto)/Math.LN10));
+  var norm = bruto / mag;
+  var mult = norm < 1.5 ? 1 : (norm < 3 ? 2 : (norm < 7 ? 5 : 10));
+  return mult * mag;
+}
+function esCuadradoPerfecto(n){ var r = Math.round(Math.sqrt(n)); return n >= 0 && r*r === n; }
+
+/* Plano cartesiano */
+function dibujaPlano(svg, opciones){
+  opciones = opciones || {};
+  limpiaSVG(svg);
+  var caja = (svg.getAttribute("viewBox") || "0 0 560 360").split(/\s+/);
+  var W = parseFloat(caja[2]) || 560, H = parseFloat(caja[3]) || 360, m = 46;
+  var r = opciones.rango || {x0:-6, x1:8, y0:-8, y1:12};
+
+  function px(x){ return m + (x - r.x0)/(r.x1 - r.x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - r.y0)/(r.y1 - r.y0) * (H - 2*m); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  var pasoX = Math.max(1, pasoBonito(r.x1 - r.x0, 8));
+  var pasoY = pasoBonito(r.y1 - r.y0, 6);
+  for (var gx = Math.ceil(r.x0/pasoX)*pasoX; gx <= r.x1; gx += pasoX)
+    crea("line", {x1:px(gx), y1:m, x2:px(gx), y2:H-m, stroke:"#ececec", "stroke-width":1});
+  for (var gy = Math.ceil(r.y0/pasoY)*pasoY; gy <= r.y1; gy += pasoY)
+    crea("line", {x1:m, y1:py(gy), x2:W-m, y2:py(gy), stroke:"#ececec", "stroke-width":1});
+  crea("line", {x1:m, y1:py(0), x2:W-m, y2:py(0), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(0), y1:m, x2:px(0), y2:H-m, stroke:"#555", "stroke-width":2});
+  crea("text", {x:W-m, y:py(0)-8, "text-anchor":"end", "font-size":13, fill:"#555"}, opciones.etiquetaX || "x");
+  crea("text", {x:px(0)+8, y:m+12, "font-size":13, fill:"#555"}, opciones.etiquetaY || "y");
+  for (var tx = Math.ceil(r.x0/pasoX)*pasoX; tx <= r.x1; tx += pasoX)
+    if (tx !== 0) crea("text", {x:px(tx), y:py(0)+16, "text-anchor":"middle", "font-size":12, fill:"#555"}, tx);
+  for (var ty = Math.ceil(r.y0/pasoY)*pasoY; ty <= r.y1; ty += pasoY)
+    if (ty !== 0) crea("text", {x:px(0)-8, y:py(ty)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, ty);
+
+  if (opciones.ejeSimetria !== undefined && opciones.ejeSimetria !== null){
+    var xe = opciones.ejeSimetria;
+    crea("line", {x1:px(xe), y1:m, x2:px(xe), y2:H-m, stroke:"#00695c", "stroke-width":3, "stroke-dasharray":"9 6"});
+    var xEt = Math.min(Math.max(px(xe), m + 40), W - m - 40);
+    crea("text", {x:xEt, y:m - 14, "text-anchor":"middle", "font-size":14, "font-weight":"bold",
+                  fill:"#00695c", stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, "x = " + redondea(xe,2));
+  }
+  (opciones.curvas || []).forEach(function(c){
+    if (!c.puntos.length) return;
+    var d = c.puntos.map(function(p,i){ return (i ? "L" : "M") + px(p[0]).toFixed(1) + " " + py(p[1]).toFixed(1); }).join(" ");
+    crea("path", {d:d, fill:"none", stroke:"#b71c1c", "stroke-width":3});
+  });
+  (opciones.marcas || []).forEach(function(mk){
+    var color = mk.color || "#7f0000";
+    crea("circle", {cx:px(mk.p[0]), cy:py(mk.p[1]), r:8, fill:"#fff", stroke:color, "stroke-width":3});
+    if (mk.etiqueta)
+      crea("text", {x:px(mk.p[0]), y:py(mk.p[1]) - 15, "text-anchor":"middle", "font-size":13,
+                    "font-weight":"bold", fill:color, stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, mk.etiqueta);
+  });
+}
+function curvaCuadratica(a,b,c,r){
+  var trozos = [], actual = [];
+  for (var x = r.x0; x <= r.x1 + 1e-9; x += (r.x1 - r.x0)/400){
+    var y = a*x*x + b*x + c;
+    if (y >= r.y0 - (r.y1-r.y0) && y <= r.y1 + (r.y1-r.y0)) actual.push([x,y]);
+    else if (actual.length){ trozos.push({puntos:actual}); actual = []; }
+  }
+  if (actual.length) trozos.push({puntos:actual});
+  return trozos;
+}
+function rangoParaCuadratica(a,b,c){
+  var xv = -b/(2*a), yv = a*xv*xv + b*xv + c;
+  var anchoX = Math.max(6, Math.abs(xv) + 5);
+  var x0 = Math.floor(xv - anchoX/1.6), x1 = Math.ceil(xv + anchoX/1.6);
+  var extremos = [yv, a*x0*x0 + b*x0 + c, a*x1*x1 + b*x1 + c, 0];
+  var y0 = Math.floor(Math.min.apply(null, extremos)) - 2;
+  var y1 = Math.ceil(Math.max.apply(null, extremos)) + 2;
+  if (y1 - y0 > 40){ y0 = Math.floor(Math.min(yv, 0)) - 4; y1 = Math.ceil(Math.max(yv, 0)) + 14; }
+  return {x0:x0, x1:x1, y0:y0, y1:y1};
+}
+
+/* Motor del paso a paso */
+function montaStepper(cfg){
+  var idx = 0, pasos = [], k = 0;
+  function agrega(i){
+    var div = document.createElement("div");
+    div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + pasos[i];
+    $(cfg.pasos).appendChild(div);
+  }
+  function reinicia(){
+    idx = parseInt($(cfg.sel).value, 10) || 0;
+    pasos = cfg.construye(cfg.banco[idx]); k = 0;
+    $(cfg.pasos).innerHTML = "";
+    $(cfg.sig).disabled = false;
+    $(cfg.sig).textContent = "Mostrar el primer paso";
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], 0);
+  }
+  function siguiente(){
+    if (k >= pasos.length) return;
+    agrega(k); k++;
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], k);
+    $(cfg.sig).textContent = k >= pasos.length ? "No quedan más pasos" : "Siguiente paso";
+    if (k >= pasos.length) $(cfg.sig).disabled = true;
+  }
+  function todo(){
+    $(cfg.pasos).innerHTML = "";
+    pasos.forEach(function(t,i){ agrega(i); });
+    k = pasos.length;
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], k);
+    $(cfg.sig).textContent = "No quedan más pasos";
+    $(cfg.sig).disabled = true;
+  }
+  llenaSelect($(cfg.sel), cfg.banco);
+  $(cfg.sel).addEventListener("change", reinicia);
+  $(cfg.sig).addEventListener("click", siguiente);
+  $(cfg.todo).addEventListener("click", todo);
+  $(cfg.reset).addEventListener("click", reinicia);
+  reinicia();
+}
+
+/* Motor de práctica */
+function creaPractica(banco, ids){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Explorador de la parábola
+   ============================================================ */
+function actualizaParabola(){
+  var a = parseFloat($("f-a").value), b = parseFloat($("f-b").value), c = parseFloat($("f-c").value);
+  $("f-a-val").textContent = a; $("f-b-val").textContent = b; $("f-c-val").textContent = c;
+
+  if (a === 0){
+    $("f-aviso").innerHTML = "<strong>Con a = 0 deja de ser una parábola.</strong> Sin el término x² la función se convierte en la recta f(x) = " +
+      (b === 0 ? c : (b + "x" + (c ? (c < 0 ? " − " + Math.abs(c) : " + " + c) : ""))) +
+      ", que es una función lineal. Mueve el deslizador de a para volver a una cuadrática.";
+    $("f-aviso").className = "caja-aviso visible";
+    $("f-ecuacion").textContent = "f(x) = " + (b ? b + "x" : "") + (c ? (c < 0 ? " − " + Math.abs(c) : " + " + c) : "");
+    $("f-forma").textContent = "Es una recta, no una parábola: no tiene vértice ni eje de simetría.";
+    $("f-datos").textContent = "";
+    var rr = {x0:-8, x1:8, y0:-10, y1:10};
+    dibujaPlano($("f-svg"), {rango:rr, curvas:curvaCuadratica(0,b,c,rr)});
+    $("f-svg-texto").textContent = "Con a = 0 la gráfica es una línea recta.";
+    return;
+  }
+  $("f-aviso").className = "caja-aviso";
+
+  var xv = -b/(2*a), yv = a*xv*xv + b*xv + c;
+  $("f-ecuacion").textContent = textoCuadratica(a,b,c);
+  $("f-forma").innerHTML = "<strong>Forma:</strong> como a = " + a + (a > 0 ? " es positivo, abre hacia <strong>arriba</strong> y el vértice es un <strong>mínimo</strong>."
+      : " es negativo, abre hacia <strong>abajo</strong> y el vértice es un <strong>máximo</strong>.") +
+      " Con |a| = " + Math.abs(a) + (Math.abs(a) > 1 ? ", la parábola es más <strong>estrecha</strong> que la básica." :
+        Math.abs(a) === 1 ? ", tiene la anchura de la parábola básica y = x²." : ", es más <strong>ancha</strong> que la básica.");
+  $("f-datos").innerHTML = "<strong>Vértice:</strong> (" + redondea(xv,2) + ", " + redondea(yv,2) +
+      "). <strong>Eje de simetría:</strong> x = " + redondea(xv,2) +
+      ". <strong>Intercepto con el eje y:</strong> (0, " + c + "), que es justo el valor de c.";
+
+  var r = rangoParaCuadratica(a,b,c);
+  dibujaPlano($("f-svg"), {rango:r, curvas:curvaCuadratica(a,b,c,r), ejeSimetria:xv,
+    marcas:[{p:[xv,yv], etiqueta:"vértice"}, {p:[0,c], etiqueta:"(0, " + c + ")", color:"#00695c"}]});
+  $("f-svg-texto").textContent = "Parábola que abre hacia " + (a > 0 ? "arriba" : "abajo") +
+    ", con el vértice en (" + redondea(xv,2) + ", " + redondea(yv,2) + ") y el eje de simetría marcado a trazos.";
+}
+var BANCO_P1 = [
+  { q:"f(x) = 3x² − 2x + 1. ¿Hacia dónde abre la parábola?", ops:["Hacia arriba","Hacia abajo","Hacia el lado"], ok:0,
+    exp:"a = 3 es positivo, así que abre hacia arriba y el vértice es un mínimo." },
+  { q:"f(x) = −x² + 5. ¿Hacia dónde abre la parábola?", ops:["Hacia abajo","Hacia arriba","No abre"], ok:0,
+    exp:"a = −1 es negativo: abre hacia abajo y el vértice es un máximo." },
+  { q:"¿Cuál de estas parábolas es la más estrecha?", ops:["f(x) = 4x²","f(x) = x²","f(x) = 0.5x²"], ok:0,
+    exp:"Cuanto mayor es |a|, más cerrada es la parábola. Con 0.5 sería la más ancha de las tres." },
+  { q:"En f(x) = 2x² − 3x + 7, ¿dónde cruza la parábola el eje y?", ops:["(0, 7)","(7, 0)","(0, 2)"], ok:0,
+    exp:"f(0) = 7: el intercepto con el eje y siempre es el valor de c." },
+  { q:"Si a es negativo, el vértice de la parábola es…", ops:["Un máximo","Un mínimo","Un intercepto"], ok:0,
+    exp:"La parábola abre hacia abajo, así que el vértice es el punto más alto." },
+  { q:"En f(x) = ax² + bx + c, si a = 0, la gráfica es…", ops:["Una recta","Una parábola muy ancha","Un punto"], ok:0,
+    exp:"Sin el término x² la función deja de ser cuadrática: queda f(x) = bx + c, una función lineal." }
+];
+
+/* ============================================================
+   MÓDULOS 2 y 3 · Banco de cuadráticas
+   ============================================================ */
+var CUADRATICAS = [
+  { a:1, b:-4, c:3 },
+  { a:1, b:-6, c:5 },
+  { a:-1, b:4, c:1 },
+  { a:1, b:2, c:-3 },
+  { a:2, b:-8, c:5 },
+  { a:1, b:0, c:4 }
+];
+CUADRATICAS.forEach(function(e){ e.etiqueta = textoCuadratica(e.a, e.b, e.c); });
+
+function pasosVertice(e){
+  var a = e.a, b = e.b, c = e.c;
+  var xv = -b/(2*a), yv = a*xv*xv + b*xv + c;
+  return [
+    "Identificar los coeficientes: a = " + a + ", b = " + b + " y c = " + c + ".",
+    "Aplicar la fórmula con paréntesis: x = −b / (2a) = −(" + b + ") / (2 · " + a + ") = " + (-b) + " / " + (2*a) +
+      " = <strong>" + redondea(xv,3) + "</strong>.",
+    "Evaluar la función en ese valor para hallar la y: f(" + redondea(xv,3) + ") = <strong>" + redondea(yv,3) + "</strong>.",
+    "Escribir el vértice: <strong>(" + redondea(xv,3) + ", " + redondea(yv,3) + ")</strong>, y el eje de simetría: <strong>x = " +
+      redondea(xv,3) + "</strong>. Fíjate en que el eje es una ecuación de x, no de y.",
+    "Decidir si es máximo o mínimo: como a = " + a + (a > 0 ? " es positivo, la parábola abre hacia arriba y el vértice es un <strong>mínimo</strong>."
+      : " es negativo, la parábola abre hacia abajo y el vértice es un <strong>máximo</strong>.")
+  ];
+}
+function pintaVertice(e, k){
+  var a = e.a, b = e.b, c = e.c;
+  var xv = -b/(2*a), yv = a*xv*xv + b*xv + c;
+  var r = rangoParaCuadratica(a,b,c);
+  var marcas = [];
+  if (k >= 3) marcas.push({p:[xv,yv], etiqueta:"vértice (" + redondea(xv,2) + ", " + redondea(yv,2) + ")"});
+  if (k >= 4){
+    var d = Math.max(1, Math.round((r.x1 - r.x0)/6));
+    var y1 = a*(xv-d)*(xv-d) + b*(xv-d) + c;
+    marcas.push({p:[xv-d, y1], etiqueta:"", color:"#1b5e20"});
+    marcas.push({p:[xv+d, y1], etiqueta:"", color:"#1b5e20"});
+  }
+  dibujaPlano($("v-svg"), {rango:r, curvas:curvaCuadratica(a,b,c,r),
+    ejeSimetria: k >= 4 ? xv : null, marcas:marcas});
+  $("v-svg-texto").textContent = k >= 4
+    ? "El eje de simetría pasa por el vértice; los dos puntos verdes están a la misma altura, uno a cada lado."
+    : (k >= 3 ? "Vértice marcado en (" + redondea(xv,2) + ", " + redondea(yv,2) + ")."
+              : "Gráfica de " + e.etiqueta + ". El vértice aparecerá al calcularlo.");
+}
+var BANCO_P2 = [
+  { q:"f(x) = x² − 6x + 5. ¿Cuál es la x del vértice?", ops:["3","−3","6"], ok:0,
+    exp:"x = −(−6) / (2·1) = 6/2 = 3. La b entra con su signo, y −(−6) es +6." },
+  { q:"f(x) = x² − 4x + 3. ¿Cuál es el vértice completo?", ops:["(2, −1)","(−2, −1)","(2, 1)"], ok:0,
+    exp:"x = 4/2 = 2, y f(2) = 4 − 8 + 3 = −1." },
+  { q:"¿Cuál es el eje de simetría de f(x) = x² − 6x + 5?", ops:["x = 3","y = 3","x = −3"], ok:0,
+    exp:"El eje de simetría es una recta vertical, así que se escribe como x = un número." },
+  { q:"f(x) = −x² + 4x + 1. ¿El vértice es máximo o mínimo?", ops:["Máximo","Mínimo","Depende de c"], ok:0,
+    exp:"a = −1 es negativo: la parábola abre hacia abajo, así que el vértice es el punto más alto." },
+  { q:"f(x) = 2x² − 8x + 5. ¿Cuál es la x del vértice?", ops:["2","4","−2"], ok:0,
+    exp:"x = −(−8) / (2·2) = 8/4 = 2. Cuidado con el 2a del denominador: son 4, no 2." },
+  { q:"f(x) = x² + 4. ¿Cuál es el vértice?", ops:["(0, 4)","(4, 0)","(−4, 0)"], ok:0,
+    exp:"Como b = 0, la x del vértice es 0, y f(0) = 4." }
+];
+
+function pasosInterceptos(e){
+  var a = e.a, b = e.b, c = e.c;
+  var D = b*b - 4*a*c;
+  var pasos = [
+    "Intercepto con el eje y: evaluar f(0), que deja solo el término independiente. El punto es <strong>(0, " + c + ")</strong>.",
+    "Interceptos con el eje x: igualar la función a cero, porque ahí la altura vale 0. Queda la ecuación " +
+      expresionCuadratica(a,b,c) + " = 0.",
+    "Calcular el discriminante para saber cuántos hay: b² − 4ac = (" + b + ")² − 4(" + a + ")(" + c + ") = " + D + "."
+  ];
+  if (D < 0){
+    pasos.push("Como el discriminante es negativo, la ecuación no tiene soluciones reales: la parábola <strong>no cruza el eje x</strong>. Queda entera por " +
+      (a > 0 ? "encima" : "debajo") + " del eje.");
+    pasos.push("Respuesta: intercepto con el eje y en (0, " + c + ") y <strong>ningún intercepto con el eje x</strong>.");
+    return pasos;
+  }
+  var raiz = Math.sqrt(D);
+  var x1 = (-b - raiz)/(2*a), x2 = (-b + raiz)/(2*a);
+  if (D === 0){
+    pasos.push("Con discriminante 0 hay una sola solución: x = −b/(2a) = <strong>" + redondea(x1,3) + "</strong>. La parábola <strong>toca</strong> el eje x en su vértice.");
+    pasos.push("Respuesta: (0, " + c + ") en el eje y y <strong>(" + redondea(x1,3) + ", 0)</strong> en el eje x.");
+    return pasos;
+  }
+  pasos.push(esCuadradoPerfecto(D)
+    ? "Como " + D + " es un cuadrado perfecto, la ecuación se puede resolver factorizando o con la fórmula: x = (" + (-b) + " ± " + raiz + ") / " + (2*a) + "."
+    : "Como " + D + " no es cuadrado perfecto, conviene la fórmula cuadrática con calculadora: √" + D + " ≈ " + redondea(raiz,3) + ".");
+  pasos.push("Las dos soluciones son x = <strong>" + redondea(x1,3) + "</strong> y x = <strong>" + redondea(x2,3) + "</strong>.");
+  pasos.push("Respuesta: interceptos en <strong>(" + redondea(x1,3) + ", 0)</strong> y <strong>(" + redondea(x2,3) +
+             ", 0)</strong> con el eje x, y en <strong>(0, " + c + ")</strong> con el eje y.");
+  return pasos;
+}
+function pintaInterceptos(e, k){
+  var a = e.a, b = e.b, c = e.c, D = b*b - 4*a*c;
+  var r = rangoParaCuadratica(a,b,c);
+  var marcas = [];
+  if (k >= 1) marcas.push({p:[0,c], etiqueta:"(0, " + c + ")", color:"#00695c"});
+  if (k >= 4 && D >= 0){
+    var raiz = Math.sqrt(D);
+    var x1 = (-b - raiz)/(2*a), x2 = (-b + raiz)/(2*a);
+    marcas.push({p:[x1,0], etiqueta:"(" + redondea(x1,2) + ", 0)"});
+    if (D > 0) marcas.push({p:[x2,0], etiqueta:"(" + redondea(x2,2) + ", 0)"});
+  }
+  dibujaPlano($("i-svg"), {rango:r, curvas:curvaCuadratica(a,b,c,r), marcas:marcas});
+  $("i-svg-texto").textContent = D < 0
+    ? "Esta parábola no llega a tocar el eje x: por eso no hay interceptos con ese eje."
+    : "Los puntos marcados son los cruces con los ejes.";
+}
+var BANCO_P3 = [
+  { q:"f(x) = x² − 4x + 3. ¿Cuál es el intercepto con el eje y?", ops:["(0, 3)","(3, 0)","(0, −4)"], ok:0,
+    exp:"f(0) = 3, así que el punto es (0, 3): siempre coincide con el valor de c." },
+  { q:"f(x) = x² − 4x + 3. ¿Cuáles son los interceptos con el eje x?", ops:["(1, 0) y (3, 0)","(0, 1) y (0, 3)","(−1, 0) y (−3, 0)"], ok:0,
+    exp:"x² − 4x + 3 = (x − 1)(x − 3) = 0, de donde x = 1 y x = 3." },
+  { q:"f(x) = x² + 4. ¿Cuántos interceptos tiene con el eje x?", ops:["Ninguno","Uno","Dos"], ok:0,
+    exp:"El discriminante es 0 − 16 = −16, negativo: la parábola queda entera por encima del eje x." },
+  { q:"f(x) = x² − 6x + 9. ¿Cuántos interceptos tiene con el eje x?", ops:["Uno","Dos","Ninguno"], ok:0,
+    exp:"El discriminante es 36 − 36 = 0: la parábola toca el eje x en un solo punto, su vértice (3, 0)." },
+  { q:"Hallar los interceptos con el eje x de una parábola equivale a…",
+    ops:["Resolver la ecuación cuadrática igualada a cero","Calcular el vértice","Evaluar f(0)"], ok:0,
+    exp:"Los ceros de la función y las soluciones de la ecuación son lo mismo visto de dos formas." },
+  { q:"f(x) = x² + 2x − 3. ¿Cuáles son los interceptos con el eje x?", ops:["(−3, 0) y (1, 0)","(3, 0) y (−1, 0)","(0, −3)"], ok:0,
+    exp:"x² + 2x − 3 = (x + 3)(x − 1) = 0, de donde x = −3 y x = 1." }
+];
+
+/* ============================================================
+   MÓDULO 4 · Máximo y mínimo en contexto
+   ============================================================ */
+var CONTEXTOS = [
+  { etiqueta:"El proyectil",
+    enunciado:"Una pelota se lanza desde una azotea y su altura en pies a los t segundos es h(t) = −16t² + 64t + 80.",
+    a:-16, b:64, c:80, xmin:0, xmax:6, paso:0.5,
+    unidadX:"segundos", unidadY:"pies", nombre:"h(t)", etiquetaX:"t (s)", etiquetaY:"altura (pies)",
+    preguntaX:"¿A los cuántos segundos alcanza la altura máxima?",
+    preguntaY:"¿Cuál es esa altura máxima?" },
+  { etiqueta:"El jardín cercado",
+    enunciado:"Se quieren cercar tres lados de un jardín rectangular contra una pared, con 40 metros de cerca. Si el lado perpendicular a la pared mide x, el área es A(x) = x(40 − 2x) = −2x² + 40x.",
+    a:-2, b:40, c:0, xmin:0, xmax:20, paso:0.5,
+    unidadX:"metros", unidadY:"metros cuadrados", nombre:"A(x)", etiquetaX:"x (m)", etiquetaY:"área (m²)",
+    preguntaX:"¿Cuánto debe medir x para que el área sea máxima?",
+    preguntaY:"¿Cuál es el área máxima?" },
+  { etiqueta:"El ingreso de la tienda",
+    enunciado:"Una tienda vende (100 − 2x) camisetas cuando el precio es x dólares. El ingreso es I(x) = x(100 − 2x) = −2x² + 100x.",
+    a:-2, b:100, c:0, xmin:0, xmax:50, paso:1,
+    unidadX:"dólares", unidadY:"dólares", nombre:"I(x)", etiquetaX:"precio ($)", etiquetaY:"ingreso ($)",
+    preguntaX:"¿Qué precio deja el ingreso máximo?",
+    preguntaY:"¿Cuál es ese ingreso máximo?" },
+  { etiqueta:"El costo de producción",
+    enunciado:"El costo diario de un taller, en dólares, es C(x) = x² − 20x + 150, donde x es la cantidad de piezas producidas.",
+    a:1, b:-20, c:150, xmin:0, xmax:20, paso:1,
+    unidadX:"piezas", unidadY:"dólares", nombre:"C(x)", etiquetaX:"piezas", etiquetaY:"costo ($)",
+    preguntaX:"¿Con cuántas piezas el costo es mínimo?",
+    preguntaY:"¿Cuál es ese costo mínimo?" }
+];
+function itemContexto(){ return CONTEXTOS[parseInt($("x-caso").value,10) || 0]; }
+function preparaContexto(){
+  var e = itemContexto();
+  $("x-enunciado").innerHTML = "<strong>Situación:</strong> " + e.enunciado;
+  $("x-valor").min = e.xmin; $("x-valor").max = e.xmax; $("x-valor").step = e.paso;
+  $("x-valor").value = e.xmin;
+  actualizaContexto();
+}
+function actualizaContexto(){
+  var e = itemContexto();
+  var x = parseFloat($("x-valor").value);
+  $("x-valor-val").textContent = x;
+
+  var xv = -e.b/(2*e.a), yv = e.a*xv*xv + e.b*xv + e.c;
+  var esMax = e.a < 0;
+  var fx = e.a*x*x + e.b*x + e.c;
+
+  $("x-formula").innerHTML = "<strong>Modelo:</strong> " + textoCuadratica(e.a, e.b, e.c, e.nombre) +
+    ". Como a = " + e.a + (esMax ? " es negativo, la parábola abre hacia abajo y el vértice es un <strong>máximo</strong>."
+                                 : " es positivo, abre hacia arriba y el vértice es un <strong>mínimo</strong>.");
+  $("x-optimo").textContent = (esMax ? "Máximo" : "Mínimo") + " en x = " + redondea(xv,2) + " " + e.unidadX +
+    ", con un valor de " + redondea(yv,2) + " " + e.unidadY + ".";
+  $("x-prueba").innerHTML = "<strong>Probando con x = " + x + ":</strong> " + e.nombre.replace("(x)","").replace("(t)","") +
+    " = " + redondea(fx,2) + " " + e.unidadY + ", que es " +
+    (Math.abs(fx - yv) < 1e-9 ? "exactamente el valor óptimo." :
+      (esMax ? "menor que el máximo de " + redondea(yv,2) + "." : "mayor que el mínimo de " + redondea(yv,2) + "."));
+
+  var r = {x0: e.xmin - (e.xmax - e.xmin)*0.08, x1: e.xmax + (e.xmax - e.xmin)*0.08,
+           y0: Math.min(0, yv) - Math.abs(yv)*0.15 - 1, y1: Math.max(yv, e.c) * 1.15 + 1};
+  dibujaPlano($("x-svg"), {rango:r, curvas:curvaCuadratica(e.a, e.b, e.c, r),
+    etiquetaX:e.etiquetaX, etiquetaY:e.etiquetaY,
+    marcas:[{p:[xv,yv], etiqueta:(esMax ? "máximo" : "mínimo") + ": " + redondea(yv,1)},
+            {p:[x,fx], etiqueta:"x = " + x, color:"#00695c"}]});
+  $("x-svg-texto").textContent = "El punto rojo es el " + (esMax ? "máximo" : "mínimo") + " y el verde, el valor que estás probando.";
+}
+var BANCO_P4 = [
+  { q:"h(t) = −16t² + 64t + 80. ¿A los cuántos segundos alcanza la altura máxima?",
+    ops:["2 segundos","4 segundos","5 segundos"], ok:0,
+    exp:"t = −64 / (2·(−16)) = 2 segundos. Esa es la x del vértice." },
+  { q:"Con el mismo modelo, ¿cuál es la altura máxima?",
+    ops:["144 pies","80 pies","128 pies"], ok:0,
+    exp:"h(2) = −64 + 128 + 80 = 144 pies. Es la y del vértice, no la x." },
+  { q:"A(x) = −2x² + 40x. ¿Qué valor de x da el área máxima?",
+    ops:["10","20","40"], ok:0,
+    exp:"x = −40 / (2·(−2)) = 10 metros, y el área máxima es A(10) = 200 m²." },
+  { q:"C(x) = x² − 20x + 150. ¿El vértice es máximo o mínimo?",
+    ops:["Mínimo, porque a es positivo","Máximo, porque es un costo","Depende de x"], ok:0,
+    exp:"a = 1 es positivo, así que la parábola abre hacia arriba: el vértice es el punto más bajo." },
+  { q:"C(x) = x² − 20x + 150. ¿Cuál es el costo mínimo?",
+    ops:["$50","$10","$150"], ok:0,
+    exp:"x = 20/2 = 10 piezas, y C(10) = 100 − 200 + 150 = 50 dólares." },
+  { q:"Si te preguntan «¿cuál es el ingreso máximo?», la respuesta es…",
+    ops:["La coordenada y del vértice","La coordenada x del vértice","El intercepto con el eje y"], ok:0,
+    exp:"La x dice con qué precio o en qué momento; la y dice cuánto vale el máximo." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+["f-a","f-b","f-c"].forEach(function(id){ $(id).addEventListener("input", actualizaParabola); });
+actualizaParabola();
+
+montaStepper({ sel:"v-funcion", banco:CUADRATICAS, pasos:"v-pasos",
+  sig:"v-siguiente", todo:"v-todo", reset:"v-reiniciar",
+  construye:pasosVertice, alCambiar:pintaVertice });
+
+montaStepper({ sel:"i-funcion", banco:CUADRATICAS, pasos:"i-pasos",
+  sig:"i-siguiente", todo:"i-todo", reset:"i-reiniciar",
+  construye:pasosInterceptos, alCambiar:pintaInterceptos });
+
+llenaSelect($("x-caso"), CONTEXTOS);
+$("x-caso").addEventListener("change", preparaContexto);
+$("x-valor").addEventListener("input", actualizaContexto);
+preparaContexto();
+
+creaPractica(BANCO_P1, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

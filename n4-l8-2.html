@@ -1,0 +1,904 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 8.2 — Funciones exponenciales, crecimiento/decaimiento e introducción a logaritmos
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #exponencial · #contexto · #interes · #logaritmo
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 8.2: funciones exponenciales y logaritmos</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 8.2 del Nivel 4: la función exponencial, crecimiento y decaimiento en contexto, el interés compuesto y el logaritmo como operación inversa.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#b71c1c; --tema-d:#7f0000; --tema-bg:#ffebee; --tema-bg2:#ffcdd2;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#fff5f5;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:185px;}
+  .campo input[type="number"]{width:120px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .centrado{text-align:center;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:560px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas tr.destacada td{background:var(--ok-bg);font-weight:700;color:var(--ok);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campo input[type="range"]{width:100%;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 8 · Modelado de funciones</div>
+    <h1>Lección 8.2 · Funciones exponenciales, crecimiento/decaimiento e introducción a logaritmos</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#exponencial">La función exponencial f(x) = a · bˣ</a></li>
+      <li><a href="#contexto">Crecimiento y decaimiento en contexto</a></li>
+      <li><a href="#interes">El interés compuesto</a></li>
+      <li><a href="#logaritmo">Introducción al logaritmo</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="exponencial" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La función exponencial f(x) = a · bˣ</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En una función exponencial la variable está <strong>en el exponente</strong>, no en la base. Eso cambia todo:
+      en vez de sumar siempre lo mismo, se <strong>multiplica</strong> siempre por lo mismo. Mueve la base y observa
+      cuándo la curva sube y cuándo baja.</p>
+
+      <table class="reglas">
+        <caption>Qué significa cada parte de f(x) = a · bˣ.</caption>
+        <thead><tr><th scope="col">Parte</th><th scope="col">Qué es</th></tr></thead>
+        <tbody>
+          <tr><td>a</td><td>El valor inicial: lo que vale la función cuando x = 0, porque b⁰ = 1.</td></tr>
+          <tr><td>b &gt; 1</td><td>Factor de crecimiento: la cantidad se multiplica y la curva sube cada vez más rápido.</td></tr>
+          <tr><td>0 &lt; b &lt; 1</td><td>Factor de decaimiento: la cantidad se reduce y la curva baja acercándose al eje x.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="e-a">Valor inicial a = <span class="valor-rango" id="e-a-val">2</span></label>
+            <input type="range" id="e-a" min="1" max="10" step="1" value="2">
+          </div>
+          <div class="campo">
+            <label for="e-b">Base b = <span class="valor-rango" id="e-b-val">2</span></label>
+            <input type="range" id="e-b" min="0.1" max="3" step="0.1" value="2">
+          </div>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="e-aviso" role="alert"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="e-ecuacion"></div>
+        <div class="linea" id="e-tipo"></div>
+        <div class="linea" id="e-inicial"></div>
+      </div>
+
+      <div id="e-tabla"></div>
+
+      <div class="grafica">
+        <svg id="e-svg" viewBox="0 0 560 340" role="img" aria-labelledby="e-svg-t e-svg-d">
+          <title id="e-svg-t">La curva exponencial</title>
+          <desc id="e-svg-d">Gráfica de la función exponencial con los valores elegidos de a y de b.</desc>
+        </svg>
+        <p class="pie-grafica" id="e-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>La curva nunca llega a tocar el eje x.</strong> Por más que baje, siempre queda algo: se acerca sin
+        alcanzarlo. Por eso en el decaimiento nunca se llega a cero exacto, solo a cantidades cada vez más pequeñas.
+      </div>
+
+      <h3>Practica: ¿crece o decae?</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="contexto">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Crecimiento y decaimiento en contexto</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Hay crecimiento exponencial cuando algo se <strong>multiplica</strong> por un factor fijo en cada período, y
+      decaimiento cuando se <strong>reduce</strong> por un factor fijo. La tabla de abajo muestra período a período de
+      dónde sale cada número.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:250px;">
+            <label for="c-caso">Situación</label>
+            <select id="c-caso"></select>
+          </div>
+          <div class="campo">
+            <label for="c-t">Períodos transcurridos: <span class="valor-rango" id="c-t-val">3</span></label>
+            <input type="range" id="c-t" min="0" max="10" step="1" value="3">
+          </div>
+        </div>
+      </div>
+
+      <div id="c-enunciado" class="panel" style="background:#fff;"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="c-modelo"></div>
+        <div class="linea veredicto" id="c-valor"></div>
+        <div class="linea" id="c-tipo"></div>
+      </div>
+
+      <div id="c-tabla"></div>
+
+      <div class="grafica">
+        <svg id="c-svg" viewBox="0 0 560 340" role="img" aria-labelledby="c-svg-t c-svg-d">
+          <title id="c-svg-t">La curva de la situación</title>
+          <desc id="c-svg-d">Gráfica del modelo exponencial de la situación, con el período elegido marcado.</desc>
+        </svg>
+        <p class="pie-grafica" id="c-svg-texto"></p>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Vida media:</strong> es el tiempo que tarda una cantidad en reducirse a la mitad. Si quedan 80 gramos y
+        la vida media es una hora, al cabo de una hora quedan 40, a las dos horas 20, a las tres 10. Nunca se resta lo
+        mismo: siempre se multiplica por la mitad.
+      </div>
+
+      <h3>Practica: identifica el modelo</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="interes">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>El interés compuesto</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>El interés compuesto es crecimiento exponencial aplicado al dinero, y su fórmula está en la
+      <strong>hoja de fórmulas del GED</strong>, así que no hay que memorizarla: hay que saber usarla.</p>
+      <p class="formula">A = P(1 + r/n)<sup>nt</sup></p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="i-p">Capital inicial P: $<span class="valor-rango" id="i-p-val">1000</span></label>
+            <input type="range" id="i-p" min="100" max="10000" step="100" value="1000">
+          </div>
+          <div class="campo">
+            <label for="i-r">Tasa anual r: <span class="valor-rango" id="i-r-val">5</span> %</label>
+            <input type="range" id="i-r" min="1" max="15" step="0.5" value="5">
+          </div>
+          <div class="campo">
+            <label for="i-t">Años t: <span class="valor-rango" id="i-t-val">10</span></label>
+            <input type="range" id="i-t" min="1" max="30" step="1" value="10">
+          </div>
+          <div class="campo">
+            <label for="i-n">Capitalización</label>
+            <select id="i-n">
+              <option value="1" selected>Anual (n = 1)</option>
+              <option value="2">Semestral (n = 2)</option>
+              <option value="4">Trimestral (n = 4)</option>
+              <option value="12">Mensual (n = 12)</option>
+              <option value="365">Diaria (n = 365)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="pasos" id="i-pasos" aria-live="polite"></div>
+
+      <div id="i-tabla"></div>
+
+      <div class="grafica">
+        <svg id="i-svg" viewBox="0 0 560 340" role="img" aria-labelledby="i-svg-t i-svg-d">
+          <title id="i-svg-t">Crecimiento del capital</title>
+          <desc id="i-svg-d">Gráfica del monto acumulado año tras año con los valores elegidos.</desc>
+        </svg>
+        <p class="pie-grafica" id="i-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Con la TI-30XS:</strong> la tasa entra siempre en decimal (5 % es 0.05) y la potencia se hace con la
+        tecla del exponente. Conviene calcular primero el paréntesis completo, guardar ese número y después elevarlo,
+        en vez de escribirlo todo de una vez.
+      </div>
+
+      <h3>Practica: interés compuesto</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="logaritmo">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Introducción al logaritmo</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>El logaritmo es la operación <strong>inversa</strong> de la exponencial. Toda la idea cabe en una pregunta:
+      <strong>«¿a qué exponente hay que elevar la base para obtener este número?»</strong></p>
+      <p class="formula">si b<sup>y</sup> = x, entonces log<sub>b</sub>(x) = y</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="l-base">Base b</label>
+            <select id="l-base">
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="10" selected>10</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="l-x">Número x</label>
+            <input type="number" id="l-x" value="1000" step="1" min="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="l-aviso" role="alert"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="l-pregunta"></div>
+        <div class="linea veredicto" id="l-respuesta"></div>
+        <div class="linea" id="l-comentario"></div>
+      </div>
+
+      <div id="l-tabla"></div>
+
+      <h3>Las dos formas de escribir lo mismo</h3>
+      <p>Cada igualdad exponencial se puede escribir como logaritmo y al revés. Practica el cambio:</p>
+      <div class="panel">
+        <div class="campo">
+          <label for="l-par">Igualdad</label>
+          <select id="l-par"></select>
+        </div>
+      </div>
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="l-formas"></div>
+        <div class="linea" id="l-lectura"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>En la TI-30XS la tecla log calcula directamente la base 10.</strong> Por eso log(100) da 2: porque
+        10² = 100. Si el número no es una potencia exacta, la calculadora devuelve un decimal, y eso está bien.
+      </div>
+
+      <h3>Practica: logaritmos</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 8.2 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function moneda(n){
+  return "$" + redondea(n,2).toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function llenaSelect(sel, banco){
+  banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+function pasoBonito(span, objetivo){
+  var bruto = span / objetivo;
+  var mag = Math.pow(10, Math.floor(Math.log(bruto)/Math.LN10));
+  var norm = bruto / mag;
+  var mult = norm < 1.5 ? 1 : (norm < 3 ? 2 : (norm < 7 ? 5 : 10));
+  return mult * mag;
+}
+
+/* Plano con curva y marcas */
+function dibujaPlano(svg, opciones){
+  opciones = opciones || {};
+  limpiaSVG(svg);
+  var caja = (svg.getAttribute("viewBox") || "0 0 560 340").split(/\s+/);
+  var W = parseFloat(caja[2]) || 560, H = parseFloat(caja[3]) || 340, mIzq = 66, mDer = 24, mSup = 26, mInf = 46;
+  var r = opciones.rango;
+
+  function px(x){ return mIzq + (x - r.x0)/(r.x1 - r.x0) * (W - mIzq - mDer); }
+  function py(y){ return H - mInf - (y - r.y0)/(r.y1 - r.y0) * (H - mSup - mInf); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  var pasoX = Math.max(1, pasoBonito(r.x1 - r.x0, 8));
+  var pasoY = pasoBonito(r.y1 - r.y0, 6);
+  for (var gx = Math.ceil(r.x0/pasoX)*pasoX; gx <= r.x1; gx += pasoX)
+    crea("line", {x1:px(gx), y1:mSup, x2:px(gx), y2:H-mInf, stroke:"#ececec", "stroke-width":1});
+  for (var gy = Math.ceil(r.y0/pasoY)*pasoY; gy <= r.y1; gy += pasoY)
+    crea("line", {x1:mIzq, y1:py(gy), x2:W-mDer, y2:py(gy), stroke:"#ececec", "stroke-width":1});
+  crea("line", {x1:mIzq, y1:py(Math.max(r.y0,0)), x2:W-mDer, y2:py(Math.max(r.y0,0)), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(Math.max(r.x0,0)), y1:mSup, x2:px(Math.max(r.x0,0)), y2:H-mInf, stroke:"#555", "stroke-width":2});
+  crea("text", {x:(W+mIzq)/2, y:H-10, "text-anchor":"middle", "font-size":13, fill:"#555"}, opciones.etiquetaX || "x");
+  crea("text", {x:16, y:H/2, "text-anchor":"middle", "font-size":13, fill:"#555",
+                transform:"rotate(-90 16 " + (H/2) + ")"}, opciones.etiquetaY || "y");
+  for (var tx = Math.ceil(r.x0/pasoX)*pasoX; tx <= r.x1; tx += pasoX)
+    crea("text", {x:px(tx), y:py(Math.max(r.y0,0))+16, "text-anchor":"middle", "font-size":12, fill:"#555"}, redondea(tx,2));
+  for (var ty = Math.ceil(r.y0/pasoY)*pasoY; ty <= r.y1; ty += pasoY)
+    crea("text", {x:mIzq-8, y:py(ty)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, redondea(ty,2));
+
+  (opciones.curvas || []).forEach(function(c){
+    if (!c.puntos.length) return;
+    var d = c.puntos.map(function(p,i){ return (i ? "L" : "M") + px(p[0]).toFixed(1) + " " + py(p[1]).toFixed(1); }).join(" ");
+    crea("path", {d:d, fill:"none", stroke:"#b71c1c", "stroke-width":3});
+  });
+  (opciones.marcas || []).forEach(function(mk){
+    crea("circle", {cx:px(mk.p[0]), cy:py(mk.p[1]), r:8, fill:"#fff", stroke:(mk.color || "#7f0000"), "stroke-width":3});
+    if (mk.etiqueta)
+      crea("text", {x:px(mk.p[0]), y:py(mk.p[1]) - 15, "text-anchor":"middle", "font-size":13, "font-weight":"bold",
+                    fill:(mk.color || "#7f0000"), stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, mk.etiqueta);
+  });
+}
+function curvaDe(f, r, n){
+  var puntos = [];
+  n = n || 200;
+  for (var i = 0; i <= n; i++){
+    var x = r.x0 + (r.x1 - r.x0)*i/n;
+    var y = f(x);
+    if (isFinite(y)) puntos.push([x, Math.max(r.y0, Math.min(r.y1*1.4, y))]);
+  }
+  return [{puntos:puntos}];
+}
+
+/* Motor de práctica */
+function creaPractica(banco, ids){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Explorador de la exponencial
+   ============================================================ */
+function actualizaExponencial(){
+  var a = parseFloat($("e-a").value), b = parseFloat($("e-b").value);
+  $("e-a-val").textContent = a; $("e-b-val").textContent = b;
+
+  if (Math.abs(b - 1) < 1e-9){
+    $("e-aviso").innerHTML = "<strong>Con b = 1 la función deja de ser exponencial.</strong> Como 1 elevado a cualquier cosa vale 1, el resultado es siempre " +
+      a + ": una recta horizontal. Ni crece ni decae.";
+    $("e-aviso").className = "caja-aviso visible";
+  } else {
+    $("e-aviso").className = "caja-aviso";
+  }
+
+  var f = function(x){ return a * Math.pow(b, x); };
+  $("e-ecuacion").textContent = "f(x) = " + a + " · " + b + "ˣ";
+  $("e-tipo").innerHTML = Math.abs(b - 1) < 1e-9
+    ? "<strong>Función constante:</strong> vale " + a + " para cualquier x."
+    : (b > 1
+      ? "<strong>Crecimiento exponencial:</strong> como la base " + b + " es mayor que 1, cada paso multiplica por " + b + " y la curva sube cada vez más rápido."
+      : "<strong>Decaimiento exponencial:</strong> como la base " + b + " está entre 0 y 1, cada paso multiplica por " + b + " y la cantidad se reduce.");
+  $("e-inicial").innerHTML = "<strong>Valor inicial:</strong> f(0) = " + a + " · " + b + "⁰ = " + a +
+    ", porque cualquier número elevado a 0 vale 1. Ese es el punto por donde la curva cruza el eje y.";
+
+  var filas = "";
+  for (var x = 0; x <= 5; x++){
+    filas += "<tr><td>" + x + "</td><td>" + a + " · " + b + "<sup>" + x + "</sup></td><td>" + redondea(f(x),3) + "</td></tr>";
+  }
+  $("e-tabla").innerHTML =
+    '<table class="reglas"><caption>Valores de la función para las primeras entradas.</caption>' +
+    '<thead><tr><th scope="col">x</th><th scope="col">Cálculo</th><th scope="col">f(x)</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+
+  var maxY = Math.max(f(0), f(5), a) * 1.15;
+  var r = {x0:0, x1:5, y0:0, y1: maxY < 2 ? 2 : maxY};
+  dibujaPlano($("e-svg"), {rango:r, curvas:curvaDe(f, r), etiquetaX:"x", etiquetaY:"f(x)",
+    marcas:[{p:[0,a], etiqueta:"(0, " + a + ")", color:"#00695c"}]});
+  $("e-svg-texto").textContent = b > 1
+    ? "La curva arranca en " + a + " y se dispara hacia arriba."
+    : (Math.abs(b-1) < 1e-9 ? "Con b = 1 la gráfica es una línea horizontal."
+       : "La curva arranca en " + a + " y baja acercándose al eje x sin llegar a tocarlo.");
+}
+var BANCO_P1 = [
+  { q:"f(x) = 3 · 2ˣ. ¿Crece o decae?", ops:["Crece","Decae","Es constante"], ok:0,
+    exp:"La base 2 es mayor que 1: cada paso multiplica por 2, así que la cantidad crece." },
+  { q:"f(x) = 100 · (0.5)ˣ. ¿Crece o decae?", ops:["Decae","Crece","Es constante"], ok:0,
+    exp:"La base 0.5 está entre 0 y 1: cada paso se queda con la mitad." },
+  { q:"En f(x) = 5 · 3ˣ, ¿cuánto vale f(0)?", ops:["5","3","15"], ok:0,
+    exp:"3⁰ = 1, así que f(0) = 5 · 1 = 5. El valor inicial siempre es a." },
+  { q:"f(x) = 20 · (1.08)ˣ representa…", ops:["Un crecimiento del 8 % por período","Un decaimiento del 8 %","Una función lineal"], ok:0,
+    exp:"Una base de 1.08 significa multiplicar por 1.08, es decir, sumar un 8 % cada período." },
+  { q:"f(x) = 200 · (0.9)ˣ representa…", ops:["Una pérdida del 10 % por período","Una pérdida del 90 %","Un crecimiento del 90 %"], ok:0,
+    exp:"Quedarse con el 0.9 de lo anterior es perder el 10 % en cada período." },
+  { q:"¿Qué distingue a una función exponencial de una cuadrática?",
+    ops:["En la exponencial la variable está en el exponente","La exponencial siempre crece","La cuadrática no tiene base"], ok:0,
+    exp:"En x² la variable es la base; en 2ˣ la variable es el exponente, y eso cambia por completo el ritmo de crecimiento." }
+];
+
+/* ============================================================
+   MÓDULO 2 · Crecimiento y decaimiento en contexto
+   ============================================================ */
+var CASOS = [
+  { etiqueta:"Población que se duplica cada año",
+    enunciado:"Un pueblo tiene 100 habitantes y su población se duplica cada año.",
+    a:100, b:2, unidad:"habitantes", periodo:"años", crece:true,
+    modelo:"P(t) = 100 · 2^t" },
+  { etiqueta:"Bacterias que se triplican cada hora",
+    enunciado:"Un cultivo empieza con 50 bacterias y se triplica cada hora.",
+    a:50, b:3, unidad:"bacterias", periodo:"horas", crece:true,
+    modelo:"B(t) = 50 · 3^t" },
+  { etiqueta:"Sustancia radiactiva (vida media 1 hora)",
+    enunciado:"Hay 80 gramos de una sustancia cuya vida media es de una hora: cada hora queda la mitad.",
+    a:80, b:0.5, unidad:"gramos", periodo:"horas", crece:false,
+    modelo:"M(t) = 80 · (0.5)^t" },
+  { etiqueta:"Auto que pierde 15 % de valor al año",
+    enunciado:"Un auto cuesta $20,000 y pierde el 15 % de su valor cada año, así que conserva el 85 %.",
+    a:20000, b:0.85, unidad:"dólares", periodo:"años", crece:false,
+    modelo:"V(t) = 20000 · (0.85)^t" },
+  { etiqueta:"Medicamento que se elimina 25 % por hora",
+    enunciado:"Una dosis de 200 mg se elimina a razón del 25 % cada hora: queda el 75 % de lo que había.",
+    a:200, b:0.75, unidad:"mg", periodo:"horas", crece:false,
+    modelo:"D(t) = 200 · (0.75)^t" },
+  { etiqueta:"Ahorro que crece 8 % al año",
+    enunciado:"Una cuenta empieza con $500 y crece un 8 % cada año, es decir, se multiplica por 1.08.",
+    a:500, b:1.08, unidad:"dólares", periodo:"años", crece:true,
+    modelo:"A(t) = 500 · (1.08)^t" }
+];
+function itemCaso(){ return CASOS[parseInt($("c-caso").value,10) || 0]; }
+function actualizaCaso(){
+  var e = itemCaso();
+  var t = parseFloat($("c-t").value);
+  $("c-t-val").textContent = t;
+  $("c-enunciado").innerHTML = "<strong>Situación:</strong> " + e.enunciado;
+
+  var f = function(x){ return e.a * Math.pow(e.b, x); };
+  var valor = f(t);
+  $("c-modelo").innerHTML = "<strong>Modelo:</strong> " + e.modelo + ", donde t son los " + e.periodo + " transcurridos.";
+  $("c-valor").textContent = "Después de " + t + " " + e.periodo + ": " +
+    (e.unidad === "dólares" ? moneda(valor) : redondea(valor,2) + " " + e.unidad) + ".";
+  $("c-tipo").innerHTML = e.crece
+    ? "<strong>Crecimiento exponencial:</strong> la base " + e.b + " es mayor que 1, así que cada período multiplica la cantidad."
+    : "<strong>Decaimiento exponencial:</strong> la base " + e.b + " está entre 0 y 1, así que cada período deja solo una parte de lo que había.";
+
+  var filas = "";
+  for (var k = 0; k <= 6; k++){
+    var v = f(k);
+    filas += '<tr' + (k === t ? ' class="destacada"' : "") + "><td>" + k + "</td><td>" + e.a + " · " + e.b + "<sup>" + k + "</sup></td><td>" +
+             (e.unidad === "dólares" ? moneda(v) : redondea(v,2)) + "</td></tr>";
+  }
+  $("c-tabla").innerHTML =
+    '<table class="reglas"><caption>Valor período a período. La fila resaltada es el período que estás viendo.</caption>' +
+    '<thead><tr><th scope="col">' + e.periodo + '</th><th scope="col">Cálculo</th><th scope="col">Cantidad</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+
+  var maxY = Math.max(f(0), f(10)) * 1.12;
+  var r = {x0:0, x1:10, y0:0, y1:maxY};
+  dibujaPlano($("c-svg"), {rango:r, curvas:curvaDe(f, r), etiquetaX:e.periodo, etiquetaY:e.unidad,
+    marcas:[{p:[t, f(t)], etiqueta:redondea(f(t),1) + ""}]});
+  $("c-svg-texto").textContent = e.crece
+    ? "La curva sube cada vez más rápido: el crecimiento se acelera solo."
+    : "La curva baja deprisa al principio y cada vez más despacio, acercándose al eje sin tocarlo.";
+}
+var BANCO_P2 = [
+  { q:"Una población que se duplica cada año es un ejemplo de:",
+    ops:["Crecimiento exponencial","Decaimiento exponencial","Crecimiento lineal"], ok:0,
+    exp:"Se multiplica por 2 en cada período: eso es crecimiento exponencial." },
+  { q:"Una sustancia radiactiva con vida media es un ejemplo de:",
+    ops:["Decaimiento exponencial","Crecimiento exponencial","Función cuadrática"], ok:0,
+    exp:"Cada vida media deja la mitad de lo que había: se multiplica por 0.5." },
+  { q:"«Vida media» es el tiempo en que la cantidad:",
+    ops:["Se reduce a la mitad","Se duplica","Desaparece del todo"], ok:0,
+    exp:"Tras cada vida media queda la mitad; nunca llega a cero exacto." },
+  { q:"Quedan 80 g de una sustancia con vida media de 1 hora. ¿Cuánto queda a las 3 horas?",
+    ops:["10 g","20 g","40 g"], ok:0,
+    exp:"80 → 40 → 20 → 10. Se divide entre 2 en cada hora, no se resta siempre lo mismo." },
+  { q:"Un auto de $20,000 pierde 15 % al año. ¿Por cuánto se multiplica cada año?",
+    ops:["0.85","0.15","1.15"], ok:0,
+    exp:"Si pierde el 15 %, conserva el 85 %, así que el factor es 0.85." },
+  { q:"Una cuenta crece 8 % al año. ¿Cuál es la base del modelo?",
+    ops:["1.08","0.08","8"], ok:0,
+    exp:"Se conserva todo lo que había (1) y se añade el 8 % (0.08), así que la base es 1.08." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Interés compuesto
+   ============================================================ */
+function actualizaInteres(){
+  var P = parseFloat($("i-p").value), rPct = parseFloat($("i-r").value);
+  var t = parseFloat($("i-t").value), n = parseFloat($("i-n").value);
+  $("i-p-val").textContent = P.toLocaleString("en-US");
+  $("i-r-val").textContent = rPct;
+  $("i-t-val").textContent = t;
+  var r = rPct/100;
+  var factor = 1 + r/n, exponente = n*t;
+  var A = P * Math.pow(factor, exponente);
+
+  var pasos = [
+    "Escribir la fórmula de la hoja del GED: A = P(1 + r/n)<sup>nt</sup>.",
+    "Identificar los datos: P = " + moneda(P) + ", r = " + rPct + " % = <strong>" + r +
+      "</strong> en decimal, n = " + n + " y t = " + t + " años.",
+    "Calcular el paréntesis: 1 + " + r + "/" + n + " = <strong>" + redondea(factor,6) + "</strong>.",
+    "Calcular el exponente: n · t = " + n + " · " + t + " = <strong>" + exponente + "</strong>.",
+    "Elevar y multiplicar: " + redondea(factor,6) + "<sup>" + exponente + "</sup> ≈ " +
+      redondea(Math.pow(factor, exponente),6) + ", y " + moneda(P) + " × ese número da <strong>" + moneda(A) + "</strong>.",
+    "Interpretar: de los " + moneda(A) + " finales, " + moneda(P) + " son el capital inicial y <strong>" +
+      moneda(A - P) + "</strong> son intereses ganados."
+  ];
+  $("i-pasos").innerHTML = pasos.map(function(texto,i){
+    return '<div class="paso"><span class="n" aria-hidden="true">' + (i+1) + '</span>' + texto + "</div>";
+  }).join("");
+
+  var frecuencias = [[1,"Anual"],[2,"Semestral"],[4,"Trimestral"],[12,"Mensual"],[365,"Diaria"]];
+  var filas = frecuencias.map(function(fr){
+    var monto = P * Math.pow(1 + r/fr[0], fr[0]*t);
+    return '<tr' + (fr[0] === n ? ' class="destacada"' : "") + "><td>" + fr[1] + "</td><td>n = " + fr[0] +
+           "</td><td>" + moneda(monto) + "</td><td>" + moneda(monto - P) + "</td></tr>";
+  }).join("");
+  $("i-tabla").innerHTML =
+    '<table class="reglas"><caption>El mismo capital con distinta frecuencia de capitalización, a ' + rPct + ' % durante ' + t + ' años.</caption>' +
+    '<thead><tr><th scope="col">Capitalización</th><th scope="col">n</th><th scope="col">Monto final</th><th scope="col">Intereses</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+
+  var f = function(x){ return P * Math.pow(1 + r/n, n*x); };
+  var rango = {x0:0, x1:t, y0:0, y1:f(t)*1.12};
+  dibujaPlano($("i-svg"), {rango:rango, curvas:curvaDe(f, rango), etiquetaX:"años", etiquetaY:"dólares",
+    marcas:[{p:[0,P], etiqueta:moneda(P), color:"#00695c"}, {p:[t,f(t)], etiqueta:moneda(f(t))}]});
+  $("i-svg-texto").textContent = "El capital crece cada vez más rápido, porque los intereses también generan intereses.";
+}
+var BANCO_P3 = [
+  { q:"En A = P(1 + r/n)^(nt), ¿qué representa P?",
+    ops:["La cantidad inicial (el capital)","La tasa de interés","El tiempo"], ok:0,
+    exp:"P es lo que se deposita al principio; A es lo que hay al final." },
+  { q:"$1,000 al 5 % anual (n = 1) durante 10 años da aproximadamente:",
+    ops:["$1,628.89","$1,500.00","$5,000.00"], ok:0,
+    exp:"1000(1.05)¹⁰ ≈ 1000 × 1.6289 = 1628.89. Los $500 del interés simple se quedan cortos." },
+  { q:"En la fórmula, r representa:",
+    ops:["La tasa de interés en decimal","El número de años","El capital"], ok:0,
+    exp:"Y entra siempre en decimal: un 5 % se escribe 0.05." },
+  { q:"Con la misma tasa y el mismo tiempo, capitalizar mensualmente en vez de anualmente da:",
+    ops:["Un poco más de dinero","Exactamente lo mismo","Mucho menos"], ok:0,
+    exp:"Cuanto más a menudo se capitaliza, antes empiezan los intereses a generar intereses. La diferencia existe, pero es pequeña." },
+  { q:"¿Cómo se escribe una tasa del 7.5 % en la fórmula?",
+    ops:["0.075","7.5","75"], ok:0,
+    exp:"Se divide entre 100: 7.5 % = 0.075. Escribir 7.5 multiplica el resultado por cien." },
+  { q:"¿Qué significa n en la fórmula?",
+    ops:["Cuántas veces al año se capitaliza","El número de años","El número de cuentas"], ok:0,
+    exp:"n = 12 es mensual, n = 4 trimestral, n = 1 anual." }
+];
+
+/* ============================================================
+   MÓDULO 4 · Logaritmos
+   ============================================================ */
+function actualizaLogaritmo(){
+  var b = parseFloat($("l-base").value);
+  var x = parseFloat($("l-x").value);
+  if (isNaN(x) || x <= 0){
+    $("l-aviso").innerHTML = "<strong>El número tiene que ser mayor que cero.</strong> No existe ningún exponente que aplicado a una base positiva dé 0 o un número negativo: por eso el logaritmo de 0 o de un negativo no está definido.";
+    $("l-aviso").className = "caja-aviso visible";
+    $("l-x").classList.add("error");
+    ["l-pregunta","l-respuesta","l-comentario"].forEach(function(id){ $(id).textContent = ""; });
+    $("l-tabla").innerHTML = "";
+    return;
+  }
+  $("l-aviso").className = "caja-aviso";
+  $("l-x").classList.remove("error");
+
+  var y = Math.log(x)/Math.log(b);
+  var exacto = Math.abs(y - Math.round(y)) < 1e-9;
+  $("l-pregunta").innerHTML = "<strong>La pregunta:</strong> log<sub>" + b + "</sub>(" + x +
+    ") significa «¿a qué exponente hay que elevar " + b + " para obtener " + x + "?».";
+  if (exacto){
+    var yr = Math.round(y);
+    $("l-respuesta").innerHTML = "log<sub>" + b + "</sub>(" + x + ") = " + yr;
+    $("l-comentario").innerHTML = "Se comprueba al revés: " + b + "<sup>" + yr + "</sup> = " + x +
+      ". Exponencial y logaritmo son la ida y la vuelta del mismo camino.";
+  } else {
+    var piso = Math.floor(y), techo = piso + 1;
+    $("l-respuesta").innerHTML = "log<sub>" + b + "</sub>(" + x + ") ≈ " + redondea(y,4);
+    $("l-comentario").innerHTML = "No es una potencia exacta: el resultado queda entre " + piso + " y " + techo +
+      ", porque " + b + "<sup>" + piso + "</sup> = " + redondea(Math.pow(b,piso),4) + " y " + b + "<sup>" + techo +
+      "</sup> = " + redondea(Math.pow(b,techo),4) + ". Un decimal como respuesta es perfectamente normal.";
+  }
+
+  var filas = "";
+  for (var k = 0; k <= 5; k++){
+    var pot = Math.pow(b,k);
+    filas += '<tr' + (exacto && k === Math.round(y) ? ' class="destacada"' : "") + "><td>" + b + "<sup>" + k + "</sup></td><td>" +
+             redondea(pot,4) + "</td><td>log<sub>" + b + "</sub>(" + redondea(pot,4) + ") = " + k + "</td></tr>";
+  }
+  $("l-tabla").innerHTML =
+    '<table class="reglas"><caption>Potencias de la base y su logaritmo, que son la misma información escrita de dos formas.</caption>' +
+    '<thead><tr><th scope="col">Potencia</th><th scope="col">Resultado</th><th scope="col">En forma de logaritmo</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+}
+var PARES = [
+  { etiqueta:"2³ = 8", b:2, y:3, x:8 },
+  { etiqueta:"10² = 100", b:10, y:2, x:100 },
+  { etiqueta:"10³ = 1000", b:10, y:3, x:1000 },
+  { etiqueta:"5² = 25", b:5, y:2, x:25 },
+  { etiqueta:"3⁴ = 81", b:3, y:4, x:81 },
+  { etiqueta:"2⁵ = 32", b:2, y:5, x:32 },
+  { etiqueta:"10⁰ = 1", b:10, y:0, x:1 }
+];
+function actualizaPar(){
+  var p = PARES[parseInt($("l-par").value,10) || 0];
+  $("l-formas").innerHTML = "Forma exponencial: <strong>" + p.b + "<sup>" + p.y + "</sup> = " + p.x +
+    "</strong> &nbsp;·&nbsp; Forma logarítmica: <strong>log<sub>" + p.b + "</sub>(" + p.x + ") = " + p.y + "</strong>";
+  $("l-lectura").innerHTML = "Se lee: «logaritmo en base " + p.b + " de " + p.x + " es igual a " + p.y +
+    "», y quiere decir que " + p.b + " elevado a " + p.y + " da " + p.x +
+    (p.y === 0 ? ". Cualquier base elevada a 0 vale 1, así que el logaritmo de 1 siempre es 0." : ".");
+}
+var BANCO_P4 = [
+  { q:"El logaritmo es la operación inversa de:", ops:["La exponencial","La multiplicación","La raíz cuadrada"], ok:0,
+    exp:"La exponencial pregunta cuánto da la potencia; el logaritmo pregunta cuál era el exponente." },
+  { q:"¿Cuánto vale log₁₀(1000)?", ops:["3","100","10"], ok:0,
+    exp:"10³ = 1000, así que el exponente buscado es 3." },
+  { q:"¿Cuánto vale log₂(8)?", ops:["3","4","2"], ok:0,
+    exp:"2³ = 8: hay que multiplicar tres doses." },
+  { q:"¿Cuánto vale log₁₀(100)?", ops:["2","10","20"], ok:0,
+    exp:"10² = 100. En la calculadora, la tecla log da este resultado directamente." },
+  { q:"¿Cuánto vale log₅(25)?", ops:["2","5","12.5"], ok:0,
+    exp:"5² = 25." },
+  { q:"¿Cuánto vale log₁₀(1)?", ops:["0","1","10"], ok:0,
+    exp:"Cualquier base elevada a 0 vale 1, así que el logaritmo de 1 es siempre 0." },
+  { q:"Si 3⁴ = 81, la forma logarítmica es:", ops:["log₃(81) = 4","log₄(81) = 3","log₈₁(3) = 4"], ok:0,
+    exp:"La base se mantiene como base, el resultado va dentro del paréntesis y el exponente es la respuesta." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+["e-a","e-b"].forEach(function(id){ $(id).addEventListener("input", actualizaExponencial); });
+actualizaExponencial();
+
+llenaSelect($("c-caso"), CASOS);
+$("c-caso").addEventListener("change", actualizaCaso);
+$("c-t").addEventListener("input", actualizaCaso);
+actualizaCaso();
+
+["i-p","i-r","i-t"].forEach(function(id){ $(id).addEventListener("input", actualizaInteres); });
+$("i-n").addEventListener("change", actualizaInteres);
+actualizaInteres();
+
+["l-base"].forEach(function(id){ $(id).addEventListener("change", actualizaLogaritmo); });
+$("l-x").addEventListener("input", actualizaLogaritmo);
+actualizaLogaritmo();
+
+llenaSelect($("l-par"), PARES);
+$("l-par").addEventListener("change", actualizaPar);
+actualizaPar();
+
+creaPractica(BANCO_P1, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

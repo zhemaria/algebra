@@ -1,0 +1,837 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 7.3 — Tasa de cambio promedio e identificar tipos de funciones
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #tasa · #contexto · #tipo
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 7.3: tasa de cambio y tipos de funciones</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 7.3 del Nivel 4: calcular la tasa de cambio promedio, interpretarla con unidades e identificar si una función es lineal, cuadrática o exponencial.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:190px;}
+  .campo input[type="text"]{width:260px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:560px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:4px;display:inline-block;}
+  .m-curva{background:#006064;}
+  .m-secante{background:#b71c1c;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas td.constante{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  tr.destacada td{background:var(--tema-bg);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;}
+    .campo input[type="range"],.campo input[type="text"]{width:100%;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 7 · Sistemas de desigualdades y funciones</div>
+    <h1>Lección 7.3 · Tasa de cambio promedio e identificar tipos de funciones</h1>
+    <div class="meta">Tres prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#tasa">La tasa de cambio promedio</a></li>
+      <li><a href="#contexto">Interpretar la tasa en contexto</a></li>
+      <li><a href="#tipo">Identificar el tipo de función</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="tasa" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La tasa de cambio promedio</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>La tasa de cambio promedio entre x = a y x = b mide cuánto cambia la salida por cada unidad de entrada.
+      Es la <strong>pendiente de la recta que une los dos puntos</strong>. Mueve los extremos del intervalo y observa
+      cómo cambia —o cómo no cambia— esa pendiente.</p>
+      <p class="formula">tasa = (f(b) − f(a)) / (b − a)</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:220px;">
+            <label for="s-funcion">Función</label>
+            <select id="s-funcion"></select>
+          </div>
+          <div class="campo">
+            <label for="s-a">Extremo a = <span class="valor-rango" id="s-a-val">1</span></label>
+            <input type="range" id="s-a" min="-4" max="6" step="1" value="1">
+          </div>
+          <div class="campo">
+            <label for="s-b">Extremo b = <span class="valor-rango" id="s-b-val">4</span></label>
+            <input type="range" id="s-b" min="-4" max="6" step="1" value="4">
+          </div>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="s-aviso" role="alert"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="s-valores"></div>
+        <div class="linea" id="s-cuenta"></div>
+        <div class="linea veredicto" id="s-resultado"></div>
+        <div class="linea" id="s-comentario"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="s-svg" viewBox="0 0 560 340" role="img" aria-labelledby="s-svg-t s-svg-d">
+          <title id="s-svg-t">La función y la recta secante</title>
+          <desc id="s-svg-d">Gráfica de la función con los dos puntos del intervalo unidos por una recta, y el triángulo que muestra cuánto sube y cuánto avanza.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m-curva" aria-hidden="true"></span> La función</span>
+          <span><span class="muestra m-secante" aria-hidden="true"></span> Recta entre los dos puntos</span>
+        </div>
+        <p class="pie-grafica" id="s-svg-texto"></p>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Prueba esto:</strong> con una función lineal, cambia el intervalo cuantas veces quieras: la tasa sale
+        siempre igual. Con la cuadrática o la exponencial, cada intervalo da una tasa distinta. Ahí está toda la
+        diferencia entre crecer a ritmo constante y crecer cada vez más rápido.
+      </div>
+
+      <h3>Practica: calcula la tasa</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="contexto">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Interpretar la tasa en contexto</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En el examen casi nunca piden solo el número: piden qué significa. La unidad se arma siempre igual,
+      <strong>unidad de salida por unidad de entrada</strong>: dólares por año, metros por segundo, litros por hora.
+      Y el signo también dice algo: positivo es que sube, negativo es que baja.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="c-caso">Situación</label>
+          <select id="c-caso"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="c-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="c-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="c-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div id="c-enunciado" class="panel" style="background:#fff;"></div>
+      <div class="pasos" id="c-pasos" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>Una tasa negativa no es un error.</strong> Significa que la cantidad disminuye: un tanque que se vacía
+        a −50 litros por hora pierde 50 litros cada hora. En la respuesta conviene decirlo con palabras, no solo con el signo.
+      </div>
+
+      <h3>Practica: calcula e interpreta</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="tipo">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Identificar el tipo de función</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Con las entradas igualmente espaciadas, el patrón de las salidas delata el tipo de función. El detector de
+      abajo calcula las diferencias y las razones y marca en verde la columna que sale constante.</p>
+
+      <table class="reglas" id="tabla-tipos">
+        <caption>El patrón que identifica cada tipo de función.</caption>
+        <thead><tr><th scope="col">Tipo</th><th scope="col">Patrón</th><th scope="col">Ejemplo de salidas</th></tr></thead>
+        <tbody>
+          <tr data-tipo="lineal"><td>Lineal</td><td>Primera diferencia constante: se suma siempre lo mismo</td><td>2, 5, 8, 11 (+3)</td></tr>
+          <tr data-tipo="cuadratica"><td>Cuadrática</td><td>Segunda diferencia constante</td><td>0, 1, 4, 9 (diferencias 1, 3, 5)</td></tr>
+          <tr data-tipo="exponencial"><td>Exponencial</td><td>Razón constante: se multiplica siempre por lo mismo</td><td>1, 2, 4, 8 (×2)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;">
+            <label for="t-tabla">Tabla de valores</label>
+            <select id="t-tabla"></select>
+          </div>
+          <div class="campo">
+            <label for="t-propia">O escribe tus propias salidas (separadas por comas)</label>
+            <input type="text" id="t-propia" placeholder="por ejemplo: 3, 7, 11, 15, 19">
+          </div>
+        </div>
+        <p class="nota">Las entradas se toman como x = 0, 1, 2, 3… es decir, igualmente espaciadas. Hacen falta al menos tres salidas.</p>
+      </div>
+
+      <div class="caja-aviso" id="t-aviso" role="alert"></div>
+      <div id="t-tabla-salida"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="t-veredicto"></div>
+        <div class="linea" id="t-detalle"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Orden para revisar:</strong> primero las diferencias; si son constantes, es lineal y no hay que mirar
+        nada más. Si no, la segunda diferencia (cuadrática). Y si tampoco, las razones (exponencial). Ir en ese orden
+        ahorra tiempo en el examen.
+      </div>
+
+      <h3>Practica: clasifica el patrón</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 7.3 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function llenaSelect(sel, banco){
+  banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+
+/* Plano cartesiano con curva, secante y triángulo de pendiente */
+function dibujaPlano(svg, opciones){
+  opciones = opciones || {};
+  limpiaSVG(svg);
+  var caja = (svg.getAttribute("viewBox") || "0 0 560 340").split(/\s+/);
+  var W = parseFloat(caja[2]) || 560, H = parseFloat(caja[3]) || 340, m = 46;
+  var r = opciones.rango || {x0:-5, x1:7, y0:-5, y1:20};
+
+  function px(x){ return m + (x - r.x0)/(r.x1 - r.x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - r.y0)/(r.y1 - r.y0) * (H - 2*m); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  var pasoX = (r.x1 - r.x0) > 14 ? 2 : 1;
+  var pasoY = (r.y1 - r.y0) > 24 ? 5 : ((r.y1 - r.y0) > 14 ? 2 : 1);
+  for (var gx = Math.ceil(r.x0); gx <= r.x1; gx += pasoX)
+    crea("line", {x1:px(gx), y1:m, x2:px(gx), y2:H-m, stroke:"#ececec", "stroke-width":1});
+  for (var gy = Math.ceil(r.y0/pasoY)*pasoY; gy <= r.y1; gy += pasoY)
+    crea("line", {x1:m, y1:py(gy), x2:W-m, y2:py(gy), stroke:"#ececec", "stroke-width":1});
+  crea("line", {x1:m, y1:py(0), x2:W-m, y2:py(0), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(0), y1:m, x2:px(0), y2:H-m, stroke:"#555", "stroke-width":2});
+  crea("text", {x:W-m, y:py(0)-8, "text-anchor":"end", "font-size":13, fill:"#555"}, "x");
+  crea("text", {x:px(0)+8, y:m+12, "font-size":13, fill:"#555"}, "y");
+  for (var tx = Math.ceil(r.x0); tx <= r.x1; tx += pasoX)
+    if (tx !== 0) crea("text", {x:px(tx), y:py(0)+16, "text-anchor":"middle", "font-size":12, fill:"#555"}, tx);
+  for (var ty = Math.ceil(r.y0/pasoY)*pasoY; ty <= r.y1; ty += pasoY)
+    if (ty !== 0) crea("text", {x:px(0)-8, y:py(ty)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, ty);
+
+  (opciones.curvas || []).forEach(function(c){
+    if (!c.puntos.length) return;
+    var d = c.puntos.map(function(p,i){ return (i ? "L" : "M") + px(p[0]).toFixed(1) + " " + py(p[1]).toFixed(1); }).join(" ");
+    crea("path", {d:d, fill:"none", stroke:"#006064", "stroke-width":3});
+  });
+
+  if (opciones.triangulo){
+    var t = opciones.triangulo;
+    crea("line", {x1:px(t[0][0]), y1:py(t[0][1]), x2:px(t[1][0]), y2:py(t[0][1]),
+                  stroke:"#8d6e63", "stroke-width":2, "stroke-dasharray":"6 4"});
+    crea("line", {x1:px(t[1][0]), y1:py(t[0][1]), x2:px(t[1][0]), y2:py(t[1][1]),
+                  stroke:"#8d6e63", "stroke-width":2, "stroke-dasharray":"6 4"});
+    if (opciones.etiquetaAvance)
+      crea("text", {x:(px(t[0][0])+px(t[1][0]))/2, y:py(t[0][1]) + 18, "text-anchor":"middle",
+                    "font-size":13, "font-weight":"bold", fill:"#5d4037",
+                    stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, opciones.etiquetaAvance);
+    if (opciones.etiquetaSubida)
+      crea("text", {x:px(t[1][0]) + 8, y:(py(t[0][1])+py(t[1][1]))/2, "font-size":13,
+                    "font-weight":"bold", fill:"#5d4037",
+                    stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, opciones.etiquetaSubida);
+  }
+  if (opciones.secante){
+    var s = opciones.secante;
+    crea("line", {x1:px(s[0][0]), y1:py(s[0][1]), x2:px(s[1][0]), y2:py(s[1][1]),
+                  stroke:"#b71c1c", "stroke-width":3});
+  }
+  (opciones.marcas || []).forEach(function(p){
+    crea("circle", {cx:px(p[0]), cy:py(p[1]), r:7, fill:"#fff", stroke:"#b71c1c", "stroke-width":3});
+    crea("text", {x:px(p[0]), y:py(p[1]) - 14, "text-anchor":"middle", "font-size":13, "font-weight":"bold",
+                  fill:"#00363a", stroke:"#fff", "stroke-width":4, "paint-order":"stroke"},
+         "(" + redondea(p[0],2) + ", " + redondea(p[1],2) + ")");
+  });
+}
+
+/* Motor común del paso a paso */
+function montaStepper(cfg){
+  var idx = 0, pasos = [], k = 0;
+  function agrega(i){
+    var div = document.createElement("div");
+    div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + pasos[i];
+    $(cfg.pasos).appendChild(div);
+  }
+  function reinicia(){
+    idx = parseInt($(cfg.sel).value, 10) || 0;
+    pasos = cfg.banco[idx].pasos; k = 0;
+    $(cfg.pasos).innerHTML = "";
+    $(cfg.sig).disabled = false;
+    $(cfg.sig).textContent = "Mostrar el primer paso";
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx]);
+  }
+  function siguiente(){
+    if (k >= pasos.length) return;
+    agrega(k); k++;
+    $(cfg.sig).textContent = k >= pasos.length ? "No quedan más pasos" : "Siguiente paso";
+    if (k >= pasos.length) $(cfg.sig).disabled = true;
+  }
+  function todo(){
+    $(cfg.pasos).innerHTML = "";
+    pasos.forEach(function(t,i){ agrega(i); });
+    k = pasos.length;
+    $(cfg.sig).textContent = "No quedan más pasos";
+    $(cfg.sig).disabled = true;
+  }
+  llenaSelect($(cfg.sel), cfg.banco);
+  $(cfg.sel).addEventListener("change", reinicia);
+  $(cfg.sig).addEventListener("click", siguiente);
+  $(cfg.todo).addEventListener("click", todo);
+  $(cfg.reset).addEventListener("click", reinicia);
+  reinicia();
+}
+
+/* Motor común de práctica */
+function creaPractica(banco, ids){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Tasa de cambio promedio
+   ============================================================ */
+var FUNCIONES = [
+  { etiqueta:"f(x) = 2x + 1 (lineal)", f:function(x){ return 2*x + 1; },
+    tipo:"lineal", min:-4, max:6, rango:{x0:-5, x1:7, y0:-8, y1:16},
+    nota:"Es lineal: la tasa de cambio vale 2 en cualquier intervalo, que es justamente su pendiente." },
+  { etiqueta:"f(x) = −x + 6 (lineal decreciente)", f:function(x){ return -x + 6; },
+    tipo:"lineal", min:-2, max:8, rango:{x0:-3, x1:9, y0:-4, y1:10},
+    nota:"La tasa sale −1 siempre: por cada unidad que avanza x, la salida baja una unidad." },
+  { etiqueta:"f(x) = x² (cuadrática)", f:function(x){ return x*x; },
+    tipo:"cuadratica", min:-4, max:6, rango:{x0:-5, x1:7, y0:-4, y1:38},
+    nota:"Es cuadrática: cada intervalo da una tasa distinta. Cuanto más a la derecha, más empinada la recta." },
+  { etiqueta:"f(x) = x² − 4x (cuadrática con mínimo)", f:function(x){ return x*x - 4*x; },
+    tipo:"cuadratica", min:-2, max:6, rango:{x0:-3, x1:7, y0:-6, y1:14},
+    nota:"Prueba el intervalo de 0 a 4: la tasa sale 0, porque la función baja y vuelve a subir hasta la misma altura." },
+  { etiqueta:"f(x) = 2ˣ (exponencial)", f:function(x){ return Math.pow(2, x); },
+    tipo:"exponencial", min:-1, max:5, rango:{x0:-2, x1:6, y0:-4, y1:34},
+    nota:"Es exponencial: la tasa se dispara al moverse a la derecha, porque la salida se duplica en cada paso." }
+];
+function itemTasa(){ return FUNCIONES[parseInt($("s-funcion").value,10) || 0]; }
+function ajustaDeslizadores(){
+  var fn = itemTasa();
+  ["s-a","s-b"].forEach(function(id){
+    $(id).min = fn.min; $(id).max = fn.max;
+    var v = parseFloat($(id).value);
+    if (v < fn.min) $(id).value = fn.min;
+    if (v > fn.max) $(id).value = fn.max;
+  });
+  if (parseFloat($("s-a").value) === parseFloat($("s-b").value)){
+    $("s-b").value = Math.min(fn.max, parseFloat($("s-a").value) + 1);
+  }
+}
+function actualizaTasa(){
+  var fn = itemTasa();
+  var a = parseFloat($("s-a").value), b = parseFloat($("s-b").value);
+  $("s-a-val").textContent = a; $("s-b-val").textContent = b;
+
+  if (a === b){
+    $("s-aviso").innerHTML = "<strong>Los dos extremos son iguales.</strong> Con a = b el denominador b − a sería 0, y la división entre cero no está definida: hace falta un intervalo de verdad, con dos valores distintos.";
+    $("s-aviso").className = "caja-aviso visible";
+    ["s-valores","s-cuenta","s-resultado","s-comentario"].forEach(function(id){ $(id).textContent = ""; });
+    return;
+  }
+  $("s-aviso").className = "caja-aviso";
+
+  var fa = fn.f(a), fb = fn.f(b);
+  var subida = fb - fa, avance = b - a, tasa = subida/avance;
+
+  $("s-valores").innerHTML = "<strong>Los dos puntos:</strong> f(" + a + ") = " + redondea(fa,3) +
+                             " y f(" + b + ") = " + redondea(fb,3) + ", o sea (" + a + ", " + redondea(fa,2) +
+                             ") y (" + b + ", " + redondea(fb,2) + ").";
+  $("s-cuenta").innerHTML = "<strong>La fórmula:</strong> (" + redondea(fb,3) + " − " + redondea(fa,3) + ") / (" +
+                            b + " − " + a + ") = " + redondea(subida,3) + " / " + avance + ".";
+  $("s-resultado").textContent = "Tasa de cambio promedio: " + redondea(tasa,3) +
+    (tasa > 0 ? " (la función sube en ese intervalo)." : tasa < 0 ? " (la función baja en ese intervalo)." : " (la función termina a la misma altura donde empezó).");
+  $("s-comentario").textContent = fn.nota;
+
+  var puntos = [], actual = [];
+  for (var x = fn.rango.x0; x <= fn.rango.x1 + 1e-9; x += 0.05){
+    var y = fn.f(x);
+    if (isFinite(y) && y >= fn.rango.y0 - 3 && y <= fn.rango.y1 + 3) actual.push([x,y]);
+    else if (actual.length){ puntos.push({puntos:actual}); actual = []; }
+  }
+  if (actual.length) puntos.push({puntos:actual});
+
+  var izq = a < b ? [a,fa] : [b,fb], der = a < b ? [b,fb] : [a,fa];
+  dibujaPlano($("s-svg"), {
+    rango: fn.rango, curvas: puntos,
+    secante: [izq, der], marcas: [izq, der],
+    triangulo: [izq, der],
+    etiquetaAvance: "avanza " + Math.abs(avance),
+    etiquetaSubida: (subida >= 0 ? "sube " : "baja ") + redondea(Math.abs(subida),2)
+  });
+  $("s-svg-texto").textContent = "La recta roja une los dos puntos del intervalo. Su inclinación es la tasa de cambio promedio: " +
+    redondea(Math.abs(subida),2) + " de " + (subida >= 0 ? "subida" : "bajada") + " por cada " + Math.abs(avance) + " de avance.";
+}
+var BANCO_P1 = [
+  { q:"Si f(2) = 10 y f(5) = 25, ¿cuál es la tasa de cambio promedio en [2, 5]?",
+    ops:["5","15","3"], ok:0, exp:"(25 − 10) / (5 − 2) = 15 / 3 = 5." },
+  { q:"Si f(1) = 4 y f(3) = 16, ¿cuál es la tasa de cambio promedio en [1, 3]?",
+    ops:["6","12","2"], ok:0, exp:"(16 − 4) / (3 − 1) = 12 / 2 = 6." },
+  { q:"Si f(0) = 9 y f(4) = 1, ¿cuál es la tasa de cambio promedio en [0, 4]?",
+    ops:["−2","2","−8"], ok:0, exp:"(1 − 9) / (4 − 0) = −8 / 4 = −2. El signo negativo indica que la función baja." },
+  { q:"Para f(x) = 2x + 1, ¿cuál es la tasa de cambio promedio entre x = 1 y x = 4?",
+    ops:["2","3","9"], ok:0, exp:"f(1) = 3 y f(4) = 9, así que (9 − 3) / 3 = 2: es la pendiente de la recta." },
+  { q:"Para f(x) = x², ¿cuál es la tasa de cambio promedio entre x = 1 y x = 3?",
+    ops:["4","2","8"], ok:0, exp:"f(1) = 1 y f(3) = 9, así que (9 − 1) / 2 = 4." },
+  { q:"En una función lineal, la tasa de cambio promedio…",
+    ops:["Es la misma en todos los intervalos","Cambia en cada intervalo","Siempre es positiva"], ok:0,
+    exp:"Es su pendiente, y una recta tiene la misma pendiente en todas partes." }
+];
+
+/* ============================================================
+   MÓDULO 2 · Interpretar en contexto
+   ============================================================ */
+var CASOS = [
+  { etiqueta:"La cuenta de ahorro",
+    enunciado:"Una cuenta de ahorro pasa de $100 a $160 en 3 años. ¿Cuál es la tasa de cambio promedio y qué significa?",
+    pasos:[
+      "Identificar entrada y salida: la entrada es el <strong>tiempo en años</strong> y la salida, el <strong>dinero en dólares</strong>. La unidad de la tasa será dólares por año.",
+      "Calcular el cambio de la salida: 160 − 100 = <strong>60 dólares</strong>.",
+      "Calcular el cambio de la entrada: 3 − 0 = <strong>3 años</strong>.",
+      "Dividir: 60 / 3 = <strong>20</strong>.",
+      "Interpretar con palabras: la cuenta crece, en promedio, <strong>$20 por año</strong>. Es un promedio: algunos años pudo subir más y otros menos."
+    ]},
+  { etiqueta:"El auto en movimiento",
+    enunciado:"Un auto recorre 150 metros en 5 segundos partiendo del reposo. ¿Cuál es su tasa de cambio promedio?",
+    pasos:[
+      "Entrada: el tiempo en segundos. Salida: la distancia en metros. La unidad será metros por segundo.",
+      "Cambio de la salida: 150 − 0 = <strong>150 metros</strong>.",
+      "Cambio de la entrada: 5 − 0 = <strong>5 segundos</strong>.",
+      "Dividir: 150 / 5 = <strong>30</strong>.",
+      "Interpretar: el auto avanza, en promedio, <strong>30 metros por segundo</strong>. Eso es justamente lo que llamamos velocidad promedio."
+    ]},
+  { etiqueta:"El tanque que se vacía",
+    enunciado:"Un tanque tiene 400 litros y, seis horas después, le quedan 100. ¿Cuál es la tasa de cambio promedio?",
+    pasos:[
+      "Entrada: horas. Salida: litros. La unidad será litros por hora.",
+      "Cambio de la salida: 100 − 400 = <strong>−300 litros</strong>. El orden importa: siempre el valor final menos el inicial.",
+      "Cambio de la entrada: 6 − 0 = <strong>6 horas</strong>.",
+      "Dividir: −300 / 6 = <strong>−50</strong>.",
+      "Interpretar: el tanque pierde <strong>50 litros por hora</strong>. El signo negativo no es un error: avisa de que la cantidad disminuye."
+    ]},
+  { etiqueta:"La población del pueblo",
+    enunciado:"Un pueblo pasa de 1200 a 1500 habitantes en 4 años. ¿Cuál es la tasa de cambio promedio?",
+    pasos:[
+      "Entrada: años. Salida: habitantes. La unidad será habitantes por año.",
+      "Cambio de la salida: 1500 − 1200 = <strong>300 habitantes</strong>.",
+      "Cambio de la entrada: <strong>4 años</strong>.",
+      "Dividir: 300 / 4 = <strong>75</strong>.",
+      "Interpretar: el pueblo gana, en promedio, <strong>75 habitantes por año</strong>."
+    ]},
+  { etiqueta:"La factura del teléfono",
+    enunciado:"La factura del teléfono sube de $45 a $60 cuando los minutos usados pasan de 300 a 600. ¿Cuál es la tasa de cambio promedio?",
+    pasos:[
+      "Entrada: minutos usados. Salida: dólares. La unidad será dólares por minuto.",
+      "Cambio de la salida: 60 − 45 = <strong>15 dólares</strong>.",
+      "Cambio de la entrada: 600 − 300 = <strong>300 minutos</strong>.",
+      "Dividir: 15 / 300 = <strong>0.05</strong>.",
+      "Interpretar: cada minuto extra cuesta, en promedio, <strong>5 centavos</strong>. Cuando el resultado es un decimal pequeño, conviene decirlo en centavos para que se entienda."
+    ]},
+  { etiqueta:"La temperatura de la tarde",
+    enunciado:"A las 3 de la tarde hay 22 °C y a las 7 hay 10 °C. ¿Cuál es la tasa de cambio promedio?",
+    pasos:[
+      "Entrada: horas. Salida: grados. La unidad será grados por hora.",
+      "Cambio de la salida: 10 − 22 = <strong>−12 grados</strong>.",
+      "Cambio de la entrada: 7 − 3 = <strong>4 horas</strong>.",
+      "Dividir: −12 / 4 = <strong>−3</strong>.",
+      "Interpretar: la temperatura baja, en promedio, <strong>3 grados por hora</strong>."
+    ]}
+];
+var BANCO_P2 = [
+  { q:"Una cuenta pasa de $200 a $260 en 3 años. La tasa es:", ops:["$20 por año","$60 por año","$260 por año"], ok:0,
+    exp:"(260 − 200) / 3 = 60 / 3 = 20 dólares por año." },
+  { q:"Un auto recorre de 0 a 150 m en 5 s. La tasa es:", ops:["30 m/s","150 m/s","5 m/s"], ok:0,
+    exp:"150 / 5 = 30 metros por segundo, que es su velocidad promedio." },
+  { q:"La tasa de cambio promedio se mide en:",
+    ops:["Unidades de salida por unidad de entrada","Solo dólares","Solo metros"], ok:0,
+    exp:"La unidad se arma con las dos magnitudes: dólares por año, litros por hora, grados por hora." },
+  { q:"Un tanque pasa de 400 a 100 litros en 6 horas. La tasa es:",
+    ops:["−50 litros por hora","50 litros por hora","−300 litros por hora"], ok:0,
+    exp:"(100 − 400) / 6 = −300 / 6 = −50. El signo indica que el contenido disminuye." },
+  { q:"Una tasa de cambio promedio negativa significa que:",
+    ops:["La cantidad disminuye","El cálculo está mal","El tiempo va hacia atrás"], ok:0,
+    exp:"El signo solo indica la dirección del cambio: hacia abajo." },
+  { q:"La factura sube de $45 a $60 al pasar de 300 a 600 minutos. La tasa es:",
+    ops:["$0.05 por minuto","$15 por minuto","$5 por minuto"], ok:0,
+    exp:"15 / 300 = 0.05 dólares por minuto, es decir, 5 centavos por minuto." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Detector de patrones
+   ============================================================ */
+var TABLAS = [
+  { etiqueta:"2, 5, 8, 11, 14", valores:[2,5,8,11,14] },
+  { etiqueta:"0, 1, 4, 9, 16", valores:[0,1,4,9,16] },
+  { etiqueta:"1, 2, 4, 8, 16", valores:[1,2,4,8,16] },
+  { etiqueta:"20, 17, 14, 11, 8", valores:[20,17,14,11,8] },
+  { etiqueta:"81, 27, 9, 3, 1", valores:[81,27,9,3,1] },
+  { etiqueta:"3, 4, 7, 12, 19", valores:[3,4,7,12,19] },
+  { etiqueta:"5, 10, 20, 40, 80", valores:[5,10,20,40,80] }
+];
+function constantes(lista){
+  if (lista.length < 2) return false;
+  return lista.every(function(v){ return Math.abs(v - lista[0]) < 1e-9; });
+}
+function analiza(valores){
+  var dif = [], dif2 = [], raz = [];
+  for (var i = 1; i < valores.length; i++){
+    dif.push(valores[i] - valores[i-1]);
+    raz.push(valores[i-1] === 0 ? NaN : redondea(valores[i]/valores[i-1], 4));
+  }
+  for (var j = 1; j < dif.length; j++) dif2.push(dif[j] - dif[j-1]);
+  var razOk = raz.length > 1 && raz.every(function(v){ return isFinite(v); }) && constantes(raz);
+  var tipo = "otro";
+  if (constantes(dif)) tipo = "lineal";
+  else if (dif2.length && constantes(dif2)) tipo = "cuadratica";
+  else if (razOk) tipo = "exponencial";
+  return {dif:dif, dif2:dif2, raz:raz, tipo:tipo, razOk:razOk};
+}
+function pintaDeteccion(valores){
+  var an = analiza(valores);
+  var filas = "";
+  valores.forEach(function(v, i){
+    filas += "<tr><td>" + i + "</td><td>" + v + "</td>" +
+      "<td" + (constantes(an.dif) && i > 0 ? ' class="constante"' : "") + ">" + (i > 0 ? an.dif[i-1] : "—") + "</td>" +
+      "<td" + (!constantes(an.dif) && an.dif2.length && constantes(an.dif2) && i > 1 ? ' class="constante"' : "") + ">" +
+        (i > 1 ? an.dif2[i-2] : "—") + "</td>" +
+      "<td" + (an.tipo === "exponencial" && i > 0 ? ' class="constante"' : "") + ">" +
+        (i > 0 ? (isFinite(an.raz[i-1]) ? an.raz[i-1] : "—") : "—") + "</td></tr>";
+  });
+  $("t-tabla-salida").innerHTML =
+    '<table class="reglas"><caption>Diferencias, segundas diferencias y razones entre salidas consecutivas. La columna constante aparece resaltada.</caption>' +
+    '<thead><tr><th scope="col">x</th><th scope="col">Salida</th><th scope="col">Diferencia</th>' +
+    '<th scope="col">Segunda diferencia</th><th scope="col">Razón (división)</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+
+  var ver = $("t-veredicto"), det = $("t-detalle");
+  if (an.tipo === "lineal"){
+    ver.textContent = "Función lineal.";
+    det.innerHTML = "La primera diferencia es constante: siempre se suma <strong>" + an.dif[0] +
+      "</strong>. Esa suma constante es la pendiente, y su fórmula es del tipo f(x) = " + an.dif[0] + "x + " + valores[0] + ".";
+  } else if (an.tipo === "cuadratica"){
+    ver.textContent = "Función cuadrática.";
+    det.innerHTML = "Las diferencias cambian (" + an.dif.join(", ") + "), pero la <strong>segunda diferencia es constante</strong>: " +
+      an.dif2[0] + ". Ese es el sello de una cuadrática, y su gráfica es una parábola.";
+  } else if (an.tipo === "exponencial"){
+    ver.textContent = "Función exponencial.";
+    det.innerHTML = "No hay diferencia constante, pero sí <strong>razón constante</strong>: cada salida es la anterior multiplicada por <strong>" +
+      an.raz[0] + "</strong>" + (an.raz[0] < 1 ? ", así que decrece" : ", así que crece cada vez más rápido") + ".";
+  } else {
+    ver.textContent = "No corresponde a ninguno de los tres patrones.";
+    det.textContent = "Ni la diferencia, ni la segunda diferencia, ni la razón salen constantes. En el examen los tres tipos que aparecen son lineal, cuadrática y exponencial.";
+  }
+  ver.className = "linea veredicto " + (an.tipo === "otro" ? "mal" : "bien");
+
+  Array.prototype.forEach.call(document.querySelectorAll("#tabla-tipos tbody tr"), function(tr){
+    tr.className = tr.getAttribute("data-tipo") === an.tipo ? "destacada" : "";
+  });
+}
+function actualizaDetector(){
+  var texto = $("t-propia").value.trim();
+  if (texto){
+    var partes = texto.split(/[,;\s]+/).filter(function(t){ return t.length; });
+    var nums = partes.map(function(t){ return parseFloat(t.replace(",", ".")); });
+    if (nums.length < 3 || nums.some(function(n){ return isNaN(n); })){
+      $("t-aviso").innerHTML = "<strong>No se pueden leer esos valores.</strong> Escribe al menos tres números separados por comas, por ejemplo: 3, 7, 11, 15.";
+      $("t-aviso").className = "caja-aviso visible";
+      $("t-propia").classList.add("error");
+      return;
+    }
+    $("t-aviso").className = "caja-aviso";
+    $("t-propia").classList.remove("error");
+    pintaDeteccion(nums);
+    return;
+  }
+  $("t-aviso").className = "caja-aviso";
+  $("t-propia").classList.remove("error");
+  pintaDeteccion(TABLAS[parseInt($("t-tabla").value,10) || 0].valores);
+}
+var BANCO_P3 = [
+  { q:"Las salidas son 2, 5, 8, 11. ¿Qué tipo de función es?", ops:["Lineal","Cuadrática","Exponencial"], ok:0,
+    exp:"Se suma siempre 3: primera diferencia constante." },
+  { q:"Las salidas son 1, 2, 4, 8. ¿Qué tipo de función es?", ops:["Exponencial","Lineal","Cuadrática"], ok:0,
+    exp:"Se multiplica siempre por 2: razón constante." },
+  { q:"Las salidas son 0, 1, 4, 9. ¿Qué tipo de función es?", ops:["Cuadrática","Lineal","Exponencial"], ok:0,
+    exp:"Las diferencias son 1, 3, 5, y la segunda diferencia es 2 en todos los casos." },
+  { q:"Las salidas son 81, 27, 9, 3. ¿Qué tipo de función es?", ops:["Exponencial decreciente","Lineal","Cuadrática"], ok:0,
+    exp:"Cada valor es el anterior dividido entre 3, o sea multiplicado por 1/3: razón constante menor que 1." },
+  { q:"Las salidas son 20, 17, 14, 11. ¿Qué tipo de función es?", ops:["Lineal decreciente","Exponencial","Cuadrática"], ok:0,
+    exp:"Se resta siempre 3: diferencia constante negativa." },
+  { q:"¿Qué se revisa primero al clasificar una tabla?",
+    ops:["La primera diferencia","La razón","La segunda diferencia"], ok:0,
+    exp:"Si la primera diferencia es constante ya es lineal y no hace falta mirar nada más." },
+  { q:"En una tabla exponencial, para pasar de una salida a la siguiente se…",
+    ops:["Multiplica siempre por el mismo número","Suma siempre el mismo número","Eleva al cuadrado"], ok:0,
+    exp:"Sumar lo mismo es lineal; multiplicar por lo mismo es exponencial." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+llenaSelect($("s-funcion"), FUNCIONES);
+$("s-funcion").addEventListener("change", function(){ ajustaDeslizadores(); actualizaTasa(); });
+["s-a","s-b"].forEach(function(id){ $(id).addEventListener("input", actualizaTasa); });
+ajustaDeslizadores();
+actualizaTasa();
+
+montaStepper({ sel:"c-caso", banco:CASOS, pasos:"c-pasos",
+  sig:"c-siguiente", todo:"c-todo", reset:"c-reiniciar",
+  alCambiar:function(e){ $("c-enunciado").innerHTML = "<strong>Situación:</strong> " + e.enunciado; }});
+
+llenaSelect($("t-tabla"), TABLAS);
+$("t-tabla").addEventListener("change", function(){ $("t-propia").value = ""; actualizaDetector(); });
+$("t-propia").addEventListener("input", actualizaDetector);
+actualizaDetector();
+
+creaPractica(BANCO_P1, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

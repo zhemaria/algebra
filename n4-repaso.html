@@ -1,0 +1,521 @@
+<!doctype html>
+<!--
+  Repaso del Nivel 4 · Matemáticas — Índice de prácticas interactivas
+  Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Cada enlace apunta a la parte exacta del interactivo, no solo a la página.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repaso del Nivel 4 · Índice de prácticas interactivas</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Índice de repaso del Nivel 4 de Matemáticas: 44 prácticas interactivas organizadas por tema y lección, con enlace directo a cada una.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --txt:#222; --bg:#f5f7fa; --gris:#555; --acento:#00695c;
+    --t1:#1a237e; --t2:#004d40; --t3:#bf360c;
+    --t4:#880e4f; --t5:#37474f; --t6:#4e342e; --t7:#006064; --t8:#b71c1c;
+    --marco:#424242; --marco-d:#212121; --marco-bg:#eceff1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);
+       line-height:1.6;font-size:16px;}
+  .contenedor{max-width:940px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+           clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--marco);color:#fff;padding:30px 28px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 10px;font-size:26px;font-weight:700;}
+  header.principal p{margin:6px 0 0;font-size:15px;}
+
+  .buscador{background:#fff;border:2px solid var(--marco-bg);border-radius:12px;padding:18px 20px;margin-bottom:20px;}
+  .buscador label{display:block;font-weight:700;color:var(--marco-d);margin-bottom:6px;}
+  .buscador input{width:100%;max-width:520px;padding:10px 12px;font-size:16px;font-family:inherit;
+                  border:2px solid #767676;border-radius:8px;}
+  .buscador input:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  .buscador .pista{font-size:14px;color:var(--gris);margin-top:8px;}
+  .buscador .contador{font-size:14px;color:var(--marco-d);font-weight:700;margin-top:10px;}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  button{font-family:inherit;font-size:15px;cursor:pointer;background:#fff;color:var(--marco-d);
+         border:2px solid var(--marco);border-radius:8px;padding:8px 18px;font-weight:700;}
+  button:hover{background:var(--marco-bg);}
+
+  section.tema{background:#fff;border-radius:12px;margin-bottom:18px;overflow:hidden;
+               border:2px solid #e3e3e3;border-left-width:10px;}
+  section.tema h2{margin:0;padding:14px 20px;font-size:19px;color:#fff;}
+  .tema-cuerpo{padding:6px 20px 18px;}
+  .t1{border-left-color:var(--t1);} .t1 h2{background:var(--t1);}
+  .t2{border-left-color:var(--t2);} .t2 h2{background:var(--t2);}
+  .t3{border-left-color:var(--t3);} .t3 h2{background:var(--t3);}
+  .t4{border-left-color:var(--t4);} .t4 h2{background:var(--t4);}
+  .t5{border-left-color:var(--t5);} .t5 h2{background:var(--t5);}
+  .t6{border-left-color:var(--t6);} .t6 h2{background:var(--t6);}
+  .t7{border-left-color:var(--t7);} .t7 h2{background:var(--t7);}
+  .t8{border-left-color:var(--t8);} .t8 h2{background:var(--t8);}
+
+  h3.leccion{font-size:16px;margin:18px 0 8px;color:var(--txt);border-bottom:2px solid #eee;padding-bottom:5px;}
+  h3.leccion a{color:inherit;}
+  ul.modulos{list-style:none;margin:0;padding:0;display:grid;gap:10px;
+             grid-template-columns:repeat(auto-fill,minmax(270px,1fr));}
+  ul.modulos li a{display:block;height:100%;text-decoration:none;color:var(--txt);
+                  border:2px solid #d8d8d8;border-radius:10px;padding:12px 14px;background:#fff;}
+  ul.modulos li a:hover{border-color:var(--acento);background:#f2fbfa;}
+  ul.modulos .titulo{display:block;font-weight:700;color:var(--marco-d);font-size:15px;}
+  ul.modulos .desc{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
+  ul.modulos .abrir{display:block;font-size:13px;font-weight:700;color:var(--acento);margin-top:8px;}
+  li.oculto,section.oculto,h3.oculto{display:none;}
+
+  .sin-resultados{display:none;background:#fff8e1;border:2px solid #f9a825;border-left:8px solid #f9a825;
+                  border-radius:10px;padding:16px 20px;color:#5c3900;font-size:15px;}
+  .sin-resultados.visible{display:block;}
+
+  .caja-nota{background:#e8f5e9;border-left:5px solid #1b5e20;padding:12px 16px;border-radius:0 8px 8px 0;
+             margin:18px 0;font-size:15px;color:#1b5e20;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--marco);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--marco-d);}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Spanish ASE Math 4 · GEDparaHispanos</div>
+    <h1>Repaso del Nivel 4: índice de prácticas interactivas</h1>
+    <p>Las prácticas de los ocho temas del nivel, reunidas en un solo sitio. Cada enlace abre directamente la
+    práctica que necesitas, no la página entera. Si el informe del simulacro señaló un tema, búscalo aquí y ve al grano.</p>
+  </header>
+
+  <div class="buscador">
+    <label for="filtro">Busca el tema que quieres repasar</label>
+    <input type="text" id="filtro" placeholder="por ejemplo: discriminante, MCM, región factible, vértice, logaritmo"
+           autocomplete="off">
+    <p class="pista">Escribe una palabra y la lista se reduce sola. Sirven tanto los nombres técnicos
+      («discriminante», «eliminación») como las palabras corrientes («bote», «monedas», «préstamo»).</p>
+    <div class="fila-btn">
+      <button type="button" id="limpiar">Ver todo otra vez</button>
+    </div>
+    <p class="contador" id="contador" role="status"></p>
+  </div>
+
+  <div class="sin-resultados" id="sin-resultados">
+    No hay ninguna práctica con esa palabra. Prueba con un término más corto o pulsa «Ver todo otra vez».
+  </div>
+
+  <div id="lista"></div>
+
+  <div class="caja-nota">
+    <strong>Cómo usar este índice después del simulacro:</strong> revisa el informe diagnóstico, localiza aquí los
+    temas que te salieron flojos y trabaja solo esos. Cada práctica es corta y se puede repetir cuantas veces quieras,
+    porque los ejercicios se generan de nuevo cada vez.
+  </div>
+
+  <footer class="pie">
+    <p><strong>Repaso del Nivel 4 · Matemáticas · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+var BASE = "https://zhemaria.github.io/algebra/";
+
+var TEMAS = [
+  { n:1, clase:"t1", titulo:"Tema 1 · Geometría analítica",
+    lecciones:[
+      { titulo:"Lección 1.1 · El plano cartesiano: pares ordenados, distancia y punto medio",
+        url:"https://zhemaria.github.io/interactivos/plano_cartesiano",
+        modulos:[
+          { url:"https://zhemaria.github.io/interactivos/plano_cartesiano", titulo:"El plano cartesiano",
+            desc:"Leer y trazar pares ordenados en los cuatro cuadrantes.",
+            claves:"plano cartesiano par ordenado cuadrantes coordenadas ejes trazar" },
+          { url:"https://zhemaria.github.io/interactivos/distancia", titulo:"La distancia entre dos puntos",
+            desc:"La fórmula de la distancia y su relación con el teorema de Pitágoras.",
+            claves:"distancia dos puntos formula pitagoras segmento" },
+          { url:"https://zhemaria.github.io/interactivos/punto_medio", titulo:"El punto medio de un segmento",
+            desc:"El promedio de las coordenadas de los extremos.",
+            claves:"punto medio promedio coordenadas segmento" }
+        ]},
+      { titulo:"Lección 1.3 · Ecuaciones de la recta: las tres formas",
+        id:"n4-l1-3.html",
+        modulos:[
+          { ancla:"pendiente-intercepto", titulo:"La forma y = mx + b",
+            desc:"Mover la pendiente y el intercepto y leer la recta de un vistazo.",
+            claves:"pendiente intercepto y igual mx mas b forma graficar recta" },
+          { ancla:"punto-pendiente", titulo:"La forma punto-pendiente",
+            desc:"Escribir la recta desde un punto y la pendiente, o desde dos puntos.",
+            claves:"punto pendiente formula dos puntos escribir ecuacion recta" },
+          { ancla:"formas", titulo:"Convertir entre las tres formas",
+            desc:"De pendiente-intercepto a estándar y al revés, sin perder enteros.",
+            claves:"convertir forma estandar Ax+By=C despejar fracciones" },
+          { ancla:"paralelas", titulo:"Paralelas y perpendiculares",
+            desc:"Misma pendiente o recíproca negativa, con la calculadora incluida.",
+            claves:"paralelas perpendiculares reciproca negativa pendiente angulo recto" }
+        ]},
+      { titulo:"Lección 1.2 · La pendiente: concepto, fórmula e interpretación",
+        url:"https://zhemaria.github.io/interactivos/pendiente-dos-puntos",
+        modulos:[
+          { url:"https://zhemaria.github.io/interactivos/pendiente-dos-puntos", titulo:"La pendiente entre dos puntos",
+            desc:"Mover dos puntos y ver cambiar la elevación, el avance y la pendiente.",
+            claves:"pendiente dos puntos elevacion avance subida recta inclinacion" }
+        ]}
+    ]},
+
+  { n:2, clase:"t2", titulo:"Tema 2 · Volumen 3D y polinomios",
+    lecciones:[
+      { titulo:"Lección 2.1 · Volumen de esferas, conos y pirámides",
+        url:"https://zhemaria.github.io/geometria/vol_esfera/",
+        modulos:[
+          { url:"https://zhemaria.github.io/geometria/vol_esfera/", titulo:"Volumen de la esfera",
+            desc:"Cambiar el radio y ver cómo responde el volumen.",
+            claves:"volumen esfera radio formula solido geometria" },
+          { url:"https://zhemaria.github.io/geometria/vol_cono/", titulo:"Volumen del cono",
+            desc:"El radio y la altura del cono frente a su volumen.",
+            claves:"volumen cono radio altura formula solido" },
+          { url:"https://zhemaria.github.io/geometria/vol_piramide/", titulo:"Volumen de la pirámide",
+            desc:"La base y la altura de la pirámide frente a su volumen.",
+            claves:"volumen piramide base altura formula solido" }
+        ]},
+      { titulo:"Lección 2.2 · Figuras 3D compuestas y área de superficie",
+        url:"https://zhemaria.github.io/geometria/compuestas_3d/",
+        modulos:[
+          { url:"https://zhemaria.github.io/geometria/compuestas_3d/", titulo:"Figuras compuestas",
+            desc:"Armar cilindro más cono o cilindro más semiesfera y sumar volúmenes.",
+            claves:"figuras compuestas cilindro cono semiesfera sumar volumenes descomponer" },
+          { url:"https://zhemaria.github.io/geometria/area_superficie/", titulo:"Área de superficie",
+            desc:"Descomponer la figura para calcular el área de su superficie.",
+            claves:"area de superficie descomponer caras pintar envolver" }
+        ]},
+      { titulo:"Lección 2.3 · Polinomios: clasificación, suma, resta y multiplicación básica",
+        url:"https://zhemaria.github.io/algebra/polinomios_suma_resta/",
+        modulos:[
+          { url:"https://zhemaria.github.io/algebra/polinomios_suma_resta/", titulo:"Suma y resta de polinomios",
+            desc:"Combinar términos semejantes y comprobar el resultado.",
+            claves:"suma resta polinomios terminos semejantes combinar" },
+          { url:"https://zhemaria.github.io/algebra/polinomios_monomio_por_polinomio/", titulo:"Monomio por polinomio",
+            desc:"Distribuir el monomio sobre cada término.",
+            claves:"monomio por polinomio distribuir producto multiplicar" },
+          { url:"https://zhemaria.github.io/algebra/polinomios_evaluar/", titulo:"Evaluar un polinomio",
+            desc:"Sustituir la variable por un valor numérico.",
+            claves:"evaluar polinomio sustituir valor numerico" }
+        ]}
+    ]},
+
+  { n:3, clase:"t3", titulo:"Tema 3 · Multiplicación de polinomios y factorización",
+    lecciones:[
+      { titulo:"Lección 3.1 · Multiplicación de binomios: FOIL e identidades notables",
+        url:"https://zhemaria.github.io/algebra/interactivo_3-1_multiplicacion_binomios/",
+        modulos:[
+          { ancla:"area", titulo:"El modelo del área",
+            desc:"Ver el producto de binomios como el área de un rectángulo.",
+            claves:"modelo del area rectangulo binomios producto visual" },
+          { ancla:"foil", titulo:"FOIL paso a paso",
+            desc:"Primeros, exteriores, interiores y últimos.",
+            claves:"foil primeros exteriores interiores ultimos binomios multiplicar" },
+          { ancla:"cuadrado", titulo:"El cuadrado de un binomio",
+            desc:"La identidad notable y el término del medio que se olvida.",
+            claves:"cuadrado de un binomio identidad notable termino del medio" },
+          { ancla:"sumadif", titulo:"Suma por diferencia",
+            desc:"El producto que deja una diferencia de cuadrados.",
+            claves:"suma por diferencia identidad diferencia de cuadrados" }
+        ]},
+      { titulo:"Lección 3.3 · Factorización de trinomios (a = 1 y a ≠ 1)",
+        url:"https://zhemaria.github.io/algebra/interactivo_3-3_factorizacion_trinomios/",
+        modulos:[
+          { ancla:"simple", titulo:"Trinomios con a = 1",
+            desc:"Buscar los dos números que multiplican a c y suman b.",
+            claves:"trinomio a igual 1 dos numeros multiplican suman factorizar" },
+          { ancla:"ac", titulo:"Trinomios con a ≠ 1: el método ac",
+            desc:"Multiplicar a por c, partir el término del medio y agrupar.",
+            claves:"metodo ac agrupacion trinomio coeficiente principal partir termino medio" },
+          { ancla:"completa", titulo:"Casos especiales y factorización completa",
+            desc:"Sacar primero el factor común y seguir factorizando hasta el final.",
+            claves:"factorizacion completa casos especiales factor comun trinomio cuadrado perfecto" }
+        ]},
+      { titulo:"Lección 3.2 · Factorización: factor común y diferencia de cuadrados",
+        url:"https://zhemaria.github.io/algebra/interactivo_3-2_factor_comun_diferencia_cuadrados/",
+        modulos:[
+          { ancla:"comun", titulo:"Factor común",
+            desc:"El MCD de los coeficientes y la menor potencia de la variable.",
+            claves:"factor comun mcd maximo comun divisor extraer potencia menor" },
+          { ancla:"cuadrados", titulo:"Diferencia de cuadrados",
+            desc:"Decidir si el binomio lo es y escribir los dos factores.",
+            claves:"diferencia de cuadrados binomio factores suma por diferencia" },
+          { ancla:"combinar", titulo:"Factor común y luego diferencia de cuadrados",
+            desc:"Factorizar en dos pasos hasta llegar a la forma completa.",
+            claves:"combinar factorizacion completa dos pasos factor comun cuadrados" }
+        ]}
+    ]},
+
+  { n:4, clase:"t4", titulo:"Tema 4 · Ecuaciones cuadráticas",
+    lecciones:[
+      { id:"n4-l4-3.html", titulo:"Lección 4.3 · La fórmula cuadrática, el discriminante y aplicaciones",
+        modulos:[
+          { ancla:"discriminante", titulo:"El discriminante: ¿cuántas soluciones?",
+            desc:"Calcular b² − 4ac y predecir si hay dos, una o ninguna solución real.",
+            claves:"discriminante soluciones reales parabola corta eje" },
+          { ancla:"formula", titulo:"Resolver con la fórmula cuadrática",
+            desc:"Resolución paso a paso, con raíz exacta o con calculadora.",
+            claves:"formula cuadratica resolver raices signos paréntesis" },
+          { ancla:"proyectil", titulo:"La trayectoria de un proyectil",
+            desc:"Altura máxima, tiempo de vuelo e interpretación en contexto.",
+            claves:"proyectil pelota altura tiempo lanzamiento gravedad" }
+        ]}
+    ]},
+
+  { n:5, clase:"t5", titulo:"Tema 5 · Expresiones racionales complejas",
+    lecciones:[
+      { id:"n4-l5-1.html", titulo:"Lección 5.1 · Simplificar expresiones racionales",
+        modulos:[
+          { ancla:"simplificar", titulo:"Simplificar fracciones algebraicas",
+            desc:"Factorizar arriba y abajo y cancelar los factores comunes.",
+            claves:"simplificar fraccion algebraica factorizar cancelar" },
+          { ancla:"excluidos", titulo:"Valores excluidos del dominio",
+            desc:"Qué valores anulan el denominador y por qué se prohíben.",
+            claves:"valores excluidos dominio denominador cero division" },
+          { ancla:"trampa", titulo:"Factores, no términos",
+            desc:"Cuándo se puede cancelar y cuándo no: el error más frecuente.",
+            claves:"factor termino cancelar error trampa suma" }
+        ]},
+      { id:"n4-l5-2.html", titulo:"Lección 5.2 · Operaciones con expresiones racionales",
+        modulos:[
+          { ancla:"multiplicar", titulo:"Multiplicar",
+            desc:"Cancelar en cruz antes de multiplicar.",
+            claves:"multiplicar producto fracciones algebraicas cruz" },
+          { ancla:"dividir", titulo:"Dividir",
+            desc:"Deja, cambia, voltea: multiplicar por el recíproco.",
+            claves:"dividir reciproco voltear cociente" },
+          { ancla:"sumar-igual", titulo:"Sumar y restar con igual denominador",
+            desc:"El paréntesis invisible y el signo menos que afecta a todo.",
+            claves:"sumar restar igual denominador parentesis signo menos" },
+          { ancla:"sumar-distinto", titulo:"Sumar y restar con denominadores diferentes",
+            desc:"Hallar el MCM, reescribir y combinar los numeradores.",
+            claves:"mcm minimo comun multiplo denominadores diferentes" }
+        ]},
+      { id:"n4-l5-3.html", titulo:"Lección 5.3 · Ecuaciones racionales y modelado",
+        modulos:[
+          { ancla:"mcm", titulo:"Limpiar los denominadores con el MCM",
+            desc:"Multiplicar los dos lados por el MCM y resolver lo que queda.",
+            claves:"ecuacion racional mcm limpiar denominadores resolver" },
+          { ancla:"extranas", titulo:"Soluciones extrañas: el verificador",
+            desc:"Sustituir en la ecuación original y descartar lo que anula un denominador.",
+            claves:"solucion extraña verificar descartar denominador original" },
+          { ancla:"trabajo", titulo:"Problemas de trabajo conjunto",
+            desc:"1/a + 1/b = 1/t y el control de sentido común.",
+            claves:"trabajo conjunto juntos horas pintar ritmo" },
+          { ancla:"dvt", titulo:"Distancia, velocidad y tiempo",
+            desc:"El bote y la corriente, con el caso en que no avanza.",
+            claves:"distancia velocidad tiempo bote corriente rio viento avion" }
+        ]}
+    ]},
+
+  { n:6, clase:"t6", titulo:"Tema 6 · Sistemas de ecuaciones lineales",
+    lecciones:[
+      { id:"n4-l6-1.html", titulo:"Lección 6.1 · Sistemas por sustitución",
+        modulos:[
+          { ancla:"sustitucion", titulo:"Los cinco pasos de la sustitución",
+            desc:"Despejar, sustituir, resolver, hallar la otra variable y verificar.",
+            claves:"sustitucion despejar sistema cinco pasos" },
+          { ancla:"verificar", titulo:"Verificar un par ordenado",
+            desc:"Comprobar si un punto cumple las dos ecuaciones.",
+            claves:"verificar par ordenado solucion sistema punto" },
+          { ancla:"contexto", titulo:"Plantear el sistema desde una situación",
+            desc:"Nombrar las incógnitas y traducir cada dato en una ecuación.",
+            claves:"plantear problema verbal cafes tes entradas perimetro numeros" }
+        ]},
+      { id:"n4-l6-2.html", titulo:"Lección 6.2 · Eliminación y clasificación",
+        modulos:[
+          { ancla:"eliminacion", titulo:"El método de eliminación",
+            desc:"Coeficientes opuestos, multiplicar una ecuación o las dos.",
+            claves:"eliminacion sumar restar ecuaciones coeficientes opuestos" },
+          { ancla:"clasificar", titulo:"Clasificar los sistemas",
+            desc:"Independiente, inconsistente y dependiente, con su gráfica.",
+            claves:"clasificar independiente inconsistente dependiente paralelas infinitas" },
+          { ancla:"metodo", titulo:"¿Sustitución o eliminación?",
+            desc:"Elegir el método más rápido según cómo esté escrito el sistema.",
+            claves:"elegir metodo sustitucion eliminacion rapido" },
+          { ancla:"aplicacion", titulo:"Monedas, mezclas y velocidades",
+            desc:"La ecuación de cantidad y la ecuación de valor.",
+            claves:"monedas boletos mezcla cafe bote edades cantidad valor" }
+        ]},
+      { id:"n4-l6-3.html", titulo:"Lección 6.3 · Método gráfico y modelado",
+        modulos:[
+          { ancla:"grafico", titulo:"El método gráfico",
+            desc:"Mover las rectas y ver desplazarse el punto de cruce.",
+            claves:"metodo grafico rectas cruce pendiente intercepto leer grafica" },
+          { ancla:"conectar", titulo:"De la forma estándar a y = mx + b",
+            desc:"Despejar y comparar pendientes e interceptos.",
+            claves:"forma estandar pendiente intercepto despejar y comparar" },
+          { ancla:"traducir", titulo:"Traducir un problema verbal",
+            desc:"Las frases típicas del examen y su traducción al álgebra.",
+            claves:"traducir problema verbal frases doble mas que total autos motos" },
+          { ancla:"equilibrio", titulo:"El punto de equilibrio",
+            desc:"Costos, ingresos y las zonas de pérdida y ganancia.",
+            claves:"punto equilibrio costos ingresos ganancia perdida negocio" }
+        ]}
+    ]},
+
+  { n:7, clase:"t7", titulo:"Tema 7 · Desigualdades y funciones",
+    lecciones:[
+      { id:"n4-l7-1.html", titulo:"Lección 7.1 · Sistemas de desigualdades lineales",
+        modulos:[
+          { ancla:"graficar", titulo:"Graficar una desigualdad",
+            desc:"Línea sólida o punteada y el lado que se sombrea.",
+            claves:"graficar desigualdad linea solida punteada sombrear" },
+          { ancla:"punto-prueba", titulo:"El método del punto de prueba",
+            desc:"Sustituir un punto y decidir el lado según salga verdadero o falso.",
+            claves:"punto de prueba origen sombrear lado verdadero falso" },
+          { ancla:"region", titulo:"La región factible",
+            desc:"Añadir las desigualdades una a una y ver cómo se recorta la región.",
+            claves:"region factible sistema desigualdades traslape interseccion" },
+          { ancla:"verificar", titulo:"¿El punto está en la región?",
+            desc:"Comprobar el punto en todas las desigualdades del sistema.",
+            claves:"verificar punto region pertenece frontera" }
+        ]},
+      { id:"n4-l7-2.html", titulo:"Lección 7.2 · Funciones, f(x), dominio y rango",
+        modulos:[
+          { ancla:"maquina", titulo:"La máquina de funciones",
+            desc:"Una entrada, una sola salida, y la tabla de pares.",
+            claves:"maquina funcion entrada salida relacion par ordenado" },
+          { ancla:"linea-vertical", titulo:"La prueba de la línea vertical",
+            desc:"Contar cortes para decidir si una gráfica es función.",
+            claves:"linea vertical prueba funcion circunferencia parabola acostada" },
+          { ancla:"notacion", titulo:"Evaluar f(x)",
+            desc:"Sustituir con paréntesis y cuidar los signos.",
+            claves:"evaluar f de x notacion sustituir negativos" },
+          { ancla:"dominio-rango", titulo:"Dominio y rango",
+            desc:"Entradas y salidas, en puntos y en gráficas.",
+            claves:"dominio rango entradas salidas conjunto tipo de funcion" }
+        ]},
+      { id:"n4-l7-3.html", titulo:"Lección 7.3 · Tasa de cambio y tipos de función",
+        modulos:[
+          { ancla:"tasa", titulo:"La tasa de cambio promedio",
+            desc:"La pendiente entre dos puntos, con la recta dibujada.",
+            claves:"tasa de cambio promedio pendiente intervalo secante" },
+          { ancla:"contexto", titulo:"Interpretar la tasa con unidades",
+            desc:"Dólares por año, metros por segundo y las tasas negativas.",
+            claves:"interpretar unidades dolares por año velocidad negativa tanque" },
+          { ancla:"tipo", titulo:"Identificar el tipo de función",
+            desc:"Detector de diferencias y razones en una tabla de valores.",
+            claves:"tipo funcion lineal cuadratica exponencial diferencias razon tabla" }
+        ]}
+    ]},
+
+  { n:8, clase:"t8", titulo:"Tema 8 · Modelado de funciones",
+    lecciones:[
+      { id:"n4-l8-1.html", titulo:"Lección 8.1 · La parábola, el vértice y los interceptos",
+        modulos:[
+          { ancla:"parabola", titulo:"La parábola y su forma",
+            desc:"Qué hace cada coeficiente: dirección, anchura e intercepto.",
+            claves:"parabola forma coeficientes abre arriba abajo estrecha" },
+          { ancla:"vertice", titulo:"El vértice y el eje de simetría",
+            desc:"La fórmula −b/(2a) y la simetría vista en la gráfica.",
+            claves:"vertice eje simetria formula maximo minimo" },
+          { ancla:"interceptos", titulo:"Los interceptos con los ejes",
+            desc:"Dos, uno o ninguno, según el discriminante.",
+            claves:"interceptos ceros cruces ejes raices" },
+          { ancla:"maximo", titulo:"Máximo y mínimo en contexto",
+            desc:"Proyectil, jardín cercado, ingreso y costo.",
+            claves:"maximo minimo contexto proyectil jardin ingreso costo optimo" }
+        ]},
+      { id:"n4-l8-2.html", titulo:"Lección 8.2 · Exponenciales y logaritmos",
+        modulos:[
+          { ancla:"exponencial", titulo:"La función exponencial",
+            desc:"Valor inicial, base, crecimiento y decaimiento.",
+            claves:"exponencial base valor inicial crece decae" },
+          { ancla:"contexto", titulo:"Crecimiento y decaimiento en contexto",
+            desc:"Población, vida media, depreciación y medicamentos.",
+            claves:"crecimiento decaimiento vida media poblacion bacterias auto porcentaje" },
+          { ancla:"interes", titulo:"El interés compuesto",
+            desc:"La fórmula de la hoja del GED y el efecto de capitalizar más a menudo.",
+            claves:"interes compuesto capital tasa prestamo ahorro banco formula" },
+          { ancla:"logaritmo", titulo:"Introducción al logaritmo",
+            desc:"¿A qué exponente hay que elevar la base?",
+            claves:"logaritmo log exponente inverso base potencia" }
+        ]}
+    ]}
+];
+
+/* ---------- Construcción de la lista ---------- */
+function construye(){
+  var contenedor = document.getElementById("lista");
+  var html = "";
+  TEMAS.forEach(function(t){
+    html += '<section class="tema ' + t.clase + '" data-tema="' + t.n + '">';
+    html += "<h2>" + t.titulo + "</h2><div class=\"tema-cuerpo\">";
+    t.lecciones.forEach(function(l){
+      var urlLeccion = l.url || (BASE + l.id);
+      html += '<h3 class="leccion" data-leccion="' + (l.id || l.url) + '">' +
+              '<a href="' + urlLeccion + '" target="_blank" rel="noopener noreferrer">' + l.titulo + "</a></h3>";
+      html += '<ul class="modulos" data-de="' + (l.id || l.url) + '">';
+      l.modulos.forEach(function(m){
+        var texto = (m.titulo + " " + m.desc + " " + m.claves + " " + l.titulo + " " + t.titulo).toLowerCase();
+        var urlModulo = m.url || (urlLeccion + (m.ancla ? "#" + m.ancla : ""));
+        html += '<li data-busca="' + texto.replace(/"/g, "") + '">' +
+                '<a href="' + urlModulo + '" target="_blank" rel="noopener noreferrer">' +
+                '<span class="titulo">' + m.titulo + "</span>" +
+                '<span class="desc">' + m.desc + "</span>" +
+                '<span class="abrir">Abrir esta práctica <span aria-hidden="true">›</span></span>' +
+                "</a></li>";
+      });
+      html += "</ul>";
+    });
+    html += "</div></section>";
+  });
+  contenedor.innerHTML = html;
+}
+
+/* ---------- Normalizar para buscar sin acentos ---------- */
+function normaliza(t){
+  return t.toLowerCase()
+    .replace(/[áàä]/g,"a").replace(/[éèë]/g,"e").replace(/[íìï]/g,"i")
+    .replace(/[óòö]/g,"o").replace(/[úùü]/g,"u").replace(/ñ/g,"n");
+}
+
+function filtra(){
+  var q = normaliza(document.getElementById("filtro").value.trim());
+  var visibles = 0, total = 0;
+
+  document.querySelectorAll("section.tema").forEach(function(sec){
+    var algoEnTema = false;
+    sec.querySelectorAll("ul.modulos").forEach(function(ul){
+      var algoEnLeccion = false;
+      ul.querySelectorAll("li").forEach(function(li){
+        total++;
+        var coincide = !q || normaliza(li.getAttribute("data-busca")).indexOf(q) !== -1;
+        li.className = coincide ? "" : "oculto";
+        if (coincide){ visibles++; algoEnLeccion = true; algoEnTema = true; }
+      });
+      ul.className = algoEnLeccion ? "modulos" : "modulos oculto";
+      var titulo = ul.previousElementSibling;
+      if (titulo) titulo.className = algoEnLeccion ? "leccion" : "leccion oculto";
+    });
+    sec.className = "tema " + sec.getAttribute("data-tema").replace(/^/, "t") + (algoEnTema ? "" : " oculto");
+  });
+
+  document.getElementById("contador").textContent = q
+    ? "Se muestran " + visibles + " prácticas de " + total + "."
+    : "Hay " + total + " prácticas disponibles en todo el nivel.";
+  document.getElementById("sin-resultados").className = (q && visibles === 0) ? "sin-resultados visible" : "sin-resultados";
+}
+
+construye();
+document.getElementById("filtro").addEventListener("input", filtra);
+document.getElementById("limpiar").addEventListener("click", function(){
+  document.getElementById("filtro").value = "";
+  filtra();
+  document.getElementById("filtro").focus();
+});
+filtra();
+</script>
+</body>
+</html>
