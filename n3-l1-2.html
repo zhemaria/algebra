@@ -1,0 +1,1113 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 1.2 — Regla del cociente, exponente cero y exponentes negativos
+  Nivel 3 · Spanish ASE Math 3 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #cociente · #cero · #negativos · #cinco-reglas · #verificar
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 1.2: regla del cociente, exponente cero y exponentes negativos</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 1.2 del Nivel 3: regla del cociente, exponente cero, exponentes negativos, las cinco reglas y verificación numérica.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+
+  :root{
+    --tema:#1a237e; --tema-d:#0e1452; --tema-bg:#e8eaf6; --tema-bg2:#c5cae9;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#004d40;border-color:#004d40;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:96px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* fracción algebraica */
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 6px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 8px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;
+                 text-decoration-color:#b71c1c;color:#b71c1c;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} }
+
+  /* ---------- Añadidos de la serie del Nivel 3 · Tema 1 ---------- */
+  .ex{white-space:nowrap;}
+  sup{font-size:.68em;line-height:0;position:relative;top:-.55em;vertical-align:baseline;font-weight:700;}
+  .expr-grande{text-align:center;font-size:24px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .enun .ex, .opcion .ex, .salida .ex{font-size:18px;}
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 4px;}
+  .frac .arriba{display:block;padding:1px 8px;border-bottom:2px solid currentColor;}
+  .frac .abajo{display:block;padding:1px 8px;}
+  .fichas{display:flex;flex-wrap:wrap;align-items:center;gap:6px;justify-content:center;margin:14px 0;font-size:18px;}
+  .ficha{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;padding:0 6px;
+         border-radius:8px;font-weight:700;border:2px solid var(--tema);background:var(--tema-bg);color:var(--tema-d);}
+  .ficha.b{border-color:#00695c;background:#e0f2f1;color:#004d40;}
+  .ficha.tachada{border-color:#b71c1c;background:#ffebee;color:#b71c1c;text-decoration:line-through;text-decoration-thickness:3px;}
+  .grupo{display:inline-flex;gap:4px;align-items:center;padding:4px 6px;border:2px dashed var(--tema-bg2);border-radius:10px;}
+  .signo{font-weight:700;font-size:20px;color:var(--tema-d);padding:0 2px;}
+  .linea-frac{display:flex;flex-direction:column;align-items:center;gap:8px;margin:14px 0;}
+  .linea-frac .barra{width:100%;max-width:520px;border-top:3px solid var(--tema-d);}
+  .campo input[type="text"]{width:120px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input.bien{border-color:#1b5e20;background:#e8f5e9;}
+  table.reglas td .ex{font-size:16px;}
+  .marcador-regla{margin-top:12px;}
+  .marcador-regla table{border-collapse:collapse;font-size:14px;}
+  .marcador-regla caption{text-align:left;font-size:14px;color:var(--gris);padding-bottom:4px;}
+  .marcador-regla th,.marcador-regla td{border:1px solid #c8c8c8;padding:5px 10px;text-align:left;}
+  .marcador-regla th{background:var(--tema-bg);color:var(--tema-d);}
+  .tarjeta-ext{display:block;text-decoration:none;color:var(--txt);border:2px solid var(--tema-bg2);border-radius:10px;
+               padding:14px 18px;background:#fff;margin:12px 0;}
+  .tarjeta-ext:hover{border-color:var(--acento);background:#f2fbfa;}
+  .tarjeta-ext strong{display:block;color:var(--tema-d);font-size:17px;}
+  .tarjeta-ext span{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
+  .tarjeta-ext .abrir{color:var(--acento);font-weight:700;margin-top:8px;}
+  .paso .regla{display:inline-block;font-size:13px;font-weight:700;color:var(--tema-d);background:var(--tema-bg);
+               border-radius:12px;padding:0 8px;margin-left:6px;}
+  .tabla-patron{border-collapse:collapse;margin:12px auto;font-size:17px;}
+  .tabla-patron caption{font-size:14px;color:var(--gris);padding-bottom:6px;}
+  .tabla-patron th,.tabla-patron td{border:1px solid #c8c8c8;padding:8px 14px;text-align:center;min-width:64px;}
+  .tabla-patron th{background:var(--tema-bg);color:var(--tema-d);}
+  .tabla-patron td.neg{background:#fff8e1;}
+  .tabla-patron td.cero{background:#e8f5e9;font-weight:700;}
+  .dividir{font-size:13px;color:var(--gris);}
+  .fila-resp{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+  .btn:disabled,.btn-sec:disabled{background:#eeeeee;color:#424242;border-color:#9e9e9e;cursor:not-allowed;}
+  input:disabled,select:disabled{background:#f3f3f3;cursor:not-allowed;}
+
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 3 · Tema 1 · Exponentes</div>
+    <h1>Lección 1.2 · Regla del cociente, exponente cero y exponentes negativos</h1>
+    <div class="meta">Cinco prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#cociente">La regla del cociente</a></li>
+      <li><a href="#cero">El exponente cero</a></li>
+      <li><a href="#negativos">Los exponentes negativos</a></li>
+      <li><a href="#cinco-reglas">Las cinco reglas de los exponentes</a></li>
+      <li><a href="#verificar">Verificar con valores numéricos</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 · #cociente ============ -->
+  <details class="modulo" id="cociente" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La regla del cociente</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Al dividir dos potencias de la <strong>misma base</strong>, cada factor de abajo cancela un factor de arriba. Por
+      eso los exponentes <strong>se restan</strong>, siempre el de arriba menos el de abajo:</p>
+      <div class="formula">a<sup>m</sup> ÷ a<sup>n</sup> = a<sup>m − n</sup> &nbsp;(a ≠ 0)</div>
+
+      <h3>Cancelador de factores</h3>
+      <p>Cambia los exponentes del numerador y del denominador. Prueba también a poner el mismo número en los dos, o uno
+      mayor abajo: así se descubren las dos ideas de los módulos siguientes.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="co-m">Exponente de arriba</label>
+            <input type="number" id="co-m" value="5" min="1" max="7" step="1">
+          </div>
+          <div class="campo">
+            <label for="co-n">Exponente de abajo</label>
+            <input type="number" id="co-n" value="2" min="1" max="7" step="1">
+          </div>
+        </div>
+      </div>
+      <div class="caja-aviso" id="co-aviso" role="alert"></div>
+      <div class="linea-frac" id="co-fichas" aria-hidden="true"></div>
+      <div class="salida" aria-live="polite" id="co-salida"></div>
+
+      <div class="caja-atencion">
+        <strong>Cuidado con el orden:</strong> se resta el exponente de arriba menos el de abajo, nunca al revés. Y la base
+        no puede ser cero, porque dividir entre cero no está definido.
+      </div>
+
+      <h3>Practica: escribe el exponente del resultado</h3>
+      <div class="practica" id="p-cociente1"></div>
+
+      <h3>Practica: con coeficientes</h3>
+      <p>Los coeficientes se <strong>dividen</strong>; los exponentes se <strong>restan</strong>.</p>
+      <div class="practica" id="p-cociente2"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 · #cero ============ -->
+  <details class="modulo" id="cero">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>El exponente cero</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Si divides una potencia entre sí misma, el resultado es 1, porque todo número distinto de cero dividido entre sí
+      mismo da 1. Pero la regla del cociente da a<sup>3</sup> ÷ a<sup>3</sup> = a<sup>0</sup>. Las dos cosas describen el
+      mismo cociente, así que tienen que ser iguales:</p>
+      <div class="formula">a<sup>0</sup> = 1 &nbsp;(a ≠ 0)</div>
+
+      <h3>El patrón de potencias decrecientes</h3>
+      <p>Cada vez que el exponente baja una unidad, el valor se divide entre la base. Elige una base y sigue el patrón hasta el cero.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="ce-base">Base</label>
+            <select id="ce-base"><option value="2">2</option><option value="3">3</option><option value="5">5</option><option value="10">10</option></select>
+          </div>
+        </div>
+      </div>
+      <div id="ce-tabla" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>El exponente cero solo afecta a su base:</strong> (3x)<sup>0</sup> = 1, porque el cero afecta a todo el
+        paréntesis; pero 3x<sup>0</sup> = 3 · 1 = 3, porque el cero solo afecta a la x. Del mismo modo,
+        −5<sup>0</sup> = −1, mientras que (−5)<sup>0</sup> = 1.
+      </div>
+
+      <h3>Practica: ¿cuánto vale?</h3>
+      <div class="practica" id="p-cero"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 · #negativos ============ -->
+  <details class="modulo" id="negativos">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Los exponentes negativos</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Si el patrón sigue más allá del cero, cada paso sigue dividiendo entre la base y aparecen las fracciones. Un
+      exponente negativo indica el <strong>recíproco</strong> de la potencia con exponente positivo:</p>
+      <div class="formula">a<sup>−n</sup> = <span class="frac"><span class="arriba">1</span><span class="abajo">a<sup>n</sup></span></span> &nbsp;(a ≠ 0)</div>
+
+      <h3>El patrón continúa</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="ne-base">Base</label>
+            <select id="ne-base"><option value="2">2</option><option value="3">3</option><option value="5">5</option><option value="10">10</option></select>
+          </div>
+          <div class="campo">
+            <label for="ne-n">Exponente negativo que quieres estudiar</label>
+            <select id="ne-n"><option value="1">−1</option><option value="2" selected>−2</option><option value="3">−3</option><option value="4">−4</option></select>
+          </div>
+        </div>
+      </div>
+      <div id="ne-tabla"></div>
+      <div class="salida" aria-live="polite" id="ne-salida"></div>
+
+      <div class="caja-tip">
+        <strong>Cruzar la barra de fracción:</strong> mover un factor de arriba abajo, o de abajo arriba, cambia el signo de
+        su exponente. Así, x<sup>−4</sup> = 1/x<sup>4</sup> y también 1/a<sup>−2</sup> = a<sup>2</sup>.
+      </div>
+      <div class="caja-atencion">
+        <strong>Un exponente negativo no hace negativo al número.</strong> 2<sup>−3</sup> no es −8 ni −6: es la fracción
+        positiva 1/8. El signo del exponente solo dice «recíproco».
+      </div>
+
+      <h3>Practica: exponentes negativos</h3>
+      <div class="practica" id="p-negativos"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 · #cinco-reglas ============ -->
+  <details class="modulo" id="cinco-reglas">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Las cinco reglas de los exponentes</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <table class="reglas">
+        <caption>Las cinco reglas de los exponentes: nombre, patrón y ejemplo.</caption>
+        <thead><tr><th scope="col">Regla</th><th scope="col">Patrón</th><th scope="col">Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Producto</td><td>a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup></td><td>x<sup>4</sup> · x<sup>3</sup> = x<sup>7</sup></td></tr>
+          <tr><td>Potencia de una potencia</td><td>(a<sup>m</sup>)<sup>n</sup> = a<sup>m·n</sup></td><td>(x<sup>4</sup>)<sup>3</sup> = x<sup>12</sup></td></tr>
+          <tr><td>Potencia de un producto</td><td>(a · b)<sup>n</sup> = a<sup>n</sup> · b<sup>n</sup></td><td>(2x)<sup>3</sup> = 8x<sup>3</sup></td></tr>
+          <tr><td>Cociente</td><td>a<sup>m</sup> ÷ a<sup>n</sup> = a<sup>m−n</sup></td><td>x<sup>7</sup> ÷ x<sup>2</sup> = x<sup>5</sup></td></tr>
+          <tr><td>Exponente cero y negativo</td><td>a<sup>0</sup> = 1 · a<sup>−n</sup> = 1/a<sup>n</sup></td><td>5<sup>0</sup> = 1 · 3<sup>−2</sup> = 1/9</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Practica: ¿qué regla se aplicó?</h3>
+      <p>Cada ejercicio muestra un paso ya hecho, y bien hecho. Tu tarea es reconocer qué regla lo justifica.</p>
+      <div class="practica" id="p-cinco"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 5 · #verificar ============ -->
+  <details class="modulo" id="verificar">
+    <summary>
+      <span class="num" aria-hidden="true">5</span>
+      <h2>Verificar con valores numéricos</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Una simplificación correcta da el <strong>mismo número</strong> que la expresión original para cualquier valor de
+      la variable. Si al sustituir un número salen valores distintos, hay un error seguro. Es la misma comprobación que
+      harías con la calculadora.</p>
+
+      <div class="caja-atencion">
+        <strong>Elige bien el número de prueba:</strong> el 0 no sirve cuando hay divisiones o exponentes negativos, y con
+        el 1 cualquier potencia vale 1, así que la prueba no distingue nada. Usa 2 o 3.
+      </div>
+
+      <h3>Practica: ¿la simplificación es correcta?</h3>
+      <p>Primero prueba con uno o dos valores de x. Después decide.</p>
+      <div class="practica">
+        <div class="enun" id="v-enun"></div>
+        <div class="panel">
+          <div class="campos">
+            <div class="campo">
+              <label for="v-x">Valor de x para la prueba</label>
+              <input type="number" id="v-x" value="2" min="-5" max="5" step="1">
+            </div>
+          </div>
+          <div class="fila-btn"><button type="button" class="btn-sec" id="v-probar">Sustituir este valor</button></div>
+        </div>
+        <div class="caja-aviso" id="v-aviso" role="alert"></div>
+        <div class="salida" id="v-salida" aria-live="polite"></div>
+        <div class="fila-resp" role="group" aria-label="Tu decisión">
+          <button type="button" class="opcion" id="v-bien" data-op="bien">La simplificación es correcta</button>
+          <button type="button" class="opcion" id="v-mal" data-op="mal">La simplificación tiene un error</button>
+        </div>
+        <div class="fb" id="v-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="v-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="v-marc">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Nivel 3 · Tema 1 · Exponentes · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   MOTOR COMÚN · Nivel 3 · Tema 1 · Exponentes
+   Monomios con coeficiente racional, operaciones exactas,
+   escritura visual + texto para lector de pantalla, y las
+   dos piezas de práctica (opción múltiple y respuesta escrita).
+   ============================================================ */
+"use strict";
+function $(id){ return document.getElementById(id); }
+function ale(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+function elige(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function mezcla(arr){
+  var a = arr.slice();
+  for (var i = a.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function mcd(a,b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a || 1; }
+
+var MENOS = "\u2212";
+function numTxt(n){ return n < 0 ? MENOS + Math.abs(n) : String(n); }
+function numVoz(n){ return n < 0 ? "menos " + Math.abs(n) : String(n); }
+
+/* ---------- Expresión visual: {h: HTML visible, s: texto hablado} ---------- */
+function X(h,s){ return {h:h, s:s}; }
+function ver(x){
+  return '<span class="ex"><span aria-hidden="true">' + x.h + '</span><span class="sr-only">' + x.s + '</span></span>';
+}
+function supH(e){ return "<sup>" + numTxt(e) + "</sup>"; }
+function potX(baseH, baseS, e){
+  if (e === 1) return X(baseH, baseS);
+  return X(baseH + supH(e), baseS + " elevado a la " + numVoz(e));
+}
+function parX(x, e){
+  var dentro = X("(" + x.h + ")", "abre paréntesis " + x.s + " cierra paréntesis");
+  if (e === undefined || e === null) return dentro;
+  return X(dentro.h + supH(e), dentro.s + " elevado a la " + numVoz(e));
+}
+function porX(a,b){ return X(a.h + ' <span class="signo">·</span> ' + b.h, a.s + " por " + b.s); }
+function entreX(a,b){ return X(a.h + ' <span class="signo">÷</span> ' + b.h, a.s + " entre " + b.s); }
+function igualX(a,b){ return X(a.h + ' <span class="signo">=</span> ' + b.h, a.s + " igual a " + b.s); }
+function fracX(n,d){
+  return X('<span class="frac"><span class="arriba">' + n.h + '</span><span class="abajo">' + d.h + '</span></span>',
+           n.s + " sobre " + d.s);
+}
+function txtX(t){ return X(t, t); }
+
+/* ---------- Monomios: coeficiente n/d y exponentes por variable ---------- */
+function M(n, d, e, orden){
+  e = e || {};
+  if (d < 0){ n = -n; d = -d; }
+  var g = mcd(n, d);
+  var o = [];
+  (orden || []).concat(Object.keys(e)).forEach(function(k){ if (o.indexOf(k) < 0) o.push(k); });
+  return {n:n/g, d:d/g, e:e, o:o};
+}
+function mono(c, e){ return M(c, 1, e || {}); }
+function copiaE(e){ var r = {}; for (var k in e) r[k] = e[k]; return r; }
+function mMul(A,B){
+  var e = copiaE(A.e);
+  for (var k in B.e) e[k] = (e[k] || 0) + B.e[k];
+  return M(A.n*B.n, A.d*B.d, e, A.o.concat(B.o));
+}
+function mPow(A,k){
+  var e = {};
+  for (var v in A.e) e[v] = A.e[v]*k;
+  return M(Math.pow(A.n,k), Math.pow(A.d,k), e, A.o);
+}
+function mDiv(A,B){
+  var e = copiaE(A.e);
+  for (var k in B.e) e[k] = (e[k] || 0) - B.e[k];
+  return M(A.n*B.d, A.d*B.n, e, A.o.concat(B.o));
+}
+function mIgual(A,B){
+  if (A.n !== B.n || A.d !== B.d) return false;
+  var ks = {}; var k;
+  for (k in A.e) if (A.e[k] !== 0) ks[k] = 1;
+  for (k in B.e) if (B.e[k] !== 0) ks[k] = 1;
+  for (k in ks) if ((A.e[k] || 0) !== (B.e[k] || 0)) return false;
+  return true;
+}
+/* Valor numérico exacto (fracción) al sustituir las variables */
+function mValor(A, env){
+  var n = A.n, d = A.d;
+  A.o.forEach(function(v){
+    var e = A.e[v] || 0, x = env[v];
+    if (e > 0) n *= Math.pow(x, e); else if (e < 0) d *= Math.pow(x, -e);
+  });
+  if (d < 0){ n = -n; d = -d; }
+  var g = mcd(n, d);
+  return {n:n/g, d:d/g};
+}
+function ratX(r){
+  if (r.d === 1) return X(numTxt(r.n), numVoz(r.n));
+  var s = r.n < 0 ? MENOS : "";
+  return X(s + Math.abs(r.n) + "/" + r.d, (r.n < 0 ? "menos " : "") + Math.abs(r.n) + " sobre " + r.d);
+}
+function ratIgual(a,b){ return a.n === b.n && a.d === b.d; }
+
+/* Partes de un monomio: coeficiente y variables con exponente (sin los de exponente 0) */
+function partesX(coef, vars, mostrarUno){
+  var h = "", s = [];
+  var hayVars = vars.length > 0;
+  if (coef === -1 && hayVars){ h += MENOS; s.push("menos"); }
+  else if (coef !== 1 || !hayVars || mostrarUno){ h += numTxt(coef); s.push(numVoz(coef)); }
+  vars.forEach(function(p){
+    var x = potX(p[0], p[0], p[1]);
+    h += x.h; s.push(x.s);
+  });
+  return X(h, s.join(" "));
+}
+/* Forma en línea: admite exponentes negativos (paso intermedio) */
+function mLinea(A, verCero){
+  var vars = [];
+  A.o.forEach(function(v){
+    var e = A.e[v];
+    if (e === undefined) return;
+    if (e !== 0 || verCero) vars.push([v, e]);
+  });
+  if (A.d !== 1){
+    var num = partesX(A.n < 0 ? -A.n : A.n, [], false);
+    var f = fracX(num, X(String(A.d), String(A.d)));
+    var resto = partesX(1, vars, false);
+    var h = (A.n < 0 ? MENOS : "") + f.h + (vars.length ? resto.h : "");
+    return X(h, (A.n < 0 ? "menos " : "") + f.s + (vars.length ? " por " + resto.s : ""));
+  }
+  return partesX(A.n, vars, false);
+}
+/* Forma final: solo exponentes positivos, como fracción si hace falta */
+function mFinal(A){
+  var arriba = [], abajo = [];
+  A.o.forEach(function(v){
+    var e = A.e[v] || 0;
+    if (e > 0) arriba.push([v, e]); else if (e < 0) abajo.push([v, -e]);
+  });
+  var neg = A.n < 0, nAbs = Math.abs(A.n);
+  if (A.d === 1 && abajo.length === 0) return partesX(A.n, arriba, false);
+  var num = partesX(nAbs, arriba, false);
+  var den = partesX(A.d, abajo, false);
+  var f = fracX(num, den);
+  return neg ? X(MENOS + f.h, "menos " + f.s) : f;
+}
+
+/* ---------- Fichas: cada factor de la base como una ficha visible ---------- */
+function fichas(base, cuantas, clase, tachadas){
+  var h = "";
+  for (var i = 0; i < cuantas; i++){
+    var c = "ficha" + (clase ? " " + clase : "") + (tachadas && i < tachadas ? " tachada" : "");
+    h += '<span class="' + c + '">' + base + "</span>";
+  }
+  return h;
+}
+
+/* ============================================================
+   PRÁCTICA DE OPCIÓN MÚLTIPLE
+   gen() devuelve { enun:HTML, opciones:[{x:{h,s}|html:.., ok:bool, fb:HTML}],
+                    sol:HTML (explicación), regla:"clave" }
+   ============================================================ */
+function PracticaOM(idContenedor, gen, cfg){
+  cfg = cfg || {};
+  var raiz = $(idContenedor);
+  var id = idContenedor;
+  raiz.innerHTML =
+    '<div class="enun" id="' + id + '-enun"></div>' +
+    '<div class="opciones" id="' + id + '-op" role="group" aria-labelledby="' + id + '-enun"></div>' +
+    '<div class="fb" id="' + id + '-fb" role="status"></div>' +
+    '<div class="fila-btn"><button type="button" class="btn" id="' + id + '-nuevo">Otro ejercicio</button></div>' +
+    '<p class="marcador" id="' + id + '-marc">Aciertos: 0 de 0</p>' +
+    (cfg.reglas ? '<div class="marcador-regla" id="' + id + '-reglas"></div>' : "");
+  var est = {aciertos:0, total:0, resuelta:false, q:null, reglas:{}};
+  if (cfg.reglas) cfg.reglas.forEach(function(r){ est.reglas[r[0]] = {nombre:r[1], a:0, t:0}; });
+
+  function pintaReglas(){
+    if (!cfg.reglas) return;
+    var h = '<table><caption>Aciertos por regla</caption><thead><tr><th scope="col">Regla</th><th scope="col">Aciertos</th></tr></thead><tbody>';
+    cfg.reglas.forEach(function(r){
+      var x = est.reglas[r[0]];
+      h += "<tr><td>" + x.nombre + "</td><td>" + x.a + " de " + x.t + "</td></tr>";
+    });
+    $(id + "-reglas").innerHTML = h + "</tbody></table>";
+  }
+  function nuevo(){
+    var q, vueltas = 0;
+    do { q = gen(); vueltas++; } while (est.q && q.enun === est.q.enun && vueltas < 10);
+    est.q = q; est.resuelta = false;
+    $(id + "-enun").innerHTML = q.enun;
+    var cont = $(id + "-op"); cont.innerHTML = "";
+    mezcla(q.opciones).forEach(function(op){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opcion";
+      b.setAttribute("aria-pressed", "false");
+      b.innerHTML = op.x ? ver(op.x) : op.html;
+      b._op = op;
+      b.addEventListener("click", function(){ responde(b); });
+      cont.appendChild(b);
+    });
+    $(id + "-fb").className = "fb"; $(id + "-fb").innerHTML = "";
+  }
+  function responde(btn){
+    if (est.resuelta) return;
+    est.resuelta = true; est.total++;
+    var q = est.q, ok = btn._op.ok;
+    Array.prototype.forEach.call($(id + "-op").children, function(b){
+      b.disabled = true;
+      if (b._op.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed", "true");
+    if (ok) est.aciertos++;
+    if (cfg.reglas && q.regla && est.reglas[q.regla]){
+      est.reglas[q.regla].t++; if (ok) est.reglas[q.regla].a++;
+    }
+    var fb = $(id + "-fb");
+    fb.className = "fb " + (ok ? "bien" : "mal");
+    fb.innerHTML = (ok ? "✓ Correcto. " : "✗ Todavía no. ") + (btn._op.fb ? btn._op.fb + " " : "") + (q.sol || "");
+    $(id + "-marc").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+    pintaReglas();
+  }
+  $(id + "-nuevo").addEventListener("click", function(){ nuevo(); $(id + "-op").firstChild.focus(); });
+  pintaReglas();
+  nuevo();
+  return {nuevo:nuevo};
+}
+
+/* ============================================================
+   PRÁCTICA DE RESPUESTA ESCRITA (un número entero)
+   gen() devuelve { enun:HTML, etiqueta:"texto del campo", resp:int,
+                    pista:function(valor)->HTML|null, sol:HTML }
+   Dos intentos: al primer error, pista; al segundo, la solución.
+   ============================================================ */
+function PracticaEscrita(idContenedor, gen){
+  var raiz = $(idContenedor), id = idContenedor;
+  raiz.innerHTML =
+    '<div class="enun" id="' + id + '-enun"></div>' +
+    '<div class="campos"><div class="campo">' +
+      '<label for="' + id + '-in" id="' + id + '-lab"></label>' +
+      '<input type="text" inputmode="numeric" autocomplete="off" id="' + id + '-in">' +
+    '</div></div>' +
+    '<div class="fila-btn">' +
+      '<button type="button" class="btn" id="' + id + '-ver">Verificar</button>' +
+      '<button type="button" class="btn-sec" id="' + id + '-nuevo">Otro ejercicio</button>' +
+    '</div>' +
+    '<div class="fb" id="' + id + '-fb" role="status"></div>' +
+    '<p class="marcador" id="' + id + '-marc">Aciertos: 0 de 0</p>';
+  var est = {aciertos:0, total:0, intentos:0, cerrada:false, q:null};
+  function lee(t){
+    t = String(t).trim().replace(/\u2212|–|—/g, "-").replace(/\s+/g, "");
+    return /^-?\d+$/.test(t) ? parseInt(t, 10) : NaN;
+  }
+  function nuevo(){
+    var q, vueltas = 0;
+    do { q = gen(); vueltas++; } while (est.q && q.enun === est.q.enun && vueltas < 10);
+    est.q = q; est.intentos = 0; est.cerrada = false;
+    $(id + "-enun").innerHTML = q.enun;
+    $(id + "-lab").textContent = q.etiqueta;
+    var inp = $(id + "-in"); inp.value = ""; inp.className = ""; inp.disabled = false;
+    $(id + "-ver").disabled = false;
+    $(id + "-fb").className = "fb"; $(id + "-fb").innerHTML = "";
+  }
+  function verifica(){
+    if (est.cerrada) return;
+    var inp = $(id + "-in"), v = lee(inp.value), fb = $(id + "-fb"), q = est.q;
+    if (isNaN(v)){
+      fb.className = "fb mal";
+      fb.innerHTML = "Escribe un número entero (puede llevar signo menos) y vuelve a pulsar «Verificar».";
+      inp.focus(); return;
+    }
+    est.intentos++;
+    if (v === q.resp){
+      est.cerrada = true; est.total++; est.aciertos++;
+      inp.className = "bien"; inp.disabled = true; $(id + "-ver").disabled = true;
+      fb.className = "fb bien"; fb.innerHTML = "✓ Correcto. " + q.sol;
+    } else if (est.intentos < 2){
+      inp.className = "error";
+      var p = q.pista ? q.pista(v) : null;
+      fb.className = "fb mal";
+      fb.innerHTML = "✗ Todavía no. " + (p || "Revisa la regla y prueba otra vez: tienes un intento más.");
+      inp.focus(); inp.select();
+    } else {
+      est.cerrada = true; est.total++;
+      inp.className = "error"; inp.disabled = true; $(id + "-ver").disabled = true;
+      fb.className = "fb mal"; fb.innerHTML = "✗ La respuesta era <strong>" + numTxt(q.resp) + "</strong>. " + q.sol;
+    }
+    $(id + "-marc").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  $(id + "-ver").addEventListener("click", verifica);
+  $(id + "-in").addEventListener("keydown", function(e){ if (e.key === "Enter") verifica(); });
+  $(id + "-nuevo").addEventListener("click", function(){ nuevo(); $(id + "-in").focus(); });
+  nuevo();
+  return {nuevo:nuevo};
+}
+
+/* ---------- Opciones de monomios sin repeticiones ----------
+   correcto: monomio; distractores: [[monomio, fb], ...]; forma: "final" | "linea" */
+function opcionesMono(correcto, distractores, fbBien, forma){
+  var pinta = forma === "linea" ? mLinea : mFinal;
+  var lista = [{x:pinta(correcto), ok:true, fb:fbBien || ""}];
+  var vistos = [correcto];
+  distractores.forEach(function(d){
+    if (lista.length >= 4) return;
+    var m = d[0];
+    for (var i = 0; i < vistos.length; i++) if (mIgual(vistos[i], m)) return;
+    vistos.push(m);
+    lista.push({x:pinta(m), ok:false, fb:d[1] || ""});
+  });
+  /* relleno de seguridad: variantes cercanas para llegar a cuatro opciones */
+  var v0 = correcto.o.filter(function(v){ return (correcto.e[v] || 0) !== 0; })[0];
+  var cambios = [1, -1, 2, 3, -2];
+  for (var i = 0; i < cambios.length && lista.length < 4; i++){
+    var e = copiaE(correcto.e), m;
+    if (v0){ e[v0] = e[v0] + cambios[i]; m = M(correcto.n, correcto.d, e, correcto.o); }
+    else m = M(correcto.n + cambios[i], correcto.d, e, correcto.o);
+    var repetido = false;
+    for (var j = 0; j < vistos.length; j++) if (mIgual(vistos[j], m)) repetido = true;
+    if (!repetido){ vistos.push(m); lista.push({x:pinta(m), ok:false, fb:""}); }
+  }
+  return lista;
+}
+
+/* ---------- Pasos numerados (solución mostrada) ---------- */
+function pasosHTML(lista){
+  return '<div class="pasos">' + lista.map(function(p, i){
+    return '<div class="paso"><span class="n" aria-hidden="true">' + (i+1) + "</span>" + p + "</div>";
+  }).join("") + "</div>";
+}
+
+/* ---------- Ayudas comunes de los módulos ---------- */
+var VARS = ["x","y","a","m","n","b"];
+function xv(v,e){ return mono(1, (function(){ var o = {}; o[v] = e; return o; })()); }
+function unicas(lista){
+  var vistos = {}, r = [];
+  lista.forEach(function(o){
+    var clave = o.x ? o.x.h : o.html;
+    if (vistos[clave] || r.length >= 4) return;
+    vistos[clave] = true; r.push(o);
+  });
+  return r;
+}
+function numOp(v, ok, fb){ return {x:X(numTxt(v), numVoz(v)), ok:ok, fb:fb || ""}; }
+function leeEntero(id, min, max, aviso, nombre){
+  var v = parseInt($(id).value, 10);
+  if (isNaN(v) || v < min || v > max){
+    $(id).classList.add("error");
+    $(aviso).className = "caja-aviso visible";
+    $(aviso).textContent = "El " + nombre + " debe ser un número entero entre " + min + " y " + max + ".";
+    return null;
+  }
+  $(id).classList.remove("error");
+  return v;
+}
+function limpiaAviso(aviso){ $(aviso).className = "caja-aviso"; $(aviso).textContent = ""; }
+
+
+function fmt(n){ return (n < 0 ? MENOS : "") + Math.abs(n).toLocaleString("en-US"); }
+
+/* ---------- Navegación: índice, anclas y abrir/cerrar ---------- */
+function iniciaNavegacion(){
+  function abrePorHash(){
+    var h = decodeURIComponent(window.location.hash.replace("#", ""));
+    if (!h) return;
+    var el = document.getElementById(h);
+    if (el && el.tagName.toLowerCase() === "details"){
+      el.open = true;
+      el.scrollIntoView({block:"start"});
+    }
+  }
+  document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(){
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el && el.tagName.toLowerCase() === "details") el.open = true;
+    });
+  });
+  $("abrir-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+  });
+  $("cerrar-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+  });
+  window.addEventListener("hashchange", abrePorHash);
+  abrePorHash();
+}
+
+/* ============================================================
+   LECCIÓN 1.2 · Cociente, exponente cero y exponentes negativos
+   ============================================================ */
+function e1(v, k){ var o = {}; o[v] = k; return o; }
+function valX(r){
+  if (r.d === 1) return X(fmt(r.n), numVoz(r.n));
+  return X((r.n < 0 ? MENOS : "") + fmt(Math.abs(r.n)) + "/" + fmt(r.d), (r.n < 0 ? "menos " : "") + Math.abs(r.n) + " sobre " + r.d);
+}
+function htmlOp(h, ok, fb){ return {html:h, ok:ok, fb:fb || ""}; }
+
+/* ---------- MÓDULO 1 · Cancelador de factores ---------- */
+function actualizaCociente(){
+  var m = leeEntero("co-m", 1, 7, "co-aviso", "exponente de arriba");
+  var n = m === null ? null : leeEntero("co-n", 1, 7, "co-aviso", "exponente de abajo");
+  if (m === null || n === null){ $("co-fichas").innerHTML = ""; $("co-salida").innerHTML = ""; return; }
+  limpiaAviso("co-aviso");
+  var k = Math.min(m, n);
+  $("co-fichas").innerHTML =
+    '<div class="fichas">' + fichas("a", m, "", k) + "</div>" +
+    '<div class="barra"></div>' +
+    '<div class="fichas">' + fichas("a", n, "b", k) + "</div>";
+  var cuenta = ver(fracX(potX("a","a",m), potX("a","a",n)));
+  var h = '<div class="linea">Se cancelan ' + k + (k === 1 ? " pareja" : " parejas") + " de factores (las fichas tachadas).</div>";
+  if (m > n){
+    h += '<div class="linea">' + cuenta + " = " + ver(potX("a","a",m-n)) + "</div>";
+    h += '<div class="linea veredicto">Quedan ' + (m-n) + (m-n === 1 ? " factor" : " factores") + " arriba: " + m + " − " + n + " = " + (m-n) + ".</div>";
+  } else if (m === n){
+    h += '<div class="linea">' + cuenta + " = 1, porque no queda ningún factor.</div>";
+    h += '<div class="linea veredicto">La regla da ' + m + " − " + n + " = 0, es decir, a<sup>0</sup>. Las dos respuestas tienen que coincidir: a<sup>0</sup> = 1. Lo verás en el módulo 2.</div>";
+  } else {
+    h += '<div class="linea">' + cuenta + " = " + ver(fracX(X("1","1"), potX("a","a",n-m))) + "</div>";
+    h += '<div class="linea veredicto">Quedan ' + (n-m) + (n-m === 1 ? " factor" : " factores") + " abajo. La regla da " + m + " − " + n + " = " + numTxt(m-n) +
+         ": a<sup>" + numTxt(m-n) + "</sup> significa lo mismo que 1/a<sup>" + (n-m) + "</sup>. Lo verás en el módulo 3.</div>";
+  }
+  $("co-salida").innerHTML = h;
+}
+
+function genCociente1(){
+  var numerica = Math.random() < 0.35, v = elige(VARS), m, n, base;
+  n = ale(2, 6); m = n + ale(1, 7);
+  base = numerica ? String(elige([2,3,5,10])) : v;
+  return {
+    enun: ver(igualX(entreX(potX(base,base,m), potX(base,base,n)), X(base + "<sup>?</sup>", base + " elevado a la cuánto"))),
+    etiqueta: "Exponente del resultado", resp: m - n,
+    pista: function(x){
+      if (x === n - m) return "Restaste al revés: siempre es el exponente de arriba menos el de abajo.";
+      if (x === m + n) return "Sumaste los exponentes; al dividir se restan.";
+      if (n !== 0 && x === m / n) return "Dividiste los exponentes; se restan.";
+      return null;
+    },
+    sol: "Misma base: " + m + " − " + n + " = " + (m-n) + "." + (numerica ? " La base " + base + " no cambia." : "")
+  };
+}
+
+function genCociente2(){
+  var v = elige(["x","a","m"]), c2 = ale(2, 6), q = ale(2, 6), c1 = c2*q, b = ale(1, 5), a = b + ale(1, 6);
+  var A = mono(c1, e1(v, a)), B = mono(c2, e1(v, b)), R = mDiv(A, B);
+  var dis = [
+    [mono(c1 - c2, R.e), "Restaste los coeficientes; los números se dividen: " + c1 + " ÷ " + c2 + " = " + q + "."],
+    [mono(c1, R.e), "Falta dividir los coeficientes."],
+    [mono(q, e1(v, a + b)), "Sumaste los exponentes; al dividir se restan."]
+  ];
+  if (a % b === 0 && a / b !== a - b) dis.push([mono(q, e1(v, a / b)), "Dividiste los exponentes; se restan."]);
+  return {
+    enun: "Simplifica " + ver(fracX(mLinea(A), mLinea(B))) + ".",
+    opciones: opcionesMono(R, dis),
+    sol: "Coeficientes: " + c1 + " ÷ " + c2 + " = " + q + ". Exponentes de " + v + ": " + a + " − " + b + " = " + (a-b) + "."
+  };
+}
+
+/* ---------- MÓDULO 2 · Patrón hacia el cero ---------- */
+function actualizaCero(){
+  var b = parseInt($("ce-base").value, 10);
+  var cab = "", val = "", div = "";
+  for (var e = 4; e >= 0; e--){
+    var c = e === 0 ? ' class="cero"' : "";
+    cab += '<th scope="col"' + (e === 0 ? ' class="cero"' : "") + ">" + b + "<sup>" + e + "</sup></th>";
+    val += "<td" + c + ">" + fmt(Math.pow(b, e)) + "</td>";
+    div += "<td class=\"dividir\">" + (e > 0 ? "÷ " + b + " →" : "") + "</td>";
+  }
+  $("ce-tabla").innerHTML =
+    '<table class="tabla-patron"><caption>Potencias decrecientes de ' + b + ": cada paso a la derecha divide entre " + b + ".</caption>" +
+    "<thead><tr>" + cab + "</tr></thead><tbody><tr>" + val + "</tr><tr>" + div + "</tr></tbody></table>" +
+    '<p class="nota" style="text-align:center">' + b + " ÷ " + b + " = 1: el patrón llega de forma natural a " + b + "<sup>0</sup> = 1.</p>";
+}
+
+function genCero(){
+  var t = ale(1, 7), k = ale(2, 99), c = ale(2, 9), v = elige(["x","y","a"]), a = ale(2, 8);
+  var n = function(x){ return {x:X(fmt(x), numVoz(x))}; };
+  function op(x, ok, fb){ var o = n(x); o.ok = ok; o.fb = fb || ""; return o; }
+  if (t === 1) return {enun:"¿Cuánto vale " + ver(potX(String(k), String(k), 0)) + "?",
+    opciones: unicas([op(1, true), op(0, false, "El exponente cero no anula el número: indica que se ha dividido la potencia entre sí misma."), op(k, false, "Con exponente cero el valor siempre es 1, sea cual sea la base (distinta de cero).")]),
+    sol: "Cualquier base distinta de cero con exponente 0 vale 1."};
+  if (t === 2) return {enun:"¿Cuánto vale " + ver(parX(X(c + v, c + " " + v), 0)) + "?",
+    opciones: [op(1, true), op(0, false, "El exponente cero da 1, no 0."), op(c, false, "El cero afecta a todo el paréntesis, coeficiente incluido."), htmlOp(ver(X(c + v, c + " " + v)), false, "El exponente cero no desaparece sin más: convierte todo el paréntesis en 1.")],
+    sol: "El exponente 0 afecta a todo lo que está dentro del paréntesis: (" + c + v + ")<sup>0</sup> = 1."};
+  if (t === 3) return {enun:"¿Cuánto vale " + ver(X(c + v + "<sup>0</sup>", c + " " + v + " elevado a la 0")) + "?",
+    opciones: [op(c, true), op(1, false, "El cero solo afecta a la " + v + ", no al " + c + ": sin paréntesis, el coeficiente queda fuera."), op(0, false, v + "<sup>0</sup> vale 1, no 0."), htmlOp(ver(X(c + v, c + " " + v)), false, v + "<sup>0</sup> no es " + v + ": es 1.")],
+    sol: c + v + "<sup>0</sup> = " + c + " · " + v + "<sup>0</sup> = " + c + " · 1 = " + c + "."};
+  if (t === 4) return {enun:"¿Cuánto vale " + ver(potX(MENOS + k, "menos " + k, 0)) + "?",
+    opciones: unicas([op(-1, true), op(1, false, "Sin paréntesis, la base es solo el " + k + ": el signo menos queda fuera y se conserva."), op(0, false, "El exponente cero da 1, no 0."), op(-k, false, "")]),
+    sol: "La base es " + k + ": " + MENOS + k + "<sup>0</sup> = " + MENOS + "(" + k + "<sup>0</sup>) = " + MENOS + "1."};
+  if (t === 5) return {enun:"¿Cuánto vale " + ver(potX("(" + MENOS + k + ")", "abre paréntesis menos " + k + " cierra paréntesis", 0)) + "?",
+    opciones: unicas([op(1, true), op(-1, false, "Con paréntesis, la base es " + MENOS + k + " completa, y cualquier base distinta de cero con exponente 0 vale 1."), op(0, false, "El exponente cero da 1, no 0."), op(-k, false, "")]),
+    sol: "La base es " + MENOS + k + ", distinta de cero: (" + MENOS + k + ")<sup>0</sup> = 1."};
+  if (t === 6) return {enun:"Simplifica " + ver(entreX(potX(v,v,a), potX(v,v,a))) + ".",
+    opciones: [op(1, true), op(0, false, "Un número distinto de cero dividido entre sí mismo da 1, no 0."), htmlOp(ver(X(v, v)), false, "No queda ningún factor de " + v + ": se cancelan todos."), htmlOp(ver(potX(v,v,a)), false, "Los exponentes se restan: " + a + " − " + a + " = 0.")],
+    sol: "Por la regla del cociente, " + v + "<sup>" + a + "−" + a + "</sup> = " + v + "<sup>0</sup> = 1."};
+  return {enun:"Simplifica " + ver(porX(potX(v,v,0), potX(v,v,a))) + ".",
+    opciones: [{x:potX(v,v,a), ok:true, fb:""}, op(0, false, v + "<sup>0</sup> vale 1, no 0: no anula el producto."), op(1, false, "Solo " + v + "<sup>0</sup> vale 1; la otra potencia se conserva."), {x:potX(v,v,a+1), ok:false, fb:"El exponente cero suma 0, no 1."}],
+    sol: v + "<sup>0</sup> · " + v + "<sup>" + a + "</sup> = 1 · " + v + "<sup>" + a + "</sup> = " + v + "<sup>" + a + "</sup>. Con la regla del producto: 0 + " + a + " = " + a + "."};
+}
+
+/* ---------- MÓDULO 3 · Exponentes negativos ---------- */
+function actualizaNegativos(){
+  var b = parseInt($("ne-base").value, 10), n = parseInt($("ne-n").value, 10);
+  var cab = "", val = "";
+  for (var e = 3; e >= -4; e--){
+    var cl = e === 0 ? ' class="cero"' : (e < 0 ? ' class="neg"' : "");
+    cab += "<th scope=\"col\">" + b + "<sup>" + numTxt(e) + "</sup></th>";
+    val += "<td" + cl + ">" + (e >= 0 ? fmt(Math.pow(b, e)) : "1/" + fmt(Math.pow(b, -e))) + "</td>";
+  }
+  $("ne-tabla").innerHTML = '<div style="overflow-x:auto"><table class="tabla-patron"><caption>Potencias de ' + b +
+    " desde el exponente 3 hasta el −4: cada paso a la derecha divide entre " + b + ".</caption><thead><tr>" + cab +
+    "</tr></thead><tbody><tr>" + val + "</tr></tbody></table></div>";
+  var p = Math.pow(b, n), dec;
+  if (b === 3) dec = "≈ " + (1/p).toFixed(4) + " (decimal periódico)";
+  else dec = "= " + String(1/p);
+  $("ne-salida").innerHTML =
+    '<div class="linea">' + ver(igualX(potX(String(b), String(b), -n), fracX(X("1","1"), potX(String(b), String(b), n)))) +
+    " = " + ver(fracX(X("1","1"), X(fmt(p), String(p)))) + " " + dec + "</div>" +
+    '<div class="linea veredicto">El resultado es un número positivo y pequeño: el exponente −' + n + " dice «recíproco de " + b + "<sup>" + n + "</sup>», no «negativo».</div>";
+}
+
+function genNegativos(){
+  var t = ale(1, 5), v = elige(["x","y","a","m"]), n = ale(2, 5);
+  if (t === 1){
+    var b = ale(2, 5), k = ale(1, 3); if (b === 2 && k === 1) k = 2;
+    var p = Math.pow(b, k);
+    var f = function(num, den){ return X(num + "/" + den, num + " sobre " + den); };
+    return {enun:"¿Cuánto vale " + ver(potX(String(b), String(b), -k)) + "?",
+      opciones: unicas([
+        {x:f(1, p), ok:true},
+        {x:X(MENOS + p, "menos " + p), ok:false, fb:"El exponente negativo no hace negativo al número: indica el recíproco."},
+        {x:X(MENOS + (b*k), "menos " + (b*k)), ok:false, fb:"No se multiplica la base por el exponente, y el resultado no es negativo."},
+        {x:f(1, b*k), ok:false, fb:"El recíproco es de la potencia " + b + "<sup>" + k + "</sup> = " + p + ", no del producto " + b + " · " + k + "."},
+        {x:X(String(p), String(p)), ok:false, fb:"Falta tomar el recíproco."}
+      ]),
+      sol: b + "<sup>" + MENOS + k + "</sup> = 1/" + b + "<sup>" + k + "</sup> = 1/" + p + "."};
+  }
+  if (t === 2) return {enun:"¿A qué equivale " + ver(potX(v,v,-n)) + "?",
+    opciones: [
+      {x:fracX(X("1","1"), potX(v,v,n)), ok:true},
+      {x:X(MENOS + v + "<sup>" + n + "</sup>", "menos " + v + " elevado a la " + n), ok:false, fb:"El signo del exponente no pasa al número."},
+      {x:fracX(X(String(n), String(n)), X(v, v)), ok:false, fb:"El exponente no baja como coeficiente: " + v + " se queda con su exponente " + n + " en el denominador."},
+      {x:fracX(X("1","1"), potX(v,v,-n)), ok:false, fb:"Al cruzar la barra de fracción, el signo del exponente cambia."}],
+    sol: v + "<sup>" + MENOS + n + "</sup> = 1/" + v + "<sup>" + n + "</sup>."};
+  if (t === 3) return {enun:"¿A qué equivale " + ver(fracX(X("1","1"), potX(v,v,-n))) + "?",
+    opciones: [
+      {x:potX(v,v,n), ok:true},
+      {x:fracX(X("1","1"), potX(v,v,n)), ok:false, fb:"Si el factor sube, su exponente cambia de signo y el 1 de arriba ya no hace falta."},
+      {x:X(MENOS + v + "<sup>" + n + "</sup>", "menos " + v + " elevado a la " + n), ok:false, fb:"El resultado no es negativo."},
+      {x:potX(v,v,-n), ok:false, fb:"Al cruzar la barra, el exponente negativo pasa a positivo."}],
+    sol: "Al subir " + v + "<sup>" + MENOS + n + "</sup> al numerador, el exponente cambia de signo: " + v + "<sup>" + n + "</sup>."};
+  if (t === 4){
+    var c = ale(2, 9);
+    return {enun:"¿A qué equivale " + ver(X(c + v + "<sup>" + MENOS + n + "</sup>", c + " " + v + " elevado a la menos " + n)) + "?",
+      opciones: [
+        {x:fracX(X(String(c), String(c)), potX(v,v,n)), ok:true},
+        {x:fracX(X("1","1"), X(c + v + "<sup>" + n + "</sup>", c + " " + v + " elevado a la " + n)), ok:false, fb:"El exponente negativo solo afecta a la " + v + ": el " + c + " se queda arriba."},
+        {x:X(MENOS + c + v + "<sup>" + n + "</sup>", "menos " + c + " " + v + " elevado a la " + n), ok:false, fb:"El signo del exponente no hace negativo al término."},
+        {x:X(c + v + "<sup>" + n + "</sup>", c + " " + v + " elevado a la " + n), ok:false, fb:"Falta llevar la " + v + " al denominador."}],
+      sol: c + v + "<sup>" + MENOS + n + "</sup> = " + c + " · 1/" + v + "<sup>" + n + "</sup> = " + c + "/" + v + "<sup>" + n + "</sup>."};
+  }
+  var a = ale(1, 6), bb = ale(2, 8);
+  var R = mMul(xv(v, a), xv(v, -bb));
+  return {enun:"Simplifica " + ver(porX(potX(v,v,a), potX(v,v,-bb))) + " y deja el resultado sin exponentes negativos.",
+    opciones: opcionesMono(R, [
+      [xv(v, a + bb), "El exponente " + MENOS + bb + " es negativo: sumarlo es restar " + bb + "."],
+      [xv(v, -(a + bb)), ""],
+      [xv(v, bb - a), "Revisa el signo: " + a + " + (" + MENOS + bb + ") = " + numTxt(a - bb) + "."]
+    ]),
+    sol: "Regla del producto: " + a + " + (" + MENOS + bb + ") = " + numTxt(a - bb) + (a - bb < 0 ? ", y el exponente negativo se pasa al denominador." : a - bb === 0 ? ", y " + v + "<sup>0</sup> = 1." : ".")};
+}
+
+/* ---------- MÓDULO 4 · ¿Qué regla se aplicó? ---------- */
+var REGLAS5 = [["producto","Producto de potencias"],["potpot","Potencia de una potencia"],["potprod","Potencia de un producto"],
+               ["cociente","Cociente de potencias"],["cero","Exponente cero"],["negativo","Exponente negativo"]];
+function genCinco(){
+  var r = elige(REGLAS5), v = elige(["x","y","a"]), paso;
+  var a = ale(2, 7), b = ale(2, 6), c = ale(2, 5);
+  if (r[0] === "producto") paso = igualX(porX(potX(v,v,a), potX(v,v,b)), potX(v,v,a+b));
+  else if (r[0] === "potpot") paso = igualX(parX(potX(v,v,a), b), potX(v,v,a*b));
+  else if (r[0] === "potprod") paso = igualX(parX(X(c + v, c + " " + v), b > 4 ? 3 : b), X(Math.pow(c, b > 4 ? 3 : b) + v + "<sup>" + (b > 4 ? 3 : b) + "</sup>", Math.pow(c, b > 4 ? 3 : b) + " " + v + " elevado a la " + (b > 4 ? 3 : b)));
+  else if (r[0] === "cociente") paso = igualX(entreX(potX(v,v,a+b), potX(v,v,b)), potX(v,v,a));
+  else if (r[0] === "cero") paso = igualX(parX(X(c + v, c + " " + v), 0), X("1","1"));
+  else paso = igualX(potX(v,v,-a), fracX(X("1","1"), potX(v,v,a)));
+  var otras = mezcla(REGLAS5.filter(function(x){ return x[0] !== r[0]; })).slice(0, 3);
+  var ops = [htmlOp(r[1], true)].concat(otras.map(function(o){ return htmlOp(o[1], false); }));
+  var porque = {
+    producto:"Dos potencias de la misma base multiplicadas: los exponentes se suman.",
+    potpot:"Una potencia elevada a otra: los exponentes se multiplican.",
+    potprod:"Un producto elevado a un exponente: el exponente se reparte a cada factor, coeficiente incluido.",
+    cociente:"Dos potencias de la misma base divididas: los exponentes se restan.",
+    cero:"Cualquier base distinta de cero con exponente 0 vale 1.",
+    negativo:"El exponente negativo indica el recíproco de la potencia positiva."
+  };
+  return {enun:"¿Qué regla justifica este paso? " + ver(paso), opciones:ops, sol:porque[r[0]], regla:r[0]};
+}
+
+/* ---------- MÓDULO 5 · Verificación numérica ---------- */
+var V = {caso:null, resuelta:false, aciertos:0, total:0};
+function genCaso(){
+  var t = ale(1, 5), bien = Math.random() < 0.5, orig, R, P, error;
+  if (t === 1){
+    var c1 = ale(2, 5), c2 = ale(2, 5), a = ale(2, 4), b = ale(2, 4);
+    var A = mono(c1, {x:a}), B = mono(c2, {x:b});
+    orig = porX(parX(mLinea(A)), parX(mLinea(B))); R = mMul(A, B);
+    if (Math.random() < 0.5){ P = mono(c1*c2, {x:a*b}); error = "Se multiplicaron los exponentes; en un producto se suman."; }
+    else { P = mono(c1 + c2, {x:a+b}); error = "Se sumaron los coeficientes; se multiplican."; }
+    if (a === 2 && b === 2){ P = mono(c1 + c2, {x:4}); error = "Se sumaron los coeficientes; se multiplican."; }
+  } else if (t === 2){
+    var c = ale(2, 4), a2 = ale(1, 3), n = ale(2, 3), A2 = mono(c, {x:a2});
+    orig = parX(mLinea(A2), n); R = mPow(A2, n);
+    P = mono(c, R.e); error = "Faltó elevar el coeficiente: " + c + "<sup>" + n + "</sup> = " + Math.pow(c, n) + ".";
+  } else if (t === 3){
+    var b3 = ale(2, 4), a3 = b3 + ale(1, 4);
+    orig = entreX(potX("x","x",a3), potX("x","x",b3)); R = xv("x", a3 - b3);
+    P = xv("x", b3 - a3); error = "Se restó al revés: es el exponente de arriba menos el de abajo.";
+  } else if (t === 4){
+    var a4 = ale(2, 5), b4 = ale(1, 4); if (b4 === a4) b4 = a4 + 1;
+    orig = porX(potX("x","x",a4), potX("x","x",-b4)); R = xv("x", a4 - b4);
+    P = xv("x", a4 + b4); error = "Se ignoró el signo del exponente negativo: " + a4 + " + (" + MENOS + b4 + ") = " + numTxt(a4 - b4) + ".";
+  } else {
+    var k = ale(2, 7), a5 = ale(2, 5);
+    orig = porX(X(k + "x<sup>0</sup>", k + " x elevado a la 0"), potX("x","x",a5)); R = mono(k, {x:a5});
+    P = xv("x", a5); error = "El exponente cero solo afecta a la x: " + k + "x<sup>0</sup> vale " + k + ", no 1.";
+  }
+  if (bien) P = R;
+  return {orig:orig, R:R, P:P, bien:mIgual(P, R), error:error};
+}
+function pintaCaso(){
+  V.caso = genCaso(); V.resuelta = false;
+  $("v-enun").innerHTML = "Alguien simplificó así: " + ver(igualX(V.caso.orig, mFinal(V.caso.P)));
+  $("v-salida").innerHTML = ""; $("v-fb").className = "fb"; $("v-fb").innerHTML = "";
+  ["v-bien","v-mal"].forEach(function(id){ $(id).className = "opcion"; $(id).disabled = false; $(id).setAttribute("aria-pressed","false"); });
+  limpiaAviso("v-aviso"); $("v-x").classList.remove("error");
+}
+function pruebaValor(x){
+  var o = mValor(V.caso.R, {x:x}), p = mValor(V.caso.P, {x:x});
+  var h = '<div class="linea">Con x = ' + numTxt(x) + ", la expresión original vale <strong>" + ver(valX(o)) + "</strong>.</div>" +
+          '<div class="linea">Con x = ' + numTxt(x) + ", la simplificación propuesta vale <strong>" + ver(valX(p)) + "</strong>.</div>";
+  h += '<div class="linea veredicto">' + (ratIgual(o, p)
+        ? "Los dos valores coinciden." + (Math.abs(x) === 1 ? " Pero con x = " + numTxt(x) + " casi todas las potencias dan lo mismo: prueba con 2 o con 3 antes de fiarte." : " Es buena señal; si coinciden también con otro valor, la simplificación es casi con seguridad correcta.")
+        : "Los valores no coinciden: la simplificación tiene un error.") + "</div>";
+  return h;
+}
+function probar(){
+  var x = leeEntero("v-x", -5, 5, "v-aviso", "valor de prueba");
+  if (x === null) return;
+  if (x === 0){
+    $("v-x").classList.add("error");
+    $("v-aviso").className = "caja-aviso visible";
+    $("v-aviso").textContent = "Con x = 0 hay divisiones entre cero o potencias sin definir. Elige otro valor, como 2 o 3.";
+    return;
+  }
+  limpiaAviso("v-aviso");
+  $("v-salida").innerHTML = pruebaValor(x);
+}
+function decide(btn){
+  if (V.resuelta) return;
+  V.resuelta = true; V.total++;
+  var dijoBien = btn.getAttribute("data-op") === "bien", ok = dijoBien === V.caso.bien;
+  if (ok) V.aciertos++;
+  $("v-bien").disabled = true; $("v-mal").disabled = true;
+  var correcto = V.caso.bien ? "v-bien" : "v-mal";
+  $(correcto).className = "opcion correcta";
+  if (btn.id !== correcto) btn.className = "opcion incorrecta";
+  btn.setAttribute("aria-pressed","true");
+  var expl = V.caso.bien
+    ? "La simplificación es correcta: " + ver(igualX(V.caso.orig, mFinal(V.caso.R))) + "."
+    : "La simplificación tiene un error. " + V.caso.error + " Lo correcto es " + ver(mFinal(V.caso.R)) + ".";
+  $("v-fb").className = "fb " + (ok ? "bien" : "mal");
+  $("v-fb").innerHTML = (ok ? "✓ Correcto. " : "✗ Todavía no. ") + expl;
+  if (!$("v-salida").innerHTML) $("v-salida").innerHTML = pruebaValor(2);
+  $("v-marc").textContent = "Aciertos: " + V.aciertos + " de " + V.total;
+}
+
+/* ---------- Arranque ---------- */
+["co-m","co-n"].forEach(function(id){ $(id).addEventListener("input", actualizaCociente); });
+actualizaCociente();
+PracticaEscrita("p-cociente1", genCociente1);
+PracticaOM("p-cociente2", genCociente2);
+
+$("ce-base").addEventListener("change", actualizaCero);
+actualizaCero();
+PracticaOM("p-cero", genCero);
+
+$("ne-base").addEventListener("change", actualizaNegativos);
+$("ne-n").addEventListener("change", actualizaNegativos);
+actualizaNegativos();
+PracticaOM("p-negativos", genNegativos);
+
+PracticaOM("p-cinco", genCinco, {reglas:REGLAS5});
+
+$("v-probar").addEventListener("click", probar);
+$("v-x").addEventListener("keydown", function(e){ if (e.key === "Enter") probar(); });
+$("v-bien").addEventListener("click", function(){ decide($("v-bien")); });
+$("v-mal").addEventListener("click", function(){ decide($("v-mal")); });
+$("v-nuevo").addEventListener("click", function(){ pintaCaso(); $("v-x").focus(); });
+pintaCaso();
+
+iniciaNavegacion();
+
+</script>
+</body>
+</html>

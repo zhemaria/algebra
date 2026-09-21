@@ -1,0 +1,1180 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 1.1 — Regla del producto, potencia de potencia y potencia de un producto
+  Nivel 3 · Spanish ASE Math 3 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #notacion · #producto · #potencia-potencia · #potencia-producto · #tres-reglas
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 1.1: regla del producto, potencia de potencia y potencia de un producto</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 1.1 del Nivel 3: notación exponencial, regla del producto, potencia de una potencia, potencia de un producto y expresiones mixtas.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+
+  :root{
+    --tema:#1a237e; --tema-d:#0e1452; --tema-bg:#e8eaf6; --tema-bg2:#c5cae9;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#004d40;border-color:#004d40;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:96px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* fracción algebraica */
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 6px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 8px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;
+                 text-decoration-color:#b71c1c;color:#b71c1c;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} }
+
+  /* ---------- Añadidos de la serie del Nivel 3 · Tema 1 ---------- */
+  .ex{white-space:nowrap;}
+  sup{font-size:.68em;line-height:0;position:relative;top:-.55em;vertical-align:baseline;font-weight:700;}
+  .expr-grande{text-align:center;font-size:24px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .enun .ex, .opcion .ex, .salida .ex{font-size:18px;}
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 4px;}
+  .frac .arriba{display:block;padding:1px 8px;border-bottom:2px solid currentColor;}
+  .frac .abajo{display:block;padding:1px 8px;}
+  .fichas{display:flex;flex-wrap:wrap;align-items:center;gap:6px;justify-content:center;margin:14px 0;font-size:18px;}
+  .ficha{display:inline-flex;align-items:center;justify-content:center;min-width:38px;height:38px;padding:0 6px;
+         border-radius:8px;font-weight:700;border:2px solid var(--tema);background:var(--tema-bg);color:var(--tema-d);}
+  .ficha.b{border-color:#00695c;background:#e0f2f1;color:#004d40;}
+  .ficha.tachada{border-color:#b71c1c;background:#ffebee;color:#b71c1c;text-decoration:line-through;text-decoration-thickness:3px;}
+  .grupo{display:inline-flex;gap:4px;align-items:center;padding:4px 6px;border:2px dashed var(--tema-bg2);border-radius:10px;}
+  .signo{font-weight:700;font-size:20px;color:var(--tema-d);padding:0 2px;}
+  .linea-frac{display:flex;flex-direction:column;align-items:center;gap:8px;margin:14px 0;}
+  .linea-frac .barra{width:100%;max-width:520px;border-top:3px solid var(--tema-d);}
+  .campo input[type="text"]{width:120px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input.bien{border-color:#1b5e20;background:#e8f5e9;}
+  table.reglas td .ex{font-size:16px;}
+  .marcador-regla{margin-top:12px;}
+  .marcador-regla table{border-collapse:collapse;font-size:14px;}
+  .marcador-regla caption{text-align:left;font-size:14px;color:var(--gris);padding-bottom:4px;}
+  .marcador-regla th,.marcador-regla td{border:1px solid #c8c8c8;padding:5px 10px;text-align:left;}
+  .marcador-regla th{background:var(--tema-bg);color:var(--tema-d);}
+  .tarjeta-ext{display:block;text-decoration:none;color:var(--txt);border:2px solid var(--tema-bg2);border-radius:10px;
+               padding:14px 18px;background:#fff;margin:12px 0;}
+  .tarjeta-ext:hover{border-color:var(--acento);background:#f2fbfa;}
+  .tarjeta-ext strong{display:block;color:var(--tema-d);font-size:17px;}
+  .tarjeta-ext span{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
+  .tarjeta-ext .abrir{color:var(--acento);font-weight:700;margin-top:8px;}
+  .paso .regla{display:inline-block;font-size:13px;font-weight:700;color:var(--tema-d);background:var(--tema-bg);
+               border-radius:12px;padding:0 8px;margin-left:6px;}
+  .tabla-patron{border-collapse:collapse;margin:12px auto;font-size:17px;}
+  .tabla-patron caption{font-size:14px;color:var(--gris);padding-bottom:6px;}
+  .tabla-patron th,.tabla-patron td{border:1px solid #c8c8c8;padding:8px 14px;text-align:center;min-width:64px;}
+  .tabla-patron th{background:var(--tema-bg);color:var(--tema-d);}
+  .tabla-patron td.neg{background:#fff8e1;}
+  .tabla-patron td.cero{background:#e8f5e9;font-weight:700;}
+  .dividir{font-size:13px;color:var(--gris);}
+  .fila-resp{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+  .btn:disabled,.btn-sec:disabled{background:#eeeeee;color:#424242;border-color:#9e9e9e;cursor:not-allowed;}
+  input:disabled,select:disabled{background:#f3f3f3;cursor:not-allowed;}
+
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 3 · Tema 1 · Exponentes</div>
+    <h1>Lección 1.1 · Regla del producto, potencia de potencia y potencia de un producto</h1>
+    <div class="meta">Cinco prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#notacion">La notación exponencial</a></li>
+      <li><a href="#producto">La regla del producto</a></li>
+      <li><a href="#potencia-potencia">La potencia de una potencia</a></li>
+      <li><a href="#potencia-producto">La potencia de un producto</a></li>
+      <li><a href="#tres-reglas">Las tres reglas juntas</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 · #notacion ============ -->
+  <details class="modulo" id="notacion" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La notación exponencial</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En una potencia a<sup>n</sup>, la <strong>base</strong> a es el factor que se repite y el <strong>exponente</strong> n
+      dice cuántas veces se repite. <strong>El exponente cuenta factores</strong>: si sabes contar los factores, siempre
+      llegas al exponente correcto, aunque no recuerdes la regla.</p>
+
+      <h3>Explorador de potencias</h3>
+      <p>Elige una base y un exponente, y observa la forma desarrollada y el valor.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="n-base">Base</label>
+            <select id="n-base">
+              <option value="2">2</option><option value="3" selected>3</option><option value="5">5</option>
+              <option value="10">10</option><option value="-2">−2</option><option value="-3">−3</option>
+              <option value="x">x</option><option value="a">a</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="n-exp">Exponente (de 1 a 8)</label>
+            <input type="number" id="n-exp" value="4" min="1" max="8" step="1">
+          </div>
+        </div>
+      </div>
+      <div class="caja-aviso" id="n-aviso" role="alert"></div>
+      <div class="salida" aria-live="polite" id="n-salida"></div>
+
+      <div class="caja-atencion">
+        <strong>El paréntesis manda:</strong> en (−3)<sup>4</sup> la base es −3 y el signo se multiplica cuatro veces,
+        así que el resultado es positivo. En −3<sup>4</sup> la base es solo el 3; el signo menos queda fuera y el
+        resultado es −81. Elige una base negativa en el explorador para verlo.
+      </div>
+
+      <h3>Practica: potencias y forma desarrollada</h3>
+      <div class="practica" id="p-notacion"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 · #producto ============ -->
+  <details class="modulo" id="producto">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>La regla del producto</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Al multiplicar dos potencias de la <strong>misma base</strong>, los factores se acumulan. Por eso los
+      exponentes <strong>se suman</strong>:</p>
+      <div class="formula">a<sup>m</sup> · a<sup>n</sup> = a<sup>m + n</sup></div>
+
+      <h3>Contador de factores</h3>
+      <p>Cambia los dos exponentes y cuenta las fichas: cada ficha es un factor de la base.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="pr-m">Primer exponente</label>
+            <input type="number" id="pr-m" value="3" min="1" max="7" step="1">
+          </div>
+          <div class="campo">
+            <label for="pr-n">Segundo exponente</label>
+            <input type="number" id="pr-n" value="2" min="1" max="7" step="1">
+          </div>
+        </div>
+      </div>
+      <div class="caja-aviso" id="pr-aviso" role="alert"></div>
+      <div class="fichas" id="pr-fichas" aria-hidden="true"></div>
+      <div class="salida" aria-live="polite" id="pr-salida"></div>
+
+      <div class="caja-atencion">
+        <strong>Dos errores frecuentes:</strong> los exponentes se suman, no se multiplican (a<sup>3</sup> · a<sup>2</sup> = a<sup>5</sup>, no a<sup>6</sup>).
+        Y la regla solo vale para bases iguales: x<sup>2</sup> · y<sup>3</sup> se queda como está.
+      </div>
+
+      <h3>Practica: escribe el exponente del resultado</h3>
+      <div class="practica" id="p-producto1"></div>
+
+      <h3>Practica: con coeficientes y con varias bases</h3>
+      <p>Los coeficientes numéricos se <strong>multiplican</strong>; los exponentes de cada base se <strong>suman</strong> por separado.</p>
+      <div class="practica" id="p-producto2"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 · #potencia-potencia ============ -->
+  <details class="modulo" id="potencia-potencia">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>La potencia de una potencia</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Cuando una potencia se eleva a otro exponente, la potencia entera se repite como factor. Al contar las fichas
+      se ve que los exponentes <strong>se multiplican</strong>:</p>
+      <div class="formula">(a<sup>m</sup>)<sup>n</sup> = a<sup>m · n</sup></div>
+
+      <h3>Grupos de factores</h3>
+      <p>El exponente de dentro dice cuántas fichas tiene cada grupo; el de fuera, cuántos grupos hay.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="pp-m">Exponente de dentro</label>
+            <input type="number" id="pp-m" value="2" min="1" max="5" step="1">
+          </div>
+          <div class="campo">
+            <label for="pp-n">Exponente de fuera</label>
+            <input type="number" id="pp-n" value="3" min="1" max="4" step="1">
+          </div>
+        </div>
+      </div>
+      <div class="caja-aviso" id="pp-aviso" role="alert"></div>
+      <div class="fichas" id="pp-fichas" aria-hidden="true"></div>
+      <div class="salida" aria-live="polite" id="pp-salida"></div>
+
+      <div class="caja-atencion">
+        <strong>No confundas las dos reglas:</strong> en a<sup>5</sup> · a<sup>4</sup> las potencias están
+        <em>multiplicadas</em> y los exponentes se suman (a<sup>9</sup>); en (a<sup>5</sup>)<sup>4</sup> una potencia está
+        <em>elevada</em> a la otra y los exponentes se multiplican (a<sup>20</sup>).
+      </div>
+
+      <h3>Practica: ¿sumar o multiplicar?</h3>
+      <p>Aquí se mezclan las dos formas. Antes de elegir, fíjate si hay paréntesis con exponente.</p>
+      <div class="practica" id="p-potpot"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 · #potencia-producto ============ -->
+  <details class="modulo" id="potencia-producto">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>La potencia de un producto</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Cuando lo que se eleva es un producto, el exponente <strong>se reparte a cada factor</strong>, incluido el
+      coeficiente numérico:</p>
+      <div class="formula">(a · b)<sup>n</sup> = a<sup>n</sup> · b<sup>n</sup></div>
+
+      <h3>Repartidor del exponente</h3>
+      <p>Arma un producto dentro del paréntesis y observa cómo el exponente de fuera llega a cada factor.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="px-c">Coeficiente</label>
+            <input type="number" id="px-c" value="2" min="1" max="5" step="1">
+          </div>
+          <div class="campo">
+            <label for="px-a">Exponente de x</label>
+            <input type="number" id="px-a" value="1" min="1" max="4" step="1">
+          </div>
+          <div class="campo">
+            <label for="px-b">Exponente de y (0 = sin y)</label>
+            <input type="number" id="px-b" value="0" min="0" max="3" step="1">
+          </div>
+          <div class="campo">
+            <label for="px-n">Exponente de fuera</label>
+            <input type="number" id="px-n" value="3" min="2" max="4" step="1">
+          </div>
+        </div>
+      </div>
+      <div class="caja-aviso" id="px-aviso" role="alert"></div>
+      <div class="salida" aria-live="polite" id="px-salida"></div>
+
+      <div class="caja-atencion">
+        <strong>El error más frecuente:</strong> olvidar elevar el coeficiente. (2x)<sup>3</sup> no es 2x<sup>3</sup>:
+        el 2 también se eleva al cubo y el resultado es 8x<sup>3</sup>. Y tampoco es 6x<sup>3</sup>: elevar al cubo no es multiplicar por 3.
+      </div>
+
+      <h3>Practica: repartir el exponente</h3>
+      <div class="practica" id="p-potprod"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 5 · #tres-reglas ============ -->
+  <details class="modulo" id="tres-reglas">
+    <summary>
+      <span class="num" aria-hidden="true">5</span>
+      <h2>Las tres reglas juntas</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <table class="reglas">
+        <caption>Las tres reglas de la multiplicación con exponentes: nombre, patrón y ejemplo.</caption>
+        <thead><tr><th scope="col">Regla</th><th scope="col">Patrón</th><th scope="col">Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Producto de potencias</td><td>a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup> (se suman)</td><td>x<sup>4</sup> · x<sup>3</sup> = x<sup>7</sup></td></tr>
+          <tr><td>Potencia de una potencia</td><td>(a<sup>m</sup>)<sup>n</sup> = a<sup>m·n</sup> (se multiplican)</td><td>(x<sup>4</sup>)<sup>3</sup> = x<sup>12</sup></td></tr>
+          <tr><td>Potencia de un producto</td><td>(a · b)<sup>n</sup> = a<sup>n</sup> · b<sup>n</sup> (se reparte)</td><td>(2x)<sup>3</sup> = 8x<sup>3</sup></td></tr>
+        </tbody>
+      </table>
+
+      <div class="caja-tip">
+        <strong>Estrategia:</strong> resuelve primero los paréntesis con exponente (potencia de una potencia o de un producto)
+        y después combina con la regla del producto. Trabajar de adentro hacia afuera evita la mayoría de los errores.
+      </div>
+
+      <h3>Practica: expresiones mixtas</h3>
+      <p>Cada ejercicio se centra en una regla o las combina. El marcador de abajo te dice qué regla necesitas repasar.</p>
+      <div class="practica" id="p-tres"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Nivel 3 · Tema 1 · Exponentes · GEDparaHispanos</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   MOTOR COMÚN · Nivel 3 · Tema 1 · Exponentes
+   Monomios con coeficiente racional, operaciones exactas,
+   escritura visual + texto para lector de pantalla, y las
+   dos piezas de práctica (opción múltiple y respuesta escrita).
+   ============================================================ */
+"use strict";
+function $(id){ return document.getElementById(id); }
+function ale(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+function elige(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function mezcla(arr){
+  var a = arr.slice();
+  for (var i = a.length-1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function mcd(a,b){ a = Math.abs(a); b = Math.abs(b); while (b){ var t = a % b; a = b; b = t; } return a || 1; }
+
+var MENOS = "\u2212";
+function numTxt(n){ return n < 0 ? MENOS + Math.abs(n) : String(n); }
+function numVoz(n){ return n < 0 ? "menos " + Math.abs(n) : String(n); }
+
+/* ---------- Expresión visual: {h: HTML visible, s: texto hablado} ---------- */
+function X(h,s){ return {h:h, s:s}; }
+function ver(x){
+  return '<span class="ex"><span aria-hidden="true">' + x.h + '</span><span class="sr-only">' + x.s + '</span></span>';
+}
+function supH(e){ return "<sup>" + numTxt(e) + "</sup>"; }
+function potX(baseH, baseS, e){
+  if (e === 1) return X(baseH, baseS);
+  return X(baseH + supH(e), baseS + " elevado a la " + numVoz(e));
+}
+function parX(x, e){
+  var dentro = X("(" + x.h + ")", "abre paréntesis " + x.s + " cierra paréntesis");
+  if (e === undefined || e === null) return dentro;
+  return X(dentro.h + supH(e), dentro.s + " elevado a la " + numVoz(e));
+}
+function porX(a,b){ return X(a.h + ' <span class="signo">·</span> ' + b.h, a.s + " por " + b.s); }
+function entreX(a,b){ return X(a.h + ' <span class="signo">÷</span> ' + b.h, a.s + " entre " + b.s); }
+function igualX(a,b){ return X(a.h + ' <span class="signo">=</span> ' + b.h, a.s + " igual a " + b.s); }
+function fracX(n,d){
+  return X('<span class="frac"><span class="arriba">' + n.h + '</span><span class="abajo">' + d.h + '</span></span>',
+           n.s + " sobre " + d.s);
+}
+function txtX(t){ return X(t, t); }
+
+/* ---------- Monomios: coeficiente n/d y exponentes por variable ---------- */
+function M(n, d, e, orden){
+  e = e || {};
+  if (d < 0){ n = -n; d = -d; }
+  var g = mcd(n, d);
+  var o = [];
+  (orden || []).concat(Object.keys(e)).forEach(function(k){ if (o.indexOf(k) < 0) o.push(k); });
+  return {n:n/g, d:d/g, e:e, o:o};
+}
+function mono(c, e){ return M(c, 1, e || {}); }
+function copiaE(e){ var r = {}; for (var k in e) r[k] = e[k]; return r; }
+function mMul(A,B){
+  var e = copiaE(A.e);
+  for (var k in B.e) e[k] = (e[k] || 0) + B.e[k];
+  return M(A.n*B.n, A.d*B.d, e, A.o.concat(B.o));
+}
+function mPow(A,k){
+  var e = {};
+  for (var v in A.e) e[v] = A.e[v]*k;
+  return M(Math.pow(A.n,k), Math.pow(A.d,k), e, A.o);
+}
+function mDiv(A,B){
+  var e = copiaE(A.e);
+  for (var k in B.e) e[k] = (e[k] || 0) - B.e[k];
+  return M(A.n*B.d, A.d*B.n, e, A.o.concat(B.o));
+}
+function mIgual(A,B){
+  if (A.n !== B.n || A.d !== B.d) return false;
+  var ks = {}; var k;
+  for (k in A.e) if (A.e[k] !== 0) ks[k] = 1;
+  for (k in B.e) if (B.e[k] !== 0) ks[k] = 1;
+  for (k in ks) if ((A.e[k] || 0) !== (B.e[k] || 0)) return false;
+  return true;
+}
+/* Valor numérico exacto (fracción) al sustituir las variables */
+function mValor(A, env){
+  var n = A.n, d = A.d;
+  A.o.forEach(function(v){
+    var e = A.e[v] || 0, x = env[v];
+    if (e > 0) n *= Math.pow(x, e); else if (e < 0) d *= Math.pow(x, -e);
+  });
+  if (d < 0){ n = -n; d = -d; }
+  var g = mcd(n, d);
+  return {n:n/g, d:d/g};
+}
+function ratX(r){
+  if (r.d === 1) return X(numTxt(r.n), numVoz(r.n));
+  var s = r.n < 0 ? MENOS : "";
+  return X(s + Math.abs(r.n) + "/" + r.d, (r.n < 0 ? "menos " : "") + Math.abs(r.n) + " sobre " + r.d);
+}
+function ratIgual(a,b){ return a.n === b.n && a.d === b.d; }
+
+/* Partes de un monomio: coeficiente y variables con exponente (sin los de exponente 0) */
+function partesX(coef, vars, mostrarUno){
+  var h = "", s = [];
+  var hayVars = vars.length > 0;
+  if (coef === -1 && hayVars){ h += MENOS; s.push("menos"); }
+  else if (coef !== 1 || !hayVars || mostrarUno){ h += numTxt(coef); s.push(numVoz(coef)); }
+  vars.forEach(function(p){
+    var x = potX(p[0], p[0], p[1]);
+    h += x.h; s.push(x.s);
+  });
+  return X(h, s.join(" "));
+}
+/* Forma en línea: admite exponentes negativos (paso intermedio) */
+function mLinea(A, verCero){
+  var vars = [];
+  A.o.forEach(function(v){
+    var e = A.e[v];
+    if (e === undefined) return;
+    if (e !== 0 || verCero) vars.push([v, e]);
+  });
+  if (A.d !== 1){
+    var num = partesX(A.n < 0 ? -A.n : A.n, [], false);
+    var f = fracX(num, X(String(A.d), String(A.d)));
+    var resto = partesX(1, vars, false);
+    var h = (A.n < 0 ? MENOS : "") + f.h + (vars.length ? resto.h : "");
+    return X(h, (A.n < 0 ? "menos " : "") + f.s + (vars.length ? " por " + resto.s : ""));
+  }
+  return partesX(A.n, vars, false);
+}
+/* Forma final: solo exponentes positivos, como fracción si hace falta */
+function mFinal(A){
+  var arriba = [], abajo = [];
+  A.o.forEach(function(v){
+    var e = A.e[v] || 0;
+    if (e > 0) arriba.push([v, e]); else if (e < 0) abajo.push([v, -e]);
+  });
+  var neg = A.n < 0, nAbs = Math.abs(A.n);
+  if (A.d === 1 && abajo.length === 0) return partesX(A.n, arriba, false);
+  var num = partesX(nAbs, arriba, false);
+  var den = partesX(A.d, abajo, false);
+  var f = fracX(num, den);
+  return neg ? X(MENOS + f.h, "menos " + f.s) : f;
+}
+
+/* ---------- Fichas: cada factor de la base como una ficha visible ---------- */
+function fichas(base, cuantas, clase, tachadas){
+  var h = "";
+  for (var i = 0; i < cuantas; i++){
+    var c = "ficha" + (clase ? " " + clase : "") + (tachadas && i < tachadas ? " tachada" : "");
+    h += '<span class="' + c + '">' + base + "</span>";
+  }
+  return h;
+}
+
+/* ============================================================
+   PRÁCTICA DE OPCIÓN MÚLTIPLE
+   gen() devuelve { enun:HTML, opciones:[{x:{h,s}|html:.., ok:bool, fb:HTML}],
+                    sol:HTML (explicación), regla:"clave" }
+   ============================================================ */
+function PracticaOM(idContenedor, gen, cfg){
+  cfg = cfg || {};
+  var raiz = $(idContenedor);
+  var id = idContenedor;
+  raiz.innerHTML =
+    '<div class="enun" id="' + id + '-enun"></div>' +
+    '<div class="opciones" id="' + id + '-op" role="group" aria-labelledby="' + id + '-enun"></div>' +
+    '<div class="fb" id="' + id + '-fb" role="status"></div>' +
+    '<div class="fila-btn"><button type="button" class="btn" id="' + id + '-nuevo">Otro ejercicio</button></div>' +
+    '<p class="marcador" id="' + id + '-marc">Aciertos: 0 de 0</p>' +
+    (cfg.reglas ? '<div class="marcador-regla" id="' + id + '-reglas"></div>' : "");
+  var est = {aciertos:0, total:0, resuelta:false, q:null, reglas:{}};
+  if (cfg.reglas) cfg.reglas.forEach(function(r){ est.reglas[r[0]] = {nombre:r[1], a:0, t:0}; });
+
+  function pintaReglas(){
+    if (!cfg.reglas) return;
+    var h = '<table><caption>Aciertos por regla</caption><thead><tr><th scope="col">Regla</th><th scope="col">Aciertos</th></tr></thead><tbody>';
+    cfg.reglas.forEach(function(r){
+      var x = est.reglas[r[0]];
+      h += "<tr><td>" + x.nombre + "</td><td>" + x.a + " de " + x.t + "</td></tr>";
+    });
+    $(id + "-reglas").innerHTML = h + "</tbody></table>";
+  }
+  function nuevo(){
+    var q, vueltas = 0;
+    do { q = gen(); vueltas++; } while (est.q && q.enun === est.q.enun && vueltas < 10);
+    est.q = q; est.resuelta = false;
+    $(id + "-enun").innerHTML = q.enun;
+    var cont = $(id + "-op"); cont.innerHTML = "";
+    mezcla(q.opciones).forEach(function(op){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opcion";
+      b.setAttribute("aria-pressed", "false");
+      b.innerHTML = op.x ? ver(op.x) : op.html;
+      b._op = op;
+      b.addEventListener("click", function(){ responde(b); });
+      cont.appendChild(b);
+    });
+    $(id + "-fb").className = "fb"; $(id + "-fb").innerHTML = "";
+  }
+  function responde(btn){
+    if (est.resuelta) return;
+    est.resuelta = true; est.total++;
+    var q = est.q, ok = btn._op.ok;
+    Array.prototype.forEach.call($(id + "-op").children, function(b){
+      b.disabled = true;
+      if (b._op.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed", "true");
+    if (ok) est.aciertos++;
+    if (cfg.reglas && q.regla && est.reglas[q.regla]){
+      est.reglas[q.regla].t++; if (ok) est.reglas[q.regla].a++;
+    }
+    var fb = $(id + "-fb");
+    fb.className = "fb " + (ok ? "bien" : "mal");
+    fb.innerHTML = (ok ? "✓ Correcto. " : "✗ Todavía no. ") + (btn._op.fb ? btn._op.fb + " " : "") + (q.sol || "");
+    $(id + "-marc").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+    pintaReglas();
+  }
+  $(id + "-nuevo").addEventListener("click", function(){ nuevo(); $(id + "-op").firstChild.focus(); });
+  pintaReglas();
+  nuevo();
+  return {nuevo:nuevo};
+}
+
+/* ============================================================
+   PRÁCTICA DE RESPUESTA ESCRITA (un número entero)
+   gen() devuelve { enun:HTML, etiqueta:"texto del campo", resp:int,
+                    pista:function(valor)->HTML|null, sol:HTML }
+   Dos intentos: al primer error, pista; al segundo, la solución.
+   ============================================================ */
+function PracticaEscrita(idContenedor, gen){
+  var raiz = $(idContenedor), id = idContenedor;
+  raiz.innerHTML =
+    '<div class="enun" id="' + id + '-enun"></div>' +
+    '<div class="campos"><div class="campo">' +
+      '<label for="' + id + '-in" id="' + id + '-lab"></label>' +
+      '<input type="text" inputmode="numeric" autocomplete="off" id="' + id + '-in">' +
+    '</div></div>' +
+    '<div class="fila-btn">' +
+      '<button type="button" class="btn" id="' + id + '-ver">Verificar</button>' +
+      '<button type="button" class="btn-sec" id="' + id + '-nuevo">Otro ejercicio</button>' +
+    '</div>' +
+    '<div class="fb" id="' + id + '-fb" role="status"></div>' +
+    '<p class="marcador" id="' + id + '-marc">Aciertos: 0 de 0</p>';
+  var est = {aciertos:0, total:0, intentos:0, cerrada:false, q:null};
+  function lee(t){
+    t = String(t).trim().replace(/\u2212|–|—/g, "-").replace(/\s+/g, "");
+    return /^-?\d+$/.test(t) ? parseInt(t, 10) : NaN;
+  }
+  function nuevo(){
+    var q, vueltas = 0;
+    do { q = gen(); vueltas++; } while (est.q && q.enun === est.q.enun && vueltas < 10);
+    est.q = q; est.intentos = 0; est.cerrada = false;
+    $(id + "-enun").innerHTML = q.enun;
+    $(id + "-lab").textContent = q.etiqueta;
+    var inp = $(id + "-in"); inp.value = ""; inp.className = ""; inp.disabled = false;
+    $(id + "-ver").disabled = false;
+    $(id + "-fb").className = "fb"; $(id + "-fb").innerHTML = "";
+  }
+  function verifica(){
+    if (est.cerrada) return;
+    var inp = $(id + "-in"), v = lee(inp.value), fb = $(id + "-fb"), q = est.q;
+    if (isNaN(v)){
+      fb.className = "fb mal";
+      fb.innerHTML = "Escribe un número entero (puede llevar signo menos) y vuelve a pulsar «Verificar».";
+      inp.focus(); return;
+    }
+    est.intentos++;
+    if (v === q.resp){
+      est.cerrada = true; est.total++; est.aciertos++;
+      inp.className = "bien"; inp.disabled = true; $(id + "-ver").disabled = true;
+      fb.className = "fb bien"; fb.innerHTML = "✓ Correcto. " + q.sol;
+    } else if (est.intentos < 2){
+      inp.className = "error";
+      var p = q.pista ? q.pista(v) : null;
+      fb.className = "fb mal";
+      fb.innerHTML = "✗ Todavía no. " + (p || "Revisa la regla y prueba otra vez: tienes un intento más.");
+      inp.focus(); inp.select();
+    } else {
+      est.cerrada = true; est.total++;
+      inp.className = "error"; inp.disabled = true; $(id + "-ver").disabled = true;
+      fb.className = "fb mal"; fb.innerHTML = "✗ La respuesta era <strong>" + numTxt(q.resp) + "</strong>. " + q.sol;
+    }
+    $(id + "-marc").textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+  }
+  $(id + "-ver").addEventListener("click", verifica);
+  $(id + "-in").addEventListener("keydown", function(e){ if (e.key === "Enter") verifica(); });
+  $(id + "-nuevo").addEventListener("click", function(){ nuevo(); $(id + "-in").focus(); });
+  nuevo();
+  return {nuevo:nuevo};
+}
+
+/* ---------- Opciones de monomios sin repeticiones ----------
+   correcto: monomio; distractores: [[monomio, fb], ...]; forma: "final" | "linea" */
+function opcionesMono(correcto, distractores, fbBien, forma){
+  var pinta = forma === "linea" ? mLinea : mFinal;
+  var lista = [{x:pinta(correcto), ok:true, fb:fbBien || ""}];
+  var vistos = [correcto];
+  distractores.forEach(function(d){
+    if (lista.length >= 4) return;
+    var m = d[0];
+    for (var i = 0; i < vistos.length; i++) if (mIgual(vistos[i], m)) return;
+    vistos.push(m);
+    lista.push({x:pinta(m), ok:false, fb:d[1] || ""});
+  });
+  /* relleno de seguridad: variantes cercanas para llegar a cuatro opciones */
+  var v0 = correcto.o.filter(function(v){ return (correcto.e[v] || 0) !== 0; })[0];
+  var cambios = [1, -1, 2, 3, -2];
+  for (var i = 0; i < cambios.length && lista.length < 4; i++){
+    var e = copiaE(correcto.e), m;
+    if (v0){ e[v0] = e[v0] + cambios[i]; m = M(correcto.n, correcto.d, e, correcto.o); }
+    else m = M(correcto.n + cambios[i], correcto.d, e, correcto.o);
+    var repetido = false;
+    for (var j = 0; j < vistos.length; j++) if (mIgual(vistos[j], m)) repetido = true;
+    if (!repetido){ vistos.push(m); lista.push({x:pinta(m), ok:false, fb:""}); }
+  }
+  return lista;
+}
+
+/* ---------- Pasos numerados (solución mostrada) ---------- */
+function pasosHTML(lista){
+  return '<div class="pasos">' + lista.map(function(p, i){
+    return '<div class="paso"><span class="n" aria-hidden="true">' + (i+1) + "</span>" + p + "</div>";
+  }).join("") + "</div>";
+}
+
+/* ---------- Ayudas comunes de los módulos ---------- */
+var VARS = ["x","y","a","m","n","b"];
+function xv(v,e){ return mono(1, (function(){ var o = {}; o[v] = e; return o; })()); }
+function unicas(lista){
+  var vistos = {}, r = [];
+  lista.forEach(function(o){
+    var clave = o.x ? o.x.h : o.html;
+    if (vistos[clave] || r.length >= 4) return;
+    vistos[clave] = true; r.push(o);
+  });
+  return r;
+}
+function numOp(v, ok, fb){ return {x:X(numTxt(v), numVoz(v)), ok:ok, fb:fb || ""}; }
+function leeEntero(id, min, max, aviso, nombre){
+  var v = parseInt($(id).value, 10);
+  if (isNaN(v) || v < min || v > max){
+    $(id).classList.add("error");
+    $(aviso).className = "caja-aviso visible";
+    $(aviso).textContent = "El " + nombre + " debe ser un número entero entre " + min + " y " + max + ".";
+    return null;
+  }
+  $(id).classList.remove("error");
+  return v;
+}
+function limpiaAviso(aviso){ $(aviso).className = "caja-aviso"; $(aviso).textContent = ""; }
+
+
+function fmt(n){ return (n < 0 ? MENOS : "") + Math.abs(n).toLocaleString("en-US"); }
+
+/* ---------- Navegación: índice, anclas y abrir/cerrar ---------- */
+function iniciaNavegacion(){
+  function abrePorHash(){
+    var h = decodeURIComponent(window.location.hash.replace("#", ""));
+    if (!h) return;
+    var el = document.getElementById(h);
+    if (el && el.tagName.toLowerCase() === "details"){
+      el.open = true;
+      el.scrollIntoView({block:"start"});
+    }
+  }
+  document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(){
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      if (el && el.tagName.toLowerCase() === "details") el.open = true;
+    });
+  });
+  $("abrir-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+  });
+  $("cerrar-todo").addEventListener("click", function(){
+    document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+  });
+  window.addEventListener("hashchange", abrePorHash);
+  abrePorHash();
+}
+
+/* ============================================================
+   LECCIÓN 1.1 · Producto, potencia de potencia, potencia de producto
+   ============================================================ */
+/* ---------- MÓDULO 1 · Explorador de la notación ---------- */
+function actualizaNotacion(){
+  var n = leeEntero("n-exp", 1, 8, "n-aviso", "exponente");
+  if (n === null){ $("n-salida").innerHTML = ""; return; }
+  limpiaAviso("n-aviso");
+  var bv = $("n-base").value, h = "";
+  var esVar = isNaN(parseInt(bv, 10));
+  var factores = [];
+  if (esVar){
+    for (var i = 0; i < n; i++) factores.push(bv);
+    h += '<div class="linea">Base: <strong>' + bv + "</strong> · exponente: <strong>" + n + "</strong></div>";
+    h += '<div class="linea">Forma desarrollada: ' + ver(igualX(potX(bv, bv, n), X(factores.join(" · "), factores.join(" por ")))) + "</div>";
+    h += '<div class="linea veredicto">' + n + (n === 1 ? " factor" : " factores") + " de " + bv +
+         (n === 1 ? ". Una base sola ya tiene exponente 1, aunque no se escriba." : ".") + "</div>";
+  } else {
+    var b = parseInt(bv, 10);
+    var bH = b < 0 ? "(" + numTxt(b) + ")" : String(b);
+    var bS = b < 0 ? "menos " + Math.abs(b) : String(b);
+    for (var j = 0; j < n; j++) factores.push(bH);
+    var valor = Math.pow(b, n);
+    h += '<div class="linea">Base: <strong>' + numTxt(b) + "</strong> · exponente: <strong>" + n + "</strong></div>";
+    h += '<div class="linea">' + ver(igualX(potX(bH, (b < 0 ? "abre paréntesis " + bS + " cierra paréntesis" : bS), n),
+          X(factores.join(" · "), factores.join(" por ")))) + " = <strong>" + numTxt(valor) + "</strong></div>";
+    if (b < 0){
+      var sinPar = -Math.pow(-b, n);
+      h += '<div class="linea">Sin paréntesis: ' + ver(potX(MENOS + Math.abs(b), "menos " + Math.abs(b), n)) +
+           " = " + MENOS + "(" + Array(n+1).join(String(-b) + " · ").slice(0, -3) + ") = <strong>" + numTxt(sinPar) + "</strong></div>";
+      h += '<div class="linea veredicto">' + (n % 2 === 0
+        ? "Con exponente par, (" + numTxt(b) + ")<sup>" + n + "</sup> es positivo; sin paréntesis el resultado es negativo. No son lo mismo."
+        : "Con exponente impar, los dos resultados coinciden, pero por razones distintas: fíjate en dónde está el signo.") + "</div>";
+    } else {
+      h += '<div class="linea veredicto">' + n + (n === 1 ? " factor" : " factores") + " de " + b + ": el valor es " + numTxt(valor) + ".</div>";
+    }
+  }
+  $("n-salida").innerHTML = h;
+}
+
+function genNotacion(){
+  var t = ale(1, 3);
+  if (t === 1){
+    var b, n;
+    do { b = ale(2, 5); n = ale(2, 4); } while ((b === 2 && n === 2) || Math.pow(b, n) > 625);
+    var v = Math.pow(b, n);
+    return {
+      enun: "¿Cuánto vale " + ver(potX(String(b), String(b), n)) + "?",
+      opciones: unicas([
+        numOp(v, true),
+        numOp(b*n, false, "Multiplicaste la base por el exponente; el exponente dice cuántas veces se repite la base como factor."),
+        numOp(Math.pow(n, b), false, "Intercambiaste la base y el exponente."),
+        numOp(Math.pow(b, n-1), false, "Te faltó un factor: cuenta otra vez cuántas veces aparece la base."),
+        numOp(v + b, false, "")
+      ]),
+      sol: ver(potX(String(b), String(b), n)) + " = " + Array(n+1).join(b + " · ").slice(0, -3) + " = " + v + "."
+    };
+  }
+  if (t === 2){
+    var b2 = ale(2, 4), n2 = ale(2, 4), conPar = Math.random() < 0.5;
+    if (b2 === 2 && n2 === 2) n2 = 3;
+    var val = conPar ? Math.pow(-b2, n2) : -Math.pow(b2, n2);
+    var expr = conPar ? potX("(" + MENOS + b2 + ")", "abre paréntesis menos " + b2 + " cierra paréntesis", n2)
+                      : potX(MENOS + b2, "menos " + b2, n2);
+    var explic = conPar
+      ? "La base es " + MENOS + b2 + ": el signo se multiplica " + n2 + " veces, y con exponente " + (n2 % 2 === 0 ? "par el resultado es positivo." : "impar el resultado es negativo.")
+      : "Sin paréntesis, la base es solo el " + b2 + ": primero " + b2 + "<sup>" + n2 + "</sup> = " + Math.pow(b2, n2) + ", y el signo menos se pone delante.";
+    return {
+      enun: "¿Cuánto vale " + ver(expr) + "?",
+      opciones: unicas([
+        numOp(val, true),
+        numOp(-val, false, "El signo no es el correcto: fíjate si el signo menos está dentro del paréntesis o fuera."),
+        numOp(-b2*n2, false, "Multiplicaste la base por el exponente."),
+        numOp(b2*n2, false, "Multiplicaste la base por el exponente y además perdiste el signo.")
+      ]),
+      sol: explic
+    };
+  }
+  var v3 = elige(VARS), k = ale(3, 7), f = [];
+  for (var i = 0; i < k; i++) f.push(v3);
+  return {
+    enun: "¿Cómo se escribe " + ver(X(f.join(" · "), f.join(" por "))) + " con un exponente?",
+    opciones: [
+      {x:potX(v3, v3, k), ok:true},
+      {x:X(k + v3, k + " " + v3), ok:false, fb:k + v3 + " significa " + v3 + " + " + v3 + " + …, una suma repetida, no una multiplicación repetida."},
+      {x:X(k + "<sup>" + v3 + "</sup>", k + " elevado a la " + v3), ok:false, fb:"La base es " + v3 + " y el exponente es " + k + ": los pusiste al revés."},
+      {x:potX(v3, v3, k-1), ok:false, fb:"Cuenta otra vez los factores: son " + k + "."}
+    ],
+    sol: "Hay " + k + " factores de " + v3 + ", así que el exponente es " + k + "."
+  };
+}
+
+/* ---------- MÓDULO 2 · Contador de factores (regla del producto) ---------- */
+function actualizaProducto(){
+  var m = leeEntero("pr-m", 1, 7, "pr-aviso", "primer exponente");
+  var n = m === null ? null : leeEntero("pr-n", 1, 7, "pr-aviso", "segundo exponente");
+  if (m === null || n === null){ $("pr-fichas").innerHTML = ""; $("pr-salida").innerHTML = ""; return; }
+  limpiaAviso("pr-aviso");
+  $("pr-fichas").innerHTML =
+    '<span class="grupo">' + fichas("a", m) + "</span>" +
+    '<span class="signo">·</span>' +
+    '<span class="grupo">' + fichas("a", n, "b") + "</span>" +
+    '<span class="signo">=</span>' +
+    '<span class="grupo">' + fichas("a", m) + fichas("a", n, "b") + "</span>";
+  var h = '<div class="linea">' + ver(igualX(porX(potX("a","a",m), potX("a","a",n)), potX("a","a",m+n))) + "</div>";
+  h += '<div class="linea veredicto">' + m + (m === 1 ? " factor" : " factores") + " más " + n + (n === 1 ? " factor" : " factores") +
+       " son " + (m+n) + " factores: " + m + " + " + n + " = " + (m+n) + ".</div>";
+  if (m === 1 || n === 1) h += '<div class="linea">Una a sola cuenta como a<sup>1</sup>: aporta un factor.</div>';
+  $("pr-salida").innerHTML = h;
+}
+
+function genProducto1(){
+  var t = ale(1, 4), v = elige(VARS), a, b, c;
+  if (t === 1){
+    a = ale(2, 9); b = ale(2, 9);
+    return {
+      enun: ver(igualX(porX(potX(v,v,a), potX(v,v,b)), X(v + "<sup>?</sup>", v + " elevado a la cuánto"))),
+      etiqueta: "Exponente del resultado", resp: a + b,
+      pista: function(x){ return x === a*b ? "Multiplicaste los exponentes. Cuando las potencias están multiplicadas, los exponentes se suman." : null; },
+      sol: "Misma base: se suman los exponentes, " + a + " + " + b + " = " + (a+b) + "."
+    };
+  }
+  if (t === 2){
+    a = ale(2, 6); b = ale(2, 6); c = ale(2, 6);
+    return {
+      enun: ver(igualX(porX(porX(potX(v,v,a), potX(v,v,b)), potX(v,v,c)), X(v + "<sup>?</sup>", v + " elevado a la cuánto"))),
+      etiqueta: "Exponente del resultado", resp: a + b + c,
+      pista: function(x){ return x === a*b*c ? "Multiplicaste los exponentes; con potencias multiplicadas se suman." : (x === a+b || x === b+c || x === a+c ? "Te faltó uno de los tres exponentes." : null); },
+      sol: "Se suman los tres exponentes: " + a + " + " + b + " + " + c + " = " + (a+b+c) + "."
+    };
+  }
+  if (t === 3){
+    a = ale(2, 9);
+    var izq = Math.random() < 0.5;
+    var expr = izq ? porX(X(v, v), potX(v,v,a)) : porX(potX(v,v,a), X(v, v));
+    return {
+      enun: ver(igualX(expr, X(v + "<sup>?</sup>", v + " elevado a la cuánto"))),
+      etiqueta: "Exponente del resultado", resp: a + 1,
+      pista: function(x){ return x === a ? "La " + v + " sola no vale cero factores: vale " + v + "<sup>1</sup>, un factor." : null; },
+      sol: "Recuerda que " + v + " = " + v + "<sup>1</sup>: " + a + " + 1 = " + (a+1) + "."
+    };
+  }
+  var base = ale(2, 5); a = ale(2, 6); b = ale(2, 6);
+  var bs = String(base);
+  return {
+    enun: ver(igualX(porX(potX(bs,bs,a), potX(bs,bs,b)), X(bs + "<sup>?</sup>", bs + " elevado a la cuánto"))),
+    etiqueta: "Exponente del resultado", resp: a + b,
+    pista: function(x){ return x === a*b ? "Multiplicaste los exponentes; se suman." : null; },
+    sol: "La base " + base + " se mantiene y se suman los exponentes: " + a + " + " + b + " = " + (a+b) + ". La base no se multiplica: no es " + (base*base) + "<sup>" + (a+b) + "</sup>."
+  };
+}
+
+function genProducto2(){
+  var t = ale(1, 3), v = elige(["x","a","m"]);
+  if (t === 1){
+    var c1 = ale(2, 7), c2 = ale(2, 7), a = ale(2, 6), b = ale(2, 6);
+    if (a === 2 && b === 2) b = 3;
+    var A = mono(c1, (function(){var o={}; o[v]=a; return o;})()), B = mono(c2, (function(){var o={}; o[v]=b; return o;})());
+    var R = mMul(A, B);
+    return {
+      enun: "Simplifica " + ver(porX(parX(mLinea(A)), parX(mLinea(B)))) + ".",
+      opciones: opcionesMono(R, [
+        [mono(c1 + c2, R.e), "Sumaste los coeficientes: los números se multiplican, " + c1 + " · " + c2 + " = " + (c1*c2) + "."],
+        [mono(c1*c2, (function(){var o={}; o[v]=a*b; return o;})()), "Multiplicaste los exponentes: se suman."],
+        [mono(c1 + c2, (function(){var o={}; o[v]=a*b; return o;})()), "Cambiaste las dos operaciones: los coeficientes se multiplican y los exponentes se suman."]
+      ]),
+      sol: "Coeficientes: " + c1 + " · " + c2 + " = " + (c1*c2) + ". Exponentes de " + v + ": " + a + " + " + b + " = " + (a+b) + "."
+    };
+  }
+  if (t === 2){
+    var p = ale(1, 5), q = ale(1, 4), r = ale(1, 5), s = ale(1, 4), k1 = ale(1, 5), k2 = ale(2, 5);
+    var A2 = mono(k1, {x:p, y:q}), B2 = mono(k2, {x:r, y:s});
+    var R2 = mMul(A2, B2);
+    return {
+      enun: "Simplifica " + ver(porX(parX(mLinea(A2)), parX(mLinea(B2)))) + ".",
+      opciones: opcionesMono(R2, [
+        [mono(k1*k2, {x:p+s, y:q+r}), "Cruzaste los exponentes: cada base suma solo sus propios exponentes."],
+        [mono(k1 + k2, R2.e), "Sumaste los coeficientes; se multiplican."],
+        [mono(k1*k2, {x:p*r, y:q*s}), "Multiplicaste los exponentes; se suman."],
+        [mono(k1*k2, {x:p+q+r+s}), "Juntaste bases distintas: la x y la y no se combinan entre sí."]
+      ]),
+      sol: "Coeficientes: " + k1 + " · " + k2 + " = " + (k1*k2) + ". Exponentes de x: " + p + " + " + r + " = " + (p+r) +
+           ". Exponentes de y: " + q + " + " + s + " = " + (q+s) + "."
+    };
+  }
+  var e1 = ale(2, 6), e2 = ale(2, 6);
+  if (e1 + e2 === e1 * e2) e2 = 3;
+  return {
+    enun: "Simplifica " + ver(porX(potX("x","x",e1), potX("y","y",e2))) + ".",
+    opciones: [
+      {html:ver(mLinea(mono(1,{x:e1, y:e2}))) + " (ya está simplificada)", ok:true, fb:"Las bases son distintas: no hay nada que combinar."},
+      {x:parX(X("xy","x y"), e1+e2), ok:false, fb:"Sumar los exponentes solo vale con la misma base; x e y son bases distintas."},
+      {x:potX("x","x",e1+e2), ok:false, fb:"La y no puede desaparecer ni convertirse en x."},
+      {x:parX(X("xy","x y"), e1*e2), ok:false, fb:"Con bases distintas no se aplica ninguna regla: la expresión se queda como está."}
+    ],
+    sol: "La regla del producto exige la misma base. x<sup>" + e1 + "</sup>y<sup>" + e2 + "</sup> es la forma más simple."
+  };
+}
+
+/* ---------- MÓDULO 3 · Potencia de una potencia ---------- */
+function actualizaPotPot(){
+  var m = leeEntero("pp-m", 1, 5, "pp-aviso", "exponente de dentro");
+  var n = m === null ? null : leeEntero("pp-n", 1, 4, "pp-aviso", "exponente de fuera");
+  if (m === null || n === null){ $("pp-fichas").innerHTML = ""; $("pp-salida").innerHTML = ""; return; }
+  limpiaAviso("pp-aviso");
+  var g = [];
+  for (var i = 0; i < n; i++) g.push('<span class="grupo">' + fichas("a", m, i % 2 ? "b" : "") + "</span>");
+  $("pp-fichas").innerHTML = g.join('<span class="signo">·</span>');
+  var rep = [];
+  for (var j = 0; j < n; j++) rep.push(potX("a","a",m));
+  var desarrollo = rep.reduce(function(acc, x){ return acc ? porX(acc, x) : x; }, null);
+  var h = '<div class="linea">' + ver(igualX(igualX(parX(potX("a","a",m), n), desarrollo), potX("a","a",m*n))) + "</div>";
+  h += '<div class="linea veredicto">' + n + (n === 1 ? " grupo" : " grupos") + " de " + m + (m === 1 ? " factor" : " factores") +
+       " son " + (m*n) + " factores: " + m + " × " + n + " = " + (m*n) + ".</div>";
+  if (n > 1) h += '<div class="linea">Es lo mismo que sumar ' + Array(n+1).join(m + " + ").slice(0, -3) + " = " + (m*n) + ": multiplicar es sumar el mismo número varias veces.</div>";
+  $("pp-salida").innerHTML = h;
+}
+
+function genPotPot(){
+  var v = elige(VARS), a, n;
+  do { a = ale(2, 6); n = ale(2, 5); } while (a + n === a * n);
+  if (Math.random() < 0.6){
+    var R = xv(v, a*n);
+    var dis = [[xv(v, a+n), "Sumaste los exponentes. Aquí una potencia está elevada a otra: se multiplican."]];
+    if (Math.pow(a, n) <= 81) dis.push([xv(v, Math.pow(a, n)), "Elevaste un exponente al otro; basta con multiplicarlos."]);
+    dis.push([xv(v, a*n + 1), "Revisa la multiplicación de los exponentes."]);
+    dis.push([xv(v, Math.abs(a - n) || a + 1), ""]);
+    return {
+      enun: "Simplifica " + ver(parX(potX(v,v,a), n)) + ".",
+      opciones: opcionesMono(R, dis),
+      sol: "Potencia de una potencia: " + a + " × " + n + " = " + (a*n) + "."
+    };
+  }
+  var b = n;
+  var R2 = xv(v, a+b);
+  return {
+    enun: "Simplifica " + ver(porX(potX(v,v,a), potX(v,v,b))) + ".",
+    opciones: opcionesMono(R2, [
+      [xv(v, a*b), "Multiplicaste los exponentes. Aquí no hay paréntesis: las potencias están multiplicadas y los exponentes se suman."],
+      [xv(v, a+b+1), "Revisa la suma de los exponentes."],
+      [xv(v, Math.abs(a-b) || a*b+1), ""]
+    ]),
+    sol: "Regla del producto: " + a + " + " + b + " = " + (a+b) + "."
+  };
+}
+
+/* ---------- MÓDULO 4 · Repartidor del exponente ---------- */
+function actualizaPotProd(){
+  var c = leeEntero("px-c", 1, 5, "px-aviso", "coeficiente");
+  var a = c === null ? null : leeEntero("px-a", 1, 4, "px-aviso", "exponente de x");
+  var b = a === null ? null : leeEntero("px-b", 0, 3, "px-aviso", "exponente de y");
+  var n = b === null ? null : leeEntero("px-n", 2, 4, "px-aviso", "exponente de fuera");
+  if (n === null){ $("px-salida").innerHTML = ""; return; }
+  limpiaAviso("px-aviso");
+  var e = {x:a}; if (b > 0) e.y = b;
+  var A = mono(c, e), R = mPow(A, n);
+  var piezas = [];
+  if (c !== 1) piezas.push(potX(String(c), String(c), n));
+  piezas.push(a === 1 ? potX("x","x",n) : parX(potX("x","x",a), n));
+  if (b > 0) piezas.push(b === 1 ? potX("y","y",n) : parX(potX("y","y",b), n));
+  var reparto = piezas.reduce(function(acc, x){ return acc ? porX(acc, x) : x; }, null);
+  var h = '<div class="linea">' + ver(igualX(igualX(parX(mLinea(A), n), reparto), mFinal(R))) + "</div>";
+  var det = [];
+  if (c !== 1) det.push("el coeficiente: " + c + "<sup>" + n + "</sup> = " + Math.pow(c, n));
+  det.push("la x: " + a + " × " + n + " = " + (a*n));
+  if (b > 0) det.push("la y: " + b + " × " + n + " = " + (b*n));
+  h += '<div class="linea veredicto">El exponente ' + n + " llega a cada factor — " + det.join("; ") + ".</div>";
+  if (c === 1) h += '<div class="linea">Con coeficiente 1 no se escribe: 1 elevado a cualquier exponente sigue siendo 1.</div>';
+  $("px-salida").innerHTML = h;
+}
+
+function genPotProd(){
+  var c, a = ale(1, 4), n = ale(2, 4), conY = Math.random() < 0.45, b = ale(1, 3);
+  var negativo = Math.random() < 0.25;
+  do { c = negativo ? -ale(2, 3) : ale(2, 5); } while (Math.pow(Math.abs(c), n) > 625 || Math.abs(c) === n);
+  var e = {x:a}; if (conY) e.y = b;
+  var A = mono(c, e), R = mPow(A, n);
+  var dis = [
+    [mono(c, R.e), "Olvidaste elevar el coeficiente: el " + numTxt(c) + " también está dentro del paréntesis."],
+    [mono(c*n, R.e), "Multiplicaste el coeficiente por " + n + "; hay que elevarlo: " + numTxt(c) + "<sup>" + n + "</sup>."]
+  ];
+  if (negativo) dis.unshift([mono(-R.n, R.e), "El signo también se eleva: con exponente " + (n % 2 === 0 ? "par el resultado es positivo." : "impar el resultado es negativo.")]);
+  var eSum = {x:a+n}; if (conY) eSum.y = b+n;
+  dis.push([mono(R.n, eSum), "Sumaste los exponentes de las variables; en la potencia de un producto se multiplican."]);
+  return {
+    enun: "Simplifica " + ver(parX(mLinea(A), n)) + ".",
+    opciones: opcionesMono(R, dis),
+    sol: "Se reparte el exponente: " + numTxt(c) + "<sup>" + n + "</sup> = " + numTxt(Math.pow(c, n)) + "; x: " + a + " × " + n + " = " + (a*n) +
+         (conY ? "; y: " + b + " × " + n + " = " + (b*n) : "") + "."
+  };
+}
+
+/* ---------- MÓDULO 5 · Las tres reglas juntas ---------- */
+function genTres(){
+  var tipo = elige(["producto","potpot","potprod","combinada","combinada"]);
+  var v = elige(["x","a","y"]), R, enun, pasos, dis;
+  function e1(k){ var o = {}; o[v] = k; return o; }
+  if (tipo === "producto"){
+    var a = ale(2, 6), b = ale(1, 5), c = ale(2, 6);
+    R = xv(v, a+b+c);
+    enun = porX(porX(potX(v,v,a), potX(v,v,b)), potX(v,v,c));
+    dis = [[xv(v, a*b*c), "Multiplicaste los exponentes; se suman."], [xv(v, a+c), "Te saltaste un factor: " + v + (b === 1 ? " sola vale " + v + "<sup>1</sup>." : "<sup>" + b + "</sup> también cuenta.")], [xv(v, a+b+c+1), ""]];
+    pasos = ["Regla del producto: " + a + " + " + b + " + " + c + " = " + (a+b+c) + "."];
+  } else if (tipo === "potpot"){
+    var p, q; do { p = ale(2, 6); q = ale(2, 5); } while (p + q === p * q);
+    R = xv(v, p*q);
+    enun = parX(potX(v,v,p), q);
+    dis = [[xv(v, p+q), "Sumaste; con una potencia elevada a otra, los exponentes se multiplican."], [xv(v, p*q+q), ""], [xv(v, p*q - 1), ""]];
+    pasos = ["Potencia de una potencia: " + p + " × " + q + " = " + (p*q) + "."];
+  } else if (tipo === "potprod"){
+    var k = ale(2, 4), r = ale(1, 4), s; do { s = ale(2, 3); } while (s === k);
+    R = mPow(mono(k, e1(r)), s);
+    enun = parX(mLinea(mono(k, e1(r))), s);
+    dis = [[mono(k, R.e), "Falta elevar el coeficiente."], [mono(k*s, R.e), "El coeficiente se eleva, no se multiplica por el exponente."], [mono(R.n, e1(r+s)), "Los exponentes se multiplican, no se suman."]];
+    pasos = ["Potencia de un producto: " + k + "<sup>" + s + "</sup> = " + Math.pow(k, s) + " y " + r + " × " + s + " = " + (r*s) + "."];
+  } else {
+    var sub = ale(1, 3);
+    if (sub === 1){
+      var a1 = ale(2, 5), n1 = ale(2, 4), b1 = ale(1, 6);
+      if (a1 + n1 === a1 * n1) n1 = 3;
+      var P = xv(v, a1*n1); R = mMul(P, xv(v, b1));
+      enun = porX(parX(potX(v,v,a1), n1), potX(v,v,b1));
+      dis = [[xv(v, a1+n1+b1), "Sumaste todo. El paréntesis va primero y allí los exponentes se multiplican."], [xv(v, a1*n1*b1), "Multiplicaste todo. Después del paréntesis, el producto suma exponentes."], [xv(v, a1*(n1+b1)), "El exponente de fuera solo afecta a lo que está dentro del paréntesis."]];
+      pasos = ["Paréntesis primero: (" + v + "<sup>" + a1 + "</sup>)<sup>" + n1 + "</sup> = " + v + "<sup>" + (a1*n1) + "</sup>. <span class=\"regla\">potencia de una potencia</span>",
+               "Producto: " + (a1*n1) + " + " + b1 + " = " + (a1*n1+b1) + ". <span class=\"regla\">producto</span>"];
+    } else if (sub === 2){
+      var k2 = ale(2, 3), a2 = ale(1, 4), n2 = ale(2, 3), b2 = ale(1, 5);
+      var P2 = mPow(mono(k2, e1(a2)), n2); R = mMul(P2, xv(v, b2));
+      enun = porX(parX(mLinea(mono(k2, e1(a2))), n2), potX(v,v,b2));
+      dis = [[mono(k2, R.e), "Falta elevar el coeficiente dentro del paréntesis."], [mono(R.n, e1(a2+n2+b2)), "En el paréntesis los exponentes se multiplican."], [mono(k2*n2, R.e), "El coeficiente se eleva: " + k2 + "<sup>" + n2 + "</sup>."]];
+      pasos = ["Paréntesis: " + k2 + "<sup>" + n2 + "</sup> = " + Math.pow(k2, n2) + " y " + a2 + " × " + n2 + " = " + (a2*n2) + ". <span class=\"regla\">potencia de un producto</span>",
+               "Producto: " + (a2*n2) + " + " + b2 + " = " + (a2*n2+b2) + ". <span class=\"regla\">producto</span>"];
+    } else {
+      var a3 = ale(2, 4), n3 = ale(2, 3), b3 = ale(1, 3), m3 = ale(2, 4);
+      R = mMul(xv(v, a3*n3), xv(v, b3*m3));
+      enun = porX(parX(potX(v,v,a3), n3), parX(potX(v,v,b3), m3));
+      dis = [[xv(v, a3+n3+b3+m3), "Sumaste todos los exponentes; los paréntesis multiplican."], [xv(v, a3*n3*b3*m3), "Tras resolver los paréntesis, las dos potencias están multiplicadas: se suman."], [xv(v, a3*n3 + b3), "El segundo paréntesis también hay que resolverlo."]];
+      pasos = ["Primer paréntesis: " + a3 + " × " + n3 + " = " + (a3*n3) + "; segundo: " + b3 + " × " + m3 + " = " + (b3*m3) + ". <span class=\"regla\">potencia de una potencia</span>",
+               "Producto: " + (a3*n3) + " + " + (b3*m3) + " = " + (a3*n3 + b3*m3) + ". <span class=\"regla\">producto</span>"];
+    }
+  }
+  return {enun:"Simplifica " + ver(enun) + ".", opciones:opcionesMono(R, dis), sol:pasosHTML(pasos), regla:tipo};
+}
+
+/* ---------- Arranque ---------- */
+$("n-base").addEventListener("change", actualizaNotacion);
+$("n-exp").addEventListener("input", actualizaNotacion);
+actualizaNotacion();
+PracticaOM("p-notacion", genNotacion);
+
+["pr-m","pr-n"].forEach(function(id){ $(id).addEventListener("input", actualizaProducto); });
+actualizaProducto();
+PracticaEscrita("p-producto1", genProducto1);
+PracticaOM("p-producto2", genProducto2);
+
+["pp-m","pp-n"].forEach(function(id){ $(id).addEventListener("input", actualizaPotPot); });
+actualizaPotPot();
+PracticaOM("p-potpot", genPotPot);
+
+["px-c","px-a","px-b","px-n"].forEach(function(id){ $(id).addEventListener("input", actualizaPotProd); });
+actualizaPotProd();
+PracticaOM("p-potprod", genPotProd);
+
+PracticaOM("p-tres", genTres, {reglas:[["producto","Producto de potencias"],["potpot","Potencia de una potencia"],["potprod","Potencia de un producto"],["combinada","Reglas combinadas"]]});
+
+iniciaNavegacion();
+
+</script>
+</body>
+</html>
