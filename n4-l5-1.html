@@ -1,0 +1,694 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 5.1 — Simplificar expresiones racionales: factorizar y cancelar
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #simplificar · #excluidos · #trampa
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 5.1: simplificar expresiones racionales</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 5.1 del Nivel 4: simplificar fracciones algebraicas, hallar los valores excluidos del dominio y distinguir factores de términos.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#37474f; --tema-d:#263238; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#004d40;border-color:#004d40;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:96px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* fracción algebraica */
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 6px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 8px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;
+                 text-decoration-color:#b71c1c;color:#b71c1c;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 5 · Expresiones racionales complejas</div>
+    <h1>Lección 5.1 · Simplificar expresiones racionales: factorizar y cancelar</h1>
+    <div class="meta">Tres prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#simplificar">Simplificar fracciones algebraicas</a></li>
+      <li><a href="#excluidos">Valores excluidos del dominio</a></li>
+      <li><a href="#trampa">El error trampa: factores, no términos</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="simplificar" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Simplificar fracciones algebraicas</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Simplificar una fracción algebraica es lo mismo que simplificar 12/18: se <strong>factoriza</strong> arriba y abajo y se <strong>cancelan los factores comunes</strong>. Tres pasos, siempre en el mismo orden.</p>
+
+      <h3>Simplificador paso a paso</h3>
+      <p>Elige una expresión y ve revelando un paso a la vez. Intenta anticipar cada paso antes de mostrarlo.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:260px;">
+            <label for="s-expr">Expresión que se va a simplificar</label>
+            <select id="s-expr"></select>
+          </div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="s-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="s-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="s-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="fraccion-grande" id="s-visual" aria-live="polite"></div>
+      <div class="pasos" id="s-pasos" aria-live="polite"></div>
+
+      <div class="caja-tip">
+        <strong>Anota los valores excluidos antes de cancelar:</strong> al cancelar, el factor desaparece de la expresión,
+        pero el valor que lo anulaba sigue prohibido en el dominio. Por eso los valores excluidos se leen siempre
+        en el denominador <em>original</em>.
+      </div>
+
+      <h3>Practica: ¿cuál es la forma simplificada?</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="excluidos">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Valores excluidos del dominio</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Una fracción nunca puede tener el denominador igual a cero: la división entre cero no está definida. Los
+      <strong>valores excluidos</strong> son los que hacen cero al denominador. Para hallarlos se factoriza el denominador
+      y se iguala cada factor a cero.</p>
+
+      <h3>Explorador del denominador</h3>
+      <p>Arma un denominador de la forma (x − p)(x − q) eligiendo p y q, y comprueba qué ocurre al sustituir distintos valores de x.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="e-p">Valor de p</label>
+            <input type="number" id="e-p" value="3" step="1">
+          </div>
+          <div class="campo">
+            <label for="e-q">Valor de q</label>
+            <input type="number" id="e-q" value="-2" step="1">
+          </div>
+          <div class="campo">
+            <label for="e-x">Prueba con x =</label>
+            <input type="number" id="e-x" value="0" step="1">
+          </div>
+        </div>
+        <p class="nota">Con p = 3 y q = −2 el denominador es (x − 3)(x + 2). Prueba a escribir en x justo el valor de p o el de q.</p>
+      </div>
+
+      <div class="caja-aviso" id="e-aviso" role="alert"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="e-factorizado"></div>
+        <div class="linea" id="e-expandido"></div>
+        <div class="linea" id="e-excluidos"></div>
+        <div class="linea veredicto" id="e-prueba"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Ojo con el signo:</strong> el factor (x − 3) se anula en x = <strong>3</strong>, y el factor (x + 2) se anula
+        en x = <strong>−2</strong>. El valor excluido es el que hace cero al factor, no el número que aparece escrito en él.
+      </div>
+
+      <h3>Practica: ¿qué valores se excluyen?</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="trampa">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>El error trampa: factores, no términos</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Solo se cancelan <strong>factores</strong>, es decir, cosas que <em>multiplican a toda</em> la expresión.
+      Nunca se cancelan <strong>términos</strong>, que son las partes separadas por signos de suma o resta.</p>
+
+      <table class="reglas">
+        <caption>Diferencia entre factor y término en el numerador de una fracción algebraica.</caption>
+        <thead>
+          <tr><th scope="col">Expresión</th><th scope="col">¿Qué es la x?</th><th scope="col">¿Se puede cancelar?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>x(x + 4)</td><td>Un factor: multiplica a todo el paréntesis</td><td>Sí</td></tr>
+          <tr><td>x + 4</td><td>Un término: está sumado</td><td>No</td></tr>
+        </tbody>
+      </table>
+
+      <div class="caja-atencion">
+        <strong>La prueba rápida:</strong> si entre la parte que quieres cancelar y el resto hay un signo + o −
+        sin paréntesis que los agrupe, entonces es un término y <strong>no</strong> se cancela. Si lo que quieres cancelar
+        está multiplicando a todo lo demás, es un factor y sí se cancela.
+      </div>
+
+      <h3>Practica: ¿es correcta esta cancelación?</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="fraccion-grande" id="p3-visual"></div>
+        <div class="opciones" id="p3-opciones">
+          <button type="button" class="opcion" data-op="si" aria-pressed="false">Sí: lo que se cancela es un factor</button>
+          <button type="button" class="opcion" data-op="no" aria-pressed="false">No: lo que se cancela es un término</button>
+        </div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p3-nuevo">Otro caso</button>
+        </div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 5.1 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual, largo){
+  var i = aleatorio(0, largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0, largo-1);
+  return i;
+}
+
+/* ============================================================
+   MÓDULO 1 · Simplificador paso a paso
+   Cada expresión guarda sus factores como fichas, para poder
+   tacharlas una a una al cancelar.
+   ============================================================ */
+var EXPRESIONES = [
+  { etiqueta:"6x² / 9x",
+    num:["3","2","x","x"], den:["3","3","x"], cancelar:["3","x"],
+    resultado:"2x / 3", excluidos:"x = 0",
+    notaNum:"6x² = 3 · 2 · x · x", notaDen:"9x = 3 · 3 · x" },
+  { etiqueta:"(x² + 5x + 6) / (x + 2)",
+    num:["(x + 2)","(x + 3)"], den:["(x + 2)"], cancelar:["(x + 2)"],
+    resultado:"x + 3", excluidos:"x = −2",
+    notaNum:"x² + 5x + 6 = (x + 2)(x + 3)", notaDen:"el denominador ya está factorizado" },
+  { etiqueta:"(x² − 4) / (x² − x − 2)",
+    num:["(x + 2)","(x − 2)"], den:["(x − 2)","(x + 1)"], cancelar:["(x − 2)"],
+    resultado:"(x + 2) / (x + 1)", excluidos:"x = 2 y x = −1",
+    notaNum:"x² − 4 = (x + 2)(x − 2), diferencia de cuadrados", notaDen:"x² − x − 2 = (x − 2)(x + 1)" },
+  { etiqueta:"(x² − 9) / (x² + 7x + 12)",
+    num:["(x + 3)","(x − 3)"], den:["(x + 3)","(x + 4)"], cancelar:["(x + 3)"],
+    resultado:"(x − 3) / (x + 4)", excluidos:"x = −3 y x = −4",
+    notaNum:"x² − 9 = (x + 3)(x − 3), diferencia de cuadrados", notaDen:"x² + 7x + 12 = (x + 3)(x + 4)" },
+  { etiqueta:"(x² + 4x + 4) / (x + 2)",
+    num:["(x + 2)","(x + 2)"], den:["(x + 2)"], cancelar:["(x + 2)"],
+    resultado:"x + 2", excluidos:"x = −2",
+    notaNum:"x² + 4x + 4 = (x + 2)(x + 2), trinomio cuadrado perfecto", notaDen:"el denominador ya está factorizado" },
+  { etiqueta:"(2x² + 6x) / (x² − 9)",
+    num:["2","x","(x + 3)"], den:["(x + 3)","(x − 3)"], cancelar:["(x + 3)"],
+    resultado:"2x / (x − 3)", excluidos:"x = −3 y x = 3",
+    notaNum:"2x² + 6x = 2x(x + 3), factor común 2x", notaDen:"x² − 9 = (x + 3)(x − 3)" },
+  { etiqueta:"(x² − 1) / (x² + 2x + 1)",
+    num:["(x + 1)","(x − 1)"], den:["(x + 1)","(x + 1)"], cancelar:["(x + 1)"],
+    resultado:"(x − 1) / (x + 1)", excluidos:"x = −1",
+    notaNum:"x² − 1 = (x + 1)(x − 1)", notaDen:"x² + 2x + 1 = (x + 1)(x + 1)" }
+];
+var sIndice = 0, sPasos = [], sPaso = 0;
+
+function fichas(lista, tachados){
+  var html = "";
+  lista.forEach(function(t, i){
+    var tach = tachados && tachados.indexOf(i) !== -1;
+    html += '<span class="tok' + (tach ? ' cancelado' : '') + '">' + t +
+            (tach ? '<span class="sr-only"> (cancelado)</span>' : '') + '</span>';
+  });
+  return html;
+}
+function indicesACancelar(lista, cancelar){
+  var usados = [], copia = lista.slice();
+  cancelar.forEach(function(f){
+    var i = copia.indexOf(f);
+    if (i !== -1){ usados.push(i); copia[i] = null; }
+  });
+  return usados;
+}
+function pintaVisual(etapa){
+  var e = EXPRESIONES[sIndice];
+  var cont = $("s-visual");
+  if (etapa === 0){
+    cont.innerHTML = '<span class="frac"><span class="arriba">' + e.etiqueta.split(" / ")[0] +
+                     '</span><span class="abajo">' + e.etiqueta.split(" / ")[1] + '</span></span>';
+    return;
+  }
+  if (etapa === 1){
+    cont.innerHTML = '<span class="frac"><span class="arriba">' + fichas(e.num) +
+                     '</span><span class="abajo">' + fichas(e.den) + '</span></span>';
+    return;
+  }
+  var tn = indicesACancelar(e.num, e.cancelar), td = indicesACancelar(e.den, e.cancelar);
+  cont.innerHTML = '<span class="frac"><span class="arriba">' + fichas(e.num, tn) +
+                   '</span><span class="abajo">' + fichas(e.den, td) + '</span></span>' +
+                   '<span class="igual" aria-hidden="true">=</span>' +
+                   '<span class="sr-only"> es igual a </span>' +
+                   '<strong>' + e.resultado + '</strong>';
+}
+function construyeSimplificacion(){
+  var e = EXPRESIONES[sIndice];
+  return [
+    "Anotar los valores excluidos mirando el denominador original: <strong>" + e.excluidos + "</strong>. Se anotan ahora, antes de cancelar nada.",
+    "Factorizar el numerador: " + e.notaNum + ".",
+    "Factorizar el denominador: " + e.notaDen + ".",
+    "Cancelar los factores comunes: <strong>" + e.cancelar.join(" y ") + "</strong>. Solo se cancela lo que multiplica a todo, nunca lo que está sumado.",
+    "Resultado simplificado: <strong>" + e.resultado + "</strong>, con " + e.excluidos + " excluidos del dominio."
+  ];
+}
+function llenaSelector(){
+  var sel = $("s-expr");
+  EXPRESIONES.forEach(function(e, i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta;
+    sel.appendChild(op);
+  });
+}
+function reiniciaSimplificador(){
+  sIndice = parseInt($("s-expr").value, 10) || 0;
+  sPasos = construyeSimplificacion();
+  sPaso = 0;
+  $("s-pasos").innerHTML = "";
+  $("s-siguiente").disabled = false;
+  $("s-siguiente").textContent = "Mostrar el primer paso";
+  pintaVisual(0);
+}
+function agregaPaso(i){
+  var div = document.createElement("div");
+  div.className = "paso";
+  div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + sPasos[i];
+  $("s-pasos").appendChild(div);
+}
+function siguientePaso(){
+  if (sPaso >= sPasos.length) return;
+  agregaPaso(sPaso);
+  sPaso++;
+  if (sPaso >= 3) pintaVisual(1);
+  if (sPaso >= 4) pintaVisual(2);
+  $("s-siguiente").textContent = sPaso >= sPasos.length ? "No quedan más pasos" : "Siguiente paso";
+  if (sPaso >= sPasos.length) $("s-siguiente").disabled = true;
+}
+function todosLosPasos(){
+  $("s-pasos").innerHTML = "";
+  sPasos.forEach(function(t, i){ agregaPaso(i); });
+  sPaso = sPasos.length;
+  pintaVisual(2);
+  $("s-siguiente").textContent = "No quedan más pasos";
+  $("s-siguiente").disabled = true;
+}
+
+/* Práctica 1 */
+var BANCO1 = [
+  { q:"4x² / 6x", ops:["2x / 3","2x² / 3","4x / 6"], ok:0,
+    exp:"4x² = 2 · 2 · x · x y 6x = 2 · 3 · x. Se cancela un 2 y una x: queda 2x / 3." },
+  { q:"(x² − 1) / (x − 1)", ops:["x − 1","x + 1","x² − 1"], ok:1,
+    exp:"x² − 1 = (x + 1)(x − 1). Se cancela (x − 1) y queda x + 1." },
+  { q:"(x² + 4x + 4) / (x + 2)", ops:["x + 2","x + 4","x² + 2"], ok:0,
+    exp:"x² + 4x + 4 = (x + 2)(x + 2). Se cancela un (x + 2) y queda x + 2." },
+  { q:"(x² − 25) / (x² + 10x + 25)", ops:["(x − 5) / (x + 5)","(x + 5) / (x − 5)","x − 5"], ok:0,
+    exp:"Arriba: (x + 5)(x − 5). Abajo: (x + 5)(x + 5). Se cancela (x + 5) y queda (x − 5) / (x + 5)." },
+  { q:"(3x + 6) / (x² − 4)", ops:["3 / (x − 2)","3 / (x + 2)","3x / (x − 2)"], ok:0,
+    exp:"3x + 6 = 3(x + 2) y x² − 4 = (x + 2)(x − 2). Se cancela (x + 2) y queda 3 / (x − 2)." },
+  { q:"(x² − 3x) / (x² − 9)", ops:["x / (x + 3)","x / (x − 3)","−3 / 9"], ok:0,
+    exp:"x² − 3x = x(x − 3) y x² − 9 = (x + 3)(x − 3). Se cancela (x − 3) y queda x / (x + 3)." },
+  { q:"10x³ / 15x", ops:["2x² / 3","2x³ / 3","10x² / 15"], ok:0,
+    exp:"10x³ = 5 · 2 · x · x · x y 15x = 5 · 3 · x. Se cancela el 5 y una x: queda 2x² / 3." },
+  { q:"(x² + 7x + 12) / (x² + 5x + 6)", ops:["(x + 4) / (x + 2)","(x + 3) / (x + 2)","(x + 4) / (x + 3)"], ok:0,
+    exp:"Arriba: (x + 3)(x + 4). Abajo: (x + 2)(x + 3). Se cancela (x + 3) y queda (x + 4) / (x + 2)." }
+];
+
+/* Práctica 2 */
+var BANCO2 = [
+  { q:"3 / (x − 5)", ops:["x = 5","x = −5","x = 3"], ok:0,
+    exp:"El denominador se anula cuando x − 5 = 0, es decir, en x = 5." },
+  { q:"(x + 1) / [(x − 4)(x + 2)]", ops:["x = 4 y x = −2","x = −4 y x = 2","x = −1"], ok:0,
+    exp:"x − 4 = 0 da x = 4; x + 2 = 0 da x = −2. El numerador no influye en el dominio." },
+  { q:"x / (x² − 16)", ops:["x = 4 y x = −4","x = 16","x = 4 solamente"], ok:0,
+    exp:"x² − 16 = (x + 4)(x − 4), que se anula en x = 4 y en x = −4." },
+  { q:"7 / (x² + 5x)", ops:["x = 0 y x = −5","x = 5 solamente","x = 0 solamente"], ok:0,
+    exp:"x² + 5x = x(x + 5). El factor x se anula en x = 0 y el factor (x + 5) en x = −5." },
+  { q:"(x − 1) / (x² − x − 6)", ops:["x = 3 y x = −2","x = −3 y x = 2","x = 1"], ok:0,
+    exp:"x² − x − 6 = (x − 3)(x + 2), que se anula en x = 3 y en x = −2." },
+  { q:"2x / (x² − 2x + 1)", ops:["x = 1","x = 1 y x = −1","x = 2"], ok:0,
+    exp:"x² − 2x + 1 = (x − 1)(x − 1). Aunque el factor aparece dos veces, el único valor excluido es x = 1." },
+  { q:"(x + 2) / (x² + 4)", ops:["No hay valores excluidos","x = 2 y x = −2","x = −2"], ok:0,
+    exp:"x² + 4 nunca vale 0 con números reales: x² siempre es 0 o positivo, así que x² + 4 es al menos 4. Ningún valor real queda excluido." }
+];
+
+/* Práctica 3 */
+var BANCO3 = [
+  { arriba:"x + 4", abajo:"x", cancela:"x", correcto:false,
+    exp:"Arriba la x está sumada al 4: es un término, no un factor. (x + 4) / x no se simplifica." },
+  { arriba:"(x + 2)(x − 3)", abajo:"(x + 2)", cancela:"(x + 2)", correcto:true,
+    exp:"(x + 2) multiplica a todo arriba y es todo el denominador: es un factor común y sí se cancela. Queda x − 3." },
+  { arriba:"x + 3", abajo:"3", cancela:"3", correcto:false,
+    exp:"El 3 de arriba está sumado a la x: es un término. Solo se podría cancelar si multiplicara a todo el numerador." },
+  { arriba:"2x + 6", abajo:"2", cancela:"2", correcto:true,
+    exp:"2x + 6 = 2(x + 3): el 2 sí es factor común de todo el numerador. Se cancela y queda x + 3." },
+  { arriba:"x² + 4", abajo:"x²", cancela:"x²", correcto:false,
+    exp:"Arriba x² está sumado al 4: es un término. La expresión no se simplifica." },
+  { arriba:"5(x − 1)", abajo:"10(x − 1)", cancela:"(x − 1)", correcto:true,
+    exp:"(x − 1) multiplica arriba y abajo: se cancela. También se simplifica 5/10, y queda 1/2." },
+  { arriba:"x² − 9", abajo:"x − 3", cancela:"(x − 3)", correcto:true,
+    exp:"Primero se factoriza: x² − 9 = (x + 3)(x − 3). Entonces (x − 3) sí es factor común. Queda x + 3." },
+  { arriba:"x − 5", abajo:"x", cancela:"x", correcto:false,
+    exp:"Arriba la x está restando 5: es un término. Cancelarla para dejar −5 es el error más común." }
+];
+
+/* Motor de práctica de opción múltiple */
+function creaPractica(banco, idEnun, idOpciones, idFb, idMarcador, idNuevo, extra){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(idEnun).textContent = (extra && extra.prefijo ? extra.prefijo : "") + p.q +
+                            (extra && extra.sufijo ? extra.sufijo : "");
+    var cont = $(idOpciones);
+    cont.innerHTML = "";
+    p.ops.forEach(function(texto, j){
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "opcion";
+      btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(idFb).className = "fb"; $(idFb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(idOpciones).children, function(b2, k){
+      b2.disabled = true;
+      if (k === p.ok) b2.className = "opcion correcta";
+      else if (b2 === btn) b2.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(idFb).className = "fb bien";
+      $(idFb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(idFb).className = "fb mal";
+      $(idFb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(idMarcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(idNuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 2 · Explorador del denominador
+   ============================================================ */
+function factorTexto(r){ return r < 0 ? "(x + " + Math.abs(r) + ")" : "(x − " + r + ")"; }
+function actualizaExcluidos(){
+  var p = parseFloat($("e-p").value), q = parseFloat($("e-q").value), x = parseFloat($("e-x").value);
+  var campos = ["e-p","e-q","e-x"];
+  if (isNaN(p) || isNaN(q)){
+    $("e-aviso").innerHTML = "<strong>Faltan datos.</strong> Escribe un número entero en p y en q para armar el denominador.";
+    $("e-aviso").className = "caja-aviso visible";
+    ["e-factorizado","e-expandido","e-excluidos","e-prueba"].forEach(function(id){ $(id).textContent = ""; });
+    return;
+  }
+  $("e-aviso").className = "caja-aviso";
+  campos.forEach(function(id){ $(id).classList.remove("error"); });
+
+  var fact = factorTexto(p) + factorTexto(q);
+  var b = -(p + q), c = p * q;
+  var exp = "x²" + (b === 0 ? "" : (b < 0 ? " − " + Math.abs(b) : " + " + b) + "x") +
+                   (c === 0 ? "" : (c < 0 ? " − " + Math.abs(c) : " + " + c));
+  $("e-factorizado").textContent = "Denominador factorizado: " + fact + ".";
+  $("e-expandido").textContent = "Desarrollado: " + exp + ".";
+  $("e-excluidos").textContent = (p === q)
+    ? "Valor excluido: x = " + p + " (el factor aparece dos veces, pero el valor prohibido es uno solo)."
+    : "Valores excluidos: x = " + p + " y x = " + q + ".";
+
+  if (isNaN(x)){
+    $("e-prueba").textContent = "Escribe un valor en «Prueba con x =» para evaluar el denominador.";
+    return;
+  }
+  var valor = (x - p) * (x - q);
+  if (valor === 0){
+    $("e-prueba").textContent = "Con x = " + x + " el denominador vale 0: la fracción queda indefinida, porque no se puede dividir entre cero. Por eso x = " + x + " está excluido del dominio.";
+    $("e-x").classList.add("error");
+  } else {
+    $("e-prueba").textContent = "Con x = " + x + " el denominador vale " + valor + ", distinto de cero: ese valor sí pertenece al dominio.";
+    $("e-x").classList.remove("error");
+  }
+}
+
+/* ============================================================
+   MÓDULO 3 · ¿Factor o término?
+   ============================================================ */
+var p3Estado = {i:-1, resuelta:false, aciertos:0, total:0};
+function pintaTrampa(){
+  p3Estado.i = barajaIndice(p3Estado.i, BANCO3.length);
+  p3Estado.resuelta = false;
+  var c = BANCO3[p3Estado.i];
+  $("p3-enun").textContent = "Alguien quiere cancelar " + c.cancela + " en esta fracción. ¿Es una cancelación válida?";
+  $("p3-visual").innerHTML = '<span class="frac"><span class="arriba">' + c.arriba +
+                             '</span><span class="abajo">' + c.abajo + '</span></span>';
+  Array.prototype.forEach.call($("p3-opciones").children, function(b){
+    b.className = "opcion"; b.disabled = false; b.setAttribute("aria-pressed","false");
+  });
+  $("p3-fb").className = "fb"; $("p3-fb").textContent = "";
+}
+function respondeTrampa(btn){
+  if (p3Estado.resuelta) return;
+  p3Estado.resuelta = true; p3Estado.total++;
+  var c = BANCO3[p3Estado.i];
+  var eligeSi = btn.getAttribute("data-op") === "si";
+  var correcta = c.correcto ? "si" : "no";
+  Array.prototype.forEach.call($("p3-opciones").children, function(b){
+    b.disabled = true;
+    if (b.getAttribute("data-op") === correcta) b.className = "opcion correcta";
+    else if (b === btn) b.className = "opcion incorrecta";
+  });
+  btn.setAttribute("aria-pressed","true");
+  if (eligeSi === c.correcto){
+    p3Estado.aciertos++;
+    $("p3-fb").className = "fb bien";
+    $("p3-fb").textContent = "✓ Correcto. " + c.exp;
+  } else {
+    $("p3-fb").className = "fb mal";
+    $("p3-fb").textContent = "✗ Todavía no. " + c.exp;
+  }
+  $("p3-marcador").textContent = "Aciertos: " + p3Estado.aciertos + " de " + p3Estado.total;
+}
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+llenaSelector();
+$("s-expr").addEventListener("change", reiniciaSimplificador);
+$("s-siguiente").addEventListener("click", siguientePaso);
+$("s-todo").addEventListener("click", todosLosPasos);
+$("s-reiniciar").addEventListener("click", reiniciaSimplificador);
+reiniciaSimplificador();
+
+creaPractica(BANCO1, "p1-enun", "p1-opciones", "p1-fb", "p1-marcador", "p1-nuevo",
+             {prefijo:"Simplifica: "});
+creaPractica(BANCO2, "p2-enun", "p2-opciones", "p2-fb", "p2-marcador", "p2-nuevo",
+             {prefijo:"¿Qué valores se excluyen del dominio de ", sufijo:" ?"});
+
+["e-p","e-q","e-x"].forEach(function(id){ $(id).addEventListener("input", actualizaExcluidos); });
+actualizaExcluidos();
+
+Array.prototype.forEach.call($("p3-opciones").children, function(b){
+  b.addEventListener("click", function(){ respondeTrampa(b); });
+});
+$("p3-nuevo").addEventListener("click", pintaTrampa);
+pintaTrampa();
+
+abrePorHash();
+</script>
+</body>
+</html>

@@ -1,0 +1,830 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 5.3 — Resolver ecuaciones con expresiones racionales y modelado
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #mcm · #extranas · #trabajo · #dvt
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 5.3: ecuaciones racionales y modelado</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 5.3 del Nivel 4: limpiar denominadores con el MCM, detectar soluciones extrañas, trabajo conjunto y problemas de distancia, velocidad y tiempo.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#37474f; --tema-d:#263238; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#004d40;border-color:#004d40;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:110px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+  .paso .analogia{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
+
+  .ecuacion{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:18px 0;}
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .barra-trabajo{border:2px solid var(--tema);border-radius:8px;overflow:hidden;display:flex;height:40px;margin:12px 0;background:#fff;}
+  .seg{display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;white-space:nowrap;}
+  .seg-a{background:#37474f;}
+  .seg-b{background:#00695c;}
+  .seg-resto{background:#eceff1;color:var(--gris);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  td.cero{background:var(--mal-bg);color:var(--mal);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 5 · Expresiones racionales complejas</div>
+    <h1>Lección 5.3 · Resolver ecuaciones con expresiones racionales y modelado</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#mcm">Limpiar los denominadores con el MCM</a></li>
+      <li><a href="#extranas">Soluciones extrañas: el verificador</a></li>
+      <li><a href="#trabajo">Problemas de trabajo conjunto</a></li>
+      <li><a href="#dvt">Distancia, velocidad y tiempo</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="mcm" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Limpiar los denominadores con el MCM</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Una ecuación racional se resuelve en cuatro movimientos: anotar los valores excluidos, multiplicar los dos
+      lados por el MCM de todos los denominadores, resolver la ecuación que queda —ya sin fracciones— y verificar
+      la solución contra los valores excluidos.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="q-expr">Ecuación que se va a resolver</label>
+          <select id="q-expr"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="q-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="q-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="q-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="ecuacion" id="q-visual" aria-live="polite"></div>
+      <div class="pasos" id="q-pasos" aria-live="polite"></div>
+
+      <div class="caja-tip">
+        <strong>Multiplicar por el MCM no es lo mismo que sumar fracciones:</strong> aquí hay un signo de igual, así que
+        se puede multiplicar todo por el MCM y hacer desaparecer los denominadores. En una suma sin igual, como las de
+        la lección anterior, los denominadores se conservan.
+      </div>
+
+      <h3>Practica: resuelve la ecuación</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="extranas">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Soluciones extrañas: el verificador</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Al multiplicar por el MCM puede aparecer un valor que resuelve la ecuación <em>sin fracciones</em> pero que
+      anula un denominador de la ecuación <strong>original</strong>. Ese valor es una <strong>solución extraña</strong>
+      y hay que descartarlo. La única forma de detectarlo es verificar.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:280px;">
+            <label for="v-expr">Ecuación original</label>
+            <select id="v-expr"></select>
+          </div>
+          <div class="campo">
+            <label for="v-x">Verifica el valor x =</label>
+            <input type="number" id="v-x" value="3" step="1">
+          </div>
+        </div>
+        <p class="nota">Escribe el valor obtenido al resolver y comprueba qué le pasa a cada denominador.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn-acento" id="v-verificar">Verificar</button>
+          <button type="button" class="btn-sec" id="v-candidata">Usar el valor que da el álgebra</button>
+        </div>
+      </div>
+
+      <div class="ecuacion" id="v-ecuacion"></div>
+      <div class="caja-aviso" id="v-aviso" role="alert"></div>
+      <div id="v-tabla"></div>
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="v-detalle"></div>
+        <div class="linea veredicto" id="v-veredicto"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Una solución extraña no es un error de cuentas.</strong> El álgebra está bien hecha: lo que ocurre es que
+        al multiplicar por el MCM se multiplicó por algo que vale cero para ese valor de x, y eso agrega una solución
+        que la ecuación original no tenía. Si todas las soluciones resultan extrañas, la ecuación no tiene solución.
+      </div>
+
+      <h3>Practica: ¿válida o extraña?</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="trabajo">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Problemas de trabajo conjunto</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Si una persona tarda <strong>a</strong> horas en hacer un trabajo completo, en una hora hace <strong>1/a</strong>
+      del trabajo. Esa es toda la idea: se suman las partes que cada quien hace en una hora.</p>
+      <p class="formula">1/a + 1/b = 1/t</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="t-a">La primera persona tarda (horas)</label>
+            <input type="number" id="t-a" value="3" step="0.5" min="0.5">
+          </div>
+          <div class="campo">
+            <label for="t-b">La segunda persona tarda (horas)</label>
+            <input type="number" id="t-b" value="6" step="0.5" min="0.5">
+          </div>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="t-aviso" role="alert"></div>
+
+      <div id="t-barra"></div>
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="t-ritmo"></div>
+        <div class="linea" id="t-suma"></div>
+        <div class="linea" id="t-formula"></div>
+        <div class="linea veredicto bien" id="t-resultado"></div>
+        <div class="linea" id="t-control"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Control de sentido común:</strong> juntos siempre tardan menos que el más rápido de los dos por separado.
+        Si el resultado sale mayor, el planteamiento está mal: seguramente se sumaron los tiempos en vez de los ritmos.
+      </div>
+
+      <h3>Practica: trabajo conjunto</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="dvt">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Distancia, velocidad y tiempo</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Muchos problemas del GED salen de una sola relación:</p>
+      <p class="formula">tiempo = distancia / velocidad</p>
+      <p>Como la velocidad está en el denominador, en cuanto la velocidad lleva una variable aparece una ecuación
+      racional. El caso clásico es un bote en un río o un avión con viento.</p>
+
+      <table class="reglas">
+        <caption>Velocidad efectiva según la dirección respecto a la corriente.</caption>
+        <thead><tr><th scope="col">Situación</th><th scope="col">Velocidad efectiva</th><th scope="col">Por qué</th></tr></thead>
+        <tbody>
+          <tr><td>A favor de la corriente</td><td>v + c</td><td>La corriente empuja: suma su velocidad.</td></tr>
+          <tr><td>En contra de la corriente</td><td>v − c</td><td>La corriente frena: resta su velocidad.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="r-v">Velocidad del bote en agua quieta (mph)</label>
+            <input type="number" id="r-v" value="10" step="1" min="1">
+          </div>
+          <div class="campo">
+            <label for="r-c">Velocidad de la corriente (mph)</label>
+            <input type="number" id="r-c" value="2" step="1" min="0">
+          </div>
+          <div class="campo">
+            <label for="r-d">Distancia en cada sentido (millas)</label>
+            <input type="number" id="r-d" value="24" step="1" min="1">
+          </div>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="r-aviso" role="alert"></div>
+      <div id="r-tabla"></div>
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="r-ida"></div>
+        <div class="linea" id="r-vuelta"></div>
+        <div class="linea veredicto bien" id="r-total"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Prueba a poner la corriente igual que la velocidad del bote.</strong> El denominador v − c se vuelve cero
+        y el tiempo de subida deja de existir: es el mismo valor excluido del módulo 1, pero contado como historia real.
+      </div>
+
+      <h3>Practica: distancia, velocidad y tiempo</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 5.3 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n, d){ var f = Math.pow(10, d || 2); return Math.round(n*f)/f; }
+
+/* Motor común del paso a paso */
+function montaStepper(cfg){
+  var idx = 0, pasos = [], k = 0;
+  function agrega(i){
+    var div = document.createElement("div");
+    div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + pasos[i];
+    $(cfg.pasos).appendChild(div);
+  }
+  function reinicia(){
+    idx = parseInt($(cfg.sel).value, 10) || 0;
+    pasos = cfg.construye(cfg.banco[idx]); k = 0;
+    $(cfg.pasos).innerHTML = "";
+    $(cfg.sig).disabled = false;
+    $(cfg.sig).textContent = "Mostrar el primer paso";
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], 0);
+  }
+  function siguiente(){
+    if (k >= pasos.length) return;
+    agrega(k); k++;
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], k);
+    $(cfg.sig).textContent = k >= pasos.length ? "No quedan más pasos" : "Siguiente paso";
+    if (k >= pasos.length) $(cfg.sig).disabled = true;
+  }
+  function todo(){
+    $(cfg.pasos).innerHTML = "";
+    pasos.forEach(function(t,i){ agrega(i); });
+    k = pasos.length;
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], k);
+    $(cfg.sig).textContent = "No quedan más pasos";
+    $(cfg.sig).disabled = true;
+  }
+  var sel = $(cfg.sel);
+  cfg.banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+  sel.addEventListener("change", reinicia);
+  $(cfg.sig).addEventListener("click", siguiente);
+  $(cfg.todo).addEventListener("click", todo);
+  $(cfg.reset).addEventListener("click", reinicia);
+  reinicia();
+}
+
+/* Motor común de práctica */
+function creaPractica(banco, ids, extra){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = (extra && extra.prefijo ? extra.prefijo : "") + p.q +
+                              (extra && extra.sufijo ? extra.sufijo : "");
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Resolver con el MCM
+   ============================================================ */
+var BANCO_EC = [
+  { etiqueta:"6/x + 1 = 4",
+    mcm:"x", excluidos:"x = 0", limpia:"6 + x = 4x",
+    resolucion:"6 = 4x − x, o sea 6 = 3x, así que x = 2",
+    solucion:"x = 2", valida:true,
+    comprobacion:"x = 2 no anula el denominador x, y al sustituir: 6/2 + 1 = 3 + 1 = 4. Coincide con el lado derecho." },
+  { etiqueta:"1/(x − 2) = 3/x",
+    mcm:"x(x − 2)", excluidos:"x = 2 y x = 0", limpia:"x = 3(x − 2)",
+    resolucion:"x = 3x − 6, entonces −2x = −6, así que x = 3",
+    solucion:"x = 3", valida:true,
+    comprobacion:"x = 3 no anula ningún denominador, y al sustituir: 1/(3 − 2) = 1 y 3/3 = 1. Los dos lados coinciden." },
+  { etiqueta:"3/x + 1/2 = 2/x",
+    mcm:"2x", excluidos:"x = 0", limpia:"6 + x = 4",
+    resolucion:"x = 4 − 6, así que x = −2",
+    solucion:"x = −2", valida:true,
+    comprobacion:"x = −2 no anula el denominador x, y al sustituir: 3/(−2) + 1/2 = −1.5 + 0.5 = −1, igual que 2/(−2) = −1." },
+  { etiqueta:"2/(x + 1) = 1/(x − 1)",
+    mcm:"(x + 1)(x − 1)", excluidos:"x = −1 y x = 1", limpia:"2(x − 1) = x + 1",
+    resolucion:"2x − 2 = x + 1, entonces x = 3",
+    solucion:"x = 3", valida:true,
+    comprobacion:"x = 3 no anula ningún denominador, y al sustituir: 2/4 = 0.5 y 1/2 = 0.5. Coinciden." },
+  { etiqueta:"x/(x − 4) = 2 + 4/(x − 4)",
+    mcm:"(x − 4)", excluidos:"x = 4", limpia:"x = 2(x − 4) + 4",
+    resolucion:"x = 2x − 8 + 4, entonces x = 2x − 4, así que x = 4",
+    solucion:"x = 4", valida:false,
+    comprobacion:"x = 4 <strong>anula el denominador (x − 4)</strong>: es una solución extraña y se descarta. La ecuación no tiene solución." }
+];
+function pintaEc(e, k){
+  if (k <= 1) return e.etiqueta;
+  if (k === 2) return e.limpia;
+  if (k === 3) return e.limpia + " → " + e.solucion;
+  return e.valida
+    ? e.solucion + ' <span style="color:#1b5e20;">✓ válida</span>'
+    : e.solucion + ' <span style="color:#b71c1c;">✗ extraña, se descarta</span>';
+}
+function pasosEc(e){
+  return [
+    "Anotar los valores excluidos antes de tocar nada: <strong>" + e.excluidos + "</strong>. Estos valores nunca podrán ser solución.",
+    "Hallar el MCM de todos los denominadores: <strong>" + e.mcm + "</strong>, y multiplicar por él <em>los dos lados completos</em> de la ecuación.",
+    "Al multiplicar, los denominadores desaparecen y queda: <strong>" + e.limpia + "</strong>.",
+    "Resolver esa ecuación, que ya es de las de siempre: " + e.resolucion + ".",
+    "Verificar contra los valores excluidos: " + e.comprobacion +
+      (e.valida ? " <strong>Solución: " + e.solucion + "</strong>." : " <strong>La ecuación no tiene solución.</strong>")
+  ];
+}
+var BANCO_P1 = [
+  { q:"6/x + 1 = 4", ops:["x = 2","x = 6","x = 1/2"], ok:0,
+    exp:"Se multiplica todo por x: 6 + x = 4x, entonces 6 = 3x y x = 2. No anula el denominador, así que es válida." },
+  { q:"1/(x − 2) = 3/x", ops:["x = 3","x = 2","x = 6"], ok:0,
+    exp:"MCM x(x − 2). Queda x = 3(x − 2) = 3x − 6, entonces −2x = −6 y x = 3." },
+  { q:"4/x = 2", ops:["x = 2","x = 8","x = 1/2"], ok:0,
+    exp:"Se multiplica por x: 4 = 2x, así que x = 2." },
+  { q:"1/x + 1/(2x) = 3", ops:["x = 1/2","x = 2","x = 3/2"], ok:0,
+    exp:"MCM 2x. Queda 2 + 1 = 6x, o sea 3 = 6x y x = 1/2." },
+  { q:"5/(x + 1) = 1", ops:["x = 4","x = 5","x = −4"], ok:0,
+    exp:"Se multiplica por (x + 1): 5 = x + 1, así que x = 4." }
+];
+
+/* ============================================================
+   MÓDULO 2 · Verificador de soluciones extrañas
+   ============================================================ */
+var BANCO_VER = [
+  { etiqueta:"x/(x − 3) = 3/(x − 3) + 2",
+    dens:[{t:"x − 3", f:function(x){ return x - 3; }}],
+    izq:function(x){ return x/(x-3); },
+    der:function(x){ return 3/(x-3) + 2; },
+    candidata:3, excluidos:"x = 3",
+    comentario:"El álgebra da x = 3, pero ese valor anula el denominador: la ecuación no tiene solución." },
+  { etiqueta:"6/x + 1 = 4",
+    dens:[{t:"x", f:function(x){ return x; }}],
+    izq:function(x){ return 6/x + 1; },
+    der:function(x){ return 4; },
+    candidata:2, excluidos:"x = 0",
+    comentario:"El álgebra da x = 2, que no anula ningún denominador: es una solución válida." },
+  { etiqueta:"x/(x − 4) = 2 + 4/(x − 4)",
+    dens:[{t:"x − 4", f:function(x){ return x - 4; }}],
+    izq:function(x){ return x/(x-4); },
+    der:function(x){ return 2 + 4/(x-4); },
+    candidata:4, excluidos:"x = 4",
+    comentario:"El álgebra da x = 4, que anula el denominador: solución extraña, la ecuación no tiene solución." },
+  { etiqueta:"x²/(x − 1) = 1/(x − 1)",
+    dens:[{t:"x − 1", f:function(x){ return x - 1; }}],
+    izq:function(x){ return (x*x)/(x-1); },
+    der:function(x){ return 1/(x-1); },
+    candidata:-1, excluidos:"x = 1",
+    comentario:"El álgebra da x² = 1, o sea x = 1 y x = −1. Prueba las dos: una es extraña y la otra es válida." },
+  { etiqueta:"1/(x − 2) = 3/x",
+    dens:[{t:"x − 2", f:function(x){ return x - 2; }}, {t:"x", f:function(x){ return x; }}],
+    izq:function(x){ return 1/(x-2); },
+    der:function(x){ return 3/x; },
+    candidata:3, excluidos:"x = 2 y x = 0",
+    comentario:"El álgebra da x = 3, que no anula ninguno de los dos denominadores: es válida." }
+];
+function llenaSelectVer(){
+  var sel = $("v-expr");
+  BANCO_VER.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+function itemVer(){ return BANCO_VER[parseInt($("v-expr").value,10) || 0]; }
+function preparaVer(){
+  var e = itemVer();
+  $("v-ecuacion").textContent = e.etiqueta;
+  $("v-tabla").innerHTML = "";
+  $("v-detalle").textContent = "Valores excluidos de esta ecuación: " + e.excluidos + ".";
+  $("v-veredicto").textContent = "";
+  $("v-veredicto").className = "linea veredicto";
+  $("v-aviso").className = "caja-aviso";
+  $("v-x").classList.remove("error");
+}
+function verifica(){
+  var e = itemVer();
+  var x = parseFloat($("v-x").value);
+  if (isNaN(x)){
+    $("v-aviso").innerHTML = "<strong>Falta el valor.</strong> Escribe el número que quieres verificar en la casilla «Verifica el valor x =».";
+    $("v-aviso").className = "caja-aviso visible";
+    return;
+  }
+  $("v-aviso").className = "caja-aviso";
+
+  var filas = "", anula = false;
+  e.dens.forEach(function(d){
+    var v = d.f(x);
+    if (v === 0) anula = true;
+    filas += "<tr><td>" + d.t + "</td><td>" + redondea(v,3) + "</td>" +
+             '<td class="' + (v === 0 ? "cero" : "") + '">' +
+             (v === 0 ? "✗ se anula: división entre cero" : "✓ distinto de cero") + "</td></tr>";
+  });
+  $("v-tabla").innerHTML =
+    '<table class="reglas"><caption>Valor de cada denominador de la ecuación original al sustituir x = ' + x + '.</caption>' +
+    '<thead><tr><th scope="col">Denominador</th><th scope="col">Valor con x = ' + x + '</th><th scope="col">¿Sirve?</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+
+  if (anula){
+    $("v-detalle").innerHTML = "Al sustituir x = " + x + ", al menos un denominador se vuelve cero, así que la ecuación original ni siquiera se puede evaluar en ese valor.";
+    $("v-veredicto").textContent = "✗ x = " + x + " es una solución extraña: se descarta.";
+    $("v-veredicto").className = "linea veredicto mal";
+    $("v-x").classList.add("error");
+    return;
+  }
+  $("v-x").classList.remove("error");
+  var a = e.izq(x), b = e.der(x);
+  var iguales = Math.abs(a - b) < 1e-9;
+  $("v-detalle").innerHTML = "Ningún denominador se anula. Lado izquierdo: <strong>" + redondea(a,3) +
+                             "</strong>. Lado derecho: <strong>" + redondea(b,3) + "</strong>.";
+  if (iguales){
+    $("v-veredicto").textContent = "✓ x = " + x + " es una solución válida: los dos lados dan el mismo valor.";
+    $("v-veredicto").className = "linea veredicto bien";
+  } else {
+    $("v-veredicto").textContent = "✗ x = " + x + " no es solución: los dos lados dan valores distintos (pero tampoco es extraña, simplemente no resuelve la ecuación).";
+    $("v-veredicto").className = "linea veredicto mal";
+  }
+}
+var BANCO_P2 = [
+  { q:"Al resolver x/(x − 3) = 3/(x − 3) + 2 se obtiene x = 3. ¿Qué se concluye?",
+    ops:["Es extraña: la ecuación no tiene solución","Es válida: la solución es x = 3","Hay que resolver otra vez"], ok:0,
+    exp:"x = 3 anula el denominador (x − 3). Se descarta, y al no quedar ninguna otra, la ecuación no tiene solución." },
+  { q:"Al resolver 6/x + 1 = 4 se obtiene x = 2. ¿Qué se concluye?",
+    ops:["Es válida","Es extraña","Depende del MCM"], ok:0,
+    exp:"El único valor excluido es x = 0, y 2 no es 0. Además, al sustituir, los dos lados dan 4." },
+  { q:"¿Cuándo una solución es extraña?",
+    ops:["Cuando anula un denominador de la ecuación original","Cuando es negativa","Cuando es una fracción"], ok:0,
+    exp:"Ser negativa o fraccionaria no tiene nada de malo. Lo que la descalifica es anular un denominador original." },
+  { q:"Al resolver x²/(x − 1) = 1/(x − 1) se obtiene x = 1 y x = −1. ¿Qué se concluye?",
+    ops:["x = −1 es válida y x = 1 es extraña","Las dos son válidas","Las dos son extrañas"], ok:0,
+    exp:"El valor excluido es x = 1, así que esa se descarta. Con x = −1 los dos lados dan −1/2: es válida." },
+  { q:"¿Por qué aparecen las soluciones extrañas?",
+    ops:["Porque se multiplicó por una expresión que vale cero para ese valor","Porque se resta mal","Porque el MCM está mal calculado"], ok:0,
+    exp:"Multiplicar los dos lados por algo que vale cero puede crear soluciones que la ecuación original no tenía. Por eso hay que verificar siempre." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Trabajo conjunto
+   ============================================================ */
+function actualizaTrabajo(){
+  var a = parseFloat($("t-a").value), b = parseFloat($("t-b").value);
+  var ids = ["t-ritmo","t-suma","t-formula","t-resultado","t-control"];
+  if (isNaN(a) || isNaN(b) || a <= 0 || b <= 0){
+    $("t-aviso").innerHTML = "<strong>Los tiempos tienen que ser mayores que cero.</strong> Un trabajo que se hace en 0 horas no tiene sentido, y además 1/0 no existe: la división entre cero no está definida.";
+    $("t-aviso").className = "caja-aviso visible";
+    $("t-a").classList.toggle("error", !(a > 0));
+    $("t-b").classList.toggle("error", !(b > 0));
+    ids.forEach(function(id){ $(id).textContent = ""; });
+    $("t-barra").innerHTML = "";
+    return;
+  }
+  $("t-aviso").className = "caja-aviso";
+  $("t-a").classList.remove("error"); $("t-b").classList.remove("error");
+
+  var ra = 1/a, rb = 1/b, suma = ra + rb, t = 1/suma;
+  var pa = Math.min(ra, 1) * 100, pb = Math.min(rb, 1 - Math.min(ra,1)) * 100;
+  var resto = Math.max(0, 100 - pa - pb);
+  $("t-barra").innerHTML =
+    '<div class="barra-trabajo" role="img" aria-label="En una hora, la primera persona hace ' +
+    redondea(ra*100,1) + ' por ciento del trabajo y la segunda ' + redondea(rb*100,1) + ' por ciento.">' +
+    '<div class="seg seg-a" style="width:' + pa + '%">' + (pa > 14 ? redondea(ra*100,0) + "%" : "") + '</div>' +
+    '<div class="seg seg-b" style="width:' + pb + '%">' + (pb > 14 ? redondea(rb*100,0) + "%" : "") + '</div>' +
+    '<div class="seg seg-resto" style="width:' + resto + '%">' + (resto > 20 ? "falta" : "") + '</div></div>' +
+    '<p class="nota">Lo que hace cada persona en <strong>una hora</strong>, sobre el trabajo completo.</p>';
+
+  $("t-ritmo").innerHTML = "En una hora, la primera hace <strong>1/" + a + "</strong> del trabajo (" +
+                           redondea(ra*100,1) + " %) y la segunda <strong>1/" + b + "</strong> (" + redondea(rb*100,1) + " %).";
+  $("t-suma").innerHTML = "Juntas, en una hora hacen 1/" + a + " + 1/" + b + " = <strong>" + redondea(suma,4) +
+                          "</strong> del trabajo.";
+  $("t-formula").innerHTML = "Como 1/t es ese ritmo conjunto, t = 1 ÷ " + redondea(suma,4) +
+                             ", o con la fórmula directa t = (a · b) / (a + b) = (" + a + " · " + b + ") / (" + a + " + " + b + ").";
+  $("t-resultado").textContent = "Juntas tardan " + redondea(t,3) + " horas" +
+                                 (Math.abs(t - Math.round(t)) < 1e-9 ? "." : " (unos " + redondea(t*60,0) + " minutos).");
+  var masRapido = Math.min(a,b);
+  $("t-control").textContent = t < masRapido
+    ? "Control de sentido: " + redondea(t,3) + " h es menos que las " + masRapido + " h del más rápido. El resultado tiene sentido."
+    : "Algo no cuadra: el resultado debería ser menor que " + masRapido + " h.";
+}
+var BANCO_P3 = [
+  { q:"A tarda 2 h y B tarda 2 h. ¿Cuánto tardan juntos?", ops:["1 h","2 h","4 h"], ok:0,
+    exp:"Cada uno hace 1/2 del trabajo por hora; juntos hacen el trabajo completo en una hora." },
+  { q:"A tarda 6 h y B tarda 3 h. ¿Cuánto tardan juntos?", ops:["2 h","3 h","9 h"], ok:0,
+    exp:"1/6 + 1/3 = 1/6 + 2/6 = 3/6 = 1/2, así que t = 2 horas." },
+  { q:"¿Qué fórmula modela el trabajo conjunto?", ops:["1/a + 1/b = 1/t","a + b = t","a · b = t"], ok:0,
+    exp:"Se suman los ritmos por hora, no los tiempos. Sumar los tiempos daría un resultado mayor que trabajar solo." },
+  { q:"A tarda 4 h y B tarda 12 h. ¿Cuánto tardan juntos?", ops:["3 h","6 h","8 h"], ok:0,
+    exp:"1/4 + 1/12 = 3/12 + 1/12 = 4/12 = 1/3, así que t = 3 horas." },
+  { q:"A tarda 5 h y juntos tardan 2 h. ¿Cuánto tarda B solo?", ops:["Unas 3.3 h","3 h","7 h"], ok:0,
+    exp:"1/5 + 1/b = 1/2, entonces 1/b = 1/2 − 1/5 = 3/10 y b = 10/3, es decir, unas 3.3 horas." },
+  { q:"Juntos tardan 2 h y el más rápido tarda 3 h solo. ¿Es posible?", ops:["Sí, juntos siempre tardan menos","No, es imposible","Solo si trabajan por turnos"], ok:0,
+    exp:"Trabajar acompañado nunca hace más lento el trabajo: el tiempo conjunto siempre es menor que el individual más corto." }
+];
+
+/* ============================================================
+   MÓDULO 4 · Distancia, velocidad y tiempo
+   ============================================================ */
+function actualizaRio(){
+  var v = parseFloat($("r-v").value), c = parseFloat($("r-c").value), d = parseFloat($("r-d").value);
+  if (isNaN(v) || isNaN(c) || isNaN(d) || v <= 0 || c < 0 || d <= 0){
+    $("r-aviso").innerHTML = "<strong>Faltan datos o no son válidos.</strong> La velocidad del bote y la distancia tienen que ser mayores que cero, y la corriente no puede ser negativa.";
+    $("r-aviso").className = "caja-aviso visible";
+    $("r-tabla").innerHTML = "";
+    ["r-ida","r-vuelta","r-total"].forEach(function(id){ $(id).textContent = ""; });
+    return;
+  }
+  var vf = v + c, vc = v - c;
+  var tf = d/vf;
+
+  $("r-tabla").innerHTML =
+    '<table class="reglas"><caption>Velocidades efectivas y tiempos con los datos escritos.</caption>' +
+    '<thead><tr><th scope="col">Sentido</th><th scope="col">Velocidad efectiva</th><th scope="col">Tiempo = distancia / velocidad</th></tr></thead>' +
+    '<tbody>' +
+    '<tr><td>A favor</td><td>' + v + ' + ' + c + ' = ' + vf + ' mph</td><td>' + d + ' / ' + vf + ' = ' + redondea(tf,3) + ' h</td></tr>' +
+    '<tr><td>En contra</td><td>' + v + ' − ' + c + ' = ' + vc + ' mph</td><td class="' + (vc <= 0 ? "cero" : "") + '">' +
+      (vc > 0 ? d + ' / ' + vc + ' = ' + redondea(d/vc,3) + ' h' : "no se puede calcular") + '</td></tr>' +
+    '</tbody></table>';
+
+  if (vc === 0){
+    $("r-aviso").innerHTML = "<strong>La corriente es igual que la velocidad del bote.</strong> La velocidad efectiva en contra es v − c = 0, y el tiempo sería " + d + " / 0, que no existe: el bote se queda parado y nunca llega. Es un valor excluido del modelo.";
+    $("r-aviso").className = "caja-aviso visible";
+  } else if (vc < 0){
+    $("r-aviso").innerHTML = "<strong>La corriente es más fuerte que el bote.</strong> La velocidad en contra sale negativa: el bote retrocede en vez de avanzar, así que el problema no tiene sentido físico con estos datos.";
+    $("r-aviso").className = "caja-aviso visible";
+  } else {
+    $("r-aviso").className = "caja-aviso";
+  }
+
+  $("r-ida").innerHTML = "Bajando (a favor): " + d + " millas a " + vf + " mph tardan <strong>" + redondea(tf,3) + " h</strong>.";
+  $("r-vuelta").innerHTML = vc > 0
+    ? "Subiendo (en contra): " + d + " millas a " + vc + " mph tardan <strong>" + redondea(d/vc,3) + " h</strong>."
+    : "Subiendo (en contra): con estos datos el viaje no se puede hacer.";
+  $("r-total").textContent = vc > 0
+    ? "Tiempo total del viaje de ida y vuelta: " + redondea(tf + d/vc, 3) + " horas."
+    : "No hay tiempo total: el viaje de vuelta es imposible con estos datos.";
+}
+var BANCO_P4 = [
+  { q:"Un bote va a 10 mph en agua quieta y la corriente es de 2 mph. ¿A qué velocidad avanza a favor de la corriente?",
+    ops:["12 mph","8 mph","10 mph"], ok:0,
+    exp:"A favor las velocidades se suman: 10 + 2 = 12 mph." },
+  { q:"Con el mismo bote, ¿a qué velocidad avanza en contra de la corriente?",
+    ops:["8 mph","12 mph","5 mph"], ok:0,
+    exp:"En contra se resta: 10 − 2 = 8 mph." },
+  { q:"¿Cuánto tarda ese bote en recorrer 24 millas a favor de la corriente?",
+    ops:["2 h","3 h","12 h"], ok:0,
+    exp:"tiempo = distancia / velocidad = 24 / 12 = 2 horas." },
+  { q:"¿Qué relación genera las ecuaciones racionales en estos problemas?",
+    ops:["tiempo = distancia / velocidad","distancia = tiempo / velocidad","velocidad = distancia · tiempo"], ok:0,
+    exp:"Como la velocidad queda en el denominador, en cuanto lleva una variable aparece una fracción algebraica." },
+  { q:"Un avión vuela a 300 mph y el viento sopla a 50 mph en contra. ¿Cuál es su velocidad respecto al suelo?",
+    ops:["250 mph","350 mph","300 mph"], ok:0,
+    exp:"El viento en contra resta: 300 − 50 = 250 mph." },
+  { q:"Si la corriente tuviera la misma velocidad que el bote, ¿qué pasaría al subir el río?",
+    ops:["El denominador v − c sería 0 y el tiempo no existiría","Tardaría el doble","Iría al doble de velocidad"], ok:0,
+    exp:"v − c = 0 y el tiempo sería distancia / 0, que no está definido: el bote no avanza." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+montaStepper({ sel:"q-expr", banco:BANCO_EC, visual:"q-visual", pasos:"q-pasos",
+  sig:"q-siguiente", todo:"q-todo", reset:"q-reiniciar",
+  construye:pasosEc, pinta:pintaEc });
+
+llenaSelectVer();
+$("v-expr").addEventListener("change", preparaVer);
+$("v-verificar").addEventListener("click", verifica);
+$("v-candidata").addEventListener("click", function(){
+  $("v-x").value = itemVer().candidata;
+  verifica();
+});
+preparaVer();
+
+["t-a","t-b"].forEach(function(id){ $(id).addEventListener("input", actualizaTrabajo); });
+actualizaTrabajo();
+
+["r-v","r-c","r-d"].forEach(function(id){ $(id).addEventListener("input", actualizaRio); });
+actualizaRio();
+
+creaPractica(BANCO_P1, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"},
+             {prefijo:"Resuelve: "});
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

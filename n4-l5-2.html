@@ -1,0 +1,807 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 5.2 — Sumar, restar, multiplicar y dividir expresiones racionales
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #multiplicar · #dividir · #sumar-igual · #sumar-distinto
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 5.2: operaciones con expresiones racionales</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 5.2 del Nivel 4: multiplicar, dividir, sumar y restar fracciones algebraicas paso a paso.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#37474f; --tema-d:#263238; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-rojo{background:#fff;color:#b71c1c;border:2px solid #b71c1c;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-rojo:hover{background:#ffebee;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-rojo:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+  .paso .analogia{display:block;font-size:14px;color:var(--gris);margin-top:4px;}
+
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 4px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 6px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:#b71c1c;color:#b71c1c;}
+  .resaltado{background:#fff8e1;border-bottom:3px solid #f9a825;padding:0 3px;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-error{background:var(--mal-bg);border:2px solid var(--mal);border-left:8px solid var(--mal);
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--mal);font-size:15px;display:none;}
+  .caja-error.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 5 · Expresiones racionales complejas</div>
+    <h1>Lección 5.2 · Sumar, restar, multiplicar y dividir expresiones racionales</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#multiplicar">Multiplicar</a></li>
+      <li><a href="#dividir">Dividir</a></li>
+      <li><a href="#sumar-igual">Sumar y restar con igual denominador</a></li>
+      <li><a href="#sumar-distinto">Sumar y restar con denominadores diferentes</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="multiplicar" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Multiplicar</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Para multiplicar fracciones algebraicas se factoriza todo, se cancelan los factores comunes —de cualquier
+      numerador con cualquier denominador— y solo al final se multiplica lo que queda. Cancelar <em>antes</em> de
+      multiplicar ahorra casi todo el trabajo.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="m-expr">Producto que se va a resolver</label>
+          <select id="m-expr"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="m-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="m-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="m-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="fraccion-grande" id="m-visual" aria-live="polite"></div>
+      <div class="pasos" id="m-pasos" aria-live="polite"></div>
+
+      <div class="caja-tip">
+        <strong>En la multiplicación se cancela en cruz:</strong> un factor del primer numerador puede cancelarse con
+        uno del segundo denominador, y al revés. Lo que no se puede es cancelar dos numeradores entre sí.
+      </div>
+
+      <h3>Practica: ¿cuál es el producto simplificado?</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="dividir">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Dividir</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Dividir es <strong>multiplicar por el recíproco</strong>: se voltea la segunda fracción y a partir de ahí
+      el problema es una multiplicación como la del módulo anterior. La regla se recuerda como
+      <strong>«deja, cambia, voltea»</strong>.</p>
+      <p class="formula">a/b ÷ c/d = a/b · d/c</p>
+
+      <table class="reglas">
+        <caption>Los tres movimientos de la regla «deja, cambia, voltea».</caption>
+        <thead><tr><th scope="col">Movimiento</th><th scope="col">Qué se hace</th></tr></thead>
+        <tbody>
+          <tr><td>Deja</td><td>La primera fracción se queda igual.</td></tr>
+          <tr><td>Cambia</td><td>El signo ÷ se convierte en ·</td></tr>
+          <tr><td>Voltea</td><td>La segunda fracción se pone al revés: el denominador arriba y el numerador abajo.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="d-expr">División que se va a resolver</label>
+          <select id="d-expr"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="d-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="d-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="d-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="fraccion-grande" id="d-visual" aria-live="polite"></div>
+      <div class="pasos" id="d-pasos" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>Se voltea la segunda, nunca la primera.</strong> Voltear la de la izquierda cambia el problema por
+        completo y da un resultado que es el recíproco del correcto.
+      </div>
+
+      <h3>Practica: ¿cuál es el cociente simplificado?</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="sumar-igual">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Sumar y restar con igual denominador</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Cuando los denominadores ya son iguales, se combinan los numeradores y el denominador se conserva,
+      exactamente como en 2/7 + 3/7 = 5/7. La suma casi nunca da problemas; la resta sí, y siempre por el mismo motivo.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="i-expr">Operación que se va a resolver</label>
+          <select id="i-expr"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="i-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="i-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="i-reiniciar">Reiniciar</button>
+          <button type="button" class="btn-rojo" id="i-error">Ver el error frecuente</button>
+        </div>
+      </div>
+
+      <div class="fraccion-grande" id="i-visual" aria-live="polite"></div>
+      <div class="caja-error" id="i-caja-error" role="status"></div>
+      <div class="pasos" id="i-pasos" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>El paréntesis invisible:</strong> al restar, el signo menos afecta a <em>todo</em> el segundo numerador,
+        no solo a su primer término. Escribe siempre ese numerador entre paréntesis antes de restar; es el paso que
+        evita el error más frecuente de toda la lección.
+      </div>
+
+      <h3>Practica: combina los numeradores</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="sumar-distinto">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Sumar y restar con denominadores diferentes</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Con denominadores distintos hay un paso previo: buscar el <strong>mínimo común múltiplo (MCM)</strong>,
+      reescribir cada fracción con ese denominador común y recién entonces combinar los numeradores. Es el mismo
+      procedimiento de 1/2 + 1/3; lo único nuevo es que los denominadores llevan variables.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="c-expr">Suma o resta que se va a resolver</label>
+          <select id="c-expr"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="c-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="c-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="c-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="fraccion-grande" id="c-visual" aria-live="polite"></div>
+      <div class="pasos" id="c-pasos" aria-live="polite"></div>
+
+      <div class="caja-tip">
+        <strong>Cómo se arma el MCM:</strong> se toman todos los factores distintos que aparecen en los denominadores,
+        cada uno con el mayor exponente con que aparezca. Si los denominadores no tienen ningún factor en común,
+        el MCM es simplemente su producto.
+      </div>
+
+      <h3>Practica: ¿cuál es el resultado?</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 5.2 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function frac(arriba, abajo){
+  return '<span class="frac"><span class="arriba">' + arriba +
+         '</span><span class="abajo">' + abajo + '</span></span>';
+}
+function simbolo(signo, lectura){
+  return '<span class="igual" aria-hidden="true">' + signo + '</span>' +
+         '<span class="sr-only"> ' + lectura + ' </span>';
+}
+function fichas(lista, tachados){
+  if (!lista.length) return "1";
+  var html = "";
+  lista.forEach(function(t,i){
+    var tach = tachados && tachados.indexOf(i) !== -1;
+    html += '<span class="tok' + (tach ? ' cancelado' : '') + '">' + t +
+            (tach ? '<span class="sr-only"> (cancelado)</span>' : '') + '</span>';
+  });
+  return html;
+}
+function indicesACancelar(lista, cancelar){
+  var usados = [], copia = lista.slice();
+  cancelar.forEach(function(f){
+    var i = copia.indexOf(f);
+    if (i !== -1){ usados.push(i); copia[i] = null; }
+  });
+  return usados;
+}
+
+/* Motor común de los cuatro pasos a paso */
+function montaStepper(cfg){
+  var idx = 0, pasos = [], k = 0;
+  function agrega(i){
+    var div = document.createElement("div");
+    div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + pasos[i];
+    $(cfg.pasos).appendChild(div);
+  }
+  function reinicia(){
+    idx = parseInt($(cfg.sel).value, 10) || 0;
+    pasos = cfg.construye(cfg.banco[idx]);
+    k = 0;
+    $(cfg.pasos).innerHTML = "";
+    $(cfg.sig).disabled = false;
+    $(cfg.sig).textContent = "Mostrar el primer paso";
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], 0);
+    if (cfg.alReiniciar) cfg.alReiniciar(cfg.banco[idx]);
+  }
+  function siguiente(){
+    if (k >= pasos.length) return;
+    agrega(k); k++;
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], k);
+    $(cfg.sig).textContent = k >= pasos.length ? "No quedan más pasos" : "Siguiente paso";
+    if (k >= pasos.length) $(cfg.sig).disabled = true;
+  }
+  function todo(){
+    $(cfg.pasos).innerHTML = "";
+    pasos.forEach(function(t,i){ agrega(i); });
+    k = pasos.length;
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], k);
+    $(cfg.sig).textContent = "No quedan más pasos";
+    $(cfg.sig).disabled = true;
+  }
+  var sel = $(cfg.sel);
+  cfg.banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta;
+    sel.appendChild(op);
+  });
+  sel.addEventListener("change", reinicia);
+  $(cfg.sig).addEventListener("click", siguiente);
+  $(cfg.todo).addEventListener("click", todo);
+  $(cfg.reset).addEventListener("click", reinicia);
+  reinicia();
+  return { actual:function(){ return cfg.banco[idx]; } };
+}
+
+/* Motor común de práctica de opción múltiple */
+function creaPractica(banco, ids, extra){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = (extra && extra.prefijo ? extra.prefijo : "") + p.q +
+                              (extra && extra.sufijo ? extra.sufijo : "");
+    var cont = $(ids.opciones);
+    cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien";
+      $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal";
+      $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Multiplicar
+   ============================================================ */
+var BANCO_MULT = [
+  { etiqueta:"(x + 2)/(x − 3) · (x − 3)/(x + 5)",
+    izq:["x + 2","x − 3"], der:["x − 3","x + 5"],
+    n1:["(x + 2)"], d1:["(x − 3)"], n2:["(x − 3)"], d2:["(x + 5)"],
+    cancelar:["(x − 3)"], resultado:"(x + 2) / (x + 5)", excluidos:"x = 3 y x = −5",
+    nota:"Las cuatro partes ya están factorizadas." },
+  { etiqueta:"(6x)/(x + 1) · (x + 1)/3",
+    izq:["6x","x + 1"], der:["x + 1","3"],
+    n1:["3","2","x"], d1:["(x + 1)"], n2:["(x + 1)"], d2:["3"],
+    cancelar:["(x + 1)","3"], resultado:"2x", excluidos:"x = −1",
+    nota:"6x = 3 · 2 · x; así aparece el 3 que después se cancela." },
+  { etiqueta:"(x/4) · (8/x)",
+    izq:["x","4"], der:["8","x"],
+    n1:["x"], d1:["4"], n2:["4","2"], d2:["x"],
+    cancelar:["x","4"], resultado:"2", excluidos:"x = 0",
+    nota:"8 = 4 · 2, para que salte a la vista el 4 del otro denominador." },
+  { etiqueta:"(x² − 4)/(x + 1) · (x + 1)/(x − 2)",
+    izq:["x² − 4","x + 1"], der:["x + 1","x − 2"],
+    n1:["(x + 2)","(x − 2)"], d1:["(x + 1)"], n2:["(x + 1)"], d2:["(x − 2)"],
+    cancelar:["(x + 1)","(x − 2)"], resultado:"x + 2", excluidos:"x = −1 y x = 2",
+    nota:"x² − 4 = (x + 2)(x − 2), diferencia de cuadrados." },
+  { etiqueta:"3/(x + 4) · (x + 4)/x",
+    izq:["3","x + 4"], der:["x + 4","x"],
+    n1:["3"], d1:["(x + 4)"], n2:["(x + 4)"], d2:["x"],
+    cancelar:["(x + 4)"], resultado:"3 / x", excluidos:"x = −4 y x = 0",
+    nota:"Todo está ya factorizado." }
+];
+function pintaMult(e, k){
+  var num = e.n1.concat(e.n2), den = e.d1.concat(e.d2);
+  if (k <= 1) return frac(e.izq[0], e.izq[1]) + simbolo("·","por") + frac(e.der[0], e.der[1]);
+  if (k === 2) return frac(fichas(num), fichas(den));
+  var tn = indicesACancelar(num, e.cancelar), td = indicesACancelar(den, e.cancelar);
+  var vis = frac(fichas(num, tn), fichas(den, td));
+  if (k >= 4) vis += simbolo("=","es igual a") + "<strong>" + e.resultado + "</strong>";
+  return vis;
+}
+function pasosMult(e){
+  return [
+    "Anotar los valores excluidos de los denominadores originales: <strong>" + e.excluidos + "</strong>.",
+    "Factorizar todo lo que se pueda. " + e.nota,
+    "Escribir el producto como una sola fracción: todos los factores de arriba sobre todos los factores de abajo.",
+    "Cancelar los factores comunes: <strong>" + e.cancelar.join(" y ") + "</strong>. Se cancela en cruz, de cualquier numerador con cualquier denominador.",
+    "Multiplicar lo que quedó: <strong>" + e.resultado + "</strong>."
+  ];
+}
+var BANCO_P1 = [
+  { q:"(x/4) · (8/x)", ops:["2","x²/32","8/4"], ok:0,
+    exp:"Se cancela la x y el 4 con el 8: queda 8/4 = 2." },
+  { q:"[(x + 1)/x] · [x/(x + 3)]", ops:["(x + 1)/(x + 3)","x/(x + 3)","(x + 1)/x"], ok:0,
+    exp:"La x del primer denominador se cancela con la x del segundo numerador: queda (x + 1)/(x + 3)." },
+  { q:"[(x² − 1)/(x + 2)] · [(x + 2)/(x − 1)]", ops:["x + 1","x − 1","(x + 1)/(x + 2)"], ok:0,
+    exp:"x² − 1 = (x + 1)(x − 1). Se cancelan (x + 2) y (x − 1): queda x + 1." },
+  { q:"(3x/2) · [4/(9x)]", ops:["2/3","3/2","12x/18"], ok:0,
+    exp:"3x · 4 = 12x y 2 · 9x = 18x. Se cancela x y se simplifica 12/18: queda 2/3." },
+  { q:"[(x + 5)/(x − 5)] · [(x − 5)/(x + 5)]", ops:["1","(x + 5)/(x − 5)","0"], ok:0,
+    exp:"Se cancelan los dos factores: arriba y abajo queda 1, y 1/1 = 1." }
+];
+
+/* ============================================================
+   MÓDULO 2 · Dividir
+   ============================================================ */
+var BANCO_DIV = [
+  { etiqueta:"(x/2) ÷ (x²/6)",
+    izq:["x","2"], der:["x²","6"], reciproco:["6","x²"],
+    n1:["x"], d1:["2"], n2:["3","2"], d2:["x","x"],
+    cancelar:["2","x"], resultado:"3 / x", excluidos:"x = 0",
+    nota:"6 = 3 · 2 y x² = x · x." },
+  { etiqueta:"(x/2) ÷ (x/8)",
+    izq:["x","2"], der:["x","8"], reciproco:["8","x"],
+    n1:["x"], d1:["2"], n2:["4","2"], d2:["x"],
+    cancelar:["x","2"], resultado:"4", excluidos:"x = 0",
+    nota:"8 = 4 · 2." },
+  { etiqueta:"[(x + 1)/3] ÷ [(x + 1)/9]",
+    izq:["(x + 1)","3"], der:["(x + 1)","9"], reciproco:["9","(x + 1)"],
+    n1:["(x + 1)"], d1:["3"], n2:["3","3"], d2:["(x + 1)"],
+    cancelar:["(x + 1)","3"], resultado:"3", excluidos:"x = −1",
+    nota:"9 = 3 · 3." },
+  { etiqueta:"[x/(x + 2)] ÷ [x²/(x + 2)]",
+    izq:["x","(x + 2)"], der:["x²","(x + 2)"], reciproco:["(x + 2)","x²"],
+    n1:["x"], d1:["(x + 2)"], n2:["(x + 2)"], d2:["x","x"],
+    cancelar:["x","(x + 2)"], resultado:"1 / x", excluidos:"x = −2 y x = 0",
+    nota:"x² = x · x." },
+  { etiqueta:"[(x² − 9)/x] ÷ [(x + 3)/x²]",
+    izq:["(x² − 9)","x"], der:["(x + 3)","x²"], reciproco:["x²","(x + 3)"],
+    n1:["(x + 3)","(x − 3)"], d1:["x"], n2:["x","x"], d2:["(x + 3)"],
+    cancelar:["(x + 3)","x"], resultado:"x(x − 3)", excluidos:"x = 0 y x = −3",
+    nota:"x² − 9 = (x + 3)(x − 3) y x² = x · x." }
+];
+function pintaDiv(e, k){
+  if (k <= 1) return frac(e.izq[0], e.izq[1]) + simbolo("÷","dividido entre") + frac(e.der[0], e.der[1]);
+  if (k === 2) return frac(e.izq[0], e.izq[1]) + simbolo("·","por") + frac(e.reciproco[0], e.reciproco[1]);
+  var num = e.n1.concat(e.n2), den = e.d1.concat(e.d2);
+  if (k === 3) return frac(fichas(num), fichas(den));
+  var tn = indicesACancelar(num, e.cancelar), td = indicesACancelar(den, e.cancelar);
+  var vis = frac(fichas(num, tn), fichas(den, td));
+  if (k >= 5) vis += simbolo("=","es igual a") + "<strong>" + e.resultado + "</strong>";
+  return vis;
+}
+function pasosDiv(e){
+  return [
+    "Anotar los valores excluidos: <strong>" + e.excluidos + "</strong>. Cuidado: también se excluye lo que anule el numerador de la segunda fracción, porque pasa a ser denominador.",
+    "Aplicar «deja, cambia, voltea»: la primera fracción se queda, el ÷ pasa a ·, y la segunda se voltea.",
+    "Factorizar todo. " + e.nota,
+    "Cancelar los factores comunes: <strong>" + e.cancelar.join(" y ") + "</strong>.",
+    "Multiplicar lo que quedó: <strong>" + e.resultado + "</strong>."
+  ];
+}
+var BANCO_P2 = [
+  { q:"(x/2) ÷ (x/8)", ops:["4","1/4","x²/16"], ok:0,
+    exp:"Se voltea la segunda: (x/2) · (8/x). Se cancela la x y queda 8/2 = 4." },
+  { q:"[(x + 1)/3] ÷ [(x + 1)/9]", ops:["3","1/3","(x + 1)/3"], ok:0,
+    exp:"Queda [(x + 1)/3] · [9/(x + 1)]. Se cancela (x + 1) y queda 9/3 = 3." },
+  { q:"[x/(x + 2)] ÷ [x²/(x + 2)]", ops:["1/x","x","x²"], ok:0,
+    exp:"Queda [x/(x + 2)] · [(x + 2)/x²]. Se cancela (x + 2) y una x: queda 1/x." },
+  { q:"(6/x) ÷ (3/x²)", ops:["2x","2/x","18/x³"], ok:0,
+    exp:"Queda (6/x) · (x²/3) = 6x²/(3x). Se cancela una x y se simplifica 6/3: queda 2x." },
+  { q:"[(x² − 4)/x] ÷ [(x − 2)/x]", ops:["x + 2","x − 2","(x + 2)/x"], ok:0,
+    exp:"Queda [(x + 2)(x − 2)/x] · [x/(x − 2)]. Se cancelan la x y (x − 2): queda x + 2." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Igual denominador
+   ============================================================ */
+var BANCO_IGUAL = [
+  { etiqueta:"(3x)/(x + 2) + 4/(x + 2)",
+    n1:"3x", n2:"4", den:"x + 2", signo:"+",
+    combinado:"3x + 4", resultado:"(3x + 4) / (x + 2)", excluidos:"x = −2",
+    error:null,
+    analogia:"Como 2/7 + 3/7 = 5/7." },
+  { etiqueta:"(5x)/(x − 3) − (2x)/(x − 3)",
+    n1:"5x", n2:"2x", den:"x − 3", signo:"−",
+    combinado:"5x − 2x = 3x", resultado:"(3x) / (x − 3)", excluidos:"x = 3",
+    error:null,
+    analogia:"Como 5/9 − 2/9 = 3/9." },
+  { etiqueta:"(4x + 1)/(x + 2) − (x − 3)/(x + 2)",
+    n1:"4x + 1", n2:"x − 3", den:"x + 2", signo:"−",
+    combinado:"4x + 1 − (x − 3) = 4x + 1 − x + 3 = 3x + 4",
+    resultado:"(3x + 4) / (x + 2)", excluidos:"x = −2",
+    error:"Sin el paréntesis se escribe 4x + 1 − x − 3 y se llega a <strong>3x − 2</strong>, que es incorrecto. El menos también cambia el signo del −3, que se vuelve +3.",
+    analogia:"El signo menos afecta al binomio completo." },
+  { etiqueta:"(2x + 5)/(x − 1) − (x + 2)/(x − 1)",
+    n1:"2x + 5", n2:"x + 2", den:"x − 1", signo:"−",
+    combinado:"2x + 5 − (x + 2) = 2x + 5 − x − 2 = x + 3",
+    resultado:"(x + 3) / (x − 1)", excluidos:"x = 1",
+    error:"Sin el paréntesis queda 2x + 5 − x + 2 y se llega a <strong>x + 7</strong>, que es incorrecto: el +2 tenía que volverse −2.",
+    analogia:"Restar (x + 2) es restar la x y restar también el 2." },
+  { etiqueta:"(x² + 2)/(x − 5) − (x² − 4)/(x − 5)",
+    n1:"x² + 2", n2:"x² − 4", den:"x − 5", signo:"−",
+    combinado:"x² + 2 − (x² − 4) = x² + 2 − x² + 4 = 6",
+    resultado:"6 / (x − 5)", excluidos:"x = 5",
+    error:"Sin el paréntesis queda x² + 2 − x² − 4 y se llega a <strong>−2</strong>, que es incorrecto. El resultado correcto es 6.",
+    analogia:"Las x² se cancelan entre sí y solo quedan los números." }
+];
+function pintaIgual(e, k){
+  if (k <= 1) return frac(e.n1, e.den) + simbolo(e.signo, e.signo === "+" ? "más" : "menos") + frac(e.n2, e.den);
+  if (k === 2 && e.signo === "−")
+    return frac(e.n1 + ' − <span class="resaltado">(' + e.n2 + ')</span>', e.den);
+  if (k === 2) return frac(e.n1 + " + " + e.n2, e.den);
+  var vis = frac(e.combinado.split(" = ").pop(), e.den);
+  if (k >= 4) vis += simbolo("=","es igual a") + "<strong>" + e.resultado + "</strong>";
+  return vis;
+}
+function pasosIgual(e){
+  var p = [];
+  p.push("Comprobar que los denominadores son iguales: los dos son <strong>" + e.den + "</strong>. Se conserva tal cual y se anota el valor excluido: <strong>" + e.excluidos + "</strong>.");
+  if (e.signo === "−")
+    p.push("Escribir el segundo numerador entre paréntesis: " + e.n1 + " − (" + e.n2 + "). Ese paréntesis es el que recuerda que el menos afecta a todo.");
+  else
+    p.push("Combinar los numeradores conservando el denominador: " + e.n1 + " + " + e.n2 + ".");
+  p.push("Operar el numerador: " + e.combinado + '<span class="analogia">' + e.analogia + "</span>");
+  p.push("Escribir el resultado sobre el denominador común: <strong>" + e.resultado + "</strong>.");
+  return p;
+}
+var BANCO_P3 = [
+  { q:"(3x)/(x + 2) + 4/(x + 2)", ops:["(3x + 4)/(x + 2)","(3x + 4)/(2x + 4)","3x + 4"], ok:0,
+    exp:"Se suman los numeradores y el denominador se conserva: (3x + 4)/(x + 2). El denominador nunca se suma." },
+  { q:"(5x)/(x − 3) − (2x)/(x − 3)", ops:["(3x)/(x − 3)","(7x)/(x − 3)","3x"], ok:0,
+    exp:"5x − 2x = 3x, sobre el mismo denominador." },
+  { q:"(4x + 1)/(x + 2) − (x − 3)/(x + 2)", ops:["(3x + 4)/(x + 2)","(3x − 2)/(x + 2)","(5x − 2)/(x + 2)"], ok:0,
+    exp:"4x + 1 − (x − 3) = 4x + 1 − x + 3 = 3x + 4. El menos convierte el −3 en +3." },
+  { q:"(2x + 5)/(x − 1) − (x + 2)/(x − 1)", ops:["(x + 3)/(x − 1)","(x + 7)/(x − 1)","(3x + 7)/(x − 1)"], ok:0,
+    exp:"2x + 5 − (x + 2) = 2x + 5 − x − 2 = x + 3." },
+  { q:"(x² + 2)/(x − 5) − (x² − 4)/(x − 5)", ops:["6/(x − 5)","−2/(x − 5)","(2x² − 2)/(x − 5)"], ok:0,
+    exp:"x² + 2 − (x² − 4) = x² + 2 − x² + 4 = 6. Las x² se cancelan y el −4 se vuelve +4." }
+];
+
+/* ============================================================
+   MÓDULO 4 · Denominadores diferentes
+   ============================================================ */
+var BANCO_MCM = [
+  { etiqueta:"1/x + 1/(2x)",
+    n1:"1", d1:"x", n2:"1", d2:"2x", signo:"+",
+    mcm:"2x", f1:"2", f2:"1",
+    reescrito:["2","2x","1","2x"], numerador:"2 + 1 = 3",
+    resultado:"3 / (2x)", excluidos:"x = 0",
+    analogia:"Igual que 1/2 + 1/4 = 2/4 + 1/4 = 3/4." },
+  { etiqueta:"3/x + 2/x²",
+    n1:"3", d1:"x", n2:"2", d2:"x²", signo:"+",
+    mcm:"x²", f1:"x", f2:"1",
+    reescrito:["3x","x²","2","x²"], numerador:"3x + 2",
+    resultado:"(3x + 2) / x²", excluidos:"x = 0",
+    analogia:"El MCM de x y x² es x², el de mayor exponente." },
+  { etiqueta:"1/2 + 3/x",
+    n1:"1", d1:"2", n2:"3", d2:"x", signo:"+",
+    mcm:"2x", f1:"x", f2:"2",
+    reescrito:["x","2x","6","2x"], numerador:"x + 6",
+    resultado:"(x + 6) / (2x)", excluidos:"x = 0",
+    analogia:"Sin factores comunes, el MCM es el producto: 2 · x." },
+  { etiqueta:"2/(x + 1) + 3/(x − 1)",
+    n1:"2", d1:"x + 1", n2:"3", d2:"x − 1", signo:"+",
+    mcm:"(x + 1)(x − 1)", f1:"(x − 1)", f2:"(x + 1)",
+    reescrito:["2(x − 1)","(x + 1)(x − 1)","3(x + 1)","(x + 1)(x − 1)"],
+    numerador:"2x − 2 + 3x + 3 = 5x + 1",
+    resultado:"(5x + 1) / [(x + 1)(x − 1)]", excluidos:"x = −1 y x = 1",
+    analogia:"Los denominadores no comparten factores: el MCM es su producto." },
+  { etiqueta:"5/x − 2/(x + 3)",
+    n1:"5", d1:"x", n2:"2", d2:"x + 3", signo:"−",
+    mcm:"x(x + 3)", f1:"(x + 3)", f2:"x",
+    reescrito:["5(x + 3)","x(x + 3)","2x","x(x + 3)"],
+    numerador:"5x + 15 − 2x = 3x + 15",
+    resultado:"(3x + 15) / [x(x + 3)]", excluidos:"x = 0 y x = −3",
+    analogia:"Al restar, el segundo numerador entra entre paréntesis: 5(x + 3) − (2x)." }
+];
+function pintaMcm(e, k){
+  var lectura = e.signo === "+" ? "más" : "menos";
+  if (k <= 2) return frac(e.n1, e.d1) + simbolo(e.signo, lectura) + frac(e.n2, e.d2);
+  if (k === 3)
+    return frac(e.reescrito[0], e.reescrito[1]) + simbolo(e.signo, lectura) + frac(e.reescrito[2], e.reescrito[3]);
+  var vis = frac(e.numerador.split(" = ").pop(), e.mcm);
+  if (k >= 5) vis += simbolo("=","es igual a") + "<strong>" + e.resultado + "</strong>";
+  return vis;
+}
+function pasosMcm(e){
+  return [
+    "Anotar los valores excluidos de los denominadores originales: <strong>" + e.excluidos + "</strong>.",
+    "Hallar el MCM de " + e.d1 + " y " + e.d2 + ": es <strong>" + e.mcm + '</strong>.<span class="analogia">' + e.analogia + "</span>",
+    "Ver por cuánto hay que multiplicar cada fracción: la primera por " + e.f1 + " y la segunda por " + e.f2 +
+      ". Se multiplica arriba y abajo, así que el valor de la fracción no cambia.",
+    "Reescribir las dos fracciones con el denominador común " + e.mcm + ".",
+    "Combinar los numeradores: " + e.numerador + ".",
+    "Escribir el resultado: <strong>" + e.resultado + "</strong>."
+  ];
+}
+var BANCO_P4 = [
+  { q:"1/x + 1/(3x)", ops:["4/(3x)","2/(4x)","1/(4x²)"], ok:0,
+    exp:"El MCM es 3x. Queda 3/(3x) + 1/(3x) = 4/(3x)." },
+  { q:"2/x + 1/x²", ops:["(2x + 1)/x²","3/x²","(2x + 1)/x³"], ok:0,
+    exp:"El MCM es x². Queda 2x/x² + 1/x² = (2x + 1)/x²." },
+  { q:"1/(x + 1) + 1/(x − 1)", ops:["2x / [(x + 1)(x − 1)]","2 / [(x + 1)(x − 1)]","1 / (x² − 1)"], ok:0,
+    exp:"El MCM es (x + 1)(x − 1). Arriba queda (x − 1) + (x + 1) = 2x." },
+  { q:"3/x − 1/(x + 2)", ops:["(2x + 6) / [x(x + 2)]","(3x + 6) / [x(x + 2)]","2 / [x(x + 2)]"], ok:0,
+    exp:"El MCM es x(x + 2). Arriba queda 3(x + 2) − x = 3x + 6 − x = 2x + 6." },
+  { q:"1/2 + 1/x", ops:["(x + 2)/(2x)","2/(2x)","1/(2x)"], ok:0,
+    exp:"El MCM es 2x. Queda x/(2x) + 2/(2x) = (x + 2)/(2x)." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+montaStepper({ sel:"m-expr", banco:BANCO_MULT, visual:"m-visual", pasos:"m-pasos",
+  sig:"m-siguiente", todo:"m-todo", reset:"m-reiniciar",
+  construye:pasosMult, pinta:pintaMult });
+
+montaStepper({ sel:"d-expr", banco:BANCO_DIV, visual:"d-visual", pasos:"d-pasos",
+  sig:"d-siguiente", todo:"d-todo", reset:"d-reiniciar",
+  construye:pasosDiv, pinta:pintaDiv });
+
+var stepperIgual = montaStepper({ sel:"i-expr", banco:BANCO_IGUAL, visual:"i-visual", pasos:"i-pasos",
+  sig:"i-siguiente", todo:"i-todo", reset:"i-reiniciar",
+  construye:pasosIgual, pinta:pintaIgual,
+  alReiniciar:function(e){
+    $("i-caja-error").className = "caja-error";
+    $("i-caja-error").innerHTML = "";
+    $("i-error").disabled = !e.error;
+    $("i-error").textContent = e.error ? "Ver el error frecuente" : "Sin error típico en esta suma";
+  }});
+$("i-error").addEventListener("click", function(){
+  var e = stepperIgual.actual();
+  if (!e.error) return;
+  $("i-caja-error").innerHTML = "<strong>Error frecuente:</strong> " + e.error;
+  $("i-caja-error").className = "caja-error visible";
+});
+
+montaStepper({ sel:"c-expr", banco:BANCO_MCM, visual:"c-visual", pasos:"c-pasos",
+  sig:"c-siguiente", todo:"c-todo", reset:"c-reiniciar",
+  construye:pasosMcm, pinta:pintaMcm });
+
+creaPractica(BANCO_P1, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"},
+             {prefijo:"Multiplica y simplifica: "});
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"},
+             {prefijo:"Divide y simplifica: "});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"},
+             {prefijo:"Resuelve: "});
+creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"},
+             {prefijo:"Resuelve: "});
+
+abrePorHash();
+</script>
+</body>
+</html>

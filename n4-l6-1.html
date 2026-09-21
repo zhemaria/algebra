@@ -1,0 +1,815 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 6.1 — Resolver sistemas de ecuaciones por sustitución
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #sustitucion · #verificar · #contexto
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 6.1: sistemas de ecuaciones por sustitución</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 6.1 del Nivel 4: resolver sistemas por sustitución, verificar pares ordenados y plantear sistemas a partir de situaciones reales.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#4e342e; --tema-d:#3e2723; --tema-bg:#efebe9; --tema-bg2:#d7ccc8;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#004d40;border-color:#004d40;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:100px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .sistema{display:inline-block;border-left:5px solid var(--tema);padding:6px 0 6px 16px;margin:14px 0;
+           font-size:19px;font-weight:700;color:var(--tema-d);}
+  .sistema span{display:block;}
+  .centrado{text-align:center;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{max-width:100%;height:auto;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:4px;display:inline-block;}
+  .m1{background:#4e342e;}
+  .m2{background:#00695c;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  td.si{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  td.no{background:var(--mal-bg);color:var(--mal);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 6 · Sistemas de ecuaciones lineales</div>
+    <h1>Lección 6.1 · Resolver sistemas de ecuaciones por sustitución</h1>
+    <div class="meta">Tres prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#sustitucion">Los cinco pasos de la sustitución</a></li>
+      <li><a href="#verificar">Verificar un par ordenado</a></li>
+      <li><a href="#contexto">Plantear el sistema a partir de una situación</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="sustitucion" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Los cinco pasos de la sustitución</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Resolver un sistema es encontrar el par (x, y) que cumple las <strong>dos</strong> ecuaciones a la vez.
+      Gráficamente, es el punto donde las dos rectas se cruzan. El método de sustitución llega a ese punto sin dibujar nada.</p>
+
+      <table class="reglas">
+        <caption>Los cinco pasos del método de sustitución.</caption>
+        <thead><tr><th scope="col">Paso</th><th scope="col">Acción</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Despejar una variable en una de las ecuaciones.</td></tr>
+          <tr><td>2</td><td>Sustituir esa expresión en la <em>otra</em> ecuación.</td></tr>
+          <tr><td>3</td><td>Resolver la ecuación que queda, que ya tiene una sola variable.</td></tr>
+          <tr><td>4</td><td>Sustituir ese valor para hallar la otra variable.</td></tr>
+          <tr><td>5</td><td>Verificar el par en las dos ecuaciones originales.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="s-sistema">Sistema que se va a resolver</label>
+          <select id="s-sistema"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="s-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="s-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="s-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="centrado"><div class="sistema" id="s-visual" aria-live="polite"></div></div>
+      <div class="pasos" id="s-pasos" aria-live="polite"></div>
+
+      <div class="grafica">
+        <svg id="s-svg" viewBox="0 0 520 380" role="img" aria-labelledby="s-svg-t s-svg-d">
+          <title id="s-svg-t">Las dos rectas del sistema</title>
+          <desc id="s-svg-d">Gráfica de las dos ecuaciones del sistema y del punto donde se cruzan.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m1" aria-hidden="true"></span> Primera ecuación</span>
+          <span><span class="muestra m2" aria-hidden="true"></span> Segunda ecuación</span>
+        </div>
+        <p class="pie-grafica" id="s-svg-texto"></p>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Elige bien qué despejar:</strong> conviene la variable cuyo coeficiente sea 1 o −1, porque así no
+        aparecen fracciones. Si una ecuación ya viene con y despejada, ese trabajo está hecho.
+      </div>
+
+      <h3>Practica: resuelve por sustitución</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="verificar">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Verificar un par ordenado</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Un par (x, y) es solución del sistema solo si cumple <strong>las dos</strong> ecuaciones. Cumplir una sola
+      no basta: significa que el punto está sobre una recta, pero no sobre la otra.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:250px;">
+            <label for="v-sistema">Sistema</label>
+            <select id="v-sistema"></select>
+          </div>
+          <div class="campo">
+            <label for="v-x">Valor de x</label>
+            <input type="number" id="v-x" value="2" step="1">
+          </div>
+          <div class="campo">
+            <label for="v-y">Valor de y</label>
+            <input type="number" id="v-y" value="5" step="1">
+          </div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn-acento" id="v-verificar">Verificar el par</button>
+          <button type="button" class="btn-sec" id="v-solucion">Usar la solución correcta</button>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="v-aviso" role="alert"></div>
+      <div id="v-tabla"></div>
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="v-veredicto"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="v-svg" viewBox="0 0 520 380" role="img" aria-labelledby="v-svg-t v-svg-d">
+          <title id="v-svg-t">El punto y las dos rectas</title>
+          <desc id="v-svg-d">Gráfica de las dos rectas del sistema con el punto que se está verificando.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m1" aria-hidden="true"></span> Primera ecuación</span>
+          <span><span class="muestra m2" aria-hidden="true"></span> Segunda ecuación</span>
+        </div>
+        <p class="pie-grafica" id="v-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Ver el punto ayuda a entender el resultado:</strong> si el par cumple una sola ecuación, en la gráfica
+        se ve encima de una recta pero fuera de la otra. Solo el cruce de ambas cumple las dos a la vez.
+      </div>
+
+      <h3>Practica: ¿es solución del sistema?</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="contexto">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Plantear el sistema a partir de una situación</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En el GED lo difícil casi nunca es resolver el sistema, sino <strong>armarlo</strong>. El procedimiento es
+      siempre el mismo: nombrar las dos incógnitas con letras, traducir cada dato en una ecuación y recién entonces
+      resolver por sustitución.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="c-caso">Situación</label>
+          <select id="c-caso"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="c-siguiente">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="c-todo">Mostrar todos los pasos</button>
+          <button type="button" class="btn-sec" id="c-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div id="c-enunciado" class="panel" style="background:#fff;"></div>
+      <div class="centrado"><div class="sistema" id="c-visual" aria-live="polite"></div></div>
+      <div class="pasos" id="c-pasos" aria-live="polite"></div>
+
+      <div class="caja-tip">
+        <strong>Escribe qué significa cada letra antes de nada.</strong> «Sea c el precio del café» no es un adorno:
+        es lo que permite releer el resultado al final y saber si el 2 que salió eran dólares, cafés u horas.
+      </div>
+
+      <h3>Practica: problemas de contexto</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 6.1 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+
+/* ============================================================
+   Gráfica de dos rectas ax + by = c
+   ============================================================ */
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function dibujaSistema(svg, e1, e2, punto, incluir){
+  limpiaSVG(svg);
+  var W = 520, H = 380, m = 40;
+  var vistos = [];
+  if (punto) vistos.push(punto);
+  if (incluir) vistos.push(incluir);
+  if (!vistos.length) vistos.push([0,0]);
+  var xs = vistos.map(function(p){ return p[0]; }).concat([0]);
+  var ys = vistos.map(function(p){ return p[1]; }).concat([0]);
+  var cx = (Math.max.apply(null,xs) + Math.min.apply(null,xs)) / 2;
+  var cy = (Math.max.apply(null,ys) + Math.min.apply(null,ys)) / 2;
+  var R = Math.max(8,
+    Math.ceil(Math.max(Math.max.apply(null,xs) - Math.min.apply(null,xs),
+                       Math.max.apply(null,ys) - Math.min.apply(null,ys)) / 2) + 3);
+  var x0 = Math.round(cx) - R, x1 = Math.round(cx) + R;
+  var y0 = Math.round(cy) - R, y1 = Math.round(cy) + R;
+  var salto = R > 12 ? 4 : 2, saltoEt = salto * 2;
+
+  function px(x){ return m + (x - x0)/(x1 - x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - y0)/(y1 - y0) * (H - 2*m); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  // cuadrícula
+  for (var gx = x0; gx <= x1; gx += salto)
+    crea("line", {x1:px(gx), y1:m, x2:px(gx), y2:H-m, stroke:"#e6e6e6", "stroke-width":1});
+  for (var gy = y0; gy <= y1; gy += salto)
+    crea("line", {x1:m, y1:py(gy), x2:W-m, y2:py(gy), stroke:"#e6e6e6", "stroke-width":1});
+  // ejes
+  crea("line", {x1:m, y1:py(0), x2:W-m, y2:py(0), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(0), y1:m, x2:px(0), y2:H-m, stroke:"#555", "stroke-width":2});
+  crea("text", {x:W-m, y:py(0)-8, "text-anchor":"end", "font-size":13, fill:"#555"}, "x");
+  crea("text", {x:px(0)+8, y:m+12, "font-size":13, fill:"#555"}, "y");
+  for (var tx = x0 + salto; tx <= x1 - salto; tx += saltoEt)
+    if (tx !== 0) crea("text", {x:px(tx), y:py(0)+16, "text-anchor":"middle", "font-size":12, fill:"#555"}, tx);
+  for (var ty = y0 + salto; ty <= y1 - salto; ty += saltoEt)
+    if (ty !== 0) crea("text", {x:px(0)-8, y:py(ty)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, ty);
+
+  function recta(e, color){
+    if (e.b === 0){
+      var xv = e.c/e.a;
+      crea("line", {x1:px(xv), y1:m, x2:px(xv), y2:H-m, stroke:color, "stroke-width":3});
+      return;
+    }
+    var ya = (e.c - e.a*x0)/e.b, yb = (e.c - e.a*x1)/e.b;
+    crea("line", {x1:px(x0), y1:py(ya), x2:px(x1), y2:py(yb), stroke:color, "stroke-width":3});
+  }
+  recta(e1, "#4e342e");
+  recta(e2, "#00695c");
+
+  if (punto){
+    crea("circle", {cx:px(punto[0]), cy:py(punto[1]), r:8, fill:"#fff", stroke:"#3e2723", "stroke-width":3});
+    crea("text", {x:px(punto[0])+12, y:py(punto[1])-12, "font-size":14, "font-weight":"bold", fill:"#3e2723"},
+         "(" + punto[0] + ", " + punto[1] + ")");
+  }
+}
+
+/* Motor común del paso a paso */
+function montaStepper(cfg){
+  var idx = 0, pasos = [], k = 0;
+  function agrega(i){
+    var div = document.createElement("div");
+    div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + pasos[i];
+    $(cfg.pasos).appendChild(div);
+  }
+  function reinicia(){
+    idx = parseInt($(cfg.sel).value, 10) || 0;
+    pasos = cfg.construye(cfg.banco[idx]); k = 0;
+    $(cfg.pasos).innerHTML = "";
+    $(cfg.sig).disabled = false;
+    $(cfg.sig).textContent = "Mostrar el primer paso";
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], 0);
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], 0);
+  }
+  function siguiente(){
+    if (k >= pasos.length) return;
+    agrega(k); k++;
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], k);
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], k);
+    $(cfg.sig).textContent = k >= pasos.length ? "No quedan más pasos" : "Siguiente paso";
+    if (k >= pasos.length) $(cfg.sig).disabled = true;
+  }
+  function todo(){
+    $(cfg.pasos).innerHTML = "";
+    pasos.forEach(function(t,i){ agrega(i); });
+    k = pasos.length;
+    $(cfg.visual).innerHTML = cfg.pinta(cfg.banco[idx], k);
+    if (cfg.alCambiar) cfg.alCambiar(cfg.banco[idx], k);
+    $(cfg.sig).textContent = "No quedan más pasos";
+    $(cfg.sig).disabled = true;
+  }
+  var sel = $(cfg.sel);
+  cfg.banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+  sel.addEventListener("change", reinicia);
+  $(cfg.sig).addEventListener("click", siguiente);
+  $(cfg.todo).addEventListener("click", todo);
+  $(cfg.reset).addEventListener("click", reinicia);
+  reinicia();
+}
+
+/* Motor común de práctica */
+function creaPractica(banco, ids, extra){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = (extra && extra.prefijo ? extra.prefijo : "") + p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   Banco de sistemas (a·x + b·y = c en cada ecuación)
+   ============================================================ */
+var SISTEMAS = [
+  { etiqueta:"y = 2x + 1 ; 3x + y = 11",
+    t1:"y = 2x + 1", t2:"3x + y = 11",
+    e1:{a:-2,b:1,c:1}, e2:{a:3,b:1,c:11}, sol:[2,5],
+    pasos:[
+      "La primera ecuación ya tiene la y despejada: y = 2x + 1. Ese paso viene regalado.",
+      "Sustituir esa expresión en la <em>otra</em> ecuación: 3x + (2x + 1) = 11. Los paréntesis no son decorativos: recuerdan que entra la expresión completa.",
+      "Resolver: 3x + 2x + 1 = 11, o sea 5x + 1 = 11, entonces 5x = 10 y <strong>x = 2</strong>.",
+      "Hallar la otra variable con el valor encontrado: y = 2(2) + 1 = <strong>5</strong>.",
+      "Verificar en las dos ecuaciones originales: 5 = 2(2) + 1 ✓ y 3(2) + 5 = 11 ✓. <strong>Solución: (2, 5)</strong>."
+    ]},
+  { etiqueta:"x + y = 7 ; 2x − y = 2",
+    t1:"x + y = 7", t2:"2x − y = 2",
+    e1:{a:1,b:1,c:7}, e2:{a:2,b:-1,c:2}, sol:[3,4],
+    pasos:[
+      "Despejar la variable más cómoda. En x + y = 7 el coeficiente de y es 1, así que y = 7 − x.",
+      "Sustituir en la otra: 2x − (7 − x) = 2. Aquí el paréntesis es imprescindible, porque el menos afecta a los dos términos.",
+      "Resolver: 2x − 7 + x = 2, o sea 3x − 7 = 2, entonces 3x = 9 y <strong>x = 3</strong>.",
+      "Hallar y: y = 7 − 3 = <strong>4</strong>.",
+      "Verificar: 3 + 4 = 7 ✓ y 2(3) − 4 = 2 ✓. <strong>Solución: (3, 4)</strong>."
+    ]},
+  { etiqueta:"y = x − 3 ; 2x + y = 9",
+    t1:"y = x − 3", t2:"2x + y = 9",
+    e1:{a:-1,b:1,c:-3}, e2:{a:2,b:1,c:9}, sol:[4,1],
+    pasos:[
+      "La y ya está despejada en la primera: y = x − 3.",
+      "Sustituir en la segunda: 2x + (x − 3) = 9.",
+      "Resolver: 3x − 3 = 9, entonces 3x = 12 y <strong>x = 4</strong>.",
+      "Hallar y: y = 4 − 3 = <strong>1</strong>.",
+      "Verificar: 1 = 4 − 3 ✓ y 2(4) + 1 = 9 ✓. <strong>Solución: (4, 1)</strong>."
+    ]},
+  { etiqueta:"x + 2y = 10 ; y = x + 2",
+    t1:"x + 2y = 10", t2:"y = x + 2",
+    e1:{a:1,b:2,c:10}, e2:{a:-1,b:1,c:2}, sol:[2,4],
+    pasos:[
+      "La segunda ecuación ya trae la y despejada: y = x + 2. Se puede sustituir en la primera.",
+      "Sustituir: x + 2(x + 2) = 10. Ojo con el 2 de afuera: multiplica a todo el paréntesis.",
+      "Resolver: x + 2x + 4 = 10, o sea 3x + 4 = 10, entonces 3x = 6 y <strong>x = 2</strong>.",
+      "Hallar y: y = 2 + 2 = <strong>4</strong>.",
+      "Verificar: 2 + 2(4) = 10 ✓ y 4 = 2 + 2 ✓. <strong>Solución: (2, 4)</strong>."
+    ]},
+  { etiqueta:"3x + y = 5 ; y = −2x + 3",
+    t1:"3x + y = 5", t2:"y = −2x + 3",
+    e1:{a:3,b:1,c:5}, e2:{a:2,b:1,c:3}, sol:[2,-1],
+    pasos:[
+      "La segunda ya tiene la y despejada: y = −2x + 3.",
+      "Sustituir en la primera: 3x + (−2x + 3) = 5.",
+      "Resolver: 3x − 2x + 3 = 5, o sea x + 3 = 5 y <strong>x = 2</strong>.",
+      "Hallar y: y = −2(2) + 3 = −4 + 3 = <strong>−1</strong>.",
+      "Verificar: 3(2) + (−1) = 5 ✓ y −1 = −2(2) + 3 ✓. <strong>Solución: (2, −1)</strong>."
+    ]}
+];
+function pintaSistema(e, k){
+  var html = "<span>" + e.t1 + "</span><span>" + e.t2 + "</span>";
+  if (k >= 5) html += '<span style="color:#1b5e20;">Solución: (' + e.sol[0] + ", " + e.sol[1] + ")</span>";
+  return html;
+}
+function textoGrafica(e){
+  return "Las dos rectas se cruzan en el punto (" + e.sol[0] + ", " + e.sol[1] +
+         "), que es justamente la solución del sistema.";
+}
+
+var BANCO_P1 = [
+  { q:"y = 2x + 1 ; 3x + y = 11", ops:["(2, 5)","(5, 2)","(1, 3)"], ok:0,
+    exp:"3x + (2x + 1) = 11 da 5x + 1 = 11, entonces x = 2 y y = 2(2) + 1 = 5." },
+  { q:"x + y = 7 ; 2x − y = 2", ops:["(3, 4)","(4, 3)","(5, 2)"], ok:0,
+    exp:"y = 7 − x, y al sustituir: 2x − (7 − x) = 2, o sea 3x = 9 y x = 3, con y = 4." },
+  { q:"y = x − 3 ; 2x + y = 9", ops:["(4, 1)","(1, 4)","(3, 0)"], ok:0,
+    exp:"2x + (x − 3) = 9 da 3x = 12, entonces x = 4 y y = 1." },
+  { q:"x + 2y = 10 ; y = x + 2", ops:["(2, 4)","(4, 2)","(6, 2)"], ok:0,
+    exp:"x + 2(x + 2) = 10 da 3x + 4 = 10, entonces x = 2 y y = 4." },
+  { q:"3x + y = 5 ; y = −2x + 3", ops:["(2, −1)","(−1, 2)","(1, 2)"], ok:0,
+    exp:"3x + (−2x + 3) = 5 da x + 3 = 5, entonces x = 2 y y = −1." },
+  { q:"y = 3x ; x + y = 8", ops:["(2, 6)","(6, 2)","(4, 4)"], ok:0,
+    exp:"x + 3x = 8 da 4x = 8, entonces x = 2 y y = 6." }
+];
+
+/* ============================================================
+   MÓDULO 2 · Verificador de pares ordenados
+   ============================================================ */
+function llenaSelectVer(){
+  var sel = $("v-sistema");
+  SISTEMAS.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+function itemVer(){ return SISTEMAS[parseInt($("v-sistema").value,10) || 0]; }
+function ladoIzq(e, x, y){ return e.a*x + e.b*y; }
+function preparaVer(){
+  $("v-tabla").innerHTML = "";
+  $("v-veredicto").textContent = "";
+  $("v-veredicto").className = "linea veredicto";
+  $("v-aviso").className = "caja-aviso";
+  verificaPar();
+}
+function verificaPar(){
+  var e = itemVer();
+  var x = parseFloat($("v-x").value), y = parseFloat($("v-y").value);
+  if (isNaN(x) || isNaN(y)){
+    $("v-aviso").innerHTML = "<strong>Faltan datos.</strong> Escribe un número en x y otro en y para poder verificar el par.";
+    $("v-aviso").className = "caja-aviso visible";
+    return;
+  }
+  $("v-aviso").className = "caja-aviso";
+
+  var v1 = ladoIzq(e.e1, x, y), v2 = ladoIzq(e.e2, x, y);
+  var ok1 = Math.abs(v1 - e.e1.c) < 1e-9, ok2 = Math.abs(v2 - e.e2.c) < 1e-9;
+
+  $("v-tabla").innerHTML =
+    '<table class="reglas"><caption>Sustitución del par (' + x + ', ' + y + ') en cada ecuación del sistema.</caption>' +
+    '<thead><tr><th scope="col">Ecuación</th><th scope="col">Al sustituir</th><th scope="col">¿Se cumple?</th></tr></thead><tbody>' +
+    '<tr><td>' + e.t1 + '</td><td>' + redondea(v1,3) + ' frente a ' + e.e1.c + '</td>' +
+      '<td class="' + (ok1 ? "si" : "no") + '">' + (ok1 ? "✓ sí" : "✗ no") + '</td></tr>' +
+    '<tr><td>' + e.t2 + '</td><td>' + redondea(v2,3) + ' frente a ' + e.e2.c + '</td>' +
+      '<td class="' + (ok2 ? "si" : "no") + '">' + (ok2 ? "✓ sí" : "✗ no") + '</td></tr>' +
+    '</tbody></table>';
+
+  var ver = $("v-veredicto");
+  if (ok1 && ok2){
+    ver.textContent = "✓ (" + x + ", " + y + ") sí es solución: cumple las dos ecuaciones. En la gráfica está justo en el cruce.";
+    ver.className = "linea veredicto bien";
+  } else if (ok1 || ok2){
+    ver.textContent = "✗ (" + x + ", " + y + ") no es solución: cumple solo " +
+      (ok1 ? "la primera" : "la segunda") + " ecuación. En la gráfica está sobre una recta, pero fuera de la otra.";
+    ver.className = "linea veredicto mal";
+  } else {
+    ver.textContent = "✗ (" + x + ", " + y + ") no es solución: no cumple ninguna de las dos. En la gráfica el punto queda fuera de las dos rectas.";
+    ver.className = "linea veredicto mal";
+  }
+  dibujaSistema($("v-svg"), e.e1, e.e2, [x,y], e.sol);
+  $("v-svg-texto").textContent = "Las dos rectas del sistema y el punto (" + x + ", " + y + ") que se está verificando. El cruce de las rectas está en (" + e.sol[0] + ", " + e.sol[1] + ").";
+}
+var BANCO_P2 = [
+  { q:"¿Es (3, 2) solución de x + y = 5 y x − y = 1?", ops:["Sí, cumple las dos","No, falla la primera","No, falla la segunda"], ok:0,
+    exp:"3 + 2 = 5 ✓ y 3 − 2 = 1 ✓. Cumple las dos, así que es solución." },
+  { q:"¿Es (1, 4) solución de 2x + y = 6 y x + y = 5?", ops:["Sí, cumple las dos","No, falla la primera","No, falla la segunda"], ok:0,
+    exp:"2(1) + 4 = 6 ✓ y 1 + 4 = 5 ✓. Cumple las dos." },
+  { q:"¿Es (2, 1) solución de x + y = 3 y 2x − y = 2?", ops:["No, falla la segunda","Sí, cumple las dos","No, falla la primera"], ok:0,
+    exp:"2 + 1 = 3 ✓, pero 2(2) − 1 = 3, y debía dar 2. Falla la segunda, así que no es solución." },
+  { q:"¿Es (0, 5) solución de x + y = 5 y 2x + y = 5?", ops:["Sí, cumple las dos","No, falla la primera","No, falla la segunda"], ok:0,
+    exp:"0 + 5 = 5 ✓ y 2(0) + 5 = 5 ✓. Las dos rectas se cruzan justo ahí." },
+  { q:"Un par cumple la primera ecuación pero no la segunda. ¿Es solución del sistema?",
+    ops:["No: hay que cumplir las dos","Sí, con una basta","Solo si la segunda es más difícil"], ok:0,
+    exp:"Cumplir una sola significa estar sobre una recta pero no sobre la otra; la solución es el punto donde ambas se cruzan." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Plantear el sistema
+   ============================================================ */
+var CASOS = [
+  { etiqueta:"Cafés y tés",
+    enunciado:"En una cafetería, 2 cafés y 1 té cuestan $7. Un café y un té cuestan $5. ¿Cuánto cuesta cada uno?",
+    t1:"2c + t = 7", t2:"c + t = 5", sol:"c = 2 y t = 3",
+    pasos:[
+      "Nombrar las incógnitas: sea <strong>c</strong> el precio del café y <strong>t</strong> el precio del té, los dos en dólares.",
+      "Traducir el primer dato: dos cafés y un té cuestan 7 dólares → <strong>2c + t = 7</strong>.",
+      "Traducir el segundo dato: un café y un té cuestan 5 dólares → <strong>c + t = 5</strong>.",
+      "Despejar en la más cómoda: de c + t = 5 sale t = 5 − c.",
+      "Sustituir: 2c + (5 − c) = 7, o sea c + 5 = 7, entonces <strong>c = 2</strong>, y t = 5 − 2 = <strong>3</strong>.",
+      "Releer la pregunta: el café cuesta <strong>$2</strong> y el té, <strong>$3</strong>. Comprobación: 2(2) + 3 = 7 ✓ y 2 + 3 = 5 ✓."
+    ]},
+  { etiqueta:"Empanadas y refrescos",
+    enunciado:"Tres empanadas y dos refrescos cuestan $12. Una empanada y dos refrescos cuestan $8. ¿Cuánto cuesta cada cosa?",
+    t1:"3e + 2r = 12", t2:"e + 2r = 8", sol:"e = 2 y r = 3",
+    pasos:[
+      "Nombrar: sea <strong>e</strong> el precio de una empanada y <strong>r</strong> el de un refresco.",
+      "Primer dato: <strong>3e + 2r = 12</strong>.",
+      "Segundo dato: <strong>e + 2r = 8</strong>.",
+      "Despejar la variable de coeficiente 1: de la segunda sale e = 8 − 2r.",
+      "Sustituir: 3(8 − 2r) + 2r = 12, o sea 24 − 6r + 2r = 12, entonces −4r = −12 y <strong>r = 3</strong>; luego e = 8 − 6 = <strong>2</strong>.",
+      "Releer: la empanada cuesta <strong>$2</strong> y el refresco, <strong>$3</strong>. Comprobación: 3(2) + 2(3) = 12 ✓ y 2 + 2(3) = 8 ✓."
+    ]},
+  { etiqueta:"Entradas de adulto y de niño",
+    enunciado:"Dos entradas de adulto y tres de niño cuestan $31. Una de adulto y una de niño cuestan $13. ¿Cuánto vale cada entrada?",
+    t1:"2a + 3n = 31", t2:"a + n = 13", sol:"a = 8 y n = 5",
+    pasos:[
+      "Nombrar: sea <strong>a</strong> el precio de la entrada de adulto y <strong>n</strong> el de la de niño.",
+      "Primer dato: <strong>2a + 3n = 31</strong>.",
+      "Segundo dato: <strong>a + n = 13</strong>.",
+      "Despejar: de a + n = 13 sale a = 13 − n.",
+      "Sustituir: 2(13 − n) + 3n = 31, o sea 26 − 2n + 3n = 31, entonces n = <strong>5</strong> y a = 13 − 5 = <strong>8</strong>.",
+      "Releer: la entrada de adulto vale <strong>$8</strong> y la de niño, <strong>$5</strong>. Comprobación: 2(8) + 3(5) = 31 ✓."
+    ]},
+  { etiqueta:"Dos números",
+    enunciado:"La suma de dos números es 20 y su diferencia es 4. ¿Cuáles son?",
+    t1:"x + y = 20", t2:"x − y = 4", sol:"x = 12 y y = 8",
+    pasos:[
+      "Nombrar: sean <strong>x</strong> el número mayor y <strong>y</strong> el menor.",
+      "«Su suma es 20» → <strong>x + y = 20</strong>.",
+      "«Su diferencia es 4» → <strong>x − y = 4</strong>.",
+      "Despejar: de la segunda sale x = y + 4.",
+      "Sustituir: (y + 4) + y = 20, o sea 2y + 4 = 20, entonces <strong>y = 8</strong> y x = 8 + 4 = <strong>12</strong>.",
+      "Releer: los números son <strong>12 y 8</strong>. Comprobación: 12 + 8 = 20 ✓ y 12 − 8 = 4 ✓."
+    ]},
+  { etiqueta:"El perímetro del terreno",
+    enunciado:"Un terreno rectangular tiene 26 metros de perímetro. El largo mide 3 metros más que el ancho. ¿Cuánto mide cada lado?",
+    t1:"2L + 2A = 26", t2:"L = A + 3", sol:"L = 8 y A = 5",
+    pasos:[
+      "Nombrar: sea <strong>L</strong> el largo y <strong>A</strong> el ancho, en metros.",
+      "El perímetro de un rectángulo es 2L + 2A → <strong>2L + 2A = 26</strong>, que se puede simplificar dividiendo entre 2: L + A = 13.",
+      "«El largo mide 3 más que el ancho» → <strong>L = A + 3</strong>. Ya viene despejado.",
+      "Sustituir en L + A = 13: (A + 3) + A = 13.",
+      "Resolver: 2A + 3 = 13, entonces <strong>A = 5</strong> y L = 5 + 3 = <strong>8</strong>.",
+      "Releer: el largo mide <strong>8 m</strong> y el ancho, <strong>5 m</strong>. Comprobación: 2(8) + 2(5) = 26 ✓."
+    ]}
+];
+function pintaCaso(e, k){
+  if (k < 2) return "";
+  var html = "<span>" + e.t1 + "</span>";
+  if (k >= 3) html += "<span>" + e.t2 + "</span>";
+  if (k >= 6) html += '<span style="color:#1b5e20;">' + e.sol + "</span>";
+  return html;
+}
+var BANCO_P3 = [
+  { q:"Dos cafés y un té cuestan $7; un café y un té cuestan $5. ¿Cuánto cuesta el café?",
+    ops:["$2","$3","$5"], ok:0,
+    exp:"Con t = 5 − c: 2c + (5 − c) = 7, entonces c = 2. El té cuesta $3." },
+  { q:"La suma de dos números es 20 y su diferencia es 4. ¿Cuál es el mayor?",
+    ops:["12","16","10"], ok:0,
+    exp:"x = y + 4 y (y + 4) + y = 20 dan y = 8 y x = 12." },
+  { q:"Un terreno tiene 26 m de perímetro y el largo mide 3 m más que el ancho. ¿Cuánto mide el ancho?",
+    ops:["5 m","8 m","10 m"], ok:0,
+    exp:"L + A = 13 y L = A + 3 dan 2A + 3 = 13, entonces A = 5 y L = 8." },
+  { q:"Tres empanadas y dos refrescos cuestan $12; una empanada y dos refrescos, $8. ¿Cuánto cuesta el refresco?",
+    ops:["$3","$2","$4"], ok:0,
+    exp:"e = 8 − 2r y 3(8 − 2r) + 2r = 12 dan r = 3; la empanada cuesta $2." },
+  { q:"¿Cuál es el primer paso al plantear un problema de dos incógnitas?",
+    ops:["Decir qué representa cada letra","Sumar los datos","Dibujar las rectas"], ok:0,
+    exp:"Sin definir las letras, el resultado final no se puede interpretar: no se sabría si el 2 son dólares, personas o metros." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+montaStepper({ sel:"s-sistema", banco:SISTEMAS, visual:"s-visual", pasos:"s-pasos",
+  sig:"s-siguiente", todo:"s-todo", reset:"s-reiniciar",
+  construye:function(e){ return e.pasos; },
+  pinta:pintaSistema,
+  alCambiar:function(e, k){
+    dibujaSistema($("s-svg"), e.e1, e.e2, k >= 5 ? e.sol : null);
+    $("s-svg-texto").textContent = k >= 5
+      ? textoGrafica(e)
+      : "Las dos rectas del sistema. El punto donde se cruzan aparecerá al llegar al último paso.";
+  }});
+
+llenaSelectVer();
+$("v-sistema").addEventListener("change", preparaVer);
+$("v-verificar").addEventListener("click", verificaPar);
+["v-x","v-y"].forEach(function(id){ $(id).addEventListener("input", verificaPar); });
+$("v-solucion").addEventListener("click", function(){
+  var e = itemVer();
+  $("v-x").value = e.sol[0]; $("v-y").value = e.sol[1];
+  verificaPar();
+});
+preparaVer();
+
+montaStepper({ sel:"c-caso", banco:CASOS, visual:"c-visual", pasos:"c-pasos",
+  sig:"c-siguiente", todo:"c-todo", reset:"c-reiniciar",
+  construye:function(e){ return e.pasos; },
+  pinta:pintaCaso,
+  alCambiar:function(e){ $("c-enunciado").innerHTML = "<strong>Situación:</strong> " + e.enunciado; }});
+
+creaPractica(BANCO_P1, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"},
+             {prefijo:"Resuelve por sustitución: "});
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>
