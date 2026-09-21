@@ -1,0 +1,895 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 7.1 — Sistemas de desigualdades lineales: graficar la región solución
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #graficar · #punto-prueba · #region · #verificar
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 7.1: desigualdades lineales y región factible</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 7.1 del Nivel 4: graficar desigualdades lineales, usar el punto de prueba, hallar la región factible de un sistema y verificar si un punto pertenece a ella.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:200px;}
+  .campo input[type="number"]{width:100px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .centrado{text-align:center;}
+
+  .desigualdad{display:inline-block;border-left:5px solid var(--tema);padding:6px 0 6px 16px;margin:14px 0;
+               font-size:19px;font-weight:700;color:var(--tema-d);text-align:left;}
+  .desigualdad span{display:block;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{max-width:100%;height:auto;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:5px;display:inline-block;}
+  .m-solida{background:#006064;}
+  .m-punteada{background:repeating-linear-gradient(90deg,#006064 0 7px,transparent 7px 12px);}
+  .m-region{background:#4dd0e1;height:14px;width:22px;border:1px solid #006064;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  td.si{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  td.no{background:var(--mal-bg);color:var(--mal);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campo input[type="range"]{width:100%;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 7 · Sistemas de desigualdades y funciones</div>
+    <h1>Lección 7.1 · Sistemas de desigualdades lineales: graficar la región solución</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#graficar">Graficar una desigualdad lineal</a></li>
+      <li><a href="#punto-prueba">El método del punto de prueba</a></li>
+      <li><a href="#region">El sistema y la región factible</a></li>
+      <li><a href="#verificar">Verificar si un punto pertenece a la región</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="graficar" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Graficar una desigualdad lineal</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Graficar una desigualdad tiene dos decisiones: cómo se dibuja la <strong>línea frontera</strong> y qué
+      <strong>lado</strong> se sombrea. Cambia el símbolo y verás cambiar la línea; cambia la pendiente o el intercepto
+      y verás moverse la región.</p>
+
+      <table class="reglas">
+        <caption>Cómo se dibuja la línea frontera según el símbolo.</caption>
+        <thead><tr><th scope="col">Símbolo</th><th scope="col">Línea</th><th scope="col">Por qué</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; o &gt;</td><td>Punteada</td><td>Los puntos de la línea no cumplen la desigualdad: no se incluyen.</td></tr>
+          <tr><td>≤ o ≥</td><td>Sólida</td><td>Los puntos de la línea sí cumplen la igualdad: se incluyen.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="g-simbolo">Símbolo</label>
+            <select id="g-simbolo">
+              <option value="menor">y &lt; mx + b</option>
+              <option value="menorIgual" selected>y ≤ mx + b</option>
+              <option value="mayor">y &gt; mx + b</option>
+              <option value="mayorIgual">y ≥ mx + b</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="g-m">Pendiente m = <span class="valor-rango" id="g-m-val">1</span></label>
+            <input type="range" id="g-m" min="-4" max="4" step="1" value="1">
+          </div>
+          <div class="campo">
+            <label for="g-b">Intercepto b = <span class="valor-rango" id="g-b-val">1</span></label>
+            <input type="range" id="g-b" min="-6" max="6" step="1" value="1">
+          </div>
+        </div>
+      </div>
+
+      <div class="centrado"><div class="desigualdad" id="g-texto"></div></div>
+
+      <div class="grafica">
+        <svg id="g-svg" viewBox="0 0 520 400" role="img" aria-labelledby="g-svg-t g-svg-d">
+          <title id="g-svg-t">Gráfica de la desigualdad</title>
+          <desc id="g-svg-d">Plano cartesiano con la línea frontera y la región sombreada de la desigualdad elegida.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m-solida" aria-hidden="true"></span> Línea sólida: la frontera se incluye</span>
+          <span><span class="muestra m-punteada" aria-hidden="true"></span> Punteada: no se incluye</span>
+          <span><span class="muestra m-region" aria-hidden="true"></span> Región solución</span>
+        </div>
+        <p class="pie-grafica" id="g-svg-texto"></p>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="g-linea"></div>
+        <div class="linea" id="g-lado"></div>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="punto-prueba">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>El método del punto de prueba</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Para decidir qué lado se sombrea no hace falta razonarlo: se elige un punto cualquiera que no esté sobre la
+      línea, se sustituye en la desigualdad y se mira si el resultado es verdadero o falso. Casi siempre conviene
+      el (0, 0), porque sustituir ceros es lo más rápido que hay.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:230px;">
+            <label for="t-desigualdad">Desigualdad</label>
+            <select id="t-desigualdad"></select>
+          </div>
+          <div class="campo">
+            <label for="t-x">Punto de prueba · x</label>
+            <input type="number" id="t-x" value="0" step="1">
+          </div>
+          <div class="campo">
+            <label for="t-y">Punto de prueba · y</label>
+            <input type="number" id="t-y" value="0" step="1">
+          </div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn-sec" id="t-origen">Usar el origen (0, 0)</button>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="t-aviso" role="alert"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="t-sustitucion"></div>
+        <div class="linea veredicto" id="t-verdad"></div>
+        <div class="linea" id="t-conclusion"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="t-svg" viewBox="0 0 520 400" role="img" aria-labelledby="t-svg-t t-svg-d">
+          <title id="t-svg-t">La desigualdad y el punto de prueba</title>
+          <desc id="t-svg-d">Gráfica con la región sombreada y el punto de prueba marcado.</desc>
+        </svg>
+        <p class="pie-grafica" id="t-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Si la línea pasa por el origen, el (0, 0) no sirve como punto de prueba:</strong> está justo sobre la
+        frontera y no decide nada. En ese caso se usa otro punto claramente fuera de la línea, como (1, 0) o (0, 1).
+        El interactivo avisa cuando eso ocurre.
+      </div>
+
+      <h3>Practica: la línea y el lado</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="region">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>El sistema y la región factible</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Un sistema se grafica una desigualdad a la vez. La <strong>región factible</strong> es la zona donde se
+      traslapan todos los sombreados: los puntos que cumplen <em>todas</em> las condiciones a la vez. Ve añadiendo
+      desigualdades y observa cómo la región se va recortando.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="r-sistema">Sistema</label>
+          <select id="r-sistema"></select>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="r-siguiente">Añadir la primera desigualdad</button>
+          <button type="button" class="btn-sec" id="r-todo">Mostrar la región completa</button>
+          <button type="button" class="btn-sec" id="r-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="centrado"><div class="desigualdad" id="r-lista" aria-live="polite"></div></div>
+
+      <div class="grafica">
+        <svg id="r-svg" viewBox="0 0 520 400" role="img" aria-labelledby="r-svg-t r-svg-d">
+          <title id="r-svg-t">Región factible del sistema</title>
+          <desc id="r-svg-d">Plano cartesiano con las fronteras del sistema y la región que cumple todas las desigualdades.</desc>
+        </svg>
+        <p class="pie-grafica" id="r-svg-texto"></p>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="r-estado"></div>
+        <div class="linea" id="r-comentario"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Cada desigualdad recorta, nunca agranda.</strong> Al añadir una condición más, la región solo puede
+        quedarse igual o hacerse más pequeña, y a veces desaparece del todo: ahí el sistema no tiene solución.
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="verificar">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Verificar si un punto pertenece a la región</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Para saber si un punto pertenece a la región no hace falta mirar el dibujo: se sustituye en
+      <strong>todas</strong> las desigualdades. Si las cumple todas, está dentro; si falla en una sola, está fuera.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:230px;">
+            <label for="v-sistema">Sistema</label>
+            <select id="v-sistema"></select>
+          </div>
+          <div class="campo">
+            <label for="v-x">Punto · x</label>
+            <input type="number" id="v-x" value="1" step="1">
+          </div>
+          <div class="campo">
+            <label for="v-y">Punto · y</label>
+            <input type="number" id="v-y" value="1" step="1">
+          </div>
+        </div>
+        <p class="nota">Prueba puntos justo sobre una frontera: ahí se nota la diferencia entre &lt; y ≤.</p>
+      </div>
+
+      <div class="caja-aviso" id="v-aviso" role="alert"></div>
+      <div id="v-tabla"></div>
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="v-veredicto"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="v-svg" viewBox="0 0 520 400" role="img" aria-labelledby="v-svg-t v-svg-d">
+          <title id="v-svg-t">El punto y la región</title>
+          <desc id="v-svg-d">Gráfica de la región factible con el punto que se está verificando.</desc>
+        </svg>
+        <p class="pie-grafica" id="v-svg-texto"></p>
+      </div>
+
+      <h3>Practica: ¿está en la región?</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 7.1 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+
+/* ============================================================
+   Desigualdades: {a, b, c, op, texto}  significa  a·x + b·y op c
+   op: "<=", "<", ">=", ">"
+   ============================================================ */
+function cumple(d, x, y){
+  var v = d.a*x + d.b*y;
+  var e = 1e-9;
+  if (d.op === "<=") return v <= d.c + e;
+  if (d.op === "<")  return v <  d.c - e;
+  if (d.op === ">=") return v >= d.c - e;
+  return v > d.c + e;
+}
+function esEstricta(d){ return d.op === "<" || d.op === ">"; }
+function haciaMenor(d){ return d.op === "<=" || d.op === "<"; }
+
+/* Recorta un polígono con el semiplano de la desigualdad (Sutherland–Hodgman) */
+function recorta(poligono, d){
+  var dentro = function(p){
+    var v = d.a*p[0] + d.b*p[1] - d.c;
+    return haciaMenor(d) ? v <= 1e-9 : v >= -1e-9;
+  };
+  var valor = function(p){ return d.a*p[0] + d.b*p[1] - d.c; };
+  var salida = [];
+  for (var i = 0; i < poligono.length; i++){
+    var actual = poligono[i], previo = poligono[(i + poligono.length - 1) % poligono.length];
+    var dA = dentro(actual), dP = dentro(previo);
+    if (dA){
+      if (!dP){
+        var t1 = valor(previo)/(valor(previo) - valor(actual));
+        salida.push([previo[0] + t1*(actual[0]-previo[0]), previo[1] + t1*(actual[1]-previo[1])]);
+      }
+      salida.push(actual);
+    } else if (dP){
+      var t2 = valor(previo)/(valor(previo) - valor(actual));
+      salida.push([previo[0] + t2*(actual[0]-previo[0]), previo[1] + t2*(actual[1]-previo[1])]);
+    }
+  }
+  return salida;
+}
+
+/* Dibuja un plano con desigualdades, región y punto opcional */
+function dibujaPlano(svg, desigualdades, opciones){
+  opciones = opciones || {};
+  limpiaSVG(svg);
+  var W = 520, H = 400, m = 44;
+  var r = opciones.rango || {x0:-7, x1:7, y0:-7, y1:7};
+
+  function px(x){ return m + (x - r.x0)/(r.x1 - r.x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - r.y0)/(r.y1 - r.y0) * (H - 2*m); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+
+  // región: se recorta el rectángulo visible con cada desigualdad
+  var poli = [[r.x0,r.y0],[r.x1,r.y0],[r.x1,r.y1],[r.x0,r.y1]];
+  desigualdades.forEach(function(d){ poli = recorta(poli, d); });
+  if (poli.length > 2){
+    crea("polygon", {
+      points: poli.map(function(p){ return px(p[0]).toFixed(1) + "," + py(p[1]).toFixed(1); }).join(" "),
+      fill:"#4dd0e1", "fill-opacity":0.45, stroke:"none"
+    });
+  }
+
+  // cuadrícula
+  for (var gx = Math.ceil(r.x0); gx <= r.x1; gx++)
+    crea("line", {x1:px(gx), y1:m, x2:px(gx), y2:H-m, stroke:"#ececec", "stroke-width":1});
+  for (var gy = Math.ceil(r.y0); gy <= r.y1; gy++)
+    crea("line", {x1:m, y1:py(gy), x2:W-m, y2:py(gy), stroke:"#ececec", "stroke-width":1});
+  // ejes
+  crea("line", {x1:m, y1:py(0), x2:W-m, y2:py(0), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(0), y1:m, x2:px(0), y2:H-m, stroke:"#555", "stroke-width":2});
+  crea("text", {x:W-m, y:py(0)-8, "text-anchor":"end", "font-size":13, fill:"#555"}, "x");
+  crea("text", {x:px(0)+8, y:m+12, "font-size":13, fill:"#555"}, "y");
+  for (var tx = Math.ceil(r.x0); tx <= r.x1; tx += 2)
+    if (tx !== 0) crea("text", {x:px(tx), y:py(0)+16, "text-anchor":"middle", "font-size":12, fill:"#555"}, tx);
+  for (var ty = Math.ceil(r.y0); ty <= r.y1; ty += 2)
+    if (ty !== 0) crea("text", {x:px(0)-8, y:py(ty)+4, "text-anchor":"end", "font-size":12, fill:"#555"}, ty);
+
+  // fronteras
+  desigualdades.forEach(function(d){
+    var p1, p2;
+    if (d.b === 0){
+      var xv = d.c/d.a;
+      p1 = [xv, r.y0]; p2 = [xv, r.y1];
+    } else {
+      p1 = [r.x0, (d.c - d.a*r.x0)/d.b];
+      p2 = [r.x1, (d.c - d.a*r.x1)/d.b];
+    }
+    var attrs = {x1:px(p1[0]), y1:py(p1[1]), x2:px(p2[0]), y2:py(p2[1]),
+                 stroke:"#006064", "stroke-width":3};
+    if (esEstricta(d)) attrs["stroke-dasharray"] = "9 7";
+    crea("line", attrs);
+  });
+
+  if (opciones.punto){
+    var pt = opciones.punto;
+    if (pt[0] >= r.x0 && pt[0] <= r.x1 && pt[1] >= r.y0 && pt[1] <= r.y1){
+      crea("circle", {cx:px(pt[0]), cy:py(pt[1]), r:8,
+                      fill: opciones.puntoDentro ? "#1b5e20" : "#b71c1c", stroke:"#fff", "stroke-width":3});
+      crea("text", {x:px(pt[0])+12, y:py(pt[1])-12, "font-size":13, "font-weight":"bold",
+                    fill: opciones.puntoDentro ? "#1b5e20" : "#b71c1c"},
+           "(" + pt[0] + ", " + pt[1] + ")");
+    }
+  }
+  return poli;
+}
+
+/* Motor común de práctica */
+function creaPractica(banco, ids){
+  var estado = {i:-1, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.i = barajaIndice(estado.i, banco.length);
+    estado.resuelta = false;
+    var p = banco[estado.i];
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = banco[estado.i];
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Graficador de una desigualdad
+   ============================================================ */
+var SIMBOLOS = {
+  menor:      {signo:"<",  op:"<",  estricta:true},
+  menorIgual: {signo:"≤",  op:"<=", estricta:false},
+  mayor:      {signo:">",  op:">",  estricta:true},
+  mayorIgual: {signo:"≥",  op:">=", estricta:false}
+};
+function textoLado(m, b){
+  var s = (m === 0) ? "" : (m === 1 ? "x" : m === -1 ? "−x" : (m < 0 ? "−" + Math.abs(m) : m) + "x");
+  if (m === 0) return String(b);
+  if (b !== 0) s += (b < 0 ? " − " + Math.abs(b) : " + " + b);
+  return s;
+}
+function actualizaGraficador(){
+  var clave = $("g-simbolo").value, s = SIMBOLOS[clave];
+  var m = parseFloat($("g-m").value), b = parseFloat($("g-b").value);
+  $("g-m-val").textContent = m; $("g-b-val").textContent = b;
+
+  var texto = "y " + s.signo + " " + textoLado(m, b);
+  $("g-texto").innerHTML = "<span>" + texto + "</span>";
+
+  // y op mx + b  →  −m·x + y  op  b
+  var d = {a:-m, b:1, c:b, op:s.op, texto:texto};
+  dibujaPlano($("g-svg"), [d], {});
+
+  $("g-linea").innerHTML = "<strong>La línea frontera</strong> es y = " + textoLado(m,b) + ", dibujada " +
+    (s.estricta ? "<strong>punteada</strong>, porque con " + s.signo + " los puntos de la línea no cumplen la desigualdad."
+                : "<strong>sólida</strong>, porque con " + s.signo + " los puntos de la línea sí cumplen la desigualdad.");
+  var origenCumple = cumple(d, 0, 0);
+  var sobreLinea = Math.abs(b) < 1e-9;
+  $("g-lado").innerHTML = sobreLinea
+    ? "<strong>El lado sombreado:</strong> la línea pasa por el origen, así que (0, 0) no sirve de prueba. Con un punto como (0, 1) se decide el lado: aquí se sombrea el lado de " +
+      (haciaMenor(d) ? "abajo" : "arriba") + " de la recta."
+    : "<strong>El lado sombreado:</strong> al probar (0, 0) la desigualdad resulta <strong>" +
+      (origenCumple ? "verdadera" : "falsa") + "</strong>, así que se sombrea el lado " +
+      (origenCumple ? "donde está el origen" : "contrario al origen") + ".";
+  $("g-svg-texto").textContent = "Región de " + texto + ": todos los puntos del área coloreada cumplen la desigualdad.";
+}
+
+/* ============================================================
+   MÓDULO 2 · Punto de prueba
+   ============================================================ */
+var DESIGUALDADES = [
+  { etiqueta:"2x + y > 4",  a:2, b:1, c:4, op:">" },
+  { etiqueta:"y ≤ x + 1",   a:-1, b:1, c:1, op:"<=" },
+  { etiqueta:"y ≥ 2x − 3",  a:-2, b:1, c:-3, op:">=" },
+  { etiqueta:"x + y < 5",   a:1, b:1, c:5, op:"<" },
+  { etiqueta:"y < 2x",      a:-2, b:1, c:0, op:"<" },
+  { etiqueta:"3x − 2y ≥ 6", a:3, b:-2, c:6, op:">=" }
+];
+function itemPrueba(){ return DESIGUALDADES[parseInt($("t-desigualdad").value,10) || 0]; }
+function llenaSelect(sel, banco){
+  banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+function actualizaPrueba(){
+  var d = itemPrueba();
+  var x = parseFloat($("t-x").value), y = parseFloat($("t-y").value);
+  if (isNaN(x) || isNaN(y)){
+    $("t-aviso").innerHTML = "<strong>Faltan datos.</strong> Escribe un número en x y otro en y para poder probar el punto.";
+    $("t-aviso").className = "caja-aviso visible";
+    return;
+  }
+  var valor = d.a*x + d.b*y;
+  var sobre = Math.abs(valor - d.c) < 1e-9;
+  if (sobre){
+    $("t-aviso").innerHTML = "<strong>Ese punto está justo sobre la línea frontera.</strong> No sirve como punto de prueba, porque no está ni a un lado ni al otro: no decide nada. Elige otro punto, por ejemplo una unidad más arriba.";
+    $("t-aviso").className = "caja-aviso visible";
+    $("t-x").classList.add("error"); $("t-y").classList.add("error");
+  } else {
+    $("t-aviso").className = "caja-aviso";
+    $("t-x").classList.remove("error"); $("t-y").classList.remove("error");
+  }
+
+  var ok = cumple(d, x, y);
+  $("t-sustitucion").innerHTML = "<strong>Sustituir (" + x + ", " + y + ") en " + d.etiqueta + ":</strong> el lado izquierdo vale " +
+    redondea(valor,3) + ", y hay que compararlo con " + d.c + ".";
+  var ver = $("t-verdad");
+  if (sobre){
+    ver.textContent = "El punto cae sobre la frontera: hay igualdad, no sirve para decidir el lado.";
+    ver.className = "linea veredicto";
+  } else {
+    ver.textContent = ok ? "✓ La desigualdad resulta VERDADERA en ese punto." : "✗ La desigualdad resulta FALSA en ese punto.";
+    ver.className = "linea veredicto " + (ok ? "bien" : "mal");
+  }
+  $("t-conclusion").innerHTML = sobre
+    ? "Mueve el punto fuera de la línea y vuelve a probar."
+    : (ok ? "Como es verdadera, se sombrea <strong>el lado donde está el punto</strong>: ese punto pertenece a la región."
+          : "Como es falsa, se sombrea <strong>el lado contrario</strong> al punto: ese punto queda fuera de la región.");
+
+  dibujaPlano($("t-svg"), [d], {punto:[x,y], puntoDentro:ok});
+  $("t-svg-texto").textContent = "Región de " + d.etiqueta + " con el punto de prueba (" + x + ", " + y + ") marcado en " +
+    (ok ? "verde, dentro de la región." : "rojo, fuera de la región.");
+}
+var BANCO_P2 = [
+  { q:"Para y ≤ x, la línea frontera se dibuja:", ops:["Sólida","Punteada","No se dibuja"], ok:0,
+    exp:"El símbolo ≤ incluye la igualdad, así que los puntos de la línea también son solución: línea sólida." },
+  { q:"Para y > 2x + 1, la línea frontera se dibuja:", ops:["Punteada","Sólida","Doble"], ok:0,
+    exp:"Con > los puntos de la línea no cumplen la desigualdad, así que la frontera se excluye: punteada." },
+  { q:"Al probar (0, 0) en 2x + y > 4 se obtiene 0 > 4, que es falso. ¿Qué lado se sombrea?",
+    ops:["El contrario al origen","El del origen","Los dos"], ok:0,
+    exp:"Si el punto de prueba no cumple la desigualdad, la región está del otro lado de la línea." },
+  { q:"Al probar (0, 0) en y ≤ x + 1 se obtiene 0 ≤ 1, que es verdadero. ¿Qué lado se sombrea?",
+    ops:["El del origen","El contrario al origen","Ninguno"], ok:0,
+    exp:"Si el punto de prueba cumple la desigualdad, se sombrea su propio lado." },
+  { q:"La desigualdad es y < 2x y la línea pasa por el origen. ¿Qué punto de prueba conviene?",
+    ops:["(1, 0)","(0, 0)","Cualquiera de la línea"], ok:0,
+    exp:"(0, 0) está sobre la frontera y no decide nada; hay que elegir un punto fuera de la línea, como (1, 0)." },
+  { q:"¿Para qué sirve el punto de prueba?",
+    ops:["Para decidir qué lado de la línea se sombrea","Para dibujar la línea","Para hallar la pendiente"], ok:0,
+    exp:"La línea se dibuja con la ecuación; el punto de prueba solo decide el lado." }
+];
+
+/* ============================================================
+   MÓDULO 3 · Región factible
+   ============================================================ */
+var SISTEMAS = [
+  { etiqueta:"x ≥ 0 ; y ≥ 0 ; x + y ≤ 4",
+    rango:{x0:-3, x1:8, y0:-3, y1:8},
+    ds:[{a:1,b:0,c:0,op:">=",texto:"x ≥ 0"},
+        {a:0,b:1,c:0,op:">=",texto:"y ≥ 0"},
+        {a:1,b:1,c:4,op:"<=",texto:"x + y ≤ 4"}],
+    comentarios:["Las dos primeras condiciones dejan solo el primer cuadrante: valores de x y de y que no son negativos.",
+                 "Sigue siendo todo el primer cuadrante, una región infinita hacia arriba y hacia la derecha.",
+                 "La tercera recorta ese cuadrante con una diagonal y deja un triángulo con vértices (0, 0), (4, 0) y (0, 4)."],
+    final:"Región factible: el triángulo de vértices (0, 0), (4, 0) y (0, 4). Todos sus puntos cumplen las tres condiciones." },
+  { etiqueta:"y ≤ x + 1 ; y ≥ 0",
+    rango:{x0:-7, x1:7, y0:-7, y1:7},
+    ds:[{a:-1,b:1,c:1,op:"<=",texto:"y ≤ x + 1"},
+        {a:0,b:1,c:0,op:">=",texto:"y ≥ 0"}],
+    comentarios:["Todo lo que queda por debajo de la recta y = x + 1, incluida la propia recta.",
+                 "Al añadir y ≥ 0 se elimina la parte de abajo del eje x y queda una cuña abierta hacia la derecha."],
+    final:"Región factible: la franja entre el eje x y la recta y = x + 1, que se abre sin límite hacia la derecha." },
+  { etiqueta:"y > 2x − 3 ; y < −x + 4",
+    rango:{x0:-7, x1:7, y0:-7, y1:7},
+    ds:[{a:-2,b:1,c:-3,op:">",texto:"y > 2x − 3"},
+        {a:1,b:1,c:4,op:"<",texto:"y < −x + 4"}],
+    comentarios:["Todo lo que queda por encima de la recta y = 2x − 3; la línea va punteada porque no se incluye.",
+                 "La segunda recorta por arriba y deja una cuña con las dos fronteras punteadas: ningún punto de las líneas pertenece a la región."],
+    final:"Región factible: la cuña entre las dos rectas, sin incluir las fronteras, que se abre hacia la izquierda." },
+  { etiqueta:"x ≥ 0 ; y ≥ 0 ; 2x + y ≤ 8 ; x + y ≤ 5",
+    rango:{x0:-2, x1:9, y0:-2, y1:9},
+    ds:[{a:1,b:0,c:0,op:">=",texto:"x ≥ 0"},
+        {a:0,b:1,c:0,op:">=",texto:"y ≥ 0"},
+        {a:2,b:1,c:8,op:"<=",texto:"2x + y ≤ 8"},
+        {a:1,b:1,c:5,op:"<=",texto:"x + y ≤ 5"}],
+    comentarios:["Primer cuadrante, sin valores negativos.",
+                 "Sigue siendo el primer cuadrante completo.",
+                 "La tercera lo recorta y deja un triángulo con vértices (0, 0), (4, 0) y (0, 8).",
+                 "La cuarta recorta una esquina más y queda un cuadrilátero con vértices (0, 0), (4, 0), (3, 2) y (0, 5)."],
+    final:"Región factible: el cuadrilátero de vértices (0, 0), (4, 0), (3, 2) y (0, 5). Es el caso típico de los problemas de producción." },
+  { etiqueta:"y ≥ x + 2 ; y ≤ x − 1 (sin solución)",
+    rango:{x0:-7, x1:7, y0:-7, y1:7},
+    ds:[{a:-1,b:1,c:2,op:">=",texto:"y ≥ x + 2"},
+        {a:-1,b:1,c:-1,op:"<=",texto:"y ≤ x − 1"}],
+    comentarios:["Todo lo que queda por encima de la recta y = x + 2.",
+                 "La segunda pide estar por debajo de y = x − 1, que va tres unidades más abajo y es paralela. No hay ningún punto que cumpla las dos: la región desaparece."],
+    final:"No hay región factible: las dos condiciones se contradicen, así que el sistema no tiene solución." }
+];
+var rEstado = {idx:0, n:0};
+function llenaSelectSistemas(sel){
+  SISTEMAS.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+function pintaRegion(){
+  var s = SISTEMAS[rEstado.idx];
+  var activas = s.ds.slice(0, rEstado.n);
+  var lista = activas.map(function(d){ return "<span>" + d.texto + "</span>"; }).join("");
+  $("r-lista").innerHTML = lista || "<span>Aún no se ha añadido ninguna desigualdad.</span>";
+
+  var poli = dibujaPlano($("r-svg"), activas, {rango:s.rango});
+  var vacia = rEstado.n > 0 && poli.length < 3;
+
+  $("r-svg-texto").textContent = rEstado.n === 0
+    ? "Plano vacío: pulsa el botón para ir añadiendo las desigualdades una a una."
+    : (vacia ? "No queda ninguna zona coloreada: ningún punto cumple todas las condiciones a la vez."
+             : "Zona coloreada: los puntos que cumplen las " + rEstado.n + " desigualdad" + (rEstado.n > 1 ? "es" : "") + " añadidas hasta ahora.");
+
+  var estado = $("r-estado");
+  if (rEstado.n === 0){
+    estado.textContent = "Sistema: " + s.etiqueta;
+    estado.className = "linea veredicto";
+    $("r-comentario").textContent = "Cada desigualdad se añade por separado; la región va quedando donde se traslapan todos los sombreados.";
+  } else if (rEstado.n < s.ds.length){
+    estado.textContent = "Añadida la desigualdad " + rEstado.n + " de " + s.ds.length + ": " + s.ds[rEstado.n-1].texto;
+    estado.className = "linea veredicto";
+    $("r-comentario").textContent = s.comentarios[rEstado.n-1];
+  } else {
+    estado.textContent = vacia ? "El sistema no tiene solución." : "Región factible completa.";
+    estado.className = "linea veredicto " + (vacia ? "mal" : "bien");
+    $("r-comentario").textContent = s.final;
+  }
+
+  $("r-siguiente").textContent = rEstado.n === 0 ? "Añadir la primera desigualdad"
+    : (rEstado.n >= s.ds.length ? "No quedan más desigualdades" : "Añadir la siguiente desigualdad");
+  $("r-siguiente").disabled = rEstado.n >= s.ds.length;
+}
+function reiniciaRegion(){
+  rEstado.idx = parseInt($("r-sistema").value,10) || 0;
+  rEstado.n = 0;
+  pintaRegion();
+}
+
+/* ============================================================
+   MÓDULO 4 · Verificar un punto
+   ============================================================ */
+function itemVer(){ return SISTEMAS[parseInt($("v-sistema").value,10) || 0]; }
+function verificaPunto(){
+  var s = itemVer();
+  var x = parseFloat($("v-x").value), y = parseFloat($("v-y").value);
+  if (isNaN(x) || isNaN(y)){
+    $("v-aviso").innerHTML = "<strong>Faltan datos.</strong> Escribe un número en x y otro en y para verificar el punto.";
+    $("v-aviso").className = "caja-aviso visible";
+    return;
+  }
+  $("v-aviso").className = "caja-aviso";
+
+  var todas = true, filas = "";
+  s.ds.forEach(function(d){
+    var ok = cumple(d, x, y);
+    if (!ok) todas = false;
+    var izq = d.a*x + d.b*y;
+    filas += "<tr><td>" + d.texto + "</td><td>" + redondea(izq,3) + " frente a " + d.c + "</td>" +
+             '<td class="' + (ok ? "si" : "no") + '">' + (ok ? "✓ se cumple" : "✗ no se cumple") + "</td></tr>";
+  });
+  $("v-tabla").innerHTML =
+    '<table class="reglas"><caption>Sustitución del punto (' + x + ', ' + y + ') en cada desigualdad del sistema.</caption>' +
+    '<thead><tr><th scope="col">Desigualdad</th><th scope="col">Al sustituir</th><th scope="col">¿Se cumple?</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+
+  var ver = $("v-veredicto");
+  ver.textContent = todas
+    ? "✓ (" + x + ", " + y + ") pertenece a la región: cumple todas las desigualdades."
+    : "✗ (" + x + ", " + y + ") queda fuera de la región: basta con que falle una para quedar excluido.";
+  ver.className = "linea veredicto " + (todas ? "bien" : "mal");
+
+  dibujaPlano($("v-svg"), s.ds, {rango:s.rango, punto:[x,y], puntoDentro:todas});
+  $("v-svg-texto").textContent = "Región del sistema con el punto (" + x + ", " + y + ") marcado en " +
+    (todas ? "verde, dentro de la región." : "rojo, fuera de la región.");
+}
+var BANCO_P4 = [
+  { q:"¿Está (1, 1) en la región de y ≤ x + 1 ; y ≥ 0?", ops:["Sí, cumple las dos","No, falla la primera","No, falla la segunda"], ok:0,
+    exp:"1 ≤ 1 + 1 es verdadero y 1 ≥ 0 también: el punto pertenece a la región." },
+  { q:"¿Está (5, 0) en la región de x ≥ 0 ; y ≥ 0 ; x + y ≤ 4?", ops:["No: 5 + 0 no es menor o igual que 4","Sí","No: falla y ≥ 0"], ok:0,
+    exp:"Cumple las dos primeras, pero x + y = 5, que es mayor que 4. Con que falle una, queda fuera." },
+  { q:"¿Está (2, 2) en la región de x ≥ 0 ; y ≥ 0 ; x + y ≤ 4?", ops:["Sí, justo sobre la frontera","No","Solo si la línea es punteada"], ok:0,
+    exp:"2 + 2 = 4, y como el símbolo es ≤, la frontera se incluye: el punto pertenece a la región." },
+  { q:"¿Está (0, 0) en la región de y > 2x − 3 ; y < −x + 4?", ops:["Sí, cumple las dos","No, falla la primera","No, falla la segunda"], ok:0,
+    exp:"0 > −3 es verdadero y 0 < 4 también, así que el origen está dentro de la cuña." },
+  { q:"Un punto cumple tres de las cuatro desigualdades de un sistema. ¿Pertenece a la región?",
+    ops:["No: tiene que cumplirlas todas","Sí, con la mayoría basta","Solo si la que falla es estricta"], ok:0,
+    exp:"La región factible es la intersección: fallar una sola condición deja al punto fuera." },
+  { q:"Con y < x, ¿pertenece a la región un punto que está justo sobre la recta y = x?",
+    ops:["No: el símbolo < excluye la frontera","Sí","Solo si x es positivo"], ok:0,
+    exp:"Por eso la línea se dibuja punteada: marca el límite, pero sus puntos no forman parte de la solución." }
+];
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+["g-simbolo","g-m","g-b"].forEach(function(id){ $(id).addEventListener("input", actualizaGraficador); });
+$("g-simbolo").addEventListener("change", actualizaGraficador);
+actualizaGraficador();
+
+llenaSelect($("t-desigualdad"), DESIGUALDADES);
+$("t-desigualdad").addEventListener("change", actualizaPrueba);
+["t-x","t-y"].forEach(function(id){ $(id).addEventListener("input", actualizaPrueba); });
+$("t-origen").addEventListener("click", function(){
+  $("t-x").value = 0; $("t-y").value = 0; actualizaPrueba();
+});
+actualizaPrueba();
+
+llenaSelectSistemas($("r-sistema"));
+$("r-sistema").addEventListener("change", reiniciaRegion);
+$("r-siguiente").addEventListener("click", function(){
+  var s = SISTEMAS[rEstado.idx];
+  if (rEstado.n < s.ds.length){ rEstado.n++; pintaRegion(); }
+});
+$("r-todo").addEventListener("click", function(){
+  rEstado.n = SISTEMAS[rEstado.idx].ds.length; pintaRegion();
+});
+$("r-reiniciar").addEventListener("click", reiniciaRegion);
+reiniciaRegion();
+
+llenaSelectSistemas($("v-sistema"));
+$("v-sistema").addEventListener("change", verificaPunto);
+["v-x","v-y"].forEach(function(id){ $(id).addEventListener("input", verificaPunto); });
+verificaPunto();
+
+creaPractica(BANCO_P2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>
