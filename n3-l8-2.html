@@ -1,25 +1,25 @@
 <!doctype html>
 <!--
-  Interactivo general · Lección 7.1 — Volumen de prismas y cilindros
+  Interactivo general · Lección 8.2 — Probabilidad compuesta: con y sin reemplazo
   Nivel 3 · Spanish ASE Math 3 · GEDparaHispanos
   Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
   Licencia: Creative Commons CC BY-NC-SA 4.0
   https://creativecommons.org/licenses/by-nc-sa/4.0/
-  Anclas internas: #prismas · #cilindros · #despejar · #capacidad
+  Anclas internas: #simple · #con-reemplazo · #sin-reemplazo · #arbol · #tres-formas
 -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactivo · Lección 7.1: volumen de prismas y cilindros</title>
+<title>Interactivo · Lección 8.2: probabilidad con y sin reemplazo</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Interactivo de práctica para la Lección 7.1 del Nivel 3: volumen de prismas y cilindros, despejar la altura o el radio, y capacidad en problemas de almacenamiento.">
+<meta name="description" content="Interactivo de práctica para la Lección 8.2 del Nivel 3: probabilidad de un evento, dos eventos con y sin reemplazo, del árbol a la tabla y expresar la probabilidad como fracción, decimal y porcentaje.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
 
   :root{
-    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --tema:#b71c1c; --tema-d:#7f0000; --tema-bg:#ffebee; --tema-bg2:#ffcdd2;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -230,24 +230,38 @@
   .tabla-frec input{width:70px;padding:6px 8px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
   .tabla-frec td.bien input{border-color:var(--ok);background:var(--ok-bg);} .tabla-frec td.mal input{border-color:var(--mal);background:var(--mal-bg);}
 
+  .tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:12px 0;}
+  a.tarjeta-ext{display:block;background:#fff;border:2px solid var(--tema-bg2);border-left:8px solid var(--tema);border-radius:10px;padding:14px 16px;color:var(--txt);text-decoration:none;}
+  a.tarjeta-ext:hover{background:var(--tema-bg);}
+  a.tarjeta-ext strong{display:block;color:var(--tema-d);font-size:17px;margin-bottom:4px;}
+  a.tarjeta-ext .ir{display:block;margin-top:8px;font-weight:700;color:var(--acento);}
+  .slots{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0;}
+  .slot{min-width:84px;text-align:center;border:2px solid var(--tema);border-radius:10px;padding:8px;background:#fff;}
+  .slot strong{display:block;font-size:24px;color:var(--tema-d);}
+  .slot span{font-size:13px;color:var(--gris);}
+  .arreglos{font-family:Consolas,'Courier New',monospace;font-size:16px;display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;max-height:220px;overflow-y:auto;}
+  .arreglos span{background:#fff;border:1px solid #d8d8d8;border-radius:6px;padding:3px 8px;}
+  .arreglos span.grupo{background:var(--tema-bg);border-color:var(--tema-bg2);}
+
 </style>
 </head>
 <body>
 <div class="contenedor">
 
   <header class="principal">
-    <div class="ruta">Nivel 3 · Tema 7 · Volumen y estadística</div>
-    <h1>Lección 7.1 · Volumen de prismas y cilindros</h1>
-    <div class="meta">Cuatro prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+    <div class="ruta">Nivel 3 · Tema 8 · Conteo y probabilidad</div>
+    <h1>Lección 8.2 · Probabilidad compuesta: con y sin reemplazo</h1>
+    <div class="meta">Prácticas interactivas y enlaces a los simuladores de probabilidad, en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
   </header>
 
   <nav class="indice" aria-labelledby="titulo-indice">
     <h2 id="titulo-indice">Contenido de esta página</h2>
     <ol>
-      <li><a href="#prismas">Volumen de prismas</a></li>
-      <li><a href="#cilindros">Volumen de cilindros</a></li>
-      <li><a href="#despejar">Despejar la altura o el radio</a></li>
-      <li><a href="#capacidad">Capacidad y almacenamiento</a></li>
+      <li><a href="#simple">Probabilidad de un evento</a></li>
+      <li><a href="#con-reemplazo">Dos eventos con reemplazo</a></li>
+      <li><a href="#sin-reemplazo">Dos eventos sin reemplazo</a></li>
+      <li><a href="#arbol">Del árbol a la tabla</a></li>
+      <li><a href="#tres-formas">Fracción, decimal y porcentaje</a></li>
     </ol>
     <div class="controles-todo">
       <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
@@ -255,38 +269,27 @@
     </div>
   </nav>
 
-  <!-- ============ MÓDULO 1 · #prismas ============ -->
-  <details class="modulo" id="prismas" open>
+  <!-- ============ MÓDULO 1 · #simple ============ -->
+  <details class="modulo" id="simple" open>
     <summary>
       <span class="num" aria-hidden="true">1</span>
-      <h2>Volumen de prismas</h2>
+      <h2>Probabilidad de un evento</h2>
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>El <strong>volumen</strong> es el espacio que ocupa un cuerpo. Para prismas y cilindros se calcula siempre con la
-      misma idea: el área de la base multiplicada por la altura. El resultado va en unidades <strong>cúbicas</strong> (cm³, m³).</p>
-      <div class="formula">V = área de la base × altura</div>
+      <p>La probabilidad de un evento es la razón entre los casos favorables y los casos posibles. Siempre está entre 0
+      (imposible) y 1 (seguro).</p>
+      <div class="formula">P(evento) = <span class="fracc"><span class="fa">casos favorables</span><span class="fb2">casos posibles</span></span></div>
 
-      <h3>La caja por capas</h3>
-      <p>Cada cubito mide 1 unidad por lado. La base tiene largo × ancho cubitos, y se apilan tantas capas como indica la
-      altura. Gira la caja para verla desde otro lado.</p>
-      <div class="panel">
-        <div class="campos">
-          <div class="campo" style="flex:1;min-width:150px;"><label for="cj-l">Largo: <span id="cj-lv"></span></label><input type="range" id="cj-l" min="1" max="7" value="5"></div>
-          <div class="campo" style="flex:1;min-width:150px;"><label for="cj-w">Ancho: <span id="cj-wv"></span></label><input type="range" id="cj-w" min="1" max="6" value="3"></div>
-          <div class="campo" style="flex:1;min-width:150px;"><label for="cj-h">Alto: <span id="cj-hv"></span></label><input type="range" id="cj-h" min="1" max="6" value="4"></div>
-          <div class="campo" style="flex:1;min-width:150px;"><label for="cj-g">Girar: <span id="cj-gv"></span></label><input type="range" id="cj-g" min="10" max="80" value="30"></div>
-        </div>
-        <div id="cj-svg"></div>
-        <div class="salida" id="cj-salida" aria-live="polite"></div>
+      <h3>Simuladores de probabilidad</h3>
+      <p>Estos simuladores comparan la probabilidad teórica (la de la fórmula) con la experimental (la que sale al repetir el experimento muchas veces). Se abren en una pestaña nueva.</p>
+      <div class="tarjetas">
+        <a class="tarjeta-ext" href="https://zhemaria.github.io/interactivos/prob_dados/" target="_blank" rel="noopener noreferrer"><strong>Dos dados</strong>Lanza dos dados y compara la frecuencia de cada suma con su probabilidad.<span class="ir">Abrir en pestaña nueva ›</span></a>
+        <a class="tarjeta-ext" href="https://zhemaria.github.io/interactivos/prob_barajas/" target="_blank" rel="noopener noreferrer"><strong>Baraja</strong>Saca cartas y calcula la probabilidad de cada palo, color o figura.<span class="ir">Abrir en pestaña nueva ›</span></a>
+        <a class="tarjeta-ext" href="https://zhemaria.github.io/interactivos/prob_rueda/" target="_blank" rel="noopener noreferrer"><strong>Ruleta</strong>Gira una ruleta muchas veces y mira cómo lo experimental se acerca a lo teórico.<span class="ir">Abrir en pestaña nueva ›</span></a>
       </div>
 
-      <div class="caja-tip">
-        <strong>Prisma triangular:</strong> la base es un triángulo. Primero se calcula su área (base × altura ÷ 2) y
-        después se multiplica por el largo del prisma.
-      </div>
-
-      <h3>Practica: volumen de prismas</h3>
+      <h3>Practica: probabilidad de un evento</h3>
       <div class="practica" id="p1">
         <div class="enun" id="p1-enun"></div>
         <div class="opciones" id="p1-opciones"></div>
@@ -299,38 +302,26 @@
     </div>
   </details>
 
-  <!-- ============ MÓDULO 2 · #cilindros ============ -->
-  <details class="modulo" id="cilindros">
+  <!-- ============ MÓDULO 2 · #con-reemplazo ============ -->
+  <details class="modulo" id="con-reemplazo">
     <summary>
       <span class="num" aria-hidden="true">2</span>
-      <h2>Volumen de cilindros</h2>
+      <h2>Dos eventos con reemplazo</h2>
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>En un cilindro la base es un círculo de radio r, cuya área es πr². Por eso:</p>
-      <div class="formula">V = πr<sup>2</sup>h</div>
-      <p>En los cálculos se usa π ≈ 3.14 o la tecla π de la calculadora. También se puede dejar el resultado <strong>exacto</strong>, con π: por ejemplo, 20π.</p>
+      <p>Si después de la primera extracción el objeto <strong>se devuelve</strong>, la bolsa queda igual para la segunda:
+      los eventos son <strong>independientes</strong>. La probabilidad de los dos es el producto.</p>
+      <div class="formula">P(A y B) = P(A) × P(B)</div>
 
-      <h3>Calculadora del cilindro</h3>
-      <div class="panel">
-        <div class="campos">
-          <div class="campo" style="flex:1;min-width:180px;"><label for="ci-r">Radio: <span id="ci-rv"></span></label><input type="range" id="ci-r" min="0.5" max="6" step="0.5" value="2"></div>
-          <div class="campo" style="flex:1;min-width:180px;"><label for="ci-h">Altura: <span id="ci-hv"></span></label><input type="range" id="ci-h" min="1" max="12" step="0.5" value="5"></div>
-        </div>
-        <div id="ci-svg"></div>
-        <div class="salida" id="ci-salida" aria-live="polite"></div>
-      </div>
+      <h3>La bolsa que no cambia</h3>
+      <div class="panel" id="bc-panel"></div>
 
-      <div class="caja-atencion">
-        <strong>Solo el radio va al cuadrado:</strong> en πr²h el exponente afecta únicamente a r. Y si el problema da el
-        <strong>diámetro</strong>, primero se divide entre 2 para obtener el radio.
-      </div>
-
-      <h3>Practica: volumen de un cilindro</h3>
+      <h3>Practica: con reemplazo</h3>
       <div class="practica" id="p2">
         <div class="enun" id="p2-enun"></div>
-        <div class="campos"><div class="campo"><label for="p2-r">Volumen</label><input type="text" autocomplete="off" class="ancho" id="p2-r"></div></div>
-        <p class="nota">Usa π ≈ 3.14 y redondea a la décima, o escribe el resultado exacto con π, como 20π.</p>
+        <div class="campos"><div class="campo"><label for="p2-r">Probabilidad</label><input type="text" autocomplete="off" class="ancho" id="p2-r"></div></div>
+        <p class="nota">Escribe una fracción (como 4/27), un decimal o un porcentaje. No hace falta simplificar.</p>
         <div class="fila-btn">
           <button type="button" class="btn" id="p2-comprobar">Comprobar</button>
           <button type="button" class="btn-sec" id="p2-nuevo">Otro ejercicio</button>
@@ -343,34 +334,31 @@
     </div>
   </details>
 
-  <!-- ============ MÓDULO 3 · #despejar ============ -->
-  <details class="modulo" id="despejar">
+  <!-- ============ MÓDULO 3 · #sin-reemplazo ============ -->
+  <details class="modulo" id="sin-reemplazo">
     <summary>
       <span class="num" aria-hidden="true">3</span>
-      <h2>Despejar la altura o el radio</h2>
+      <h2>Dos eventos sin reemplazo</h2>
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>Si se conoce el volumen y falta una medida, se despeja como en el Tema 5: la altura es el volumen dividido entre el
-      área de la base. Para el radio de un cilindro, se divide entre πh y después se saca la raíz cuadrada.</p>
-      <div class="formula">h = <span class="fracc"><span class="fa">V</span><span class="fb2">área de la base</span></span> &nbsp;&nbsp;&nbsp; r = √<span class="fracc"><span class="fa">V</span><span class="fb2">πh</span></span></div>
+      <p>Si el objeto <strong>no se devuelve</strong>, la bolsa cambia: queda uno menos en total, y uno menos del tipo que
+      salió. Los eventos son <strong>dependientes</strong>.</p>
+      <div class="formula">P(A y B) = P(A) × P(B después de A)</div>
 
-      <h3>Paso a paso</h3>
-      <div class="panel">
-        <div class="estado" id="dj-enun"></div>
-        <div class="fila-btn">
-          <button type="button" class="btn" id="dj-sig">Mostrar el primer paso</button>
-          <button type="button" class="btn-sec" id="dj-todo">Mostrar todos los pasos</button>
-          <button type="button" class="btn-sec" id="dj-nuevo">Otro ejemplo</button>
-        </div>
+      <h3>La bolsa que pierde un elemento</h3>
+      <div class="panel" id="bs-panel"></div>
+
+      <div class="caja-atencion">
+        <strong>Ajusta los dos números:</strong> en la segunda extracción el denominador siempre baja en 1, y el numerador
+        baja en 1 solo si se busca el mismo color que ya salió.
       </div>
-      <div class="pasos" id="dj-pasos" aria-live="polite"></div>
 
-      <h3>Practica: halla la medida que falta</h3>
+      <h3>Practica: sin reemplazo</h3>
       <div class="practica" id="p3">
         <div class="enun" id="p3-enun"></div>
-        <div class="campos"><div class="campo"><label for="p3-r">Medida</label><input type="text" autocomplete="off" class="ancho" id="p3-r"></div></div>
-        <p class="nota">Escribe el número; si no es exacto, redondea a la décima.</p>
+        <div class="campos"><div class="campo"><label for="p3-r">Probabilidad</label><input type="text" autocomplete="off" class="ancho" id="p3-r"></div></div>
+        <p class="nota">Escribe una fracción (como 2/7), un decimal o un porcentaje. No hace falta simplificar.</p>
         <div class="fila-btn">
           <button type="button" class="btn" id="p3-comprobar">Comprobar</button>
           <button type="button" class="btn-sec" id="p3-nuevo">Otro ejercicio</button>
@@ -383,43 +371,64 @@
     </div>
   </details>
 
-  <!-- ============ MÓDULO 4 · #capacidad ============ -->
-  <details class="modulo" id="capacidad">
+  <!-- ============ MÓDULO 4 · #arbol ============ -->
+  <details class="modulo" id="arbol">
     <summary>
       <span class="num" aria-hidden="true">4</span>
-      <h2>Capacidad y almacenamiento</h2>
+      <h2>Del árbol a la tabla</h2>
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>El volumen responde preguntas reales: cuánta agua cabe en un tanque o cuánto concreto lleva una columna. Para
-      pasar de volumen a capacidad se usan estas equivalencias:</p>
+      <p>Un diagrama de árbol muestra todas las posibilidades de dos extracciones: en cada rama se escribe su probabilidad,
+      y la probabilidad de un camino completo es el <strong>producto</strong> de las ramas. Las probabilidades de todos los
+      caminos suman 1. El interactivo «Del árbol a la tabla» lleva ese árbol a una tabla de doble entrada.</p>
+      <div class="tarjetas">
+        <a class="tarjeta-ext" href="https://zhemaria.github.io/interactivos/caja_arbol/" target="_blank" rel="noopener noreferrer"><strong>Del árbol a la tabla</strong>Probabilidad en dos extracciones, con y sin reemplazo, en árbol y en tabla.<span class="ir">Abrir en pestaña nueva ›</span></a>
+      </div>
+      <div class="caja-tip">
+        <strong>Para comprobar un árbol:</strong> suma las probabilidades de todos los caminos. Si no da 1, hay una rama mal calculada.
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 5 · #tres-formas ============ -->
+  <details class="modulo" id="tres-formas">
+    <summary>
+      <span class="num" aria-hidden="true">5</span>
+      <h2>Fracción, decimal y porcentaje</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Una probabilidad se puede escribir de tres formas. El examen suele pedir una en particular.</p>
       <table class="reglas">
-        <caption>Equivalencias entre volumen y capacidad</caption>
-        <thead><tr><th scope="col">Volumen</th><th scope="col">Capacidad</th></tr></thead>
+        <caption>Cómo pasar de una forma a otra</caption>
+        <thead><tr><th scope="col">De</th><th scope="col">A</th><th scope="col">Se hace</th></tr></thead>
         <tbody>
-          <tr><td>1 m³</td><td>1000 litros</td></tr>
-          <tr><td>1 cm³</td><td>1 mililitro (mL)</td></tr>
-          <tr><td>1000 cm³</td><td>1 litro</td></tr>
-          <tr><td>231 pulgadas cúbicas</td><td>1 galón</td></tr>
-          <tr><td>1 pie cúbico</td><td>unos 7.48 galones</td></tr>
+          <tr><td>Fracción</td><td>Decimal</td><td>se divide el numerador entre el denominador</td></tr>
+          <tr><td>Decimal</td><td>Porcentaje</td><td>se multiplica por 100</td></tr>
+          <tr><td>Porcentaje</td><td>Fracción</td><td>se escribe sobre 100 y se simplifica</td></tr>
         </tbody>
       </table>
 
-      <div class="caja-atencion">
-        <strong>Todas las medidas en la misma unidad:</strong> si el radio está en centímetros y la altura en metros, primero
-        se convierte todo a una sola unidad.
+      <h3>Conversor</h3>
+      <div class="panel">
+        <div class="campos"><div class="campo"><label for="tf-v">Probabilidad (fracción, decimal o porcentaje)</label><input type="text" class="ancho" id="tf-v" value="1/4"></div></div>
+        <div class="salida" id="tf-salida" aria-live="polite"></div>
       </div>
 
-      <h3>Practica: problemas de capacidad</h3>
+      <div class="caja-tip">
+        <strong>Toda probabilidad está entre 0 y 1:</strong> si un cálculo da más de 1 (o más de 100 %), hay un error;
+        probablemente se sumó cuando había que multiplicar.
+      </div>
+
+      <h3>Practica: las tres formas</h3>
       <div class="practica" id="p4">
         <div class="enun" id="p4-enun"></div>
-        <div class="campos"><div class="campo"><label for="p4-r">Resultado</label><input type="text" autocomplete="off" class="ancho" id="p4-r"></div></div>
-        <p class="nota">Redondea al número entero más cercano.</p>
-        <div class="fila-btn">
-          <button type="button" class="btn" id="p4-comprobar">Comprobar</button>
-          <button type="button" class="btn-sec" id="p4-nuevo">Otro ejercicio</button>
-        </div>
+        <div class="opciones" id="p4-opciones"></div>
         <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button></div>
         <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
       </div>
 
@@ -428,7 +437,7 @@
   </details>
 
   <footer class="pie">
-    <p><strong>Nivel 3 · Tema 7 · Volumen y estadística · GEDparaHispanos</strong><br>
+    <p><strong>Nivel 3 · Tema 8 · Conteo y probabilidad · GEDparaHispanos</strong><br>
     José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
     <p>Esta obra se distribuye bajo licencia
       <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
@@ -873,227 +882,167 @@ function pasoAPaso(pre, pasos){
 }
 
 /* ============================================================
-   Estadística del Tema 7
-   Cuartiles con el método de la lección: la mediana de cada
-   mitad, sin incluir la mediana cuando la cantidad es impar.
+   Conteo y probabilidad
    ============================================================ */
-function ordena(d){ return d.slice().sort(function(a, b){ return a - b; }); }
-function mediana(o){ var n = o.length, m = Math.floor(n/2); return n % 2 ? o[m] : (o[m-1] + o[m]) / 2; }
-function mitades(o){ var n = o.length, m = Math.floor(n/2); return [o.slice(0, m), o.slice(n % 2 ? m + 1 : m)]; }
-function cinco(d){ var o = ordena(d), h = mitades(o); return { min: o[0], q1: mediana(h[0]), med: mediana(o), q3: mediana(h[1]), max: o[o.length-1], o: o }; }
-function nv(x){ return menos(parseFloat(Number(x).toFixed(3)).toString()); }
-function datosAzar(n, lo, hi){ var d = []; for (var i = 0; i < n; i++) d.push(aleatorio(lo, hi)); return d; }
-function limites(c){ var iqr = c.q3 - c.q1; return { iqr: iqr, inf: c.q1 - 1.5*iqr, sup: c.q3 + 1.5*iqr }; }
-
-/* Diagrama de caja: grupos = [{ nombre, c (cinco), atip: [] , bigMin, bigMax }] */
-function escalaBonita(lo, hi){
-  var r = hi - lo || 1, paso = [1,2,5,10,20,25,50,100,200][0], cand = [1,2,5,10,20,25,50,100,200,500];
-  for (var i = 0; i < cand.length; i++){ if (r / cand[i] <= 10){ paso = cand[i]; break; } }
-  return { lo: Math.floor(lo / paso) * paso, hi: Math.ceil(hi / paso) * paso, paso: paso };
-}
-function cajaSVG(grupos, voz, opc){
-  opc = opc || {};
-  var lo = Infinity, hi = -Infinity;
-  grupos.forEach(function(g){ lo = Math.min(lo, g.c.min); hi = Math.max(hi, g.c.max); });
-  if (opc.lo !== undefined){ lo = Math.min(lo, opc.lo); hi = Math.max(hi, opc.hi); }
-  var E = escalaBonita(lo, hi), W = 640, x0 = opc.x0 || (grupos.length > 1 ? 90 : 40), x1 = opc.x1 || W - 30, alto = 70, H = grupos.length * alto + 60;
-  function X(v){ return x0 + (v - E.lo) * (x1 - x0) / (E.hi - E.lo); }
-  var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">', yEje = H - 34;
-  s += linea([x0, yEje], [x1, yEje], "#424242", 2);
-  for (var v = E.lo; v <= E.hi + 1e-9; v += E.paso){ s += linea([X(v), yEje - 6], [X(v), yEje + 6], "#424242", 2) + texto([X(v), yEje + 22], nv(v), 18, "#222", 400); }
-  grupos.forEach(function(g, i){
-    var y = 30 + i*alto, c = g.c, col = g.color || "#006064", bmin = g.bigMin !== undefined ? g.bigMin : c.min, bmax = g.bigMax !== undefined ? g.bigMax : c.max;
-    if (grupos.length > 1) s += texto([x0 - 14, y + 2], g.nombre, 22, col, 700, "end");
-    s += linea([X(bmin), y], [X(c.q1), y], col, 3) + linea([X(c.q3), y], [X(bmax), y], col, 3);
-    s += linea([X(bmin), y - 12], [X(bmin), y + 12], col, 3) + linea([X(bmax), y - 12], [X(bmax), y + 12], col, 3);
-    s += '<rect x="' + f1(X(c.q1)) + '" y="' + (y - 20) + '" width="' + f1(Math.max(X(c.q3) - X(c.q1), 1)) + '" height="40" fill="' + (g.relleno || "#e0f7fa") + '" stroke="' + col + '" stroke-width="3"/>';
-    s += linea([X(c.med), y - 20], [X(c.med), y + 20], "#b71c1c", 4);
-    (g.atip || []).forEach(function(a){ s += '<circle cx="' + f1(X(a)) + '" cy="' + y + '" r="7" fill="#fff" stroke="#b71c1c" stroke-width="3"/>'; });
-    if (opc.rotulos) [["mín", bmin], ["Q1", c.q1], ["Q2", c.med], ["Q3", c.q3], ["máx", bmax]].forEach(function(p, k){ s += texto([X(p[1]), y - 32 + (k % 2 ? 0 : -2)], p[0], 16, "#424242", 700); });
-  });
-  return s + '</svg>';
-}
-/* Histograma: clases = [{ a, b, f }] */
-function histSVG(clases, voz, opc){
-  opc = opc || {};
-  var W = 640, H = 300, x0 = 56, x1 = W - 20, yb = H - 44, ytop = 20, fmax = Math.max.apply(null, clases.map(function(c){ return c.f; })) || 1;
-  var paso = fmax <= 6 ? 1 : (fmax <= 12 ? 2 : (fmax <= 30 ? 5 : 10)), top = Math.ceil(fmax / paso) * paso, n = clases.length, w = (x1 - x0) / n;
-  function Y(f){ return yb - f * (yb - ytop) / top; }
-  var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">';
-  for (var f = 0; f <= top; f += paso){ s += linea([x0, Y(f)], [x1, Y(f)], "#e0e0e0", 1) + texto([x0 - 8, Y(f)], f, 17, "#424242", 400, "end"); }
-  clases.forEach(function(c, i){
-    s += '<rect x="' + f1(x0 + i*w) + '" y="' + f1(Y(c.f)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(c.f)) + '" fill="' + (opc.marcar === i ? "#f9a825" : "#4dd0e1") + '" stroke="#006064" stroke-width="2"/>';
-    s += texto([x0 + i*w, yb + 20], nv(c.a), 17, "#222", 400);
-  });
-  s += texto([x1, yb + 20], nv(clases[n-1].b), 17, "#222", 400);
-  s += linea([x0, yb], [x1, yb], "#424242", 2) + linea([x0, yb], [x0, ytop], "#424242", 2);
-  s += texto([x0 - 44, (yb + ytop)/2], "Frecuencia", 14, "#424242", 700).replace('<text', '<text transform="rotate(-90 ' + (x0 - 44) + ' ' + ((yb + ytop)/2) + ')"');
-  if (opc.eje) s += texto([(x0 + x1)/2, H - 6], opc.eje, 16, "#424242", 700);
-  return s + '</svg>';
-}
+function fact(n){ var r = 1; for (var i = 2; i <= n; i++) r *= i; return r; }
+function perm(n, r){ var p = 1; for (var i = 0; i < r; i++) p *= (n - i); return p; }
+function comb(n, r){ return perm(n, r) / fact(r); }
+function nv(x){ return menos(parseFloat(Number(x).toFixed(4)).toString()); }
 function evaluaDec(t, esperado, pistas, tol){
   var v = leeDecimal(t); if (v === null){ var f = leeFraccion(t); if (f) v = f.p / f.q; }
-  if (v === null) return { estado: "invalido", msg: "Escribe un número, por ejemplo 12 o 62.8." };
+  if (v === null) return { estado: "invalido", msg: "Escribe un número entero." };
   if (Math.abs(v - esperado) <= (tol || 1e-6)) return { estado: "bien", msg: "Correcto." };
-  for (var i = 0; i < (pistas || []).length; i++) if (Math.abs(v - pistas[i].v) <= (pistas[i].tol || tol || 1e-6)) return { estado: "mal", msg: pistas[i].msg };
+  for (var i = 0; i < (pistas || []).length; i++) if (Math.abs(v - pistas[i].v) <= 1e-6) return { estado: "mal", msg: pistas[i].msg };
+  return { estado: "mal", msg: "Todavía no." };
+}
+/* Probabilidad escrita como fracción, decimal o porcentaje */
+function leeProb(t){
+  var s = String(t).trim().replace(/\s+/g, "");
+  var pc = s.match(/^(\d+(?:\.\d+)?)%$/); if (pc) return parseFloat(pc[1]) / 100;
+  var f = leeFraccion(s); if (f) return f.p / f.q;
+  var d = leeDecimal(s); return d;
+}
+function evaluaProb(t, p, pistas){
+  var v = leeProb(t);
+  if (v === null) return { estado: "invalido", msg: "Escribe la probabilidad como fracción (3/8), decimal (0.375) o porcentaje (37.5%)." };
+  if (Math.abs(v - fval(p)) < 0.0006) return { estado: "bien", msg: "Correcto." };
+  if (v > 1) return { estado: "mal", msg: "Una probabilidad nunca pasa de 1 (100 %): probablemente se sumó cuando había que multiplicar." };
+  for (var i = 0; i < (pistas || []).length; i++) if (Math.abs(v - fval(pistas[i].v)) < 0.0006) return { estado: "mal", msg: pistas[i].msg };
   return { estado: "mal", msg: "Todavía no." };
 }
 
-var PI = 3.14;
-function r1(x){ return parseFloat(x.toFixed(1)); }
-function r2(x){ return parseFloat(x.toFixed(2)); }
+var COLORES = [ { n: "rojo", pl: "rojos", l: "R", c: "#c62828" }, { n: "azul", pl: "azules", l: "A", c: "#1565c0" }, { n: "verde", pl: "verdes", l: "V", c: "#2e7d32" } ];
+function frVis(p, q){ return fracHTML(p, q); }
+function frSimpl(p, q){ var r = reduce(p, q); return fracHTML(r.p, r.q); }
+function tresFormas(p, q){ var v = p / q; return frVis(p, q) + (mcd(p, q) > 1 ? " = " + frSimpl(p, q) : "") + " ≈ " + nv(Math.round(v*10000)/10000) + " ≈ " + nv(Math.round(v*1000)/10) + " %"; }
 
 /* ============================================================
-   MÓDULO 1 · Caja por capas, en perspectiva
+   Bolsa de caramelos (módulos 2 y 3)
    ============================================================ */
-function pintaCaja(){
-  var l = +$("cj-l").value, w = +$("cj-w").value, h = +$("cj-h").value, g = rad(+$("cj-g").value), phi = rad(28);
-  ["l","w","h"].forEach(function(k){ $("cj-" + k + "v").textContent = $("cj-" + k).value; }); $("cj-gv").textContent = $("cj-g").value + "°";
-  var cg = Math.cos(g), sg = Math.sin(g), cp = Math.cos(phi), sp = Math.sin(phi);
-  function prj(p){ var x = p[0] - l/2, y = p[1] - w/2, z = p[2]; var xr = x*cg - y*sg, yr = x*sg + y*cg; return [xr, z*cp + yr*sp]; }
-  var caras = [
-    { n: [0,-1,0], p: function(u, v){ return [u, 0, v]; }, U: l, V: h, col: "#b2ebf2" },
-    { n: [0,1,0], p: function(u, v){ return [u, w, v]; }, U: l, V: h, col: "#b2ebf2" },
-    { n: [-1,0,0], p: function(u, v){ return [0, u, v]; }, U: w, V: h, col: "#80deea" },
-    { n: [1,0,0], p: function(u, v){ return [l, u, v]; }, U: w, V: h, col: "#80deea" },
-    { n: [0,0,1], p: function(u, v){ return [u, v, h]; }, U: l, V: w, col: "#e0f7fa" },
-    { n: [0,0,-1], p: function(u, v){ return [u, v, 0]; }, U: l, V: w, col: "#e0f7fa" }
-  ];
-  var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  caras.forEach(function(c){ [[0,0],[c.U,0],[c.U,c.V],[0,c.V]].forEach(function(q){ var p = prj(c.p(q[0], q[1])); minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minY = Math.min(minY, p[1]); maxY = Math.max(maxY, p[1]); }); });
-  var esc = Math.min(420 / (maxX - minX), 260 / (maxY - minY)), ox = 320 - (minX + maxX)/2*esc, oy = 150 + (minY + maxY)/2*esc;
-  function T(p){ var q = prj(p); return [ox + q[0]*esc, oy - q[1]*esc]; }
-  var s = '<svg class="figura" viewBox="0 0 640 300" role="img" aria-label="Caja de ' + l + ' por ' + w + ' por ' + h + ' cubitos: ' + (l*w*h) + ' en total.">';
-  caras.forEach(function(c){
-    /* la cara es visible si su normal apunta hacia el observador */
-    var yr = c.n[0]*sg + c.n[1]*cg, d = yr*cp - c.n[2]*sp;
-    if (!(d < 0)) return;
-    var pts = [[0,0],[c.U,0],[c.U,c.V],[0,c.V]].map(function(q){ return T(c.p(q[0], q[1])); });
-    s += '<polygon points="' + pts.map(function(p){ return f1(p[0]) + "," + f1(p[1]); }).join(" ") + '" fill="' + c.col + '" stroke="#006064" stroke-width="2.5"/>';
-    for (var u = 1; u < c.U; u++) s += linea(T(c.p(u, 0)), T(c.p(u, c.V)), "#00838f", 1);
-    for (var v = 1; v < c.V; v++) s += linea(T(c.p(0, v)), T(c.p(c.U, v)), "#00838f", 1);
+function bolsaSVG(cuentas, quitado, titulo){
+  var items = []; cuentas.forEach(function(k, i){ for (var j = 0; j < k; j++) items.push(i); });
+  var porFila = 9, filas = Math.ceil(items.length / porFila) || 1, W = 300, H = 60 + filas*32, s = '<svg class="figura" style="max-width:300px" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + titulo + '">';
+  s += '<path d="M20 20 Q20 ' + (H - 6) + ' 150 ' + (H - 6) + ' Q280 ' + (H - 6) + ' 280 20 Z" fill="#fff8e1" stroke="#8d6e63" stroke-width="3"/>';
+  var marcado = false;
+  items.forEach(function(ci, j){
+    var x = 44 + (j % porFila)*27, y = 40 + Math.floor(j / porFila)*32, col = COLORES[ci];
+    var fuera = quitado !== null && quitado !== undefined && ci === quitado && !marcado; if (fuera) marcado = true;
+    s += '<circle cx="' + x + '" cy="' + y + '" r="12" fill="' + (fuera ? "#fff" : col.c) + '" stroke="' + col.c + '" stroke-width="2"' + (fuera ? ' stroke-dasharray="3 3"' : '') + '/>';
+    s += texto([x, y + 1], col.l, 12, fuera ? col.c : "#fff");
   });
-  $("cj-svg").innerHTML = s + '</svg>';
-  $("cj-salida").innerHTML = '<div class="linea">Una capa (la base) tiene ' + l + ' × ' + w + ' = ' + (l*w) + ' cubitos: es el área de la base.</div>' +
-    '<div class="linea">Hay ' + h + (h === 1 ? ' capa' : ' capas') + ': ' + (l*w) + ' × ' + h + ' = <strong>' + (l*w*h) + '</strong> cubitos.</div>' +
-    '<div class="linea veredicto">V = ' + l + ' × ' + w + ' × ' + h + ' = ' + (l*w*h) + ' unidades cúbicas</div>';
+  return s + '</svg>';
 }
-function opN(v){ return { html: nv(v), clave: "n" + v }; }
-function genPrisma(){
-  var t = aleatorio(1,3), o, pc = {};
-  if (t === 1){ var l = aleatorio(2,9), w = aleatorio(2,8), h = aleatorio(2,9), V = l*w*h;
-    o = [opN(V), opN(l + w + h), opN(l*w), opN(2*(l*w + l*h + w*h))]; pc["n" + (l + w + h)] = "Las medidas se multiplican, no se suman."; pc["n" + (l*w)] = "Ese es el área de la base: falta multiplicar por la altura."; pc["n" + 2*(l*w + l*h + w*h)] = "Esa es el área de la superficie, no el volumen.";
-    return { enun: "Una caja mide " + l + " cm de largo, " + w + " cm de ancho y " + h + " cm de alto. ¿Cuál es su volumen en cm³?", opciones: o, correcta: "n" + V, porClave: pc, bien: l + " × " + w + " × " + h + " = " + V + " cm³.", mal: "V = " + l + " × " + w + " × " + h + " = " + V + " cm³." }; }
-  if (t === 2){ var a = aleatorio(2,9), V2 = a*a*a;
-    o = [opN(V2), opN(a*a), opN(3*a), opN(6*a*a)]; pc["n" + a*a] = "Eso es el área de una cara."; pc["n" + 3*a] = "Se multiplica el lado tres veces, no se multiplica por 3.";
-    return { enun: "¿Cuál es el volumen de un cubo de " + a + " cm de lado?", opciones: o, correcta: "n" + V2, porClave: pc, bien: a + " × " + a + " × " + a + " = " + V2 + " cm³.", mal: "V = " + a + "³ = " + V2 + " cm³." }; }
-  var b = aleatorio(2,8)*2, ht = aleatorio(2,7), L = aleatorio(3,12), A = b*ht/2, V3 = A*L;
-  o = [opN(V3), opN(b*ht*L), opN(A), opN(b + ht + L)]; pc["n" + b*ht*L] = "El área del triángulo es base × altura ÷ 2: faltó dividir entre 2.";
-  return { enun: "Un prisma tiene como base un triángulo de base " + b + " cm y altura " + ht + " cm, y mide " + L + " cm de largo. ¿Cuál es su volumen en cm³?", opciones: o, correcta: "n" + V3, porClave: pc,
-    bien: "Área de la base: " + b + " × " + ht + " ÷ 2 = " + A + ". Volumen: " + A + " × " + L + " = " + V3 + " cm³.", mal: "Área de la base: " + b + " × " + ht + " ÷ 2 = " + A + " cm²; V = " + A + " × " + L + " = " + V3 + " cm³." };
+function creaBolsa(pre, reemplazo){
+  var panel = $(pre + "-panel");
+  var sel = function(id, def){ return '<select id="' + pre + '-' + id + '">' + COLORES.map(function(c, i){ return '<option value="' + i + '"' + (i === def ? " selected" : "") + '>' + c.n + '</option>'; }).join("") + '</select>'; };
+  panel.innerHTML = '<div class="campos">' + COLORES.map(function(c, i){ return '<div class="campo"><label for="' + pre + '-n' + i + '">Caramelos ' + c.pl + '</label><input type="text" inputmode="numeric" class="corto" id="' + pre + '-n' + i + '" value="' + [4,3,2][i] + '"></div>'; }).join("") + '</div>' +
+    '<div class="campos" style="margin-top:8px;"><div class="campo"><label for="' + pre + '-c1">Primero sale</label>' + sel("c1", 0) + '</div><div class="campo"><label for="' + pre + '-c2">Después sale</label>' + sel("c2", reemplazo ? 1 : 0) + '</div></div>' +
+    '<div class="caja-aviso" id="' + pre + '-aviso" role="alert"></div>' +
+    '<div class="lado-a-lado"><div><p><strong>1.ª extracción</strong></p><div id="' + pre + '-b1"></div></div><div><p><strong>2.ª extracción</strong></p><div id="' + pre + '-b2"></div></div></div>' +
+    '<div class="salida" id="' + pre + '-salida" aria-live="polite"></div>';
+  function pinta(){
+    var n = [0,1,2].map(function(i){ return leeEntero($(pre + "-n" + i).value); }), av = $(pre + "-aviso");
+    if (n.some(function(x){ return x === null || x < 0 || x > 9; })){ av.className = "caja-aviso visible"; av.textContent = "Escribe cantidades enteras de 0 a 9."; return; }
+    var c1 = +$(pre + "-c1").value, c2 = +$(pre + "-c2").value, T = n[0] + n[1] + n[2];
+    if (T < 2 || n[c1] === 0){ av.className = "caja-aviso visible"; av.textContent = "La bolsa necesita al menos 2 caramelos y alguno del primer color elegido."; return; }
+    av.className = "caja-aviso"; av.textContent = "";
+    var n2 = n.slice(); if (!reemplazo) n2[c1]--;
+    var T2 = reemplazo ? T : T - 1, f2 = n2[c2];
+    $(pre + "-b1").innerHTML = bolsaSVG(n, null, "Bolsa con " + n[0] + " rojos, " + n[1] + " azules y " + n[2] + " verdes.");
+    $(pre + "-b2").innerHTML = bolsaSVG(reemplazo ? n : n, reemplazo ? null : c1, reemplazo ? "La misma bolsa: el caramelo se devolvió." : "Bolsa sin el caramelo " + COLORES[c1].n + " que salió: quedan " + T2 + ".");
+    var h = '<div class="linea">P(' + COLORES[c1].n + ' primero) = ' + frVis(n[c1], T) + '.</div>';
+    h += '<div class="linea">' + (reemplazo ? "Se devuelve: la bolsa sigue con " + T + " caramelos, " + n[c2] + " " + (n[c2] === 1 ? COLORES[c2].n : COLORES[c2].pl) + "." :
+          "No se devuelve: quedan " + T2 + " caramelos, " + f2 + " " + (f2 === 1 ? COLORES[c2].n : COLORES[c2].pl) + (c1 === c2 ? " (uno menos, porque ya salió uno de ese color)." : ".")) +
+          ' P(' + COLORES[c2].n + ' después) = ' + frVis(f2, T2) + '.</div>';
+    var num = n[c1]*f2, den = T*T2;
+    h += '<div class="linea veredicto">P(' + COLORES[c1].n + ' y luego ' + COLORES[c2].n + ') = ' + frVis(n[c1], T) + ' × ' + frVis(f2, T2) + ' = ' + (num === 0 ? "0" : tresFormas(num, den)) + '</div>';
+    var otra = reemplazo ? n[c1]*(n[c2] - (c1 === c2 ? 1 : 0)) : n[c1]*n[c2], otroDen = reemplazo ? T*(T - 1) : T*T;
+    h += '<div class="linea nota">' + (reemplazo ? "Sin reemplazo" : "Con reemplazo") + ' daría ' + frVis(Math.max(otra, 0), otroDen) + ' ≈ ' + nv(Math.round(Math.max(otra, 0)/otroDen*10000)/10000) + '.</div>';
+    $(pre + "-salida").innerHTML = h;
+  }
+  panel.querySelectorAll("input").forEach(function(x){ x.addEventListener("input", pinta); });
+  panel.querySelectorAll("select").forEach(function(x){ x.addEventListener("change", pinta); });
+  pinta();
 }
-
-/* ============================================================
-   MÓDULO 2 · Cilindro
-   ============================================================ */
-function pintaCil(){
-  var r = +$("ci-r").value, h = +$("ci-h").value;
-  $("ci-rv").textContent = nv(r); $("ci-hv").textContent = nv(h);
-  var esc = Math.min(160 / r, 220 / h, 40), R = r*esc, Hh = h*esc, cx = 300, yt = 150 - Hh/2, yb = 150 + Hh/2, ry = Math.max(R*0.3, 6);
-  var s = '<svg class="figura" viewBox="0 0 640 310" role="img" aria-label="Cilindro de radio ' + nv(r) + ' y altura ' + nv(h) + '.">';
-  s += '<path d="M' + f1(cx - R) + ' ' + f1(yt) + ' L' + f1(cx - R) + ' ' + f1(yb) + ' A' + f1(R) + ' ' + f1(ry) + ' 0 0 0 ' + f1(cx + R) + ' ' + f1(yb) + ' L' + f1(cx + R) + ' ' + f1(yt) + '" fill="#b2ebf2" stroke="#006064" stroke-width="2.5"/>';
-  s += '<path d="M' + f1(cx - R) + ' ' + f1(yb) + ' A' + f1(R) + ' ' + f1(ry) + ' 0 0 1 ' + f1(cx + R) + ' ' + f1(yb) + '" fill="none" stroke="#006064" stroke-width="1.5" stroke-dasharray="5 4"/>';
-  s += '<ellipse cx="' + cx + '" cy="' + f1(yt) + '" rx="' + f1(R) + '" ry="' + f1(ry) + '" fill="#e0f7fa" stroke="#006064" stroke-width="2.5"/>';
-  s += linea([cx, yt], [cx + R, yt], "#b71c1c", 3) + texto([cx + R/2, yt - ry - 10], "r = " + nv(r), 18, "#b71c1c");
-  s += linea([cx + R + 22, yt], [cx + R + 22, yb], "#0d47a1", 2) + texto([cx + R + 30, (yt + yb)/2], "h = " + nv(h), 18, "#0d47a1", 700, "start");
-  $("ci-svg").innerHTML = s + '</svg>';
-  var r2v = r*r, base = PI*r2v, V = base*h, exacto = r2v*h;
-  $("ci-salida").innerHTML = '<div class="linea">Primero el radio al cuadrado: r² = ' + nv(r) + '² = ' + nv(r2v) + '.</div>' +
-    '<div class="linea">Área de la base: π × ' + nv(r2v) + ' ≈ 3.14 × ' + nv(r2v) + ' = ' + nv(r2(base)) + '.</div>' +
-    '<div class="linea">Por la altura: ' + nv(r2(base)) + ' × ' + nv(h) + ' ≈ <strong>' + nv(r2(V)) + '</strong>.</div>' +
-    '<div class="linea veredicto">V = ' + nv(exacto) + 'π (exacto) ≈ ' + nv(r1(V)) + ' unidades cúbicas</div>';
+function bolsaAzar(){ var n; do { n = [aleatorio(1,6), aleatorio(1,6), aleatorio(0,4)]; } while (n[0] + n[1] + n[2] < 5); return n; }
+function cuenta(k, i){ return k + " " + (k === 1 ? COLORES[i].n : COLORES[i].pl); }
+function textoBolsa(n){ return "Una bolsa tiene " + n[0] + " caramelos rojos, " + n[1] + " azules y " + n[2] + " verdes (" + (n[0] + n[1] + n[2]) + " en total)."
+  .replace(n[0] + " caramelos rojos", n[0] === 1 ? "1 caramelo rojo" : n[0] + " caramelos rojos").replace(" " + n[1] + " azules", " " + cuenta(n[1], 1)).replace(" " + n[2] + " verdes", " " + cuenta(n[2], 2)); }
+function coloresConHay(n){ return [0,1,2].filter(function(i){ return n[i] > 0; }); }
+function genCon(){
+  var n = bolsaAzar(), T = n[0] + n[1] + n[2], c = coloresConHay(n), a = elige(c), b = elige(c), p = fr(n[a]*n[b], T*T);
+  return { enun: textoBolsa(n) + " Se saca un caramelo, <strong>se devuelve</strong> y se saca otro. ¿Cuál es la probabilidad de sacar " + COLORES[a].n + " y luego " + COLORES[b].n + "?",
+    correcta: p.n + "/" + p.d, solucion: "Con reemplazo el total sigue siendo " + T + ": " + frVis(n[a], T) + " × " + frVis(n[b], T) + " = " + frVis(n[a]*n[b], T*T) + (mcd(n[a]*n[b], T*T) > 1 ? " = " + fracHTML(p.n, p.d) : "") + ".",
+    evalua: function(t){ return evaluaProb(t, p, [{ v: fr(n[a]*(n[b] - (a === b ? 1 : 0)), T*(T - 1)), msg: "Así sería sin reemplazo. Aquí el caramelo se devuelve: la bolsa no cambia." }, { v: fr(n[a] + n[b], T), msg: "Para que ocurran los dos eventos se multiplican las probabilidades, no se suman." }]); } };
 }
-function evaluaPi(t, k, pistas){ /* k = coeficiente de π */
-  var s = String(t).trim().replace(/\s+/g, "").replace(/pi$/i, "π");
-  var m = s.match(/^(\d+(?:\.\d+)?)π$/);
-  if (m){ return Math.abs(parseFloat(m[1]) - k) < 1e-6 ? { estado: "bien", msg: "Correcto, en forma exacta." } : { estado: "mal", msg: "El coeficiente de π no es el correcto." }; }
-  var v = leeDecimal(s);
-  if (v === null) return { estado: "invalido", msg: "Escribe un número (por ejemplo 62.8) o el resultado exacto con π (por ejemplo 20π)." };
-  if (Math.abs(v - k*3.14) <= 0.051 || Math.abs(v - k*Math.PI) <= 0.051) return { estado: "bien", msg: "Correcto." };
-  for (var i = 0; i < pistas.length; i++) if (Math.abs(v - pistas[i].v) <= 0.06) return { estado: "mal", msg: pistas[i].msg };
-  return { estado: "mal", msg: "Todavía no." };
-}
-function genCilindro(){
-  var r = aleatorio(1,9), h = aleatorio(2,12), diam = Math.random() < 0.3, k = r*r*h;
-  var enun = "Un cilindro tiene " + (diam ? "un diámetro de " + (2*r) : "un radio de " + r) + " cm y una altura de " + h + " cm. ¿Cuál es su volumen en cm³?";
-  var pistas = [{ v: 3.14*r*h, msg: "Faltó elevar el radio al cuadrado." }, { v: 3.14*2*r*h, msg: "Eso se parece al área lateral (2πrh), no al volumen." }, { v: r1(3.14*r*r), msg: "Ese es el área de la base: falta multiplicar por la altura." }];
-  if (diam) pistas.unshift({ v: 3.14*4*r*r*h, msg: "Se usó el diámetro como radio: primero hay que dividirlo entre 2." }, { v: 4*r*r*h*Math.PI, msg: "Se usó el diámetro como radio: primero hay que dividirlo entre 2." });
-  return { enun: enun, correcta: nv(r1(3.14*k)), solucion: (diam ? "El radio es " + (2*r) + " ÷ 2 = " + r + ". " : "") + "V = π × " + r + "² × " + h + " = " + k + "π ≈ " + nv(r1(3.14*k)) + " cm³.",
-    evalua: function(t){ return evaluaPi(t, k, pistas); } };
+function genSin(){
+  var n = bolsaAzar(), T = n[0] + n[1] + n[2], c = coloresConHay(n), a = elige(c), b = elige(c);
+  if (a === b && n[a] < 2) b = elige(c.filter(function(x){ return x !== a; }).concat([a]));
+  var f2 = n[b] - (a === b ? 1 : 0), p = fr(n[a]*f2, T*(T - 1));
+  var pistas = [{ v: fr(n[a]*n[b], T*T), msg: "Así sería con reemplazo. Sin reemplazo, en la segunda extracción queda un caramelo menos." }];
+  if (a === b) pistas.push({ v: fr(n[a]*n[b], T*(T - 1)), msg: "El denominador está bien, pero también baja el numerador: ya salió un caramelo " + COLORES[a].n + "." });
+  return { enun: textoBolsa(n) + " Se saca un caramelo, <strong>no se devuelve</strong>, y se saca otro. ¿Cuál es la probabilidad de sacar " + COLORES[a].n + " y luego " + COLORES[b].n + "?",
+    correcta: p.n + "/" + p.d, solucion: "Primero " + frVis(n[a], T) + "; después quedan " + (T - 1) + " caramelos y " + f2 + " " + (f2 === 1 ? COLORES[b].n : COLORES[b].pl) + ": " + frVis(f2, T - 1) + ". Producto: " + frVis(n[a]*f2, T*(T - 1)) + (p.n !== 0 && mcd(n[a]*f2, T*(T - 1)) > 1 ? " = " + fracHTML(p.n, p.d) : "") + ".",
+    evalua: function(t){ return evaluaProb(t, p, pistas); } };
 }
 
 /* ============================================================
-   MÓDULO 3 · Despejar
+   MÓDULO 1 · Probabilidad simple
    ============================================================ */
-function problemaDespeje(t){
-  if (t === undefined) t = aleatorio(1,4);
-  if (t === 1){ var A = aleatorio(4,30), h = aleatorio(2,12), V = A*h;
-    return { txt: "Un prisma tiene un volumen de " + V + " cm³ y una base de área " + A + " cm². ¿Cuál es su altura?", res: h,
-      pasos: ["Se parte de V = área de la base × altura: " + V + " = " + A + " × h.", "Se divide entre " + A + " en ambos lados: h = " + V + " ÷ " + A + ".", '<span class="veredicto">h = ' + h + ' cm</span>'] }; }
-  if (t === 2){ var l = aleatorio(2,10), w = aleatorio(2,8), hh = aleatorio(2,9), V2 = l*w*hh;
-    return { txt: "Una caja tiene un volumen de " + V2 + " cm³, un largo de " + l + " cm y un ancho de " + w + " cm. ¿Cuál es su altura?", res: hh,
-      pasos: ["El área de la base es " + l + " × " + w + " = " + (l*w) + " cm².", "Se divide el volumen entre el área de la base: h = " + V2 + " ÷ " + (l*w) + ".", '<span class="veredicto">h = ' + hh + ' cm</span>'] }; }
-  if (t === 3){ var r = aleatorio(1,6), hc = aleatorio(2,10), V3 = r2(3.14*r*r*hc);
-    return { txt: "Un cilindro tiene un volumen de " + nv(V3) + " cm³ y un radio de " + r + " cm. ¿Cuál es su altura? (π ≈ 3.14)", res: hc,
-      pasos: ["El área de la base es 3.14 × " + r + "² = 3.14 × " + (r*r) + " = " + nv(r2(3.14*r*r)) + " cm².", "Se divide el volumen entre el área de la base: h = " + nv(V3) + " ÷ " + nv(r2(3.14*r*r)) + ".", '<span class="veredicto">h = ' + hc + ' cm</span>'] }; }
-  var rr = aleatorio(2,7), h4 = aleatorio(2,10), V4 = r2(3.14*rr*rr*h4);
-  return { txt: "Un cilindro tiene un volumen de " + nv(V4) + " cm³ y una altura de " + h4 + " cm. ¿Cuál es su radio? (π ≈ 3.14)", res: rr,
-    pasos: ["Se divide el volumen entre πh: r² = " + nv(V4) + " ÷ (3.14 × " + h4 + ") = " + nv(V4) + " ÷ " + nv(r2(3.14*h4)) + " = " + (rr*rr) + ".", "Se saca la raíz cuadrada: r = √" + (rr*rr) + ".", '<span class="veredicto">r = ' + rr + ' cm</span>'] };
-}
-var DJ_COLA = [1, 3, 4];
-function nuevoDJ(){ var q = problemaDespeje(DJ_COLA.length ? DJ_COLA.shift() : undefined); $("dj-enun").textContent = q.txt; DJS.carga(q.pasos); }
-function genDespeje(){
-  var q = problemaDespeje();
-  return { enun: q.txt, correcta: String(q.res), solucion: q.pasos.map(function(p){ return p.replace(/<[^>]+>/g, ""); }).join(" "),
-    evalua: function(t){ return evaluaDec(t, q.res, [], 0.051); } };
+function opF(p, q){ var r = reduce(p, q); return { html: fracHTML(p, q), clave: "f" + r.p + "/" + r.q }; }
+function genSimple(){
+  var t = aleatorio(1,3), f, T, enun, o, pc = {};
+  if (t === 1){ var n = bolsaAzar(); T = n[0] + n[1] + n[2]; var c = elige(coloresConHay(n)); f = n[c];
+    enun = textoBolsa(n) + " ¿Cuál es la probabilidad de sacar uno " + COLORES[c].n + "?";
+    o = [opF(f, T), opF(f, T - f), opF(T, f), opF(f, T + 1)]; pc["f" + reduce(f, T - f).p + "/" + reduce(f, T - f).q] = "El denominador es el total de casos posibles, no los que no son " + COLORES[c].n + "."; }
+  else if (t === 2){ var ev = elige([["un número par", 3], ["un número mayor que 4", 2], ["un 6", 1], ["un número menor que 3", 2], ["un múltiplo de 3", 2]]); T = 6; f = ev[1];
+    enun = "Se lanza un dado de seis caras. ¿Cuál es la probabilidad de obtener " + ev[0] + "?"; o = [opF(f, 6), opF(6 - f, 6), opF(f, 5), opF(1, f + 1 === 6 ? 7 : f + 1)]; }
+  else { var ev2 = elige([["un corazón", 13], ["un as", 4], ["una figura (J, Q o K)", 12], ["una carta roja", 26], ["el as de espadas", 1]]); T = 52; f = ev2[1];
+    enun = "Se saca una carta de una baraja de 52. ¿Cuál es la probabilidad de sacar " + ev2[0] + "?"; o = [opF(f, 52), opF(52 - f, 52), opF(f, 13), opF(1, f)]; }
+  return { enun: enun, opciones: o, correcta: o[0].clave, porClave: pc, bien: "Casos favorables: " + f + "; casos posibles: " + T + ".", mal: "P = casos favorables ÷ casos posibles = " + f + "/" + T + "." };
 }
 
 /* ============================================================
-   MÓDULO 4 · Capacidad
+   MÓDULO 5 · Tres formas
    ============================================================ */
-function genCapacidad(){
-  var t = aleatorio(1,5), enun, res, sol;
-  if (t === 1){ var r = elige([0.5,0.6,0.8,1,1.2,1.5]), h = elige([1,1.5,2,2.5,3]), V = 3.14*r*r*h; res = Math.round(V*1000);
-    enun = "Un tanque cilíndrico tiene un radio de " + nv(r) + " m y una altura de " + nv(h) + " m. ¿Cuántos litros de agua caben? (π ≈ 3.14)";
-    sol = "V = 3.14 × " + nv(r) + "² × " + nv(h) + " ≈ " + nv(r2(V)) + " m³, y cada m³ son 1000 litros: unos " + res + " litros."; }
-  else if (t === 2){ var l = elige([20,24,30,36]), w = elige([10,12,15]), hh = elige([12,16,18,20]), Vi = l*w*hh; res = Math.round(Vi/231);
-    enun = "Una pecera mide " + l + " pulgadas de largo, " + w + " de ancho y " + hh + " de alto. ¿Cuántos galones caben? (1 galón = 231 pulgadas cúbicas)";
-    sol = "V = " + l + " × " + w + " × " + hh + " = " + Vi + " pulgadas cúbicas; " + Vi + " ÷ 231 ≈ " + res + " galones."; }
-  else if (t === 3){ var L = elige([10,12,15,20]), A = elige([5,6,8]), P = elige([1,1.5,2]), Vp = L*A*P; res = Math.round(Vp*7.48);
-    enun = "Una piscina rectangular mide " + L + " pies de largo, " + A + " de ancho y " + nv(P) + " de profundidad. ¿Cuántos galones caben, aproximadamente? (1 pie cúbico ≈ 7.48 galones)";
-    sol = "V = " + L + " × " + A + " × " + nv(P) + " = " + nv(Vp) + " pies cúbicos; × 7.48 ≈ " + res + " galones."; }
-  else if (t === 4){ var rc = elige([10,15,20,25]), hm = elige([1,2,3]), Vc = 3.14*(rc/100)*(rc/100)*hm; res = Math.round(Vc*1000);
-    enun = "Una columna cilíndrica tiene un radio de " + rc + " cm y una altura de " + hm + " m. ¿Cuántos litros de concreto lleva? (π ≈ 3.14; primero pasa el radio a metros)";
-    sol = "El radio es " + rc + " cm = " + nv(rc/100) + " m. V = 3.14 × " + nv(rc/100) + "² × " + hm + " ≈ " + nv(r2(Vc)) + " m³ ≈ " + res + " litros."; }
-  else { var lc = elige([20,25,30,40]), wc = elige([10,20,25]), hc = elige([10,15,20]), Vl = lc*wc*hc; res = Math.round(Vl/1000);
-    enun = "Un recipiente mide " + lc + " cm × " + wc + " cm × " + hc + " cm. ¿Cuántos litros caben? (1000 cm³ = 1 litro)";
-    sol = "V = " + lc + " × " + wc + " × " + hc + " = " + Vl + " cm³; ÷ 1000 = " + nv(Vl/1000) + " litros, unos " + res + "."; }
-  return { enun: enun, correcta: String(res), solucion: sol, evalua: function(v){ return evaluaDec(v, res, [], Math.max(1, res*0.01)); } };
+function aFraccionDec(v){ for (var k = 0; k <= 6; k++){ var d = Math.pow(10, k); if (Math.abs(Math.round(v*d) - v*d) < 1e-9) return reduce(Math.round(v*d), d); } return null; }
+function pintaTF(){
+  var s = $("tf-v").value, v = leeProb(s), sal = $("tf-salida");
+  if (v === null){ sal.innerHTML = "Escribe una fracción (3/8), un decimal (0.375) o un porcentaje (37.5%)."; return; }
+  var f = leeFraccion(String(s).trim().replace(/\s+/g, "")), fr_ = f && f.q !== 1 ? reduce(f.p, f.q) : aFraccionDec(v);
+  var h = '<div class="linea">Fracción: ' + (fr_ ? fracHTML(fr_.p, fr_.q) : "—") + '</div><div class="linea">Decimal: ' + nv(Math.round(v*10000)/10000) + '</div><div class="linea">Porcentaje: ' + nv(Math.round(v*100000)/1000) + ' %</div>';
+  if (v < 0 || v > 1) h += '<div class="linea veredicto">Ese valor no puede ser una probabilidad: toda probabilidad está entre 0 y 1 (entre 0 % y 100 %).</div>';
+  else h += '<div class="linea veredicto">' + (v === 0 ? "Probabilidad 0: el evento es imposible." : (v === 1 ? "Probabilidad 1: el evento es seguro." : "Es una probabilidad válida: está entre 0 y 1.")) + '</div>';
+  sal.innerHTML = h;
+}
+function genTres(){
+  var t = aleatorio(1,4), par = elige([[1,4],[3,4],[1,2],[1,5],[2,5],[3,8],[1,8],[7,10],[3,20],[9,25]]), v = par[0]/par[1], o, pc = {};
+  if (t === 1){ var d = nv(v); o = [ { html: d, clave: "a" }, { html: nv(par[0]*10/par[1]/100 + 0.1), clave: "b" }, { html: nv(par[1]/par[0]), clave: "c" }, { html: par[0] + "." + par[1], clave: "d" } ];
+    pc.c = "Se divide el numerador entre el denominador, no al revés."; pc.d = "Una fracción no se convierte juntando sus números con un punto.";
+    return { enun: "Escribe " + fracHTML(par[0], par[1]) + " como decimal.", opciones: o, correcta: "a", porClave: pc, bien: par[0] + " ÷ " + par[1] + " = " + d + ".", mal: par[0] + " ÷ " + par[1] + " = " + d + "." }; }
+  if (t === 2){ var p = nv(v*100); o = [ { html: p + " %", clave: "a" }, { html: nv(v) + " %", clave: "b" }, { html: nv(v*1000) + " %", clave: "c" }, { html: par[0] + " %", clave: "d" } ];
+    pc.b = "Falta multiplicar el decimal por 100.";
+    return { enun: "Escribe " + fracHTML(par[0], par[1]) + " como porcentaje.", opciones: o, correcta: "a", porClave: pc, bien: par[0] + " ÷ " + par[1] + " = " + nv(v) + ", y × 100 = " + p + " %.", mal: par[0] + " ÷ " + par[1] + " = " + nv(v) + ", y × 100 = " + p + " %." }; }
+  if (t === 3){ var pc100 = Math.round(v*100); var r = reduce(pc100, 100);
+    if (Math.abs(pc100 - v*100) > 1e-9){ return genTres(); }
+    o = [opF(r.p, r.q), opF(pc100, 10), { html: fracHTML(1, pc100), clave: "inv" }, opF(pc100 + 5, 100)];
+    return { enun: "Escribe " + pc100 + " % como fracción simplificada.", opciones: o, correcta: o[0].clave, porClave: {}, bien: pc100 + " % = " + fracHTML(pc100, 100) + " = " + fracHTML(r.p, r.q) + ".", mal: pc100 + " % = " + fracHTML(pc100, 100) + " = " + fracHTML(r.p, r.q) + "." }; }
+  var malo = elige([["1.2", "es mayor que 1"], ["120 %", "pasa del 100 %"], ["−0.3", "es negativo"], [fracHTML(5, 4), "es mayor que 1"]]);
+  var buenos = baraja(["0.95", "3 %", fracHTML(7, 8), "0", "100 %", "0.5"]).slice(0,3);
+  o = [{ html: malo[0], clave: "m" }].concat(buenos.map(function(b, i){ return { html: b, clave: "b" + i }; }));
+  return { enun: "¿Cuál de estos valores <strong>no</strong> puede ser una probabilidad?", opciones: o, correcta: "m", porClave: {}, bien: malo[0].replace(/<[^>]+>/g, "") + " " + malo[1] + ": una probabilidad está siempre entre 0 y 1.", mal: "El que no puede ser es " + malo[0] + ", porque " + malo[1] + "." };
 }
 
 /* ============================================================
    Arranque
    ============================================================ */
-["cj-l","cj-w","cj-h","cj-g"].forEach(function(id){ $(id).addEventListener("input", pintaCaja); });
-pintaCaja();
-creaPracticaOM("p1", genPrisma);
-["ci-r","ci-h"].forEach(function(id){ $(id).addEventListener("input", pintaCil); });
-pintaCil();
-creaPracticaLibre("p2", genCilindro);
-var DJS = pasoAPaso("dj", []);
-$("dj-nuevo").addEventListener("click", nuevoDJ); nuevoDJ();
-creaPracticaLibre("p3", genDespeje);
-creaPracticaLibre("p4", genCapacidad);
+creaPracticaOM("p1", genSimple);
+creaBolsa("bc", true);
+creaPracticaLibre("p2", genCon);
+creaBolsa("bs", false);
+creaPracticaLibre("p3", genSin);
+$("tf-v").addEventListener("input", pintaTF); pintaTF();
+creaPracticaOM("p4", genTres);
 iniciaNavegacion();
 
 </script>

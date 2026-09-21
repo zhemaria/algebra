@@ -1,25 +1,25 @@
 <!doctype html>
 <!--
-  Interactivo general · Lección 7.1 — Volumen de prismas y cilindros
+  Interactivo general · Lección 8.1 — Principio del conteo, permutaciones y combinaciones
   Nivel 3 · Spanish ASE Math 3 · GEDparaHispanos
   Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
   Licencia: Creative Commons CC BY-NC-SA 4.0
   https://creativecommons.org/licenses/by-nc-sa/4.0/
-  Anclas internas: #prismas · #cilindros · #despejar · #capacidad
+  Anclas internas: #principio · #factorial · #permutaciones · #combinaciones · #decidir
 -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactivo · Lección 7.1: volumen de prismas y cilindros</title>
+<title>Interactivo · Lección 8.1: conteo, permutaciones y combinaciones</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Interactivo de práctica para la Lección 7.1 del Nivel 3: volumen de prismas y cilindros, despejar la altura o el radio, y capacidad en problemas de almacenamiento.">
+<meta name="description" content="Interactivo de práctica para la Lección 8.1 del Nivel 3: el principio fundamental del conteo, el factorial, permutaciones, combinaciones y cómo decidir si importa el orden.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
 
   :root{
-    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --tema:#b71c1c; --tema-d:#7f0000; --tema-bg:#ffebee; --tema-bg2:#ffcdd2;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -230,24 +230,38 @@
   .tabla-frec input{width:70px;padding:6px 8px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
   .tabla-frec td.bien input{border-color:var(--ok);background:var(--ok-bg);} .tabla-frec td.mal input{border-color:var(--mal);background:var(--mal-bg);}
 
+  .tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:12px 0;}
+  a.tarjeta-ext{display:block;background:#fff;border:2px solid var(--tema-bg2);border-left:8px solid var(--tema);border-radius:10px;padding:14px 16px;color:var(--txt);text-decoration:none;}
+  a.tarjeta-ext:hover{background:var(--tema-bg);}
+  a.tarjeta-ext strong{display:block;color:var(--tema-d);font-size:17px;margin-bottom:4px;}
+  a.tarjeta-ext .ir{display:block;margin-top:8px;font-weight:700;color:var(--acento);}
+  .slots{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0;}
+  .slot{min-width:84px;text-align:center;border:2px solid var(--tema);border-radius:10px;padding:8px;background:#fff;}
+  .slot strong{display:block;font-size:24px;color:var(--tema-d);}
+  .slot span{font-size:13px;color:var(--gris);}
+  .arreglos{font-family:Consolas,'Courier New',monospace;font-size:16px;display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;max-height:220px;overflow-y:auto;}
+  .arreglos span{background:#fff;border:1px solid #d8d8d8;border-radius:6px;padding:3px 8px;}
+  .arreglos span.grupo{background:var(--tema-bg);border-color:var(--tema-bg2);}
+
 </style>
 </head>
 <body>
 <div class="contenedor">
 
   <header class="principal">
-    <div class="ruta">Nivel 3 · Tema 7 · Volumen y estadística</div>
-    <h1>Lección 7.1 · Volumen de prismas y cilindros</h1>
-    <div class="meta">Cuatro prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+    <div class="ruta">Nivel 3 · Tema 8 · Conteo y probabilidad</div>
+    <h1>Lección 8.1 · Principio del conteo, permutaciones y combinaciones</h1>
+    <div class="meta">Cinco prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
   </header>
 
   <nav class="indice" aria-labelledby="titulo-indice">
     <h2 id="titulo-indice">Contenido de esta página</h2>
     <ol>
-      <li><a href="#prismas">Volumen de prismas</a></li>
-      <li><a href="#cilindros">Volumen de cilindros</a></li>
-      <li><a href="#despejar">Despejar la altura o el radio</a></li>
-      <li><a href="#capacidad">Capacidad y almacenamiento</a></li>
+      <li><a href="#principio">El principio fundamental del conteo</a></li>
+      <li><a href="#factorial">El factorial</a></li>
+      <li><a href="#permutaciones">Permutaciones: el orden importa</a></li>
+      <li><a href="#combinaciones">Combinaciones: el orden no importa</a></li>
+      <li><a href="#decidir">¿Importa el orden?</a></li>
     </ol>
     <div class="controles-todo">
       <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
@@ -255,43 +269,39 @@
     </div>
   </nav>
 
-  <!-- ============ MÓDULO 1 · #prismas ============ -->
-  <details class="modulo" id="prismas" open>
+  <!-- ============ MÓDULO 1 · #principio ============ -->
+  <details class="modulo" id="principio" open>
     <summary>
       <span class="num" aria-hidden="true">1</span>
-      <h2>Volumen de prismas</h2>
+      <h2>El principio fundamental del conteo</h2>
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>El <strong>volumen</strong> es el espacio que ocupa un cuerpo. Para prismas y cilindros se calcula siempre con la
-      misma idea: el área de la base multiplicada por la altura. El resultado va en unidades <strong>cúbicas</strong> (cm³, m³).</p>
-      <div class="formula">V = área de la base × altura</div>
+      <p>Si una decisión se puede tomar de m formas y otra de n formas, las dos juntas se pueden tomar de
+      <strong>m × n</strong> formas. Con más decisiones, se siguen multiplicando las opciones de cada una.</p>
 
-      <h3>La caja por capas</h3>
-      <p>Cada cubito mide 1 unidad por lado. La base tiene largo × ancho cubitos, y se apilan tantas capas como indica la
-      altura. Gira la caja para verla desde otro lado.</p>
+      <h3>El árbol que crece</h3>
+      <p>Arma un menú. Cada rama del árbol es una elección; las hojas del final son todas las combinaciones posibles.</p>
       <div class="panel">
         <div class="campos">
-          <div class="campo" style="flex:1;min-width:150px;"><label for="cj-l">Largo: <span id="cj-lv"></span></label><input type="range" id="cj-l" min="1" max="7" value="5"></div>
-          <div class="campo" style="flex:1;min-width:150px;"><label for="cj-w">Ancho: <span id="cj-wv"></span></label><input type="range" id="cj-w" min="1" max="6" value="3"></div>
-          <div class="campo" style="flex:1;min-width:150px;"><label for="cj-h">Alto: <span id="cj-hv"></span></label><input type="range" id="cj-h" min="1" max="6" value="4"></div>
-          <div class="campo" style="flex:1;min-width:150px;"><label for="cj-g">Girar: <span id="cj-gv"></span></label><input type="range" id="cj-g" min="10" max="80" value="30"></div>
+          <div class="campo" style="flex:1;min-width:160px;"><label for="ar-a">Platos principales: <span id="ar-av"></span></label><input type="range" id="ar-a" min="1" max="4" value="2"></div>
+          <div class="campo" style="flex:1;min-width:160px;"><label for="ar-b">Bebidas: <span id="ar-bv"></span></label><input type="range" id="ar-b" min="1" max="4" value="3"></div>
+          <div class="campo" style="flex:1;min-width:160px;"><label for="ar-c">Postres: <span id="ar-cv"></span></label><input type="range" id="ar-c" min="0" max="3" value="0"></div>
         </div>
-        <div id="cj-svg"></div>
-        <div class="salida" id="cj-salida" aria-live="polite"></div>
+        <div id="ar-svg"></div>
+        <div class="salida" id="ar-salida" aria-live="polite"></div>
       </div>
 
-      <div class="caja-tip">
-        <strong>Prisma triangular:</strong> la base es un triángulo. Primero se calcula su área (base × altura ÷ 2) y
-        después se multiplica por el largo del prisma.
-      </div>
-
-      <h3>Practica: volumen de prismas</h3>
+      <h3>Practica: ¿cuántas posibilidades hay?</h3>
       <div class="practica" id="p1">
         <div class="enun" id="p1-enun"></div>
-        <div class="opciones" id="p1-opciones"></div>
+        <div class="campos"><div class="campo"><label for="p1-r">Total</label><input type="text" autocomplete="off" class="ancho" id="p1-r"></div></div>
+        <p class="nota">Escribe un número entero.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p1-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p1-nuevo">Otro ejercicio</button>
+        </div>
         <div class="fb" id="p1-fb" role="status"></div>
-        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
         <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
       </div>
 
@@ -299,38 +309,32 @@
     </div>
   </details>
 
-  <!-- ============ MÓDULO 2 · #cilindros ============ -->
-  <details class="modulo" id="cilindros">
+  <!-- ============ MÓDULO 2 · #factorial ============ -->
+  <details class="modulo" id="factorial">
     <summary>
       <span class="num" aria-hidden="true">2</span>
-      <h2>Volumen de cilindros</h2>
+      <h2>El factorial</h2>
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>En un cilindro la base es un círculo de radio r, cuya área es πr². Por eso:</p>
-      <div class="formula">V = πr<sup>2</sup>h</div>
-      <p>En los cálculos se usa π ≈ 3.14 o la tecla π de la calculadora. También se puede dejar el resultado <strong>exacto</strong>, con π: por ejemplo, 20π.</p>
+      <p>El factorial de un número, n!, es el producto de todos los enteros desde n hasta 1. Por convención,
+      <strong>0! = 1</strong>. Crece muy rápido: por eso conviene simplificar los cocientes antes de multiplicar.</p>
+      <div class="formula">n! = n × (n − 1) × … × 2 × 1</div>
 
-      <h3>Calculadora del cilindro</h3>
+      <h3>Explorador de factoriales</h3>
       <div class="panel">
         <div class="campos">
-          <div class="campo" style="flex:1;min-width:180px;"><label for="ci-r">Radio: <span id="ci-rv"></span></label><input type="range" id="ci-r" min="0.5" max="6" step="0.5" value="2"></div>
-          <div class="campo" style="flex:1;min-width:180px;"><label for="ci-h">Altura: <span id="ci-hv"></span></label><input type="range" id="ci-h" min="1" max="12" step="0.5" value="5"></div>
+          <div class="campo" style="flex:1;min-width:180px;"><label for="fc-n">n: <span id="fc-nv"></span></label><input type="range" id="fc-n" min="0" max="10" value="5"></div>
+          <div class="campo" style="flex:1;min-width:180px;"><label for="fc-k">Dividir entre k! con k = <span id="fc-kv"></span></label><input type="range" id="fc-k" min="0" max="10" value="3"></div>
         </div>
-        <div id="ci-svg"></div>
-        <div class="salida" id="ci-salida" aria-live="polite"></div>
+        <div class="salida" id="fc-salida" aria-live="polite"></div>
       </div>
 
-      <div class="caja-atencion">
-        <strong>Solo el radio va al cuadrado:</strong> en πr²h el exponente afecta únicamente a r. Y si el problema da el
-        <strong>diámetro</strong>, primero se divide entre 2 para obtener el radio.
-      </div>
-
-      <h3>Practica: volumen de un cilindro</h3>
+      <h3>Practica: calcula</h3>
       <div class="practica" id="p2">
         <div class="enun" id="p2-enun"></div>
-        <div class="campos"><div class="campo"><label for="p2-r">Volumen</label><input type="text" autocomplete="off" class="ancho" id="p2-r"></div></div>
-        <p class="nota">Usa π ≈ 3.14 y redondea a la décima, o escribe el resultado exacto con π, como 20π.</p>
+        <div class="campos"><div class="campo"><label for="p2-r">Resultado</label><input type="text" autocomplete="off" class="ancho" id="p2-r"></div></div>
+        <p class="nota">Escribe un número entero. Simplifica antes de multiplicar.</p>
         <div class="fila-btn">
           <button type="button" class="btn" id="p2-comprobar">Comprobar</button>
           <button type="button" class="btn-sec" id="p2-nuevo">Otro ejercicio</button>
@@ -343,34 +347,34 @@
     </div>
   </details>
 
-  <!-- ============ MÓDULO 3 · #despejar ============ -->
-  <details class="modulo" id="despejar">
+  <!-- ============ MÓDULO 3 · #permutaciones ============ -->
+  <details class="modulo" id="permutaciones">
     <summary>
       <span class="num" aria-hidden="true">3</span>
-      <h2>Despejar la altura o el radio</h2>
+      <h2>Permutaciones: el orden importa</h2>
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>Si se conoce el volumen y falta una medida, se despeja como en el Tema 5: la altura es el volumen dividido entre el
-      área de la base. Para el radio de un cilindro, se divide entre πh y después se saca la raíz cuadrada.</p>
-      <div class="formula">h = <span class="fracc"><span class="fa">V</span><span class="fb2">área de la base</span></span> &nbsp;&nbsp;&nbsp; r = √<span class="fracc"><span class="fa">V</span><span class="fb2">πh</span></span></div>
+      <p>Una <strong>permutación</strong> cuenta de cuántas formas se pueden <strong>ordenar</strong> r elementos elegidos
+      de n. Sirve cuando el orden cambia el resultado: un podio, una clave, un orden de llegada.</p>
+      <div class="formula">P(n, r) = <span class="fracc"><span class="fa">n!</span><span class="fb2">(n − r)!</span></span> = n × (n − 1) × … (r factores)</div>
 
-      <h3>Paso a paso</h3>
+      <h3>Los lugares que se llenan</h3>
+      <p>Hay n personas y r lugares. En el primer lugar se puede poner a cualquiera; en el segundo, a una menos; y así.</p>
       <div class="panel">
-        <div class="estado" id="dj-enun"></div>
-        <div class="fila-btn">
-          <button type="button" class="btn" id="dj-sig">Mostrar el primer paso</button>
-          <button type="button" class="btn-sec" id="dj-todo">Mostrar todos los pasos</button>
-          <button type="button" class="btn-sec" id="dj-nuevo">Otro ejemplo</button>
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:180px;"><label for="pm-n">Personas (n): <span id="pm-nv"></span></label><input type="range" id="pm-n" min="2" max="8" value="5"></div>
+          <div class="campo" style="flex:1;min-width:180px;"><label for="pm-r">Lugares (r): <span id="pm-rv"></span></label><input type="range" id="pm-r" min="1" max="8" value="3"></div>
         </div>
+        <div class="slots" id="pm-slots" aria-hidden="true"></div>
+        <div class="salida" id="pm-salida" aria-live="polite"></div>
       </div>
-      <div class="pasos" id="dj-pasos" aria-live="polite"></div>
 
-      <h3>Practica: halla la medida que falta</h3>
+      <h3>Practica: permutaciones</h3>
       <div class="practica" id="p3">
         <div class="enun" id="p3-enun"></div>
-        <div class="campos"><div class="campo"><label for="p3-r">Medida</label><input type="text" autocomplete="off" class="ancho" id="p3-r"></div></div>
-        <p class="nota">Escribe el número; si no es exacto, redondea a la décima.</p>
+        <div class="campos"><div class="campo"><label for="p3-r">Total</label><input type="text" autocomplete="off" class="ancho" id="p3-r"></div></div>
+        <p class="nota">Escribe un número entero.</p>
         <div class="fila-btn">
           <button type="button" class="btn" id="p3-comprobar">Comprobar</button>
           <button type="button" class="btn-sec" id="p3-nuevo">Otro ejercicio</button>
@@ -383,38 +387,35 @@
     </div>
   </details>
 
-  <!-- ============ MÓDULO 4 · #capacidad ============ -->
-  <details class="modulo" id="capacidad">
+  <!-- ============ MÓDULO 4 · #combinaciones ============ -->
+  <details class="modulo" id="combinaciones">
     <summary>
       <span class="num" aria-hidden="true">4</span>
-      <h2>Capacidad y almacenamiento</h2>
+      <h2>Combinaciones: el orden no importa</h2>
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>El volumen responde preguntas reales: cuánta agua cabe en un tanque o cuánto concreto lleva una columna. Para
-      pasar de volumen a capacidad se usan estas equivalencias:</p>
-      <table class="reglas">
-        <caption>Equivalencias entre volumen y capacidad</caption>
-        <thead><tr><th scope="col">Volumen</th><th scope="col">Capacidad</th></tr></thead>
-        <tbody>
-          <tr><td>1 m³</td><td>1000 litros</td></tr>
-          <tr><td>1 cm³</td><td>1 mililitro (mL)</td></tr>
-          <tr><td>1000 cm³</td><td>1 litro</td></tr>
-          <tr><td>231 pulgadas cúbicas</td><td>1 galón</td></tr>
-          <tr><td>1 pie cúbico</td><td>unos 7.48 galones</td></tr>
-        </tbody>
-      </table>
+      <p>Una <strong>combinación</strong> cuenta de cuántas formas se puede <strong>elegir</strong> un grupo, sin importar el
+      orden: un comité, un equipo, una mano de cartas. Se calcula como la permutación dividida entre r!, porque cada grupo
+      aparece r! veces en las permutaciones, una por cada orden.</p>
+      <div class="formula">C(n, r) = <span class="fracc"><span class="fa">n!</span><span class="fb2">r! (n − r)!</span></span> = <span class="fracc"><span class="fa">P(n, r)</span><span class="fb2">r!</span></span></div>
 
-      <div class="caja-atencion">
-        <strong>Todas las medidas en la misma unidad:</strong> si el radio está en centímetros y la altura en metros, primero
-        se convierte todo a una sola unidad.
+      <h3>Del orden al grupo</h3>
+      <p>Con letras pequeñas se pueden ver todas: cada fila son los órdenes distintos de un mismo grupo.</p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:180px;"><label for="cb-n">Elementos (n): <span id="cb-nv"></span></label><input type="range" id="cb-n" min="2" max="6" value="4"></div>
+          <div class="campo" style="flex:1;min-width:180px;"><label for="cb-r">Se eligen (r): <span id="cb-rv"></span></label><input type="range" id="cb-r" min="1" max="4" value="2"></div>
+        </div>
+        <div class="salida" id="cb-salida" aria-live="polite"></div>
+        <div id="cb-lista"></div>
       </div>
 
-      <h3>Practica: problemas de capacidad</h3>
+      <h3>Practica: combinaciones</h3>
       <div class="practica" id="p4">
         <div class="enun" id="p4-enun"></div>
-        <div class="campos"><div class="campo"><label for="p4-r">Resultado</label><input type="text" autocomplete="off" class="ancho" id="p4-r"></div></div>
-        <p class="nota">Redondea al número entero más cercano.</p>
+        <div class="campos"><div class="campo"><label for="p4-r">Total</label><input type="text" autocomplete="off" class="ancho" id="p4-r"></div></div>
+        <p class="nota">Escribe un número entero.</p>
         <div class="fila-btn">
           <button type="button" class="btn" id="p4-comprobar">Comprobar</button>
           <button type="button" class="btn-sec" id="p4-nuevo">Otro ejercicio</button>
@@ -427,8 +428,40 @@
     </div>
   </details>
 
+  <!-- ============ MÓDULO 5 · #decidir ============ -->
+  <details class="modulo" id="decidir">
+    <summary>
+      <span class="num" aria-hidden="true">5</span>
+      <h2>¿Importa el orden?</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Antes de calcular, pregúntate: <strong>«si cambio el orden, ¿cambia el resultado?»</strong></p>
+      <table class="reglas">
+        <caption>Cómo decidir qué herramienta usar</caption>
+        <thead><tr><th scope="col">Situación</th><th scope="col">Herramienta</th><th scope="col">Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Decisiones de tipos distintos</td><td>Principio del conteo</td><td>plato, bebida y postre</td></tr>
+          <tr><td>Del mismo grupo, y el orden importa</td><td>Permutación</td><td>presidente, secretario y tesorero</td></tr>
+          <tr><td>Del mismo grupo, y el orden no importa</td><td>Combinación</td><td>un comité de 3</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Practica: ¿qué herramienta usarías?</h3>
+      <div class="practica" id="p5">
+        <div class="enun" id="p5-enun"></div>
+        <div class="opciones" id="p5-opciones"></div>
+        <div class="fb" id="p5-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p5-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p5-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
   <footer class="pie">
-    <p><strong>Nivel 3 · Tema 7 · Volumen y estadística · GEDparaHispanos</strong><br>
+    <p><strong>Nivel 3 · Tema 8 · Conteo y probabilidad · GEDparaHispanos</strong><br>
     José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
     <p>Esta obra se distribuye bajo licencia
       <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
@@ -873,227 +906,199 @@ function pasoAPaso(pre, pasos){
 }
 
 /* ============================================================
-   Estadística del Tema 7
-   Cuartiles con el método de la lección: la mediana de cada
-   mitad, sin incluir la mediana cuando la cantidad es impar.
+   Conteo y probabilidad
    ============================================================ */
-function ordena(d){ return d.slice().sort(function(a, b){ return a - b; }); }
-function mediana(o){ var n = o.length, m = Math.floor(n/2); return n % 2 ? o[m] : (o[m-1] + o[m]) / 2; }
-function mitades(o){ var n = o.length, m = Math.floor(n/2); return [o.slice(0, m), o.slice(n % 2 ? m + 1 : m)]; }
-function cinco(d){ var o = ordena(d), h = mitades(o); return { min: o[0], q1: mediana(h[0]), med: mediana(o), q3: mediana(h[1]), max: o[o.length-1], o: o }; }
-function nv(x){ return menos(parseFloat(Number(x).toFixed(3)).toString()); }
-function datosAzar(n, lo, hi){ var d = []; for (var i = 0; i < n; i++) d.push(aleatorio(lo, hi)); return d; }
-function limites(c){ var iqr = c.q3 - c.q1; return { iqr: iqr, inf: c.q1 - 1.5*iqr, sup: c.q3 + 1.5*iqr }; }
-
-/* Diagrama de caja: grupos = [{ nombre, c (cinco), atip: [] , bigMin, bigMax }] */
-function escalaBonita(lo, hi){
-  var r = hi - lo || 1, paso = [1,2,5,10,20,25,50,100,200][0], cand = [1,2,5,10,20,25,50,100,200,500];
-  for (var i = 0; i < cand.length; i++){ if (r / cand[i] <= 10){ paso = cand[i]; break; } }
-  return { lo: Math.floor(lo / paso) * paso, hi: Math.ceil(hi / paso) * paso, paso: paso };
-}
-function cajaSVG(grupos, voz, opc){
-  opc = opc || {};
-  var lo = Infinity, hi = -Infinity;
-  grupos.forEach(function(g){ lo = Math.min(lo, g.c.min); hi = Math.max(hi, g.c.max); });
-  if (opc.lo !== undefined){ lo = Math.min(lo, opc.lo); hi = Math.max(hi, opc.hi); }
-  var E = escalaBonita(lo, hi), W = 640, x0 = opc.x0 || (grupos.length > 1 ? 90 : 40), x1 = opc.x1 || W - 30, alto = 70, H = grupos.length * alto + 60;
-  function X(v){ return x0 + (v - E.lo) * (x1 - x0) / (E.hi - E.lo); }
-  var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">', yEje = H - 34;
-  s += linea([x0, yEje], [x1, yEje], "#424242", 2);
-  for (var v = E.lo; v <= E.hi + 1e-9; v += E.paso){ s += linea([X(v), yEje - 6], [X(v), yEje + 6], "#424242", 2) + texto([X(v), yEje + 22], nv(v), 18, "#222", 400); }
-  grupos.forEach(function(g, i){
-    var y = 30 + i*alto, c = g.c, col = g.color || "#006064", bmin = g.bigMin !== undefined ? g.bigMin : c.min, bmax = g.bigMax !== undefined ? g.bigMax : c.max;
-    if (grupos.length > 1) s += texto([x0 - 14, y + 2], g.nombre, 22, col, 700, "end");
-    s += linea([X(bmin), y], [X(c.q1), y], col, 3) + linea([X(c.q3), y], [X(bmax), y], col, 3);
-    s += linea([X(bmin), y - 12], [X(bmin), y + 12], col, 3) + linea([X(bmax), y - 12], [X(bmax), y + 12], col, 3);
-    s += '<rect x="' + f1(X(c.q1)) + '" y="' + (y - 20) + '" width="' + f1(Math.max(X(c.q3) - X(c.q1), 1)) + '" height="40" fill="' + (g.relleno || "#e0f7fa") + '" stroke="' + col + '" stroke-width="3"/>';
-    s += linea([X(c.med), y - 20], [X(c.med), y + 20], "#b71c1c", 4);
-    (g.atip || []).forEach(function(a){ s += '<circle cx="' + f1(X(a)) + '" cy="' + y + '" r="7" fill="#fff" stroke="#b71c1c" stroke-width="3"/>'; });
-    if (opc.rotulos) [["mín", bmin], ["Q1", c.q1], ["Q2", c.med], ["Q3", c.q3], ["máx", bmax]].forEach(function(p, k){ s += texto([X(p[1]), y - 32 + (k % 2 ? 0 : -2)], p[0], 16, "#424242", 700); });
-  });
-  return s + '</svg>';
-}
-/* Histograma: clases = [{ a, b, f }] */
-function histSVG(clases, voz, opc){
-  opc = opc || {};
-  var W = 640, H = 300, x0 = 56, x1 = W - 20, yb = H - 44, ytop = 20, fmax = Math.max.apply(null, clases.map(function(c){ return c.f; })) || 1;
-  var paso = fmax <= 6 ? 1 : (fmax <= 12 ? 2 : (fmax <= 30 ? 5 : 10)), top = Math.ceil(fmax / paso) * paso, n = clases.length, w = (x1 - x0) / n;
-  function Y(f){ return yb - f * (yb - ytop) / top; }
-  var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">';
-  for (var f = 0; f <= top; f += paso){ s += linea([x0, Y(f)], [x1, Y(f)], "#e0e0e0", 1) + texto([x0 - 8, Y(f)], f, 17, "#424242", 400, "end"); }
-  clases.forEach(function(c, i){
-    s += '<rect x="' + f1(x0 + i*w) + '" y="' + f1(Y(c.f)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(c.f)) + '" fill="' + (opc.marcar === i ? "#f9a825" : "#4dd0e1") + '" stroke="#006064" stroke-width="2"/>';
-    s += texto([x0 + i*w, yb + 20], nv(c.a), 17, "#222", 400);
-  });
-  s += texto([x1, yb + 20], nv(clases[n-1].b), 17, "#222", 400);
-  s += linea([x0, yb], [x1, yb], "#424242", 2) + linea([x0, yb], [x0, ytop], "#424242", 2);
-  s += texto([x0 - 44, (yb + ytop)/2], "Frecuencia", 14, "#424242", 700).replace('<text', '<text transform="rotate(-90 ' + (x0 - 44) + ' ' + ((yb + ytop)/2) + ')"');
-  if (opc.eje) s += texto([(x0 + x1)/2, H - 6], opc.eje, 16, "#424242", 700);
-  return s + '</svg>';
-}
+function fact(n){ var r = 1; for (var i = 2; i <= n; i++) r *= i; return r; }
+function perm(n, r){ var p = 1; for (var i = 0; i < r; i++) p *= (n - i); return p; }
+function comb(n, r){ return perm(n, r) / fact(r); }
+function nv(x){ return menos(parseFloat(Number(x).toFixed(4)).toString()); }
 function evaluaDec(t, esperado, pistas, tol){
   var v = leeDecimal(t); if (v === null){ var f = leeFraccion(t); if (f) v = f.p / f.q; }
-  if (v === null) return { estado: "invalido", msg: "Escribe un número, por ejemplo 12 o 62.8." };
+  if (v === null) return { estado: "invalido", msg: "Escribe un número entero." };
   if (Math.abs(v - esperado) <= (tol || 1e-6)) return { estado: "bien", msg: "Correcto." };
-  for (var i = 0; i < (pistas || []).length; i++) if (Math.abs(v - pistas[i].v) <= (pistas[i].tol || tol || 1e-6)) return { estado: "mal", msg: pistas[i].msg };
+  for (var i = 0; i < (pistas || []).length; i++) if (Math.abs(v - pistas[i].v) <= 1e-6) return { estado: "mal", msg: pistas[i].msg };
+  return { estado: "mal", msg: "Todavía no." };
+}
+/* Probabilidad escrita como fracción, decimal o porcentaje */
+function leeProb(t){
+  var s = String(t).trim().replace(/\s+/g, "");
+  var pc = s.match(/^(\d+(?:\.\d+)?)%$/); if (pc) return parseFloat(pc[1]) / 100;
+  var f = leeFraccion(s); if (f) return f.p / f.q;
+  var d = leeDecimal(s); return d;
+}
+function evaluaProb(t, p, pistas){
+  var v = leeProb(t);
+  if (v === null) return { estado: "invalido", msg: "Escribe la probabilidad como fracción (3/8), decimal (0.375) o porcentaje (37.5%)." };
+  if (Math.abs(v - fval(p)) < 0.0006) return { estado: "bien", msg: "Correcto." };
+  if (v > 1) return { estado: "mal", msg: "Una probabilidad nunca pasa de 1 (100 %): probablemente se sumó cuando había que multiplicar." };
+  for (var i = 0; i < (pistas || []).length; i++) if (Math.abs(v - fval(pistas[i].v)) < 0.0006) return { estado: "mal", msg: pistas[i].msg };
   return { estado: "mal", msg: "Todavía no." };
 }
 
-var PI = 3.14;
-function r1(x){ return parseFloat(x.toFixed(1)); }
-function r2(x){ return parseFloat(x.toFixed(2)); }
+var LETRAS = "ABCDEFGH".split("");
+function con(n){ return n.toLocaleString("en-US"); }
 
 /* ============================================================
-   MÓDULO 1 · Caja por capas, en perspectiva
+   MÓDULO 1 · Árbol de opciones
    ============================================================ */
-function pintaCaja(){
-  var l = +$("cj-l").value, w = +$("cj-w").value, h = +$("cj-h").value, g = rad(+$("cj-g").value), phi = rad(28);
-  ["l","w","h"].forEach(function(k){ $("cj-" + k + "v").textContent = $("cj-" + k).value; }); $("cj-gv").textContent = $("cj-g").value + "°";
-  var cg = Math.cos(g), sg = Math.sin(g), cp = Math.cos(phi), sp = Math.sin(phi);
-  function prj(p){ var x = p[0] - l/2, y = p[1] - w/2, z = p[2]; var xr = x*cg - y*sg, yr = x*sg + y*cg; return [xr, z*cp + yr*sp]; }
-  var caras = [
-    { n: [0,-1,0], p: function(u, v){ return [u, 0, v]; }, U: l, V: h, col: "#b2ebf2" },
-    { n: [0,1,0], p: function(u, v){ return [u, w, v]; }, U: l, V: h, col: "#b2ebf2" },
-    { n: [-1,0,0], p: function(u, v){ return [0, u, v]; }, U: w, V: h, col: "#80deea" },
-    { n: [1,0,0], p: function(u, v){ return [l, u, v]; }, U: w, V: h, col: "#80deea" },
-    { n: [0,0,1], p: function(u, v){ return [u, v, h]; }, U: l, V: w, col: "#e0f7fa" },
-    { n: [0,0,-1], p: function(u, v){ return [u, v, 0]; }, U: l, V: w, col: "#e0f7fa" }
-  ];
-  var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  caras.forEach(function(c){ [[0,0],[c.U,0],[c.U,c.V],[0,c.V]].forEach(function(q){ var p = prj(c.p(q[0], q[1])); minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minY = Math.min(minY, p[1]); maxY = Math.max(maxY, p[1]); }); });
-  var esc = Math.min(420 / (maxX - minX), 260 / (maxY - minY)), ox = 320 - (minX + maxX)/2*esc, oy = 150 + (minY + maxY)/2*esc;
-  function T(p){ var q = prj(p); return [ox + q[0]*esc, oy - q[1]*esc]; }
-  var s = '<svg class="figura" viewBox="0 0 640 300" role="img" aria-label="Caja de ' + l + ' por ' + w + ' por ' + h + ' cubitos: ' + (l*w*h) + ' en total.">';
-  caras.forEach(function(c){
-    /* la cara es visible si su normal apunta hacia el observador */
-    var yr = c.n[0]*sg + c.n[1]*cg, d = yr*cp - c.n[2]*sp;
-    if (!(d < 0)) return;
-    var pts = [[0,0],[c.U,0],[c.U,c.V],[0,c.V]].map(function(q){ return T(c.p(q[0], q[1])); });
-    s += '<polygon points="' + pts.map(function(p){ return f1(p[0]) + "," + f1(p[1]); }).join(" ") + '" fill="' + c.col + '" stroke="#006064" stroke-width="2.5"/>';
-    for (var u = 1; u < c.U; u++) s += linea(T(c.p(u, 0)), T(c.p(u, c.V)), "#00838f", 1);
-    for (var v = 1; v < c.V; v++) s += linea(T(c.p(0, v)), T(c.p(c.U, v)), "#00838f", 1);
-  });
-  $("cj-svg").innerHTML = s + '</svg>';
-  $("cj-salida").innerHTML = '<div class="linea">Una capa (la base) tiene ' + l + ' × ' + w + ' = ' + (l*w) + ' cubitos: es el área de la base.</div>' +
-    '<div class="linea">Hay ' + h + (h === 1 ? ' capa' : ' capas') + ': ' + (l*w) + ' × ' + h + ' = <strong>' + (l*w*h) + '</strong> cubitos.</div>' +
-    '<div class="linea veredicto">V = ' + l + ' × ' + w + ' × ' + h + ' = ' + (l*w*h) + ' unidades cúbicas</div>';
+var OPCIONES = [["pollo","pasta","pescado","arroz"], ["agua","jugo","café","té"], ["flan","fruta","helado"]];
+function pintaArbol(){
+  var ns = [+$("ar-a").value, +$("ar-b").value, +$("ar-c").value].filter(function(x, i){ return i < 2 || x > 0; });
+  $("ar-av").textContent = $("ar-a").value; $("ar-bv").textContent = $("ar-b").value; $("ar-cv").textContent = $("ar-c").value === "0" ? "ninguno" : $("ar-c").value;
+  var total = ns.reduce(function(a, b){ return a*b; }, 1), paso = total > 24 ? 12 : 22, H = Math.max(total*paso + 30, 160), niveles = ns.length;
+  var xs = [30].concat(ns.map(function(x, i){ return 30 + (i + 1) * (niveles === 3 ? 170 : 230); }));
+  var s = '<svg class="figura" viewBox="0 0 640 ' + H + '" role="img" aria-label="Árbol de ' + total + ' combinaciones: ' + ns.join(" por ") + '.">';
+  function nodo(nivel, idx, y0, y1, ruta){
+    var y = (y0 + y1)/2;
+    if (nivel === niveles){ if (total <= 24) s += texto([xs[nivel] + 10, y], ruta.join(" · "), 13, "#424242", 400, "start"); return y; }
+    var n = ns[nivel], h = (y1 - y0) / n;
+    for (var i = 0; i < n; i++){
+      var yc = y0 + h*i + h/2, nombre = OPCIONES[nivel][i];
+      s += linea([xs[nivel], y], [xs[nivel + 1], yc], ["#b71c1c","#0d47a1","#1b5e20"][nivel], 2);
+      s += '<circle cx="' + xs[nivel + 1] + '" cy="' + f1(yc) + '" r="4" fill="#424242"/>';
+      if (nivel < niveles - 1 || total <= 12) s += texto([xs[nivel + 1] - 6, yc - 9], nombre, 13, ["#b71c1c","#0d47a1","#1b5e20"][nivel], 700, "end");
+      nodo(nivel + 1, i, y0 + h*i, y0 + h*(i + 1), ruta.concat([nombre]));
+    }
+    return y;
+  }
+  s += '<circle cx="30" cy="' + f1(H/2) + '" r="6" fill="#424242"/>';
+  nodo(0, 0, 10, H - 10, []);
+  $("ar-svg").innerHTML = s + '</svg>';
+  $("ar-salida").innerHTML = '<div class="linea">Cada plato se abre en ' + ns[1] + ' bebidas' + (niveles === 3 ? ', y cada bebida en ' + ns[2] + ' postres' : '') + '.</div>' +
+    '<div class="linea veredicto">Total: ' + ns.join(" × ") + ' = ' + total + ' combinaciones distintas.</div>';
 }
-function opN(v){ return { html: nv(v), clave: "n" + v }; }
-function genPrisma(){
-  var t = aleatorio(1,3), o, pc = {};
-  if (t === 1){ var l = aleatorio(2,9), w = aleatorio(2,8), h = aleatorio(2,9), V = l*w*h;
-    o = [opN(V), opN(l + w + h), opN(l*w), opN(2*(l*w + l*h + w*h))]; pc["n" + (l + w + h)] = "Las medidas se multiplican, no se suman."; pc["n" + (l*w)] = "Ese es el área de la base: falta multiplicar por la altura."; pc["n" + 2*(l*w + l*h + w*h)] = "Esa es el área de la superficie, no el volumen.";
-    return { enun: "Una caja mide " + l + " cm de largo, " + w + " cm de ancho y " + h + " cm de alto. ¿Cuál es su volumen en cm³?", opciones: o, correcta: "n" + V, porClave: pc, bien: l + " × " + w + " × " + h + " = " + V + " cm³.", mal: "V = " + l + " × " + w + " × " + h + " = " + V + " cm³." }; }
-  if (t === 2){ var a = aleatorio(2,9), V2 = a*a*a;
-    o = [opN(V2), opN(a*a), opN(3*a), opN(6*a*a)]; pc["n" + a*a] = "Eso es el área de una cara."; pc["n" + 3*a] = "Se multiplica el lado tres veces, no se multiplica por 3.";
-    return { enun: "¿Cuál es el volumen de un cubo de " + a + " cm de lado?", opciones: o, correcta: "n" + V2, porClave: pc, bien: a + " × " + a + " × " + a + " = " + V2 + " cm³.", mal: "V = " + a + "³ = " + V2 + " cm³." }; }
-  var b = aleatorio(2,8)*2, ht = aleatorio(2,7), L = aleatorio(3,12), A = b*ht/2, V3 = A*L;
-  o = [opN(V3), opN(b*ht*L), opN(A), opN(b + ht + L)]; pc["n" + b*ht*L] = "El área del triángulo es base × altura ÷ 2: faltó dividir entre 2.";
-  return { enun: "Un prisma tiene como base un triángulo de base " + b + " cm y altura " + ht + " cm, y mide " + L + " cm de largo. ¿Cuál es su volumen en cm³?", opciones: o, correcta: "n" + V3, porClave: pc,
-    bien: "Área de la base: " + b + " × " + ht + " ÷ 2 = " + A + ". Volumen: " + A + " × " + L + " = " + V3 + " cm³.", mal: "Área de la base: " + b + " × " + ht + " ÷ 2 = " + A + " cm²; V = " + A + " × " + L + " = " + V3 + " cm³." };
+function genConteo(){
+  var t = aleatorio(1,5), enun, res, sol, pistas = [];
+  if (t === 1){ var a = aleatorio(3,8), b = aleatorio(2,6), c = aleatorio(2,4); res = a*b*c; enun = "Tienes " + a + " camisas, " + b + " pantalones y " + c + " pares de zapatos. ¿Cuántos conjuntos distintos puedes formar?"; sol = a + " × " + b + " × " + c + " = " + res + "."; pistas.push({ v: a + b + c, msg: "Las opciones de cada decisión se multiplican, no se suman." }); }
+  else if (t === 2){ var n = aleatorio(4,10); res = Math.pow(2, n); enun = "Un examen tiene " + n + " preguntas de verdadero o falso. ¿De cuántas formas distintas se puede contestar?"; sol = "Cada pregunta tiene 2 opciones: 2 multiplicado " + n + " veces = 2^" + n + " = " + con(res) + "."; pistas.push({ v: 2*n, msg: "Son " + n + " decisiones de 2 opciones cada una: se multiplica 2 × 2 × … (" + n + " veces), no 2 × " + n + "." }); }
+  else if (t === 3){ var d = aleatorio(3,5); res = Math.pow(10, d); enun = "Una clave tiene " + d + " dígitos y se pueden repetir. ¿Cuántas claves distintas hay?"; sol = "10 opciones para cada dígito: 10^" + d + " = " + con(res) + "."; pistas.push({ v: 10*d, msg: "Son " + d + " decisiones de 10 opciones: se multiplica 10 × 10 × …" }, { v: perm(10, d), msg: "Así sería si los dígitos no se pudieran repetir. Aquí sí se repiten: 10 opciones cada vez." }); }
+  else if (t === 4){ res = 26*26*10*10; enun = "Una placa tiene 2 letras (de 26) seguidas de 2 dígitos (de 0 a 9), y se pueden repetir. ¿Cuántas placas distintas hay?"; sol = "26 × 26 × 10 × 10 = " + con(res) + "."; pistas.push({ v: 26 + 26 + 10 + 10, msg: "Las opciones se multiplican, no se suman." }); }
+  else { var p = aleatorio(2,5), q = aleatorio(2,5), r = aleatorio(2,4); res = p*q*r; enun = "Un restaurante ofrece " + p + " entradas, " + q + " platos fuertes y " + r + " postres. ¿Cuántas comidas distintas de tres tiempos se pueden pedir?"; sol = p + " × " + q + " × " + r + " = " + res + "."; pistas.push({ v: p + q + r, msg: "Las opciones de cada tiempo se multiplican." }); }
+  return { enun: enun, correcta: String(res), solucion: sol, evalua: function(v){ return evaluaDec(v, res, pistas); } };
 }
 
 /* ============================================================
-   MÓDULO 2 · Cilindro
+   MÓDULO 2 · Factorial
    ============================================================ */
-function pintaCil(){
-  var r = +$("ci-r").value, h = +$("ci-h").value;
-  $("ci-rv").textContent = nv(r); $("ci-hv").textContent = nv(h);
-  var esc = Math.min(160 / r, 220 / h, 40), R = r*esc, Hh = h*esc, cx = 300, yt = 150 - Hh/2, yb = 150 + Hh/2, ry = Math.max(R*0.3, 6);
-  var s = '<svg class="figura" viewBox="0 0 640 310" role="img" aria-label="Cilindro de radio ' + nv(r) + ' y altura ' + nv(h) + '.">';
-  s += '<path d="M' + f1(cx - R) + ' ' + f1(yt) + ' L' + f1(cx - R) + ' ' + f1(yb) + ' A' + f1(R) + ' ' + f1(ry) + ' 0 0 0 ' + f1(cx + R) + ' ' + f1(yb) + ' L' + f1(cx + R) + ' ' + f1(yt) + '" fill="#b2ebf2" stroke="#006064" stroke-width="2.5"/>';
-  s += '<path d="M' + f1(cx - R) + ' ' + f1(yb) + ' A' + f1(R) + ' ' + f1(ry) + ' 0 0 1 ' + f1(cx + R) + ' ' + f1(yb) + '" fill="none" stroke="#006064" stroke-width="1.5" stroke-dasharray="5 4"/>';
-  s += '<ellipse cx="' + cx + '" cy="' + f1(yt) + '" rx="' + f1(R) + '" ry="' + f1(ry) + '" fill="#e0f7fa" stroke="#006064" stroke-width="2.5"/>';
-  s += linea([cx, yt], [cx + R, yt], "#b71c1c", 3) + texto([cx + R/2, yt - ry - 10], "r = " + nv(r), 18, "#b71c1c");
-  s += linea([cx + R + 22, yt], [cx + R + 22, yb], "#0d47a1", 2) + texto([cx + R + 30, (yt + yb)/2], "h = " + nv(h), 18, "#0d47a1", 700, "start");
-  $("ci-svg").innerHTML = s + '</svg>';
-  var r2v = r*r, base = PI*r2v, V = base*h, exacto = r2v*h;
-  $("ci-salida").innerHTML = '<div class="linea">Primero el radio al cuadrado: r² = ' + nv(r) + '² = ' + nv(r2v) + '.</div>' +
-    '<div class="linea">Área de la base: π × ' + nv(r2v) + ' ≈ 3.14 × ' + nv(r2v) + ' = ' + nv(r2(base)) + '.</div>' +
-    '<div class="linea">Por la altura: ' + nv(r2(base)) + ' × ' + nv(h) + ' ≈ <strong>' + nv(r2(V)) + '</strong>.</div>' +
-    '<div class="linea veredicto">V = ' + nv(exacto) + 'π (exacto) ≈ ' + nv(r1(V)) + ' unidades cúbicas</div>';
+function pintaFC(){
+  var n = +$("fc-n").value, k = +$("fc-k").value;
+  if (k > n){ k = n; $("fc-k").value = n; }
+  $("fc-nv").textContent = n; $("fc-kv").textContent = k;
+  var exp = n === 0 ? "1 (por convención)" : Array.from({ length: n }, function(_, i){ return n - i; }).join(" × ");
+  var h = '<div class="linea grande">' + n + '! = ' + exp + ' = ' + con(fact(n)) + '</div>';
+  var arriba = n === 0 ? "1" : Array.from({ length: n }, function(_, i){ var v = n - i; return v <= k ? '<span class="tok cancelado">' + v + '</span>' : v; }).join(" × ");
+  var abajo = k === 0 ? "1" : Array.from({ length: k }, function(_, i){ return '<span class="tok cancelado">' + (k - i) + '</span>'; }).join(" × ");
+  var res = fact(n) / fact(k);
+  h += '<div class="linea">Para calcular ' + n + '! ÷ ' + k + '! se tachan los factores comunes:</div>';
+  h += '<div class="fraccion-grande"><span class="frac"><span class="arriba">' + arriba + '</span><span class="abajo">' + abajo + '</span></span> = ' + (n > k ? Array.from({ length: n - k }, function(_, i){ return n - i; }).join(" × ") + " = " : "") + con(res) + '</div>';
+  h += '<p class="sr-only">' + n + ' factorial entre ' + k + ' factorial es igual a ' + res + '.</p>';
+  $("fc-salida").innerHTML = h;
 }
-function evaluaPi(t, k, pistas){ /* k = coeficiente de π */
-  var s = String(t).trim().replace(/\s+/g, "").replace(/pi$/i, "π");
-  var m = s.match(/^(\d+(?:\.\d+)?)π$/);
-  if (m){ return Math.abs(parseFloat(m[1]) - k) < 1e-6 ? { estado: "bien", msg: "Correcto, en forma exacta." } : { estado: "mal", msg: "El coeficiente de π no es el correcto." }; }
-  var v = leeDecimal(s);
-  if (v === null) return { estado: "invalido", msg: "Escribe un número (por ejemplo 62.8) o el resultado exacto con π (por ejemplo 20π)." };
-  if (Math.abs(v - k*3.14) <= 0.051 || Math.abs(v - k*Math.PI) <= 0.051) return { estado: "bien", msg: "Correcto." };
-  for (var i = 0; i < pistas.length; i++) if (Math.abs(v - pistas[i].v) <= 0.06) return { estado: "mal", msg: pistas[i].msg };
-  return { estado: "mal", msg: "Todavía no." };
-}
-function genCilindro(){
-  var r = aleatorio(1,9), h = aleatorio(2,12), diam = Math.random() < 0.3, k = r*r*h;
-  var enun = "Un cilindro tiene " + (diam ? "un diámetro de " + (2*r) : "un radio de " + r) + " cm y una altura de " + h + " cm. ¿Cuál es su volumen en cm³?";
-  var pistas = [{ v: 3.14*r*h, msg: "Faltó elevar el radio al cuadrado." }, { v: 3.14*2*r*h, msg: "Eso se parece al área lateral (2πrh), no al volumen." }, { v: r1(3.14*r*r), msg: "Ese es el área de la base: falta multiplicar por la altura." }];
-  if (diam) pistas.unshift({ v: 3.14*4*r*r*h, msg: "Se usó el diámetro como radio: primero hay que dividirlo entre 2." }, { v: 4*r*r*h*Math.PI, msg: "Se usó el diámetro como radio: primero hay que dividirlo entre 2." });
-  return { enun: enun, correcta: nv(r1(3.14*k)), solucion: (diam ? "El radio es " + (2*r) + " ÷ 2 = " + r + ". " : "") + "V = π × " + r + "² × " + h + " = " + k + "π ≈ " + nv(r1(3.14*k)) + " cm³.",
-    evalua: function(t){ return evaluaPi(t, k, pistas); } };
+function genFactorial(){
+  var t = aleatorio(1,4), enun, res, sol, pistas = [];
+  if (t === 1){ var n = aleatorio(3,7); res = fact(n); enun = "¿Cuánto es " + n + "!?"; sol = Array.from({ length: n }, function(_, i){ return n - i; }).join(" × ") + " = " + con(res) + "."; pistas.push({ v: n*(n-1), msg: "El factorial multiplica todos los enteros desde " + n + " hasta 1." }); }
+  else if (t === 2){ var m = aleatorio(6,12), k = m - aleatorio(2,3); res = fact(m) / fact(k); enun = "¿Cuánto es " + m + "! ÷ " + k + "!?"; sol = "Se cancelan los factores de " + k + "! y quedan " + Array.from({ length: m - k }, function(_, i){ return m - i; }).join(" × ") + " = " + con(res) + "."; pistas.push({ v: fact(m - k), msg: "No se restan los números dentro del factorial: " + m + "! ÷ " + k + "! no es (" + m + " − " + k + ")!." }); }
+  else if (t === 3){ res = 1; enun = "¿Cuánto es 0!?"; sol = "Por convención, 0! = 1."; pistas.push({ v: 0, msg: "Por convención, 0! vale 1, no 0." }); }
+  else { var a = aleatorio(4,7), b = aleatorio(1, a - 1); res = fact(a) / (fact(b) * fact(a - b)); enun = "¿Cuánto es " + a + "! ÷ (" + b + "! × " + (a - b) + "!)?"; sol = con(fact(a)) + " ÷ (" + fact(b) + " × " + fact(a - b) + ") = " + con(res) + "."; }
+  return { enun: enun, correcta: String(res), solucion: sol, evalua: function(v){ return evaluaDec(v, res, pistas); } };
 }
 
 /* ============================================================
-   MÓDULO 3 · Despejar
+   MÓDULO 3 · Permutaciones
    ============================================================ */
-function problemaDespeje(t){
-  if (t === undefined) t = aleatorio(1,4);
-  if (t === 1){ var A = aleatorio(4,30), h = aleatorio(2,12), V = A*h;
-    return { txt: "Un prisma tiene un volumen de " + V + " cm³ y una base de área " + A + " cm². ¿Cuál es su altura?", res: h,
-      pasos: ["Se parte de V = área de la base × altura: " + V + " = " + A + " × h.", "Se divide entre " + A + " en ambos lados: h = " + V + " ÷ " + A + ".", '<span class="veredicto">h = ' + h + ' cm</span>'] }; }
-  if (t === 2){ var l = aleatorio(2,10), w = aleatorio(2,8), hh = aleatorio(2,9), V2 = l*w*hh;
-    return { txt: "Una caja tiene un volumen de " + V2 + " cm³, un largo de " + l + " cm y un ancho de " + w + " cm. ¿Cuál es su altura?", res: hh,
-      pasos: ["El área de la base es " + l + " × " + w + " = " + (l*w) + " cm².", "Se divide el volumen entre el área de la base: h = " + V2 + " ÷ " + (l*w) + ".", '<span class="veredicto">h = ' + hh + ' cm</span>'] }; }
-  if (t === 3){ var r = aleatorio(1,6), hc = aleatorio(2,10), V3 = r2(3.14*r*r*hc);
-    return { txt: "Un cilindro tiene un volumen de " + nv(V3) + " cm³ y un radio de " + r + " cm. ¿Cuál es su altura? (π ≈ 3.14)", res: hc,
-      pasos: ["El área de la base es 3.14 × " + r + "² = 3.14 × " + (r*r) + " = " + nv(r2(3.14*r*r)) + " cm².", "Se divide el volumen entre el área de la base: h = " + nv(V3) + " ÷ " + nv(r2(3.14*r*r)) + ".", '<span class="veredicto">h = ' + hc + ' cm</span>'] }; }
-  var rr = aleatorio(2,7), h4 = aleatorio(2,10), V4 = r2(3.14*rr*rr*h4);
-  return { txt: "Un cilindro tiene un volumen de " + nv(V4) + " cm³ y una altura de " + h4 + " cm. ¿Cuál es su radio? (π ≈ 3.14)", res: rr,
-    pasos: ["Se divide el volumen entre πh: r² = " + nv(V4) + " ÷ (3.14 × " + h4 + ") = " + nv(V4) + " ÷ " + nv(r2(3.14*h4)) + " = " + (rr*rr) + ".", "Se saca la raíz cuadrada: r = √" + (rr*rr) + ".", '<span class="veredicto">r = ' + rr + ' cm</span>'] };
+function permutaciones(elem, r){
+  if (r === 0) return [[]];
+  var out = [];
+  elem.forEach(function(e, i){ var resto = elem.slice(0, i).concat(elem.slice(i + 1)); permutaciones(resto, r - 1).forEach(function(p){ out.push([e].concat(p)); }); });
+  return out;
 }
-var DJ_COLA = [1, 3, 4];
-function nuevoDJ(){ var q = problemaDespeje(DJ_COLA.length ? DJ_COLA.shift() : undefined); $("dj-enun").textContent = q.txt; DJS.carga(q.pasos); }
-function genDespeje(){
-  var q = problemaDespeje();
-  return { enun: q.txt, correcta: String(q.res), solucion: q.pasos.map(function(p){ return p.replace(/<[^>]+>/g, ""); }).join(" "),
-    evalua: function(t){ return evaluaDec(t, q.res, [], 0.051); } };
+function combinaciones(elem, r){
+  if (r === 0) return [[]]; if (elem.length < r) return [];
+  var out = [];
+  combinaciones(elem.slice(1), r - 1).forEach(function(c){ out.push([elem[0]].concat(c)); });
+  return out.concat(combinaciones(elem.slice(1), r));
+}
+function pintaPM(){
+  var n = +$("pm-n").value, r = +$("pm-r").value; if (r > n){ r = n; $("pm-r").value = n; }
+  $("pm-nv").textContent = n; $("pm-rv").textContent = r;
+  var h = "";
+  for (var i = 0; i < r; i++) h += '<div class="slot"><strong>' + (n - i) + '</strong><span>' + (i + 1) + '.º lugar</span></div>';
+  $("pm-slots").innerHTML = h;
+  var P = perm(n, r), fact_ = Array.from({ length: r }, function(_, i){ return n - i; }).join(" × ");
+  var s = '<div class="linea">Opciones por lugar: ' + fact_ + '.</div><div class="linea veredicto">P(' + n + ', ' + r + ') = ' + fact_ + ' = ' + con(P) + ' ordenamientos</div>';
+  s += '<div class="linea">Con la fórmula: ' + n + '! ÷ (' + n + ' − ' + r + ')! = ' + con(fact(n)) + ' ÷ ' + con(fact(n - r)) + ' = ' + con(P) + '.</div>';
+  if (P <= 60){ s += '<p class="nota">Todos los ordenamientos con las personas ' + LETRAS.slice(0, n).join(", ") + ':</p><div class="arreglos">' + permutaciones(LETRAS.slice(0, n), r).map(function(p){ return '<span>' + p.join("") + '</span>'; }).join("") + '</div>'; }
+  $("pm-salida").innerHTML = s;
+}
+function genPermutacion(){
+  var t = aleatorio(1,4), n, r, enun;
+  if (t === 1){ n = aleatorio(5,10); r = 3; enun = "En una carrera hay " + n + " corredores. ¿De cuántas formas se pueden repartir el 1.º, 2.º y 3.º lugar?"; }
+  else if (t === 2){ n = aleatorio(6,12); r = 3; enun = "Un club de " + n + " personas elige presidente, secretario y tesorero (cargos distintos). ¿De cuántas formas puede hacerlo?"; }
+  else if (t === 3){ n = aleatorio(4,7); r = n; enun = "¿De cuántas formas se pueden ordenar " + n + " libros distintos en un estante?"; }
+  else { n = 10; r = aleatorio(3,4); enun = "Una clave de " + r + " dígitos no puede repetir ningún dígito. ¿Cuántas claves distintas hay?"; }
+  var res = perm(n, r), pistas = [{ v: comb(n, r), msg: "Esa sería la combinación. Aquí el orden importa: cada orden distinto cuenta." }, { v: Math.pow(n, r), msg: "Así sería si se pudiera repetir. Sin repetir, cada lugar tiene una opción menos que el anterior." }, { v: n*r, msg: "No se multiplica n por r: se multiplican las opciones de cada lugar, que van bajando de uno en uno." }];
+  return { enun: enun, correcta: String(res), solucion: "El orden importa: P(" + n + ", " + r + ") = " + Array.from({ length: r }, function(_, i){ return n - i; }).join(" × ") + " = " + con(res) + ".",
+    evalua: function(v){ return evaluaDec(v, res, pistas); } };
 }
 
 /* ============================================================
-   MÓDULO 4 · Capacidad
+   MÓDULO 4 · Combinaciones
    ============================================================ */
-function genCapacidad(){
-  var t = aleatorio(1,5), enun, res, sol;
-  if (t === 1){ var r = elige([0.5,0.6,0.8,1,1.2,1.5]), h = elige([1,1.5,2,2.5,3]), V = 3.14*r*r*h; res = Math.round(V*1000);
-    enun = "Un tanque cilíndrico tiene un radio de " + nv(r) + " m y una altura de " + nv(h) + " m. ¿Cuántos litros de agua caben? (π ≈ 3.14)";
-    sol = "V = 3.14 × " + nv(r) + "² × " + nv(h) + " ≈ " + nv(r2(V)) + " m³, y cada m³ son 1000 litros: unos " + res + " litros."; }
-  else if (t === 2){ var l = elige([20,24,30,36]), w = elige([10,12,15]), hh = elige([12,16,18,20]), Vi = l*w*hh; res = Math.round(Vi/231);
-    enun = "Una pecera mide " + l + " pulgadas de largo, " + w + " de ancho y " + hh + " de alto. ¿Cuántos galones caben? (1 galón = 231 pulgadas cúbicas)";
-    sol = "V = " + l + " × " + w + " × " + hh + " = " + Vi + " pulgadas cúbicas; " + Vi + " ÷ 231 ≈ " + res + " galones."; }
-  else if (t === 3){ var L = elige([10,12,15,20]), A = elige([5,6,8]), P = elige([1,1.5,2]), Vp = L*A*P; res = Math.round(Vp*7.48);
-    enun = "Una piscina rectangular mide " + L + " pies de largo, " + A + " de ancho y " + nv(P) + " de profundidad. ¿Cuántos galones caben, aproximadamente? (1 pie cúbico ≈ 7.48 galones)";
-    sol = "V = " + L + " × " + A + " × " + nv(P) + " = " + nv(Vp) + " pies cúbicos; × 7.48 ≈ " + res + " galones."; }
-  else if (t === 4){ var rc = elige([10,15,20,25]), hm = elige([1,2,3]), Vc = 3.14*(rc/100)*(rc/100)*hm; res = Math.round(Vc*1000);
-    enun = "Una columna cilíndrica tiene un radio de " + rc + " cm y una altura de " + hm + " m. ¿Cuántos litros de concreto lleva? (π ≈ 3.14; primero pasa el radio a metros)";
-    sol = "El radio es " + rc + " cm = " + nv(rc/100) + " m. V = 3.14 × " + nv(rc/100) + "² × " + hm + " ≈ " + nv(r2(Vc)) + " m³ ≈ " + res + " litros."; }
-  else { var lc = elige([20,25,30,40]), wc = elige([10,20,25]), hc = elige([10,15,20]), Vl = lc*wc*hc; res = Math.round(Vl/1000);
-    enun = "Un recipiente mide " + lc + " cm × " + wc + " cm × " + hc + " cm. ¿Cuántos litros caben? (1000 cm³ = 1 litro)";
-    sol = "V = " + lc + " × " + wc + " × " + hc + " = " + Vl + " cm³; ÷ 1000 = " + nv(Vl/1000) + " litros, unos " + res + "."; }
-  return { enun: enun, correcta: String(res), solucion: sol, evalua: function(v){ return evaluaDec(v, res, [], Math.max(1, res*0.01)); } };
+function pintaCB(){
+  var n = +$("cb-n").value, r = +$("cb-r").value; if (r > n){ r = n; $("cb-r").value = n; }
+  $("cb-nv").textContent = n; $("cb-rv").textContent = r;
+  var P = perm(n, r), C = comb(n, r);
+  $("cb-salida").innerHTML = '<div class="linea">Si importara el orden habría P(' + n + ', ' + r + ') = ' + con(P) + ' ordenamientos.</div>' +
+    '<div class="linea">Pero cada grupo de ' + r + ' aparece ' + r + '! = ' + fact(r) + (fact(r) === 1 ? ' vez' : ' veces') + ' (una por cada orden).</div>' +
+    '<div class="linea veredicto">C(' + n + ', ' + r + ') = ' + con(P) + ' ÷ ' + fact(r) + ' = ' + con(C) + ' grupos</div>';
+  var lista = combinaciones(LETRAS.slice(0, n), r);
+  $("cb-lista").innerHTML = P <= 120 ? '<p class="nota">Cada fila es un grupo con todos sus órdenes:</p>' + lista.map(function(g){ return '<div class="arreglos"><span class="grupo">{' + g.join(", ") + '}</span>' + permutaciones(g, r).map(function(p){ return '<span>' + p.join("") + '</span>'; }).join("") + '</div>'; }).join("") : '<p class="nota">Son demasiados para mostrarlos todos.</p>';
+}
+function genCombinacion(){
+  var t = aleatorio(1,4), n, r, enun;
+  if (t === 1){ n = aleatorio(6,12); r = 3; enun = "De un grupo de " + n + " personas se elige un comité de 3 (sin cargos). ¿Cuántos comités distintos se pueden formar?"; }
+  else if (t === 2){ n = aleatorio(6,10); r = 2; enun = "Una pizzería ofrece " + n + " ingredientes y se eligen 2. ¿Cuántas pizzas distintas de dos ingredientes hay?"; }
+  else if (t === 3){ n = aleatorio(8,12); r = elige([4,5]); enun = "Un entrenador elige " + r + " jugadores de " + n + " para un equipo. ¿Cuántos equipos distintos puede formar?"; }
+  else { n = aleatorio(5,8); r = 2; enun = "En una reunión hay " + n + " personas y cada una saluda a todas las demás una vez con un apretón de manos. ¿Cuántos apretones hay?"; }
+  var res = comb(n, r), pistas = [{ v: perm(n, r), msg: "Esa es la permutación. En un grupo el orden no importa: hay que dividir entre " + r + "! = " + fact(r) + "." }];
+  return { enun: enun, correcta: String(res), solucion: "El orden no importa: C(" + n + ", " + r + ") = P(" + n + ", " + r + ") ÷ " + r + "! = " + con(perm(n, r)) + " ÷ " + fact(r) + " = " + con(res) + ".",
+    evalua: function(v){ return evaluaDec(v, res, pistas); } };
+}
+
+/* ============================================================
+   MÓDULO 5 · Decidir
+   ============================================================ */
+var SITUACIONES = [
+  ["Elegir un comité de 3 personas de un grupo de 10.", "c", "En un comité todos tienen el mismo papel: el orden no importa."],
+  ["Repartir 1.º, 2.º y 3.º lugar entre 8 corredores.", "p", "No es lo mismo llegar primero que tercero: el orden importa."],
+  ["Formar un conjunto con una camisa, un pantalón y unos zapatos.", "f", "Son decisiones de tipos distintos: se multiplican las opciones de cada una."],
+  ["Elegir presidente y vicepresidente de un club de 15 personas.", "p", "Los cargos son distintos: el orden importa."],
+  ["Escoger 2 sabores de helado de 12 para una copa.", "c", "Chocolate y vainilla es la misma copa que vainilla y chocolate."],
+  ["Crear una clave de 4 dígitos que se pueden repetir.", "f", "Cada dígito es una decisión con 10 opciones, y se pueden repetir: principio del conteo."],
+  ["Ordenar 5 fotos en una fila en la pared.", "p", "Cambiar el orden de las fotos da otra fila distinta."],
+  ["Elegir 5 cartas de una baraja para formar una mano.", "c", "Una mano es la misma sin importar el orden en que llegaron las cartas."],
+  ["Pedir una entrada, un plato fuerte y un postre de un menú.", "f", "Tres decisiones de tipos distintos: se multiplican."],
+  ["Elegir 4 libros de 9 para llevar de viaje.", "c", "Se llevan los mismos libros sin importar el orden en que se escojan."],
+  ["Asignar 3 turnos distintos (mañana, tarde y noche) a 3 de 7 empleados.", "p", "Cada turno es distinto: el orden importa."]
+];
+function genDecidir(){
+  var s = elige(SITUACIONES);
+  return { enun: s[0] + " ¿Qué herramienta se usa?", opciones: [ { html: "Permutación (el orden importa)", clave: "p" }, { html: "Combinación (el orden no importa)", clave: "c" }, { html: "Principio del conteo (decisiones distintas)", clave: "f" } ],
+    correcta: s[1], porClave: {}, bien: s[2], mal: s[2] };
 }
 
 /* ============================================================
    Arranque
    ============================================================ */
-["cj-l","cj-w","cj-h","cj-g"].forEach(function(id){ $(id).addEventListener("input", pintaCaja); });
-pintaCaja();
-creaPracticaOM("p1", genPrisma);
-["ci-r","ci-h"].forEach(function(id){ $(id).addEventListener("input", pintaCil); });
-pintaCil();
-creaPracticaLibre("p2", genCilindro);
-var DJS = pasoAPaso("dj", []);
-$("dj-nuevo").addEventListener("click", nuevoDJ); nuevoDJ();
-creaPracticaLibre("p3", genDespeje);
-creaPracticaLibre("p4", genCapacidad);
+["ar-a","ar-b","ar-c"].forEach(function(id){ $(id).addEventListener("input", pintaArbol); }); pintaArbol();
+creaPracticaLibre("p1", genConteo);
+["fc-n","fc-k"].forEach(function(id){ $(id).addEventListener("input", pintaFC); }); pintaFC();
+creaPracticaLibre("p2", genFactorial);
+["pm-n","pm-r"].forEach(function(id){ $(id).addEventListener("input", pintaPM); }); pintaPM();
+creaPracticaLibre("p3", genPermutacion);
+["cb-n","cb-r"].forEach(function(id){ $(id).addEventListener("input", pintaCB); }); pintaCB();
+creaPracticaLibre("p4", genCombinacion);
+creaPracticaOM("p5", genDecidir);
 iniciaNavegacion();
 
 </script>
