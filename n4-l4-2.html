@@ -1,0 +1,641 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 4.2 — Completar el cuadrado
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #visual · #pasos · #dividir · #sumar
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 4.2: completar el cuadrado</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 4.2 del Nivel 4: la idea visual de completar el cuadrado, los cinco pasos, el caso a ≠ 1 y el término (b/2)².">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+
+  :root{
+    --tema:#880e4f; --tema-d:#5d0935; --tema-bg:#fce4ec; --tema-bg2:#f8bbd0;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;
+             padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);
+       border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);
+           border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border-color:var(--acento);color:#fff;
+              border-radius:8px;padding:8px 18px;font-weight:700;border-width:2px;border-style:solid;}
+  .btn-acento:hover{background:#004d40;border-color:#004d40;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;
+                 margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;
+                           background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;
+       flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:88px;padding:8px 10px;font-size:16px;
+        border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input[type="range"]{width:220px;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);
+          border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;
+        background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);
+           color:var(--tema-d);width:24px;height:24px;border-radius:50%;
+           font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:640px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);
+              font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .caja-aviso strong{color:var(--avi);}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .campo label .marca-error{color:#b71c1c;font-weight:700;}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;
+            padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;
+          padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);
+                       margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;
+             padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){
+    .campo input[type="range"]{width:100%;}
+    .campos{flex-direction:column;align-items:stretch;}
+  }
+
+  .esquina-lista{fill:#00695c;fill-opacity:.28;stroke:#00695c;stroke-width:2.5;}
+  .esquina-falta{fill:#fff;stroke:#00695c;stroke-width:2.5;stroke-dasharray:6 5;}
+  .intentos{font-size:14px;color:var(--gris);margin-top:6px;}
+  @media (prefers-reduced-motion:reduce){ *{scroll-behavior:auto !important;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 4 · Ecuaciones cuadráticas</div>
+    <h1>Lección 4.2 · Completar el cuadrado</h1>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#visual">La idea visual: completar un cuadrado</a></li>
+      <li><a href="#pasos">Los cinco pasos (cuando a = 1)</a></li>
+      <li><a href="#dividir">Cuando a ≠ 1: dividir primero</a></li>
+      <li><a href="#sumar">¿Cuánto hay que sumar?</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="visual" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La idea visual: completar un cuadrado</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>La expresión <strong>x² + bx</strong> se dibuja como un cuadrado de lado x más un rectángulo de área bx. Si ese rectángulo se parte por la mitad y se coloca una mitad a cada lado del cuadrado, falta solo una esquina para formar un cuadrado grande. Esa esquina mide <strong>(b/2) × (b/2)</strong>.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="v-b">Coeficiente de x: b = <span class="valor-rango" id="v-b-val">6</span></label>
+            <input type="range" id="v-b" min="2" max="12" step="2" value="6">
+          </div>
+          <button type="button" class="btn-acento" id="v-completar" aria-pressed="false">Completar la esquina</button>
+        </div>
+      </div>
+
+      <div class="grafica">
+        <svg id="v-svg" viewBox="0 0 330 320" role="img" aria-labelledby="v-svg-t v-svg-d">
+          <title id="v-svg-t">Modelo del área de x² + bx</title>
+          <desc id="v-svg-d"></desc>
+          <g id="v-dibujo"></g>
+        </svg>
+        <p class="pie-grafica">El cuadrado grande tiene lado x + b/2.</p>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <p class="linea" id="v-linea1"></p>
+        <p class="linea veredicto" id="v-linea2"></p>
+      </div>
+
+      <div class="caja-tip"><strong>Si b es negativo</strong>, el dibujo es el mismo con b/2 negativo: x² − 6x + 9 = (x − 3)². El número que se suma, (b/2)², siempre es positivo.</div>
+
+      <h3>Practica: ¿qué binomio al cuadrado queda?</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="pasos">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Los cinco pasos (cuando a = 1)</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <table class="reglas">
+        <caption>Los cinco pasos para resolver completando el cuadrado.</caption>
+        <thead><tr><th scope="col">Paso</th><th scope="col">Acción</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Dejar los términos con x a un lado: x² + bx = −c.</td></tr>
+          <tr><td>2</td><td>Sumar (b/2)² a ambos lados.</td></tr>
+          <tr><td>3</td><td>Escribir el lado izquierdo como (x + b/2)².</td></tr>
+          <tr><td>4</td><td>Sacar la raíz cuadrada de ambos lados, con ±.</td></tr>
+          <tr><td>5</td><td>Resolver para x.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Observa: un caso paso a paso</h3>
+      <div class="panel">
+        <p class="enun" id="q-enunciado"></p>
+        <div class="fila-btn">
+          <button type="button" class="btn-acento" id="q-siguiente">Siguiente paso</button>
+          <button type="button" class="btn-sec" id="q-todo">Ver todos los pasos</button>
+          <button type="button" class="btn" id="q-caso">Otro caso</button>
+        </div>
+        <div class="pasos" id="q-pasos" aria-live="polite"></div>
+      </div>
+
+      <div class="caja-atencion"><strong>No olvides el ±:</strong> al sacar la raíz cuadrada aparecen dos resultados, el positivo y el negativo. Sin el ± se pierde una solución.</div>
+
+      <h3>Practica: resuelve completando el cuadrado</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <p class="nota">Escribe las dos soluciones enteras en cualquier orden. Tienes dos intentos.</p>
+        <div class="campos">
+          <div class="campo"><label for="p2-r1">Primera solución</label><input type="number" id="p2-r1" step="1"></div>
+          <div class="campo"><label for="p2-r2">Segunda solución</label><input type="number" id="p2-r2" step="1"></div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn-acento" id="p2-revisar">Revisar</button>
+          <button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="dividir">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Cuando a ≠ 1: dividir primero</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Los cinco pasos funcionan cuando el coeficiente de x² es 1. Si no lo es, primero se divide <strong>toda</strong> la ecuación entre a, incluido el término independiente.</p>
+
+      <h3>Observa: dividir y luego completar</h3>
+      <div class="panel">
+        <p class="enun" id="r-enunciado"></p>
+        <div class="fila-btn">
+          <button type="button" class="btn-acento" id="r-siguiente">Siguiente paso</button>
+          <button type="button" class="btn-sec" id="r-todo">Ver todos los pasos</button>
+          <button type="button" class="btn" id="r-caso">Otro caso</button>
+        </div>
+        <div class="pasos" id="r-pasos" aria-live="polite"></div>
+      </div>
+
+      <h3>Practica: ¿qué ecuación queda al dividir?</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="sumar">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>¿Cuánto hay que sumar?</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>El corazón del método es <strong>(b/2)²</strong>: la mitad del coeficiente de x, elevada al cuadrado. Cuando b es impar, el resultado es una fracción.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="s-b">Escribe b</label>
+            <input type="number" id="s-b" step="1" value="5">
+          </div>
+        </div>
+        <div class="salida" aria-live="polite">
+          <p class="linea" id="s-linea1"></p>
+          <p class="linea veredicto" id="s-linea2"></p>
+        </div>
+      </div>
+
+      <h3>Practica: el término que completa el cuadrado</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 4.2 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Utilidades generales
+   ============================================================ */
+function $(id){ return document.getElementById(id); }
+function aleatorio(min, max){ return Math.floor(Math.random()*(max-min+1)) + min; }
+function signoNum(n){ return n < 0 ? "−" + Math.abs(n) : String(n); }
+function mcd(x,y){ x=Math.abs(x); y=Math.abs(y); while(y){ var t=y; y=x%y; x=t; } return x; }
+/* Fracción simplificada como texto: 25/4, −5/2, 9 */
+function fraccion(num, den){
+  if (den < 0){ num = -num; den = -den; }
+  var g = mcd(num, den) || 1; num /= g; den /= g;
+  if (den === 1) return signoNum(num);
+  return (num < 0 ? "−" : "") + Math.abs(num) + "/" + den;
+}
+/* Término con signo delante: " + 6x", " − 7" */
+function conSigno(coef, variable){
+  if (coef === 0) return "";
+  var abs = Math.abs(coef);
+  var cuerpo = (variable && abs === 1) ? variable : abs + (variable || "");
+  return (coef < 0 ? " − " : " + ") + cuerpo;
+}
+function primero(coef, variable){
+  var abs = Math.abs(coef);
+  var cuerpo = (variable && abs === 1) ? variable : abs + (variable || "");
+  return (coef < 0 ? "−" : "") + cuerpo;
+}
+function ecuacion(a, b, c){ return primero(a, "x²") + conSigno(b, "x") + conSigno(c, "") + " = 0"; }
+/* (x + 3)², (x − 2)² */
+function binomio(h){ return "(x" + (h < 0 ? " − " + Math.abs(h) : " + " + h) + ")²"; }
+function baraja(arr){
+  for (var i = arr.length - 1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  return arr;
+}
+function crea(tag, attrs, texto){
+  var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (var k in attrs) el.setAttribute(k, attrs[k]);
+  if (texto !== undefined) el.textContent = texto;
+  return el;
+}
+/* Pregunta de opción múltiple con un solo intento */
+function preparaOpciones(pref, opciones, correcta, estado, explicacion){
+  var cont = $(pref + "-opciones");
+  cont.innerHTML = "";
+  estado.resuelta = false;
+  $(pref + "-fb").className = "fb"; $(pref + "-fb").textContent = "";
+  baraja(opciones.slice()).forEach(function(txt){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "opcion"; b.setAttribute("aria-pressed", "false");
+    b.textContent = txt;
+    b.addEventListener("click", function(){
+      if (estado.resuelta) return;
+      estado.resuelta = true; estado.total++;
+      Array.prototype.forEach.call(cont.children, function(o){
+        o.disabled = true;
+        if (o.textContent === correcta) o.className = "opcion correcta";
+        else if (o === b) o.className = "opcion incorrecta";
+      });
+      b.setAttribute("aria-pressed", "true");
+      if (txt === correcta){
+        estado.aciertos++;
+        $(pref + "-fb").className = "fb bien";
+        $(pref + "-fb").textContent = "✓ Correcto. " + explicacion;
+      } else {
+        $(pref + "-fb").className = "fb mal";
+        $(pref + "-fb").textContent = "✗ Todavía no. La respuesta es " + correcta + ". " + explicacion;
+      }
+      $(pref + "-marcador").textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+    });
+    cont.appendChild(b);
+  });
+}
+/* Mostrar pasos uno a uno */
+function Pasador(idPasos){ this.id = idPasos; this.pasos = []; this.i = 0; }
+Pasador.prototype.carga = function(pasos){ this.pasos = pasos; this.i = 0; $(this.id).innerHTML = ""; };
+Pasador.prototype.uno = function(){
+  if (this.i >= this.pasos.length) return;
+  var d = document.createElement("div");
+  d.className = "paso";
+  d.innerHTML = '<span class="n" aria-hidden="true">' + (this.i + 1) + '</span>' + this.pasos[this.i];
+  $(this.id).appendChild(d);
+  this.i++;
+};
+Pasador.prototype.todos = function(){ while (this.i < this.pasos.length) this.uno(); };
+
+/* Genera raíces con suma par (b par) y distintas */
+function raicesPares(lim){
+  var r1, r2;
+  do { r1 = aleatorio(-lim, lim); r2 = aleatorio(-lim, lim); }
+  while (r1 === r2 || r1 === 0 || r2 === 0 || (r1 + r2) % 2 !== 0 || r1 + r2 === 0);
+  return [r1, r2];
+}
+/* Pasos de completar el cuadrado para x² + bx + c = 0 con raíces r1, r2 */
+function pasosCompletar(b, c, r1, r2){
+  var h = b / 2, k = h * h, d = Math.abs(r1 - r2) / 2;
+  var menor = Math.min(r1, r2), mayor = Math.max(r1, r2);
+  return [
+    "Se deja lo que tiene x a un lado: x²" + conSigno(b, "x") + " = " + signoNum(-c) + ".",
+    "(b/2)² = (" + signoNum(b) + "/2)² = " + k + ". Se suma " + k + " a ambos lados: x²" + conSigno(b, "x") + " + " + k + " = " + signoNum(-c + k) + ".",
+    "El lado izquierdo es un cuadrado perfecto: " + binomio(h) + " = " + signoNum(-c + k) + ".",
+    "Raíz cuadrada con ±: x" + (h < 0 ? " − " + Math.abs(h) : " + " + h) + " = ±" + d + ".",
+    "Se despeja x: x = " + signoNum(-h) + " + " + d + " = " + signoNum(mayor) + " o x = " + signoNum(-h) + " − " + d + " = " + signoNum(menor) + "."
+  ];
+}
+
+/* ============================================================
+   Módulo 1 · Modelo del área
+   ============================================================ */
+var vCompleta = false;
+function dibujaVisual(){
+  var b = parseInt($("v-b").value, 10), h = b / 2, k = h * h;
+  $("v-b-val").textContent = b;
+  var g = $("v-dibujo"); while (g.firstChild) g.removeChild(g.firstChild);
+  var X = 170, u = 12, H = h * u, x0 = 40, y0 = 34;
+  g.appendChild(crea("rect", {x:x0, y:y0, width:X, height:X, fill:"#fce4ec", stroke:"#5d0935", "stroke-width":2}));
+  g.appendChild(crea("rect", {x:x0+X, y:y0, width:H, height:X, fill:"#f8bbd0", stroke:"#5d0935", "stroke-width":2}));
+  g.appendChild(crea("rect", {x:x0, y:y0+X, width:X, height:H, fill:"#f8bbd0", stroke:"#5d0935", "stroke-width":2}));
+  g.appendChild(crea("rect", {x:x0+X, y:y0+X, width:H, height:H, "class": vCompleta ? "esquina-lista" : "esquina-falta"}));
+  var f = {"font-family":"Segoe UI, sans-serif", "font-weight":700, fill:"#5d0935"};
+  function t(x, y, txt, extra){ var a = Object.assign({x:x, y:y, "text-anchor":"middle"}, f, extra || {}); g.appendChild(crea("text", a, txt)); }
+  t(x0 + X/2, y0 + X/2 + 7, "x²", {"font-size":22});
+  t(x0 + X/2, y0 - 10, "x", {"font-size":15});
+  t(x0 - 14, y0 + X/2 + 5, "x", {"font-size":15});
+  t(x0 + X + H/2, y0 - 10, String(h), {"font-size":15});
+  t(x0 - 14, y0 + X + H/2 + 5, String(h), {"font-size":15});
+  if (H >= 36){
+    t(x0 + X + H/2, y0 + X/2 + 5, h + "x", {"font-size":14});
+    t(x0 + X/2, y0 + X + H/2 + 5, h + "x", {"font-size":14});
+  }
+  t(x0 + X + H/2, y0 + X + H/2 + 5, vCompleta ? String(k) : "?", {"font-size": H >= 30 ? 15 : 11, fill:"#00695c"});
+  $("v-svg-d").textContent = "Un cuadrado de lado x, dos rectángulos de " + h + " por x a su derecha y debajo, y una esquina de " + h + " por " + h +
+    (vCompleta ? " ya completada, con área " + k + "." : " que todavía falta.");
+  $("v-linea1").textContent = "x² + " + b + "x: se parte " + b + "x en dos rectángulos de " + h + "x. La esquina que falta mide " + h + " × " + h + " = " + k + ".";
+  $("v-linea2").textContent = vCompleta ? "x² + " + b + "x + " + k + " = " + binomio(h) : "Pulsa «Completar la esquina» para formar el cuadrado grande.";
+  $("v-completar").textContent = vCompleta ? "Quitar la esquina" : "Completar la esquina";
+  $("v-completar").setAttribute("aria-pressed", vCompleta ? "true" : "false");
+}
+var p1 = {aciertos:0, total:0};
+function nuevaP1(){
+  var h; do { h = aleatorio(-7, 7); } while (Math.abs(h) < 3);
+  var b = 2*h, k = h*h;
+  $("p1-enun").textContent = "x²" + conSigno(b, "x") + " + " + k + " es igual a:";
+  var correcta = binomio(h);
+  var opciones = [correcta, binomio(-h), binomio(b), binomio(k)];
+  preparaOpciones("p1", opciones, correcta, p1,
+    "El número del binomio es la mitad de b: " + signoNum(b) + "/2 = " + signoNum(h) + ", y (" + signoNum(h) + ")² = " + k + ".");
+}
+
+/* ============================================================
+   Módulo 2 · Los cinco pasos
+   ============================================================ */
+var q = new Pasador("q-pasos");
+function nuevoCasoQ(){
+  var r = raicesPares(7), b = -(r[0] + r[1]), c = r[0]*r[1];
+  $("q-enunciado").textContent = "Resolver " + ecuacion(1, b, c);
+  q.carga(pasosCompletar(b, c, r[0], r[1]));
+}
+var p2 = {aciertos:0, total:0, intentos:0, resuelta:false};
+function nuevaP2(){
+  var r = raicesPares(8);
+  p2.r1 = r[0]; p2.r2 = r[1]; p2.b = -(r[0] + r[1]); p2.c = r[0]*r[1];
+  p2.intentos = 0; p2.resuelta = false;
+  $("p2-enun").textContent = "Resuelve completando el cuadrado: " + ecuacion(1, p2.b, p2.c);
+  $("p2-r1").value = ""; $("p2-r2").value = "";
+  $("p2-fb").className = "fb"; $("p2-fb").textContent = "";
+}
+function revisaP2(){
+  if (p2.resuelta) return;
+  var v1 = parseInt($("p2-r1").value, 10), v2 = parseInt($("p2-r2").value, 10);
+  if (isNaN(v1) || isNaN(v2)){
+    $("p2-fb").className = "fb mal"; $("p2-fb").textContent = "Escribe las dos soluciones antes de revisar."; return;
+  }
+  p2.intentos++;
+  var esp = [p2.r1, p2.r2].sort(function(x,y){return x-y;}), dado = [v1, v2].sort(function(x,y){return x-y;});
+  var h = p2.b/2, k = h*h;
+  if (esp[0] === dado[0] && esp[1] === dado[1]){
+    p2.resuelta = true; p2.total++; p2.aciertos++;
+    $("p2-fb").className = "fb bien";
+    $("p2-fb").textContent = "✓ Correcto. " + binomio(h) + " = " + (-p2.c + k) + ", así que x = " + signoNum(esp[1]) + " o x = " + signoNum(esp[0]) + ".";
+  } else if (p2.intentos === 1){
+    $("p2-fb").className = "fb mal";
+    $("p2-fb").textContent = "✗ Todavía no. Pista: el número que se suma es (" + signoNum(p2.b) + "/2)² = " + k + ". Revisa también el ± del paso 4. Te queda un intento.";
+  } else {
+    p2.resuelta = true; p2.total++;
+    $("p2-fb").className = "fb mal";
+    $("p2-fb").innerHTML = "✗ Las soluciones son x = " + signoNum(esp[1]) + " y x = " + signoNum(esp[0]) + ".<br>" + pasosCompletar(p2.b, p2.c, p2.r1, p2.r2).join("<br>");
+  }
+  $("p2-marcador").textContent = "Aciertos: " + p2.aciertos + " de " + p2.total;
+}
+
+/* ============================================================
+   Módulo 3 · a ≠ 1
+   ============================================================ */
+var r = new Pasador("r-pasos");
+function casoConA(){
+  var rr = raicesPares(6), a = aleatorio(2, 5);
+  var b = -(rr[0] + rr[1]), c = rr[0]*rr[1];
+  return {a:a, A:a, B:a*b, C:a*c, b:b, c:c, r1:rr[0], r2:rr[1]};
+}
+function nuevoCasoR(){
+  var k = casoConA();
+  $("r-enunciado").textContent = "Resolver " + ecuacion(k.A, k.B, k.C);
+  var pasos = ["Se divide todo entre " + k.a + ", también el término independiente: " + ecuacion(1, k.b, k.c) + "."]
+              .concat(pasosCompletar(k.b, k.c, k.r1, k.r2));
+  r.carga(pasos);
+}
+var p3 = {aciertos:0, total:0};
+function nuevaP3(){
+  var k = casoConA();
+  $("p3-enun").textContent = "Primer paso para resolver " + ecuacion(k.A, k.B, k.C) + ": al dividir entre " + k.a + ", ¿qué ecuación queda?";
+  var correcta = ecuacion(1, k.b, k.c);
+  var opciones = [correcta, ecuacion(1, k.B, k.C), ecuacion(1, k.b, k.C), ecuacion(1, k.B, k.c)];
+  var unicas = opciones.filter(function(o, i){ return opciones.indexOf(o) === i; });
+  preparaOpciones("p3", unicas, correcta, p3,
+    "Se dividen los tres términos entre " + k.a + ": " + k.B + " ÷ " + k.a + " = " + k.b + " y " + k.C + " ÷ " + k.a + " = " + k.c + ".");
+}
+
+/* ============================================================
+   Módulo 4 · (b/2)²
+   ============================================================ */
+function actualizaSumar(){
+  var b = parseInt($("s-b").value, 10);
+  if (isNaN(b)){ $("s-linea1").textContent = "Escribe un número entero para b."; $("s-linea2").textContent = ""; return; }
+  $("s-linea1").textContent = "b/2 = " + fraccion(b, 2) + ", y (b/2)² = (" + fraccion(b, 2) + ")² = " + fraccion(b*b, 4) + ".";
+  $("s-linea2").textContent = "x²" + conSigno(b, "x") + " + " + fraccion(b*b, 4) + " es un cuadrado perfecto.";
+}
+var p4 = {aciertos:0, total:0};
+function nuevaP4(){
+  var b; do { b = aleatorio(-13, 13); } while (Math.abs(b) < 3);
+  $("p4-enun").textContent = "¿Qué número hay que sumar a x²" + conSigno(b, "x") + " para completar el cuadrado?";
+  var correcta = fraccion(b*b, 4);
+  var opciones = [correcta, fraccion(b, 2), String(b*b), fraccion(b*b, 2)];
+  preparaOpciones("p4", opciones, correcta, p4,
+    "La mitad de " + signoNum(b) + " es " + fraccion(b, 2) + ", y al elevarla al cuadrado queda " + correcta + (b % 2 ? ". Con b impar, el resultado es una fracción." : "."));
+}
+
+/* ============================================================
+   Navegación: anclas, abrir/cerrar todo
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#", "");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){ document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; }); });
+$("cerrar-todo").addEventListener("click", function(){ document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; }); });
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+$("v-b").addEventListener("input", dibujaVisual);
+$("v-completar").addEventListener("click", function(){ vCompleta = !vCompleta; dibujaVisual(); });
+$("p1-nuevo").addEventListener("click", nuevaP1);
+$("q-siguiente").addEventListener("click", function(){ q.uno(); });
+$("q-todo").addEventListener("click", function(){ q.todos(); });
+$("q-caso").addEventListener("click", nuevoCasoQ);
+$("p2-revisar").addEventListener("click", revisaP2);
+$("p2-nuevo").addEventListener("click", nuevaP2);
+$("r-siguiente").addEventListener("click", function(){ r.uno(); });
+$("r-todo").addEventListener("click", function(){ r.todos(); });
+$("r-caso").addEventListener("click", nuevoCasoR);
+$("p3-nuevo").addEventListener("click", nuevaP3);
+$("s-b").addEventListener("input", actualizaSumar);
+$("p4-nuevo").addEventListener("click", nuevaP4);
+["p2-r1","p2-r2"].forEach(function(id){ $(id).addEventListener("keydown", function(e){ if (e.key === "Enter") revisaP2(); }); });
+
+dibujaVisual(); nuevaP1(); nuevoCasoQ(); nuevaP2(); nuevoCasoR(); nuevaP3(); actualizaSumar(); nuevaP4();
+abrePorHash();
+</script>
+</body>
+</html>
