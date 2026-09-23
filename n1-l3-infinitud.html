@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La infinitud de los decimales</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .infd-app {
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #213744;
+    max-width: 860px;
+    margin: 0 auto;
+    line-height: 1.55;
+  }
+  .infd-app h1 { font-size: 1.7rem; color: #05445e; font-weight: 700; margin: 0 0 0.4rem 0; }
+  .infd-app h2 { font-size: 1.2rem; color: #0089cd; font-weight: 600; margin: 1.9rem 0 0.5rem 0; }
+  .infd-app p { margin: 0.5rem 0; }
+  .infd-cita {
+    background: #e8f4fb; border-left: 5px solid #0089cd;
+    padding: 0.7rem 1rem; border-radius: 6px;
+    font-style: italic; color: #05445e; margin: 0.8rem 0 0.2rem 0;
+  }
+  .infd-recta-wrap {
+    background: #f4fafd; border: 1px solid #b8dcef; border-radius: 10px;
+    padding: 0.6rem 0.4rem 0.2rem 0.4rem; box-shadow: 0 1px 4px #c9dded; margin-top: 0.5rem;
+  }
+  .infd-recta-wrap canvas { display: block; width: 100%; height: 240px; touch-action: manipulation; }
+  .infd-recta-wrap.clic canvas { cursor: zoom-in; }
+  .infd-hint { text-align: center; font-size: 0.85rem; color: #4a6d82; margin: 0.1rem 0 0.4rem 0; }
+  .infd-controles { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin: 0.9rem 0; }
+  .infd-btn {
+    font-family: 'Poppins', Arial, sans-serif; font-size: 0.92rem; font-weight: 500;
+    border: none; border-radius: 8px; padding: 0.55rem 1rem; cursor: pointer;
+    background: #0089cd; color: #ffffff; transition: background 0.15s ease;
+  }
+  .infd-btn:hover { background: #006fa6; }
+  .infd-btn:disabled { background: #b8cdd9; cursor: default; }
+  .infd-btn.secundario { background: #e8f4fb; color: #05445e; }
+  .infd-btn.secundario:hover { background: #d2e9f7; }
+  .infd-btn.acento { background: #5C3900; color: #ffffff; }
+  .infd-btn.acento:hover { background: #3f2700; }
+  .infd-btn.activo { background: #05445e; color: #ffffff; }
+  .infd-panel { background: #ffffff; border: 1px solid #b8dcef; border-radius: 10px; padding: 0.9rem 1.1rem; margin-top: 0.4rem; }
+  .infd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.7rem 1.2rem; }
+  .infd-dato .et { font-size: 0.76rem; color: #4a6d82; text-transform: uppercase; letter-spacing: 0.04em; }
+  .infd-dato .val { font-size: 1.12rem; font-weight: 600; color: #05445e; word-break: break-all; }
+  .infd-dato .val.inf { color: #5C3900; }
+  .infd-mensaje { margin-top: 0.9rem; padding: 0.7rem 0.9rem; background: #e8f4fb; border-radius: 8px; color: #05445e; font-size: 0.95rem; }
+  .infd-app details { border: 1px solid #b8dcef; border-radius: 8px; margin-top: 0.6rem; background: #f4fafd; }
+  .infd-app summary { cursor: pointer; padding: 0.7rem 1rem; font-weight: 600; color: #0089cd; list-style: none; }
+  .infd-app summary::-webkit-details-marker { display: none; }
+  .infd-app summary::before { content: "\25B8  "; color: #0089cd; }
+  .infd-app details[open] summary::before { content: "\25BE  "; }
+  .infd-app details .cuerpo { padding: 0 1rem 0.9rem 1rem; }
+</style>
+</head>
+<body>
+<div class="infd-app">
+
+  <h1>La infinitud de los decimales</h1>
+  <p>Ordenar decimales es ubicarlos en la recta numérica. Pero la recta esconde tres ideas que suelen confundir: que entre dos decimales caben infinitos más, que añadir ceros a la derecha no cambia el valor, y que redondear es elegir dónde detenerse. Explore cada una con las manos.</p>
+  <p class="infd-cita">Entre 0 y 1 caben infinitos decimales. Y entre cualquier par de ellos, también. Acérquese y compruébelo: el tramo se vuelve diez veces más pequeño en cada paso… y nunca se acaba.</p>
+
+  <!-- ============ 1. INFINITUD ============ -->
+  <h2>1. Acérquese: el tramo nunca se acaba</h2>
+  <div class="infd-recta-wrap clic">
+    <canvas id="cvInf" role="img" aria-label="Recta numérica interactiva. El panel inferior describe el estado."></canvas>
+  </div>
+  <p class="infd-hint">Pulse cualquier tramo de la recta para acercarse a él, o use los botones.</p>
+  <div class="infd-controles">
+    <button class="infd-btn" id="infPaso" type="button">Acercar un nivel</button>
+    <button class="infd-btn acento" id="infCaida" type="button">Caída al infinito</button>
+    <button class="infd-btn secundario" id="infAlejar" type="button">Alejar</button>
+    <button class="infd-btn secundario" id="infReset" type="button">Reiniciar</button>
+  </div>
+  <div class="infd-panel" aria-live="polite">
+    <div class="infd-grid">
+      <div class="infd-dato"><div class="et">Nivel de acercamiento</div><div class="val" id="infNivel">0</div></div>
+      <div class="infd-dato"><div class="et">Tramo actual</div><div class="val" id="infIntervalo">[0, 1]</div></div>
+      <div class="infd-dato"><div class="et">Mide cada división</div><div class="val" id="infAmplitud">0.1</div></div>
+      <div class="infd-dato"><div class="et">Decimales recorridos</div><div class="val" id="infRecorridos">1</div></div>
+      <div class="infd-dato"><div class="et">Te falta para el fondo</div><div class="val inf" id="infFalta">&#8734;</div></div>
+    </div>
+    <div class="infd-mensaje" id="infMensaje">El número <strong>1/7 = 0.142857&#8230;</strong> vive dentro del tramo resaltado. Persígalo: por más que se acerque, jamás dejará de tener vecinos.</div>
+  </div>
+
+  <!-- ============ 2. CEROS A LA DERECHA ============ -->
+  <h2>2. &#191;Es 0.1 lo mismo que 0.10 y 0.100?</h2>
+  <p>Muchas personas creen que 0.10 es &#8220;mayor&#8221; o &#8220;distinto&#8221; que 0.1 porque tiene m&#225;s cifras. Observe el punto naranja: al a&#241;adir ceros, la regla se afina, pero el punto no se mueve ni un pelo.</p>
+  <div class="infd-recta-wrap">
+    <canvas id="cvCeros" role="img" aria-label="Recta que muestra el punto 0.1 mientras se le añaden ceros a la derecha."></canvas>
+  </div>
+  <div class="infd-controles">
+    <button class="infd-btn" id="cerMas" type="button">A&#241;adir un cero</button>
+    <button class="infd-btn secundario" id="cerMenos" type="button">Quitar un cero</button>
+    <button class="infd-btn secundario" id="cerReset" type="button">Reiniciar</button>
+  </div>
+  <div class="infd-panel" aria-live="polite">
+    <div class="infd-mensaje" id="cerMensaje">El punto naranja marca el valor <strong>0.1</strong>. Pulse &#171;A&#241;adir un cero&#187; y observe que la etiqueta cambia, pero la posici&#243;n no.</div>
+  </div>
+
+  <!-- ============ 3. REDONDEO ============ -->
+  <h2>3. Entonces, &#191;qu&#233; es redondear?</h2>
+  <p>Como bajar para siempre es imposible, en alg&#250;n momento hay que <strong>plantarse</strong> en un nivel. Redondear es justamente eso: elegir cu&#225;ntos decimales conservamos y quedarnos con la marca m&#225;s cercana. Veamos d&#243;nde cae 1/7 = 0.142857&#8230;</p>
+  <div class="infd-recta-wrap">
+    <canvas id="cvRed" role="img" aria-label="Recta que muestra el redondeo de 1/7 a distintos números de decimales."></canvas>
+  </div>
+  <div class="infd-controles">
+    <button class="infd-btn redbtn" data-n="1" type="button">A 1 decimal</button>
+    <button class="infd-btn redbtn" data-n="2" type="button">A 2 decimales</button>
+    <button class="infd-btn redbtn" data-n="3" type="button">A 3 decimales</button>
+    <button class="infd-btn redbtn" data-n="4" type="button">A 4 decimales</button>
+  </div>
+  <div class="infd-panel" aria-live="polite">
+    <div class="infd-mensaje" id="redMensaje">Elija a cu&#225;ntos decimales redondear. El punto naranja es el valor real de 1/7; la marca azul es la m&#225;s cercana, a la que redondeamos.</div>
+  </div>
+
+  <!-- ============ EXPLICACIÓN ============ -->
+  <h2>&#191;Por qu&#233; nunca llegamos al final?</h2>
+  <details>
+    <summary>Mostrar la explicaci&#243;n matem&#225;tica</summary>
+    <div class="cuerpo">
+      <p>Tome dos decimales distintos, por cercanos que sean; por ejemplo, 0.14 y 0.15. Su promedio, 0.145, queda exactamente entre ellos y es distinto de ambos. Ese promedio puede volver a promediarse con cualquiera de sus vecinos para obtener otro n&#250;mero intermedio, y as&#237; indefinidamente.</p>
+      <p>Esta propiedad se llama <strong>densidad</strong> de los n&#250;meros: entre cualesquiera dos n&#250;meros siempre existe un tercero. La consecuencia es que en cualquier tramo de la recta, sin importar cu&#225;n diminuto sea, caben infinitos decimales.</p>
+      <p>Los ceros a la derecha no a&#241;aden valor porque no cambian la posici&#243;n del punto: 0.1, 0.10 y 0.100 nombran el mismo lugar. Y redondear no contradice la infinitud, sino que la reconoce: como descender es interminable, decidimos en qu&#233; nivel detenernos y elegimos la marca vecina m&#225;s cercana.</p>
+    </div>
+  </details>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var INFD_GS = [];
+
+  // ===== Colores =====
+  var COL_EJE = "#9cc4dc", COL_MAYOR = "#0089cd", COL_MENOR = "#5bb4e0";
+  var COL_TEXTO = "#05445e", COL_TENUE = "#7896a8";
+  var COL_AMBAR = "#5C3900", COL_GUIA_FONDO = "#fdebd0";
+
+  // ===== Etiquetas exactas con BigInt =====
+  function limite(p, addOne) {
+    var len = p.length;
+    var base = BigInt(p === "" ? "0" : p);
+    var n = base + (addOne ? 1n : 0n);
+    var denom = 10n ** BigInt(len);
+    if (n === 0n) return "0";
+    if (n === denom) return "1";
+    return "0." + n.toString().padStart(len, "0");
+  }
+  function marcaVal(p, i) {
+    var len = p.length;
+    var base = BigInt(p === "" ? "0" : p);
+    var n = base * 10n + BigInt(i);
+    var denom = 10n ** BigInt(len + 1);
+    if (n === 0n) return "0";
+    if (n === denom) return "1";
+    return "0." + n.toString().padStart(len + 1, "0");
+  }
+  function amplitudTexto(len) {
+    if (len === 0) return "0.1";
+    var c = ""; for (var i = 0; i < len; i++) c += "0";
+    return "0." + c + "1";
+  }
+  // dígitos exactos de 1/7 = 0.142857142857...
+  function digito17(pos) {
+    var r = 1, d = 0;
+    for (var i = 0; i <= pos; i++) { r = r * 10; d = Math.floor(r / 7); r = r % 7; }
+    return d;
+  }
+  function prefijoSigue17(p) {
+    for (var i = 0; i < p.length; i++) if (Number(p.charAt(i)) !== digito17(i)) return false;
+    return true;
+  }
+
+  // ===== Geometría / dibujo compartido =====
+  function mkG(canvas, hfrac) {
+    return { canvas: canvas, ctx: canvas.getContext("2d"), mh: 46, W: 0, axisY: 0, cssH: 0, hfrac: hfrac || 0.46 };
+  }
+  function ajustar(g) {
+    var dpr = window.devicePixelRatio || 1;
+    var cssW = g.canvas.clientWidth || 700, cssH = g.canvas.clientHeight || 240;
+    g.canvas.width = Math.round(cssW * dpr);
+    g.canvas.height = Math.round(cssH * dpr);
+    g.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.W = cssW - 2 * g.mh; g.cssH = cssH; g.axisY = Math.round(cssH * g.hfrac);
+  }
+  function xp(g, local, A, B) { return g.mh + ((local - A) / (B - A)) * g.W; }
+  function clr(g) { g.ctx.clearRect(0, 0, g.canvas.width, g.canvas.height); }
+  function eje(g) {
+    var c = g.ctx; c.globalAlpha = 1; c.strokeStyle = COL_EJE; c.lineWidth = 2;
+    c.beginPath(); c.moveTo(g.mh, g.axisY); c.lineTo(g.mh + g.W, g.axisY); c.stroke();
+    c.beginPath();
+    c.moveTo(g.mh + g.W, g.axisY); c.lineTo(g.mh + g.W - 8, g.axisY - 5);
+    c.moveTo(g.mh + g.W, g.axisY); c.lineTo(g.mh + g.W - 8, g.axisY + 5);
+    c.moveTo(g.mh, g.axisY); c.lineTo(g.mh + 8, g.axisY - 5);
+    c.moveTo(g.mh, g.axisY); c.lineTo(g.mh + 8, g.axisY + 5);
+    c.stroke();
+  }
+  function tick(g, x, h, color, alpha) {
+    if (x < g.mh - 30 || x > g.mh + g.W + 30) return;
+    var c = g.ctx; c.globalAlpha = alpha; c.strokeStyle = color; c.lineWidth = 2;
+    c.beginPath(); c.moveTo(x, g.axisY - h); c.lineTo(x, g.axisY + h); c.stroke(); c.globalAlpha = 1;
+  }
+  function lbl(g, x, texto, alpha, tam, color, align, dy) {
+    if (x < g.mh - 70 || x > g.mh + g.W + 70) return;
+    var c = g.ctx, px = x;
+    if (align === "left") { c.textAlign = "left"; px = Math.max(x, 4); }
+    else if (align === "right") { c.textAlign = "right"; px = Math.min(x, g.mh + g.W + g.mh - 4); }
+    else c.textAlign = "center";
+    c.globalAlpha = alpha; c.fillStyle = color;
+    c.font = tam + "px 'Poppins', Arial, sans-serif";
+    c.fillText(texto, px, g.axisY + (dy === undefined ? 30 : dy));
+    c.globalAlpha = 1; c.textAlign = "start";
+  }
+  function gota(g, x, color, alpha) {
+    var c = g.ctx; c.globalAlpha = alpha; c.fillStyle = color;
+    var y = g.axisY;
+    c.beginPath();
+    c.moveTo(x, y - 4);
+    c.lineTo(x - 7, y - 18);
+    c.lineTo(x + 7, y - 18);
+    c.closePath(); c.fill();
+    c.beginPath(); c.arc(x, y, 4, 0, Math.PI * 2); c.fill();
+    c.globalAlpha = 1;
+  }
+  function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+  // =========================================================
+  // SECCIÓN 1 — INFINITUD (zoom telescópico)
+  // =========================================================
+  (function () {
+    var g = mkG(document.getElementById("cvInf"), 0.46);
+    var prefix = "", animando = false;
+
+    function resaltar(A, B) {
+      if (!prefijoSigue17(prefix)) return;
+      var k = digito17(prefix.length);
+      var x0 = xp(g, k / 10, A, B), x1 = xp(g, (k + 1) / 10, A, B);
+      var c = g.ctx; c.globalAlpha = 1; c.fillStyle = COL_GUIA_FONDO;
+      c.fillRect(x0, g.axisY - 38, x1 - x0, 76);
+      c.strokeStyle = COL_AMBAR; c.lineWidth = 1.5; c.strokeRect(x0, g.axisY - 38, x1 - x0, 76);
+      var cx = (x0 + x1) / 2;
+      if (cx > g.mh + 18 && cx < g.mh + g.W - 18) {
+        c.fillStyle = COL_AMBAR; c.font = "11px 'Poppins', Arial, sans-serif"; c.textAlign = "center";
+        c.fillText("1/7 est\u00E1 aqu\u00ED", cx, g.axisY - 44); c.textAlign = "start";
+      }
+    }
+    function estable() {
+      clr(g); resaltar(0, 1); eje(g);
+      var hiTxt = limite(prefix, true), loTxt = limite(prefix, false);
+      g.ctx.font = "12px 'Poppins', Arial, sans-serif";
+      var anchoMax = Math.max(g.ctx.measureText(hiTxt).width, g.ctx.measureText(marcaVal(prefix, 5)).width);
+      var completas = (anchoMax + 8) < (g.W / 10);
+      for (var i = 0; i <= 10; i++) tick(g, xp(g, i / 10, 0, 1), 13, COL_MAYOR, 1);
+      lbl(g, xp(g, 0, 0, 1), loTxt, 1, 12, COL_TEXTO, "left");
+      lbl(g, xp(g, 1, 0, 1), hiTxt, 1, 12, COL_TEXTO, "right");
+      for (var j = 1; j <= 9; j++) {
+        var xj = xp(g, j / 10, 0, 1);
+        if (completas) lbl(g, xj, marcaVal(prefix, j), 1, 12, COL_TENUE, "center");
+        else lbl(g, xj, "\u2026" + j, 1, 11, COL_TENUE, "center");
+      }
+    }
+    function animar(k, dur, cb) {
+      if (animando) return;
+      if (prefix.length >= 18) { tope(); if (cb) cb(false); return; }
+      animando = true; bloquear(true);
+      var t0 = null, np = prefix + String(k);
+      var loN = limite(np, false), hiN = limite(np, true);
+      function frame(ts) {
+        if (t0 === null) t0 = ts;
+        var prog = Math.min(1, (ts - t0) / dur), e = easeInOut(prog);
+        var A = e * (k / 10), B = (1 - e) * 1 + e * ((k + 1) / 10);
+        clr(g); eje(g);
+        for (var i = 0; i <= 10; i++) tick(g, xp(g, i / 10, A, B), 13, COL_MAYOR, 1);
+        for (var j = 0; j <= 10; j++) tick(g, xp(g, k / 10 + j / 100, A, B), 10, COL_MENOR, e);
+        lbl(g, xp(g, k / 10, A, B), loN, e, 12, COL_TEXTO, "left");
+        lbl(g, xp(g, (k + 1) / 10, A, B), hiN, e, 12, COL_TEXTO, "right");
+        if (prog < 1) requestAnimationFrame(frame);
+        else { prefix = np; animando = false; bloquear(false); estable(); panel(); if (cb) cb(true); }
+      }
+      requestAnimationFrame(frame);
+    }
+    function siguienteK() { return prefijoSigue17(prefix) ? digito17(prefix.length) : 4; }
+    function panel(extra) {
+      var len = prefix.length;
+      document.getElementById("infNivel").textContent = String(len);
+      document.getElementById("infIntervalo").textContent = "[" + limite(prefix, false) + ", " + limite(prefix, true) + "]";
+      document.getElementById("infAmplitud").innerHTML = amplitudTexto(len) + " <span style='font-size:0.78rem;color:#4a6d82'>(10<sup>-" + (len + 1) + "</sup>)</span>";
+      document.getElementById("infRecorridos").textContent = String(len + 1);
+      var msg = document.getElementById("infMensaje");
+      if (extra) msg.innerHTML = extra;
+      else if (prefijoSigue17(prefix)) msg.innerHTML = "El n\u00FAmero <strong>1/7 = 0.142857\u2026</strong> sigue dentro del tramo resaltado. Por m\u00E1s que se acerque, jam\u00E1s se quedar\u00E1 sin vecinos.";
+      else msg.innerHTML = "Ha entrado en un tramo diez veces m\u00E1s peque\u00F1o. Aun as\u00ED, dentro de \u00E9l vuelven a caber infinitos decimales.";
+    }
+    function tope() { panel("Ha descendido much\u00EDsimos niveles\u2026 y el tramo sigue lleno de n\u00FAmeros. Aqu\u00ED detenemos el lienzo, pero las matem\u00E1ticas no: <strong>nunca</strong> se llega al final. Pulse \u00ABReiniciar\u00BB para volver a la superficie."); }
+    function bloquear(b) {
+      ["infPaso", "infCaida", "infAlejar", "infReset"].forEach(function (id) { document.getElementById(id).disabled = b; });
+    }
+    document.getElementById("cvInf").addEventListener("click", function (ev) {
+      if (animando) return;
+      var r = g.canvas.getBoundingClientRect(), x = ev.clientX - r.left;
+      var local = (x - g.mh) / g.W;
+      if (local < 0 || local > 1) return;
+      var k = Math.floor(local * 10); if (k < 0) k = 0; if (k > 9) k = 9;
+      animar(k, 650, null);
+    });
+    document.getElementById("infPaso").addEventListener("click", function () { animar(siguienteK(), 650, null); });
+    document.getElementById("infCaida").addEventListener("click", function () {
+      if (animando) return;
+      var obj = Math.min(18, prefix.length + 8);
+      (function paso() {
+        if (prefix.length >= obj) { panel("Hemos ca\u00EDdo " + prefix.length + " niveles y el tramo mide apenas " + amplitudTexto(prefix.length) + "\u2026 y todav\u00EDa caben infinitos decimales dentro. Jam\u00E1s llegamos al fondo: eso es el infinito."); return; }
+        animar(siguienteK(), 430, function (ok) { if (ok) setTimeout(paso, 90); });
+      })();
+    });
+    document.getElementById("infAlejar").addEventListener("click", function () {
+      if (animando || prefix.length === 0) return;
+      prefix = prefix.slice(0, -1); estable(); panel();
+    });
+    document.getElementById("infReset").addEventListener("click", function () { if (animando) return; prefix = ""; estable(); panel(); });
+
+    g._redraw = function () { ajustar(g); estable(); };
+    g._panel = panel;
+    INFD_GS.push(g);
+  })();
+
+  // =========================================================
+  // SECCIÓN 2 — CEROS A LA DERECHA (zoom centrado en 0.1)
+  // =========================================================
+  (function () {
+    var g = mkG(document.getElementById("cvCeros"), 0.5);
+    var z = 0; // nº de ceros añadidos: etiqueta = 0.1 + z ceros
+    var animando = false, curA = 0, curB = 0.2;
+
+    function rango(zz) {
+      if (zz === 0) return [0, 0.2];
+      var div = Math.pow(10, -(zz + 1));
+      return [0.1 - 2 * div, 0.1 + 2 * div];
+    }
+    function etq(zz) { var s = "0.1"; for (var i = 0; i < zz; i++) s += "0"; return s; }
+
+    function dibujar(A, B) {
+      clr(g); eje(g);
+      var div = (B - A) / (B === 0.2 && A === 0 ? 2 : 4); // tamaño de paso visible
+      // determinar paso de marcas según nivel
+      var paso = (z === 0) ? 0.1 : Math.pow(10, -(z + 1));
+      var inicio = Math.round(A / paso) * paso;
+      for (var v = inicio; v <= B + paso * 0.5; v += paso) {
+        if (v < A - paso * 0.01) continue;
+        var x = xp(g, v, A, B);
+        var esCentro = Math.abs(v - 0.1) < paso * 0.01;
+        tick(g, x, esCentro ? 14 : 9, esCentro ? COL_MAYOR : COL_MENOR, 1);
+        var et = (Math.round(v / paso) === 0) ? "0" : ("0." + (Math.round(v / paso)).toString().padStart(z + 1, "0"));
+        if (Math.abs(v) < paso * 0.01) et = "0";
+        lbl(g, x, et, esCentro ? 0 : 1, 11, COL_TENUE, "center"); // centro lo etiqueta la gota
+      }
+      // punto invitado 0.1 (fijo en el centro)
+      var xc = xp(g, 0.1, A, B);
+      gota(g, xc, COL_AMBAR, 1);
+      g.ctx.fillStyle = COL_AMBAR; g.ctx.font = "600 14px 'Poppins', Arial, sans-serif"; g.ctx.textAlign = "center";
+      g.ctx.fillText(etq(z), xc, g.axisY - 26); g.ctx.textAlign = "start";
+    }
+    function anim(nz) {
+      if (animando) return;
+      animando = true; setBtns(true);
+      var r0 = [curA, curB], r1 = rango(nz), t0 = null, dur = 520;
+      function frame(ts) {
+        if (t0 === null) t0 = ts;
+        var prog = Math.min(1, (ts - t0) / dur), e = easeInOut(prog);
+        var A = r0[0] + (r1[0] - r0[0]) * e, B = r0[1] + (r1[1] - r0[1]) * e;
+        // durante la transición usamos el nivel destino para las marcas
+        z = nz;
+        dibujar(A, B);
+        if (prog < 1) requestAnimationFrame(frame);
+        else { curA = r1[0]; curB = r1[1]; animando = false; setBtns(false); msg(); }
+      }
+      requestAnimationFrame(frame);
+    }
+    function setBtns(b) { ["cerMas", "cerMenos", "cerReset"].forEach(function (id) { document.getElementById(id).disabled = b; }); }
+    function msg() {
+      var m = document.getElementById("cerMensaje");
+      if (z === 0) m.innerHTML = "El punto naranja marca el valor <strong>0.1</strong>. Pulse \u00ABA\u00F1adir un cero\u00BB y observe que la etiqueta cambia, pero la posici\u00F3n no.";
+      else m.innerHTML = "<strong>" + etq(z) + " = 0.1</strong>. Llevamos " + z + " cero(s) a\u00F1adido(s) y el punto no se ha movido ni un pelo. Los ceros a la derecha afinan la regla, pero no cambian el valor.";
+    }
+    document.getElementById("cerMas").addEventListener("click", function () { if (z < 6) anim(z + 1); });
+    document.getElementById("cerMenos").addEventListener("click", function () { if (z > 0) anim(z - 1); });
+    document.getElementById("cerReset").addEventListener("click", function () { if (!animando) { z = 0; curA = 0; curB = 0.2; dibujar(0, 0.2); msg(); } });
+
+    g._redraw = function () { ajustar(g); dibujar(curA, curB); };
+    INFD_GS.push(g);
+  })();
+
+  // =========================================================
+  // SECCIÓN 3 — REDONDEO (1/7 a N decimales)
+  // =========================================================
+  (function () {
+    var g = mkG(document.getElementById("cvRed"), 0.5);
+    var N = 2;
+    var V17 = 1 / 7; // valor numérico de 1/7
+
+    function inferiorStr(n) { var s = ""; for (var i = 0; i < n; i++) s += String(digito17(i)); return s; } // dígitos
+    function marcaInf(n) { return "0." + inferiorStr(n); }
+    function marcaSup(n) {
+      var base = BigInt(inferiorStr(n)) + 1n;
+      var denom = 10n ** BigInt(n);
+      if (base === denom) return "1";
+      return "0." + base.toString().padStart(n, "0");
+    }
+    function redondeoStr(n) {
+      // dígito siguiente decide
+      var sig = digito17(n);
+      return (sig >= 5) ? marcaSup(n) : marcaInf(n);
+    }
+    function dibujar() {
+      clr(g);
+      var lo = parseFloat(marcaInf(N)), hi = parseFloat(marcaSup(N));
+      var div = hi - lo;
+      var A = lo - div, B = hi + div;
+      eje(g);
+      // marcas: lo-div, lo, hi, hi+div
+      var vals = [lo - div, lo, hi, hi + div];
+      var elegido = redondeoStr(N);
+      for (var i = 0; i < vals.length; i++) {
+        var v = vals[i], x = xp(g, v, A, B);
+        var txt;
+        if (i === 1) txt = marcaInf(N); else if (i === 2) txt = marcaSup(N);
+        else txt = (v).toFixed(N);
+        var esElegido = (txt === elegido);
+        tick(g, x, esElegido ? 15 : 10, esElegido ? COL_MAYOR : COL_MENOR, 1);
+        lbl(g, x, txt, 1, 12, esElegido ? COL_MAYOR : COL_TENUE, "center");
+        if (esElegido) {
+          g.ctx.strokeStyle = COL_MAYOR; g.ctx.lineWidth = 2;
+          g.ctx.beginPath(); g.ctx.arc(x, g.axisY, 9, 0, Math.PI * 2); g.ctx.stroke();
+        }
+      }
+      // punto real de 1/7
+      var xr = xp(g, V17, A, B);
+      gota(g, xr, COL_AMBAR, 1);
+      g.ctx.fillStyle = COL_AMBAR; g.ctx.font = "600 13px 'Poppins', Arial, sans-serif"; g.ctx.textAlign = "center";
+      g.ctx.fillText("0.142857\u2026", xr, g.axisY - 26); g.ctx.textAlign = "start";
+    }
+    function msg() {
+      var elegido = redondeoStr(N), sig = digito17(N);
+      var razon = (sig >= 5)
+        ? ("la cifra siguiente es " + sig + " (5 o m\u00E1s), as\u00ED que subimos a la marca de arriba")
+        : ("la cifra siguiente es " + sig + " (menor que 5), as\u00ED que nos quedamos con la marca de abajo");
+      document.getElementById("redMensaje").innerHTML =
+        "A " + N + " decimal(es): <strong>0.142857\u2026 \u2248 " + elegido + "</strong>. Como " + razon + ". Redondear es plantarse en este nivel y elegir la marca m\u00E1s cercana; los infinitos decimales restantes se resumen en esa decisi\u00F3n.";
+    }
+    function marcaActiva() {
+      var btns = document.querySelectorAll(".redbtn");
+      for (var i = 0; i < btns.length; i++) {
+        if (Number(btns[i].getAttribute("data-n")) === N) btns[i].classList.add("activo");
+        else btns[i].classList.remove("activo");
+      }
+    }
+    var btns = document.querySelectorAll(".redbtn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function () {
+        N = Number(this.getAttribute("data-n")); dibujar(); msg(); marcaActiva();
+      });
+    }
+    g._redraw = function () { ajustar(g); dibujar(); };
+    g._initRed = function () { marcaActiva(); msg(); };
+    INFD_GS.push(g);
+    g._initRed();
+  })();
+
+  // ===== arranque y reescalado de todos los lienzos =====
+  function redibujarTodo() { for (var i = 0; i < INFD_GS.length; i++) INFD_GS[i]._redraw(); }
+  var t;
+  window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(redibujarTodo, 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(redibujarTodo);
+  redibujarTodo();
+  // panel inicial sección 1
+  for (var i = 0; i < INFD_GS.length; i++) if (INFD_GS[i]._panel) INFD_GS[i]._panel();
+})();
+</script>
