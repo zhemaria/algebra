@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo: área y perímetro de figuras básicas</title>
+<style>
+  :root{
+    --cp:#0089cd;
+    --cp-claro:#e3f2fd;
+    --cp-oscuro:#005a8a;
+    --acento:#ff8c42;
+    --acento-oscuro:#e65100;
+    --texto:#1a2332;
+    --fondo:#fafbfc;
+    --gris:#6b7785;
+    --gris-claro:#eef1f4;
+    --linea:#dbe2ea;
+    --exito:#2e7d32;
+    --exito-claro:#e8f5e9;
+    --error:#b91c1c;
+    --error-claro:#fdeaea;
+    --amarillo:#fff7e6;
+    --amarillo-borde:#ffc107;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    font-family:'Poppins','Segoe UI',Tahoma,Arial,sans-serif;
+    background-color:var(--fondo);
+    color:var(--texto);
+    margin:0;
+    padding:18px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:100vh;
+  }
+
+  .container{
+    width:720px;
+    max-width:100%;
+    margin:0 auto;
+    padding:18px 22px 22px;
+    border:1px solid var(--linea);
+    border-radius:14px;
+    background-color:#ffffff;
+    box-shadow:0 6px 22px rgba(0,86,138,0.10);
+    display:flex;
+    flex-direction:column;
+  }
+
+  .header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    border-bottom:3px solid var(--cp);
+    padding-bottom:10px;
+    margin-bottom:14px;
+  }
+  .header h1{
+    color:var(--cp-oscuro);
+    margin:0;
+    font-size:1.28em;
+    line-height:1.2;
+    font-weight:700;
+  }
+  .units-badge{
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.85em;
+  }
+  .units-badge .lbl{
+    color:var(--gris);
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+  .units-badge .unit{
+    color:var(--cp-oscuro);
+    font-weight:700;
+    background-color:var(--cp-claro);
+    padding:3px 10px;
+    border-radius:6px;
+    border:1px solid #bfe0f4;
+  }
+
+  .canvas-container{
+    position:relative;
+    width:100%;
+    margin-bottom:12px;
+    border:1px solid var(--linea);
+    border-radius:10px;
+    background-color:#ffffff;
+    overflow:hidden;
+  }
+  canvas{
+    cursor:pointer;
+    display:block;
+    width:100%;
+    height:auto;
+  }
+
+  .instruction{
+    text-align:center;
+    color:var(--acento-oscuro);
+    font-weight:600;
+    font-size:0.95em;
+    margin-bottom:10px;
+    background-color:var(--amarillo);
+    border:1px solid var(--amarillo-borde);
+    padding:7px 14px;
+    border-radius:8px;
+  }
+  .instruction.ok{
+    color:var(--exito);
+    background-color:var(--exito-claro);
+    border-color:#bfe3c2;
+  }
+
+  .panel{
+    border:1px solid var(--linea);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .panel-head{
+    background-color:var(--cp-claro);
+    color:var(--cp-oscuro);
+    font-weight:700;
+    padding:8px 14px;
+    font-size:0.97em;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #bfe0f4;
+  }
+  .panel-head .figura{ font-size:1.05em; }
+
+  .fila{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 14px;
+    border-bottom:1px solid var(--gris-claro);
+    flex-wrap:wrap;
+  }
+  .fila:last-child{ border-bottom:none; }
+
+  .fila .nombre{
+    font-weight:600;
+    min-width:128px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .pastilla{
+    display:inline-block;
+    min-width:22px;
+    text-align:center;
+    font-weight:700;
+    color:#fff;
+    background-color:var(--cp);
+    border-radius:5px;
+    padding:1px 7px;
+    font-size:0.9em;
+  }
+  .pastilla.area{ background-color:var(--acento-oscuro); }
+  .pastilla.perim{ background-color:var(--cp-oscuro); }
+
+  .btn-medir{
+    background-color:var(--cp-oscuro);
+    color:#fff;
+    border:none;
+    border-radius:7px;
+    padding:6px 12px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:0.85em;
+    font-family:inherit;
+    transition:transform .12s ease, box-shadow .12s ease;
+    white-space:nowrap;
+  }
+  .btn-medir:hover{ background-color:#004a73; }
+  .btn-medir.active{
+    box-shadow:0 0 0 3px #bfe0f4;
+    transform:translateY(-1px);
+  }
+  .btn-medir.listo{ background-color:var(--exito); }
+
+  .campo{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-left:auto;
+    font-weight:600;
+  }
+  .campo input{
+    width:64px;
+    padding:6px 8px;
+    border:2px solid var(--linea);
+    border-radius:7px;
+    font-size:1em;
+    font-family:inherit;
+    text-align:center;
+    color:var(--texto);
+    background-color:#fff;
+  }
+  .campo input:focus{
+    outline:none;
+    border-color:var(--cp);
+    box-shadow:0 0 0 3px var(--cp-claro);
+  }
+  .campo input:disabled{
+    background-color:var(--gris-claro);
+    color:var(--gris);
+    cursor:not-allowed;
+  }
+  .campo input.correcto{
+    border-color:var(--exito);
+    background-color:var(--exito-claro);
+    color:var(--exito);
+  }
+  .campo input.incorrecto{
+    border-color:var(--error);
+    background-color:var(--error-claro);
+  }
+  .campo .uni{ color:var(--gris); font-size:0.9em; }
+  .estado{
+    width:20px;
+    text-align:center;
+    font-weight:700;
+    font-size:1.05em;
+  }
+  .estado.ok{ color:var(--exito); }
+  .estado.no{ color:var(--error); }
+
+  .formula{
+    font-size:0.82em;
+    color:var(--gris);
+    font-style:italic;
+  }
+
+  .feedback{
+    width:100%;
+    font-size:0.85em;
+    margin-top:2px;
+    font-weight:600;
+  }
+  .feedback.no{ color:var(--error); }
+  .feedback.si{ color:var(--exito); }
+
+  .success-box{
+    display:none;
+    margin-top:14px;
+    padding:14px 16px;
+    background-color:var(--exito-claro);
+    border:2px solid #bfe3c2;
+    border-radius:10px;
+    color:#14532d;
+    line-height:1.6;
+  }
+  .success-box strong.titulo{
+    display:block;
+    font-size:1.1em;
+    color:var(--exito);
+    margin-bottom:8px;
+  }
+  .success-box .calc{ margin:2px 0; }
+
+  .controls{
+    margin-top:12px;
+    display:flex;
+    justify-content:center;
+  }
+  #new-exercise{
+    background-color:var(--texto);
+    color:#fff;
+    border:none;
+    border-radius:9px;
+    padding:10px 26px;
+    cursor:pointer;
+    font-weight:700;
+    font-size:1em;
+    font-family:inherit;
+    width:70%;
+    max-width:360px;
+  }
+  #new-exercise:hover{ background-color:#0f1722; }
+
+  .pie{
+    margin-top:12px;
+    padding-top:9px;
+    border-top:1px solid var(--gris-claro);
+    text-align:center;
+    font-size:0.76em;
+    color:var(--gris);
+    line-height:1.45;
+  }
+
+  @media (max-width:560px){
+    .header h1{ font-size:1.05em; }
+    .fila .nombre{ min-width:108px; }
+    .campo input{ width:56px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Área y perímetro</h1>
+    <div class="units-badge">
+      <span class="lbl">UNIDADES</span>
+      <span class="unit" id="unit-display">cm</span>
+    </div>
+  </div>
+
+  <div class="canvas-container">
+    <canvas id="figura-canvas" width="640" height="320"></canvas>
+  </div>
+
+  <div class="instruction" id="instruction-text">Pulsa “Medir” en una dimensión y coloca la regla sobre el lado correspondiente.</div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <span class="figura" id="shape-name">Figura</span>
+      <span id="paso-info" style="font-size:0.82em;color:var(--cp-oscuro);font-weight:600;"></span>
+    </div>
+    <div id="dims-container"></div>
+    <div class="fila" id="fila-area">
+      <span class="nombre"><span class="pastilla area">A</span> Área</span>
+      <span class="formula" id="formula-area"></span>
+      <span class="campo">
+        A = <input type="number" id="input-area" inputmode="decimal" aria-label="Escribe el área" disabled> <span class="uni" id="uni-area">cm²</span>
+      </span>
+      <span class="estado" id="estado-area"></span>
+      <div class="feedback" id="fb-area"></div>
+    </div>
+    <div class="fila" id="fila-perim">
+      <span class="nombre"><span class="pastilla perim">P</span> Perímetro</span>
+      <span class="formula" id="formula-perim"></span>
+      <span class="campo">
+        P = <input type="number" id="input-perim" inputmode="decimal" aria-label="Escribe el perímetro" disabled> <span class="uni" id="uni-perim">cm</span>
+      </span>
+      <span class="estado" id="estado-perim"></span>
+      <div class="feedback" id="fb-perim"></div>
+    </div>
+  </div>
+
+  <div class="success-box" id="success-box"></div>
+
+  <div class="controls">
+    <button id="new-exercise">Generar otro ejercicio</button>
+  </div>
+
+  <div class="pie">
+    Spanish ASE Math (Nivel 1) · Truman College — City Colleges of Chicago<br>
+    Prof. José M. Fernández
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const canvas = document.getElementById("figura-canvas");
+  const ctx = canvas.getContext("2d");
+
+  const unitDisplay   = document.getElementById("unit-display");
+  const shapeNameEl    = document.getElementById("shape-name");
+  const pasoInfoEl     = document.getElementById("paso-info");
+  const instructionEl  = document.getElementById("instruction-text");
+  const dimsContainer  = document.getElementById("dims-container");
+  const successBox     = document.getElementById("success-box");
+  const newExerciseBtn = document.getElementById("new-exercise");
+
+  const inputArea  = document.getElementById("input-area");
+  const inputPerim = document.getElementById("input-perim");
+  const estadoArea = document.getElementById("estado-area");
+  const estadoPerim= document.getElementById("estado-perim");
+  const fbArea     = document.getElementById("fb-area");
+  const fbPerim    = document.getElementById("fb-perim");
+  const formulaArea= document.getElementById("formula-area");
+  const formulaPerim=document.getElementById("formula-perim");
+
+  const W = canvas.width;   // 640
+  const H = canvas.height;  // 320
+  const CX = W / 2;
+  const MAX_FIG_W = W - 90;
+  const BAND_TOP = 28, BAND_H = 200;
+  const PARK_Y = 288;
+
+  let shape, unit, scale, geo, dims, areaVal, perimVal;
+  let activeKey = null;
+  let areaTyped = false, perimTyped = false;
+
+  let rulerStart = { x: CX - 80, y: PARK_Y };
+  let rulerEnd   = { x: CX + 80, y: PARK_Y };
+  let dragStart = false, dragEnd = false;
+
+  // ternas para el triángulo rectángulo (hipotenusa entera)
+  const triplesRec = [ {b:3,h:4,c:5}, {b:4,h:3,c:5}, {b:6,h:8,c:10}, {b:8,h:6,c:10} ];
+  // isósceles acutángulos: (mitad de base, altura, lado) con altura > mitad de base
+  const setsAcu = [ {b:6,h:4,l:5}, {b:12,h:8,l:10} ];
+  // isósceles obtusángulos: altura < mitad de base
+  const setsObt = [ {b:8,h:3,l:5}, {b:16,h:6,l:10} ];
+
+  function rnd(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function pick(arr){ return arr[rnd(0,arr.length-1)]; }
+
+  function computeScale(wUnits,hUnits){
+    const s = Math.min(MAX_FIG_W/wUnits, BAND_H/hUnits);
+    return Math.max(18, Math.min(42, s));
+  }
+
+  function isTri(){ return shape.indexOf("tri") === 0; }
+
+  function buildGeometry(){
+    let wU, hU;
+    if (shape === "tri-rec"){ wU = dims[0].value; hU = dims[1].value; }
+    else if (isTri()){       wU = dims[0].value; hU = dims[1].value; }
+    else {                   wU = dims[0].value; hU = dims[1].value; }
+
+    scale = computeScale(wU, hU);
+    const figW = wU*scale, figH = hU*scale;
+    const top = BAND_TOP + (BAND_H - figH)/2;
+    const bottom = top + figH;
+
+    geo = { segments:[], rightAngleAt:null };
+
+    if (shape === "tri-rec"){
+      const left = CX - figW/2, right = left + figW;
+      const A = {x:left,  y:bottom}; // ángulo recto
+      const B = {x:right, y:bottom};
+      const C = {x:left,  y:top};
+      geo.rightAngleAt = A;
+      geo.segments = [
+        { p1:A, p2:B, key:"base",   dashed:false },
+        { p1:A, p2:C, key:"altura", dashed:false },
+        { p1:B, p2:C, key:"hip",    dashed:false }
+      ];
+    } else if (isTri()){
+      // isósceles (acutángulo / obtusángulo): ápice centrado, altura interior punteada
+      const left = CX - figW/2, right = left + figW;
+      const A = {x:left,  y:bottom};
+      const B = {x:right, y:bottom};
+      const C = {x:CX,    y:top};      // ápice
+      const M = {x:CX,    y:bottom};   // pie de la altura (punto medio de la base)
+      geo.segments = [
+        { p1:A, p2:B, key:"base",   dashed:false },
+        { p1:A, p2:C, key:"lado",   dashed:false },
+        { p1:B, p2:C, key:"lado",   dashed:false },
+        { p1:M, p2:C, key:"altura", dashed:true  }
+      ];
+    } else {
+      const lx = CX - figW/2, rx = CX + figW/2;
+      const tl={x:lx,y:top}, tr={x:rx,y:top}, br={x:rx,y:bottom}, bl={x:lx,y:bottom};
+      geo.segments = [
+        { p1:bl, p2:br, key:"largo", dashed:false },
+        { p1:tl, p2:tr, key:"largo", dashed:false },
+        { p1:bl, p2:tl, key:"ancho", dashed:false },
+        { p1:br, p2:tr, key:"ancho", dashed:false }
+      ];
+    }
+  }
+
+  function segmentsForKey(key){
+    return geo.segments.filter(function(s){ return s.key === key; });
+  }
+
+  function generateNewExercise(){
+    const pool = ["square","rectangle","tri-acu","tri-rec","tri-obt"];
+    shape = pick(pool);
+
+    const units = ["mm","cm","dm","m"];
+    unit = pick(units);
+    unitDisplay.textContent = unit;
+    document.getElementById("uni-area").textContent  = unit + "²";
+    document.getElementById("uni-perim").textContent = unit;
+
+    if (shape === "square"){
+      const l = rnd(3,7);
+      dims = [
+        { key:"largo", sym:"l", name:"Largo", value:l },
+        { key:"ancho", sym:"w", name:"Ancho", value:l }
+      ];
+      areaVal = l*l; perimVal = 4*l;
+      shapeNameEl.textContent = "Cuadrado";
+    } else if (shape === "rectangle"){
+      let l = rnd(4,8), w = rnd(2,5);
+      if (l === w) w = (w-1 < 2) ? w+1 : w-1;
+      dims = [
+        { key:"largo", sym:"l", name:"Largo", value:l },
+        { key:"ancho", sym:"w", name:"Ancho", value:w }
+      ];
+      areaVal = l*w; perimVal = 2*(l+w);
+      shapeNameEl.textContent = "Rectángulo";
+    } else if (shape === "tri-rec"){
+      const t = pick(triplesRec);
+      dims = [
+        { key:"base",   sym:"b", name:"Base",       value:t.b },
+        { key:"altura", sym:"h", name:"Altura",     value:t.h },
+        { key:"hip",    sym:"c", name:"Hipotenusa", value:t.c }
+      ];
+      areaVal = (t.b*t.h)/2; perimVal = t.b+t.h+t.c;
+      shapeNameEl.textContent = "Triángulo rectángulo";
+    } else {
+      const s = (shape === "tri-acu") ? pick(setsAcu) : pick(setsObt);
+      dims = [
+        { key:"base",   sym:"b", name:"Base",   value:s.b },
+        { key:"altura", sym:"h", name:"Altura", value:s.h },
+        { key:"lado",   sym:"l", name:"Lado",   value:s.l }
+      ];
+      areaVal = (s.b*s.h)/2; perimVal = s.b + 2*s.l;
+      shapeNameEl.textContent = (shape === "tri-acu") ? "Triángulo acutángulo" : "Triángulo obtusángulo";
+    }
+
+    dims.forEach(function(d){ d.measured = false; d.typed = false; });
+    activeKey = dims[0].key;
+    areaTyped = false; perimTyped = false;
+
+    buildGeometry();
+    buildPanel();
+    resetAreaPerim();
+
+    rulerStart = { x: CX - 80, y: PARK_Y };
+    rulerEnd   = { x: CX + 80, y: PARK_Y };
+
+    setInstruction();
+    successBox.style.display = "none";
+    successBox.innerHTML = "";
+
+    drawScene();
+  }
+
+  function buildPanel(){
+    dimsContainer.innerHTML = "";
+    dims.forEach(function(d){
+      const fila = document.createElement("div");
+      fila.className = "fila";
+      fila.id = "fila-" + d.key;
+      fila.innerHTML =
+        '<span class="nombre"><span class="pastilla">'+d.sym+'</span> '+d.name+'</span>' +
+        '<button type="button" class="btn-medir" data-key="'+d.key+'">📏 Medir</button>' +
+        '<span class="campo">'+d.sym+' = ' +
+          '<input type="number" inputmode="decimal" id="in-'+d.key+'" aria-label="Escribe la medida de '+d.name+'" disabled> ' +
+          '<span class="uni">'+unit+'</span>' +
+        '</span>' +
+        '<span class="estado" id="st-'+d.key+'"></span>';
+      dimsContainer.appendChild(fila);
+    });
+
+    dimsContainer.querySelectorAll(".btn-medir").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        activeKey = btn.getAttribute("data-key");
+        rulerStart = { x: CX - 80, y: PARK_Y };
+        rulerEnd   = { x: CX + 80, y: PARK_Y };
+        setInstruction();
+        updateMedirButtons();
+        drawScene();
+      });
+    });
+
+    dims.forEach(function(d){
+      const inp = document.getElementById("in-"+d.key);
+      inp.addEventListener("keydown", function(e){ if(e.key==="Enter") checkDim(d); });
+      inp.addEventListener("blur", function(){ if(inp.value!=="") checkDim(d); });
+    });
+
+    updateMedirButtons();
+  }
+
+  function updateMedirButtons(){
+    dims.forEach(function(d){
+      const btn = dimsContainer.querySelector('.btn-medir[data-key="'+d.key+'"]');
+      btn.classList.toggle("active", d.key === activeKey && !d.measured);
+      btn.classList.toggle("listo", d.measured);
+      btn.textContent = d.measured ? "✓ Medida" : "📏 Medir";
+    });
+  }
+
+  function activeDim(){ return dims.find(function(d){ return d.key === activeKey; }); }
+
+  function nombreLado(d){
+    if (d.key === "base")   return "el lado de abajo (la base)";
+    if (d.key === "altura") return isTri() && shape!=="tri-rec" ? "la línea punteada de adentro (la altura)" : "el lado vertical (la altura)";
+    if (d.key === "hip")    return "el lado inclinado (la hipotenusa)";
+    if (d.key === "lado")   return "uno de los lados inclinados iguales";
+    if (d.key === "largo")  return "un lado horizontal (el largo)";
+    if (d.key === "ancho")  return "un lado vertical (el ancho)";
+    return "el lado indicado";
+  }
+
+  function setInstruction(){
+    const d = activeDim();
+    if (!d){
+      instructionEl.classList.remove("ok");
+      instructionEl.textContent = "Pulsa “Medir” en una dimensión y coloca la regla sobre el lado.";
+    } else if (!d.measured){
+      instructionEl.classList.remove("ok");
+      instructionEl.textContent = "Coloca la regla sobre " + nombreLado(d) + ".";
+    } else if (!d.typed){
+      instructionEl.classList.add("ok");
+      instructionEl.textContent = "¡Regla bien colocada! Lee el número que marca y escríbelo en " + d.sym + ".";
+    } else {
+      instructionEl.classList.remove("ok");
+      instructionEl.textContent = "Dimensión " + d.sym + " lista. Continúa con las demás.";
+    }
+    const faltan = dims.filter(function(x){ return !x.typed; }).length;
+    pasoInfoEl.textContent = faltan > 0 ? (faltan + " medida(s) por escribir") : "Calcula área y perímetro";
+  }
+
+  // ---------- dibujo ----------
+  function drawScene(){
+    ctx.clearRect(0,0,W,H);
+
+    // relleno de la figura (usa los vértices del contorno, sin la altura punteada)
+    const outline = geo.segments.filter(function(s){ return !s.dashed; });
+    if (outline.length){
+      ctx.beginPath();
+      ctx.moveTo(outline[0].p1.x, outline[0].p1.y);
+      // construir el contorno encadenando puntos
+      const pts = orderedOutline(outline);
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.closePath();
+      ctx.fillStyle = "#e3f2fd";
+      ctx.fill();
+    }
+
+    // lados (color por estado)
+    geo.segments.forEach(function(s){
+      const d = dims.find(function(x){ return x.key === s.key; });
+      const done = d && d.typed;
+      ctx.beginPath();
+      ctx.moveTo(s.p1.x, s.p1.y);
+      ctx.lineTo(s.p2.x, s.p2.y);
+      if (s.dashed){
+        ctx.setLineDash([7,6]);
+        ctx.strokeStyle = done ? "#2e7d32" : "#ff8c42";
+        ctx.lineWidth = 2.5;
+      } else {
+        ctx.setLineDash([]);
+        ctx.strokeStyle = done ? "#2e7d32" : "#005a8a";
+        ctx.lineWidth = 3.5;
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    if (geo.rightAngleAt) drawRightAngle(geo.rightAngleAt);
+
+    drawRuler();
+  }
+
+  // ordena los puntos del contorno (triángulo o cuadrilátero)
+  function orderedOutline(outline){
+    if (outline.length === 3){
+      // triángulo: base, lado, lado / o base, altura(side), hip
+      // recoger vértices únicos
+      return uniquePoints(outline);
+    }
+    // cuadrilátero: bl,br,tr,tl en orden
+    const pts = uniquePoints(outline);
+    // ordenar por ángulo respecto al centroide
+    const cx = pts.reduce(function(a,p){return a+p.x;},0)/pts.length;
+    const cy = pts.reduce(function(a,p){return a+p.y;},0)/pts.length;
+    pts.sort(function(a,b){ return Math.atan2(a.y-cy,a.x-cx) - Math.atan2(b.y-cy,b.x-cx); });
+    return pts;
+  }
+  function uniquePoints(segs){
+    const out = [];
+    segs.forEach(function(s){
+      [s.p1,s.p2].forEach(function(p){
+        if (!out.some(function(q){ return Math.abs(q.x-p.x)<0.5 && Math.abs(q.y-p.y)<0.5; })) out.push(p);
+      });
+    });
+    return out;
+  }
+
+  function drawRightAngle(A){
+    // marca en la esquina inferior-izquierda hacia arriba y derecha
+    const s = 14;
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(A.x + s, A.y);
+    ctx.lineTo(A.x + s, A.y - s);
+    ctx.lineTo(A.x, A.y - s);
+    ctx.strokeStyle = "#005a8a";
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+  }
+
+  function drawRuler(){
+    const d = activeDim();
+    const color = (d && d.measured) ? "#2e7d32" : "#ff8c42";
+    const dark  = (d && d.measured) ? "#1b5e20" : "#c2570c";
+
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(rulerStart.x, rulerStart.y);
+    ctx.lineTo(rulerEnd.x, rulerEnd.y);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    [[rulerStart,dragStart],[rulerEnd,dragEnd]].forEach(function(p){
+      ctx.beginPath();
+      ctx.arc(p[0].x, p[0].y, 10, 0, 2*Math.PI);
+      ctx.fillStyle = p[1] ? dark : color;
+      ctx.fill();
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+
+    const vx = rulerEnd.x - rulerStart.x, vy = rulerEnd.y - rulerStart.y;
+    const len = Math.hypot(vx, vy) || 1;
+    const ang = Math.atan2(vy, vx);
+    const nx = -vy/len, ny = vx/len;
+    const numTicks = Math.floor(len/scale) + 1;
+
+    ctx.fillStyle = "#1a2332";
+    ctx.font = "bold 12px 'Poppins','Segoe UI',Arial";
+    ctx.strokeStyle = color;
+
+    for (let i=0;i<numTicks;i++){
+      const dist = i*scale;
+      if (dist > len + 2) break;
+      const tx = rulerStart.x + Math.cos(ang)*dist;
+      const ty = rulerStart.y + Math.sin(ang)*dist;
+      const L = (i % 5 === 0) ? 14 : 7;
+      ctx.beginPath();
+      ctx.moveTo(tx - nx*(L/2), ty - ny*(L/2));
+      ctx.lineTo(tx + nx*(L/2), ty + ny*(L/2));
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      const numX = tx + nx*(L+9);
+      const numY = ty + ny*(L+9);
+      ctx.textAlign = (nx > 0.1) ? "left" : (nx < -0.1) ? "right" : "center";
+      ctx.textBaseline = (ny > 0.1) ? "top" : (ny < -0.1) ? "bottom" : "middle";
+      ctx.fillText(i.toString(), numX, numY);
+    }
+    ctx.textAlign = "start";
+    ctx.textBaseline = "alphabetic";
+  }
+
+  // ---------- snapping ----------
+  function trySnap(){
+    const d = activeDim();
+    if (!d) return;
+    const segs = segmentsForKey(d.edge ? d.edge : d.key);
+    const TH = 22;
+    let snapped = false;
+
+    for (let k=0;k<segs.length && !snapped;k++){
+      const p1 = segs[k].p1, p2 = segs[k].p2;
+      const dS1 = Math.hypot(rulerStart.x-p1.x, rulerStart.y-p1.y);
+      const dE2 = Math.hypot(rulerEnd.x-p2.x,   rulerEnd.y-p2.y);
+      const dS2 = Math.hypot(rulerStart.x-p2.x, rulerStart.y-p2.y);
+      const dE1 = Math.hypot(rulerEnd.x-p1.x,   rulerEnd.y-p1.y);
+      if (dS1 < TH && dE2 < TH){
+        rulerStart = {x:p1.x,y:p1.y}; rulerEnd = {x:p2.x,y:p2.y}; snapped = true;
+      } else if (dS2 < TH && dE1 < TH){
+        rulerStart = {x:p2.x,y:p2.y}; rulerEnd = {x:p1.x,y:p1.y}; snapped = true;
+      }
+    }
+
+    if (snapped && !d.measured){
+      d.measured = true;
+      const inp = document.getElementById("in-"+d.key);
+      inp.disabled = false;
+      updateMedirButtons();
+      setInstruction();
+      drawScene();
+      setTimeout(function(){ inp.focus(); }, 30);
+    }
+  }
+
+  // ---------- comprobaciones ----------
+  function checkDim(d){
+    const inp = document.getElementById("in-"+d.key);
+    const st  = document.getElementById("st-"+d.key);
+    const val = parseFloat(inp.value);
+    if (isNaN(val)){ inp.className=""; st.textContent=""; st.className="estado"; return; }
+
+    if (Math.abs(val - d.value) < 1e-6){
+      d.typed = true;
+      inp.className = "correcto";
+      st.textContent = "✓"; st.className = "estado ok";
+    } else {
+      d.typed = false;
+      inp.className = "incorrecto";
+      st.textContent = "✗"; st.className = "estado no";
+      instructionEl.classList.remove("ok");
+      instructionEl.textContent = "Vuelve a leer la regla con calma: fíjate en el número del extremo.";
+    }
+    setInstruction();
+    updateAreaPerimAvailability();
+    drawScene();
+  }
+
+  function allDimsTyped(){ return dims.every(function(d){ return d.typed; }); }
+
+  function resetAreaPerim(){
+    inputArea.value=""; inputPerim.value="";
+    inputArea.disabled=true; inputPerim.disabled=true;
+    inputArea.className=""; inputPerim.className="";
+    estadoArea.textContent=""; estadoArea.className="estado";
+    estadoPerim.textContent=""; estadoPerim.className="estado";
+    fbArea.textContent=""; fbArea.className="feedback";
+    fbPerim.textContent=""; fbPerim.className="feedback";
+    formulaArea.textContent=""; formulaPerim.textContent="";
+  }
+
+  function updateAreaPerimAvailability(){
+    if (!allDimsTyped()) return;
+    inputArea.disabled = false;
+    inputPerim.disabled = false;
+    if (shape === "tri-rec"){
+      formulaArea.textContent  = "fórmula: A = (b × h) ÷ 2";
+      formulaPerim.textContent = "fórmula: P = b + h + c";
+    } else if (isTri()){
+      formulaArea.textContent  = "fórmula: A = (b × h) ÷ 2";
+      formulaPerim.textContent = "fórmula: P = b + l + l";
+    } else if (shape === "square"){
+      formulaArea.textContent  = "fórmula: A = l × w";
+      formulaPerim.textContent = "fórmula: P = 4 × l";
+    } else {
+      formulaArea.textContent  = "fórmula: A = l × w";
+      formulaPerim.textContent = "fórmula: P = 2 × (l + w)";
+    }
+  }
+
+  inputArea.addEventListener("keydown", function(e){ if(e.key==="Enter") checkArea(); });
+  inputArea.addEventListener("blur", function(){ if(inputArea.value!=="") checkArea(); });
+  inputPerim.addEventListener("keydown", function(e){ if(e.key==="Enter") checkPerim(); });
+  inputPerim.addEventListener("blur", function(){ if(inputPerim.value!=="") checkPerim(); });
+
+  function checkArea(){
+    const val = parseFloat(inputArea.value);
+    if (isNaN(val)) return;
+    if (Math.abs(val - areaVal) < 1e-6){
+      areaTyped=true; inputArea.className="correcto";
+      estadoArea.textContent="✓"; estadoArea.className="estado ok";
+      fbArea.textContent="¡Área correcta!"; fbArea.className="feedback si";
+    } else {
+      areaTyped=false; inputArea.className="incorrecto";
+      estadoArea.textContent="✗"; estadoArea.className="estado no";
+      fbArea.textContent="Revisa la operación con las medidas que escribiste."; fbArea.className="feedback no";
+    }
+    maybeFinish();
+  }
+
+  function checkPerim(){
+    const val = parseFloat(inputPerim.value);
+    if (isNaN(val)) return;
+    if (Math.abs(val - perimVal) < 1e-6){
+      perimTyped=true; inputPerim.className="correcto";
+      estadoPerim.textContent="✓"; estadoPerim.className="estado ok";
+      fbPerim.textContent="¡Perímetro correcto!"; fbPerim.className="feedback si";
+    } else {
+      perimTyped=false; inputPerim.className="incorrecto";
+      estadoPerim.textContent="✗"; estadoPerim.className="estado no";
+      fbPerim.textContent="Recuerda sumar todos los lados (o usar la fórmula)."; fbPerim.className="feedback no";
+    }
+    maybeFinish();
+  }
+
+  function maybeFinish(){
+    if (!(areaTyped && perimTyped)){ successBox.style.display="none"; return; }
+    let calc = "";
+    if (shape === "tri-rec"){
+      const b=dims[0].value, h=dims[1].value, c=dims[2].value;
+      calc =
+        '<div class="calc">A = (b × h) ÷ 2 = ('+b+' × '+h+') ÷ 2 = <strong>'+areaVal+' '+unit+'²</strong></div>' +
+        '<div class="calc">P = b + h + c = '+b+' + '+h+' + '+c+' = <strong>'+perimVal+' '+unit+'</strong></div>';
+    } else if (isTri()){
+      const b=dims[0].value, h=dims[1].value, l=dims[2].value;
+      calc =
+        '<div class="calc">A = (b × h) ÷ 2 = ('+b+' × '+h+') ÷ 2 = <strong>'+areaVal+' '+unit+'²</strong></div>' +
+        '<div class="calc">P = b + l + l = '+b+' + '+l+' + '+l+' = <strong>'+perimVal+' '+unit+'</strong></div>';
+    } else if (shape === "square"){
+      const l=dims[0].value;
+      calc =
+        '<div class="calc">A = l × w = '+l+' × '+l+' = <strong>'+areaVal+' '+unit+'²</strong></div>' +
+        '<div class="calc">P = 4 × l = 4 × '+l+' = <strong>'+perimVal+' '+unit+'</strong></div>';
+    } else {
+      const l=dims[0].value, w=dims[1].value;
+      calc =
+        '<div class="calc">A = l × w = '+l+' × '+w+' = <strong>'+areaVal+' '+unit+'²</strong></div>' +
+        '<div class="calc">P = 2 × (l + w) = 2 × ('+l+' + '+w+') = <strong>'+perimVal+' '+unit+'</strong></div>';
+    }
+    successBox.innerHTML = '<strong class="titulo">¡Excelente trabajo! 🎉</strong>' + calc;
+    successBox.style.display = "block";
+    instructionEl.classList.add("ok");
+    instructionEl.textContent = "Ejercicio completo: mediste, escribiste y calculaste área y perímetro.";
+  }
+
+  // ---------- ratón / táctil ----------
+  function pos(e){
+    const r = canvas.getBoundingClientRect();
+    return {
+      x: (e.clientX - r.left) * (canvas.width / r.width),
+      y: (e.clientY - r.top)  * (canvas.height / r.height)
+    };
+  }
+  function down(e){
+    const p = pos(e);
+    const dS = Math.hypot(p.x-rulerStart.x, p.y-rulerStart.y);
+    const dE = Math.hypot(p.x-rulerEnd.x,   p.y-rulerEnd.y);
+    dragStart = dS < 22;
+    dragEnd   = !dragStart && dE < 22;
+    if (dragStart || dragEnd) drawScene();
+  }
+  function move(e){
+    if (!dragStart && !dragEnd) return;
+    const p = pos(e);
+    if (dragStart) rulerStart = {x:p.x,y:p.y};
+    else rulerEnd = {x:p.x,y:p.y};
+    trySnap();
+    drawScene();
+  }
+  function up(){
+    if (dragStart || dragEnd){
+      dragStart=false; dragEnd=false;
+      trySnap();
+      drawScene();
+    }
+  }
+
+  canvas.addEventListener("mousedown", down);
+  canvas.addEventListener("mousemove", move);
+  window.addEventListener("mouseup", up);
+  canvas.addEventListener("touchstart", function(e){ e.preventDefault(); const t=e.touches[0]; down({clientX:t.clientX,clientY:t.clientY}); }, {passive:false});
+  canvas.addEventListener("touchmove",  function(e){ e.preventDefault(); const t=e.touches[0]; move({clientX:t.clientX,clientY:t.clientY}); }, {passive:false});
+  window.addEventListener("touchend", up);
+
+  newExerciseBtn.addEventListener("click", generateNewExercise);
+
+  generateNewExercise();
+});
+</script>
+</body>
+</html>
