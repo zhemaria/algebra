@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#880e4f; --tema-d:#560027; --tema-bg:#fce4ec; --tema-bg2:#f8bbd0;
+    --tema:#6a1b9a; --tema-d:#4a148c; --tema-bg:#f3e5f5; --tema-bg2:#e1bee7;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1269,7 +1269,7 @@ function evFr(obj, pistas, exigeSimple){
 /* barra de fracción: n partes llenas de d (si n > d, varias barras) */
 function barraFr(n, d, col, voz, ancho){
   var W = ancho || 520, h = 40, bars = Math.max(1, Math.ceil(n / d)), s = '<svg class="figura" style="max-width:' + (W + 40) + 'px" viewBox="0 0 ' + (W + 40) + ' ' + (bars*(h + 12) + 8) + '" role="img" aria-label="' + (voz || (n + " de " + d + " partes")) + '">';
-  for (var b = 0; b < bars; b++){ for (var i = 0; i < d; i++){ var k = b*d + i, x = 20 + i*W/d, y = 6 + b*(h + 12); s += '<rect x="' + f1(x) + '" y="' + y + '" width="' + f1(W/d) + '" height="' + h + '" fill="' + (k < n ? (col || "#ad1457") : "#fff") + '" stroke="#424242" stroke-width="2"/>'; } }
+  for (var b = 0; b < bars; b++){ for (var i = 0; i < d; i++){ var k = b*d + i, x = 20 + i*W/d, y = 6 + b*(h + 12); s += '<rect x="' + f1(x) + '" y="' + y + '" width="' + f1(W/d) + '" height="' + h + '" fill="' + (k < n ? (col || "#7b1fa2") : "#fff") + '" stroke="#424242" stroke-width="2"/>'; } }
   return s + '</svg>';
 }
 
@@ -1277,8 +1277,8 @@ function leeF(id){ var f = leeFraccion($(id).value.trim()); if (!f){ var n = lee
 /* MÓDULO 1 · Modelo de área */
 function areaSVG(a, b, c, d){
   var W = 360, H = 240, x0 = 140, y0 = 20, s = '<svg class="figura" style="max-width:560px" viewBox="0 0 640 312" role="img" aria-label="Rectángulo dividido en ' + d + ' columnas y ' + b + ' filas; la zona doble tiene ' + a*c + ' de ' + b*d + ' cuadritos.">';
-  for (var i = 0; i < d; i++) for (var j = 0; j < b; j++){ var fil = j < a, col = i < c, color = fil && col ? "#6a1b9a" : (fil ? "#f8bbd0" : (col ? "#e1bee7" : "#fff")); s += '<rect x="' + f1(x0 + i*W/d) + '" y="' + f1(y0 + j*H/b) + '" width="' + f1(W/d) + '" height="' + f1(H/b) + '" fill="' + color + '" stroke="#424242" stroke-width="1.5"/>'; }
-  s += texto([x0 - 12, y0 + a*H/b/2], a + "/" + b, 20, "#ad1457", 700, "end") + texto([x0 + c*W/d/2, y0 + H + 26], c + "/" + d, 20, "#6a1b9a");
+  for (var i = 0; i < d; i++) for (var j = 0; j < b; j++){ var fil = j < a, col = i < c, color = fil && col ? "#6a1b9a" : (fil ? "#e1bee7" : (col ? "#e1bee7" : "#fff")); s += '<rect x="' + f1(x0 + i*W/d) + '" y="' + f1(y0 + j*H/b) + '" width="' + f1(W/d) + '" height="' + f1(H/b) + '" fill="' + color + '" stroke="#424242" stroke-width="1.5"/>'; }
+  s += texto([x0 - 12, y0 + a*H/b/2], a + "/" + b, 20, "#7b1fa2", 700, "end") + texto([x0 + c*W/d/2, y0 + H + 26], c + "/" + d, 20, "#6a1b9a");
   return s + '</svg>';
 }
 function pintaMU(){

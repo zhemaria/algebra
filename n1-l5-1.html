@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#37474f; --tema-d:#263238; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
+    --tema:#bf4500; --tema-d:#8c2f08; --tema-bg:#fff3e0; --tema-bg2:#ffe0b2;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1306,7 +1306,7 @@ function figSVG(P, n0, n1, punto){
   var slots = datos.map(function(d){ return Math.max(d.w, 96); }), tot = slots.reduce(function(a, b){ return a + b + 24; }, -24), W = Math.max(640, tot + 40), H = alto + 50, x = (W - tot)/2;
   var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Figuras de la ' + n0 + ' a la ' + n1 + ' del patrón.">';
   datos.forEach(function(d, k){ var x0 = x + (slots[k] - d.w)/2;
-    d.cel.forEach(function(c){ var cx = x0 + c[0]*u, cy = alto + 6 - (c[1] + 1)*u; s += punto ? '<circle cx="' + (cx + u/2) + '" cy="' + (cy + u/2) + '" r="' + (u/2 - 2) + '" fill="#37474f"/>' : '<rect x="' + cx + '" y="' + cy + '" width="' + (u - 2) + '" height="' + (u - 2) + '" fill="#546e7a"/>'; });
+    d.cel.forEach(function(c){ var cx = x0 + c[0]*u, cy = alto + 6 - (c[1] + 1)*u; s += punto ? '<circle cx="' + (cx + u/2) + '" cy="' + (cy + u/2) + '" r="' + (u/2 - 2) + '" fill="#8c2f08"/>' : '<rect x="' + cx + '" y="' + cy + '" width="' + (u - 2) + '" height="' + (u - 2) + '" fill="#bf4500"/>'; });
     s += texto([x + slots[k]/2, alto + 34], "Figura " + d.n, 17, "#222"); x += slots[k] + 24; });
   return s + '</svg>';
 }

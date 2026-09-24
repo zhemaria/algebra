@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#1a237e; --tema-d:#0d1452; --tema-bg:#e8eaf6; --tema-bg2:#c5cae9;
+    --tema:#1565c0; --tema-d:#0d47a1; --tema-bg:#e3f2fd; --tema-bg2:#bbdefb;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -308,7 +308,7 @@
   .columna .tach{text-decoration:line-through;color:#9e9e9e;}
   .columna .nuevo{color:#b71c1c;font-size:15px;vertical-align:super;}
   table.vp{border-collapse:collapse;margin:8px auto;}
-  table.vp th,table.vp td{border:1px solid #c5cae9;padding:6px 8px;text-align:center;min-width:44px;}
+  table.vp th,table.vp td{border:1px solid #bbdefb;padding:6px 8px;text-align:center;min-width:44px;}
   table.vp th{font-size:12px;background:var(--tema-bg);color:var(--tema-d);line-height:1.2;}
   table.vp td{font-size:26px;font-weight:700;}
   table.vp td.sel{background:#fff3e0;color:#b71c1c;}
@@ -970,14 +970,14 @@ function rectaEnt(lo, hi, marcas, saltos, voz, tramo){
   function X(v){ return x0 + (v - lo) * (x1 - x0) / (hi - lo); }
   var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">';
   s += linea([x0 - 12, y], [x1 + 12, y], "#424242", 2) + '<path d="M' + (x0 - 18) + ' ' + y + ' l10 -6 v12 z" fill="#424242"/><path d="M' + (x1 + 18) + ' ' + y + ' l-10 -6 v12 z" fill="#424242"/>';
-  if (tramo) s += linea([X(tramo.de), y], [X(tramo.a), y], tramo.color || "#1a237e", 7);
+  if (tramo) s += linea([X(tramo.de), y], [X(tramo.a), y], tramo.color || "#1565c0", 7);
   var paso = (hi - lo) > 24 ? 5 : ((hi - lo) > 14 ? 2 : 1);
   for (var v = lo; v <= hi; v++){
     s += linea([X(v), y - (v === 0 ? 11 : 7)], [X(v), y + (v === 0 ? 11 : 7)], "#424242", v === 0 ? 3 : 1.5);
     if (v % paso === 0 || v === 0) s += texto([X(v), y + 28], ent(v), v === 0 ? 17 : 15, "#222", v === 0 ? 700 : 400);
   }
   (saltos || []).forEach(function(sl, i){
-    var xa = X(sl.de), xb = X(sl.a), alto = 34 + 10*(i % 2), col = sl.color || "#1a237e", mx = (xa + xb)/2;
+    var xa = X(sl.de), xb = X(sl.a), alto = 34 + 10*(i % 2), col = sl.color || "#1565c0", mx = (xa + xb)/2;
     s += '<path d="M' + f1(xa) + ' ' + (y - 6) + ' Q' + f1(mx) + ' ' + (y - 6 - 2*alto) + ' ' + f1(xb) + ' ' + (y - 6) + '" fill="none" stroke="' + col + '" stroke-width="3"/>';
     var dir = xb > xa ? -1 : 1;
     s += '<path d="M' + f1(xb) + ' ' + (y - 6) + ' l' + (dir*9) + ' -12 l' + (-dir*3) + ' 0 z" fill="' + col + '" stroke="' + col + '" stroke-width="2"/>';

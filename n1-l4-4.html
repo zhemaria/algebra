@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#880e4f; --tema-d:#560027; --tema-bg:#fce4ec; --tema-bg2:#f8bbd0;
+    --tema:#6a1b9a; --tema-d:#4a148c; --tema-bg:#f3e5f5; --tema-bg2:#e1bee7;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1292,7 +1292,7 @@ function evFr(obj, pistas, exigeSimple){
 /* barra de fracción: n partes llenas de d (si n > d, varias barras) */
 function barraFr(n, d, col, voz, ancho){
   var W = ancho || 520, h = 40, bars = Math.max(1, Math.ceil(n / d)), s = '<svg class="figura" style="max-width:' + (W + 40) + 'px" viewBox="0 0 ' + (W + 40) + ' ' + (bars*(h + 12) + 8) + '" role="img" aria-label="' + (voz || (n + " de " + d + " partes")) + '">';
-  for (var b = 0; b < bars; b++){ for (var i = 0; i < d; i++){ var k = b*d + i, x = 20 + i*W/d, y = 6 + b*(h + 12); s += '<rect x="' + f1(x) + '" y="' + y + '" width="' + f1(W/d) + '" height="' + h + '" fill="' + (k < n ? (col || "#ad1457") : "#fff") + '" stroke="#424242" stroke-width="2"/>'; } }
+  for (var b = 0; b < bars; b++){ for (var i = 0; i < d; i++){ var k = b*d + i, x = 20 + i*W/d, y = 6 + b*(h + 12); s += '<rect x="' + f1(x) + '" y="' + y + '" width="' + f1(W/d) + '" height="' + h + '" fill="' + (k < n ? (col || "#7b1fa2") : "#fff") + '" stroke="#424242" stroke-width="2"/>'; } }
   return s + '</svg>';
 }
 
@@ -1305,11 +1305,11 @@ function pintaCV(){
   var s = $("cv-x").value.trim().replace(/\s+/g, " "), o = $("cv-salida"), m = s.match(/^(\d+) (\d+)\/(\d+)$/), f = leeFraccion(s.replace(/ /g, ""));
   if (m && +m[3] > 0 && +m[2] < +m[3] && +m[3] <= 12 && +m[1] <= 9){
     var e = +m[1], n = +m[2], d = +m[3], N = e*d + n;
-    $("cv-svg").innerHTML = barraFr(N, d, "#ad1457", e + " enteros y " + n + " de " + d);
+    $("cv-svg").innerHTML = barraFr(N, d, "#7b1fa2", e + " enteros y " + n + " de " + d);
     o.innerHTML = '<div class="linea">1. Entero por denominador: ' + e + ' × ' + d + ' = ' + e*d + ' (los pedazos de los ' + e + ' enteros).</div><div class="linea">2. Más el numerador: ' + e*d + ' + ' + n + ' = ' + N + '.</div><div class="linea">3. El denominador se queda: ' + d + '.</div><div class="linea veredicto">' + mixH({ e: e, n: n, d: d }) + ' = ' + fracHTML(N, d) + '</div>'; return; }
   if (f && f.q > 0 && f.q <= 12 && f.p <= 108 && !m){
     var q = Math.floor(f.p / f.q), r = f.p % f.q;
-    $("cv-svg").innerHTML = barraFr(f.p, f.q, "#ad1457", f.p + " de " + f.q);
+    $("cv-svg").innerHTML = barraFr(f.p, f.q, "#7b1fa2", f.p + " de " + f.q);
     o.innerHTML = '<div class="linea">1. Se divide: ' + f.p + ' ÷ ' + f.q + ' = ' + q + ', residuo ' + r + '.</div><div class="linea">2. El cociente (' + q + ') es el entero; el residuo (' + r + ') es el numerador; el denominador se queda.</div><div class="linea veredicto">' + fracHTML(f.p, f.q) + ' = ' + (r ? mixH({ e: q, n: r, d: f.q }) : q) + '</div>' + (f.p < f.q ? '<div class="linea">Es una fracción propia (menor que 1): no tiene parte entera.</div>' : ''); return; }
   $("cv-svg").innerHTML = ""; o.innerHTML = "Escriba un número mixto como 3 1/4 o una fracción impropia como 13/4 (denominador hasta 12).";
 }

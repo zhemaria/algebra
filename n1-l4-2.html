@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#880e4f; --tema-d:#560027; --tema-bg:#fce4ec; --tema-bg2:#f8bbd0;
+    --tema:#6a1b9a; --tema-d:#4a148c; --tema-bg:#f3e5f5; --tema-bg2:#e1bee7;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1259,7 +1259,7 @@ function evFr(obj, pistas, exigeSimple){
 /* barra de fracción: n partes llenas de d (si n > d, varias barras) */
 function barraFr(n, d, col, voz, ancho){
   var W = ancho || 520, h = 40, bars = Math.max(1, Math.ceil(n / d)), s = '<svg class="figura" style="max-width:' + (W + 40) + 'px" viewBox="0 0 ' + (W + 40) + ' ' + (bars*(h + 12) + 8) + '" role="img" aria-label="' + (voz || (n + " de " + d + " partes")) + '">';
-  for (var b = 0; b < bars; b++){ for (var i = 0; i < d; i++){ var k = b*d + i, x = 20 + i*W/d, y = 6 + b*(h + 12); s += '<rect x="' + f1(x) + '" y="' + y + '" width="' + f1(W/d) + '" height="' + h + '" fill="' + (k < n ? (col || "#ad1457") : "#fff") + '" stroke="#424242" stroke-width="2"/>'; } }
+  for (var b = 0; b < bars; b++){ for (var i = 0; i < d; i++){ var k = b*d + i, x = 20 + i*W/d, y = 6 + b*(h + 12); s += '<rect x="' + f1(x) + '" y="' + y + '" width="' + f1(W/d) + '" height="' + h + '" fill="' + (k < n ? (col || "#7b1fa2") : "#fff") + '" stroke="#424242" stroke-width="2"/>'; } }
   return s + '</svg>';
 }
 
@@ -1270,7 +1270,7 @@ function pintaMD(){
   $("md-a").max = d; $("md-b").max = d; $("md-dv").textContent = d; $("md-av").textContent = a; $("md-bv").textContent = b;
   if (o === "-" && b > a){ $("md-salida").innerHTML = "Para restar, el primer numerador tiene que ser el mayor."; $("md-svg").innerHTML = ""; return; }
   var r = o === "+" ? a + b : a - b;
-  $("md-svg").innerHTML = barraFr(a, d, "#ad1457", a + "/" + d) + barraFr(b, d, "#f48fb1", b + "/" + d) + barraFr(r, d, "#6a1b9a", "Resultado " + r + "/" + d);
+  $("md-svg").innerHTML = barraFr(a, d, "#7b1fa2", a + "/" + d) + barraFr(b, d, "#ce93d8", b + "/" + d) + barraFr(r, d, "#6a1b9a", "Resultado " + r + "/" + d);
   var R = fr(r, d);
   $("md-salida").innerHTML = '<div class="linea">Las partes son del mismo tamaño (' + d + (d === 1 ? '' : ' partes') + '). Se ' + (o === "+" ? "suman" : "restan") + ' solo los numeradores: ' + a + ' ' + (o === "+" ? "+" : "−") + ' ' + b + ' = ' + r + '.</div><div class="linea veredicto">' + fracHTML(a, d) + ' ' + (o === "+" ? "+" : "−") + ' ' + fracHTML(b, d) + ' = ' + fracHTML(r, d) + (R.d !== d && r ? ' = ' + mixHTML(R) : (r > d ? ' = ' + mixHTML(R) : '')) + '</div>';
 }
@@ -1296,7 +1296,7 @@ function pintaDD(){
   h += '<div class="linea">3. Con el mismo denominador: ' + a2 + ' ' + (o === "+" ? "+" : "−") + ' ' + b2 + ' = ' + r + '.</div>';
   h += '<div class="linea veredicto">' + fracHTML(A.p, A.q) + ' ' + (o === "+" ? "+" : "−") + ' ' + fracHTML(B.p, B.q) + ' = ' + fracHTML(r, M) + (R.d !== M ? ' = ' + fracHTML(R.n, R.d) : '') + (R.n > R.d && R.d !== 1 ? ' = ' + mixHTML(R) : '') + '</div>';
   s.innerHTML = h;
-  if (M <= 24) $("dd-svg").innerHTML = barraFr(a2, M, "#ad1457", A.p + "/" + A.q + " convertida a " + a2 + "/" + M) + barraFr(b2, M, "#f48fb1", B.p + "/" + B.q + " convertida a " + b2 + "/" + M); else $("dd-svg").innerHTML = "";
+  if (M <= 24) $("dd-svg").innerHTML = barraFr(a2, M, "#7b1fa2", A.p + "/" + A.q + " convertida a " + a2 + "/" + M) + barraFr(b2, M, "#ce93d8", B.p + "/" + B.q + " convertida a " + b2 + "/" + M); else $("dd-svg").innerHTML = "";
 }
 function genComun(){
   var pares = [[4, 6], [2, 3], [3, 4], [6, 8], [4, 10], [3, 5], [2, 5], [6, 9], [8, 12], [5, 10]], p = elige(pares), M = mcm(p[0], p[1]);

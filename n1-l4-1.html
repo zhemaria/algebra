@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#880e4f; --tema-d:#560027; --tema-bg:#fce4ec; --tema-bg2:#f8bbd0;
+    --tema:#6a1b9a; --tema-d:#4a148c; --tema-bg:#f3e5f5; --tema-bg2:#e1bee7;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1288,7 +1288,7 @@ function evFr(obj, pistas, exigeSimple){
 /* barra de fracción: n partes llenas de d (si n > d, varias barras) */
 function barraFr(n, d, col, voz, ancho){
   var W = ancho || 520, h = 40, bars = Math.max(1, Math.ceil(n / d)), s = '<svg class="figura" style="max-width:' + (W + 40) + 'px" viewBox="0 0 ' + (W + 40) + ' ' + (bars*(h + 12) + 8) + '" role="img" aria-label="' + (voz || (n + " de " + d + " partes")) + '">';
-  for (var b = 0; b < bars; b++){ for (var i = 0; i < d; i++){ var k = b*d + i, x = 20 + i*W/d, y = 6 + b*(h + 12); s += '<rect x="' + f1(x) + '" y="' + y + '" width="' + f1(W/d) + '" height="' + h + '" fill="' + (k < n ? (col || "#ad1457") : "#fff") + '" stroke="#424242" stroke-width="2"/>'; } }
+  for (var b = 0; b < bars; b++){ for (var i = 0; i < d; i++){ var k = b*d + i, x = 20 + i*W/d, y = 6 + b*(h + 12); s += '<rect x="' + f1(x) + '" y="' + y + '" width="' + f1(W/d) + '" height="' + h + '" fill="' + (k < n ? (col || "#7b1fa2") : "#fff") + '" stroke="#424242" stroke-width="2"/>'; } }
   return s + '</svg>';
 }
 
@@ -1297,12 +1297,12 @@ function rectaFr(n, d){
   var mx = Math.max(1, Math.ceil(n/d)), x0 = 40, x1 = 600, W = x1 - x0, s = '<svg class="figura" viewBox="0 0 640 110" role="img" aria-label="Recta numérica con ' + n + '/' + d + ' marcado.">' + linea([x0, 55], [x1, 55], "#424242", 2);
   for (var k = 0; k <= mx*d; k++){ var x = x0 + k*W/(mx*d), ent = k % d === 0; s += linea([x, 55 - (ent ? 14 : 7)], [x, 55 + (ent ? 14 : 7)], "#424242", ent ? 3 : 1.5); if (ent) s += texto([x, 95], k/d, 20, "#222"); }
   var xp = x0 + n*W/(mx*d);
-  return s + '<circle cx="' + f1(xp) + '" cy="55" r="9" fill="#ad1457"/>' + texto([xp, 26], n + "/" + d, 20, "#ad1457") + '</svg>';
+  return s + '<circle cx="' + f1(xp) + '" cy="55" r="9" fill="#7b1fa2"/>' + texto([xp, 26], n + "/" + d, 20, "#7b1fa2") + '</svg>';
 }
 function pintaQE(){
   var n = +$("qe-n").value, d = +$("qe-d").value;
   $("qe-nv").textContent = n; $("qe-dv").textContent = d;
-  $("qe-svg").innerHTML = barraFr(n, d, "#ad1457", n + " partes llenas de " + d);
+  $("qe-svg").innerHTML = barraFr(n, d, "#7b1fa2", n + " partes llenas de " + d);
   $("qe-recta").innerHTML = rectaFr(n, d);
   var v = Math.round(n/d*1000)/1000;
   $("qe-salida").innerHTML = '<div class="linea grande">' + fracHTML(n, d) + '</div><div class="linea">El entero se dividió en ' + d + (d === 1 ? ' parte' : ' partes iguales') + ' y se toman ' + n + '. Como decimal: ' + n + ' ÷ ' + d + ' ' + (Math.abs(v - n/d) > 1e-9 ? "≈" : "=") + ' ' + nv(v) + '.</div>' + (n > d ? '<div class="linea">El numerador es mayor que el denominador: la fracción es mayor que 1 (una fracción <strong>impropia</strong>).</div>' : (n === d ? '<div class="linea">Numerador y denominador iguales: es un entero completo.</div>' : ''));
@@ -1310,14 +1310,14 @@ function pintaQE(){
 function genQueFr(){
   var d = aleatorio(2, 10), n = aleatorio(1, d - 1);
   var o = [[n, d], [d - n, d], [n, d - n > 0 ? d - n : d + 1], [d, n]].filter(function(x, i, a){ return x[1] > 0 && a.findIndex(function(y){ return y[0] === x[0] && y[1] === x[1]; }) === i; });
-  return { enun: "¿Qué fracción de la barra está coloreada?" + barraFr(n, d, "#ad1457", "Barra con " + n + " de " + d + " partes coloreadas.", 400), opciones: o.map(function(x){ return { html: fracHTML(x[0], x[1]), clave: x[0] + "/" + x[1] }; }), correcta: n + "/" + d, porClave: { [(d - n) + "/" + d]: "Esa es la parte sin colorear.", [n + "/" + (d - n)]: "El denominador son todas las partes, no solo las blancas." }, bien: n + " partes coloreadas de " + d + ": " + n + "/" + d + ".", mal: "Hay " + d + " partes en total y " + n + " coloreadas: " + n + "/" + d + "." };
+  return { enun: "¿Qué fracción de la barra está coloreada?" + barraFr(n, d, "#7b1fa2", "Barra con " + n + " de " + d + " partes coloreadas.", 400), opciones: o.map(function(x){ return { html: fracHTML(x[0], x[1]), clave: x[0] + "/" + x[1] }; }), correcta: n + "/" + d, porClave: { [(d - n) + "/" + d]: "Esa es la parte sin colorear.", [n + "/" + (d - n)]: "El denominador son todas las partes, no solo las blancas." }, bien: n + " partes coloreadas de " + d + ": " + n + "/" + d + ".", mal: "Hay " + d + " partes en total y " + n + " coloreadas: " + n + "/" + d + "." };
 }
 /* MÓDULO 2 */
 function pintaEQ(){
   var n = leeNum($("eq-n").value), d = leeNum($("eq-d").value), k = +$("eq-k").value, s = $("eq-salida");
   $("eq-kv").textContent = k;
   if (n === null || !d || n > d*2 || d > 12){ s.innerHTML = "Escriba una fracción con denominador de 1 a 12."; $("eq-svg").innerHTML = ""; return; }
-  $("eq-svg").innerHTML = barraFr(n, d, "#ad1457", n + " de " + d) + barraFr(n*k, d*k, "#f06292", (n*k) + " de " + (d*k));
+  $("eq-svg").innerHTML = barraFr(n, d, "#7b1fa2", n + " de " + d) + barraFr(n*k, d*k, "#ba68c8", (n*k) + " de " + (d*k));
   s.innerHTML = '<div class="linea grande">' + fracHTML(n, d) + ' = ' + envuelve('<span class="fracc"><span class="fa">' + n + '×' + k + '</span><span class="fb2">' + d + '×' + k + '</span></span>', n + " por " + k + " sobre " + d + " por " + k) + ' = ' + fracHTML(n*k, d*k) + '</div><div class="linea">Cada pedazo se partió en ' + k + ': hay ' + k + ' veces más partes, y también ' + k + ' veces más llenas. La parte coloreada mide lo mismo.</div>';
 }
 function genEquiv(){
@@ -1349,7 +1349,7 @@ function genSimp(){
 function pintaCO(){
   var a = leeFraccion($("co-a").value.trim()), b = leeFraccion($("co-b").value.trim()), s = $("co-salida");
   if (!a || !b || a.q > 20 || b.q > 20 || a.p > a.q*2 || b.p > b.q*2){ s.innerHTML = "Escriba dos fracciones con barra, por ejemplo 2/3 y 3/5 (denominadores hasta 20)."; $("co-svg").innerHTML = ""; return; }
-  $("co-svg").innerHTML = barraFr(a.p, a.q, "#ad1457", a.p + "/" + a.q) + barraFr(b.p, b.q, "#1565c0", b.p + "/" + b.q);
+  $("co-svg").innerHTML = barraFr(a.p, a.q, "#7b1fa2", a.p + "/" + a.q) + barraFr(b.p, b.q, "#1565c0", b.p + "/" + b.q);
   var x = a.p*b.q, y = b.p*a.q, r = x > y ? "&gt;" : (x < y ? "&lt;" : "="), m = a.q*b.q / mcd(a.q, b.q);
   var h = '';
   if (a.q === b.q) h += '<div class="linea">Mismo denominador: se comparan los numeradores, ' + a.p + ' y ' + b.p + '.</div>';
