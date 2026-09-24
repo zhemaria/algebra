@@ -5,13 +5,6 @@
   Licencia: Creative Commons CC BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
   Anclas internas: #como-empezar · #paso-1 … #paso-6 · #ayuda · #que-es-el-ged · #enlaces
 
-  ENLACES PENDIENTES (buscar data-pendiente): mientras no se completen, llevan a la página
-  de inicio de GEDparaHispanos para que ningún enlace quede roto.
-    - prueba-ubicacion-mate      Prueba de ubicación de Matemáticas
-    - prueba-ubicacion-lenguaje  Prueba de ubicación de Artes del lenguaje
-    - lecciones-lenguaje         Lecciones de Artes del lenguaje
-    - examen-lenguaje            Examen de simulación de Artes del lenguaje
-    - profe-ged                  Tutor Profe GED
 -->
 <html lang="es">
 <head>
@@ -98,6 +91,9 @@
   .nota{background:var(--azul-cl);border-left:5px solid var(--azul-2);padding:10px 14px;
     border-radius:0 8px 8px 0;margin:12px 0;font-size:17px;}
   .final .marca{background:var(--verde);}
+  .nota > p{margin:0;}
+  .paso .nota ul.repaso{margin:6px 0 0 22px;}
+  .nota ul.repaso li{margin:3px 0;}
 
   /* Tabla de materias (paso 4) */
   .tabla-envoltura{overflow-x:auto;margin:10px 0;}
@@ -193,14 +189,14 @@
         <span class="marca" aria-hidden="true">1</span>
         <div class="paso">
           <h3><span class="sr-only">Paso 1: </span>Averigüe su punto de partida</h3>
-          <p class="tiempo">Tiempo: una hora aproximadamente, en una o dos sesiones</p>
-          <p>Haga las dos pruebas de ubicación: una de Matemáticas y otra de Artes del lenguaje. Cada una tiene 30 preguntas. El resultado le indica en qué nivel, del 1 al 4, le conviene empezar cada materia.</p>
+          <p class="tiempo">Tiempo: 30 minutos cada prueba, en una o dos sesiones</p>
+          <p>Haga las dos pruebas de ubicación: una de Matemáticas y otra de Artes del lenguaje. Cada una tiene 30 preguntas, y el resultado le indica en qué nivel, del 1 al 4, le conviene empezar cada materia.</p>
           <p>Hágalas con calma y sin ayuda. Si no sabe una respuesta, pase a la siguiente: la prueba no es un examen, sino un mapa para saber dónde está.</p>
           <div class="acciones">
-            <a class="boton" data-pendiente="prueba-ubicacion-mate" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">Prueba de Matemáticas<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
-            <a class="boton" data-pendiente="prueba-ubicacion-lenguaje" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">Prueba de Artes del lenguaje<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+            <a class="boton" href="https://zhemaria.github.io/examen/placement_math/" target="_blank" rel="noopener noreferrer">Prueba de ubicación de Matemáticas<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+            <a class="boton" href="https://zhemaria.github.io/examen/placement_lenguaje/" target="_blank" rel="noopener noreferrer">Prueba de ubicación de Artes del lenguaje<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
           </div>
-          <p class="nota">Anote el nivel que obtuvo en cada prueba. Lo va a necesitar en el paso 4.</p>
+          <p class="nota">Anote el nivel que obtuvo en cada prueba: lo va a necesitar en el paso 4.</p>
         </div>
       </li>
 
@@ -246,48 +242,49 @@
         <div class="paso">
           <h3><span class="sr-only">Paso 4: </span>Estudie con las lecciones, en este orden</h3>
           <p class="tiempo">Tiempo: la mayor parte de su preparación</p>
-          <p>Empiece por <strong>Matemáticas y Artes del lenguaje</strong>, en el nivel que le indicaron las pruebas del paso 1. Puede estudiarlas en paralelo, por ejemplo una lección de cada materia por semana.</p>
+          <p>Empiece por <strong>Matemáticas y Artes del lenguaje</strong>: Matemáticas, en el nivel que le indicó su prueba del paso 1, y Artes del lenguaje, por su primer tema. Puede estudiarlas en paralelo, por ejemplo una lección de cada materia por semana.</p>
           <p><strong>Ciencias y Estudios sociales</strong> piden leer textos, tablas y gráficas con soltura. Conviene empezarlas cuando ya vaya avanzado en Artes del lenguaje; Estudios sociales, idealmente, después de terminar su Nivel 4.</p>
           <div class="tabla-envoltura">
             <table>
-              <caption>Dónde empezar cada materia</caption>
+              <caption>Por qué tema empezar cada materia</caption>
               <thead>
-                <tr><th scope="col">Materia</th><th scope="col">Dónde empezar</th></tr>
+                <tr><th scope="col">Materia</th><th scope="col">Primer tema</th></tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Matemáticas</td>
-                  <td>En la primera lección de su nivel:
-                    <a href="https://zhemaria.github.io/clase_mate1/leccion-1-1.html" target="_blank" rel="noopener noreferrer">Nivel 1</a> ·
-                    <a href="https://zhemaria.github.io/clase_mate2/leccion_1-1.html" target="_blank" rel="noopener noreferrer">Nivel 2</a> ·
-                    <a href="https://zhemaria.github.io/clase_mate3/leccion_1-1.html" target="_blank" rel="noopener noreferrer">Nivel 3</a> ·
-                    <a href="https://zhemaria.github.io/clase_mate4/leccion_1-1.html" target="_blank" rel="noopener noreferrer">Nivel 4</a>
+                  <td>El tema del nivel que le indicó la prueba:<br>
+                    Nivel 1: <a href="https://www.gedparahispanos.com/matem%C3%A1ticas-ged/iniciaci%C3%B3n-y-dominio-num%C3%A9rico" target="_blank" rel="noopener noreferrer">Iniciación y dominio numérico</a><br>
+                    Nivel 2: <a href="https://www.gedparahispanos.com/matem%C3%A1ticas-ged/conectando-con-el-%C3%A1lgebra" target="_blank" rel="noopener noreferrer">Conectando con el álgebra</a><br>
+                    Nivel 3: <a href="https://www.gedparahispanos.com/matem%C3%A1ticas-ged/exploraci%C3%B3n-geom%C3%A9trica-y-estad%C3%ADstica" target="_blank" rel="noopener noreferrer">Exploración geométrica y estadística</a><br>
+                    Nivel 4: <a href="https://www.gedparahispanos.com/matem%C3%A1ticas-ged/dominio-del-ged-y-resoluci%C3%B3n-de-problema" target="_blank" rel="noopener noreferrer">Dominio del GED y resolución de problemas</a>
                   </td>
                 </tr>
                 <tr>
                   <td>Artes del lenguaje</td>
-                  <td>En la primera lección de su nivel:
-                    <a data-pendiente="lecciones-lenguaje" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">lecciones de Artes del lenguaje</a>
-                  </td>
+                  <td><a href="https://www.gedparahispanos.com/artes-del-lenguaje/comprensi%C3%B3n-de-textos" target="_blank" rel="noopener noreferrer">Comprensión lectora</a></td>
                 </tr>
                 <tr>
                   <td>Ciencias</td>
-                  <td>En la <a href="https://zhemaria.github.io/clases_ciencias/leccion_1-1.html" target="_blank" rel="noopener noreferrer">Lección 1.1</a> y en orden hasta la 8.3</td>
+                  <td><a href="https://www.gedparahispanos.com/ciencias/ciencias-de-la-vida" target="_blank" rel="noopener noreferrer">Ciencias de la vida</a></td>
                 </tr>
                 <tr>
                   <td>Estudios sociales</td>
-                  <td>En el <a href="https://zhemaria.github.io/sociales/" target="_blank" rel="noopener noreferrer">índice del curso</a>, por el Tema 1</td>
+                  <td><a href="https://www.gedparahispanos.com/estudios-sociales/pensar-razonar-criticar" target="_blank" rel="noopener noreferrer">Pensamiento crítico y razonamiento matemático en Estudios sociales</a></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p>Cada lección explica el tema, trae ejercicios con respuesta inmediata y enlaces a interactivos para practicar más. Termine cada lección con su quiz antes de pasar a la siguiente.</p>
-          <p class="nota">Para repasar Matemáticas, cada nivel tiene un índice con todas sus prácticas:
-            <a href="https://zhemaria.github.io/algebra/n1-repaso.html" target="_blank" rel="noopener noreferrer">Nivel 1</a> ·
-            <a href="https://zhemaria.github.io/algebra/n2-repaso.html" target="_blank" rel="noopener noreferrer">Nivel 2</a> ·
-            <a href="https://zhemaria.github.io/algebra/n3-repaso.html" target="_blank" rel="noopener noreferrer">Nivel 3</a> ·
-            <a href="https://zhemaria.github.io/algebra/n4-repaso.html" target="_blank" rel="noopener noreferrer">Nivel 4</a>.
-          </p>
+          <p>Dentro de cada tema, siga las lecciones en orden. Cada lección explica el contenido, trae ejercicios con respuesta inmediata y enlaces a interactivos para practicar más. Termine cada lección con su quiz antes de pasar a la siguiente.</p>
+          <div class="nota">
+            <p>Para repasar Matemáticas, cada nivel tiene un índice con todas sus prácticas:</p>
+            <ul class="repaso">
+              <li><a href="https://zhemaria.github.io/algebra/n1-repaso.html" target="_blank" rel="noopener noreferrer">Iniciación y dominio numérico</a></li>
+              <li><a href="https://zhemaria.github.io/algebra/n2-repaso.html" target="_blank" rel="noopener noreferrer">Conectando con el álgebra</a></li>
+              <li><a href="https://zhemaria.github.io/algebra/n3-repaso.html" target="_blank" rel="noopener noreferrer">Exploración geométrica y estadística</a></li>
+              <li><a href="https://zhemaria.github.io/algebra/n4-repaso.html" target="_blank" rel="noopener noreferrer">Dominio del GED y resolución de problemas</a></li>
+            </ul>
+          </div>
         </div>
       </li>
 
@@ -299,11 +296,12 @@
           <p class="tiempo">Tiempo: lo que dura cada examen real; hágalos al terminar cada materia</p>
           <p>Los exámenes de simulación tienen la misma cantidad de preguntas y el mismo tiempo que el examen oficial. No le dicen si acertó mientras responde, igual que en el examen real. Al final recibe un informe que le señala qué temas repasar y le enlaza a las lecciones correspondientes.</p>
           <div class="acciones">
-            <a class="boton sec" href="https://zhemaria.github.io/examen/matematicas/" target="_blank" rel="noopener noreferrer">Matemáticas<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
-            <a class="boton sec" data-pendiente="examen-lenguaje" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">Artes del lenguaje<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
-            <a class="boton sec" href="https://zhemaria.github.io/examen/ciencias/" target="_blank" rel="noopener noreferrer">Ciencias<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
-            <a class="boton sec" href="https://zhemaria.github.io/examen/sociales/" target="_blank" rel="noopener noreferrer">Estudios sociales<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
+            <a class="boton sec" href="https://www.gedparahispanos.com/ex%C3%A1menes/matem%C3%A1ticas" target="_blank" rel="noopener noreferrer">Matemáticas<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
+            <a class="boton sec" href="https://www.gedparahispanos.com/ex%C3%A1menes/artes-del-lenguaje" target="_blank" rel="noopener noreferrer">Artes del lenguaje<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
+            <a class="boton sec" href="https://www.gedparahispanos.com/ex%C3%A1menes/ciencias" target="_blank" rel="noopener noreferrer">Ciencias<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
+            <a class="boton sec" href="https://www.gedparahispanos.com/ex%C3%A1menes/estudios-sociales" target="_blank" rel="noopener noreferrer">Estudios sociales<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
           </div>
+          <p>Para Artes del lenguaje, practique también la <a href="https://www.gedparahispanos.com/ex%C3%A1menes/respuesta-extendida" target="_blank" rel="noopener noreferrer">respuesta extendida</a>, el ensayo corto que forma parte de ese examen.</p>
           <p class="nota">Si el informe le marca temas débiles, vuelva a esas lecciones y repita el simulacro unas semanas después. No es un fracaso: es exactamente para lo que sirve.</p>
         </div>
       </li>
@@ -336,7 +334,7 @@
   <section class="bloque" id="ayuda" aria-labelledby="t-ayuda">
     <h2 class="seccion" id="t-ayuda">Si necesita ayuda</h2>
     <ul class="enlaces">
-      <li><a data-pendiente="profe-ged" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">Profe GED</a>
+      <li><a href="https://www.gedparahispanos.com/profe-ged-ia" target="_blank" rel="noopener noreferrer">Profe GED</a>
         <span class="desc">El tutor de GEDparaHispanos, que responde sus dudas por chat a cualquier hora.</span></li>
       <li><a href="https://www.ged.com/es/study/ged_classes/" target="_blank" rel="noopener noreferrer">Clases de preparación cerca de usted</a>
         <span class="desc">Buscador oficial de GED.com de centros de educación para adultos.</span></li>
