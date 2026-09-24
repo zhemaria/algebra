@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<!--
+  Cómo empezar a prepararse para el GED · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+  Anclas internas: #como-empezar · #paso-1 … #paso-6 · #ayuda · #que-es-el-ged · #enlaces
+
+  ENLACES PENDIENTES (buscar data-pendiente): mientras no se completen, llevan a la página
+  de inicio de GEDparaHispanos para que ningún enlace quede roto.
+    - prueba-ubicacion-mate      Prueba de ubicación de Matemáticas
+    - prueba-ubicacion-lenguaje  Prueba de ubicación de Artes del lenguaje
+    - lecciones-lenguaje         Lecciones de Artes del lenguaje
+    - examen-lenguaje            Examen de simulación de Artes del lenguaje
+    - profe-ged                  Tutor Profe GED
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo empezar a prepararse para el GED — GEDparaHispanos</title>
+<meta name="description" content="Guía paso a paso para empezar a prepararse para el GED en español con los recursos gratuitos de GEDparaHispanos, y una explicación breve de qué es el GED.">
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* Paleta: azul GEDparaHispanos + marigold para la ruta (solo decorativo, nunca con texto blanco) */
+  :root{
+    --azul:#0b3a66;      /* títulos, botones (blanco encima: 11.9:1) */
+    --azul-2:#1d5a94;    /* enlaces (sobre blanco: 7.1:1) */
+    --azul-cl:#e8f1fa;   /* fondos suaves */
+    --ruta:#f2b705;      /* línea y marcas de la ruta */
+    --ruta-cl:#fff6d6;
+    --tinta:#1b2430;
+    --gris:#4a5563;      /* texto secundario (sobre blanco: 7.6:1) */
+    --linea:#d8e0e8;
+    --fondo:#f3f6f9;
+    --papel:#ffffff;
+    --verde:#1e6b3c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  body{
+    font-family:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,sans-serif;
+    background:var(--fondo);color:var(--tinta);font-size:18px;line-height:1.6;
+  }
+  .envoltura{max-width:820px;margin:0 auto;padding:0 20px 60px;}
+  a{color:var(--azul-2);text-underline-offset:3px;}
+  a:hover{color:var(--azul);}
+  :focus-visible{outline:3px solid var(--azul);outline-offset:3px;border-radius:4px;}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+  .saltar{position:absolute;left:-999px;top:0;background:var(--azul);color:#fff;padding:10px 16px;z-index:10;}
+  .saltar:focus{left:12px;top:12px;}
+
+  /* ---------- Encabezado ---------- */
+  header.principal{background:var(--azul);color:#fff;padding:44px 0 40px;}
+  header.principal .envoltura{padding-bottom:0;}
+  header.principal .sitio{font-size:16px;opacity:.92;margin-bottom:10px;}
+  header.principal h1{font-size:clamp(28px,5vw,40px);line-height:1.2;font-weight:700;max-width:18ch;}
+  header.principal .lema{font-size:19px;margin-top:14px;max-width:44ch;}
+  header.principal .gratis{display:inline-block;margin-top:20px;background:var(--ruta);color:#1b2430;
+    font-weight:700;padding:6px 14px;border-radius:6px;font-size:16px;}
+
+  /* ---------- Índice ---------- */
+  nav.indice{background:var(--papel);border:1px solid var(--linea);border-radius:10px;
+    padding:18px 22px;margin:-18px 0 34px;position:relative;}
+  nav.indice h2{font-size:17px;color:var(--azul);margin-bottom:8px;}
+  nav.indice ol{padding-left:22px;}
+  nav.indice li{margin:4px 0;}
+  nav.indice ol ol{list-style:none;padding-left:0;margin:4px 0 6px;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:16px;}
+
+  h2.seccion{font-size:clamp(24px,4vw,30px);color:var(--azul);line-height:1.25;margin:10px 0 10px;}
+  .intro-seccion{color:var(--gris);max-width:62ch;margin-bottom:26px;}
+
+  /* ---------- La ruta de 6 pasos ---------- */
+  ol.ruta{list-style:none;position:relative;margin:0 0 20px;}
+  ol.ruta::before{content:"";position:absolute;left:23px;top:24px;bottom:24px;width:6px;
+    background:var(--ruta);border-radius:3px;}
+  ol.ruta > li{position:relative;padding-left:74px;margin-bottom:26px;scroll-margin-top:16px;}
+  .marca{position:absolute;left:0;top:0;width:52px;height:52px;border-radius:50%;
+    background:var(--azul);color:#fff;font-weight:700;font-size:24px;
+    display:flex;align-items:center;justify-content:center;border:5px solid var(--ruta);}
+  .paso{background:var(--papel);border:1px solid var(--linea);border-radius:10px;padding:20px 22px;}
+  .paso h3{font-size:22px;line-height:1.3;color:var(--azul);margin-bottom:6px;}
+  .paso .tiempo{font-size:15px;color:var(--gris);margin-bottom:10px;}
+  .paso p{margin:8px 0;max-width:64ch;}
+  .paso ul{margin:8px 0 8px 22px;}
+  .paso li{margin:4px 0;}
+  .acciones{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+  a.boton{display:inline-block;background:var(--azul);color:#fff;text-decoration:none;font-weight:700;
+    padding:10px 18px;border-radius:8px;font-size:17px;}
+  a.boton:hover{background:#082b4c;color:#fff;}
+  a.boton.sec{background:var(--papel);color:var(--azul);border:2px solid var(--azul);}
+  a.boton.sec:hover{background:var(--azul-cl);}
+  .nota{background:var(--azul-cl);border-left:5px solid var(--azul-2);padding:10px 14px;
+    border-radius:0 8px 8px 0;margin:12px 0;font-size:17px;}
+  .final .marca{background:var(--verde);}
+
+  /* Tabla de materias (paso 4) */
+  .tabla-envoltura{overflow-x:auto;margin:10px 0;}
+  table{border-collapse:collapse;width:100%;font-size:16.5px;min-width:520px;}
+  caption{text-align:left;font-weight:700;color:var(--azul);padding-bottom:6px;}
+  th,td{border:1px solid var(--linea);padding:9px 11px;text-align:left;vertical-align:top;}
+  thead th{background:var(--azul-cl);color:var(--azul);}
+
+  /* Desplegables (videos y detalles) */
+  details.ver{margin-top:12px;border:1px solid var(--linea);border-radius:8px;background:#fafcfe;}
+  details.ver > summary{cursor:pointer;padding:10px 14px;font-weight:700;color:var(--azul);list-style:none;}
+  details.ver > summary::-webkit-details-marker{display:none;}
+  details.ver > summary::before{content:"▸ ";}
+  details.ver[open] > summary::before{content:"▾ ";}
+  details.ver .dentro{padding:4px 14px 14px;}
+  .video{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:6px;overflow:hidden;}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+
+  /* ---------- Qué es el GED ---------- */
+  section.bloque{background:var(--papel);border:1px solid var(--linea);border-radius:10px;
+    padding:26px 24px;margin:34px 0;scroll-margin-top:16px;}
+  section.bloque h2.seccion{margin-top:0;}
+  .materias{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:14px 0 18px;list-style:none;}
+  .materias li{background:var(--azul-cl);border-radius:8px;padding:12px 14px;font-weight:700;color:var(--azul);font-size:17px;}
+  .datos{margin:0 0 0 22px;}
+  .datos li{margin:6px 0;}
+  .ampliar{margin-top:16px;font-size:17px;}
+  .ampliar li{margin:4px 0;}
+  ul.enlaces{list-style:none;}
+  ul.enlaces li{padding:10px 0;border-bottom:1px solid var(--linea);}
+  ul.enlaces li:last-child{border-bottom:none;}
+  ul.enlaces .desc{display:block;color:var(--gris);font-size:16px;}
+
+  .cierre{text-align:center;margin:30px auto 0;max-width:52ch;font-size:19px;}
+  footer{border-top:1px solid var(--linea);margin-top:40px;padding-top:18px;font-size:15px;color:var(--gris);text-align:center;}
+
+  @media (max-width:560px){
+    body{font-size:17px;}
+    ol.ruta::before{left:17px;}
+    ol.ruta > li{padding-left:56px;}
+    .marca{width:40px;height:40px;font-size:19px;border-width:4px;}
+    .paso{padding:16px;}
+  }
+  @media print{
+    header.principal{background:none;color:var(--tinta);}
+    .gratis{border:1px solid #000;}
+    details.ver{display:none;}
+  }
+</style>
+</head>
+<body>
+<a class="saltar" href="#como-empezar">Ir directamente a los pasos</a>
+
+<header class="principal">
+  <div class="envoltura">
+    <p class="sitio">GEDparaHispanos</p>
+    <h1>Cómo empezar a prepararse para el GED</h1>
+    <p class="lema">Seis pasos, en orden, para estudiar por su cuenta y llegar al examen con confianza.</p>
+    <p class="gratis">Todo lo que necesita para estudiar aquí es gratuito</p>
+  </div>
+</header>
+
+<main class="envoltura" id="contenido">
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">En esta página</h2>
+    <ol>
+      <li><a href="#como-empezar">Cómo empezar, paso a paso</a>
+        <ol aria-label="Los seis pasos">
+          <li><a href="#paso-1">1. Punto de partida</a></li>
+          <li><a href="#paso-2">2. Cuenta en GED.com</a></li>
+          <li><a href="#paso-3">3. Su horario</a></li>
+          <li><a href="#paso-4">4. Las lecciones</a></li>
+          <li><a href="#paso-5">5. Medir el avance</a></li>
+          <li><a href="#paso-6">6. El examen oficial</a></li>
+        </ol>
+      </li>
+      <li><a href="#ayuda">Si necesita ayuda</a></li>
+      <li><a href="#que-es-el-ged">¿Qué es el GED?</a></li>
+      <li><a href="#enlaces">Enlaces oficiales y videos</a></li>
+    </ol>
+  </nav>
+
+  <!-- ================= CÓMO EMPEZAR ================= -->
+  <section id="como-empezar" aria-labelledby="t-empezar">
+    <h2 class="seccion" id="t-empezar">Cómo empezar, paso a paso</h2>
+    <p class="intro-seccion">Siga los pasos en este orden. No hace falta hacerlos todos el mismo día: lo importante es no saltarse el primero, porque le dice por dónde empezar a estudiar.</p>
+
+    <ol class="ruta">
+
+      <!-- PASO 1 -->
+      <li id="paso-1">
+        <span class="marca" aria-hidden="true">1</span>
+        <div class="paso">
+          <h3><span class="sr-only">Paso 1: </span>Averigüe su punto de partida</h3>
+          <p class="tiempo">Tiempo: una hora aproximadamente, en una o dos sesiones</p>
+          <p>Haga las dos pruebas de ubicación: una de Matemáticas y otra de Artes del lenguaje. Cada una tiene 30 preguntas. El resultado le indica en qué nivel, del 1 al 4, le conviene empezar cada materia.</p>
+          <p>Hágalas con calma y sin ayuda. Si no sabe una respuesta, pase a la siguiente: la prueba no es un examen, sino un mapa para saber dónde está.</p>
+          <div class="acciones">
+            <a class="boton" data-pendiente="prueba-ubicacion-mate" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">Prueba de Matemáticas<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+            <a class="boton" data-pendiente="prueba-ubicacion-lenguaje" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">Prueba de Artes del lenguaje<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          </div>
+          <p class="nota">Anote el nivel que obtuvo en cada prueba. Lo va a necesitar en el paso 4.</p>
+        </div>
+      </li>
+
+      <!-- PASO 2 -->
+      <li id="paso-2">
+        <span class="marca" aria-hidden="true">2</span>
+        <div class="paso">
+          <h3><span class="sr-only">Paso 2: </span>Cree su cuenta gratuita en GED.com</h3>
+          <p class="tiempo">Tiempo: unos 15 minutos</p>
+          <p>La cuenta en GED.com, también llamada «MyGED», es gratuita. Con ella puede ver los requisitos de su estado, encontrar un centro de examen y, más adelante, programar sus exámenes. Crearla ahora no le obliga a nada.</p>
+          <div class="acciones">
+            <a class="boton" href="https://www.ged.com/es" target="_blank" rel="noopener noreferrer">Ir a GED.com en español<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          </div>
+          <details class="ver">
+            <summary>Ver el video: cómo crear la cuenta</summary>
+            <div class="dentro">
+              <div class="video">
+                <iframe src="https://www.youtube.com/embed/htAzbGbRjXE" title="Video: cómo crear la cuenta en MyGED" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+            </div>
+          </details>
+        </div>
+      </li>
+
+      <!-- PASO 3 -->
+      <li id="paso-3">
+        <span class="marca" aria-hidden="true">3</span>
+        <div class="paso">
+          <h3><span class="sr-only">Paso 3: </span>Organice su tiempo</h3>
+          <p class="tiempo">Tiempo: 10 minutos para decidir, y después constancia</p>
+          <p>Cada nivel de Matemáticas y de Artes del lenguaje equivale a unas 96 horas de estudio. Con unas 6 horas por semana, un nivel se completa en unas 16 semanas.</p>
+          <ul>
+            <li><strong>Elija días y horas fijos.</strong> Estudiar un poco casi todos los días rinde más que una sesión larga el fin de semana.</li>
+            <li><strong>Busque un lugar tranquilo</strong> y tenga a mano un cuaderno y un lápiz.</li>
+            <li><strong>No se compare con nadie.</strong> Cada persona empieza en un punto distinto; lo que cuenta es avanzar.</li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- PASO 4 -->
+      <li id="paso-4">
+        <span class="marca" aria-hidden="true">4</span>
+        <div class="paso">
+          <h3><span class="sr-only">Paso 4: </span>Estudie con las lecciones, en este orden</h3>
+          <p class="tiempo">Tiempo: la mayor parte de su preparación</p>
+          <p>Empiece por <strong>Matemáticas y Artes del lenguaje</strong>, en el nivel que le indicaron las pruebas del paso 1. Puede estudiarlas en paralelo, por ejemplo una lección de cada materia por semana.</p>
+          <p><strong>Ciencias y Estudios sociales</strong> piden leer textos, tablas y gráficas con soltura. Conviene empezarlas cuando ya vaya avanzado en Artes del lenguaje; Estudios sociales, idealmente, después de terminar su Nivel 4.</p>
+          <div class="tabla-envoltura">
+            <table>
+              <caption>Dónde empezar cada materia</caption>
+              <thead>
+                <tr><th scope="col">Materia</th><th scope="col">Dónde empezar</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Matemáticas</td>
+                  <td>En la primera lección de su nivel:
+                    <a href="https://zhemaria.github.io/clase_mate1/leccion-1-1.html" target="_blank" rel="noopener noreferrer">Nivel 1</a> ·
+                    <a href="https://zhemaria.github.io/clase_mate2/leccion_1-1.html" target="_blank" rel="noopener noreferrer">Nivel 2</a> ·
+                    <a href="https://zhemaria.github.io/clase_mate3/leccion_1-1.html" target="_blank" rel="noopener noreferrer">Nivel 3</a> ·
+                    <a href="https://zhemaria.github.io/clase_mate4/leccion_1-1.html" target="_blank" rel="noopener noreferrer">Nivel 4</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Artes del lenguaje</td>
+                  <td>En la primera lección de su nivel:
+                    <a data-pendiente="lecciones-lenguaje" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">lecciones de Artes del lenguaje</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ciencias</td>
+                  <td>En la <a href="https://zhemaria.github.io/clases_ciencias/leccion_1-1.html" target="_blank" rel="noopener noreferrer">Lección 1.1</a> y en orden hasta la 8.3</td>
+                </tr>
+                <tr>
+                  <td>Estudios sociales</td>
+                  <td>En el <a href="https://zhemaria.github.io/sociales/" target="_blank" rel="noopener noreferrer">índice del curso</a>, por el Tema 1</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Cada lección explica el tema, trae ejercicios con respuesta inmediata y enlaces a interactivos para practicar más. Termine cada lección con su quiz antes de pasar a la siguiente.</p>
+          <p class="nota">Para repasar Matemáticas, cada nivel tiene un índice con todas sus prácticas:
+            <a href="https://zhemaria.github.io/algebra/n1-repaso.html" target="_blank" rel="noopener noreferrer">Nivel 1</a> ·
+            <a href="https://zhemaria.github.io/algebra/n2-repaso.html" target="_blank" rel="noopener noreferrer">Nivel 2</a> ·
+            <a href="https://zhemaria.github.io/algebra/n3-repaso.html" target="_blank" rel="noopener noreferrer">Nivel 3</a> ·
+            <a href="https://zhemaria.github.io/algebra/n4-repaso.html" target="_blank" rel="noopener noreferrer">Nivel 4</a>.
+          </p>
+        </div>
+      </li>
+
+      <!-- PASO 5 -->
+      <li id="paso-5">
+        <span class="marca" aria-hidden="true">5</span>
+        <div class="paso">
+          <h3><span class="sr-only">Paso 5: </span>Mida su avance con los exámenes de simulación</h3>
+          <p class="tiempo">Tiempo: lo que dura cada examen real; hágalos al terminar cada materia</p>
+          <p>Los exámenes de simulación tienen la misma cantidad de preguntas y el mismo tiempo que el examen oficial. No le dicen si acertó mientras responde, igual que en el examen real. Al final recibe un informe que le señala qué temas repasar y le enlaza a las lecciones correspondientes.</p>
+          <div class="acciones">
+            <a class="boton sec" href="https://zhemaria.github.io/examen/matematicas/" target="_blank" rel="noopener noreferrer">Matemáticas<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
+            <a class="boton sec" data-pendiente="examen-lenguaje" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">Artes del lenguaje<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
+            <a class="boton sec" href="https://zhemaria.github.io/examen/ciencias/" target="_blank" rel="noopener noreferrer">Ciencias<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
+            <a class="boton sec" href="https://zhemaria.github.io/examen/sociales/" target="_blank" rel="noopener noreferrer">Estudios sociales<span class="sr-only"> (examen de simulación, se abre en una pestaña nueva)</span></a>
+          </div>
+          <p class="nota">Si el informe le marca temas débiles, vuelva a esas lecciones y repita el simulacro unas semanas después. No es un fracaso: es exactamente para lo que sirve.</p>
+        </div>
+      </li>
+
+      <!-- PASO 6 -->
+      <li id="paso-6" class="final">
+        <span class="marca" aria-hidden="true">6</span>
+        <div class="paso">
+          <h3><span class="sr-only">Paso 6: </span>Cuando esté listo, programe el examen oficial</h3>
+          <p class="tiempo">Una materia a la vez, cuando le vaya bien en su simulacro</p>
+          <p>Antes de pagar el examen oficial, conviene hacer la prueba práctica oficial de GED.com, llamada <em>GED Ready</em>. Tiene un costo bajo y le dice si es probable que apruebe esa materia. Si el resultado es favorable, programe el examen desde su cuenta.</p>
+          <p>No tiene que presentar las cuatro materias juntas: puede aprobarlas una por una, a su ritmo.</p>
+          <div class="acciones">
+            <a class="boton" href="https://www.ged.com/es" target="_blank" rel="noopener noreferrer">Programar en GED.com<span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+          </div>
+          <details class="ver">
+            <summary>Ver el video: cómo programar el examen</summary>
+            <div class="dentro">
+              <div class="video">
+                <iframe src="https://www.youtube.com/embed/oXCyC8PYo3k" title="Video: cómo programar el examen en MyGED" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+            </div>
+          </details>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ================= AYUDA ================= -->
+  <section class="bloque" id="ayuda" aria-labelledby="t-ayuda">
+    <h2 class="seccion" id="t-ayuda">Si necesita ayuda</h2>
+    <ul class="enlaces">
+      <li><a data-pendiente="profe-ged" href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">Profe GED</a>
+        <span class="desc">El tutor de GEDparaHispanos, que responde sus dudas por chat a cualquier hora.</span></li>
+      <li><a href="https://www.ged.com/es/study/ged_classes/" target="_blank" rel="noopener noreferrer">Clases de preparación cerca de usted</a>
+        <span class="desc">Buscador oficial de GED.com de centros de educación para adultos.</span></li>
+      <li><strong>Su biblioteca pública</strong>
+        <span class="desc">Muchas ofrecen computadoras, internet gratuito y, a veces, clases o tutorías de preparación.</span></li>
+    </ul>
+  </section>
+
+  <!-- ================= QUÉ ES EL GED ================= -->
+  <section class="bloque" id="que-es-el-ged" aria-labelledby="t-ged">
+    <h2 class="seccion" id="t-ged">¿Qué es el GED?</h2>
+    <p>El GED es un examen que certifica que usted tiene los conocimientos de un graduado de la escuela secundaria (<em>high school</em>). Al aprobarlo recibe una credencial equivalente al diploma, que le abre puertas a mejores empleos y a estudios universitarios o técnicos.</p>
+    <p>Está formado por cuatro exámenes, uno por materia:</p>
+    <ul class="materias">
+      <li>Razonamiento a través de las artes del lenguaje</li>
+      <li>Razonamiento matemático</li>
+      <li>Ciencias</li>
+      <li>Estudios sociales</li>
+    </ul>
+    <ul class="datos">
+      <li>Se puede presentar <strong>en español</strong>.</li>
+      <li>Se hace <strong>en computadora</strong>, en un centro de examen autorizado o, en muchos estados, en línea desde casa con supervisión.</li>
+      <li>Para aprobar se necesita <strong>145 puntos en cada materia</strong>, en una escala de 100 a 200.</li>
+      <li>La edad mínima, los requisitos de residencia y el costo <strong>dependen de cada estado</strong>.</li>
+    </ul>
+    <div class="ampliar">
+      <p><strong>Para saber más:</strong></p>
+      <ul class="datos">
+        <li><a href="https://www.ged.com/es" target="_blank" rel="noopener noreferrer">GED.com en español</a>: información oficial, requisitos y costos de su estado.</li>
+        <li><a href="https://www.ged.com/about-test/scores.html" target="_blank" rel="noopener noreferrer">Las puntuaciones del GED</a> (en inglés): qué significa cada rango de puntos.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= ENLACES ================= -->
+  <section class="bloque" id="enlaces" aria-labelledby="t-enlaces">
+    <h2 class="seccion" id="t-enlaces">Enlaces oficiales y videos</h2>
+    <ul class="enlaces">
+      <li><a href="https://www.ged.com/es" target="_blank" rel="noopener noreferrer">GED.com en español</a>
+        <span class="desc">Sitio oficial: cuenta MyGED, requisitos, costos, prueba GED Ready y registro para el examen.</span></li>
+      <li><a href="https://www.youtube.com/watch?v=htAzbGbRjXE" target="_blank" rel="noopener noreferrer">Video: cómo crear la cuenta en MyGED</a>
+        <span class="desc">Paso a paso para registrarse en GED.com.</span></li>
+      <li><a href="https://www.youtube.com/watch?v=oXCyC8PYo3k" target="_blank" rel="noopener noreferrer">Video: cómo programar el examen en MyGED</a>
+        <span class="desc">Indicaciones para programar el examen presencial.</span></li>
+      <li><a href="https://www.gedparahispanos.com/inicio" target="_blank" rel="noopener noreferrer">GEDparaHispanos</a>
+        <span class="desc">Lecciones gratuitas de las cuatro materias, prácticas y exámenes de simulación.</span></li>
+      <li><a href="https://es.khanacademy.org" target="_blank" rel="noopener noreferrer">Khan Academy en español</a>
+        <span class="desc">Videos y ejercicios gratuitos, útiles sobre todo para reforzar Matemáticas.</span></li>
+    </ul>
+  </section>
+
+  <p class="cierre">Aprobar el GED no depende de ser «bueno para estudiar», sino de avanzar un poco cada semana. <strong>Empiece hoy por el <a href="#paso-1">paso 1</a>.</strong></p>
+
+  <footer>
+    <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago</p>
+    <p>GEDparaHispanos · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank" rel="noopener noreferrer license">Licencia CC BY-NC-SA 4.0</a></p>
+  </footer>
+</main>
+
+<script>
+  // Si se llega con un ancla, abre el desplegable que la contiene.
+  (function(){
+    function abrir(){
+      var id = decodeURIComponent(location.hash.slice(1));
+      if (!id) return;
+      var el = document.getElementById(id);
+      if (el){ var d = el.closest("details"); if (d) d.open = true; }
+    }
+    window.addEventListener("hashchange", abrir);
+    abrir();
+  })();
+</script>
+</body>
+</html>
