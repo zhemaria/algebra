@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#b71c1c; --tema-d:#7f0000; --tema-bg:#ffebee; --tema-bg2:#ffcdd2;
+    --tema:#1b5e20; --tema-d:#0d3b11; --tema-bg:#e8f5e9; --tema-bg2:#c8e6c9;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -82,7 +82,7 @@
   .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
               border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
   .caja-aviso.visible{display:block;}
-  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .campo input.error{border-color:#1b5e20;background:#e8f5e9;}
 
   .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
   .salida .linea{margin:6px 0;}
@@ -219,14 +219,14 @@
   .lista-angulos{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0;}
   .leyenda-c{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:14px;margin:6px 0;}
   .leyenda-c span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:-2px;}
-  .leyenda-c .l-sel::before{background:#0d47a1;} .leyenda-c .l-ig::before{background:#1b5e20;} .leyenda-c .l-sup::before{background:#b71c1c;}
+  .leyenda-c .l-sel::before{background:#0d47a1;} .leyenda-c .l-ig::before{background:#1b5e20;} .leyenda-c .l-sup::before{background:#1b5e20;}
 
   .datos{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
   .dato{min-width:40px;text-align:center;padding:6px 8px;border:2px solid var(--tema-bg2);border-radius:8px;background:#fff;font-weight:700;font-size:17px;}
   .dato.med{background:var(--tema);border-color:var(--tema-d);color:#fff;}
   .dato.q{background:#fff8e1;border-color:#f9a825;color:#5c3900;}
   .dato.baja{border-color:#90caf9;} .dato.alta{border-color:#a5d6a7;}
-  .dato.atip{background:#ffebee;border-color:#b71c1c;color:#b71c1c;}
+  .dato.atip{background:#e8f5e9;border-color:#1b5e20;color:#1b5e20;}
   .tabla-frec input{width:70px;padding:6px 8px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
   .tabla-frec td.bien input{border-color:var(--ok);background:var(--ok-bg);} .tabla-frec td.mal input{border-color:var(--mal);background:var(--mal-bg);}
 
@@ -302,16 +302,16 @@
   .medidas4 strong{display:block;font-size:24px;color:var(--tema-d);}
 
   .columna{font-family:Consolas,'Courier New',monospace;font-size:26px;line-height:1.35;display:inline-block;text-align:right;margin:8px 0;padding:8px 16px;background:#fff;border:2px solid var(--tema-bg2);border-radius:10px;}
-  .columna .lleva{font-size:16px;color:#b71c1c;font-weight:700;letter-spacing:0;}
+  .columna .lleva{font-size:16px;color:#1b5e20;font-weight:700;letter-spacing:0;}
   .columna .raya{border-top:3px solid #222;}
   .columna .act{background:#fff3e0;outline:2px solid #ef6c00;border-radius:4px;}
   .columna .tach{text-decoration:line-through;color:#9e9e9e;}
-  .columna .nuevo{color:#b71c1c;font-size:15px;vertical-align:super;}
+  .columna .nuevo{color:#1b5e20;font-size:15px;vertical-align:super;}
   table.vp{border-collapse:collapse;margin:8px auto;}
   table.vp th,table.vp td{border:1px solid #c5cae9;padding:6px 8px;text-align:center;min-width:44px;}
   table.vp th{font-size:12px;background:var(--tema-bg);color:var(--tema-d);line-height:1.2;}
   table.vp td{font-size:26px;font-weight:700;}
-  table.vp td.sel{background:#fff3e0;color:#b71c1c;}
+  table.vp td.sel{background:#fff3e0;color:#1b5e20;}
   table.vp tr.fila-grupo td{font-size:13px;font-weight:700;color:#fff;background:var(--tema);}
   table.columna{border-collapse:collapse;}
   table.columna td{min-width:30px;padding:2px 6px;text-align:center;}
@@ -324,7 +324,7 @@
   table.columna td.linea-arriba{border-top:3px solid #222;}
   table.division{border-collapse:collapse;font-family:Consolas,'Courier New',monospace;font-size:24px;margin:8px auto;}
   table.division td{min-width:26px;padding:1px 4px;text-align:center;}
-  table.division td.coc{color:#b71c1c;font-weight:700;}
+  table.division td.coc{color:#1b5e20;font-weight:700;}
   table.division td.techo{border-top:3px solid #222;}
   table.division td.pared{border-left:3px solid #222;}
   table.division td.sub{border-bottom:2px solid #222;}
@@ -341,11 +341,11 @@
   .arreglo span{width:26px;height:26px;border-radius:50%;background:#00897b;display:block;}
   .grupos-div{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0;}
   .grupos-div .g{border:2px dashed #80cbc4;border-radius:10px;padding:6px;display:flex;flex-wrap:wrap;gap:3px;max-width:120px;justify-content:center;}
-  .grupos-div .g.resto{border-color:#b71c1c;}
+  .grupos-div .g.resto{border-color:#1b5e20;}
   .grupos-div i{width:18px;height:18px;border-radius:4px;background:#00897b;display:block;}
-  .grupos-div .resto i{background:#e57373;}
+  .grupos-div .resto i{background:#43a047;}
 
-  table.vp td.punto{font-size:30px;color:#b71c1c;min-width:20px;}
+  table.vp td.punto{font-size:30px;color:#1b5e20;min-width:20px;}
   .tarjetas-c{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin:10px 0;}
   .tarjetas-c button{background:#fff;border:2px solid var(--tema-bg2);border-radius:10px;padding:10px 4px;font-size:18px;font-weight:700;color:var(--tema-d);min-height:58px;}
   .tarjetas-c button[aria-pressed="true"]{background:var(--tema);color:#fff;border-color:var(--tema-d);}
@@ -353,19 +353,19 @@
 
   .secuencia{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:10px 0;font-size:22px;font-weight:700;}
   .secuencia .t{min-width:54px;text-align:center;padding:8px 10px;border:2px solid var(--tema-bg2);border-radius:10px;background:#fff;}
-  .secuencia .t.falta{border-style:dashed;color:#b71c1c;}
-  .secuencia .s{font-size:14px;color:#b71c1c;font-weight:700;}
+  .secuencia .t.falta{border-style:dashed;color:#1b5e20;}
+  .secuencia .s{font-size:14px;color:#1b5e20;font-weight:700;}
   .maquina{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;margin:10px 0;font-size:20px;font-weight:700;}
   .maquina .caja{background:var(--tema);color:#fff;border-radius:12px;padding:14px 18px;}
 
   table.datos-t{border-collapse:collapse;margin:8px auto;font-size:16px;}
-  table.datos-t th,table.datos-t td{border:1px solid #ef9a9a;padding:0;text-align:center;}
+  table.datos-t th,table.datos-t td{border:1px solid #a5d6a7;padding:0;text-align:center;}
   table.datos-t th{background:var(--tema-bg);color:var(--tema-d);padding:8px 12px;}
   table.datos-t td button{border:none;background:#fff;font:inherit;padding:8px 14px;width:100%;cursor:pointer;color:#222;}
   table.datos-t td button:focus-visible{outline:3px solid var(--acento);outline-offset:-3px;}
   table.datos-t td.fila button, table.datos-t td.col button{background:#fff3e0;}
-  table.datos-t td.cruce button{background:#b71c1c;color:#fff;font-weight:700;}
-  table.datos-t th.fila, table.datos-t th.col{background:#ffcdd2;}
+  table.datos-t td.cruce button{background:#1b5e20;color:#fff;font-weight:700;}
+  table.datos-t th.fila, table.datos-t th.col{background:#c8e6c9;}
 
 </style>
 </head>
@@ -997,8 +997,8 @@ function rectaEnt(lo, hi, marcas, saltos, voz, tramo){
     if (sl.txt) s += texto([mx, y - 10 - alto], sl.txt, 17, col);
   });
   (marcas || []).forEach(function(m){
-    s += '<circle cx="' + f1(X(m.v)) + '" cy="' + y + '" r="8" fill="' + (m.color || "#b71c1c") + '"/>';
-    if (m.txt) s += texto([X(m.v), m.abajo ? y + 50 : y - 22], m.txt, 16, m.color || "#b71c1c");
+    s += '<circle cx="' + f1(X(m.v)) + '" cy="' + y + '" r="8" fill="' + (m.color || "#1b5e20") + '"/>';
+    if (m.txt) s += texto([X(m.v), m.abajo ? y + 50 : y - 22], m.txt, 16, m.color || "#1b5e20");
   });
   return s + '</svg>';
 }
@@ -1015,7 +1015,7 @@ function fichasSVG(a, b, empareja, voz){
     for (var i = 0; i < n; i++){
       var x = 80 + i*dx, posit = v > 0, cero = false;
       if (empareja){ if (posit && usadosP < pares){ cero = true; usadosP++; } else if (!posit && usadosN < pares){ cero = true; usadosN++; } }
-      var fill = posit ? "#fbc02d" : "#c62828", col = posit ? "#3e2723" : "#fff";
+      var fill = posit ? "#fbc02d" : "#2e7d32", col = posit ? "#3e2723" : "#fff";
       s += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + (cero ? "#eeeeee" : fill) + '" stroke="' + (cero ? "#9e9e9e" : "#424242") + '" stroke-width="2"/>';
       s += texto([x, y + 1], posit ? "+" : "−", 20, cero ? "#9e9e9e" : col);
       if (cero) s += linea([x - 12, y + 12], [x + 12, y - 12], "#757575", 2);
@@ -1143,7 +1143,7 @@ function figuraSVG(polis, cotas, voz, extras, alto){
   function T(p){ return [ox + p[0]*esc, oy - p[1]*esc]; }
   var s = '<svg class="figura" viewBox="0 0 640 ' + H + '" role="img" aria-label="' + voz + '">';
   polis.forEach(function(P){ s += '<polygon points="' + P.pts.map(function(p){ var q = T(p); return f1(q[0]) + "," + f1(q[1]); }).join(" ") + '" fill="' + (P.fill || "#e0f7fa") + '" stroke="' + (P.stroke || "#006064") + '" stroke-width="' + (P.sw || 3) + '"' + (P.dash ? ' stroke-dasharray="7 5"' : '') + '/>'; if (P.txt){ var c = T(P.c); s += texto(c, P.txt, 16, P.col || "#00363a"); } });
-  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#b71c1c", E.ancho || 2, E.solido ? '' : ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#b2ebf2") + '" stroke="#006064" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#00363a"); } });
+  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#1b5e20", E.ancho || 2, E.solido ? '' : ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#b2ebf2") + '" stroke="#006064" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#00363a"); } });
   (cotas || []).forEach(function(k){ var a = T(k[0]), b = T(k[1]), mx = (a[0] + b[0])/2, my = (a[1] + b[1])/2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, nx = dy / L, ny = -dx / L, sg = -(k[3] || 1), ux = nx*sg, uy = ny*sg, anc = ux > 0.5 ? "start" : (ux < -0.5 ? "end" : "middle"), d = anc === "middle" ? 16 : 9; s += texto([mx + ux*d, my + uy*d], k[2], 19, "#222", 700, anc); });
   return s + '</svg>';
 }
@@ -1157,7 +1157,7 @@ function leeLista(t){ var p = String(t).split(/[,;\s]+/).filter(function(x){ ret
 function chipsN(o, clases){ return '<div class="datos" aria-hidden="true">' + o.map(function(v, i){ return '<span class="dato' + (clases && clases[i] ? " " + clases[i] : "") + '">' + nv(v) + '</span>'; }).join("") + '</div><span class="sr-only">' + o.map(nv).join(", ") + '</span>'; }
 
 /* ---------- Gráfico circular ---------- */
-var COLS = ["#c62828", "#1565c0", "#2e7d32", "#f9a825", "#6a1b9a", "#00838f", "#ef6c00", "#5d4037"];
+var COLS = ["#2e7d32", "#1565c0", "#2e7d32", "#f9a825", "#6a1b9a", "#00838f", "#ef6c00", "#5d4037"];
 function pieSVG(items, voz, opc){
   opc = opc || {};
   var cx = 170, cy = 150, R = 120, a0 = 90, s = '<svg class="figura" viewBox="0 0 640 300" role="img" aria-label="' + voz + '">';
@@ -1284,7 +1284,7 @@ function marcasSVG(pts, opc){
   for (var i = 0; i < n; i++){
     var a = pts[i], b = pts[(i + 1) % n], mx = (a[0] + b[0])/2, my = (a[1] + b[1])/2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy), ux = dx/L, uy = dy/L, nx = -uy, ny = ux;
     if ((mx + nx*10 - cx)*(mx + nx*10 - cx) + (my + ny*10 - cy)*(my + ny*10 - cy) < (mx - cx)*(mx - cx) + (my - cy)*(my - cy)){ nx = -nx; ny = -ny; }
-    var r = (opc.rayas || [])[i] || 0; for (var k = 0; k < r; k++){ var o = (k - (r - 1)/2)*7; s += linea([mx + ux*o - nx*9, my + uy*o - ny*9], [mx + ux*o + nx*9, my + uy*o + ny*9], "#b71c1c", 2.5); }
+    var r = (opc.rayas || [])[i] || 0; for (var k = 0; k < r; k++){ var o = (k - (r - 1)/2)*7; s += linea([mx + ux*o - nx*9, my + uy*o - ny*9], [mx + ux*o + nx*9, my + uy*o + ny*9], "#1b5e20", 2.5); }
     var f = (opc.flechas || [])[i] || 0; if (f && (ux < -1e-6 || (Math.abs(ux) < 1e-6 && uy < 0))){ ux = -ux; uy = -uy; } for (var q = 0; q < f; q++){ var o2 = (q - (f - 1)/2)*9 + (r ? 20 : 0), px = mx + ux*o2, py = my + uy*o2; s += '<polyline points="' + f1(px - ux*6 - nx*6) + ',' + f1(py - uy*6 - ny*6) + ' ' + f1(px) + ',' + f1(py) + ' ' + f1(px - ux*6 + nx*6) + ',' + f1(py - uy*6 + ny*6) + '" fill="none" stroke="#0d47a1" stroke-width="2.5"/>'; }
     var et = (opc.etiquetas || [])[i]; if (et) s += texto([mx + nx*24, my + ny*24], et, 18, "#222", 700);
   }
@@ -1301,15 +1301,15 @@ function grafica(tipo, D, marca){
   var W = 640, H = 340, x0 = 80, x1 = 610, y0 = 60, y1 = 280, n = D.val.length, s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + D.titulo + ': ' + D.etq.map(function(e, i){ return e + " " + D.val[i]; }).join(", ") + '.">';
   function Y(v){ return y1 - v/D.max*(y1 - y0); }
   var hl = function(k){ return marca === k; };
-  s += texto([W/2, 26], D.titulo, 19, hl(0) ? "#b71c1c" : "#222", 700) + (hl(0) ? '<rect x="' + (W/2 - 250) + '" y="8" width="500" height="34" fill="none" stroke="#b71c1c" stroke-width="3" rx="6"/>' : '');
-  for (var v = 0; v <= D.max; v += D.paso){ s += linea([x0, Y(v)], [x1, Y(v)], "#eeeeee", 1) + texto([x0 - 10, Y(v)], v, 15, hl(2) ? "#b71c1c" : "#424242", hl(2) ? 700 : 400, "end"); }
-  s += linea([x0, y0 - 10], [x0, y1], hl(1) ? "#b71c1c" : "#424242", hl(1) ? 5 : 2) + linea([x0, y1], [x1, y1], hl(1) ? "#b71c1c" : "#424242", hl(1) ? 5 : 2);
-  s += '<text x="18" y="' + ((y0 + y1)/2) + '" transform="rotate(-90 18 ' + ((y0 + y1)/2) + ')" text-anchor="middle" font-size="14" font-weight="700" fill="' + (hl(1) ? "#b71c1c" : "#424242") + '">' + D.eje + '</text>';
+  s += texto([W/2, 26], D.titulo, 19, hl(0) ? "#1b5e20" : "#222", 700) + (hl(0) ? '<rect x="' + (W/2 - 250) + '" y="8" width="500" height="34" fill="none" stroke="#1b5e20" stroke-width="3" rx="6"/>' : '');
+  for (var v = 0; v <= D.max; v += D.paso){ s += linea([x0, Y(v)], [x1, Y(v)], "#eeeeee", 1) + texto([x0 - 10, Y(v)], v, 15, hl(2) ? "#1b5e20" : "#424242", hl(2) ? 700 : 400, "end"); }
+  s += linea([x0, y0 - 10], [x0, y1], hl(1) ? "#1b5e20" : "#424242", hl(1) ? 5 : 2) + linea([x0, y1], [x1, y1], hl(1) ? "#1b5e20" : "#424242", hl(1) ? 5 : 2);
+  s += '<text x="18" y="' + ((y0 + y1)/2) + '" transform="rotate(-90 18 ' + ((y0 + y1)/2) + ')" text-anchor="middle" font-size="14" font-weight="700" fill="' + (hl(1) ? "#1b5e20" : "#424242") + '">' + D.eje + '</text>';
   var w = (x1 - x0)/n, pts = [];
   D.val.forEach(function(v, i){ var cx = x0 + w*(i + 0.5); pts.push([cx, Y(v)]); s += texto([cx, y1 + 20], D.etq[i], 15, "#222", 400);
-    if (tipo === "b") s += '<rect x="' + f1(cx - w*0.3) + '" y="' + f1(Y(v)) + '" width="' + f1(w*0.6) + '" height="' + f1(y1 - Y(v)) + '" fill="' + (hl(3) ? "#b71c1c" : "#e57373") + '"/>';
-    if (hl(3)) s += texto([cx, Y(v) - 14], v, 15, "#7f0000", 700); });
-  if (tipo === "l"){ s += '<polyline points="' + pts.map(function(p){ return f1(p[0]) + "," + f1(p[1]); }).join(" ") + '" fill="none" stroke="' + (hl(4) ? "#b71c1c" : "#c62828") + '" stroke-width="' + (hl(4) ? 6 : 3) + '"/>'; pts.forEach(function(p){ s += '<circle cx="' + f1(p[0]) + '" cy="' + f1(p[1]) + '" r="6" fill="#7f0000"/>'; }); }
+    if (tipo === "b") s += '<rect x="' + f1(cx - w*0.3) + '" y="' + f1(Y(v)) + '" width="' + f1(w*0.6) + '" height="' + f1(y1 - Y(v)) + '" fill="' + (hl(3) ? "#1b5e20" : "#43a047") + '"/>';
+    if (hl(3)) s += texto([cx, Y(v) - 14], v, 15, "#0d3b11", 700); });
+  if (tipo === "l"){ s += '<polyline points="' + pts.map(function(p){ return f1(p[0]) + "," + f1(p[1]); }).join(" ") + '" fill="none" stroke="' + (hl(4) ? "#1b5e20" : "#2e7d32") + '" stroke-width="' + (hl(4) ? 6 : 3) + '"/>'; pts.forEach(function(p){ s += '<circle cx="' + f1(p[0]) + '" cy="' + f1(p[1]) + '" r="6" fill="#0d3b11"/>'; }); }
   if (tipo === "b" && hl(4)){ s += '<polyline points="' + pts.map(function(p){ return f1(p[0]) + "," + f1(p[1]); }).join(" ") + '" fill="none" stroke="#0d47a1" stroke-width="3" stroke-dasharray="6 5"/>'; }
   return s + '</svg>';
 }
