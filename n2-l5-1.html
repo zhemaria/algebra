@@ -5,7 +5,7 @@
   Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
   Licencia: Creative Commons CC BY-NC-SA 4.0
   https://creativecommons.org/licenses/by-nc-sa/4.0/
-  Anclas internas: #razon-100 · #conversiones · #tres-tipos · #cambio · #cotidianas
+  Anclas internas: #razon-100 · #conversiones · #tres-tipos · #cambio · #cotidianas · #triangulo · #proporcion-porcentual
 -->
 <html lang="es">
 <head>
@@ -13,13 +13,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactivo · Lección 5.1: porcentajes</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Interactivo de práctica para la Lección 5.1 del Nivel 2: el porcentaje como razón de 100, conversiones entre fracción, decimal y porcentaje, los tres tipos de problemas, el cambio porcentual y aplicaciones cotidianas.">
+<meta name="description" content="Interactivo de práctica para la Lección 5.1 del Nivel 2: el porcentaje como razón de 100, conversiones entre fracción, decimal y porcentaje, los tres tipos de problemas, el cambio porcentual, aplicaciones cotidianas, el triángulo del porcentaje y la proporción porcentual.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
 
   :root{
-    --tema:#37474f; --tema-d:#263238; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
+    --tema:#b33c00; --tema-d:#7a2800; --tema-bg:#fff3e0; --tema-bg2:#ffe0b2;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -292,7 +292,7 @@
   <header class="principal">
     <div class="ruta">Nivel 2 · Tema 5 · Porcentajes</div>
     <h1>Lección 5.1 · Porcentajes: concepto y cálculo</h1>
-    <div class="meta">Cinco prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+    <div class="meta">Siete prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
   </header>
 
   <nav class="indice" aria-labelledby="titulo-indice">
@@ -303,6 +303,8 @@
       <li><a href="#tres-tipos">Los tres tipos de problemas</a></li>
       <li><a href="#cambio">Cambio porcentual</a></li>
       <li><a href="#cotidianas">Aplicaciones cotidianas</a></li>
+      <li><a href="#triangulo">El triángulo del porcentaje</a></li>
+      <li><a href="#proporcion-porcentual">La proporción porcentual</a></li>
     </ol>
     <div class="controles-todo">
       <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
@@ -518,6 +520,102 @@
         </div>
         <div class="fb" id="p6-fb" role="status"></div>
         <p class="marcador" id="p6-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 6 · #triangulo ============ -->
+  <details class="modulo" id="triangulo">
+    <summary>
+      <span class="num" aria-hidden="true">6</span>
+      <h2>El triángulo del porcentaje</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Todo problema de porcentaje une tres elementos en una sola fórmula: <strong>Parte = Porcentaje × Todo</strong>, con el
+      porcentaje en decimal. El triángulo ayuda a recordar qué operación usar: se <strong>tapa</strong> lo que falta y se lee lo que
+      queda. Lo que está lado a lado se multiplica; lo que está arriba y abajo se divide.</p>
+
+      <h3>Tapa lo que te falta</h3>
+      <div class="panel">
+        <svg class="figura" style="max-width:320px" viewBox="0 0 300 220" role="img" aria-labelledby="tr-titulo">
+          <title id="tr-titulo">Triángulo del porcentaje: arriba la Parte; abajo, separados por un signo de multiplicar, el Porcentaje y el Todo.</title>
+          <polygon points="150,10 290,205 10,205" fill="#fff3e0" stroke="#7a2800" stroke-width="3"/>
+          <line x1="73" y1="118" x2="227" y2="118" stroke="#7a2800" stroke-width="3"/>
+          <text id="tr-parte" x="150" y="92" font-size="24" font-weight="700" text-anchor="middle" fill="#7a2800">Parte</text>
+          <text id="tr-pct" x="100" y="172" font-size="22" font-weight="700" text-anchor="middle" fill="#7a2800">%</text>
+          <text id="tr-todo" x="200" y="172" font-size="22" font-weight="700" text-anchor="middle" fill="#7a2800">Todo</text>
+          <text x="150" y="176" font-size="20" text-anchor="middle" fill="#7a2800" aria-hidden="true">×</text>
+          <rect id="tr-tapa" x="0" y="0" width="0" height="0" rx="10" fill="#7a2800"/>
+        </svg>
+        <div class="elecciones" role="group" aria-label="Elige qué valor falta">
+          <button type="button" class="eleccion" data-tapa="parte" aria-pressed="false">Me falta la parte</button>
+          <button type="button" class="eleccion" data-tapa="pct" aria-pressed="false">Me falta el porcentaje</button>
+          <button type="button" class="eleccion" data-tapa="todo" aria-pressed="false">Me falta el todo</button>
+        </div>
+        <div class="salida" id="tr-salida" aria-live="polite"></div>
+      </div>
+      <div class="caja-atencion">
+        <strong>¿Cuál es el todo?</strong> Es la cantidad de referencia, la que aparece después de la palabra «de»: «el 15 % <strong>de</strong> $80»,
+        «18 <strong>de</strong> 25».
+      </div>
+
+      <h3>Practica: ¿qué operación lo resuelve?</h3>
+      <div class="practica" id="p7">
+        <div class="enun" id="p7-enun"></div>
+        <div class="opciones" id="p7-opciones"></div>
+        <div class="fb" id="p7-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p7-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p7-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 7 · #proporcion-porcentual ============ -->
+  <details class="modulo" id="proporcion-porcentual">
+    <summary>
+      <span class="num" aria-hidden="true">7</span>
+      <h2>La proporción porcentual</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Como un porcentaje es una razón de 100, cualquier problema se puede plantear como una proporción directa (Lección 4.2).
+      Se colocan los tres datos conocidos, la x en el lugar del que falta, y se resuelve con el <strong>producto cruzado</strong>.</p>
+      <div class="formula"><span class="fracc"><span class="fa">parte</span><span class="fb2">todo</span></span> = <span class="fracc"><span class="fa">%</span><span class="fb2">100</span></span></div>
+
+      <h3>Plantea la proporción</h3>
+      <div class="panel">
+        <div class="elecciones" role="group" aria-label="Elige qué se busca">
+          <button type="button" class="eleccion" data-caso="parte" aria-pressed="true">Se busca la parte</button>
+          <button type="button" class="eleccion" data-caso="todo" aria-pressed="false">Se busca el todo</button>
+          <button type="button" class="eleccion" data-caso="pct" aria-pressed="false">Se busca el porcentaje</button>
+        </div>
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:180px;"><label for="pp-t">Todo: <span id="pp-tv"></span></label><input type="range" id="pp-t" min="20" max="400" step="20" value="80"></div>
+          <div class="campo" style="flex:1;min-width:180px;"><label for="pp-p">Porcentaje: <span id="pp-pv"></span></label><input type="range" id="pp-p" min="5" max="100" step="5" value="15"></div>
+        </div>
+        <div class="salida" id="pp-salida" aria-live="polite"></div>
+      </div>
+      <div class="caja-tip">
+        <strong>¿Cuál método conviene?</strong> La fórmula es más rápida con calculadora; la proporción ayuda cuando no se sabe qué
+        operación hacer, porque solo pide colocar bien los datos. Conviene usar uno para comprobar el otro.
+      </div>
+
+      <h3>Practica: resuelve con la proporción</h3>
+      <div class="practica" id="p8">
+        <div class="enun" id="p8-enun"></div>
+        <div class="campos"><div class="campo"><label for="p8-r">Resultado</label><input type="text" autocomplete="off" class="ancho" id="p8-r"></div></div>
+        <p class="nota">Escribe solo el número, sin el símbolo %; puede ser decimal.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p8-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p8-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p8-fb" role="status"></div>
+        <p class="marcador" id="p8-marcador">Aciertos: 0 de 0</p>
       </div>
 
       <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
@@ -1124,7 +1222,7 @@ function pc(x){ return nv(Math.round(x*1000)/1000) + " %"; }
 function r2(x){ return Math.round(x*100)/100; }
 function cuadricula(k, voz){
   var c = 26, s = '<svg class="figura" style="max-width:300px" viewBox="0 0 ' + (10*c + 4) + ' ' + (10*c + 4) + '" role="img" aria-label="' + voz + '">';
-  for (var i = 0; i < 100; i++){ var x = 2 + (i % 10)*c, y = 2 + Math.floor(i / 10)*c; s += '<rect x="' + x + '" y="' + y + '" width="' + c + '" height="' + c + '" fill="' + (i < k ? "#546e7a" : "#fff") + '" stroke="#90a4ae" stroke-width="1"/>'; }
+  for (var i = 0; i < 100; i++){ var x = 2 + (i % 10)*c, y = 2 + Math.floor(i / 10)*c; s += '<rect x="' + x + '" y="' + y + '" width="' + c + '" height="' + c + '" fill="' + (i < k ? "#b33c00" : "#fff") + '" stroke="#90a4ae" stroke-width="1"/>'; }
   return s + '<rect x="2" y="2" width="' + 10*c + '" height="' + 10*c + '" fill="none" stroke="#263238" stroke-width="2"/></svg>';
 }
 function frac100(p){ var r = reduce(p, 100); return fracHTML(r.p, r.q); }
@@ -1163,7 +1261,7 @@ function genConv(){
 function barra(total, p, rot){
   var W = 640, x0 = 30, x1 = 610, w = (x1 - x0) * Math.min(p, 100) / 100;
   var s = '<svg class="figura" viewBox="0 0 640 120" role="img" aria-label="Barra del total ' + total + ' con el ' + p + ' por ciento sombreado.">';
-  s += '<rect x="' + x0 + '" y="30" width="' + (x1 - x0) + '" height="40" fill="#fff" stroke="#263238" stroke-width="2"/><rect x="' + x0 + '" y="30" width="' + f1(w) + '" height="40" fill="#78909c"/>';
+  s += '<rect x="' + x0 + '" y="30" width="' + (x1 - x0) + '" height="40" fill="#fff" stroke="#263238" stroke-width="2"/><rect x="' + x0 + '" y="30" width="' + f1(w) + '" height="40" fill="#ef6c00"/>';
   for (var i = 1; i < 10; i++) s += linea([x0 + (x1 - x0)*i/10, 30], [x0 + (x1 - x0)*i/10, 70], "#b0bec5", 1);
   s += texto([x0 + w/2, 50], rot.parte, 16, "#fff") + texto([x0, 18], "0 %", 13, "#424242", 400, "start") + texto([x1, 18], "100 % = " + rot.total, 13, "#424242", 700, "end") + texto([x0 + w, 88], p + " %", 14, "#263238");
   return s + '</svg>';
@@ -1196,7 +1294,7 @@ function pintaCP(){
   $("cp-iv").textContent = i; $("cp-fv").textContent = f;
   var mx = Math.max(i, f), esc = 520 / mx;
   var s = '<svg class="figura" viewBox="0 0 640 110" role="img" aria-label="Barras del valor inicial ' + i + ' y el final ' + f + '.">';
-  s += texto([10, 30], "Antes", 14, "#263238", 700, "start") + '<rect x="80" y="16" width="' + f1(i*esc) + '" height="28" fill="#90a4ae"/>' + texto([88 + i*esc, 30], dinero(i), 14, "#263238", 700, "start");
+  s += texto([10, 30], "Antes", 14, "#263238", 700, "start") + '<rect x="80" y="16" width="' + f1(i*esc) + '" height="28" fill="#ffb74d"/>' + texto([88 + i*esc, 30], dinero(i), 14, "#263238", 700, "start");
   s += texto([10, 80], "Después", 14, "#263238", 700, "start") + '<rect x="80" y="66" width="' + f1(f*esc) + '" height="28" fill="' + (d >= 0 ? "#2e7d32" : "#c62828") + '"/>' + texto([88 + f*esc, 80], dinero(f), 14, "#263238", 700, "start");
   $("cp-svg").innerHTML = s + '</svg>';
   $("cp-salida").innerHTML = '<div class="linea">Cambio: ' + f + ' − ' + i + ' = ' + menos(d) + '. Se divide entre el valor <strong>inicial</strong>: ' + menos(d) + ' ÷ ' + i + ' = ' + nv(Math.round(d/i*10000)/10000) + '.</div>' +
@@ -1230,6 +1328,65 @@ function genCotidiana(){
   return { enun: enun, correcta: nv(res), solucion: sol, evalua: numL(res, pist, 0.005) };
 }
 
+/* MÓDULO 6 · triángulo */
+var TAPA = { parte: [95, 62, 110, 40], pct: [60, 150, 80, 34], todo: [160, 150, 80, 34] };
+function pintaTR(k){
+  document.querySelectorAll('#triangulo .eleccion').forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-tapa") === k ? "true" : "false"); });
+  var r = $("tr-tapa");
+  if (!k){ r.setAttribute("width", 0); r.setAttribute("height", 0); $("tr-salida").innerHTML = '<div class="linea">Elige qué te falta y el triángulo tapa ese elemento.</div>'; return; }
+  var t = TAPA[k]; r.setAttribute("x", t[0]); r.setAttribute("y", t[1]); r.setAttribute("width", t[2]); r.setAttribute("height", t[3]);
+  var h = {
+    parte: ['<strong>Parte = % × Todo</strong>: quedan el % y el Todo lado a lado, se multiplican.', 'Ejemplo: el 15 % de $80 → 0.15 × 80 = <strong>$12</strong>.'],
+    pct: ['<strong>% = Parte ÷ Todo</strong> (y se multiplica por 100): la Parte queda arriba del Todo, se divide.', 'Ejemplo: 18 de 25 → 18 ÷ 25 = 0.72 → <strong>72 %</strong>.'],
+    todo: ['<strong>Todo = Parte ÷ %</strong>: la Parte queda arriba del %, se divide.', 'Ejemplo: el 30 % de un número es 45 → 45 ÷ 0.30 = <strong>150</strong>.']
+  }[k];
+  $("tr-salida").innerHTML = h.map(function(x){ return '<div class="linea">' + x + '</div>'; }).join("");
+}
+function datosPct(){
+  var p = elige([10, 15, 20, 25, 30, 40, 50, 60, 75, 5, 8, 12]), tot = 20*aleatorio(2,20), parte = tot*p/100;
+  if (parte !== Math.round(parte*100)/100) return datosPct();
+  return { p: p, tot: tot, parte: parte };
+}
+function genOperacion(){
+  var d = datosPct(), tipo = aleatorio(0,2), pd = nv(d.p/100), q = { porClave: {} };
+  if (tipo === 0){
+    q.enun = "¿Cuánto es el " + d.p + " % de " + d.tot + "? ¿Qué operación lo resuelve?";
+    q.opciones = [{ html: d.tot + " × " + pd, clave: "ok" }, { html: d.tot + " ÷ " + pd, clave: "a" }, { html: pd + " ÷ " + d.tot, clave: "b" }, { html: d.tot + " × " + d.p, clave: "c" }];
+    q.porClave = { a: "Se conoce el todo: la parte se obtiene multiplicando, no dividiendo.", c: "El porcentaje entra en decimal: " + d.p + " % = " + pd + "." };
+    q.bien = q.mal = "Falta la parte: se tapa la Parte y quedan % × Todo. " + d.tot + " × " + pd + " = " + nv(d.parte) + ".";
+  } else if (tipo === 1){
+    q.enun = "El " + d.p + " % de un número es " + nv(d.parte) + ". ¿Qué operación da el número?";
+    q.opciones = [{ html: nv(d.parte) + " ÷ " + pd, clave: "ok" }, { html: nv(d.parte) + " × " + pd, clave: "a" }, { html: pd + " ÷ " + nv(d.parte), clave: "b" }, { html: nv(d.parte) + " ÷ " + d.p, clave: "c" }];
+    q.porClave = { a: "Multiplicar daría un número más chico que la parte; el todo tiene que ser mayor.", c: "El porcentaje entra en decimal: " + d.p + " % = " + pd + "." };
+    q.bien = q.mal = "Falta el todo: se tapa el Todo y queda Parte ÷ %. " + nv(d.parte) + " ÷ " + pd + " = " + d.tot + ".";
+  } else {
+    q.enun = "¿Qué porcentaje es " + nv(d.parte) + " de " + d.tot + "? ¿Qué operación lo resuelve?";
+    q.opciones = [{ html: "(" + nv(d.parte) + " ÷ " + d.tot + ") × 100", clave: "ok" }, { html: "(" + d.tot + " ÷ " + nv(d.parte) + ") × 100", clave: "a" }, { html: nv(d.parte) + " × " + d.tot, clave: "b" }, { html: nv(d.parte) + " ÷ " + d.tot, clave: "c" }];
+    q.porClave = { a: "Se divide la parte entre el todo, no al revés. El todo es el número que va después de «de».", c: "Eso da el decimal; falta multiplicar por 100 para llegar al porcentaje." };
+    q.bien = q.mal = "Falta el porcentaje: se tapa el % y queda Parte ÷ Todo. (" + nv(d.parte) + " ÷ " + d.tot + ") × 100 = " + d.p + " %.";
+  }
+  q.correcta = "ok";
+  return q;
+}
+/* MÓDULO 7 · proporción porcentual */
+var CASO_PP = "parte";
+function pintaPP(){
+  var t = +$("pp-t").value, p = +$("pp-p").value, parte = t*p/100;
+  $("pp-tv").textContent = t; $("pp-pv").textContent = p + " %";
+  var F = function(a, b){ return '<span class="fracc"><span class="fa">' + a + '</span><span class="fb2">' + b + '</span></span>'; }, h;
+  if (CASO_PP === "parte") h = ['¿Cuánto es el ' + p + ' % de ' + t + '?', F("x", t) + ' = ' + F(p, 100), 'Producto cruzado: 100 × x = ' + t + ' × ' + p + ' = ' + nv(t*p), 'x = ' + nv(t*p) + ' ÷ 100 = <strong>' + nv(parte) + '</strong>'];
+  else if (CASO_PP === "todo") h = ['El ' + p + ' % de un número es ' + nv(parte) + '. ¿Cuál es el número?', F(nv(parte), "x") + ' = ' + F(p, 100), 'Producto cruzado: ' + p + ' × x = ' + nv(parte) + ' × 100 = ' + nv(parte*100), 'x = ' + nv(parte*100) + ' ÷ ' + p + ' = <strong>' + t + '</strong>'];
+  else h = ['¿Qué porcentaje es ' + nv(parte) + ' de ' + t + '?', F(nv(parte), t) + ' = ' + F("x", 100), 'Producto cruzado: ' + t + ' × x = ' + nv(parte) + ' × 100 = ' + nv(parte*100), 'x = ' + nv(parte*100) + ' ÷ ' + t + ' = <strong>' + p + ' %</strong>'];
+  $("pp-salida").innerHTML = h.map(function(x, i){ return '<div class="linea' + (i === 1 ? ' grande' : '') + '">' + x + '</div>'; }).join("");
+}
+function genProporcion(){
+  var d = datosPct(), tipo = aleatorio(0,2), txt, res, prop, pist;
+  if (tipo === 0){ txt = "¿Cuánto es el " + d.p + " % de " + d.tot + "?"; res = d.parte; prop = "x/" + d.tot + " = " + d.p + "/100 → 100x = " + nv(d.tot*d.p) + " → x = " + nv(d.parte) + "."; pist = [{ v: d.tot*d.p, msg: "Falta dividir entre 100 después del producto cruzado." }]; }
+  else if (tipo === 1){ txt = "El " + d.p + " % de un número es " + nv(d.parte) + ". ¿Cuál es el número?"; res = d.tot; prop = nv(d.parte) + "/x = " + d.p + "/100 → " + d.p + "x = " + nv(d.parte*100) + " → x = " + d.tot + "."; pist = [{ v: d.parte*d.p/100, msg: "La x va abajo, en el lugar del todo: " + nv(d.parte) + "/x = " + d.p + "/100." }]; }
+  else { txt = elige(["¿Qué porcentaje es " + nv(d.parte) + " de " + d.tot + "?", "De " + d.tot + " estudiantes, " + nv(d.parte) + " aprobaron. ¿Qué porcentaje aprobó?"]); res = d.p; prop = nv(d.parte) + "/" + d.tot + " = x/100 → " + d.tot + "x = " + nv(d.parte*100) + " → x = " + d.p + " %."; pist = [{ v: Math.round(d.tot/d.parte*10000)/100, msg: "Se invirtió la razón: la parte va arriba y el todo abajo." }]; }
+  return { enun: txt + " Plantea parte/todo = %/100.", correcta: nv(res), solucion: "Proporción: " + prop, evalua: function(t){ return numL(res, pist, 0.005)(String(t).replace("%", "")); } };
+}
+
 /* Arranque */
 $("c1-p").addEventListener("input", pintaC1); pintaC1();
 creaPracticaOM("p1", genCuadricula);
@@ -1242,6 +1399,11 @@ creaPracticaLibre("p4", genTipos);
 $("sb-p").addEventListener("input", pintaSB); pintaSB();
 creaPracticaLibre("p5", genCambio);
 creaPracticaLibre("p6", genCotidiana);
+document.querySelectorAll('#triangulo .eleccion').forEach(function(b){ b.addEventListener("click", function(){ pintaTR(b.getAttribute("data-tapa")); }); }); pintaTR(null);
+creaPracticaOM("p7", genOperacion);
+document.querySelectorAll('#proporcion-porcentual .eleccion').forEach(function(b){ b.addEventListener("click", function(){ CASO_PP = b.getAttribute("data-caso"); document.querySelectorAll('#proporcion-porcentual .eleccion').forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); pintaPP(); }); });
+["pp-t","pp-p"].forEach(function(id){ $(id).addEventListener("input", pintaPP); }); pintaPP();
+creaPracticaLibre("p8", genProporcion);
 iniciaNavegacion();
 
 </script>

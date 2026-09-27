@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#4e342e; --tema-d:#3e2723; --tema-bg:#efebe9; --tema-bg2:#d7ccc8;
+    --tema:#00695c; --tema-d:#004d40; --tema-bg:#e0f2f1; --tema-bg2:#b2dfdb;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1007,7 +1007,7 @@ function fichasSVG(a, b, empareja, voz){
     for (var i = 0; i < n; i++){
       var x = 80 + i*dx, posit = v > 0, cero = false;
       if (empareja){ if (posit && usadosP < pares){ cero = true; usadosP++; } else if (!posit && usadosN < pares){ cero = true; usadosN++; } }
-      var fill = posit ? "#fbc02d" : "#c62828", col = posit ? "#3e2723" : "#fff";
+      var fill = posit ? "#fbc02d" : "#c62828", col = posit ? "#004d40" : "#fff";
       s += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + (cero ? "#eeeeee" : fill) + '" stroke="' + (cero ? "#9e9e9e" : "#424242") + '" stroke-width="2"/>';
       s += texto([x, y + 1], posit ? "+" : "−", 20, cero ? "#9e9e9e" : col);
       if (cero) s += linea([x - 12, y + 12], [x + 12, y - 12], "#757575", 2);
@@ -1091,8 +1091,8 @@ function barrasAnios(vals, base, voz, colB, colV){
   function Y(v){ return yb - v * 170 / mx; }
   vals.forEach(function(v, k){
     var x = x0 + (x1 - x0) * k / n + (x1 - x0) / n * 0.14;
-    s += '<rect x="' + f1(x) + '" y="' + f1(Y(v)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(v)) + '" fill="' + (colV || "#a1887f") + '"/>';
-    if (base !== null && base !== undefined) s += '<rect x="' + f1(x) + '" y="' + f1(Y(Math.min(base, v))) + '" width="' + f1(w) + '" height="' + f1(yb - Y(Math.min(base, v))) + '" fill="' + (colB || "#4e342e") + '"/>';
+    s += '<rect x="' + f1(x) + '" y="' + f1(Y(v)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(v)) + '" fill="' + (colV || "#4db6ac") + '"/>';
+    if (base !== null && base !== undefined) s += '<rect x="' + f1(x) + '" y="' + f1(Y(Math.min(base, v))) + '" width="' + f1(w) + '" height="' + f1(yb - Y(Math.min(base, v))) + '" fill="' + (colB || "#00695c") + '"/>';
     s += texto([x + w/2, yb + 16], k, 13, "#424242", 400);
   });
   s += linea([x0, yb], [x1, yb], "#424242", 2) + texto([(x0 + x1)/2, H - 4], "Año", 13, "#424242", 700) + texto([x0 - 6, Y(mx)], usd(mx), 12, "#424242", 400, "end");
@@ -1178,7 +1178,7 @@ function pintaTM(){
   var v = +sl.value; if (v > +sl.max) { v = +sl.max; sl.value = v; }
   var F = dir === "fc" ? v : aF(v), C = dir === "fc" ? aC(v) : v;
   $("tm-vv").textContent = nv(redon(v, 1)) + (dir === "fc" ? " °F" : " °C");
-  function termo(x, lo, hi, et){ var y0 = 220, y1 = 20, y = y0 - (x - lo) / (hi - lo) * (y0 - y1); return '<g><rect x="' + et.x + '" y="' + y1 + '" width="22" height="' + (y0 - y1) + '" rx="11" fill="#fff" stroke="#3e2723" stroke-width="2"/><rect x="' + (et.x + 4) + '" y="' + f1(y) + '" width="14" height="' + f1(y0 - y) + '" rx="7" fill="#c62828"/><circle cx="' + (et.x + 11) + '" cy="' + (y0 + 12) + '" r="16" fill="#c62828"/>' + texto([et.x + 11, 262], et.t, 16, "#3e2723") + texto([et.x + 34, y], nv(redon(x, 1)) + et.u, 16, "#3e2723", 700, "start") + '</g>'; }
+  function termo(x, lo, hi, et){ var y0 = 220, y1 = 20, y = y0 - (x - lo) / (hi - lo) * (y0 - y1); return '<g><rect x="' + et.x + '" y="' + y1 + '" width="22" height="' + (y0 - y1) + '" rx="11" fill="#fff" stroke="#004d40" stroke-width="2"/><rect x="' + (et.x + 4) + '" y="' + f1(y) + '" width="14" height="' + f1(y0 - y) + '" rx="7" fill="#c62828"/><circle cx="' + (et.x + 11) + '" cy="' + (y0 + 12) + '" r="16" fill="#c62828"/>' + texto([et.x + 11, 262], et.t, 16, "#004d40") + texto([et.x + 34, y], nv(redon(x, 1)) + et.u, 16, "#004d40", 700, "start") + '</g>'; }
   $("tm-svg").innerHTML = '<svg class="figura" style="max-width:420px" viewBox="0 0 420 272" role="img" aria-label="' + nv(redon(F, 1)) + ' grados Fahrenheit son ' + nv(redon(C, 1)) + ' grados Celsius.">' + termo(F, -40, 220, { x: 80, t: "°F", u: " °F" }) + termo(C, -40, 105, { x: 260, t: "°C", u: " °C" }) + '</svg>';
   $("tm-salida").innerHTML = dir === "fc"
     ? '<div class="linea">Paréntesis primero: ' + nv(redon(F, 1)) + ' − 32 = ' + nv(redon(F - 32, 2)) + '. Después × 5 ÷ 9: ' + nv(redon((F - 32)*5, 2)) + ' ÷ 9 ≈ ' + nv(redon(C, 1)) + '.</div><div class="linea veredicto">' + nv(redon(F, 1)) + ' °F ≈ ' + nv(redon(C, 1)) + ' °C</div>'

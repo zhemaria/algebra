@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#bf360c; --tema-d:#7f2408; --tema-bg:#fbe9e7; --tema-bg2:#ffccbc;
+    --tema:#1a237e; --tema-d:#0d144d; --tema-bg:#e8eaf6; --tema-bg2:#c5cae9;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -266,13 +266,13 @@
   .tarjetas-c button[aria-pressed="true"]{background:var(--tema);color:#fff;border-color:var(--tema-d);}
   .tarjetas-c button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
 
-  mark.op-act{background:#fff3e0;color:inherit;border-radius:5px;padding:0 3px;outline:2px solid #bf360c;}
+  mark.op-act{background:#fff3e0;color:inherit;border-radius:5px;padding:0 3px;outline:2px solid #1a237e;}
   .expr-paso{font-size:20px;margin:6px 0 2px;line-height:2.2;}
   .expr-grande{font-size:24px;font-weight:700;line-height:2.2;}
   .n1{color:#0d47a1;font-weight:700;} .n2{color:#1b5e20;font-weight:700;} .n3{color:#6a1b9a;font-weight:700;}
   .piramide{display:grid;gap:6px;max-width:560px;margin:12px auto;}
   .piramide div{margin:0 auto;border-radius:8px;padding:8px 12px;color:#fff;font-weight:700;text-align:center;}
-  .piramide .pz1{width:40%;background:#7f2408;} .piramide .pz2{width:60%;background:#bf360c;} .piramide .pz3{width:80%;background:#e64a19;} .piramide .pz4{width:100%;background:#ff7043;color:#3e1200;}
+  .piramide .pz1{width:40%;background:#0d144d;} .piramide .pz2{width:60%;background:#1a237e;} .piramide .pz3{width:80%;background:#3949ab;} .piramide .pz4{width:100%;background:#9fa8da;color:#1a1f5c;}
   .piramide span{display:block;font-weight:400;font-size:14px;}
 
 </style>
@@ -719,7 +719,7 @@ function rectaSVG(a, b, paso, marcas, titulo){
     if (entero) s += '<text x="' + xv + '" y="' + (y + 38) + '" text-anchor="middle" font-size="24" fill="#222">' + Math.round(v) + '</text>';
   }
   (marcas || []).forEach(function(m){
-    var xm = X(m.v), col = m.color || "#bf360c";
+    var xm = X(m.v), col = m.color || "#1a237e";
     s += '<path d="M' + xm + ' ' + (y - 4) + ' l-11 -18 h22 z" fill="' + col + '"/>';
     s += '<text x="' + xm + '" y="' + (y - (m.alto ? 58 : 28)) + '" text-anchor="middle" font-size="22" font-weight="700" fill="' + col + '">' + m.txt + '</text>';
   });

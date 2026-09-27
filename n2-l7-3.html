@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --tema:#37474f; --tema-d:#1c2a30; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1134,8 +1134,8 @@ function figuraSVG(polis, cotas, voz, extras, alto){
   var H = alto || 300, esc = Math.min(500 / (maxX - minX || 1), (H - 80) / (maxY - minY || 1)), ox = 320 - (minX + maxX)/2*esc, oy = H/2 + (minY + maxY)/2*esc;
   function T(p){ return [ox + p[0]*esc, oy - p[1]*esc]; }
   var s = '<svg class="figura" viewBox="0 0 640 ' + H + '" role="img" aria-label="' + voz + '">';
-  polis.forEach(function(P){ s += '<polygon points="' + P.pts.map(function(p){ var q = T(p); return f1(q[0]) + "," + f1(q[1]); }).join(" ") + '" fill="' + (P.fill || "#e0f7fa") + '" stroke="' + (P.stroke || "#006064") + '" stroke-width="' + (P.sw || 3) + '"' + (P.dash ? ' stroke-dasharray="7 5"' : '') + '/>'; if (P.txt){ var c = T(P.c); s += texto(c, P.txt, 16, P.col || "#00363a"); } });
-  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#b71c1c", 2, ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#b2ebf2") + '" stroke="#006064" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#00363a"); } });
+  polis.forEach(function(P){ s += '<polygon points="' + P.pts.map(function(p){ var q = T(p); return f1(q[0]) + "," + f1(q[1]); }).join(" ") + '" fill="' + (P.fill || "#eceff1") + '" stroke="' + (P.stroke || "#37474f") + '" stroke-width="' + (P.sw || 3) + '"' + (P.dash ? ' stroke-dasharray="7 5"' : '') + '/>'; if (P.txt){ var c = T(P.c); s += texto(c, P.txt, 16, P.col || "#1c2a30"); } });
+  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#b71c1c", 2, ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#cfd8dc") + '" stroke="#37474f" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#1c2a30"); } });
   (cotas || []).forEach(function(k){ var a = T(k[0]), b = T(k[1]), mx = (a[0] + b[0])/2, my = (a[1] + b[1])/2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, nx = dy / L, ny = -dx / L, sg = -(k[3] || 1), ux = nx*sg, uy = ny*sg, anc = ux > 0.5 ? "start" : (ux < -0.5 ? "end" : "middle"), d = anc === "middle" ? 16 : 9; s += texto([mx + ux*d, my + uy*d], k[2], 19, "#222", 700, anc); });
   return s + '</svg>';
 }
@@ -1144,14 +1144,14 @@ function figuraSVG(polis, cotas, voz, extras, alto){
 function pintaSC(){
   var n = +$("sc-n").value, R = 70, ang = 2*Math.PI/n, base = Math.PI*R, x0 = 320 - base/2 - R*Math.sin(ang/2)/2, yb = 250, s = '<svg class="figura" viewBox="0 0 640 290" role="img" aria-label="Círculo cortado en ' + n + ' porciones acomodadas como un paralelogramo de base pi por r y altura r.">';
   var cx = 120, cy = 90;
-  for (var i = 0; i < n; i++){ var a1 = i*ang, a2 = (i + 1)*ang; s += '<path d="M' + cx + ' ' + cy + ' L' + f1(cx + R*Math.cos(a1)) + ' ' + f1(cy - R*Math.sin(a1)) + ' A' + R + ' ' + R + ' 0 0 0 ' + f1(cx + R*Math.cos(a2)) + ' ' + f1(cy - R*Math.sin(a2)) + ' Z" fill="' + (i % 2 ? "#4dd0e1" : "#b2ebf2") + '" stroke="#006064" stroke-width="1.5"/>'; }
+  for (var i = 0; i < n; i++){ var a1 = i*ang, a2 = (i + 1)*ang; s += '<path d="M' + cx + ' ' + cy + ' L' + f1(cx + R*Math.cos(a1)) + ' ' + f1(cy - R*Math.sin(a1)) + ' A' + R + ' ' + R + ' 0 0 0 ' + f1(cx + R*Math.cos(a2)) + ' ' + f1(cy - R*Math.sin(a2)) + ' Z" fill="' + (i % 2 ? "#90a4ae" : "#cfd8dc") + '" stroke="#37474f" stroke-width="1.5"/>'; }
   var w = 2*R*Math.sin(ang/2), h = R*Math.cos(ang/2), xs = 250;
   for (var j = 0; j < n; j++){
     var x = xs + j*w/2, arriba = j % 2 === 0;
-    if (arriba) s += '<path d="M' + f1(x + w/2) + ' ' + f1(yb - R) + ' L' + f1(x) + ' ' + yb + ' Q' + f1(x + w/2) + ' ' + f1(yb + (R - h)*2) + ' ' + f1(x + w) + ' ' + yb + ' Z" fill="' + (j % 2 ? "#4dd0e1" : "#b2ebf2") + '" stroke="#006064" stroke-width="1.5"/>';
-    else s += '<path d="M' + f1(x + w/2) + ' ' + yb + ' L' + f1(x) + ' ' + f1(yb - R) + ' Q' + f1(x + w/2) + ' ' + f1(yb - R - (R - h)*2) + ' ' + f1(x + w) + ' ' + f1(yb - R) + ' Z" fill="#4dd0e1" stroke="#006064" stroke-width="1.5"/>';
+    if (arriba) s += '<path d="M' + f1(x + w/2) + ' ' + f1(yb - R) + ' L' + f1(x) + ' ' + yb + ' Q' + f1(x + w/2) + ' ' + f1(yb + (R - h)*2) + ' ' + f1(x + w) + ' ' + yb + ' Z" fill="' + (j % 2 ? "#90a4ae" : "#cfd8dc") + '" stroke="#37474f" stroke-width="1.5"/>';
+    else s += '<path d="M' + f1(x + w/2) + ' ' + yb + ' L' + f1(x) + ' ' + f1(yb - R) + ' Q' + f1(x + w/2) + ' ' + f1(yb - R - (R - h)*2) + ' ' + f1(x + w) + ' ' + f1(yb - R) + ' Z" fill="#90a4ae" stroke="#37474f" stroke-width="1.5"/>';
   }
-  s += texto([xs + (n/2)*w/2, yb + 26], "base ≈ π · r", 16, "#00363a") + texto([xs - 16, yb - R/2], "r", 18, "#b71c1c", 700, "end");
+  s += texto([xs + (n/2)*w/2, yb + 26], "base ≈ π · r", 16, "#1c2a30") + texto([xs - 16, yb - R/2], "r", 18, "#b71c1c", 700, "end");
   $("sc-svg").innerHTML = s + '</svg>';
   $("sc-nv").textContent = n;
   $("sc-salida").innerHTML = '<div class="linea">Con ' + n + ' porciones la figura ' + (n >= 20 ? "ya casi es un rectángulo" : "todavía tiene los bordes ondulados") + '. Área ≈ base × altura = (π · r) × r = <strong>π · r²</strong>.</div>';
@@ -1185,8 +1185,8 @@ function figSemi(t, w, h){
 function semiSVG(t, w, h){
   if (t === 1){ var f = figSemi(1, w, h); return figuraSVG(f.polis, f.cot, "Ventana: rectángulo de " + w + " por " + h + " con un semicírculo de diámetro " + w + " arriba.", f.ex, 300); }
   var r = w/2, esc = Math.min(480 / (h + w), 220 / w), x0 = 320 - h*esc/2, y0 = 150 - r*esc, R = r*esc, s = '<svg class="figura" viewBox="0 0 640 300" role="img" aria-label="Pista: rectángulo de ' + h + ' por ' + w + ' con un semicírculo en cada extremo.">';
-  s += '<path d="M' + f1(x0) + ' ' + f1(y0) + ' L' + f1(x0 + h*esc) + ' ' + f1(y0) + ' A' + f1(R) + ' ' + f1(R) + ' 0 0 1 ' + f1(x0 + h*esc) + ' ' + f1(y0 + 2*R) + ' L' + f1(x0) + ' ' + f1(y0 + 2*R) + ' A' + f1(R) + ' ' + f1(R) + ' 0 0 1 ' + f1(x0) + ' ' + f1(y0) + ' Z" fill="#b2ebf2" stroke="#006064" stroke-width="3"/>';
-  s += '<rect x="' + f1(x0) + '" y="' + f1(y0) + '" width="' + f1(h*esc) + '" height="' + f1(2*R) + '" fill="#e0f7fa" stroke="#006064" stroke-width="2" stroke-dasharray="6 4"/>';
+  s += '<path d="M' + f1(x0) + ' ' + f1(y0) + ' L' + f1(x0 + h*esc) + ' ' + f1(y0) + ' A' + f1(R) + ' ' + f1(R) + ' 0 0 1 ' + f1(x0 + h*esc) + ' ' + f1(y0 + 2*R) + ' L' + f1(x0) + ' ' + f1(y0 + 2*R) + ' A' + f1(R) + ' ' + f1(R) + ' 0 0 1 ' + f1(x0) + ' ' + f1(y0) + ' Z" fill="#cfd8dc" stroke="#37474f" stroke-width="3"/>';
+  s += '<rect x="' + f1(x0) + '" y="' + f1(y0) + '" width="' + f1(h*esc) + '" height="' + f1(2*R) + '" fill="#eceff1" stroke="#37474f" stroke-width="2" stroke-dasharray="6 4"/>';
   s += texto([x0 + h*esc/2, y0 + 2*R + 26], h + " m", 22, "#222") + texto([x0 + h*esc/2 + 10, y0 + R], w + " m", 22, "#222", 700, "start");
   s += linea([x0 + h*esc/2, y0], [x0 + h*esc/2, y0 + 2*R], "#b71c1c", 2, ' stroke-dasharray="5 4"');
   return s + '</svg>';

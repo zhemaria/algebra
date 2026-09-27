@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --tema:#37474f; --tema-d:#1c2a30; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1155,8 +1155,8 @@ function figuraSVG(polis, cotas, voz, extras, alto){
   var H = alto || 300, esc = Math.min(500 / (maxX - minX || 1), (H - 80) / (maxY - minY || 1)), ox = 320 - (minX + maxX)/2*esc, oy = H/2 + (minY + maxY)/2*esc;
   function T(p){ return [ox + p[0]*esc, oy - p[1]*esc]; }
   var s = '<svg class="figura" viewBox="0 0 640 ' + H + '" role="img" aria-label="' + voz + '">';
-  polis.forEach(function(P){ s += '<polygon points="' + P.pts.map(function(p){ var q = T(p); return f1(q[0]) + "," + f1(q[1]); }).join(" ") + '" fill="' + (P.fill || "#e0f7fa") + '" stroke="' + (P.stroke || "#006064") + '" stroke-width="' + (P.sw || 3) + '"' + (P.dash ? ' stroke-dasharray="7 5"' : '') + '/>'; if (P.txt){ var c = T(P.c); s += texto(c, P.txt, 16, P.col || "#00363a"); } });
-  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#b71c1c", 2, ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#b2ebf2") + '" stroke="#006064" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#00363a"); } });
+  polis.forEach(function(P){ s += '<polygon points="' + P.pts.map(function(p){ var q = T(p); return f1(q[0]) + "," + f1(q[1]); }).join(" ") + '" fill="' + (P.fill || "#eceff1") + '" stroke="' + (P.stroke || "#37474f") + '" stroke-width="' + (P.sw || 3) + '"' + (P.dash ? ' stroke-dasharray="7 5"' : '') + '/>'; if (P.txt){ var c = T(P.c); s += texto(c, P.txt, 16, P.col || "#1c2a30"); } });
+  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#b71c1c", 2, ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#cfd8dc") + '" stroke="#37474f" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#1c2a30"); } });
   (cotas || []).forEach(function(k){ var a = T(k[0]), b = T(k[1]), mx = (a[0] + b[0])/2, my = (a[1] + b[1])/2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, nx = dy / L, ny = -dx / L, sg = -(k[3] || 1), ux = nx*sg, uy = ny*sg, anc = ux > 0.5 ? "start" : (ux < -0.5 ? "end" : "middle"), d = anc === "middle" ? 16 : 9; s += texto([mx + ux*d, my + uy*d], k[2], 19, "#222", 700, anc); });
   return s + '</svg>';
 }
@@ -1215,7 +1215,7 @@ function genSuma(){
     return { enun: "¿Cuál es el área de esta figura, en m²?" + figuraSVG([{ pts: P }], cot, "Figura en L con medidas.", [], 300), correcta: String(T), solucion: "Se parte en dos rectángulos: " + (W - a) + " × " + b + " = " + (W - a)*b + " y " + W + " × " + (H - b) + " = " + W*(H - b) + "; total " + T + " m².", evalua: numL(T, [{ v: W*H, msg: "Ese sería el rectángulo completo: a esta figura le falta una esquina." }]) };
   }
   var b2 = 2*aleatorio(3,10), h = aleatorio(4,12), ht = aleatorio(2,8), T2 = b2*h + b2*ht/2;
-  return { enun: "Una fachada es un rectángulo de " + b2 + " m de ancho y " + h + " m de alto, con un techo triangular de " + ht + " m de altura encima. ¿Cuál es su área, en m²?" + figuraSVG([{ pts: [[0,0],[b2,0],[b2,h],[0,h]] }, { pts: [[0,h],[b2,h],[b2/2,h+ht]], fill: "#b2ebf2" }], [[[0,0],[b2,0],b2 + " m", 1], [[b2,0],[b2,h],h + " m", 1]], "Casa: rectángulo con un triángulo encima.", [{ linea: true, pts: [[b2/2,h],[b2/2,h+ht]] }, { txt: ht + " m", p: [b2/2 + b2*0.08 + 0.6, h + ht/2.5] }], 300),
+  return { enun: "Una fachada es un rectángulo de " + b2 + " m de ancho y " + h + " m de alto, con un techo triangular de " + ht + " m de altura encima. ¿Cuál es su área, en m²?" + figuraSVG([{ pts: [[0,0],[b2,0],[b2,h],[0,h]] }, { pts: [[0,h],[b2,h],[b2/2,h+ht]], fill: "#cfd8dc" }], [[[0,0],[b2,0],b2 + " m", 1], [[b2,0],[b2,h],h + " m", 1]], "Casa: rectángulo con un triángulo encima.", [{ linea: true, pts: [[b2/2,h],[b2/2,h+ht]] }, { txt: ht + " m", p: [b2/2 + b2*0.08 + 0.6, h + ht/2.5] }], 300),
     correcta: nv(T2), solucion: "Rectángulo: " + b2 + " × " + h + " = " + b2*h + "; triángulo: (" + b2 + " × " + ht + ") ÷ 2 = " + nv(b2*ht/2) + "; total " + nv(T2) + " m².", evalua: numL(T2, [{ v: b2*h + b2*ht, msg: "El área del triángulo lleva ÷ 2." }]) };
 }
 function genResta(){

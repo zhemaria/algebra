@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --tema:#37474f; --tema-d:#1c2a30; --tema-bg:#eceff1; --tema-bg2:#cfd8dc;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1129,19 +1129,19 @@ function figuraSVG(polis, cotas, voz, extras, alto){
   var H = alto || 300, esc = Math.min(500 / (maxX - minX || 1), (H - 80) / (maxY - minY || 1)), ox = 320 - (minX + maxX)/2*esc, oy = H/2 + (minY + maxY)/2*esc;
   function T(p){ return [ox + p[0]*esc, oy - p[1]*esc]; }
   var s = '<svg class="figura" viewBox="0 0 640 ' + H + '" role="img" aria-label="' + voz + '">';
-  polis.forEach(function(P){ s += '<polygon points="' + P.pts.map(function(p){ var q = T(p); return f1(q[0]) + "," + f1(q[1]); }).join(" ") + '" fill="' + (P.fill || "#e0f7fa") + '" stroke="' + (P.stroke || "#006064") + '" stroke-width="' + (P.sw || 3) + '"' + (P.dash ? ' stroke-dasharray="7 5"' : '') + '/>'; if (P.txt){ var c = T(P.c); s += texto(c, P.txt, 16, P.col || "#00363a"); } });
-  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#b71c1c", 2, ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#b2ebf2") + '" stroke="#006064" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#00363a"); } });
+  polis.forEach(function(P){ s += '<polygon points="' + P.pts.map(function(p){ var q = T(p); return f1(q[0]) + "," + f1(q[1]); }).join(" ") + '" fill="' + (P.fill || "#eceff1") + '" stroke="' + (P.stroke || "#37474f") + '" stroke-width="' + (P.sw || 3) + '"' + (P.dash ? ' stroke-dasharray="7 5"' : '') + '/>'; if (P.txt){ var c = T(P.c); s += texto(c, P.txt, 16, P.col || "#1c2a30"); } });
+  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#b71c1c", 2, ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#cfd8dc") + '" stroke="#37474f" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#1c2a30"); } });
   (cotas || []).forEach(function(k){ var a = T(k[0]), b = T(k[1]), mx = (a[0] + b[0])/2, my = (a[1] + b[1])/2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, nx = dy / L, ny = -dx / L, sg = -(k[3] || 1), ux = nx*sg, uy = ny*sg, anc = ux > 0.5 ? "start" : (ux < -0.5 ? "end" : "middle"), d = anc === "middle" ? 16 : 9; s += texto([mx + ux*d, my + uy*d], k[2], 19, "#222", 700, anc); });
   return s + '</svg>';
 }
 
 function circSVG(r, opc){
   var R = Math.min(120, 26*r), cx = 320, cy = 150, s = '<svg class="figura" viewBox="0 0 640 300" role="img" aria-label="Círculo de radio ' + r + ' y diámetro ' + (2*r) + '.">';
-  s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#e0f7fa" stroke="#006064" stroke-width="4"/>';
+  s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="#eceff1" stroke="#37474f" stroke-width="4"/>';
   s += linea([cx - R, cy + 0], [cx + R, cy], "#0d47a1", 3) + '<circle cx="' + cx + '" cy="' + cy + '" r="5" fill="#222"/>' + texto([cx - 12, cy - 12], "O", 16, "#222");
   var a = rad(55), px = cx + R*Math.cos(a), py = cy - R*Math.sin(a);
   s += linea([cx, cy], [px, py], "#b71c1c", 3) + texto([(cx + px)/2 - 18, (cy + py)/2 - 8], "r = " + r, 16, "#b71c1c");
-  s += texto([cx, cy + 22], "d = " + (2*r), 16, "#0d47a1") + texto([cx + R*0.72 + 38, cy + R*0.72 + 10], "C", 18, "#006064");
+  s += texto([cx, cy + 22], "d = " + (2*r), 16, "#0d47a1") + texto([cx + R*0.72 + 38, cy + R*0.72 + 10], "C", 18, "#37474f");
   return s + '</svg>';
 }
 function pintaAN(){ var r = +$("an-r").value; $("an-rv").textContent = r; $("an-svg").innerHTML = circSVG(r); $("an-salida").innerHTML = '<div class="linea">Radio (rojo): ' + r + '. Diámetro (azul): 2 × ' + r + ' = ' + (2*r) + '. El borde es la circunferencia: C ≈ 3.14 × ' + (2*r) + ' = ' + nv(r2(3.14*2*r)) + '.</div>'; }
@@ -1157,10 +1157,10 @@ function pintaPI(){
   var d = +$("pi-d").value, u = 44, C = Math.PI*d, R = d*u/2, cx = 30 + R, cy = 40 + R, y = cy + R + 30;
   $("pi-dv").textContent = nv(d);
   var s = '<svg class="figura" viewBox="0 0 ' + Math.max(640, 60 + C*u) + ' ' + (y + 60) + '" role="img" aria-label="El borde de la rueda estirado mide unas 3.14 veces su diámetro.">';
-  s += '<circle cx="' + f1(cx) + '" cy="' + f1(cy) + '" r="' + f1(R) + '" fill="#e0f7fa" stroke="#006064" stroke-width="4"/>' + linea([cx - R, cy], [cx + R, cy], "#0d47a1", 3);
-  s += linea([30, y], [30 + C*u, y], "#006064", 6);
+  s += '<circle cx="' + f1(cx) + '" cy="' + f1(cy) + '" r="' + f1(R) + '" fill="#eceff1" stroke="#37474f" stroke-width="4"/>' + linea([cx - R, cy], [cx + R, cy], "#0d47a1", 3);
+  s += linea([30, y], [30 + C*u, y], "#37474f", 6);
   for (var k = 0; k < 3; k++) s += '<rect x="' + f1(30 + k*d*u) + '" y="' + (y + 10) + '" width="' + f1(d*u) + '" height="14" fill="' + (k % 2 ? "#90caf9" : "#0d47a1") + '"/>' + texto([30 + (k + 0.5)*d*u, y + 40], "d", 15, "#0d47a1");
-  s += '<rect x="' + f1(30 + 3*d*u) + '" y="' + (y + 10) + '" width="' + f1(0.14159*d*u) + '" height="14" fill="#f9a825"/>' + texto([30 + C*u + 6, y + 4], "C", 16, "#006064", 700, "start");
+  s += '<rect x="' + f1(30 + 3*d*u) + '" y="' + (y + 10) + '" width="' + f1(0.14159*d*u) + '" height="14" fill="#f9a825"/>' + texto([30 + C*u + 6, y + 4], "C", 16, "#37474f", 700, "start");
   $("pi-svg").innerHTML = s + '</svg>';
   $("pi-salida").innerHTML = '<div class="linea">C ÷ d = ' + nv(r2(C)) + ' ÷ ' + nv(d) + ' ≈ 3.14. Caben 3 diámetros completos y un pedacito (en amarillo) de 0.14 diámetros.</div>';
 }

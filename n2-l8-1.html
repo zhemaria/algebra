@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#b71c1c; --tema-d:#7f0000; --tema-bg:#ffebee; --tema-bg2:#ffcdd2;
+    --tema:#33691e; --tema-d:#1a3d0c; --tema-bg:#f1f8e9; --tema-bg2:#dcedc8;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1041,8 +1041,8 @@ function rectaEnt(lo, hi, marcas, saltos, voz, tramo){
     if (sl.txt) s += texto([mx, y - 10 - alto], sl.txt, 17, col);
   });
   (marcas || []).forEach(function(m){
-    s += '<circle cx="' + f1(X(m.v)) + '" cy="' + y + '" r="8" fill="' + (m.color || "#b71c1c") + '"/>';
-    if (m.txt) s += texto([X(m.v), m.abajo ? y + 50 : y - 22], m.txt, 16, m.color || "#b71c1c");
+    s += '<circle cx="' + f1(X(m.v)) + '" cy="' + y + '" r="8" fill="' + (m.color || "#33691e") + '"/>';
+    if (m.txt) s += texto([X(m.v), m.abajo ? y + 50 : y - 22], m.txt, 16, m.color || "#33691e");
   });
   return s + '</svg>';
 }
@@ -1187,7 +1187,7 @@ function figuraSVG(polis, cotas, voz, extras, alto){
   function T(p){ return [ox + p[0]*esc, oy - p[1]*esc]; }
   var s = '<svg class="figura" viewBox="0 0 640 ' + H + '" role="img" aria-label="' + voz + '">';
   polis.forEach(function(P){ s += '<polygon points="' + P.pts.map(function(p){ var q = T(p); return f1(q[0]) + "," + f1(q[1]); }).join(" ") + '" fill="' + (P.fill || "#e0f7fa") + '" stroke="' + (P.stroke || "#006064") + '" stroke-width="' + (P.sw || 3) + '"' + (P.dash ? ' stroke-dasharray="7 5"' : '') + '/>'; if (P.txt){ var c = T(P.c); s += texto(c, P.txt, 16, P.col || "#00363a"); } });
-  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#b71c1c", 2, ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#b2ebf2") + '" stroke="#006064" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#00363a"); } });
+  (extras || []).forEach(function(E){ if (E.linea){ s += linea(T(E.pts[0]), T(E.pts[1]), E.color || "#33691e", 2, ' stroke-dasharray="6 4"'); } if (E.arco){ var c0 = T(E.c), r = E.r*esc; s += '<path d="M' + f1(c0[0] - r) + ' ' + f1(c0[1]) + ' A' + f1(r) + ' ' + f1(r) + ' 0 0 ' + (E.abajo ? 0 : 1) + ' ' + f1(c0[0] + r) + ' ' + f1(c0[1]) + ' Z" fill="' + (E.fill || "#b2ebf2") + '" stroke="#006064" stroke-width="3"/>'; } if (E.txt){ s += texto(T(E.p), E.txt, 16, E.col || "#00363a"); } });
   (cotas || []).forEach(function(k){ var a = T(k[0]), b = T(k[1]), mx = (a[0] + b[0])/2, my = (a[1] + b[1])/2, dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, nx = dy / L, ny = -dx / L, sg = -(k[3] || 1), ux = nx*sg, uy = ny*sg, anc = ux > 0.5 ? "start" : (ux < -0.5 ? "end" : "middle"), d = anc === "middle" ? 16 : 9; s += texto([mx + ux*d, my + uy*d], k[2], 19, "#222", 700, anc); });
   return s + '</svg>';
 }

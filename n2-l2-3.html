@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#004d40; --tema-d:#00332b; --tema-bg:#e0f2f1; --tema-bg2:#b2dfdb;
+    --tema:#4a148c; --tema-d:#38106b; --tema-bg:#f3e5f5; --tema-bg2:#e1bee7;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -1034,9 +1034,9 @@ function genRaiz(){
 /* MÓDULO 2 */
 function pintaLC(){
   var A = +$("lc-a").value, n = Math.round(Math.sqrt(A)), c = Math.min(22, 300 / n), x0 = 320 - n*c/2, y0 = 20, s = '<svg class="figura" viewBox="0 0 640 ' + (n*c + 60) + '" role="img" aria-label="Cuadrado de ' + A + ' cuadritos, con ' + n + ' por lado.">';
-  for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) s += '<rect x="' + f1(x0 + j*c) + '" y="' + f1(y0 + i*c) + '" width="' + f1(c) + '" height="' + f1(c) + '" fill="#e0f2f1" stroke="#004d40" stroke-width="1"/>';
-  s += '<rect x="' + f1(x0) + '" y="' + y0 + '" width="' + f1(n*c) + '" height="' + f1(n*c) + '" fill="none" stroke="#004d40" stroke-width="3"/>';
-  s += texto([320, y0 + n*c + 22], "lado = " + n, 18, "#00332b") + texto([x0 - 12, y0 + n*c/2], n, 18, "#00332b", 700, "end");
+  for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) s += '<rect x="' + f1(x0 + j*c) + '" y="' + f1(y0 + i*c) + '" width="' + f1(c) + '" height="' + f1(c) + '" fill="#f3e5f5" stroke="#4a148c" stroke-width="1"/>';
+  s += '<rect x="' + f1(x0) + '" y="' + y0 + '" width="' + f1(n*c) + '" height="' + f1(n*c) + '" fill="none" stroke="#4a148c" stroke-width="3"/>';
+  s += texto([320, y0 + n*c + 22], "lado = " + n, 18, "#38106b") + texto([x0 - 12, y0 + n*c/2], n, 18, "#38106b", 700, "end");
   $("lc-svg").innerHTML = s + '</svg>';
   $("lc-salida").innerHTML = '<div class="linea">Área: ' + A + ' cuadritos. Lado: ' + rz(A) + ' = <strong>' + n + '</strong>, porque ' + n + ' × ' + n + ' = ' + A + '.</div>';
 }

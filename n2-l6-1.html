@@ -5,7 +5,7 @@
   Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
   Licencia: Creative Commons CC BY-NC-SA 4.0
   https://creativecommons.org/licenses/by-nc-sa/4.0/
-  Anclas internas: #vocabulario · #interes-simple · #ano-a-ano · #depreciacion · #combinadas
+  Anclas internas: #vocabulario · #interes-simple · #ano-a-ano · #depreciacion · #combinadas · #misma-unidad · #despejar
 -->
 <html lang="es">
 <head>
@@ -13,13 +13,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactivo · Lección 6.1: interés simple y depreciación</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Interactivo de práctica para la Lección 6.1 del Nivel 2: vocabulario financiero, la fórmula del interés simple, el crecimiento año tras año, la depreciación lineal y aplicaciones combinadas.">
+<meta name="description" content="Interactivo de práctica para la Lección 6.1 del Nivel 2: vocabulario financiero, la fórmula del interés simple, el crecimiento año tras año, la depreciación lineal, aplicaciones combinadas, la tasa y el tiempo en la misma unidad, y los despejes de C, r y t.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
 
   :root{
-    --tema:#4e342e; --tema-d:#3e2723; --tema-bg:#efebe9; --tema-bg2:#d7ccc8;
+    --tema:#00695c; --tema-d:#004d40; --tema-bg:#e0f2f1; --tema-bg2:#b2dfdb;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -298,7 +298,7 @@
   <header class="principal">
     <div class="ruta">Nivel 2 · Tema 6 · Matemáticas financieras y conversiones</div>
     <h1>Lección 6.1 · Matemáticas financieras: interés simple y depreciación</h1>
-    <div class="meta">Cinco prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
+    <div class="meta">Siete prácticas interactivas en una sola página. Los ejercicios se generan de nuevo cada vez, así que puedes repetirlos cuantas veces quieras.</div>
   </header>
 
   <nav class="indice" aria-labelledby="titulo-indice">
@@ -309,6 +309,8 @@
       <li><a href="#ano-a-ano">Crecimiento año tras año</a></li>
       <li><a href="#depreciacion">Depreciación lineal</a></li>
       <li><a href="#combinadas">Aplicaciones combinadas</a></li>
+      <li><a href="#misma-unidad">La tasa y el tiempo, en la misma unidad</a></li>
+      <li><a href="#despejar">Despejar el capital, la tasa o el tiempo</a></li>
     </ol>
     <div class="controles-todo">
       <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
@@ -491,6 +493,105 @@
         </div>
         <div class="fb" id="p5-fb" role="status"></div>
         <p class="marcador" id="p5-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 6 · #misma-unidad ============ -->
+  <details class="modulo" id="misma-unidad">
+    <summary>
+      <span class="num" aria-hidden="true">6</span>
+      <h2>La tasa y el tiempo, en la misma unidad</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>La fórmula solo funciona si la tasa está en decimal y si la tasa y el tiempo usan <strong>la misma unidad</strong>. Si la tasa
+      es anual, el tiempo va en años: los meses se dividen entre 12 y los días entre 365 (o entre 360, si el problema indica el año
+      comercial). Si la tasa es mensual y el tiempo está en meses, ya coinciden y no hay que convertir nada.</p>
+      <div class="caja-atencion">
+        <strong>Error frecuente:</strong> usar 9 meses como si fueran 9 años. Un préstamo de $4,000 al 6 % anual por 9 meses cuesta
+        4,000 × 0.06 × 0.75 = $180, no $2,160. Antes de responder, pregúntate si el resultado tiene sentido.
+      </div>
+
+      <h3>Convierte y calcula</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="mu-c">Capital ($)</label><input type="text" inputmode="decimal" autocomplete="off" class="corto" id="mu-c" value="4000"></div>
+          <div class="campo"><label for="mu-r">Tasa (%)</label><input type="text" inputmode="decimal" autocomplete="off" class="corto" id="mu-r" value="6"></div>
+          <div class="campo"><label for="mu-ru">La tasa es…</label><select id="mu-ru"><option value="a">anual</option><option value="m">mensual</option></select></div>
+          <div class="campo"><label for="mu-t">Tiempo</label><input type="text" inputmode="decimal" autocomplete="off" class="corto" id="mu-t" value="9"></div>
+          <div class="campo"><label for="mu-tu">en…</label><select id="mu-tu"><option value="a">años</option><option value="m" selected>meses</option><option value="d365">días (año de 365)</option><option value="d360">días (año comercial de 360)</option></select></div>
+        </div>
+        <div class="salida" id="mu-salida" aria-live="polite"></div>
+      </div>
+
+      <h3>Practica: convierte antes de calcular</h3>
+      <div class="practica" id="p6">
+        <div class="enun" id="p6-enun"></div>
+        <div class="campos"><div class="campo"><label for="p6-r">Interés ($)</label><input type="text" autocomplete="off" class="ancho" id="p6-r"></div></div>
+        <p class="nota">Escribe solo el número; puede llevar centavos.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p6-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p6-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p6-fb" role="status"></div>
+        <p class="marcador" id="p6-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 7 · #despejar ============ -->
+  <details class="modulo" id="despejar">
+    <summary>
+      <span class="num" aria-hidden="true">7</span>
+      <h2>Despejar el capital, la tasa o el tiempo</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Si se conocen tres de las cuatro cantidades de I = C · r · t, se puede hallar la que falta. <strong>Una sola regla para las
+      tres:</strong> se divide el interés entre el producto de los otros dos datos. (En la hoja del GED el capital se escribe P.)</p>
+      <table class="reglas">
+        <caption>Los tres despejes</caption>
+        <thead><tr><th scope="col">Se busca</th><th scope="col">Fórmula</th></tr></thead>
+        <tbody>
+          <tr><td>El capital</td><td>C = I ÷ (r · t)</td></tr>
+          <tr><td>La tasa</td><td>r = I ÷ (C · t), y se multiplica por 100 para el porcentaje</td></tr>
+          <tr><td>El tiempo</td><td>t = I ÷ (C · r)</td></tr>
+        </tbody>
+      </table>
+      <div class="caja-tip"><strong>Si el problema da el monto total M</strong> en lugar del interés, primero se calcula I = M − C.</div>
+
+      <h3>Elige qué buscas</h3>
+      <div class="panel">
+        <div class="elecciones" role="group" aria-label="Elige qué se busca">
+          <button type="button" class="eleccion" data-busca="C" aria-pressed="false">El capital</button>
+          <button type="button" class="eleccion" data-busca="r" aria-pressed="true">La tasa</button>
+          <button type="button" class="eleccion" data-busca="t" aria-pressed="false">El tiempo</button>
+        </div>
+        <div class="campos">
+          <div class="campo" id="de-cC"><label for="de-C">Capital ($)</label><input type="text" inputmode="decimal" autocomplete="off" class="corto" id="de-C" value="2000"></div>
+          <div class="campo" id="de-cr"><label for="de-r">Tasa anual (%)</label><input type="text" inputmode="decimal" autocomplete="off" class="corto" id="de-r" value="7"></div>
+          <div class="campo" id="de-ct"><label for="de-t">Tiempo (años)</label><input type="text" inputmode="decimal" autocomplete="off" class="corto" id="de-t" value="4"></div>
+          <div class="campo"><label for="de-I">Interés ($)</label><input type="text" inputmode="decimal" autocomplete="off" class="corto" id="de-I" value="560"></div>
+        </div>
+        <div class="salida" id="de-salida" aria-live="polite"></div>
+      </div>
+
+      <h3>Practica: halla el dato que falta</h3>
+      <div class="practica" id="p7">
+        <div class="enun" id="p7-enun"></div>
+        <div class="campos"><div class="campo"><label for="p7-r">Resultado</label><input type="text" autocomplete="off" class="ancho" id="p7-r"></div></div>
+        <p class="nota">Escribe solo el número: dólares, porcentaje (5 para 5 %) o años (2.5).</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p7-comprobar">Comprobar</button>
+          <button type="button" class="btn-sec" id="p7-nuevo">Otro ejercicio</button>
+        </div>
+        <div class="fb" id="p7-fb" role="status"></div>
+        <p class="marcador" id="p7-marcador">Aciertos: 0 de 0</p>
       </div>
 
       <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
@@ -1018,7 +1119,7 @@ function fichasSVG(a, b, empareja, voz){
     for (var i = 0; i < n; i++){
       var x = 80 + i*dx, posit = v > 0, cero = false;
       if (empareja){ if (posit && usadosP < pares){ cero = true; usadosP++; } else if (!posit && usadosN < pares){ cero = true; usadosN++; } }
-      var fill = posit ? "#fbc02d" : "#c62828", col = posit ? "#3e2723" : "#fff";
+      var fill = posit ? "#fbc02d" : "#c62828", col = posit ? "#004d40" : "#fff";
       s += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + (cero ? "#eeeeee" : fill) + '" stroke="' + (cero ? "#9e9e9e" : "#424242") + '" stroke-width="2"/>';
       s += texto([x, y + 1], posit ? "+" : "−", 20, cero ? "#9e9e9e" : col);
       if (cero) s += linea([x - 12, y + 12], [x + 12, y - 12], "#757575", 2);
@@ -1102,8 +1203,8 @@ function barrasAnios(vals, base, voz, colB, colV){
   function Y(v){ return yb - v * 170 / mx; }
   vals.forEach(function(v, k){
     var x = x0 + (x1 - x0) * k / n + (x1 - x0) / n * 0.14;
-    s += '<rect x="' + f1(x) + '" y="' + f1(Y(v)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(v)) + '" fill="' + (colV || "#a1887f") + '"/>';
-    if (base !== null && base !== undefined) s += '<rect x="' + f1(x) + '" y="' + f1(Y(Math.min(base, v))) + '" width="' + f1(w) + '" height="' + f1(yb - Y(Math.min(base, v))) + '" fill="' + (colB || "#4e342e") + '"/>';
+    s += '<rect x="' + f1(x) + '" y="' + f1(Y(v)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(v)) + '" fill="' + (colV || "#4db6ac") + '"/>';
+    if (base !== null && base !== undefined) s += '<rect x="' + f1(x) + '" y="' + f1(Y(Math.min(base, v))) + '" width="' + f1(w) + '" height="' + f1(yb - Y(Math.min(base, v))) + '" fill="' + (colB || "#00695c") + '"/>';
     s += texto([x + w/2, yb + 16], k, 13, "#424242", 400);
   });
   s += linea([x0, yb], [x1, yb], "#424242", 2) + texto([(x0 + x1)/2, H - 4], "Año", 13, "#424242", 700) + texto([x0 - 6, Y(mx)], usd(mx), 12, "#424242", 400, "end");
@@ -1145,7 +1246,7 @@ function pintaAA(){
   var C = +$("aa-c").value, r = +$("aa-r").value, an = C*r/100, v = [];
   $("aa-cv").textContent = usd(C); $("aa-rv").textContent = r + " %";
   for (var k = 0; k <= 10; k++) v.push(C + an*k);
-  $("aa-svg").innerHTML = barrasAnios(v, C, "Barras del monto año por año: crece " + usd(an) + " cada año.", "#4e342e", "#bcaaa4");
+  $("aa-svg").innerHTML = barrasAnios(v, C, "Barras del monto año por año: crece " + usd(an) + " cada año.", "#00695c", "#b2dfdb");
   var h = '<table class="comparar"><caption>Capital de ' + usd(C) + ' al ' + r + ' % de interés simple (la parte oscura de cada barra es el capital)</caption><thead><tr><th scope="col">Año</th><th scope="col">Interés del año</th><th scope="col">Interés acumulado</th><th scope="col">Monto total</th></tr></thead><tbody>';
   [0,1,2,3,5,10].forEach(function(k){ h += '<tr><td>' + k + '</td><td>' + (k ? usd(an) : "—") + '</td><td>' + usd(an*k) + '</td><td>' + usd(C + an*k) + '</td></tr>'; });
   $("aa-tabla").innerHTML = h + '</tbody></table>';
@@ -1163,7 +1264,7 @@ function pintaDP(){
   var V0 = +$("dp-v").value, r = +$("dp-r").value, t = +$("dp-t").value, an = V0*r/100, V = Math.max(V0 - an*t, 0), v = [];
   $("dp-vv").textContent = usd(V0); $("dp-rv").textContent = r + " %"; $("dp-tv").textContent = t;
   for (var k = 0; k <= t; k++) v.push(Math.max(V0 - an*k, 0));
-  $("dp-svg").innerHTML = barrasAnios(v, null, "Valor del activo año por año: baja " + usd(an) + " cada año.", null, "#8d6e63");
+  $("dp-svg").innerHTML = barrasAnios(v, null, "Valor del activo año por año: baja " + usd(an) + " cada año.", null, "#00897b");
   $("dp-salida").innerHTML = '<div class="linea">Pérdida anual: ' + miles(V0) + ' × ' + nv(r/100) + ' = ' + usd(an) + '. Pérdida en ' + t + (t === 1 ? ' año' : ' años') + ': ' + usd(an*t) + '.</div>' +
     '<div class="linea veredicto">V = ' + usd(V0) + ' − ' + usd(an*t) + ' = ' + usd(V) + (V0 - an*t < 0 ? ' (no puede bajar de $0)' : '') + '</div>';
 }
@@ -1186,6 +1287,77 @@ function genComb(){
   else { var V0 = 1000*aleatorio(12,30), rd = elige([8, 10, 12, 15]), an = aleatorio(2,4); res = V0 - V0*rd/100*an; enun = "Un carro se compró nuevo por " + usd(V0) + " hace " + an + " años. Si se deprecia un " + rd + " % anual de su valor original, ¿cuál es un precio justo de reventa hoy?"; sol = "Pérdida anual: " + usd(V0*rd/100) + "; en " + an + " años: " + usd(V0*rd/100*an) + "; valor: " + usd(res) + "."; }
   return { enun: enun, correcta: nv(Math.round(res*100)/100), solucion: sol, evalua: function(x){ return numL(res, p, 0.006)(String(x).replace("%", "")); } };
 }
+/* MÓDULO 6 · misma unidad */
+function leeC(id){ var v = leeDecimal(String($(id).value).replace("$", "").replace("%", "")); $(id).classList.toggle("error", v === null || v < 0); return v === null || v < 0 ? null : v; }
+function n4(x){ return nv(Math.round(x * 10000) / 10000); }
+function pintaMU(){
+  var c = leeC("mu-c"), r = leeC("mu-r"), t = leeC("mu-t"), ru = $("mu-ru").value, tu = $("mu-tu").value, s = $("mu-salida");
+  if (c === null || r === null || t === null){ s.innerHTML = '<div class="linea">Escribe un número en cada casilla.</div>'; return; }
+  var h = [], rd = r / 100, tt, uni;
+  if (ru === "m" && tu === "m"){ tt = t; uni = "meses"; h.push("La tasa es mensual y el tiempo está en meses: <strong>ya coinciden</strong>, no hace falta convertir."); }
+  else if (ru === "m"){
+    var tm = tu === "a" ? t * 12 : t / (tu === "d360" ? 30 : 365 / 12);
+    tt = tm; uni = "meses"; h.push("La tasa es mensual: el tiempo se pasa a meses. " + (tu === "a" ? nv(t) + " años × 12 = " + n4(tm) + " meses." : nv(t) + " días ÷ " + (tu === "d360" ? "30" : "30.42 (365 ÷ 12)") + " ≈ " + n4(tm) + " meses."));
+  } else {
+    tt = tu === "a" ? t : (tu === "m" ? t / 12 : t / (tu === "d360" ? 360 : 365)); uni = "años";
+    h.push(tu === "a" ? "La tasa es anual y el tiempo está en años: ya coinciden." : "La tasa es anual: el tiempo se pasa a años. " + nv(t) + (tu === "m" ? " meses ÷ 12" : " días ÷ " + (tu === "d360" ? "360" : "365")) + " = " + n4(tt) + " años.");
+  }
+  var I = c * rd * tt;
+  h.push("La tasa en decimal: " + nv(r) + " % = " + n4(rd) + (ru === "m" ? " por mes." : " por año."));
+  h.push("I = " + nv(c) + " × " + n4(rd) + " × " + n4(tt) + " = <strong>" + usd(I) + "</strong>");
+  if (!(ru === "m" && tu === "m") && !(ru === "a" && tu === "a")) h.push("Sin convertir, saldría " + nv(c) + " × " + n4(rd) + " × " + nv(t) + " = " + usd(c * rd * t) + ": " + (c * rd * t > I ? "demasiado grande." : "demasiado pequeño."));
+  s.innerHTML = h.map(function(x, i){ return '<div class="linea' + (i === h.length - 1 && h.length > 3 ? '' : '') + '">' + x + '</div>'; }).join("");
+}
+function genMU(){
+  var tipo = aleatorio(1, 4), C, r, t, I, enun, sol, pist = [];
+  if (tipo === 1){ C = 100 * aleatorio(10, 80); r = elige([3, 4, 5, 6, 8, 9, 10, 12]); t = elige([3, 6, 8, 9, 15, 18, 20, 30]); I = C * r / 100 * t / 12;
+    enun = "Un préstamo de " + usd(C) + " al " + r + " % de interés simple anual se paga en " + t + " meses. ¿Cuánto interés se paga?";
+    sol = t + " meses ÷ 12 = " + n4(t/12) + " años. I = " + nv(C) + " × " + nv(r/100) + " × " + n4(t/12) + " = " + usd(I) + ".";
+    pist.push({ v: C * r / 100 * t, msg: "Se usaron los meses como si fueran años. Divide los meses entre 12." }); }
+  else if (tipo === 2){ C = 100 * aleatorio(6, 40); r = elige([1, 1.5, 2, 2.5]); t = aleatorio(3, 12); I = C * r / 100 * t;
+    enun = "Una tienda financia una compra de " + usd(C) + " al " + nv(r) + " % <strong>mensual</strong> durante " + t + " meses. ¿Cuánto interés se paga?";
+    sol = "Tasa mensual y tiempo en meses: ya coinciden. I = " + nv(C) + " × " + nv(r/100) + " × " + t + " = " + usd(I) + ".";
+    pist.push({ v: C * r / 100 * t / 12, msg: "La tasa es mensual y el tiempo está en meses: no hay que dividir entre 12." }); }
+  else if (tipo === 3){ C = 100 * aleatorio(5, 50); r = elige([12, 18, 24, 6]); t = elige([30, 60, 90, 120, 180]); I = C * r / 100 * t / 360;
+    enun = "Un saldo de " + usd(C) + " tiene un interés simple del " + r + " % anual durante " + t + " días. Usa el año comercial de 360 días. ¿Cuánto interés se genera?";
+    sol = t + " ÷ 360 = " + n4(t/360) + " años. I = " + nv(C) + " × " + nv(r/100) + " × " + n4(t/360) + " = " + usd(I) + ".";
+    pist.push({ v: C * r / 100 * t, msg: "Los días hay que pasarlos a años: divide entre 360." }, { v: C * r / 100 * t / 365, msg: "El problema pide el año comercial: divide entre 360, no entre 365." }); }
+  else { var meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"], a = aleatorio(0, 5), m = elige([3, 4, 6]); C = 1000 * aleatorio(2, 20); r = elige([3, 4, 5, 6]); I = C * r / 100 * m / 12;
+    enun = "Un certificado de " + usd(C) + " se abre el 1 de " + meses[a] + " y vence el 1 de " + meses[a + m] + " del mismo año, al " + r + " % de interés simple anual. ¿Cuánto interés genera?";
+    sol = "Del 1 de " + meses[a] + " al 1 de " + meses[a + m] + " hay " + m + " meses = " + n4(m/12) + " años. I = " + nv(C) + " × " + nv(r/100) + " × " + n4(m/12) + " = " + usd(I) + ".";
+    pist.push({ v: C * r / 100 * m, msg: "Cuenta los meses y pásalos a años (÷ 12)." }, { v: C * r / 100, msg: "Ese es el interés de un año completo; el plazo es más corto." }); }
+  I = Math.round(I * 100) / 100;
+  return { enun: enun, correcta: nv(I), solucion: sol, evalua: function(x){ return evaluaDec(String(x).replace("$", "").replace(/,/g, ""), I, pist.map(function(p){ return { v: Math.round(p.v * 100) / 100, msg: p.msg }; }), 0.011); } };
+}
+/* MÓDULO 7 · despejar */
+var BUSCA = "r";
+function pintaDE(){
+  ["C","r","t"].forEach(function(k){ $("de-c" + k).style.display = k === BUSCA ? "none" : ""; });
+  var C = leeC("de-C"), r = leeC("de-r"), t = leeC("de-t"), I = leeC("de-I"), s = $("de-salida"), h;
+  var fal = (BUSCA !== "C" && C === null) || (BUSCA !== "r" && r === null) || (BUSCA !== "t" && t === null) || I === null;
+  if (fal){ s.innerHTML = '<div class="linea">Escribe un número en cada casilla.</div>'; return; }
+  if (BUSCA === "C"){ var den = r / 100 * t; if (!den){ s.innerHTML = '<div class="linea">La tasa y el tiempo no pueden ser 0.</div>'; return; } var x = I / den;
+    h = ["C = I ÷ (r · t) = " + nv(I) + " ÷ (" + n4(r/100) + " × " + nv(t) + ") = " + nv(I) + " ÷ " + n4(den), '<span class="veredicto">C = ' + usd(x) + '</span>', "Comprobación: " + nv(Math.round(x*100)/100) + " × " + n4(r/100) + " × " + nv(t) + " = " + usd(x * den) + " ✓"]; }
+  else if (BUSCA === "r"){ var d2_ = C * t; if (!d2_){ s.innerHTML = '<div class="linea">El capital y el tiempo no pueden ser 0.</div>'; return; } var rr = I / d2_;
+    h = ["r = I ÷ (C · t) = " + nv(I) + " ÷ (" + nv(C) + " × " + nv(t) + ") = " + nv(I) + " ÷ " + nv(d2_) + " = " + n4(rr), "Para el porcentaje se multiplica por 100.", '<span class="veredicto">r = ' + nv(Math.round(rr * 10000) / 100) + ' % anual</span>']; }
+  else { var d3 = C * r / 100; if (!d3){ s.innerHTML = '<div class="linea">El capital y la tasa no pueden ser 0.</div>'; return; } var tt = I / d3;
+    h = ["t = I ÷ (C · r) = " + nv(I) + " ÷ (" + nv(C) + " × " + n4(r/100) + ") = " + nv(I) + " ÷ " + nv(d3), '<span class="veredicto">t = ' + n4(tt) + ' años' + (Math.abs(tt*12 - Math.round(tt*12)) < 1e-6 && tt % 1 ? " (" + Math.floor(tt) + " años y " + Math.round((tt % 1) * 12) + " meses)" : "") + '</span>']; }
+  s.innerHTML = h.map(function(x){ return '<div class="linea">' + x + '</div>'; }).join("");
+}
+function genDE(){
+  var C = 100 * aleatorio(5, 60), r = elige([2, 3, 4, 5, 6, 7, 8, 10, 12]), t = elige([1, 1.5, 2, 2.5, 3, 4, 5, 6]), I = Math.round(C * r / 100 * t * 100) / 100, tipo = aleatorio(1, 4);
+  if (tipo === 1) return { enun: "¿Cuánto hay que depositar al " + r + " % anual para ganar " + usd(I) + " de interés en " + nv(t) + " años?", correcta: String(C),
+    solucion: "C = " + nv(I) + " ÷ (" + nv(r/100) + " × " + nv(t) + ") = " + nv(I) + " ÷ " + n4(r/100*t) + " = " + usd(C) + ".", evalua: function(x){ return evaluaDec(String(x).replace("$", "").replace(/,/g, ""), C, [{ v: Math.round(I * r / 100 * t * 100) / 100, msg: "Se multiplicó; para hallar el capital se divide el interés entre (r · t)." }], 0.011); } };
+  if (tipo === 2) return { enun: "Un préstamo de " + usd(C) + " a " + nv(t) + " años generó " + usd(I) + " de interés. ¿Qué tasa anual se cobró (en %)?", correcta: String(r),
+    solucion: "r = " + nv(I) + " ÷ (" + nv(C) + " × " + nv(t) + ") = " + n4(r/100) + " → " + r + " %.", evalua: function(x){ return evaluaDec(String(x).replace("%", ""), r, [{ v: r / 100, msg: "Ese es el decimal: multiplícalo por 100 para el porcentaje." }], 0.011); } };
+  if (tipo === 3) return { enun: "¿Cuántos años deben estar " + usd(C) + " al " + r + " % anual para ganar " + usd(I) + " de interés?", correcta: nv(t),
+    solucion: "t = " + nv(I) + " ÷ (" + nv(C) + " × " + nv(r/100) + ") = " + nv(I) + " ÷ " + nv(C*r/100) + " = " + nv(t) + " años.", evalua: function(x){ return evaluaDec(String(x).replace(/años?/, ""), t, [{ v: Math.round(t * 12 * 100) / 100, msg: "Eso está en meses; se piden años." }], 0.011); } };
+  var M = Math.round((C + I) * 100) / 100;
+  return { enun: "Por un préstamo de " + usd(C) + " se devolvieron " + usd(M) + " en total al cabo de " + nv(t) + " años. ¿Qué tasa anual se cobró (en %)?", correcta: String(r),
+    solucion: "Primero el interés: " + nv(M) + " − " + nv(C) + " = " + nv(I) + ". r = " + nv(I) + " ÷ (" + nv(C) + " × " + nv(t) + ") = " + n4(r/100) + " → " + r + " %.",
+    evalua: function(x){ return evaluaDec(String(x).replace("%", ""), r, [{ v: Math.round(M / (C * t) * 10000) / 100, msg: "Se usó el monto total como si fuera el interés. Primero resta: I = M − C." }], 0.011); } };
+}
+
 /* Arranque */
 creaPracticaOM("p1", genVocab);
 ["is-c","is-r","is-t"].forEach(function(id){ $(id).addEventListener("input", pintaIS); }); pintaIS();
@@ -1195,6 +1367,11 @@ creaPracticaLibre("p3", genAA);
 ["dp-v","dp-r","dp-t"].forEach(function(id){ $(id).addEventListener("input", pintaDP); }); pintaDP();
 creaPracticaOM("p4", genDP);
 creaPracticaLibre("p5", genComb);
+["mu-c","mu-r","mu-t"].forEach(function(id){ $(id).addEventListener("input", pintaMU); }); ["mu-ru","mu-tu"].forEach(function(id){ $(id).addEventListener("change", pintaMU); }); pintaMU();
+creaPracticaLibre("p6", genMU);
+document.querySelectorAll('#despejar .eleccion').forEach(function(b){ b.addEventListener("click", function(){ BUSCA = b.getAttribute("data-busca"); document.querySelectorAll('#despejar .eleccion').forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); pintaDE(); }); });
+["de-C","de-r","de-t","de-I"].forEach(function(id){ $(id).addEventListener("input", pintaDE); }); pintaDE();
+creaPracticaLibre("p7", genDE);
 iniciaNavegacion();
 
 </script>
