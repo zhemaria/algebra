@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<!--
+  Leer para entender el álgebra / Reading to Understand Algebra
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.
+  Licencia / License: Creative Commons BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/
+-->
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leer para entender el álgebra · Reading to Understand Algebra</title>
+<meta name="description" content="Ejercicios bilingües de introducción al álgebra (variables, expresiones, términos semejantes, evaluación y ecuaciones de un paso) con la rutina de las tres lecturas.">
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#1a1a1a; --suave:#444; --papel:#fbfaf7; --blanco:#fff; --borde:#d4d0c8;
+  --primario:#1f3a5f; --primario-claro:#e8eef6;
+  --ok:#1b5e20; --ok-fondo:#e6f4e7; --mal:#8b1a1a; --mal-fondo:#fbeaea; --aviso:#5C3900; --aviso-fondo:#fff4dc;
+  --t1:#1f4e79; --t2:#5C3900; --t3:#1b5e20; --t4:#4a148c; --t5:#8b1a1a; --t6:#00525b;
+  --radio:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:18px;line-height:1.6}
+a{color:var(--primario)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+var{font-family:"Times New Roman",Georgia,serif;font-style:italic;font-size:1.1em}
+.contenedor{max-width:920px;margin:0 auto;padding:0 16px}
+.saltar{position:absolute;left:-9999px;top:0;background:var(--primario);color:#fff;padding:8px 12px;z-index:10}
+.saltar:focus{left:8px;top:8px}
+
+/* Idiomas */
+html[data-lang="es"] .en{display:none}
+html[data-lang="en"] .es{display:none}
+html[data-lang="bi"] .en{display:block;font-style:italic;color:var(--suave);font-size:.92em;margin-top:2px}
+html[data-lang="bi"] .en var{color:var(--suave)}
+html[data-lang="bi"] .opcion .en{color:inherit}
+html[data-lang="bi"] .tabla-palabras .en{display:block}
+html[data-lang="bi"] :is(h1,h2,h3,.etq,.btn,button,summary,nav a,.sub) .en{display:inline;color:inherit;font-size:inherit;margin:0}
+html[data-lang="bi"] :is(h1,h2,h3,.etq,.btn,button,summary,nav a,.sub) .en::before{content:" / ";font-style:normal}
+html[data-lang="bi"] .opcion .en{display:block;font-size:.92em}
+html[data-lang="bi"] .opcion .en::before{content:none}
+
+/* Cabecera */
+header.cabecera{background:var(--primario);color:#fff;padding:28px 0 22px}
+header.cabecera h1{margin:0 0 6px;font-size:1.9rem;line-height:1.2}
+header.cabecera .sub{margin:0;font-size:1.05rem;opacity:.95}
+header.cabecera .autor{margin:10px 0 0;font-size:.9rem}
+.barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.barra .grupo{display:flex;gap:0;border:2px solid #fff;border-radius:8px;overflow:hidden}
+.barra .grupo button{background:transparent;color:#fff;border:0;padding:8px 14px;font:inherit;font-size:.95rem;cursor:pointer;min-height:44px}
+.barra .grupo button[aria-pressed="true"]{background:#fff;color:var(--primario);font-weight:700}
+.btn{font:inherit;font-size:.95rem;border-radius:8px;padding:8px 14px;cursor:pointer;min-height:44px;border:2px solid var(--primario);background:var(--blanco);color:var(--primario)}
+.btn:hover{background:var(--primario-claro)}
+.btn-claro{border-color:#fff;background:transparent;color:#fff}
+.btn-claro:hover{background:rgba(255,255,255,.15)}
+.btn-lleno{background:var(--primario);color:#fff}
+.btn-lleno:hover{background:#16304f}
+
+/* Índice */
+nav.indice{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);padding:16px 20px;margin:24px 0}
+nav.indice h2{margin:0 0 8px;font-size:1.2rem}
+nav.indice ol{margin:0;padding-left:1.4em;columns:2;column-gap:32px}
+nav.indice li{break-inside:avoid;margin:4px 0}
+.acciones-indice{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* Cajas */
+.caja{background:var(--blanco);border:1px solid var(--borde);border-left:6px solid var(--primario);border-radius:var(--radio);padding:16px 20px;margin:18px 0}
+.caja h2,.caja h3{margin-top:0}
+.caja-idea{border-left-color:var(--c,var(--primario));background:var(--blanco)}
+.caja-consejo{border-left-color:var(--aviso);background:var(--aviso-fondo)}
+.marcos{display:grid;gap:8px;grid-template-columns:1fr;margin:8px 0 0;padding:0;list-style:none}
+.marcos li{background:var(--primario-claro);border-radius:8px;padding:8px 12px}
+.lecturas{list-style:none;padding:0;margin:12px 0;display:grid;gap:10px}
+.lecturas li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;background:var(--blanco);border:1px solid var(--borde);border-radius:8px;padding:10px 12px}
+.num-circulo{width:40px;height:40px;border-radius:50%;background:var(--primario);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* Secciones grandes */
+details.seccion-grande{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);margin:18px 0;scroll-margin-top:12px}
+details.seccion-grande > summary{list-style:none;cursor:pointer;display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:var(--radio);background:var(--c);color:#fff}
+details.seccion-grande > summary::-webkit-details-marker{display:none}
+details.seccion-grande > summary .num-circulo{background:#fff;color:var(--c);flex:0 0 40px}
+details.seccion-grande > summary h2{margin:0;font-size:1.25rem;line-height:1.25}
+details.seccion-grande > summary .progreso{margin-left:auto;font-size:.85rem;white-space:nowrap;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:20px}
+details.seccion-grande > summary .chev{transition:transform .2s;font-size:1rem}
+details.seccion-grande[open] > summary .chev{transform:rotate(90deg)}
+details.seccion-grande[open] > summary{border-radius:var(--radio) var(--radio) 0 0}
+.cuerpo{padding:6px 20px 20px}
+.indicadores{font-size:.88rem;color:var(--suave);margin:10px 0 0}
+
+/* Tabla */
+.tabla-palabras{width:100%;border-collapse:collapse;margin:10px 0;font-size:.95rem}
+.tabla-palabras caption{text-align:left;font-weight:700;padding:4px 0 8px}
+.tabla-palabras th,.tabla-palabras td{border:1px solid var(--borde);padding:6px 10px;text-align:left;vertical-align:top}
+.tabla-palabras th{background:var(--primario-claro)}
+.tabla-scroll{overflow-x:auto}
+
+/* Ejercicios */
+article.ejercicio{border:1px solid var(--borde);border-radius:var(--radio);padding:14px 16px;margin:16px 0;background:#fff;scroll-margin-top:12px}
+article.ejercicio.hecho{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+article.ejercicio h3{margin:0 0 8px;font-size:1.08rem;color:var(--c)}
+article.ejercicio h3 .marca{color:var(--ok);margin-left:6px}
+.historia{background:#f5f3ee;border-radius:8px;padding:12px 14px;margin:8px 0 12px;position:relative}
+.historia p{margin:0}
+.btn-oir{margin-top:8px;font-size:.85rem;padding:4px 10px;min-height:36px}
+.paso{border-top:1px dashed var(--borde);padding:10px 0 4px}
+.paso:first-of-type{border-top:0}
+.etq{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;background:var(--c);color:#fff;border-radius:6px;padding:2px 8px;margin:0 0 6px}
+.preg{margin:0 0 8px;font-weight:700}
+.opciones{display:grid;gap:8px}
+.opcion{display:block;width:100%;text-align:left;font:inherit;font-size:1rem;background:#fff;border:2px solid var(--borde);border-radius:8px;padding:8px 12px;cursor:pointer;color:var(--tinta);min-height:44px}
+.opcion:hover:not([disabled]){border-color:var(--c)}
+.opcion.correcta{border-color:var(--ok);background:var(--ok-fondo)}
+.opcion.incorrecta{border-color:var(--mal);background:var(--mal-fondo)}
+.opcion[disabled]{cursor:default}
+.fila-entrada{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fila-entrada input{font:inherit;font-size:1.05rem;padding:8px 10px;border:2px solid #767676;border-radius:8px;min-width:200px;min-height:44px}
+.fila-entrada input.bien{border-color:var(--ok);background:var(--ok-fondo)}
+.fila-entrada input.malo{border-color:var(--mal)}
+.ayuda{font-size:.85rem;color:var(--suave);margin:4px 0 0}
+textarea{width:100%;min-height:90px;font:inherit;font-size:1rem;padding:8px 10px;border:2px solid #767676;border-radius:8px}
+.fb{margin-top:8px}
+.fb:empty{display:none}
+.fb .msg{border-radius:8px;padding:8px 12px}
+.fb .msg.ok{background:var(--ok-fondo);color:var(--ok);border-left:5px solid var(--ok)}
+.fb .msg.mal{background:var(--mal-fondo);color:var(--mal);border-left:5px solid var(--mal)}
+.fb .msg.info{background:var(--aviso-fondo);color:var(--aviso);border-left:5px solid var(--aviso)}
+.fb .msg.sol{background:var(--primario-claro);color:var(--primario);border-left:5px solid var(--primario)}
+.modelo{background:var(--primario-claro);border-radius:8px;padding:10px 12px;margin-top:8px}
+.recta-entradas{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:8px}
+.recta-entradas div{display:flex;align-items:center;gap:6px}
+.recta-entradas input{width:90px;min-width:0;font:inherit;font-size:1.05rem;padding:6px 8px;border:2px solid #767676;border-radius:8px;min-height:44px}
+.recta-entradas input.bien{border-color:var(--ok);background:var(--ok-fondo)}
+.recta-entradas input.malo{border-color:var(--mal)}
+.recta-svg{width:100%;height:auto;margin-top:8px}
+.oculto{display:none!important}
+
+/* Referencias y pie */
+.referencias{font-size:.95rem}
+.referencias li{margin:6px 0;overflow-wrap:anywhere}
+footer{margin-top:32px;padding:20px 0 32px;border-top:1px solid var(--borde);font-size:.9rem;color:var(--suave)}
+
+@media (max-width:640px){
+  body{font-size:17px}
+  header.cabecera h1{font-size:1.5rem}
+  nav.indice ol{columns:1}
+  details.seccion-grande > summary{flex-wrap:wrap}
+  details.seccion-grande > summary .progreso{margin-left:54px}
+  .fila-entrada input{min-width:0;width:100%}
+  .cuerpo{padding:6px 10px 16px}
+  .caja{padding:12px 14px}
+  article.ejercicio{padding:12px}
+}
+@media print{
+  body{background:#fff;font-size:12pt}
+  header.cabecera{background:#fff;color:#000;border-bottom:2px solid #000;padding:8px 0}
+  .barra,.acciones-indice,.btn-oir,.btn,.ayuda,.saltar,nav.indice{display:none!important}
+  details.seccion-grande > summary{background:#fff!important;color:#000;border-bottom:2px solid #000}
+  details.seccion-grande > summary .num-circulo{border:2px solid #000;color:#000}
+  details.seccion-grande > summary .progreso,details.seccion-grande > summary .chev{display:none}
+  article.ejercicio{break-inside:avoid;box-shadow:none!important}
+  .etq{background:#fff!important;color:#000;border:1px solid #000}
+  .opcion{border:1px solid #000;background:#fff!important}
+  .opcion::before{content:"○  "}
+  .fila-entrada input,textarea{border:0;border-bottom:1px solid #000;border-radius:0;background:#fff!important}
+  .fb,.modelo{display:none!important}
+}
+</style>
+</head>
+<body>
+<a class="saltar" href="#contenido"><span class="es">Saltar al contenido</span><span class="en">Skip to content</span></a>
+
+<header class="cabecera">
+  <div class="contenedor">
+    <h1><span class="es">Leer para entender el álgebra</span><span class="en">Reading to understand algebra</span></h1>
+    <p class="sub"><span class="es">Variables, expresiones, términos semejantes y ecuaciones de un paso con la rutina de las tres lecturas</span><span class="en">Variables, expressions, like terms and one-step equations with the Three Reads routine</span></p>
+    <p class="autor">José M. Fernández · ABE/ASE Math Master Teacher · Harry S. Truman College — City Colleges of Chicago</p>
+    <div class="barra">
+      <div class="grupo" role="group" aria-label="Idioma / Language">
+        <button type="button" data-set-lang="es" aria-pressed="true">Español</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+        <button type="button" data-set-lang="bi" aria-pressed="false">ES + EN</button>
+      </div>
+      <button type="button" class="btn btn-claro" id="btn-imprimir"><span class="es">🖨️ Hoja imprimible</span><span class="en">🖨️ Printable worksheet</span></button>
+      <a class="btn btn-claro" href="guia-docente-lectura-algebra.html" target="_blank" rel="noopener noreferrer"><span class="es">📘 Guía docente</span><span class="en">📘 Teacher guide</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="contenido" class="contenedor">
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice"><span class="es">Contenido</span><span class="en">Contents</span></h2>
+    <ol id="lista-indice">
+      <li><a href="#rutina"><span class="es">Antes de empezar: leer tres veces</span><span class="en">Before you start: read three times</span></a></li>
+    </ol>
+    <div class="acciones-indice">
+      <button type="button" class="btn" id="abrir-todo"><span class="es">Abrir todo</span><span class="en">Open all</span></button>
+      <button type="button" class="btn" id="cerrar-todo"><span class="es">Cerrar todo</span><span class="en">Close all</span></button>
+    </div>
+  </nav>
+
+  <section id="rutina" class="caja" aria-labelledby="titulo-rutina">
+    <h2 id="titulo-rutina"><span class="es">Antes de empezar: leer tres veces</span><span class="en">Before you start: read three times</span></h2>
+    <p><span class="es">En álgebra, muchos errores no vienen de las cuentas, sino de la lectura. Por eso, en estos ejercicios no se empieza calculando: primero se lee el problema tres veces, cada vez con una pregunta distinta.</span><span class="en">In algebra, many mistakes come not from the arithmetic but from the reading. That is why these exercises do not start with calculating: first you read the problem three times, each time with a different question.</span></p>
+    <ol class="lecturas">
+      <li><span class="num-circulo" aria-hidden="true">1</span><div><strong><span class="es">1.ª lectura · La idea general</span><span class="en">1st read · The big idea</span></strong><br><span class="es">¿De qué trata la situación? Cuéntalo con tus palabras, <strong>sin usar números</strong>.</span><span class="en">What is the situation about? Tell it in your own words, <strong>without using numbers</strong>.</span></div></li>
+      <li><span class="num-circulo" aria-hidden="true">2</span><div><strong><span class="es">2.ª lectura · Cantidades y significado</span><span class="en">2nd read · Quantities and meaning</span></strong><br><span class="es">¿Qué se puede contar o medir? ¿Qué cambia (la variable) y qué se queda fijo? ¿Hay algún dato que sobra?</span><span class="en">What can be counted or measured? What changes (the variable) and what stays the same? Is any information not needed?</span></div></li>
+      <li><span class="num-circulo" aria-hidden="true">3</span><div><strong><span class="es">3.ª lectura · La estrategia</span><span class="en">3rd read · The strategy</span></strong><br><span class="es">¿Qué pregunta el problema? ¿Qué expresión o ecuación lo representa?</span><span class="en">What does the problem ask? What expression or equation represents it?</span></div></li>
+      <li><span class="num-circulo" aria-hidden="true">✔</span><div><strong><span class="es">Resolver y comprobar</span><span class="en">Solve and check</span></strong><br><span class="es">Resuelve y pregúntate: ¿mi respuesta tiene sentido en la historia?</span><span class="en">Solve and ask yourself: does my answer make sense in the story?</span></div></li>
+    </ol>
+    <h3><span class="es">Frases para explicar tu razonamiento</span><span class="en">Sentence frames to explain your thinking</span></h3>
+    <ul class="marcos">
+      <li><span class="es">La situación trata de…</span><span class="en">The situation is about…</span></li>
+      <li><span class="es">La variable ___ representa el número de…</span><span class="en">The variable ___ stands for the number of…</span></li>
+      <li><span class="es">El dato ___ no hace falta porque…</span><span class="en">The information ___ is not needed because…</span></li>
+      <li><span class="es">Mi respuesta tiene sentido porque…</span><span class="en">My answer makes sense because…</span></li>
+    </ul>
+    <div class="caja caja-consejo">
+      <h3><span class="es">¿Por qué leer así?</span><span class="en">Why read this way?</span></h3>
+      <p><span class="es">Un estudio reciente de la Universidad Texas A&amp;M (Niileksela, Hajovsky y colaboradores, 2026) encontró que la <strong>comprensión del lenguaje</strong> y el <strong>razonamiento</strong> —saber separar lo que importa de lo que no— están entre las habilidades que más se relacionan con el éxito en matemáticas. La buena noticia: ambas se pueden practicar. Eso es lo que harás aquí.</span><span class="en">A recent study from Texas A&amp;M University (Niileksela, Hajovsky, and colleagues, 2026) found that <strong>language comprehension</strong> and <strong>reasoning</strong>—telling what matters from what does not—are among the abilities most closely tied to success in math. The good news: both can be practiced. That is what you will do here.</span></p>
+    </div>
+    <p class="ayuda"><span class="es">Cada ejercicio tiene un botón 🔊 para escuchar la historia. En las respuestas escritas tienes dos intentos; después verás la solución.</span><span class="en">Each exercise has a 🔊 button to listen to the story. On written answers you get two tries; after that you will see the solution.</span></p>
+  </section>
+
+  <div id="temas"></div>
+
+  <section id="referencias" class="caja" aria-labelledby="titulo-ref">
+    <h2 id="titulo-ref"><span class="es">Referencias</span><span class="en">References</span></h2>
+    <ul class="referencias">
+      <li>GED Testing Service. (2014). <i>Assessment guide for educators: Mathematical reasoning</i>. <a href="https://www.ged.com/wp-content/uploads/assessment_guide_for_educators_math.pdf" target="_blank" rel="noopener noreferrer">ged.com</a></li>
+      <li>Lawson, E. (2026, octubre). Why are some people good at math while others struggle? <i>Phys.org</i>. <a href="https://phys.org/news/2026-10-people-good-math-struggle.html" target="_blank" rel="noopener noreferrer">phys.org</a></li>
+      <li>Niileksela, C. R., Hajovsky, D. B., Cocar-Montenegro, F. P., Schneider, W. J., Flanagan, D. P., &amp; Alfonso, V. C. (2026). Cognitive–mathematics relations: A meta-analysis of norm-referenced standardized test batteries. <i>Journal of Intelligence, 14</i>(7), 142. <a href="https://doi.org/10.3390/jintelligence14070142" target="_blank" rel="noopener noreferrer">https://doi.org/10.3390/jintelligence14070142</a></li>
+      <li>Shore, C. (s. f.). <i>Clothesline Math</i>. <a href="https://clotheslinemath.com/" target="_blank" rel="noopener noreferrer">clotheslinemath.com</a></li>
+      <li>Zwiers, J., Dieckmann, J., Rutherford-Quach, S., Daro, V., Skarin, R., Weiss, S., &amp; Malamut, J. (2017). <i>Principles for the design of mathematics curricula: Promoting language and content development</i>. Stanford University, UL/SCALE. <a href="https://ul.stanford.edu/sites/default/files/resource/2021-11/Principles%20for%20the%20Design%20of%20Mathematics%20Curricula_1.pdf" target="_blank" rel="noopener noreferrer">ul.stanford.edu</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p><span class="es">Este material se distribuye con la licencia</span><span class="en">This material is licensed under</span> <a rel="license noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative Commons BY-NC-SA 4.0</a>.</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+/* ====== Utilidades de idioma ====== */
+const b = (es, en) => ({ es, en: en === undefined ? es : en });
+const L = (o) => (typeof o === "string") ? o : '<span class="es" lang="es">' + o.es + '</span><span class="en" lang="en">' + o.en + '</span>';
+
+const UI = {
+  l1: b("1.ª lectura · La idea general", "1st read · The big idea"),
+  l2: b("2.ª lectura · Cantidades y significado", "2nd read · Quantities and meaning"),
+  l3: b("3.ª lectura · La estrategia", "3rd read · The strategy"),
+  r:  b("Resolver y comprobar", "Solve and check"),
+  ok: b("✔ ¡Correcto!", "✔ Correct!"),
+  noMc: b("✘ Todavía no.", "✘ Not yet."),
+  otra: b("✘ Todavía no. Te queda un intento.", "✘ Not yet. You have one more try."),
+  sol: b("Mira la solución:", "Look at the solution:"),
+  noSimpl: b("Tu expresión es equivalente, pero todavía no está simplificada: junta los términos semejantes y vuelve a intentarlo.", "Your expression is equivalent, but it is not simplified yet: combine like terms and try again."),
+  invalida: b("No pude leer esa expresión. Usa números, las letras del problema y los signos + − * / ( ).", "I could not read that expression. Use numbers, the letters in the problem, and the signs + − * / ( )."),
+  numInvalido: b("Escribe un número (por ejemplo: 12, −3 o 4.5).", "Type a number (for example: 12, −3, or 4.5)."),
+  comprobar: b("Comprobar", "Check"),
+  verEjemplo: b("Ver un ejemplo de respuesta", "See a sample answer"),
+  escuchar: b("🔊 Escuchar", "🔊 Listen"),
+  ayudaExpr: b("Puedes escribir la multiplicación pegada (2.25v) o con asterisco (2.25*v).", "You can write multiplication side by side (2.25v) or with an asterisk (2.25*v)."),
+  ejercicio: b("Ejercicio", "Exercise"),
+  de: b("de", "of"),
+  hechos: b("hechos", "done"),
+  tuRespuesta: b("Tu respuesta", "Your answer"),
+  escribeAqui: b("Escribe aquí tu respuesta.", "Write your answer here."),
+  rectaOk: b("✔ ¡Muy bien! Así quedan en la recta numérica:", "✔ Well done! This is how they look on the number line:")
+};
+
+/* ====== Contenido ====== */
+const TEMAS = [
+/* ---------------- TEMA 1 ---------------- */
+{ id:"tema1", color:"var(--t1)",
+  titulo: b("La variable: ¿qué número representa?", "The variable: what number does it stand for?"),
+  indicadores: "GED®: A.1.c · MP.2.a · MP.2.c",
+  idea: b("Una <strong>variable</strong> es una letra que representa un <strong>número</strong> que no conocemos o que puede cambiar. Para entenderla hay que decir con palabras <em>de qué</em> es ese número: «<var>v</var> = número de viajes en una semana», no «<var>v</var> = viajes». La letra nunca es un objeto ni una persona: siempre es un número.",
+          "A <strong>variable</strong> is a letter that stands for a <strong>number</strong> we do not know or that can change. To understand it, say in words <em>what</em> that number counts: “<var>v</var> = number of rides in one week,” not “<var>v</var> = rides.” The letter is never an object or a person: it is always a number."),
+  consejo: b("Busca palabras como <em>cada</em>, <em>por</em>, <em>cambia</em> o <em>depende de</em>: suelen señalar la cantidad que varía.", "Look for words like <em>each</em>, <em>per</em>, <em>changes</em>, or <em>depends on</em>: they often point to the quantity that varies."),
+  items: [
+  { titulo: b("El autobús de Rosa", "Rosa’s bus rides"),
+    texto: b("Rosa trabaja en una panadería de Pilsen y toma el autobús de la CTA para ir a su trabajo. Cada viaje le cuesta $2.25. Rosa tiene 34 años. El número de viajes que hace cada semana no siempre es el mismo.",
+             "Rosa works at a bakery in Pilsen and takes the CTA bus to get to work. Each ride costs her $2.25. Rosa is 34 years old. The number of rides she takes each week is not always the same."),
+    pasos: [
+      { l:"l1", tipo:"mc", preg: b("Sin usar números, ¿de qué trata la situación?", "Without using numbers, what is the situation about?"),
+        ops: [
+          { t: b("Rosa paga el autobús para ir a trabajar.", "Rosa pays for the bus to get to work."), ok:true, fb: b("Exacto: es una historia sobre lo que Rosa gasta en transporte.", "Exactly: it is a story about what Rosa spends on transportation.") },
+          { t: b("Rosa compra pan para su familia.", "Rosa buys bread for her family."), fb: b("Rosa trabaja en una panadería, pero la historia no trata de comprar pan.", "Rosa works at a bakery, but the story is not about buying bread.") },
+          { t: b("Rosa calcula cuántos años tiene.", "Rosa figures out how old she is."), fb: b("La edad aparece en el texto, pero no es de lo que trata la situación.", "Her age appears in the text, but it is not what the situation is about.") } ] },
+      { l:"l2", tipo:"mc", preg: b("¿Cuál es la mejor definición de la variable <var>v</var>?", "Which is the best definition of the variable <var>v</var>?"),
+        ops: [
+          { t: b("<var>v</var> = viajes", "<var>v</var> = rides"), fb: b("Casi. Una variable es un número: ¿número de qué y en qué período? Sé más específico.", "Almost. A variable is a number: the number of what, and over what time? Be more specific.") },
+          { t: b("<var>v</var> = número de viajes que Rosa hace en una semana", "<var>v</var> = number of rides Rosa takes in one week"), ok:true, fb: b("Correcto: dice de qué es el número y en qué período.", "Correct: it says what the number counts and over what time.") },
+          { t: b("<var>v</var> = $2.25", "<var>v</var> = $2.25"), fb: b("$2.25 no cambia: es el precio fijo de cada viaje.", "$2.25 does not change: it is the fixed price of each ride.") },
+          { t: b("<var>v</var> = la edad de Rosa", "<var>v</var> = Rosa’s age"), fb: b("La edad no cambia de una semana a otra y no hace falta para saber el gasto.", "Her age does not change from week to week and is not needed to find the cost.") } ] },
+      { l:"l2", tipo:"mc", preg: b("¿Qué dato <strong>no</strong> hace falta para saber cuánto gasta Rosa en autobús?", "Which information is <strong>not</strong> needed to find how much Rosa spends on the bus?"),
+        ops: [
+          { t: b("Que cada viaje cuesta $2.25", "That each ride costs $2.25"), fb: b("Ese dato sí hace falta: es el precio de cada viaje.", "That information is needed: it is the price of each ride.") },
+          { t: b("Que Rosa tiene 34 años", "That Rosa is 34 years old"), ok:true, fb: b("Bien visto: la edad es información de sobra.", "Good catch: her age is extra information.") },
+          { t: b("El número de viajes", "The number of rides"), fb: b("Ese dato sí hace falta: de él depende el gasto.", "That information is needed: the cost depends on it.") } ] },
+      { l:"l3", tipo:"expr", vars:"v", resp:"2.25v",
+        preg: b("Escribe una expresión para lo que Rosa gasta en autobús en una semana.", "Write an expression for what Rosa spends on the bus in one week."),
+        trampas: [ { e:"v+2.25", fb: b("Sumar 2.25 una sola vez sería como pagar un solo viaje. Cada viaje cuesta 2.25: hay que multiplicar.", "Adding 2.25 only once would be like paying for just one ride. Each ride costs 2.25: you need to multiply.") } ],
+        sol: b("2.25<var>v</var> (o 2.25 · <var>v</var>): $2.25 por cada uno de los <var>v</var> viajes.", "2.25<var>v</var> (or 2.25 · <var>v</var>): $2.25 for each of the <var>v</var> rides.") } ] },
+
+  { titulo: b("El pintor", "The painter"),
+    texto: b("Un pintor cobra $30 por cada hora de trabajo. Lo que cobra se escribe como 30<var>h</var>.", "A painter charges $30 for each hour of work. His charge is written as 30<var>h</var>."),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Cuál es la mejor definición de <var>h</var>?", "Which is the best definition of <var>h</var>?"),
+        ops: [
+          { t: b("<var>h</var> = horas", "<var>h</var> = hours"), fb: b("Casi: ¿horas de qué? Di de qué es el número.", "Almost: hours of what? Say what the number counts.") },
+          { t: b("<var>h</var> = $30", "<var>h</var> = $30"), fb: b("30 es lo que cobra por hora y no cambia.", "30 is what he charges per hour, and it does not change.") },
+          { t: b("<var>h</var> = número de horas que trabaja el pintor", "<var>h</var> = number of hours the painter works"), ok:true, fb: b("Correcto: es un número y sabemos de qué.", "Correct: it is a number, and we know what it counts.") },
+          { t: b("<var>h</var> = el pintor", "<var>h</var> = the painter"), fb: b("La variable no es una persona: es un número.", "The variable is not a person: it is a number.") } ] } ] },
+
+  { titulo: b("El taller mecánico", "The auto repair shop"),
+    texto: b("Un taller mecánico cobra $45 por cada hora de mano de obra y $12 por cada pieza que usa. El taller abre a las 8:00 a. m.", "An auto repair shop charges $45 for each hour of labor and $12 for each part it uses. The shop opens at 8:00 a.m."),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Qué cantidades pueden cambiar de un cliente a otro?", "Which quantities can change from one customer to another?"),
+        ops: [
+          { t: b("$45 y $12", "$45 and $12"), fb: b("Esos son los precios fijos del taller.", "Those are the shop’s fixed prices.") },
+          { t: b("El número de horas y el número de piezas", "The number of hours and the number of parts"), ok:true, fb: b("Correcto: hay dos variables.", "Correct: there are two variables.") },
+          { t: b("La hora a la que abre el taller", "The time the shop opens"), fb: b("Ese dato no cambia y no sirve para calcular el cobro.", "That does not change and is not used to find the charge.") } ] },
+      { l:"l3", tipo:"expr", vars:"hp", resp:"45h+12p",
+        preg: b("Usa <var>h</var> = número de horas de mano de obra y <var>p</var> = número de piezas. Escribe el cobro total.", "Use <var>h</var> = number of hours of labor and <var>p</var> = number of parts. Write the total charge."),
+        trampas: [ { e:"45p+12h", fb: b("Revisa: $45 va con las horas y $12 con las piezas.", "Check: $45 goes with the hours and $12 with the parts.") } ],
+        sol: b("45<var>h</var> + 12<var>p</var>", "45<var>h</var> + 12<var>p</var>") } ] },
+
+  { titulo: b("Viaje en carro", "Ride-share trip"),
+    texto: b("Javier maneja para una aplicación de viajes. Cada viaje tiene una tarifa base de $3 más $1.50 por cada milla. El costo de un viaje se escribe 3 + 1.5<var>m</var>.", "Javier drives for a ride-share app. Each trip has a base fare of $3 plus $1.50 for each mile. The cost of a trip is written 3 + 1.5<var>m</var>."),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Qué representa <var>m</var>?", "What does <var>m</var> stand for?"),
+        ops: [
+          { t: b("El costo de cada milla", "The cost of each mile"), fb: b("Ese es 1.5, un número fijo.", "That is 1.5, a fixed number.") },
+          { t: b("La tarifa base", "The base fare"), fb: b("Esa es 3.", "That is 3.") },
+          { t: b("El costo total del viaje", "The total cost of the trip"), fb: b("El costo total es toda la expresión: 3 + 1.5<var>m</var>.", "The total cost is the whole expression: 3 + 1.5<var>m</var>.") },
+          { t: b("El número de millas del viaje", "The number of miles in the trip"), ok:true, fb: b("Correcto.", "Correct.") } ] } ] },
+
+  { titulo: b("La alcancía de Marcos", "Marcos’s piggy bank"),
+    texto: b("Marcos ya tiene $12 en una alcancía y guarda $4 cada semana. La expresión 12 + 4<var>s</var> da el dinero que tiene después de <var>s</var> semanas.", "Marcos already has $12 in a piggy bank and saves $4 each week. The expression 12 + 4<var>s</var> gives the money he has after <var>s</var> weeks."),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Qué representa el término 4<var>s</var>?", "What does the term 4<var>s</var> represent?"),
+        ops: [
+          { t: b("El dinero que guardó durante esas <var>s</var> semanas", "The money he saved during those <var>s</var> weeks"), ok:true, fb: b("Correcto: $4 por cada una de las <var>s</var> semanas.", "Correct: $4 for each of the <var>s</var> weeks.") },
+          { t: b("El número de semanas", "The number of weeks"), fb: b("Ese es <var>s</var> solo.", "That is just <var>s</var>.") },
+          { t: b("El dinero que tenía al principio", "The money he had at the start"), fb: b("Ese es 12.", "That is 12.") },
+          { t: b("Todo el dinero que tiene", "All the money he has"), fb: b("El total es 12 + 4<var>s</var>.", "The total is 12 + 4<var>s</var>.") } ] } ] },
+
+  { titulo: b("Inventa tu historia", "Write your own story"),
+    pasos: [
+      { tipo:"abierta", preg: b("Inventa una situación de tu vida para la expresión 8<var>p</var>. Di con palabras qué representa <var>p</var> (número de…) y qué representa 8.", "Make up a situation from your life for the expression 8<var>p</var>. Say in words what <var>p</var> stands for (number of…) and what 8 stands for."),
+        modelo: b("Cada libra de carne cuesta $8. <var>p</var> = número de libras que compro. 8 = precio de una libra, en dólares. 8<var>p</var> = lo que pago en total.", "Each pound of meat costs $8. <var>p</var> = number of pounds I buy. 8 = price of one pound, in dollars. 8<var>p</var> = what I pay in total.") } ] }
+  ] },
+
+/* ---------------- TEMA 2 ---------------- */
+{ id:"tema2", color:"var(--t2)",
+  titulo: b("Del lenguaje a la expresión", "From words to expressions"),
+  indicadores: "GED®: A.1.c · MP.2.a",
+  idea: b("Traducir al álgebra es leer con cuidado cada palabra. Esta tabla reúne las expresiones más comunes.", "Translating into algebra means reading every word carefully. This table shows the most common phrases."),
+  tabla: true,
+  consejo: b("Cuidado con <strong>«menos que»</strong>: «5 menos que <var>n</var>» es <var>n</var> − 5 (el orden se invierte). Y fíjate en las comas: «el doble de un número, más 7» no es lo mismo que «el doble de la suma de un número y 7».", "Watch out for <strong>“less than”</strong>: “5 less than <var>n</var>” is <var>n</var> − 5 (the order flips). And pay attention to commas: “twice a number, plus 7” is not the same as “twice the sum of a number and 7.”"),
+  items: [
+  { titulo: b("Menos que", "Less than"),
+    pasos: [ { tipo:"expr", vars:"n", resp:"n-5", preg: b("Escribe como expresión: <strong>5 menos que un número <var>n</var></strong>.", "Write as an expression: <strong>5 less than a number <var>n</var></strong>."),
+      trampas: [ { e:"5-n", fb: b("Ojo con «menos que»: al número se le quitan 5. Se escribe al revés de como se lee.", "Careful with “less than”: you take 5 away from the number. It is written in the opposite order from how it is read.") } ],
+      sol: b("<var>n</var> − 5", "<var>n</var> − 5") } ] },
+  { titulo: b("El doble, aumentado", "Twice, increased"),
+    pasos: [ { tipo:"expr", vars:"n", resp:"2n+7", preg: b("Escribe: <strong>el doble de un número <var>n</var>, aumentado en 7</strong>.", "Write: <strong>twice a number <var>n</var>, increased by 7</strong>."),
+      trampas: [ { e:"2(n+7)", fb: b("La coma separa las ideas: primero el doble de <var>n</var>, después se suma 7. No hacen falta paréntesis.", "The comma separates the ideas: first twice <var>n</var>, then add 7. No parentheses are needed.") } ],
+      sol: b("2<var>n</var> + 7", "2<var>n</var> + 7") } ] },
+  { titulo: b("El doble de la suma", "Twice the sum"),
+    pasos: [ { tipo:"expr", vars:"n", resp:"2(n+7)", preg: b("Escribe: <strong>el doble de la suma de un número <var>n</var> y 7</strong>.", "Write: <strong>twice the sum of a number <var>n</var> and 7</strong>."),
+      trampas: [ { e:"2n+7", fb: b("Aquí se duplica <em>la suma completa</em>: hacen falta paréntesis.", "Here you double <em>the whole sum</em>: you need parentheses.") } ],
+      sol: b("2(<var>n</var> + 7), que también puede escribirse 2<var>n</var> + 14", "2(<var>n</var> + 7), which can also be written 2<var>n</var> + 14") } ] },
+  { titulo: b("Una diferencia dividida", "A difference divided"),
+    pasos: [ { tipo:"expr", vars:"n", resp:"(n-4)/3", preg: b("Escribe: <strong>la diferencia entre un número <var>n</var> y 4, dividida entre 3</strong>.", "Write: <strong>the difference of a number <var>n</var> and 4, divided by 3</strong>."),
+      trampas: [ { e:"n-4/3", fb: b("Toda la diferencia se divide entre 3: usa paréntesis, (<var>n</var> − 4)/3.", "The whole difference is divided by 3: use parentheses, (<var>n</var> − 4)/3.") } ],
+      sol: b("(<var>n</var> − 4)/3", "(<var>n</var> − 4)/3") } ] },
+  { titulo: b("Menos que el triple", "Less than three times"),
+    pasos: [ { tipo:"expr", vars:"n", resp:"3n-3", preg: b("Escribe: <strong>tres menos que el triple de un número <var>n</var></strong>.", "Write: <strong>three less than three times a number <var>n</var></strong>."),
+      trampas: [ { e:"3-3n", fb: b("Otra vez «menos que»: al triple del número se le quitan 3.", "“Less than” again: you take 3 away from three times the number.") } ],
+      sol: b("3<var>n</var> − 3", "3<var>n</var> − 3") } ] },
+  { titulo: b("Las edades", "Ages"),
+    texto: b("Luis tiene <var>x</var> años. Su hermana tiene 4 años menos que el doble de la edad de Luis.", "Luis is <var>x</var> years old. His sister’s age is 4 years less than twice Luis’s age."),
+    pasos: [ { l:"l3", tipo:"expr", vars:"x", resp:"2x-4", preg: b("Escribe una expresión para la edad de la hermana.", "Write an expression for his sister’s age."),
+      trampas: [ { e:"4-2x", fb: b("Lee otra vez: se parte del doble de la edad de Luis y se le quitan 4.", "Read again: start with twice Luis’s age and take away 4.") }, { e:"2(x-4)", fb: b("El doble se aplica solo a la edad de Luis; después se restan 4.", "“Twice” applies only to Luis’s age; then subtract 4.") } ],
+      sol: b("2<var>x</var> − 4", "2<var>x</var> − 4") } ] },
+  { titulo: b("De la expresión a las palabras", "From expression to words"),
+    pasos: [ { tipo:"mc", preg: b("¿Qué frase corresponde a 6 − <var>n</var>?", "Which phrase matches 6 − <var>n</var>?"),
+      ops: [
+        { t: b("6 menos que un número", "6 less than a number"), fb: b("Eso es <var>n</var> − 6.", "That is <var>n</var> − 6.") },
+        { t: b("Un número disminuido en 6", "A number decreased by 6"), fb: b("Eso es <var>n</var> − 6.", "That is <var>n</var> − 6.") },
+        { t: b("6 disminuido en un número", "6 decreased by a number"), ok:true, fb: b("Correcto: se empieza en 6 y se le quita el número.", "Correct: start at 6 and take the number away.") },
+        { t: b("El producto de 6 y un número", "The product of 6 and a number"), fb: b("«Producto» significa multiplicar: 6<var>n</var>.", "“Product” means multiply: 6<var>n</var>.") } ] } ] }
+  ] },
+
+/* ---------------- TEMA 3 ---------------- */
+{ id:"tema3", color:"var(--t3)",
+  titulo: b("Términos semejantes", "Like terms"),
+  indicadores: "GED®: A.1.a · A.1.c · MP.2.c",
+  idea: b("Los <strong>términos semejantes</strong> tienen la misma variable con el mismo exponente. Solo se juntan cantidades de la misma clase: dólares por mes con dólares por mes, camisas con camisas. Se suman los coeficientes y la variable se queda igual: 25<var>m</var> + 40<var>m</var> = 65<var>m</var>.", "<strong>Like terms</strong> have the same variable with the same exponent. You only combine quantities of the same kind: dollars per month with dollars per month, shirts with shirts. Add the coefficients and keep the variable: 25<var>m</var> + 40<var>m</var> = 65<var>m</var>."),
+  consejo: b("Antes de simplificar, pregúntate: ¿estos dos términos cuentan lo mismo? Un número sin variable (como 3) no se junta con un término que tiene variable (como 4<var>x</var>).", "Before simplifying, ask yourself: do these two terms count the same thing? A number without a variable (like 3) is not combined with a term that has a variable (like 4<var>x</var>)."),
+  items: [
+  { titulo: b("Los teléfonos de Marta", "Marta’s phones"),
+    texto: b("Marta paga $25 al mes por el teléfono de su hijo y $40 al mes por el suyo. Su hijo tiene 16 años. Marta quiere saber cuánto pagará en total por los dos teléfonos después de cierta cantidad de meses.", "Marta pays $25 a month for her son’s phone and $40 a month for her own. Her son is 16 years old. Marta wants to know how much she will pay in total for both phones after a certain number of months."),
+    pasos: [
+      { l:"l1", tipo:"mc", preg: b("Sin usar números, ¿de qué trata la situación?", "Without using numbers, what is the situation about?"),
+        ops: [
+          { t: b("Un joven compra un teléfono nuevo.", "A teenager buys a new phone."), fb: b("Nadie compra un teléfono: se trata de pagos mensuales.", "No one buys a phone: it is about monthly payments.") },
+          { t: b("Una mamá paga cada mes los teléfonos de la familia.", "A mother pays for the family’s phones every month."), ok:true, fb: b("Exacto.", "Exactly.") },
+          { t: b("Marta cambia de compañía de teléfono.", "Marta switches phone companies."), fb: b("El texto no dice que cambie de compañía.", "The text does not say she switches companies.") } ] },
+      { l:"l2", tipo:"mc", preg: b("¿Qué representa la variable <var>m</var>?", "What does the variable <var>m</var> stand for?"),
+        ops: [
+          { t: b("<var>m</var> = número de meses", "<var>m</var> = number of months"), ok:true, fb: b("Correcto: lo que cambia es cuántos meses pasan.", "Correct: what changes is how many months go by.") },
+          { t: b("<var>m</var> = el teléfono de Marta", "<var>m</var> = Marta’s phone"), fb: b("La variable no es un objeto: es un número.", "The variable is not an object: it is a number.") },
+          { t: b("<var>m</var> = $25", "<var>m</var> = $25"), fb: b("$25 es un precio fijo.", "$25 is a fixed price.") } ] },
+      { l:"l2", tipo:"mc", preg: b("¿Qué dato sobra?", "Which information is extra?"),
+        ops: [
+          { t: b("$40 al mes", "$40 a month"), fb: b("Ese dato hace falta.", "That information is needed.") },
+          { t: b("Que el hijo tiene 16 años", "That her son is 16"), ok:true, fb: b("Bien visto: la edad no cambia lo que paga.", "Good catch: his age does not change what she pays.") },
+          { t: b("$25 al mes", "$25 a month"), fb: b("Ese dato hace falta.", "That information is needed.") } ] },
+      { l:"l3", tipo:"expr", vars:"m", resp:"65m", simpl:true,
+        preg: b("Escribe lo que paga en <var>m</var> meses como una expresión <strong>simplificada</strong> (un solo término).", "Write what she pays in <var>m</var> months as a <strong>simplified</strong> expression (a single term)."),
+        sol: b("25<var>m</var> + 40<var>m</var> = 65<var>m</var>. Se pueden juntar porque los dos términos son «dólares por cada mes».", "25<var>m</var> + 40<var>m</var> = 65<var>m</var>. They can be combined because both terms are “dollars for each month.”") },
+      { l:"r", tipo:"num", resp:195, preg: b("Comprueba con <var>m</var> = 3: ¿cuánto paga Marta en 3 meses?", "Check with <var>m</var> = 3: how much does Marta pay in 3 months?"),
+        sol: b("65 · 3 = 195. Comprobación por separado: 25 · 3 + 40 · 3 = 75 + 120 = $195 ✔", "65 · 3 = 195. Checking separately: 25 · 3 + 40 · 3 = 75 + 120 = $195 ✔") } ] },
+
+  { titulo: b("La costurera", "The seamstress"),
+    texto: b("Una costurera cobra <var>c</var> dólares por arreglar una camisa y <var>p</var> dólares por arreglar un pantalón. El lunes arregló 4 camisas y 3 pantalones; el martes, 2 camisas y 5 pantalones.", "A seamstress charges <var>c</var> dollars to fix a shirt and <var>p</var> dollars to fix a pair of pants. On Monday she fixed 4 shirts and 3 pairs of pants; on Tuesday, 2 shirts and 5 pairs of pants."),
+    pasos: [ { l:"l3", tipo:"expr", vars:"cp", resp:"6c+8p", simpl:true,
+      preg: b("Escribe y simplifica lo que cobró en los dos días.", "Write and simplify what she charged over the two days."),
+      sol: b("4<var>c</var> + 3<var>p</var> + 2<var>c</var> + 5<var>p</var> = 6<var>c</var> + 8<var>p</var>. No se juntan <var>c</var> y <var>p</var>: son precios distintos.", "4<var>c</var> + 3<var>p</var> + 2<var>c</var> + 5<var>p</var> = 6<var>c</var> + 8<var>p</var>. <var>c</var> and <var>p</var> are not combined: they are different prices.") } ] },
+
+  { titulo: b("¿Cuáles son semejantes?", "Which are like terms?"),
+    pasos: [ { tipo:"mc", preg: b("¿Qué par está formado por términos semejantes?", "Which pair is made of like terms?"),
+      ops: [
+        { t: "7<var>x</var>  y  7", fb: b("7 no tiene variable.", "7 has no variable.") },
+        { t: "3<var>x</var>  y  3<var>x</var>²", fb: b("Tienen exponentes distintos.", "They have different exponents.") },
+        { t: "4<var>x</var>  y  4<var>y</var>", fb: b("Las variables son distintas.", "The variables are different.") },
+        { t: "7<var>x</var>  y  −2<var>x</var>", ok:true, fb: b("Correcto: misma variable, mismo exponente.", "Correct: same variable, same exponent.") } ] } ] },
+
+  { titulo: b("Simplificar", "Simplify"),
+    pasos: [ { tipo:"expr", vars:"x", resp:"7x-5", simpl:true, preg: b("Simplifica: 5<var>x</var> + 3 + 2<var>x</var> − 8", "Simplify: 5<var>x</var> + 3 + 2<var>x</var> − 8"),
+      sol: b("(5<var>x</var> + 2<var>x</var>) + (3 − 8) = 7<var>x</var> − 5", "(5<var>x</var> + 2<var>x</var>) + (3 − 8) = 7<var>x</var> − 5") } ] },
+
+  { titulo: b("El error de Carlos", "Carlos’s mistake"),
+    texto: b("Carlos simplificó 4<var>x</var> + 3 y escribió 7<var>x</var>.", "Carlos simplified 4<var>x</var> + 3 and wrote 7<var>x</var>."),
+    pasos: [ { tipo:"mc", preg: b("¿Qué error cometió?", "What mistake did he make?"),
+      ops: [
+        { t: b("Multiplicó en lugar de sumar.", "He multiplied instead of adding."), fb: b("No multiplicó: 4 · 3 sería 12.", "He did not multiply: 4 · 3 would be 12.") },
+        { t: b("Juntó un término con variable y un número sin variable.", "He combined a term with a variable and a number without one."), ok:true, fb: b("Correcto: 4<var>x</var> y 3 no son semejantes. La expresión ya está simplificada.", "Correct: 4<var>x</var> and 3 are not like terms. The expression is already simplified.") },
+        { t: b("No hay error.", "There is no mistake."), fb: b("Prueba con <var>x</var> = 2: 4(2) + 3 = 11, pero 7(2) = 14. No son iguales.", "Try <var>x</var> = 2: 4(2) + 3 = 11, but 7(2) = 14. They are not equal.") },
+        { t: b("Olvidó un signo negativo.", "He forgot a negative sign."), fb: b("No hay signos negativos en el problema.", "There are no negative signs in the problem.") } ] } ] },
+
+  { titulo: b("Cuadernos y bolígrafos", "Notebooks and pens"),
+    texto: b("Ana compró <var>n</var> cuadernos a $3 cada uno y la misma cantidad de bolígrafos a $1 cada uno. Usó un cupón de $2 de descuento.", "Ana bought <var>n</var> notebooks at $3 each and the same number of pens at $1 each. She used a $2-off coupon."),
+    pasos: [ { l:"l3", tipo:"expr", vars:"n", resp:"4n-2", simpl:true,
+      preg: b("Escribe el costo total como expresión simplificada.", "Write the total cost as a simplified expression."),
+      trampas: [ { e:"4n+2", fb: b("Un cupón de descuento <em>resta</em>.", "A discount coupon <em>subtracts</em>.") }, { e:"3n-1", fb: b("Lee otra vez: «la misma cantidad» quiere decir que también compró <var>n</var> bolígrafos, que cuestan 1 · <var>n</var>.", "Read again: “the same number” means she also bought <var>n</var> pens, which cost 1 · <var>n</var>.") } ],
+      sol: b("3<var>n</var> + 1<var>n</var> − 2 = 4<var>n</var> − 2", "3<var>n</var> + 1<var>n</var> − 2 = 4<var>n</var> − 2") } ] },
+
+  { titulo: b("Reto: con paréntesis", "Challenge: with parentheses"),
+    pasos: [ { tipo:"expr", vars:"x", resp:"5x+8", simpl:true,
+      preg: b("Escribe y simplifica: <strong>el doble de la suma de <var>x</var> y 4, más el triple de <var>x</var></strong>.", "Write and simplify: <strong>twice the sum of <var>x</var> and 4, plus three times <var>x</var></strong>."),
+      trampas: [ { e:"5x+4", fb: b("El doble afecta a toda la suma: 2(<var>x</var> + 4) = 2<var>x</var> + 8.", "“Twice” applies to the whole sum: 2(<var>x</var> + 4) = 2<var>x</var> + 8.") } ],
+      sol: b("2(<var>x</var> + 4) + 3<var>x</var> = 2<var>x</var> + 8 + 3<var>x</var> = 5<var>x</var> + 8", "2(<var>x</var> + 4) + 3<var>x</var> = 2<var>x</var> + 8 + 3<var>x</var> = 5<var>x</var> + 8") } ] }
+  ] },
+
+/* ---------------- TEMA 4 ---------------- */
+{ id:"tema4", color:"var(--t4)",
+  titulo: b("Evaluar expresiones", "Evaluating expressions"),
+  indicadores: "GED®: A.1.b · MP.1.a · MP.4.b",
+  idea: b("<strong>Evaluar</strong> es cambiar la variable por su valor y calcular, respetando el orden de las operaciones. Escribe el valor entre paréntesis: si <var>x</var> = −2, entonces 5 − 2<var>x</var> = 5 − 2(−2) = 5 + 4 = 9.", "To <strong>evaluate</strong> is to replace the variable with its value and calculate, following the order of operations. Write the value in parentheses: if <var>x</var> = −2, then 5 − 2<var>x</var> = 5 − 2(−2) = 5 + 4 = 9."),
+  consejo: b("Al terminar, pregúntate si el resultado tiene sentido: un viaje corto no debería costar cientos de dólares.", "When you finish, ask whether the result makes sense: a short trip should not cost hundreds of dollars."),
+  items: [
+  { titulo: b("Un viaje al centro", "A trip downtown"),
+    texto: b("Javier maneja para una aplicación de viajes. Su carro es del año 2019. Cada viaje cobra una tarifa base de $3 más $1.50 por milla. Una clienta viajó 8 millas desde Humboldt Park hasta el centro.", "Javier drives for a ride-share app. His car is a 2019 model. Each trip charges a base fare of $3 plus $1.50 per mile. A customer rode 8 miles from Humboldt Park to downtown."),
+    pasos: [
+      { l:"l1", tipo:"mc", preg: b("Sin usar números, ¿de qué trata la situación?", "Without using numbers, what is the situation about?"),
+        ops: [
+          { t: b("Javier compra un carro.", "Javier buys a car."), fb: b("El carro aparece, pero nadie lo compra.", "The car appears, but no one buys it.") },
+          { t: b("Una clienta camina hasta el centro.", "A customer walks downtown."), fb: b("La clienta va en carro, no camina.", "The customer rides in a car; she does not walk.") },
+          { t: b("Se calcula cuánto cuesta un viaje en carro.", "We find how much a car trip costs."), ok:true, fb: b("Exacto.", "Exactly.") } ] },
+      { l:"l2", tipo:"mc", preg: b("¿Qué dato sobra?", "Which information is extra?"),
+        ops: [
+          { t: b("Que el carro es de 2019", "That the car is a 2019 model"), ok:true, fb: b("Correcto: el año del carro no cambia el precio.", "Correct: the car’s year does not change the price.") },
+          { t: b("$1.50 por milla", "$1.50 per mile"), fb: b("Ese dato hace falta.", "That information is needed.") },
+          { t: b("8 millas", "8 miles"), fb: b("Ese dato hace falta.", "That information is needed.") } ] },
+      { l:"l3", tipo:"expr", vars:"m", resp:"3+1.5m", preg: b("Escribe una expresión para el costo de un viaje de <var>m</var> millas.", "Write an expression for the cost of a trip of <var>m</var> miles."),
+        trampas: [ { e:"4.5m", fb: b("La tarifa base se paga una sola vez; solo el $1.50 se multiplica por las millas.", "The base fare is paid only once; only the $1.50 is multiplied by the miles.") } ],
+        sol: b("3 + 1.5<var>m</var>", "3 + 1.5<var>m</var>") },
+      { l:"r", tipo:"num", resp:15, preg: b("¿Cuánto pagó la clienta por las 8 millas? (en dólares)", "How much did the customer pay for the 8 miles? (in dollars)"),
+        trampas: [ { v:36, fb: b("Parece que multiplicaste 4.5 × 8. La tarifa base de $3 se suma una sola vez.", "It looks like you multiplied 4.5 × 8. The $3 base fare is added only once.") } ],
+        sol: b("3 + 1.5(8) = 3 + 12 = $15", "3 + 1.5(8) = 3 + 12 = $15") } ] },
+
+  { titulo: b("Sustituir", "Substitute"),
+    pasos: [ { tipo:"num", resp:13, preg: b("Evalúa 4<var>x</var> − 7 cuando <var>x</var> = 5.", "Evaluate 4<var>x</var> − 7 when <var>x</var> = 5."),
+      sol: b("4(5) − 7 = 20 − 7 = 13", "4(5) − 7 = 20 − 7 = 13") } ] },
+
+  { titulo: b("Con un número negativo", "With a negative number"),
+    pasos: [ { tipo:"num", resp:9, preg: b("Evalúa 5 − 2<var>x</var> cuando <var>x</var> = −2.", "Evaluate 5 − 2<var>x</var> when <var>x</var> = −2."),
+      trampas: [ { v:1, fb: b("Revisa los signos: 2(−2) = −4, y 5 − (−4) = 5 + 4.", "Check the signs: 2(−2) = −4, and 5 − (−4) = 5 + 4.") } ],
+      sol: b("5 − 2(−2) = 5 + 4 = 9", "5 − 2(−2) = 5 + 4 = 9") } ] },
+
+  { titulo: b("Verano en Chicago", "Summer in Chicago"),
+    texto: b("Para convertir grados Celsius a grados Fahrenheit se usa la fórmula <var>F</var> = 1.8<var>C</var> + 32. Un día de julio, en Chicago, la temperatura llegó a 30 °C.", "To convert degrees Celsius to degrees Fahrenheit, use the formula <var>F</var> = 1.8<var>C</var> + 32. One July day in Chicago, the temperature reached 30 °C."),
+    pasos: [ { l:"r", tipo:"num", resp:86, preg: b("¿Cuántos grados Fahrenheit son?", "How many degrees Fahrenheit is that?"),
+      trampas: [ { v:111.6, fb: b("Primero se multiplica y después se suma: 1.8 × 30 = 54.", "Multiply first, then add: 1.8 × 30 = 54.") } ],
+      sol: b("1.8(30) + 32 = 54 + 32 = 86 °F", "1.8(30) + 32 = 54 + 32 = 86 °F") } ] },
+
+  { titulo: b("Tendedero algebraico", "Algebra clothesline"),
+    texto: b("Como en la rutina del tendedero (<em>Clothesline Math</em>), vamos a colgar expresiones en la recta numérica. Primero hay que saber cuánto vale cada una.", "As in the clothesline routine (<em>Clothesline Math</em>), we will hang expressions on the number line. First we need to know what each one is worth."),
+    pasos: [
+      { l:"r", tipo:"recta", x:4, exprs:[ ["x", "<var>x</var>"], ["2*x", "2<var>x</var>"], ["-x", "−<var>x</var>"], ["x/2", "<var>x</var>/2"] ],
+        preg: b("Si <var>x</var> = 4, ¿cuánto vale cada expresión?", "If <var>x</var> = 4, what is the value of each expression?"),
+        sol: b("<var>x</var> = 4, 2<var>x</var> = 8, −<var>x</var> = −4, <var>x</var>/2 = 2", "<var>x</var> = 4, 2<var>x</var> = 8, −<var>x</var> = −4, <var>x</var>/2 = 2") },
+      { l:"l3", tipo:"mc", preg: b("Ahora piensa: si <var>x</var> = −4, ¿cuál de las cuatro expresiones tendría el valor <strong>mayor</strong>?", "Now think: if <var>x</var> = −4, which of the four expressions would have the <strong>greatest</strong> value?"),
+        ops: [
+          { t: "2<var>x</var>", fb: b("2(−4) = −8: sería el menor.", "2(−4) = −8: it would be the least.") },
+          { t: "<var>x</var>", fb: b("<var>x</var> = −4.", "<var>x</var> = −4.") },
+          { t: "−<var>x</var>", ok:true, fb: b("Correcto: −(−4) = 4. El opuesto de un número negativo es positivo.", "Correct: −(−4) = 4. The opposite of a negative number is positive.") },
+          { t: "<var>x</var>/2", fb: b("−4/2 = −2.", "−4/2 = −2.") } ] } ] },
+
+  { titulo: b("El salón de fiestas", "The party hall"),
+    texto: b("Un salón de fiestas cobra $200 más $15 por cada invitado. La fiesta es el sábado a las 6:00 p. m. y van a ir 40 invitados.", "A party hall charges $200 plus $15 for each guest. The party is on Saturday at 6:00 p.m., and 40 guests are coming."),
+    pasos: [ { l:"r", tipo:"num", resp:800, preg: b("¿Cuánto cuesta el salón? (en dólares)", "How much does the hall cost? (in dollars)"),
+      trampas: [ { v:8600, fb: b("Los $200 se pagan una sola vez, no por cada invitado.", "The $200 is paid only once, not for each guest.") } ],
+      sol: b("200 + 15(40) = 200 + 600 = $800. La hora de la fiesta es un dato que sobra.", "200 + 15(40) = 200 + 600 = $800. The time of the party is extra information.") } ] }
+  ] },
+
+/* ---------------- TEMA 5 ---------------- */
+{ id:"tema5", color:"var(--t5)",
+  titulo: b("Ecuaciones de un paso", "One-step equations"),
+  indicadores: "GED®: A.2.a · A.2.b · A.2.c · MP.2.a",
+  idea: b("Una <strong>ecuación</strong> dice que dos cantidades son iguales. Palabras como <em>es</em>, <em>da</em>, <em>en total</em> o <em>le quedan</em> suelen señalar el signo =. Para resolver una ecuación de un paso se usa la <strong>operación inversa</strong>: si se suma, se resta; si se multiplica, se divide.", "An <strong>equation</strong> says that two quantities are equal. Words like <em>is</em>, <em>equals</em>, <em>in total</em>, or <em>has left</em> often point to the = sign. To solve a one-step equation, use the <strong>inverse operation</strong>: if something is added, subtract; if it is multiplied, divide."),
+  consejo: b("Comprueba siempre dos veces: sustituye tu respuesta en la ecuación y pregúntate si tiene sentido en la historia.", "Always check twice: substitute your answer into the equation and ask whether it makes sense in the story."),
+  items: [
+  { titulo: b("¿Cuántos viajes?", "How many rides?"),
+    texto: b("Esta semana, Rosa gastó $27 en viajes de autobús. Cada viaje cuesta $2.25. Rosa vive a 3 millas de la panadería. ¿Cuántos viajes hizo?", "This week, Rosa spent $27 on bus rides. Each ride costs $2.25. Rosa lives 3 miles from the bakery. How many rides did she take?"),
+    pasos: [
+      { l:"l1", tipo:"mc", preg: b("Sin usar números, ¿de qué trata la situación?", "Without using numbers, what is the situation about?"),
+        ops: [
+          { t: b("Rosa sabe lo que gastó en autobús y queremos saber cuántos viajes hizo.", "Rosa knows what she spent on the bus, and we want to know how many rides she took."), ok:true, fb: b("Exacto.", "Exactly.") },
+          { t: b("Rosa quiere mudarse más cerca de su trabajo.", "Rosa wants to move closer to work."), fb: b("El texto no dice eso.", "The text does not say that.") },
+          { t: b("Rosa compra una tarjeta de transporte.", "Rosa buys a transit card."), fb: b("No se habla de comprar una tarjeta.", "Buying a card is not mentioned.") } ] },
+      { l:"l2", tipo:"mc", preg: b("¿Qué representa el número 27?", "What does the number 27 represent?"),
+        ops: [
+          { t: b("El precio de un viaje", "The price of one ride"), fb: b("El precio de un viaje es $2.25.", "The price of one ride is $2.25.") },
+          { t: b("Lo que Rosa gastó en total esta semana", "What Rosa spent in total this week"), ok:true, fb: b("Correcto: es el total.", "Correct: it is the total.") },
+          { t: b("El número de viajes", "The number of rides"), fb: b("Eso es lo que no sabemos.", "That is what we do not know.") } ] },
+      { l:"l3", tipo:"mc", preg: b("¿Qué ecuación representa la situación? (<var>v</var> = número de viajes)", "Which equation represents the situation? (<var>v</var> = number of rides)"),
+        ops: [
+          { t: "<var>v</var> + 2.25 = 27", fb: b("Cada viaje no suma 2.25 una sola vez: se multiplica por el número de viajes.", "The 2.25 is not added just once: it is multiplied by the number of rides.") },
+          { t: "27<var>v</var> = 2.25", fb: b("Los números están cambiados de lugar.", "The numbers are in the wrong places.") },
+          { t: "2.25<var>v</var> = 27", ok:true, fb: b("Correcto: precio por viaje × número de viajes = total.", "Correct: price per ride × number of rides = total.") },
+          { t: "<var>v</var> = 27 − 2.25", fb: b("Restar no reparte el total entre los viajes.", "Subtracting does not split the total among the rides.") } ] },
+      { l:"r", tipo:"num", resp:12, preg: b("Resuelve: ¿cuántos viajes hizo Rosa?", "Solve: how many rides did Rosa take?"),
+        sol: b("<var>v</var> = 27 ÷ 2.25 = 12. Comprobación: 2.25 × 12 = 27 ✔. Las 3 millas son un dato que sobra.", "<var>v</var> = 27 ÷ 2.25 = 12. Check: 2.25 × 12 = 27 ✔. The 3 miles are extra information.") } ] },
+
+  { titulo: b("Lo que le queda a Luis", "What Luis has left"),
+    texto: b("Después de gastar $18 en el mercado, a Luis le quedan $45. ¿Cuánto dinero tenía al principio?", "After spending $18 at the market, Luis has $45 left. How much money did he have at the start?"),
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("¿Qué ecuación representa la situación? (<var>x</var> = dinero que tenía al principio)", "Which equation represents the situation? (<var>x</var> = money he had at the start)"),
+        ops: [
+          { t: "<var>x</var> + 18 = 45", fb: b("Si gastó, su dinero disminuyó: hay que restar 18.", "If he spent money, it went down: subtract 18.") },
+          { t: "<var>x</var> − 18 = 45", ok:true, fb: b("Correcto: lo que tenía, menos lo que gastó, es lo que le queda.", "Correct: what he had, minus what he spent, is what he has left.") },
+          { t: "18 − <var>x</var> = 45", fb: b("El orden está invertido: se empieza con lo que tenía.", "The order is reversed: start with what he had.") } ] },
+      { l:"r", tipo:"num", resp:63, preg: b("Resuelve: ¿cuánto tenía al principio? (en dólares)", "Solve: how much did he have at the start? (in dollars)"),
+        trampas: [ { v:27, fb: b("Si tenía $27 y gastó $18, solo le quedarían $9. Para deshacer una resta, se suma.", "If he had $27 and spent $18, he would have only $9 left. To undo subtraction, add.") } ],
+        sol: b("<var>x</var> = 45 + 18 = 63. Comprobación: 63 − 18 = 45 ✔", "<var>x</var> = 45 + 18 = 63. Check: 63 − 18 = 45 ✔") } ] },
+
+  { titulo: b("Un número aumentado", "A number increased"),
+    pasos: [ { tipo:"num", resp:18, preg: b("Un número aumentado en 12 es igual a 30. ¿Cuál es el número?", "A number increased by 12 equals 30. What is the number?"),
+      trampas: [ { v:42, fb: b("Si el número fuera 42, al aumentarlo en 12 daría 54. Para deshacer una suma, se resta.", "If the number were 42, increasing it by 12 would give 54. To undo addition, subtract.") } ],
+      sol: b("<var>n</var> + 12 = 30 → <var>n</var> = 30 − 12 = 18", "<var>n</var> + 12 = 30 → <var>n</var> = 30 − 12 = 18") } ] },
+
+  { titulo: b("La cuenta del restaurante", "The restaurant bill"),
+    texto: b("Tres amigos se reparten en partes iguales la cuenta de un restaurante. A cada uno le tocó pagar $16. ¿De cuánto era la cuenta?", "Three friends split a restaurant bill equally. Each one paid $16. How much was the bill?"),
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("¿Qué ecuación representa la situación? (<var>c</var> = la cuenta)", "Which equation represents the situation? (<var>c</var> = the bill)"),
+        ops: [
+          { t: "3<var>c</var> = 16", fb: b("La cuenta se reparte (se divide) entre 3; no se multiplica.", "The bill is split (divided) by 3, not multiplied.") },
+          { t: "<var>c</var> − 3 = 16", fb: b("Repartir entre tres no es restar 3.", "Splitting among three is not subtracting 3.") },
+          { t: "<var>c</var> ÷ 3 = 16", ok:true, fb: b("Correcto: la cuenta dividida entre 3 da lo que paga cada uno.", "Correct: the bill divided by 3 gives what each one pays.") } ] },
+      { l:"r", tipo:"num", resp:48, preg: b("Resuelve: ¿de cuánto era la cuenta? (en dólares)", "Solve: how much was the bill? (in dollars)"),
+        sol: b("<var>c</var> = 16 × 3 = 48. Comprobación: 48 ÷ 3 = 16 ✔", "<var>c</var> = 16 × 3 = 48. Check: 48 ÷ 3 = 16 ✔") } ] },
+
+  { titulo: b("El error de María", "María’s mistake"),
+    texto: b("María resolvió <var>x</var> + 9 = 20 y obtuvo <var>x</var> = 29.", "María solved <var>x</var> + 9 = 20 and got <var>x</var> = 29."),
+    pasos: [
+      { tipo:"mc", preg: b("¿Qué error cometió?", "What mistake did she make?"),
+        ops: [
+          { t: b("Sumó 9 en lugar de restarlo.", "She added 9 instead of subtracting it."), ok:true, fb: b("Correcto: para deshacer «+ 9» hay que restar 9. Comprobación de su respuesta: 29 + 9 = 38, no 20.", "Correct: to undo “+ 9” you subtract 9. Checking her answer: 29 + 9 = 38, not 20.") },
+          { t: b("Se equivocó al restar.", "She made a subtraction error."), fb: b("María no restó: 20 + 9 = 29.", "María did not subtract: 20 + 9 = 29.") },
+          { t: b("No hay error.", "There is no mistake."), fb: b("Comprueba: 29 + 9 = 38, no 20.", "Check: 29 + 9 = 38, not 20.") } ] },
+      { l:"r", tipo:"num", resp:11, preg: b("¿Cuál es la respuesta correcta?", "What is the correct answer?"),
+        sol: b("<var>x</var> = 20 − 9 = 11. Comprobación: 11 + 9 = 20 ✔", "<var>x</var> = 20 − 9 = 11. Check: 11 + 9 = 20 ✔") } ] },
+
+  { titulo: b("Invierno en Chicago", "Winter in Chicago"),
+    texto: b("Una mañana de enero en Chicago, la temperatura bajó 7 grados y ahora marca −3 °F. ¿Cuál era la temperatura antes?", "One January morning in Chicago, the temperature dropped 7 degrees and now reads −3 °F. What was the temperature before?"),
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("¿Qué ecuación representa la situación? (<var>t</var> = temperatura de antes)", "Which equation represents the situation? (<var>t</var> = temperature before)"),
+        ops: [
+          { t: "<var>t</var> + 7 = −3", fb: b("La temperatura bajó: se resta 7.", "The temperature dropped: subtract 7.") },
+          { t: "<var>t</var> − 7 = −3", ok:true, fb: b("Correcto.", "Correct.") },
+          { t: "<var>t</var> = −3 − 7", fb: b("Esa sería la temperatura si bajara 7 grados más.", "That would be the temperature if it dropped 7 more degrees.") } ] },
+      { l:"r", tipo:"num", resp:4, preg: b("Resuelve: ¿cuál era la temperatura antes? (en °F)", "Solve: what was the temperature before? (in °F)"),
+        trampas: [ { v:-10, fb: b("Si antes hacía −10 °F y bajó 7, ahora haría −17 °F. Para deshacer una resta, se suma: −3 + 7.", "If it was −10 °F and dropped 7, it would now be −17 °F. To undo subtraction, add: −3 + 7.") } ],
+        sol: b("<var>t</var> = −3 + 7 = 4 °F. Comprobación: 4 − 7 = −3 ✔", "<var>t</var> = −3 + 7 = 4 °F. Check: 4 − 7 = −3 ✔") } ] },
+
+  { titulo: b("Las cajas del camión", "The boxes on the truck"),
+    texto: b("Un trabajador carga 4 cajas iguales en un camión que salió a las 8:00 a. m. Las 4 cajas pesan 52 libras en total. ¿Cuánto pesa cada caja?", "A worker loads 4 identical boxes onto a truck that left at 8:00 a.m. The 4 boxes weigh 52 pounds in total. How much does each box weigh?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Qué dato sobra?", "Which information is extra?"),
+        ops: [
+          { t: b("Que son 4 cajas", "That there are 4 boxes"), fb: b("Ese dato hace falta.", "That information is needed.") },
+          { t: b("Las 52 libras", "The 52 pounds"), fb: b("Ese dato hace falta.", "That information is needed.") },
+          { t: b("La hora de salida del camión", "The time the truck left"), ok:true, fb: b("Correcto.", "Correct.") } ] },
+      { l:"l3", tipo:"mc", preg: b("¿Qué ecuación representa la situación? (<var>p</var> = peso de una caja, en libras)", "Which equation represents the situation? (<var>p</var> = weight of one box, in pounds)"),
+        ops: [
+          { t: "4<var>p</var> = 52", ok:true, fb: b("Correcto: 4 cajas de <var>p</var> libras pesan 52 libras.", "Correct: 4 boxes of <var>p</var> pounds weigh 52 pounds.") },
+          { t: "<var>p</var> + 4 = 52", fb: b("Hay 4 cajas iguales: se multiplica, no se suma 4.", "There are 4 identical boxes: multiply, do not add 4.") },
+          { t: "<var>p</var> ÷ 4 = 52", fb: b("Eso diría que la cuarta parte de una caja pesa 52 libras.", "That would say one fourth of a box weighs 52 pounds.") } ] },
+      { l:"r", tipo:"num", resp:13, preg: b("Resuelve: ¿cuánto pesa cada caja? (en libras)", "Solve: how much does each box weigh? (in pounds)"),
+        sol: b("<var>p</var> = 52 ÷ 4 = 13 libras. Comprobación: 4 × 13 = 52 ✔", "<var>p</var> = 52 ÷ 4 = 13 pounds. Check: 4 × 13 = 52 ✔") } ] }
+  ] },
+
+/* ---------------- TEMA 6 ---------------- */
+{ id:"tema6", color:"var(--t6)",
+  titulo: b("Detective matemático: datos que sobran, datos que faltan y errores", "Math detective: extra information, missing information, and mistakes"),
+  indicadores: "GED®: MP.1.d · MP.2.c · MP.3.c · MP.5.a · A.2.c",
+  idea: b("Los investigadores llaman <strong>razonamiento fluido</strong> a la capacidad de distinguir la información importante de la que no lo es. Un buen lector matemático se pregunta: ¿qué datos sobran?, ¿falta algún dato?, ¿la respuesta tiene sentido?", "Researchers call the ability to tell important information from unimportant information <strong>fluid reasoning</strong>. A good math reader asks: What information is extra? Is anything missing? Does the answer make sense?"),
+  consejo: b("No todos los números de un problema se usan, y no todos los problemas se pueden resolver con los datos que dan. Decir «falta información» también puede ser la respuesta correcta.", "Not every number in a problem gets used, and not every problem can be solved with the information given. “There is not enough information” can be the correct answer."),
+  items: [
+  { titulo: b("¿Qué edad tiene el pastor?", "How old is the shepherd?"),
+    texto: b("En un barco hay 26 ovejas y 10 cabras.", "There are 26 sheep and 10 goats on a boat."),
+    pasos: [ { tipo:"mc", preg: b("¿Qué edad tiene el pastor?", "How old is the shepherd?"),
+      ops: [
+        { t: b("36 años", "36 years old"), fb: b("Sumar 26 + 10 no tiene nada que ver con la edad de una persona.", "Adding 26 + 10 has nothing to do with a person’s age.") },
+        { t: b("16 años", "16 years old"), fb: b("Restar 26 − 10 no tiene nada que ver con la edad de una persona.", "Subtracting 26 − 10 has nothing to do with a person’s age.") },
+        { t: b("No se puede saber con esta información.", "It cannot be known from this information."), ok:true, fb: b("¡Exacto! Los números del problema no tienen relación con la pregunta. Combinar números sin entender la situación es justamente el error que queremos evitar.", "Exactly! The numbers in the problem have nothing to do with the question. Combining numbers without understanding the situation is exactly the mistake we want to avoid.") } ] } ] },
+
+  { titulo: b("La compra de Carmen", "Carmen’s groceries"),
+    texto: b("Carmen compró 3 libras de carne y una bolsa de papas. Pagó $21 en total.", "Carmen bought 3 pounds of meat and a bag of potatoes. She paid $21 in total."),
+    pasos: [ { tipo:"mc", preg: b("¿Cuánto costó cada libra de carne?", "How much did each pound of meat cost?"),
+      ops: [
+        { t: "$7", fb: b("Eso supone que las papas no costaron nada.", "That assumes the potatoes cost nothing.") },
+        { t: "$18", fb: b("21 − 3 no tiene sentido: 3 son libras, no dólares.", "21 − 3 makes no sense: 3 is pounds, not dollars.") },
+        { t: b("No se puede saber: falta el precio de las papas.", "It cannot be known: the price of the potatoes is missing."), ok:true, fb: b("Correcto: sin el precio de las papas no sabemos cuánto se pagó por la carne.", "Correct: without the price of the potatoes we do not know how much was paid for the meat.") },
+        { t: "$63", fb: b("Multiplicar 21 × 3 daría más de lo que pagó en total.", "Multiplying 21 × 3 gives more than she paid in total.") } ] } ] },
+
+  { titulo: b("Una traducción equivocada", "A wrong translation"),
+    texto: b("Un estudiante tradujo «4 menos que el triple de un número es 20» como 4 − 3<var>n</var> = 20.", "A student translated “4 less than three times a number is 20” as 4 − 3<var>n</var> = 20."),
+    pasos: [ { tipo:"mc", preg: b("¿Cuál es la ecuación correcta?", "Which is the correct equation?"),
+      ops: [
+        { t: "4 − 3<var>n</var> = 20", fb: b("Esa es la del estudiante: «menos que» invierte el orden.", "That is the student’s: “less than” reverses the order.") },
+        { t: "3(<var>n</var> − 4) = 20", fb: b("El texto no dice «el triple de la diferencia».", "The text does not say “three times the difference.”") },
+        { t: "3<var>n</var> − 4 = 20", ok:true, fb: b("Correcto: al triple del número se le quitan 4.", "Correct: take 4 away from three times the number.") } ] } ] },
+
+  { titulo: b("El plan de teléfono", "The phone plan"),
+    texto: b("Un plan de teléfono cuesta $35 al mes más $0.10 por cada mensaje de texto. El costo de un mes se escribe 35 + 0.10<var>t</var>.", "A phone plan costs $35 a month plus $0.10 for each text message. The cost for one month is written 35 + 0.10<var>t</var>."),
+    pasos: [ { l:"l2", tipo:"mc", preg: b("¿Qué representa el término 0.10<var>t</var>?", "What does the term 0.10<var>t</var> represent?"),
+      ops: [
+        { t: b("El número de mensajes", "The number of messages"), fb: b("Ese es <var>t</var> solo.", "That is just <var>t</var>.") },
+        { t: b("Lo que cuestan todos los mensajes del mes", "What all the messages for the month cost"), ok:true, fb: b("Correcto: $0.10 por cada uno de los <var>t</var> mensajes.", "Correct: $0.10 for each of the <var>t</var> messages.") },
+        { t: b("El costo fijo del plan", "The fixed cost of the plan"), fb: b("El costo fijo es 35.", "The fixed cost is 35.") },
+        { t: b("El costo total del mes", "The total cost for the month"), fb: b("El total es 35 + 0.10<var>t</var>.", "The total is 35 + 0.10<var>t</var>.") } ] } ] },
+
+  { titulo: b("Los tamales de Don Julio", "Don Julio’s tamales"),
+    texto: b("Don Julio vende tamales en La Villita (Little Village) a $2 cada uno. El sábado llevó 10 docenas (120 tamales). Al final del día había cobrado $168. ¿Cuántos tamales vendió?", "Don Julio sells tamales in Little Village for $2 each. On Saturday he brought 10 dozen (120 tamales). At the end of the day he had collected $168. How many tamales did he sell?"),
+    pasos: [
+      { l:"l1", tipo:"mc", preg: b("Sin usar números, ¿de qué trata la situación?", "Without using numbers, what is the situation about?"),
+        ops: [
+          { t: b("Un vendedor sabe cuánto cobró y queremos saber cuántos tamales vendió.", "A vendor knows how much he collected, and we want to know how many tamales he sold."), ok:true, fb: b("Exacto.", "Exactly.") },
+          { t: b("Don Julio prepara tamales para una fiesta.", "Don Julio makes tamales for a party."), fb: b("No se habla de una fiesta.", "No party is mentioned.") },
+          { t: b("Don Julio compra tamales en La Villita.", "Don Julio buys tamales in Little Village."), fb: b("Don Julio vende, no compra.", "Don Julio sells; he does not buy.") } ] },
+      { l:"l2", tipo:"mc", preg: b("¿Para qué sirve el dato de las 10 docenas (120 tamales)?", "What is the 10 dozen (120 tamales) information useful for?"),
+        ops: [
+          { t: b("Hay que multiplicarlo por $2.", "Multiply it by $2."), fb: b("120 × 2 = 240 sería lo que cobraría si lo vendiera todo, y eso no es lo que pasó.", "120 × 2 = 240 would be what he collected if he sold them all, and that is not what happened.") },
+          { t: b("Para comprobar si la respuesta tiene sentido: no pudo vender más de 120.", "To check whether the answer makes sense: he could not sell more than 120."), ok:true, fb: b("¡Muy bien pensado! Ese dato no se usa para calcular, pero sí para comprobar.", "Very good thinking! That information is not used to calculate, but it is used to check.") },
+          { t: b("Hay que sumarlo a $168.", "Add it to $168."), fb: b("No se suman tamales con dólares.", "You do not add tamales to dollars.") } ] },
+      { l:"l3", tipo:"mc", preg: b("¿Qué ecuación representa la situación? (<var>t</var> = número de tamales vendidos)", "Which equation represents the situation? (<var>t</var> = number of tamales sold)"),
+        ops: [
+          { t: "<var>t</var> + 2 = 168", fb: b("Cada tamal cuesta $2: se multiplica.", "Each tamal costs $2: multiply.") },
+          { t: "2<var>t</var> = 168", ok:true, fb: b("Correcto.", "Correct.") },
+          { t: "2 · 120 = <var>t</var>", fb: b("Eso supone que vendió todos los tamales.", "That assumes he sold all the tamales.") } ] },
+      { l:"r", tipo:"num", resp:84, preg: b("Resuelve: ¿cuántos tamales vendió?", "Solve: how many tamales did he sell?"),
+        sol: b("<var>t</var> = 168 ÷ 2 = 84. Comprobación: 2 × 84 = 168 ✔, y 84 es menor que 120 ✔. Tiene sentido.", "<var>t</var> = 168 ÷ 2 = 84. Check: 2 × 84 = 168 ✔, and 84 is less than 120 ✔. It makes sense.") } ] },
+
+  { titulo: b("Ahora, tú eres el autor", "Now you are the author"),
+    pasos: [ { tipo:"abierta", preg: b("Escribe un problema de tu vida que se resuelva con la ecuación <var>x</var> + 15 = 40. Incluye un dato que sobre y resuélvelo.", "Write a problem from your life that is solved with the equation <var>x</var> + 15 = 40. Include one piece of extra information, and solve it."),
+      modelo: b("El martes vi un libro de preparación para el GED que cuesta $40. Si ahorro $15 más, me alcanza justo. ¿Cuánto tengo ahorrado ahora? (Dato que sobra: el martes.) <var>x</var> + 15 = 40, así que <var>x</var> = 25: tengo $25.", "On Tuesday I saw a GED prep book that costs $40. If I save $15 more, I will have exactly enough. How much do I have saved now? (Extra information: Tuesday.) <var>x</var> + 15 = 40, so <var>x</var> = 25: I have $25.") } ] }
+  ] }
+];
+
+const TABLA = [
+  [b("más, aumentado en, la suma de","plus, increased by, the sum of"), "+", "<var>n</var> + 4"],
+  [b("menos, disminuido en, la diferencia entre","minus, decreased by, the difference of"), "−", "<var>n</var> − 4"],
+  [b("menos que (¡el orden se invierte!)","less than (the order flips!)"), "−", b("4 menos que <var>n</var> → <var>n</var> − 4","4 less than <var>n</var> → <var>n</var> − 4")],
+  [b("el doble de, el triple de, veces","twice, three times, times"), "×", "2<var>n</var>, 3<var>n</var>"],
+  [b("por cada, por","for each, per"), "×", "30<var>h</var>"],
+  [b("la mitad de, dividido entre, entre","half of, divided by"), "÷", "<var>n</var>/2, <var>n</var>/3"],
+  [b("es, da, es igual a, en total","is, equals, gives, in total"), "=", "2<var>n</var> = 18"]
+];
+
+/* ====== Evaluador seguro de expresiones ====== */
+function preparar(str, vars) {
+  let s = String(str).toLowerCase()
+    .replace(/[−–—]/g, "-").replace(/[×·]/g, "*").replace(/÷/g, "/")
+    .replace(/\s+/g, "").replace(/\$/g, "");
+  s = s.replace(/(\d),(\d)/g, "$1.$2");
+  if (!s) return null;
+  if (!/^[0-9a-z+\-*/().^]+$/.test(s)) return null;
+  const letras = s.match(/[a-z]/g) || [];
+  for (const ch of letras) if (!vars.includes(ch)) return null;
+  s = s.replace(/(\d|\))(?=[a-z(])/g, "$1*").replace(/([a-z])(?=[a-z(\d])/g, "$1*");
+  s = s.replace(/\^/g, "**");
+  return s;
+}
+function evaluar(s, valores) {
+  const e = s.replace(/[a-z]/g, ch => "(" + valores[ch] + ")");
+  try { const v = Function('"use strict";return (' + e + ");")(); return (typeof v === "number" && isFinite(v)) ? v : NaN; }
+  catch (err) { return NaN; }
+}
+const PRUEBAS = [2.5, -1.3, 4.7, 7.1, -3.6];
+function equivalentes(a, bb, vars) {
+  for (let k = 0; k < 4; k++) {
+    const val = {}; [...vars].forEach((ch, i) => { val[ch] = PRUEBAS[(k + i * 2) % PRUEBAS.length] + i; });
+    const x = evaluar(a, val), y = evaluar(bb, val);
+    if (isNaN(x) || isNaN(y)) return false;
+    if (Math.abs(x - y) > 1e-6 * (1 + Math.abs(y))) return false;
+  }
+  return true;
+}
+function estaSimplificada(s, vars) {
+  if (s.includes("(")) return false;
+  for (const ch of vars) { const c = (s.match(new RegExp(ch, "g")) || []).length; if (c > 1) return false; }
+  const terminos = []; let actual = "";
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if ((c === "+" || c === "-") && i > 0 && !"*/(".includes(s[i - 1])) { terminos.push(actual); actual = c; }
+    else actual += c;
+  }
+  terminos.push(actual);
+  return terminos.filter(t => !/[a-z]/.test(t)).length <= 1;
+}
+function leerNumero(str) {
+  let s = String(str).trim().replace(/[−–—]/g, "-").replace(/[^0-9.,\-]/g, "");
+  if (/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s)) s = s.replace(/,/g, "");
+  else s = s.replace(",", ".");
+  if (!/^-?\d*\.?\d+$/.test(s)) return NaN;
+  return parseFloat(s);
+}
+
+/* ====== Construcción de la página ====== */
+const esc = (t) => t; // el contenido es propio y de confianza
+let contador = 0;
+const estado = {}; // por ejercicio: pasos pendientes
+
+function msg(tipo, contenido) { return '<div class="msg ' + tipo + '">' + contenido + "</div>"; }
+
+function htmlPaso(p, idE, k) {
+  const idP = idE + "-p" + k;
+  let h = '<div class="paso" id="' + idP + '">';
+  if (p.l) h += '<p class="etq">' + L(UI[p.l]) + "</p>";
+  h += '<p class="preg">' + L(p.preg) + "</p>";
+  if (p.tipo === "mc") {
+    h += '<div class="opciones" role="group">';
+    p.ops.forEach((o, i) => { h += '<button type="button" class="opcion" data-i="' + i + '">' + L(o.t) + "</button>"; });
+    h += "</div>";
+  } else if (p.tipo === "expr" || p.tipo === "num") {
+    h += '<div class="fila-entrada"><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="' + (p.tipo === "num" ? "decimal" : "text") + '" aria-describedby="' + idP + '-fb"><button type="button" class="btn btn-lleno comprobar">' + L(UI.comprobar) + "</button></div>";
+    if (p.tipo === "expr") h += '<p class="ayuda">' + L(UI.ayudaExpr) + "</p>";
+  } else if (p.tipo === "abierta") {
+    h += '<textarea aria-label="Respuesta / Answer"></textarea><button type="button" class="btn ver-modelo" style="margin-top:8px">' + L(UI.verEjemplo) + '</button><div class="modelo oculto">' + L(p.modelo) + "</div>";
+  } else if (p.tipo === "recta") {
+    h += '<div class="recta-entradas">';
+    p.exprs.forEach((e, i) => { h += '<div><span aria-hidden="true">' + e[1] + ' =</span><input type="text" inputmode="decimal" data-i="' + i + '" aria-label="' + e[1].replace(/<[^>]+>/g, "") + '"></div>'; });
+    h += '</div><button type="button" class="btn btn-lleno comprobar-recta">' + L(UI.comprobar) + '</button>';
+  }
+  h += '<div class="fb" id="' + idP + '-fb" aria-live="polite"></div></div>';
+  return h;
+}
+
+function construir() {
+  const cont = document.getElementById("temas");
+  const lista = document.getElementById("lista-indice");
+  let html = "";
+  TEMAS.forEach((t, ti) => {
+    const n = ti + 1;
+    const li = document.createElement("li");
+    li.innerHTML = '<a href="#' + t.id + '">' + L(t.titulo) + "</a>";
+    lista.appendChild(li);
+    html += '<details class="seccion-grande" id="' + t.id + '" style="--c:' + t.color + '"' + (ti === 0 ? " open" : "") + ">";
+    html += '<summary><span class="num-circulo" aria-hidden="true">' + n + "</span><h2>" + L(b("Tema " + n + ". ", "Topic " + n + ". ")) + L(t.titulo) + '</h2><span class="progreso" data-tema="' + t.id + '"></span><span class="chev" aria-hidden="true">▶</span></summary>';
+    html += '<div class="cuerpo"><p class="indicadores">' + t.indicadores + "</p>";
+    html += '<div class="caja caja-idea"><h3>' + L(b("La idea clave", "The key idea")) + "</h3><p>" + L(t.idea) + "</p>";
+    if (t.tabla) {
+      html += '<div class="tabla-scroll"><table class="tabla-palabras"><caption>' + L(b("Palabras que se convierten en símbolos", "Words that become symbols")) + '</caption><thead><tr><th scope="col">' + L(b("Palabras", "Words")) + '</th><th scope="col">' + L(b("Símbolo", "Symbol")) + '</th><th scope="col">' + L(b("Ejemplo", "Example")) + "</th></tr></thead><tbody>";
+      TABLA.forEach(r => { html += "<tr><td>" + L(r[0]) + "</td><td>" + r[1] + "</td><td>" + L(r[2]) + "</td></tr>"; });
+      html += "</tbody></table></div>";
+    }
+    html += "</div>";
+    html += '<div class="caja caja-consejo"><h3>' + L(b("Lee como matemático", "Read like a mathematician")) + "</h3><p>" + L(t.consejo) + "</p></div>";
+    t.items.forEach((it, ii) => {
+      const idE = "t" + n + "-e" + (ii + 1);
+      estado[idE] = { pend: 0, tema: t.id };
+      html += '<article class="ejercicio" id="' + idE + '"><h3>' + L(UI.ejercicio) + " " + n + "." + (ii + 1) + " · " + L(it.titulo) + '<span class="marca" aria-hidden="true"></span></h3>';
+      if (it.texto) html += '<div class="historia"><p>' + L(it.texto) + '</p><button type="button" class="btn btn-oir" data-oir="' + idE + '">' + L(UI.escuchar) + "</button></div>";
+      it.pasos.forEach((p, k) => { estado[idE].pend++; html += htmlPaso(p, idE, k); });
+      html += "</article>";
+    });
+    html += "</div></details>";
+  });
+  cont.innerHTML = html;
+  const ref = document.createElement("li"); ref.innerHTML = '<a href="#referencias">' + L(b("Referencias", "References")) + "</a>"; lista.appendChild(ref);
+  actualizarProgreso();
+  conectar();
+}
+
+function buscarPaso(idE, k) {
+  const [t, e] = idE.match(/\d+/g).map(Number);
+  return TEMAS[t - 1].items[e - 1].pasos[k];
+}
+
+function pasoTerminado(idE) {
+  estado[idE].pend--;
+  if (estado[idE].pend <= 0) {
+    const art = document.getElementById(idE);
+    art.classList.add("hecho");
+    art.querySelector(".marca").textContent = " ✔";
+  }
+  actualizarProgreso();
+}
+
+function actualizarProgreso() {
+  TEMAS.forEach(t => {
+    const ids = Object.keys(estado).filter(k => estado[k].tema === t.id);
+    const hechos = ids.filter(k => estado[k].pend <= 0).length;
+    const el = document.querySelector('.progreso[data-tema="' + t.id + '"]');
+    if (el) el.innerHTML = hechos + " " + L(UI.de) + " " + ids.length + " " + L(UI.hechos);
+  });
+}
+
+function conectar() {
+  document.querySelectorAll("article.ejercicio").forEach(art => {
+    const idE = art.id;
+    art.querySelectorAll(".paso").forEach((div, k) => {
+      const p = buscarPaso(idE, k);
+      const fb = div.querySelector(".fb");
+      if (p.tipo === "mc") {
+        div.querySelectorAll(".opcion").forEach(btn => btn.addEventListener("click", () => {
+          const o = p.ops[+btn.dataset.i];
+          if (o.ok) {
+            btn.classList.add("correcta");
+            div.querySelectorAll(".opcion").forEach(x => { x.disabled = true; });
+            fb.innerHTML = msg("ok", L(UI.ok) + " " + L(o.fb));
+            pasoTerminado(idE);
+          } else {
+            btn.classList.add("incorrecta");
+            fb.innerHTML = msg("mal", L(UI.noMc) + " " + L(o.fb));
+          }
+        }));
+      } else if (p.tipo === "expr" || p.tipo === "num") {
+        const inp = div.querySelector("input"), bot = div.querySelector(".comprobar");
+        let intentos = 0, cerrado = false;
+        const revisar = () => {
+          if (cerrado) return;
+          let correcto = false, especial = null;
+          if (p.tipo === "expr") {
+            const s = preparar(inp.value, p.vars), r = preparar(p.resp, p.vars);
+            if (s === null || isNaN(evaluar(s, Object.fromEntries([...p.vars].map(c => [c, 1.7]))))) { fb.innerHTML = msg("info", L(UI.invalida)); return; }
+            if (equivalentes(s, r, p.vars)) {
+              if (p.simpl && !estaSimplificada(s, p.vars)) { fb.innerHTML = msg("info", L(UI.noSimpl)); return; }
+              correcto = true;
+            } else if (p.trampas) {
+              for (const tr of p.trampas) if (equivalentes(s, preparar(tr.e, p.vars), p.vars)) { especial = tr.fb; break; }
+            }
+          } else {
+            const v = leerNumero(inp.value);
+            if (isNaN(v)) { fb.innerHTML = msg("info", L(UI.numInvalido)); return; }
+            correcto = Math.abs(v - p.resp) < 0.005;
+            if (!correcto && p.trampas) for (const tr of p.trampas) if (Math.abs(v - tr.v) < 0.005) { especial = tr.fb; break; }
+          }
+          if (correcto) {
+            inp.classList.remove("malo"); inp.classList.add("bien"); inp.readOnly = true; bot.disabled = true; cerrado = true;
+            fb.innerHTML = msg("ok", L(UI.ok) + (p.sol ? " " + L(p.sol) : ""));
+            pasoTerminado(idE);
+            return;
+          }
+          intentos++;
+          inp.classList.add("malo");
+          if (intentos < 2) {
+            fb.innerHTML = msg("mal", L(UI.otra) + (especial ? " " + L(especial) : ""));
+          } else {
+            cerrado = true; inp.readOnly = true; bot.disabled = true;
+            fb.innerHTML = (especial ? msg("mal", L(especial)) : "") + msg("sol", L(UI.sol) + " " + L(p.sol));
+            pasoTerminado(idE);
+          }
+        };
+        bot.addEventListener("click", revisar);
+        inp.addEventListener("keydown", ev => { if (ev.key === "Enter") revisar(); });
+      } else if (p.tipo === "abierta") {
+        let visto = false;
+        div.querySelector(".ver-modelo").addEventListener("click", () => {
+          div.querySelector(".modelo").classList.toggle("oculto");
+          if (!visto) { visto = true; pasoTerminado(idE); }
+        });
+      } else if (p.tipo === "recta") {
+        const bot = div.querySelector(".comprobar-recta");
+        let intentos = 0, cerrado = false;
+        bot.addEventListener("click", () => {
+          if (cerrado) return;
+          let todos = true;
+          const vals = p.exprs.map(e => evaluar(preparar(e[0], "x"), { x: p.x }));
+          div.querySelectorAll(".recta-entradas input").forEach((inp, i) => {
+            const v = leerNumero(inp.value);
+            const ok = !isNaN(v) && Math.abs(v - vals[i]) < 0.005;
+            inp.classList.toggle("bien", ok); inp.classList.toggle("malo", !ok);
+            if (!ok) todos = false;
+          });
+          if (todos || ++intentos >= 2) {
+            cerrado = true; bot.disabled = true;
+            div.querySelectorAll(".recta-entradas input").forEach(i => { i.readOnly = true; });
+            fb.innerHTML = (todos ? msg("ok", L(UI.rectaOk)) : msg("sol", L(UI.sol) + " " + L(p.sol))) + dibujarRecta(p.exprs, vals);
+            pasoTerminado(idE);
+          } else {
+            fb.innerHTML = msg("mal", L(UI.otra));
+          }
+        });
+      }
+    });
+  });
+  document.querySelectorAll("[data-oir]").forEach(btn => btn.addEventListener("click", () => leerEnVoz(btn)));
+}
+
+function dibujarRecta(exprs, vals) {
+  const min = -10, max = 10, W = 640, x0 = 30, x1 = W - 30;
+  const X = v => x0 + (v - min) * (x1 - x0) / (max - min);
+  let s = '<svg class="recta-svg" viewBox="0 0 ' + W + ' 120" role="img" aria-label="' + exprs.map((e, i) => e[1].replace(/<[^>]+>/g, "") + " = " + vals[i]).join(", ") + '">';
+  s += '<line x1="' + x0 + '" y1="80" x2="' + x1 + '" y2="80" stroke="#1a1a1a" stroke-width="2"/>';
+  for (let v = min; v <= max; v++) {
+    s += '<line x1="' + X(v) + '" y1="' + (v % 2 === 0 ? 72 : 75) + '" x2="' + X(v) + '" y2="' + (v % 2 === 0 ? 88 : 85) + '" stroke="#1a1a1a"/>';
+    if (v % 2 === 0) s += '<text x="' + X(v) + '" y="106" font-size="13" text-anchor="middle" fill="#1a1a1a">' + (v < 0 ? "−" + (-v) : v) + "</text>";
+  }
+  exprs.forEach((e, i) => {
+    const etiqueta = e[1].replace(/<var>(.*?)<\/var>/g, '<tspan font-style="italic" font-family="Times New Roman, serif">$1</tspan>');
+    s += '<line x1="' + X(vals[i]) + '" y1="34" x2="' + X(vals[i]) + '" y2="80" stroke="#4a148c" stroke-width="1.5" stroke-dasharray="3 3"/>';
+    s += '<circle cx="' + X(vals[i]) + '" cy="80" r="6" fill="#4a148c"/>';
+    s += '<rect x="' + (X(vals[i]) - 24) + '" y="10" width="48" height="26" rx="6" fill="#fff" stroke="#4a148c" stroke-width="2"/>';
+    s += '<text x="' + X(vals[i]) + '" y="28" font-size="15" text-anchor="middle" fill="#1a1a1a">' + etiqueta + "</text>";
+  });
+  return s + "</svg>";
+}
+
+/* ====== Lectura en voz alta (DUA) ====== */
+function leerEnVoz(btn) {
+  if (!("speechSynthesis" in window)) return;
+  const art = document.getElementById(btn.dataset.oir);
+  const modo = document.documentElement.dataset.lang;
+  const p = art.querySelector(".historia p");
+  speechSynthesis.cancel();
+  const decir = (lang) => {
+    const el = p.querySelector("." + lang); if (!el) return;
+    const u = new SpeechSynthesisUtterance(el.textContent.replace(/−/g, " menos ").replace(/\$/g, ""));
+    if (lang === "en") u.text = el.textContent.replace(/−/g, " minus ");
+    u.lang = lang === "es" ? "es-US" : "en-US"; u.rate = 0.9;
+    speechSynthesis.speak(u);
+  };
+  if (modo === "en") decir("en"); else { decir("es"); if (modo === "bi") decir("en"); }
+}
+
+/* ====== Idioma, índice, impresión ====== */
+function ponerIdioma(lang) {
+  document.documentElement.dataset.lang = lang;
+  document.documentElement.lang = lang === "en" ? "en" : "es";
+  document.querySelectorAll("[data-set-lang]").forEach(b2 => b2.setAttribute("aria-pressed", b2.dataset.setLang === lang ? "true" : "false"));
+  try { localStorage.setItem("lectura-algebra-idioma", lang); } catch (e) {}
+}
+function abrirDestino() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h) return;
+  const el = document.getElementById(h);
+  if (!el) return;
+  const det = el.tagName === "DETAILS" ? el : el.closest("details");
+  if (det) det.open = true;
+  setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  construir();
+  let lang = "es";
+  try { lang = localStorage.getItem("lectura-algebra-idioma") || "es"; } catch (e) {}
+  const q = new URLSearchParams(location.search).get("lang");
+  if (q && ["es", "en", "bi"].includes(q)) lang = q;
+  ponerIdioma(lang);
+  document.querySelectorAll("[data-set-lang]").forEach(btn => btn.addEventListener("click", () => ponerIdioma(btn.dataset.setLang)));
+  document.getElementById("abrir-todo").addEventListener("click", () => document.querySelectorAll("details.seccion-grande").forEach(d => d.open = true));
+  document.getElementById("cerrar-todo").addEventListener("click", () => document.querySelectorAll("details.seccion-grande").forEach(d => d.open = false));
+  document.getElementById("btn-imprimir").addEventListener("click", () => window.print());
+  window.addEventListener("beforeprint", () => document.querySelectorAll("details.seccion-grande").forEach(d => d.open = true));
+  document.querySelectorAll('nav.indice a').forEach(a => a.addEventListener("click", () => setTimeout(abrirDestino, 0)));
+  window.addEventListener("hashchange", abrirDestino);
+  abrirDestino();
+  if (!("speechSynthesis" in window)) document.querySelectorAll(".btn-oir").forEach(x => x.classList.add("oculto"));
+});
+</script>
+</body>
+</html>

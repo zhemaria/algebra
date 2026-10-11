@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<!--
+  Guía docente · Leer para entender el álgebra / Teacher Guide · Reading to Understand Algebra
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.
+  Licencia / License: Creative Commons BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/
+-->
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía docente · Leer para entender el álgebra</title>
+<meta name="description" content="Guía docente bilingüe: fundamentación, uso en clase, alineación con el GED, análisis de errores y clave de respuestas de «Leer para entender el álgebra».">
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--tinta:#1a1a1a;--suave:#444;--papel:#fbfaf7;--borde:#d4d0c8;--primario:#1f3a5f;--primario-claro:#e8eef6;--aviso:#5C3900;--aviso-fondo:#fff4dc;--radio:10px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.6}
+a{color:var(--primario)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+var{font-family:"Times New Roman",Georgia,serif;font-style:italic;font-size:1.1em}
+.contenedor{max-width:920px;margin:0 auto;padding:0 16px}
+html[data-lang="es"] .en{display:none}
+html[data-lang="en"] .es{display:none}
+html[data-lang="bi"] .en{display:block;font-style:italic;color:var(--suave);font-size:.93em;margin-top:2px}
+html[data-lang="bi"] :is(h1,h2,h3,summary,button,nav a,th,.sub) .en{display:inline;color:inherit;font-size:inherit;margin:0}
+html[data-lang="bi"] :is(h1,h2,h3,summary,button,nav a,th,.sub) .en::before{content:" / ";font-style:normal}
+header{background:var(--primario);color:#fff;padding:26px 0 20px}
+header h1{margin:0 0 6px;font-size:1.8rem;line-height:1.2}
+header p{margin:4px 0}
+.barra{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.grupo{display:flex;border:2px solid #fff;border-radius:8px;overflow:hidden}
+.grupo button{background:transparent;color:#fff;border:0;padding:8px 14px;font:inherit;font-size:.95rem;cursor:pointer;min-height:44px}
+.grupo button[aria-pressed="true"]{background:#fff;color:var(--primario);font-weight:700}
+.btn{font:inherit;font-size:.95rem;border-radius:8px;padding:8px 14px;cursor:pointer;min-height:44px;border:2px solid var(--primario);background:#fff;color:var(--primario);text-decoration:none;display:inline-flex;align-items:center}
+.btn-claro{border-color:#fff;background:transparent;color:#fff}
+nav.indice{background:#fff;border:1px solid var(--borde);border-radius:var(--radio);padding:16px 20px;margin:22px 0}
+nav.indice h2{margin:0 0 8px;font-size:1.15rem}
+nav.indice ol{margin:0;padding-left:1.4em;columns:2;column-gap:32px}
+nav.indice li{break-inside:avoid;margin:3px 0}
+.acciones{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+details.seccion{background:#fff;border:1px solid var(--borde);border-radius:var(--radio);margin:14px 0;scroll-margin-top:12px}
+details.seccion>summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:12px 16px;background:var(--primario-claro);border-radius:var(--radio)}
+details.seccion>summary::-webkit-details-marker{display:none}
+details.seccion[open]>summary{border-radius:var(--radio) var(--radio) 0 0}
+details.seccion>summary h2{margin:0;font-size:1.15rem;color:var(--primario)}
+.num{flex:0 0 36px;width:36px;height:36px;border-radius:50%;background:var(--primario);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.chev{margin-left:auto;color:var(--primario);transition:transform .2s}
+details.seccion[open]>summary .chev{transform:rotate(90deg)}
+.cuerpo{padding:4px 20px 18px}
+.cuerpo h3{color:var(--primario);margin:18px 0 6px}
+.nota{background:var(--aviso-fondo);border-left:5px solid var(--aviso);border-radius:8px;padding:10px 14px;margin:12px 0;color:#2b1c00}
+.cita{border-left:4px solid var(--primario);padding:4px 14px;margin:10px 0;color:var(--suave)}
+.tabla-scroll{overflow-x:auto;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+caption{text-align:left;font-weight:700;padding:4px 0 8px}
+th,td{border:1px solid var(--borde);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--primario-claro)}
+code{background:#f0ede6;padding:1px 5px;border-radius:4px;font-size:.9em;overflow-wrap:anywhere}
+.referencias li{margin:8px 0;overflow-wrap:anywhere}
+footer{margin-top:30px;padding:18px 0 30px;border-top:1px solid var(--borde);font-size:.9rem;color:var(--suave)}
+@media (max-width:640px){header h1{font-size:1.45rem}nav.indice ol{columns:1}.cuerpo{padding:4px 12px 14px}}
+@media print{
+  body{background:#fff;font-size:11pt}
+  header{background:#fff;color:#000;border-bottom:2px solid #000}
+  .barra,.acciones,nav.indice{display:none!important}
+  details.seccion>summary{background:#fff}
+  details.seccion{break-inside:auto;border:0}
+  table{break-inside:auto} tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="contenedor">
+    <h1><span class="es">Guía docente · Leer para entender el álgebra</span><span class="en">Teacher guide · Reading to understand algebra</span></h1>
+    <p class="sub"><span class="es">Comprensión lectora e introducción al álgebra con la rutina de las tres lecturas</span><span class="en">Reading comprehension and introductory algebra with the Three Reads routine</span></p>
+    <p style="font-size:.9rem">José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago · <span class="es">Trabajo adicional del curso «Empower Students to Pass the GED® Math Test» · octubre de 2026</span><span class="en">Additional work for the course “Empower Students to Pass the GED® Math Test” · October 2026</span></p>
+    <div class="barra">
+      <div class="grupo" role="group" aria-label="Idioma / Language">
+        <button type="button" data-set-lang="es" aria-pressed="true">Español</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+        <button type="button" data-set-lang="bi" aria-pressed="false">ES + EN</button>
+      </div>
+      <a class="btn btn-claro" href="lectura-algebra.html" target="_blank" rel="noopener noreferrer"><span class="es">Abrir los ejercicios</span><span class="en">Open the exercises</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="contenedor">
+<nav class="indice" aria-labelledby="t-indice">
+  <h2 id="t-indice"><span class="es">Contenido</span><span class="en">Contents</span></h2>
+  <ol>
+    <li><a href="#proposito"><span class="es">Propósito</span><span class="en">Purpose</span></a></li>
+    <li><a href="#fundamentacion"><span class="es">Fundamentación: la investigación</span><span class="en">Rationale: the research</span></a></li>
+    <li><a href="#pd"><span class="es">Conexión con el curso de desarrollo profesional</span><span class="en">Connection to the professional development course</span></a></li>
+    <li><a href="#diseno"><span class="es">Diseño y alineación con el GED®</span><span class="en">Design and GED® alignment</span></a></li>
+    <li><a href="#uso"><span class="es">Cómo usar el material</span><span class="en">How to use the material</span></a></li>
+    <li><a href="#errores"><span class="es">Análisis de errores</span><span class="en">Error analysis</span></a></li>
+    <li><a href="#clave"><span class="es">Clave de respuestas</span><span class="en">Answer key</span></a></li>
+    <li><a href="#referencias"><span class="es">Referencias</span><span class="en">References</span></a></li>
+  </ol>
+  <div class="acciones">
+    <button type="button" class="btn" id="abrir-todo"><span class="es">Abrir todo</span><span class="en">Open all</span></button>
+    <button type="button" class="btn" id="cerrar-todo"><span class="es">Cerrar todo</span><span class="en">Close all</span></button>
+  </div>
+</nav>
+
+<!-- 1 -->
+<details class="seccion" id="proposito" open>
+<summary><span class="num" aria-hidden="true">1</span><h2><span class="es">Propósito</span><span class="en">Purpose</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">En mis clases de ABE/ASE observo constantemente que los estudiantes con menos comprensión lectora suelen ser también los que menos comprenden los conceptos matemáticos. En álgebra, esa relación se nota enseguida: muchos errores no son de cálculo, sino de lectura. El estudiante no sabe qué representa la letra, invierte «5 menos que <var>n</var>» o suma todos los números del problema sin preguntarse si tiene sentido.</span><span class="en">In my ABE/ASE classes I constantly see that the students with the weakest reading comprehension also tend to have the most trouble understanding math concepts. In algebra this connection shows up right away: many errors are not computational but reading errors. Students do not know what the letter stands for, they reverse “5 less than <var>n</var>,” or they add every number in the problem without asking whether it makes sense.</span></p>
+<p><span class="es"><strong>Leer para entender el álgebra</strong> es un conjunto de 39 ejercicios bilingües (español e inglés) en seis temas: la variable, la traducción del lenguaje a expresiones, los términos semejantes, la evaluación de expresiones, las ecuaciones de un paso y un tema integrador de razonamiento («Detective matemático»). En cada ejercicio, la lectura <em>forma parte</em> de la tarea matemática: antes de calcular, el estudiante describe la situación, identifica las cantidades y descarta la información que sobra.</span><span class="en"><strong>Reading to Understand Algebra</strong> is a set of 39 bilingual exercises (Spanish and English) across six topics: the variable, translating words into expressions, like terms, evaluating expressions, one-step equations, and an integrative reasoning topic (“Math Detective”). In every exercise, reading <em>is part of</em> the math task: before calculating, students describe the situation, identify the quantities, and set aside information that is not needed.</span></p>
+<p><span class="es">Es material abierto: lo pueden usar otros docentes con estudiantes hispanohablantes, con estudiantes de habla inglesa o en grupos mixtos, porque cada texto existe en los dos idiomas y puede mostrarse en uno solo o en ambos a la vez.</span><span class="en">It is an open resource: other teachers can use it with Spanish-speaking students, English-speaking students, or mixed groups, because every text exists in both languages and can be shown in one language or both at once.</span></p>
+</div>
+</details>
+
+<!-- 2 -->
+<details class="seccion" id="fundamentacion">
+<summary><span class="num" aria-hidden="true">2</span><h2><span class="es">Fundamentación: la investigación</span><span class="en">Rationale: the research</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">Niileksela, Hajovsky y colaboradores (2026) publicaron en el <i>Journal of Intelligence</i> un metaanálisis que relaciona las habilidades cognitivas medidas por baterías de pruebas estandarizadas con cuatro áreas de la matemática: conocimiento matemático, cálculo, resolución de problemas y fluidez. Según la nota de la Universidad Texas A&amp;M (Lawson, 2026), el análisis reunió datos de 122 baterías de pruebas. Los resultados que más interesan para este material son tres:</span><span class="en">Niileksela, Hajovsky, and colleagues (2026) published a meta-analysis in the <i>Journal of Intelligence</i> relating cognitive abilities measured by standardized test batteries to four areas of mathematics: math knowledge, calculation, problem solving, and fluency. According to the Texas A&amp;M University news release (Lawson, 2026), the analysis brought together data from 122 test batteries. Three findings matter most for this material:</span></p>
+<ul>
+<li><span class="es"><strong>Comprensión y conocimiento (lenguaje, vocabulario, razonamiento verbal).</strong> Tuvo efectos de moderados a grandes en la mayoría de las habilidades matemáticas, sobre todo en el conocimiento matemático y la resolución de problemas, aunque no en la fluidez de cálculo.</span><span class="en"><strong>Comprehension-knowledge (language, vocabulary, verbal reasoning).</strong> It had moderate-to-large effects on most math skills, especially math knowledge and problem solving, though not on math fluency.</span></li>
+<li><span class="es"><strong>Razonamiento fluido.</strong> Fue uno de los dos predictores más constantes, con relaciones moderadas o grandes con todas las habilidades matemáticas. Hajovsky lo describe como la capacidad de «discernir qué información es relevante y cuál no».</span><span class="en"><strong>Fluid reasoning.</strong> It was one of the two most consistent predictors, with moderate or large relations to all math skills. Hajovsky describes it as the ability to “discern which information is relevant and which is not.”</span></li>
+<li><span class="es"><strong>Sentido numérico.</strong> Resultó una base sólida, con un efecto directo grande en la resolución de problemas y el conocimiento matemático. Los autores advierten que ese resultado se apoya en pocas matrices de correlación.</span><span class="en"><strong>Number sense.</strong> It proved to be a strong foundation, with a large direct effect on problem solving and math knowledge. The authors caution that this result rests on few correlation matrices.</span></li>
+</ul>
+<p><span class="es">Hajovsky propone además mirar el <strong>patrón de errores</strong> y no solo la calificación, para saber si la dificultad viene del lenguaje, del razonamiento o de la eficiencia en el cálculo, y ajustar la enseñanza en consecuencia.</span><span class="en">Hajovsky also proposes looking at the <strong>pattern of errors</strong>, not just the score, to tell whether a difficulty comes from language, reasoning, or calculation efficiency, and to adjust instruction accordingly.</span></p>
+<div class="nota"><span class="es"><strong>Una precaución honesta.</strong> Se trata de un estudio correlacional: muestra que estas habilidades van juntas, no que enseñar lectura mejore por sí solo el rendimiento en matemáticas. Por eso este material no separa una «clase de lectura» de una «clase de matemáticas»: integra la comprensión dentro de la tarea matemática misma, que es donde el estudiante la necesita. Los autores también subrayan que estas habilidades siguen desarrollándose con el tiempo y la práctica, algo muy alentador para estudiantes adultos.</span><span class="en"><strong>An honest caveat.</strong> This is a correlational study: it shows that these abilities go together, not that teaching reading will by itself raise math achievement. That is why this material does not separate a “reading lesson” from a “math lesson”: it builds comprehension into the math task itself, where students actually need it. The authors also stress that these abilities keep developing with time and practice, which is very encouraging for adult learners.</span></div>
+<h3><span class="es">Cómo se traduce en el diseño</span><span class="en">How it shapes the design</span></h3>
+<div class="tabla-scroll"><table>
+<caption><span class="es">Hallazgos del estudio y su aplicación en los ejercicios</span><span class="en">Study findings and how the exercises apply them</span></caption>
+<thead><tr><th scope="col"><span class="es">Hallazgo</span><span class="en">Finding</span></th><th scope="col"><span class="es">En los ejercicios</span><span class="en">In the exercises</span></th></tr></thead>
+<tbody>
+<tr><td><span class="es">Comprensión y lenguaje</span><span class="en">Comprehension and language</span></td><td><span class="es">Primera lectura sin números; definir la variable con palabras y unidades; tabla de palabras clave; trampas de lenguaje («menos que», comas, «la misma cantidad»).</span><span class="en">First read without numbers; defining the variable in words with units; key-word table; language traps (“less than,” commas, “the same number”).</span></td></tr>
+<tr><td><span class="es">Razonamiento fluido</span><span class="en">Fluid reasoning</span></td><td><span class="es">Datos que sobran en casi todas las historias; problemas sin solución por falta de datos; un dato que no se usa para calcular, pero sí para comprobar (los tamales de Don Julio).</span><span class="en">Extra information in nearly every story; problems with no solution because data are missing; a fact not used to calculate but used to check (Don Julio’s tamales).</span></td></tr>
+<tr><td><span class="es">Sentido numérico</span><span class="en">Number sense</span></td><td><span class="es">Tendedero algebraico (valores de <var>x</var>, 2<var>x</var>, −<var>x</var>, <var>x</var>/2 en la recta); comprobación del resultado en el contexto.</span><span class="en">Algebra clothesline (values of <var>x</var>, 2<var>x</var>, −<var>x</var>, <var>x</var>/2 on the number line); checking the result in context.</span></td></tr>
+<tr><td><span class="es">Análisis de errores</span><span class="en">Error analysis</span></td><td><span class="es">Cada opción incorrecta y cada respuesta equivocada previsible tiene su propia retroalimentación; hay ejercicios dedicados a encontrar el error de otro estudiante (Carlos, María, la traducción equivocada).</span><span class="en">Every wrong option and every predictable wrong answer has its own feedback; some exercises are devoted to finding another student’s mistake (Carlos, María, the wrong translation).</span></td></tr>
+</tbody></table></div>
+</div>
+</details>
+
+<!-- 3 -->
+<details class="seccion" id="pd">
+<summary><span class="num" aria-hidden="true">3</span><h2><span class="es">Conexión con el curso de desarrollo profesional</span><span class="en">Connection to the professional development course</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">Este material extiende dos rutinas trabajadas en el curso «Empower Students to Pass the GED® Math Test».</span><span class="en">This material extends two routines from the course “Empower Students to Pass the GED® Math Test.”</span></p>
+<h3><span class="es">Tres lecturas (<i>Three Reads</i>, MLR6)</span><span class="en">Three Reads (MLR6)</span></h3>
+<p><span class="es">Es una de las rutinas de lenguaje matemático (MLR) de Zwiers et al. (2017). En el curso la practiqué con el problema de la propietaria que combina césped artificial y grava con un presupuesto de $3,000. Aquí la llevo a la introducción al álgebra: los pasos de los ejercicios están rotulados como <strong>1.ª lectura</strong> (la idea general, sin números), <strong>2.ª lectura</strong> (cantidades y significado: qué cambia, qué es fijo, qué sobra), <strong>3.ª lectura</strong> (la estrategia: la expresión o la ecuación) y <strong>Resolver y comprobar</strong>. El ejercicio 6.1, «¿Qué edad tiene el pastor?», retoma el ejemplo del video del curso sobre estudiantes que combinan números sin preguntarse si tiene sentido.</span><span class="en">It is one of the Mathematical Language Routines (MLRs) of Zwiers et al. (2017). In the course I practiced it with the homeowner problem that combines artificial turf and gravel within a $3,000 budget. Here I bring it to introductory algebra: exercise steps are labeled <strong>1st read</strong> (the big idea, no numbers), <strong>2nd read</strong> (quantities and meaning: what changes, what is fixed, what is extra), <strong>3rd read</strong> (the strategy: the expression or equation), and <strong>Solve and check</strong>. Exercise 6.1, “How old is the shepherd?”, revisits the example in the course video about students who combine numbers without asking whether it makes sense.</span></p>
+<h3><span class="es">Tendedero matemático (<i>Clothesline Math</i>)</span><span class="en">Clothesline Math</span></h3>
+<p><span class="es">En mi Tarea 3 propuse llevar el tendedero al álgebra colocando expresiones como <var>x</var>, 2<var>x</var>, −<var>x</var> y <var>x</var>/2. El ejercicio 4.5 lo hace: el estudiante evalúa las cuatro expresiones para <var>x</var> = 4, las ve colgadas en la recta numérica y luego razona qué pasaría si <var>x</var> fuera negativo. En Zoom puede hacerse primero en la plantilla de Google Slides compartida y después confirmarse en el interactivo.</span><span class="en">In my Assignment 3 I proposed taking the clothesline into algebra by placing expressions such as <var>x</var>, 2<var>x</var>, −<var>x</var>, and <var>x</var>/2. Exercise 4.5 does this: students evaluate the four expressions for <var>x</var> = 4, see them hung on the number line, and then reason about what would happen if <var>x</var> were negative. On Zoom it can be done first on the shared Google Slides template and then confirmed in the interactive.</span></p>
+<h3><span class="es">Apoyos lingüísticos</span><span class="en">Language supports</span></h3>
+<p><span class="es">Como en la Tarea 3, los ejercicios incluyen marcos de oración bilingües («La variable ___ representa el número de…», «El dato ___ no hace falta porque…»), la opción de escuchar cada historia y la vista simultánea en los dos idiomas para estudiantes que aprenden inglés.</span><span class="en">As in Assignment 3, the exercises include bilingual sentence frames (“The variable ___ stands for the number of…,” “The information ___ is not needed because…”), the option to listen to each story, and a side-by-side view in both languages for English learners.</span></p>
+</div>
+</details>
+
+<!-- 4 -->
+<details class="seccion" id="diseno">
+<summary><span class="num" aria-hidden="true">4</span><h2><span class="es">Diseño y alineación con el GED®</span><span class="en">Design and GED® alignment</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<div class="tabla-scroll"><table>
+<caption><span class="es">Temas, ejercicios e indicadores del GED®</span><span class="en">Topics, exercises, and GED® indicators</span></caption>
+<thead><tr><th scope="col"><span class="es">Tema</span><span class="en">Topic</span></th><th scope="col"><span class="es">Ejercicios</span><span class="en">Exercises</span></th><th scope="col"><span class="es">Indicadores</span><span class="en">Indicators</span></th><th scope="col"><span class="es">Énfasis de lectura</span><span class="en">Reading focus</span></th></tr></thead>
+<tbody>
+<tr><td><a href="lectura-algebra.html#tema1" target="_blank" rel="noopener noreferrer"><span class="es">1. La variable</span><span class="en">1. The variable</span></a></td><td>6</td><td>A.1.c · MP.2.a · MP.2.c</td><td><span class="es">Qué número representa la letra; qué cambia y qué es fijo</span><span class="en">What number the letter stands for; what changes and what is fixed</span></td></tr>
+<tr><td><a href="lectura-algebra.html#tema2" target="_blank" rel="noopener noreferrer"><span class="es">2. Del lenguaje a la expresión</span><span class="en">2. From words to expressions</span></a></td><td>7</td><td>A.1.c · MP.2.a</td><td><span class="es">Orden de las palabras, «menos que», comas y paréntesis</span><span class="en">Word order, “less than,” commas, and parentheses</span></td></tr>
+<tr><td><a href="lectura-algebra.html#tema3" target="_blank" rel="noopener noreferrer"><span class="es">3. Términos semejantes</span><span class="en">3. Like terms</span></a></td><td>7</td><td>A.1.a · A.1.c · MP.2.c</td><td><span class="es">¿Cuentan lo mismo?; «la misma cantidad»; descuentos</span><span class="en">Do they count the same thing?; “the same number”; discounts</span></td></tr>
+<tr><td><a href="lectura-algebra.html#tema4" target="_blank" rel="noopener noreferrer"><span class="es">4. Evaluar expresiones</span><span class="en">4. Evaluating expressions</span></a></td><td>6</td><td>A.1.b · MP.1.a · MP.4.b</td><td><span class="es">Fórmulas en contexto; pagos únicos frente a pagos por unidad</span><span class="en">Formulas in context; one-time charges versus per-unit charges</span></td></tr>
+<tr><td><a href="lectura-algebra.html#tema5" target="_blank" rel="noopener noreferrer"><span class="es">5. Ecuaciones de un paso</span><span class="en">5. One-step equations</span></a></td><td>7</td><td>A.2.a · A.2.b · A.2.c · MP.2.a</td><td><span class="es">«Le quedan», «se reparten», «bajó»: elegir la ecuación antes de resolver</span><span class="en">“Has left,” “split,” “dropped”: choosing the equation before solving</span></td></tr>
+<tr><td><a href="lectura-algebra.html#tema6" target="_blank" rel="noopener noreferrer"><span class="es">6. Detective matemático</span><span class="en">6. Math detective</span></a></td><td>6</td><td>MP.1.d · MP.2.c · MP.3.c · MP.5.a · A.2.c</td><td><span class="es">Datos que sobran, datos que faltan, errores ajenos, escribir problemas propios</span><span class="en">Extra data, missing data, others’ mistakes, writing one’s own problems</span></td></tr>
+</tbody></table></div>
+<h3><span class="es">Tipos de ejercicio</span><span class="en">Exercise types</span></h3>
+<ul>
+<li><span class="es"><strong>Tres lecturas completas</strong> (1.1, 3.1, 4.1, 5.1, 6.5): una historia trabajada en tres a cinco pasos.</span><span class="en"><strong>Full Three Reads</strong> (1.1, 3.1, 4.1, 5.1, 6.5): one story worked through in three to five steps.</span></li>
+<li><span class="es"><strong>Opción múltiple con retroalimentación por opción</strong>: cada distractor representa un error de lectura real y explica por qué no funciona. Las opciones están equilibradas en longitud para que la correcta no se delate.</span><span class="en"><strong>Multiple choice with per-option feedback</strong>: each distractor represents a real reading error and explains why it does not work. Options are balanced in length so the correct one does not stand out.</span></li>
+<li><span class="es"><strong>Expresión escrita</strong>: el programa acepta cualquier forma equivalente (2.25<var>v</var>, 2.25*<var>v</var>, <var>v</var>·2.25) y, cuando se pide, comprueba que esté simplificada. Reconoce las respuestas equivocadas más previsibles y responde a cada una.</span><span class="en"><strong>Written expression</strong>: the program accepts any equivalent form (2.25<var>v</var>, 2.25*<var>v</var>, <var>v</var>·2.25) and, when required, checks that it is simplified. It recognizes the most predictable wrong answers and responds to each one.</span></li>
+<li><span class="es"><strong>Respuesta abierta</strong> (1.6, 6.6): el estudiante inventa su propia historia; luego puede ver un ejemplo de respuesta.</span><span class="en"><strong>Open response</strong> (1.6, 6.6): students write their own story, then can view a sample answer.</span></li>
+</ul>
+<h3><span class="es">Diseño Universal para el Aprendizaje (DUA)</span><span class="en">Universal Design for Learning (UDL)</span></h3>
+<ul>
+<li><span class="es"><strong>Representación:</strong> texto en español, inglés o ambos; lectura en voz alta de cada historia; tipografía Atkinson Hyperlegible; contraste AA o superior.</span><span class="en"><strong>Representation:</strong> text in Spanish, English, or both; read-aloud for every story; Atkinson Hyperlegible font; AA contrast or better.</span></li>
+<li><span class="es"><strong>Acción y expresión:</strong> elegir, escribir expresiones, escribir historias propias; dos intentos antes de ver la solución; hoja imprimible.</span><span class="en"><strong>Action and expression:</strong> choosing, writing expressions, writing their own stories; two tries before seeing the solution; printable worksheet.</span></li>
+<li><span class="es"><strong>Implicación:</strong> contextos de la vida adulta en Chicago (la CTA, un taller, los tamales de La Villita, el invierno); progreso visible por tema; el error se trata como información, no como fracaso.</span><span class="en"><strong>Engagement:</strong> adult-life contexts in Chicago (the CTA, a repair shop, tamales in Little Village, winter); visible progress by topic; mistakes are treated as information, not failure.</span></li>
+</ul>
+</div>
+</details>
+
+<!-- 5 -->
+<details class="seccion" id="uso">
+<summary><span class="num" aria-hidden="true">5</span><h2><span class="es">Cómo usar el material</span><span class="en">How to use the material</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<h3><span class="es">Clase en línea (Zoom)</span><span class="en">Online class (Zoom)</span></h3>
+<ol>
+<li><span class="es">Comparta la pantalla con el ejercicio abierto y lea la historia en voz alta, con los números tapados si lo desea (la pregunta oculta, como en la rutina original).</span><span class="en">Share your screen with the exercise open and read the story aloud, covering the numbers if you wish (question hidden, as in the original routine).</span></li>
+<li><span class="es">Pida respuestas a la 1.ª lectura en el chat <em>antes</em> de hacer clic. Anote el lenguaje de los estudiantes sobre la pantalla.</span><span class="en">Ask for 1st-read responses in the chat <em>before</em> clicking. Write students’ language on the screen.</span></li>
+<li><span class="es">Para la 2.ª y la 3.ª lectura, use salas pequeñas (Breakout rooms) de 3 o 4 estudiantes con el enlace directo al ejercicio.</span><span class="en">For the 2nd and 3rd reads, use small breakout rooms (Breakout rooms) of 3 or 4 students with the direct link to the exercise.</span></li>
+<li><span class="es">De vuelta en la sala principal, compare estrategias y comente las opciones incorrectas: son la mejor fuente de conversación.</span><span class="en">Back in the main room, compare strategies and discuss the wrong options: they are the best source of conversation.</span></li>
+</ol>
+<h3><span class="es">Clase presencial o impresa</span><span class="en">In-person or printed</span></h3>
+<p><span class="es">El botón «Hoja imprimible» abre todos los temas y genera una hoja de trabajo sin retroalimentación, con líneas para escribir. Imprima en el idioma que necesite (o en los dos). La clave está en la sección 7 de esta guía.</span><span class="en">The “Printable worksheet” button opens every topic and produces a worksheet without feedback, with lines for writing. Print in the language you need (or both). The answer key is in section 7 of this guide.</span></p>
+<h3><span class="es">Estudio independiente (GEDparaHispanos)</span><span class="en">Independent study (GEDparaHispanos)</span></h3>
+<p><span class="es">El interactivo está pensado para el estudiante autodidacta: cada respuesta tiene retroalimentación inmediata, y el progreso por tema se ve en el encabezado.</span><span class="en">The interactive is designed for self-directed learners: every answer gets immediate feedback, and progress by topic is shown in each header.</span></p>
+<h3><span class="es">Enlaces directos</span><span class="en">Direct links</span></h3>
+<p><span class="es">Cada tema y cada ejercicio tiene su propia ancla, útil para Brightspace (enlace externo), el chat de Zoom o un correo:</span><span class="en">Each topic and each exercise has its own anchor, useful for Brightspace (external link), Zoom chat, or email:</span></p>
+<ul>
+<li><span class="es">Un tema:</span><span class="en">A topic:</span> <code>https://zhemaria.github.io/algebra/lectura-algebra.html#tema3</code></li>
+<li><span class="es">Un ejercicio (tema 5, ejercicio 2):</span><span class="en">An exercise (topic 5, exercise 2):</span> <code>…/lectura-algebra.html#t5-e2</code></li>
+<li><span class="es">Abrir en inglés:</span><span class="en">Open in English:</span> <code>…/lectura-algebra.html?lang=en#tema1</code></li>
+<li><span class="es">Abrir en los dos idiomas:</span><span class="en">Open in both languages:</span> <code>…/lectura-algebra.html?lang=bi</code></li>
+</ul>
+<h3><span class="es">Secuencia sugerida</span><span class="en">Suggested sequence</span></h3>
+<p><span class="es">Un tema por sesión (de 45 a 60 minutos), en orden. El Tema 6 funciona como repaso integrador o como evaluación formativa. Antes del Tema 4, el tendedero en la recta numérica sirve de calentamiento.</span><span class="en">One topic per session (45 to 60 minutes), in order. Topic 6 works as an integrative review or a formative assessment. Before Topic 4, the number-line clothesline makes a good warm-up.</span></p>
+</div>
+</details>
+
+<!-- 6 -->
+<details class="seccion" id="errores">
+<summary><span class="num" aria-hidden="true">6</span><h2><span class="es">Análisis de errores</span><span class="en">Error analysis</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">Siguiendo la propuesta de Hajovsky, esta tabla clasifica los errores previstos según su origen probable. Sirve para decidir qué apoyo dar: si el error es de lenguaje, se relee y se parafrasea; si es de razonamiento, se pregunta qué dato importa; si es de cálculo, se practica el procedimiento.</span><span class="en">Following Hajovsky’s proposal, this table classifies the anticipated errors by their likely source. It helps decide what support to give: for a language error, reread and paraphrase; for a reasoning error, ask which information matters; for a calculation error, practice the procedure.</span></p>
+<div class="tabla-scroll"><table>
+<caption><span class="es">Errores previstos y su origen probable</span><span class="en">Anticipated errors and their likely source</span></caption>
+<thead><tr><th scope="col"><span class="es">Error</span><span class="en">Error</span></th><th scope="col"><span class="es">Ejemplo</span><span class="en">Example</span></th><th scope="col"><span class="es">Origen probable</span><span class="en">Likely source</span></th><th scope="col"><span class="es">Ejercicios</span><span class="en">Exercises</span></th></tr></thead>
+<tbody>
+<tr><td><span class="es">Definir la variable como un objeto o sin precisión</span><span class="en">Defining the variable as an object or vaguely</span></td><td><span class="es">«<var>h</var> = horas», «<var>m</var> = el teléfono»</span><span class="en">“<var>h</var> = hours,” “<var>m</var> = the phone”</span></td><td><span class="es">Lenguaje</span><span class="en">Language</span></td><td>1.1, 1.2, 3.1</td></tr>
+<tr><td><span class="es">Invertir «menos que»</span><span class="en">Reversing “less than”</span></td><td>5 − <var>n</var> <span class="es">en lugar de</span><span class="en">instead of</span> <var>n</var> − 5</td><td><span class="es">Lenguaje</span><span class="en">Language</span></td><td>2.1, 2.5, 2.6, 6.3</td></tr>
+<tr><td><span class="es">Ignorar comas o paréntesis</span><span class="en">Ignoring commas or parentheses</span></td><td>2<var>n</var> + 7 ↔ 2(<var>n</var> + 7)</td><td><span class="es">Lenguaje</span><span class="en">Language</span></td><td>2.2–2.4, 3.7</td></tr>
+<tr><td><span class="es">Sumar en vez de multiplicar una tasa</span><span class="en">Adding a rate instead of multiplying</span></td><td><var>v</var> + 2.25</td><td><span class="es">Lenguaje («cada», «por»)</span><span class="en">Language (“each,” “per”)</span></td><td>1.1, 5.1, 5.7, 6.5</td></tr>
+<tr><td><span class="es">Multiplicar un cargo único</span><span class="en">Multiplying a one-time charge</span></td><td>4.5<var>m</var>; (200 + 15) · 40</td><td><span class="es">Razonamiento</span><span class="en">Reasoning</span></td><td>4.1, 4.6</td></tr>
+<tr><td><span class="es">Usar todos los números</span><span class="en">Using every number</span></td><td><span class="es">26 + 10 = edad del pastor</span><span class="en">26 + 10 = shepherd’s age</span></td><td><span class="es">Razonamiento</span><span class="en">Reasoning</span></td><td>6.1, 6.2, 6.5</td></tr>
+<tr><td><span class="es">Juntar términos no semejantes</span><span class="en">Combining unlike terms</span></td><td>4<var>x</var> + 3 = 7<var>x</var></td><td><span class="es">Concepto</span><span class="en">Concept</span></td><td>3.3, 3.5</td></tr>
+<tr><td><span class="es">Operación no inversa</span><span class="en">Not using the inverse operation</span></td><td><var>x</var> + 9 = 20 → <var>x</var> = 29</td><td><span class="es">Procedimiento</span><span class="en">Procedure</span></td><td>5.2, 5.3, 5.5, 5.6</td></tr>
+<tr><td><span class="es">Errores de signo</span><span class="en">Sign errors</span></td><td>5 − 2(−2) = 1</td><td><span class="es">Cálculo / sentido numérico</span><span class="en">Calculation / number sense</span></td><td>4.3, 4.5, 5.6</td></tr>
+<tr><td><span class="es">Orden de las operaciones</span><span class="en">Order of operations</span></td><td>1.8(30 + 32)</td><td><span class="es">Procedimiento</span><span class="en">Procedure</span></td><td>4.4</td></tr>
+</tbody></table></div>
+</div>
+</details>
+
+<!-- 7 -->
+<details class="seccion" id="clave">
+<summary><span class="num" aria-hidden="true">7</span><h2><span class="es">Clave de respuestas</span><span class="en">Answer key</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">En los pasos de opción múltiple se indica el contenido de la respuesta correcta, porque el orden de las opciones puede cambiar en futuras versiones.</span><span class="en">For multiple-choice steps, the content of the correct answer is given, because option order may change in future versions.</span></p>
+<div class="tabla-scroll"><table>
+<caption><span class="es">Respuestas por ejercicio</span><span class="en">Answers by exercise</span></caption>
+<thead><tr><th scope="col">#</th><th scope="col"><span class="es">Respuestas (por pasos)</span><span class="en">Answers (by step)</span></th></tr></thead>
+<tbody>
+<tr><td>1.1</td><td><span class="es">Paga el autobús para ir a trabajar · <var>v</var> = número de viajes en una semana · sobra la edad · 2.25<var>v</var></span><span class="en">Pays for the bus to get to work · <var>v</var> = number of rides in one week · age is extra · 2.25<var>v</var></span></td></tr>
+<tr><td>1.2</td><td><span class="es"><var>h</var> = número de horas que trabaja el pintor</span><span class="en"><var>h</var> = number of hours the painter works</span></td></tr>
+<tr><td>1.3</td><td><span class="es">El número de horas y el de piezas · 45<var>h</var> + 12<var>p</var></span><span class="en">The number of hours and of parts · 45<var>h</var> + 12<var>p</var></span></td></tr>
+<tr><td>1.4</td><td><span class="es">El número de millas del viaje</span><span class="en">The number of miles in the trip</span></td></tr>
+<tr><td>1.5</td><td><span class="es">El dinero que guardó en esas <var>s</var> semanas</span><span class="en">The money he saved during those <var>s</var> weeks</span></td></tr>
+<tr><td>1.6</td><td><span class="es">Abierta. Debe definir <var>p</var> como «número de…» y 8 como precio o tasa por unidad.</span><span class="en">Open. Must define <var>p</var> as “number of…” and 8 as a price or rate per unit.</span></td></tr>
+<tr><td>2.1</td><td><var>n</var> − 5</td></tr>
+<tr><td>2.2</td><td>2<var>n</var> + 7</td></tr>
+<tr><td>2.3</td><td>2(<var>n</var> + 7)</td></tr>
+<tr><td>2.4</td><td>(<var>n</var> − 4)/3</td></tr>
+<tr><td>2.5</td><td>3<var>n</var> − 3</td></tr>
+<tr><td>2.6</td><td>2<var>x</var> − 4</td></tr>
+<tr><td>2.7</td><td><span class="es">6 disminuido en un número</span><span class="en">6 decreased by a number</span></td></tr>
+<tr><td>3.1</td><td><span class="es">Una mamá paga los teléfonos · <var>m</var> = número de meses · sobra la edad · 65<var>m</var> · $195</span><span class="en">A mother pays for the phones · <var>m</var> = number of months · age is extra · 65<var>m</var> · $195</span></td></tr>
+<tr><td>3.2</td><td>6<var>c</var> + 8<var>p</var></td></tr>
+<tr><td>3.3</td><td>7<var>x</var> <span class="es">y</span><span class="en">and</span> −2<var>x</var></td></tr>
+<tr><td>3.4</td><td>7<var>x</var> − 5</td></tr>
+<tr><td>3.5</td><td><span class="es">Juntó un término con variable y un número sin variable</span><span class="en">He combined a term with a variable and a number without one</span></td></tr>
+<tr><td>3.6</td><td>4<var>n</var> − 2</td></tr>
+<tr><td>3.7</td><td>5<var>x</var> + 8</td></tr>
+<tr><td>4.1</td><td><span class="es">Cuánto cuesta un viaje · sobra el año del carro · 3 + 1.5<var>m</var> · $15</span><span class="en">How much a trip costs · the car’s year is extra · 3 + 1.5<var>m</var> · $15</span></td></tr>
+<tr><td>4.2</td><td>13</td></tr>
+<tr><td>4.3</td><td>9</td></tr>
+<tr><td>4.4</td><td>86 °F</td></tr>
+<tr><td>4.5</td><td><var>x</var> = 4, 2<var>x</var> = 8, −<var>x</var> = −4, <var>x</var>/2 = 2 · −<var>x</var></td></tr>
+<tr><td>4.6</td><td>$800</td></tr>
+<tr><td>5.1</td><td><span class="es">Saber cuántos viajes hizo · 27 es el gasto total · 2.25<var>v</var> = 27 · 12 viajes</span><span class="en">Find how many rides she took · 27 is the total spent · 2.25<var>v</var> = 27 · 12 rides</span></td></tr>
+<tr><td>5.2</td><td><var>x</var> − 18 = 45 · $63</td></tr>
+<tr><td>5.3</td><td>18</td></tr>
+<tr><td>5.4</td><td><var>c</var> ÷ 3 = 16 · $48</td></tr>
+<tr><td>5.5</td><td><span class="es">Sumó 9 en lugar de restarlo · 11</span><span class="en">She added 9 instead of subtracting it · 11</span></td></tr>
+<tr><td>5.6</td><td><var>t</var> − 7 = −3 · 4 °F</td></tr>
+<tr><td>5.7</td><td><span class="es">Sobra la hora de salida · 4<var>p</var> = 52 · 13 libras</span><span class="en">The departure time is extra · 4<var>p</var> = 52 · 13 pounds</span></td></tr>
+<tr><td>6.1</td><td><span class="es">No se puede saber</span><span class="en">It cannot be known</span></td></tr>
+<tr><td>6.2</td><td><span class="es">No se puede saber: falta el precio de las papas</span><span class="en">It cannot be known: the price of the potatoes is missing</span></td></tr>
+<tr><td>6.3</td><td>3<var>n</var> − 4 = 20</td></tr>
+<tr><td>6.4</td><td><span class="es">Lo que cuestan todos los mensajes del mes</span><span class="en">What all the messages for the month cost</span></td></tr>
+<tr><td>6.5</td><td><span class="es">Un vendedor y sus ventas · el dato de 120 sirve para comprobar · 2<var>t</var> = 168 · 84 tamales</span><span class="en">A vendor and his sales · the 120 is used to check · 2<var>t</var> = 168 · 84 tamales</span></td></tr>
+<tr><td>6.6</td><td><span class="es">Abierta. La historia debe llevar a <var>x</var> + 15 = 40 (<var>x</var> = 25) e incluir un dato que sobra.</span><span class="en">Open. The story must lead to <var>x</var> + 15 = 40 (<var>x</var> = 25) and include one extra piece of information.</span></td></tr>
+</tbody></table></div>
+</div>
+</details>
+
+<!-- 8 -->
+<details class="seccion" id="referencias" open>
+<summary><span class="num" aria-hidden="true">8</span><h2><span class="es">Referencias</span><span class="en">References</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<ul class="referencias">
+<li>CAST. (2024). <i>Universal design for learning guidelines</i> (version 3.0). <a href="https://udlguidelines.cast.org" target="_blank" rel="noopener noreferrer">https://udlguidelines.cast.org</a></li>
+<li>GED Testing Service. (2014). <i>Assessment guide for educators: Mathematical reasoning</i>. <a href="https://www.ged.com/wp-content/uploads/assessment_guide_for_educators_math.pdf" target="_blank" rel="noopener noreferrer">https://www.ged.com/wp-content/uploads/assessment_guide_for_educators_math.pdf</a></li>
+<li>Lawson, E. (2026, octubre). Why are some people good at math while others struggle? <i>Phys.org</i>. <a href="https://phys.org/news/2026-10-people-good-math-struggle.html" target="_blank" rel="noopener noreferrer">https://phys.org/news/2026-10-people-good-math-struggle.html</a></li>
+<li>Niileksela, C. R., Hajovsky, D. B., Cocar-Montenegro, F. P., Schneider, W. J., Flanagan, D. P., &amp; Alfonso, V. C. (2026). Cognitive–mathematics relations: A meta-analysis of norm-referenced standardized test batteries. <i>Journal of Intelligence, 14</i>(7), 142. <a href="https://doi.org/10.3390/jintelligence14070142" target="_blank" rel="noopener noreferrer">https://doi.org/10.3390/jintelligence14070142</a></li>
+<li>Shore, C. (s. f.). <i>Clothesline Math</i>. <a href="https://clotheslinemath.com/" target="_blank" rel="noopener noreferrer">https://clotheslinemath.com/</a></li>
+<li>Wills, T. (s. f.). <i>Continuum (clothesline math) in online classrooms</i> [Plantilla de Google Slides]. theresawills.com</li>
+<li>Zwiers, J., Dieckmann, J., Rutherford-Quach, S., Daro, V., Skarin, R., Weiss, S., &amp; Malamut, J. (2017). <i>Principles for the design of mathematics curricula: Promoting language and content development</i>. Stanford University, UL/SCALE. <a href="https://ul.stanford.edu/sites/default/files/resource/2021-11/Principles%20for%20the%20Design%20of%20Mathematics%20Curricula_1.pdf" target="_blank" rel="noopener noreferrer">ul.stanford.edu</a></li>
+</ul>
+</div>
+</details>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p><span class="es">Este material se distribuye con la licencia</span><span class="en">This material is licensed under</span> <a rel="license noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative Commons BY-NC-SA 4.0</a>.</p>
+  </div>
+</footer>
+<script>
+"use strict";
+function ponerIdioma(lang){
+  document.documentElement.dataset.lang = lang;
+  document.documentElement.lang = lang === "en" ? "en" : "es";
+  document.querySelectorAll("[data-set-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.setLang === lang ? "true" : "false"));
+  try { localStorage.setItem("guia-lectura-algebra-idioma", lang); } catch (e) {}
+}
+function abrirDestino(){
+  const h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
+  const el = document.getElementById(h); if (!el) return;
+  const d = el.tagName === "DETAILS" ? el : el.closest("details"); if (d) d.open = true;
+  setTimeout(() => el.scrollIntoView({behavior:"smooth", block:"start"}), 50);
+}
+document.addEventListener("DOMContentLoaded", () => {
+  let lang = "es";
+  try { lang = localStorage.getItem("guia-lectura-algebra-idioma") || "es"; } catch (e) {}
+  const q = new URLSearchParams(location.search).get("lang");
+  if (q && ["es","en","bi"].includes(q)) lang = q;
+  ponerIdioma(lang);
+  document.querySelectorAll("[data-set-lang]").forEach(b => b.addEventListener("click", () => ponerIdioma(b.dataset.setLang)));
+  document.getElementById("abrir-todo").addEventListener("click", () => document.querySelectorAll("details.seccion").forEach(d => d.open = true));
+  document.getElementById("cerrar-todo").addEventListener("click", () => document.querySelectorAll("details.seccion").forEach(d => d.open = false));
+  window.addEventListener("beforeprint", () => document.querySelectorAll("details.seccion").forEach(d => d.open = true));
+  document.querySelectorAll("nav.indice a").forEach(a => a.addEventListener("click", () => setTimeout(abrirDestino, 0)));
+  window.addEventListener("hashchange", abrirDestino);
+  abrirDestino();
+});
+</script>
+</body>
+</html>
