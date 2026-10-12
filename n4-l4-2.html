@@ -5,7 +5,7 @@
   Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
   Licencia: Creative Commons CC BY-NC-SA 4.0
   https://creativecommons.org/licenses/by-nc-sa/4.0/
-  Anclas internas: #visual · #pasos · #dividir · #sumar
+  Anclas internas: #visual · #pasos · #dividir · #sumar · #origen
 -->
 <html lang="es">
 <head>
@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactivo · Lección 4.2: completar el cuadrado</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Interactivo de práctica para la Lección 4.2 del Nivel 4: la idea visual de completar el cuadrado, los cinco pasos, el caso a ≠ 1 y el término (b/2)².">
+<meta name="description" content="Interactivo de práctica para la Lección 4.2 del Nivel 4: la idea visual de completar el cuadrado, los cinco pasos, el caso a ≠ 1, el término (b/2)² y el origen de la fórmula cuadrática.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
@@ -158,7 +158,7 @@
   <header class="principal">
     <div class="ruta">Nivel 4 · Tema 4 · Ecuaciones cuadráticas</div>
     <h1>Lección 4.2 · Completar el cuadrado</h1>
-    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+    <div class="meta">Cinco prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
   </header>
 
   <nav class="indice" aria-labelledby="titulo-indice">
@@ -168,6 +168,7 @@
       <li><a href="#pasos">Los cinco pasos (cuando a = 1)</a></li>
       <li><a href="#dividir">Cuando a ≠ 1: dividir primero</a></li>
       <li><a href="#sumar">¿Cuánto hay que sumar?</a></li>
+      <li><a href="#origen">El origen de la fórmula cuadrática</a></li>
     </ol>
     <div class="controles-todo">
       <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
@@ -344,6 +345,61 @@
           <button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button>
         </div>
         <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 5 ============ -->
+  <details class="modulo" id="origen">
+    <summary>
+      <span class="num" aria-hidden="true">5</span>
+      <h2>El origen de la fórmula cuadrática</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Si se completa el cuadrado en la ecuación general <strong>ax² + bx + c = 0</strong> (sin números, solo letras), el resultado es exactamente la <strong>fórmula cuadrática</strong>:</p>
+      <p class="formula">x = (−b ± √(b² − 4ac)) / 2a</p>
+      <p>No es un truco aislado: es la demostración de dónde proviene la fórmula que se usará en la Lección 4.3 para resolver <em>cualquier</em> ecuación cuadrática. Se aplican los mismos pasos que en la sección 3, pero con letras.</p>
+
+      <h3>Observa: la derivación, paso a paso</h3>
+      <div class="panel">
+        <p class="enun">Completar el cuadrado en ax² + bx + c = 0</p>
+        <div class="fila-btn">
+          <button type="button" class="btn-acento" id="o-siguiente">Siguiente paso</button>
+          <button type="button" class="btn-sec" id="o-todo">Ver todos los pasos</button>
+          <button type="button" class="btn" id="o-reinicia">Empezar de nuevo</button>
+        </div>
+        <div class="pasos" id="o-pasos" aria-live="polite"></div>
+        <p class="linea veredicto" id="o-resultado" aria-live="polite"></p>
+      </div>
+
+      <h3>Observa: los mismos pasos con números</h3>
+      <div class="panel">
+        <p class="enun" id="o-num-enunciado"></p>
+        <div class="fila-btn">
+          <button type="button" class="btn-acento" id="o-num-siguiente">Siguiente paso</button>
+          <button type="button" class="btn-sec" id="o-num-todo">Ver todos los pasos</button>
+          <button type="button" class="btn" id="o-num-caso">Otro caso</button>
+        </div>
+        <div class="pasos" id="o-num-pasos" aria-live="polite"></div>
+        <div class="salida" id="o-num-salida" aria-live="polite" hidden>
+          <p class="linea" id="o-num-formula"></p>
+          <p class="linea veredicto" id="o-num-veredicto"></p>
+        </div>
+      </div>
+
+      <div class="caja-tip"><strong>Fíjate en el paso 4:</strong> el lado derecho (b² − 4ac)/4a² es justo lo que queda dentro de la raíz en la fórmula. Al sacar la raíz, √(4a²) = 2a: de ahí sale el denominador 2a.</div>
+
+      <h3>Practica: sigue la derivación</h3>
+      <div class="practica">
+        <div class="enun" id="p5-enun"></div>
+        <div class="opciones" id="p5-opciones"></div>
+        <div class="fb" id="p5-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p5-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p5-marcador">Aciertos: 0 de 0</p>
       </div>
       <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
     </div>
@@ -592,6 +648,171 @@ function nuevaP4(){
   preparaOpciones("p4", opciones, correcta, p4,
     "La mitad de " + signoNum(b) + " es " + fraccion(b, 2) + ", y al elevarla al cuadrado queda " + correcta + (b % 2 ? ". Con b impar, el resultado es una fracción." : "."));
 }
+
+/* ============================================================
+   Módulo 5 · El origen de la fórmula cuadrática
+   ============================================================ */
+/* Expresión que queda después de cada paso (índice 0 = ecuación de partida) */
+var ORIGEN_EXPR = [
+  "ax² + bx + c = 0",
+  "x² + (b/a)x + c/a = 0",
+  "x² + (b/a)x = −c/a",
+  "x² + (b/a)x + b²/4a² = b²/4a² − c/a",
+  "(x + b/2a)² = (b² − 4ac)/4a²",
+  "x + b/2a = ±√(b² − 4ac) / 2a",
+  "x = (−b ± √(b² − 4ac)) / 2a"
+];
+/* Lo que se hace en cada paso (1 a 6), con el texto de la lección */
+var ORIGEN_ACCION = [
+  "",
+  "Se divide todo entre a",
+  "Se pasa la constante al otro lado",
+  "Se suma (b/2a)² = b²/4a² en ambos lados",
+  "Se factoriza el cuadrado perfecto y se usa denominador común",
+  "Se saca raíz cuadrada sin olvidar el ±",
+  "Se despeja x restando b/2a"
+];
+/* Acciones erróneas frecuentes, usadas como distractores */
+var ORIGEN_ACCION_MAL = [
+  "",
+  "Se divide entre a solo el término bx",
+  "Se pasa el término (b/a)x al otro lado",
+  "Se suma la mitad, b/2a, en ambos lados",
+  "Se multiplica todo por 4a² para quitar denominadores",
+  "Se saca raíz cuadrada solo del lado izquierdo",
+  "Se despeja x sumando b/2a"
+];
+/* Siguientes expresiones erróneas para cada paso (errores reales) */
+var ORIGEN_EXPR_MAL = [
+  [],
+  ["x² + bx + c/a = 0", "x² + (b/a)x + c = 0", "x² + (a/b)x + c/a = 0"],
+  ["x² + (b/a)x = c/a", "x² = −(b/a)x − c/a", "x² + (b/a)x = −c"],
+  ["x² + (b/a)x + b/2a = b/2a − c/a", "x² + (b/a)x + b²/4a² = −c/a", "x² + (b/a)x + b²/4a² = b²/4a² + c/a"],
+  ["(x + b/a)² = (b² − 4ac)/4a²", "(x + b/2a)² = (b² − 4c)/4a²", "(x + b/2a)² = (b² − 4ac)/2a"],
+  ["x + b/2a = √(b² − 4ac) / 2a", "x + b/2a = ±√(b² − 4ac) / 4a²", "x + b/2a = ±(b² − 4ac) / 2a"],
+  ["x = (b ± √(b² − 4ac)) / 2a", "x = −b/2a ± √(b² − 4ac)", "x = (−b ± √(b² + 4ac)) / 2a"]
+];
+/* Explicación de cada paso para la retroalimentación */
+var ORIGEN_EXPLICA = [
+  "",
+  "Para que el coeficiente de x² sea 1, se dividen los tres términos entre a: bx ÷ a = (b/a)x y c ÷ a = c/a.",
+  "Se resta c/a en ambos lados, para dejar a un lado solo los términos con x: queda −c/a a la derecha.",
+  "La mitad del coeficiente de x es (b/a) ÷ 2 = b/2a, y al cuadrado queda b²/4a². Se suma en ambos lados para mantener la igualdad.",
+  "A la izquierda, x² + (b/a)x + b²/4a² = (x + b/2a)². A la derecha, con denominador común 4a²: b²/4a² − 4ac/4a² = (b² − 4ac)/4a².",
+  "Al sacar la raíz aparecen dos signos (±). Además, √(4a²) = 2a, por eso el denominador queda 2a.",
+  "Se resta b/2a en ambos lados; como los dos términos tienen denominador 2a, se escriben juntos: x = (−b ± √(b² − 4ac)) / 2a."
+];
+
+var oLetras = new Pasador("o-pasos");
+function origenPasosLetras(){
+  var pasos = [];
+  for (var i = 1; i <= 6; i++) pasos.push(ORIGEN_ACCION[i] + ": " + ORIGEN_EXPR[i] + ".");
+  return pasos;
+}
+function origenReiniciaLetras(){ oLetras.carga(origenPasosLetras()); origenMuestraResultado(); }
+function origenMuestraResultado(){
+  $("o-resultado").textContent = oLetras.i >= oLetras.pasos.length
+    ? "Resultado: la fórmula cuadrática, la misma que aparece en la hoja de fórmulas del GED." : "";
+}
+
+/* Caso numérico ax² + Bx + C = 0 con a de 2 a 4 y raíces enteras (suma par) */
+function origenCasoNumerico(){
+  var rr = raicesPares(5), a = aleatorio(2, 4);
+  var s = rr[0] + rr[1], p = rr[0]*rr[1];
+  var h = -s/2, d = Math.abs(rr[0] - rr[1])/2;
+  var B = -a*s, C = a*p;
+  return {a:a, B:B, C:C, ba:-s, ca:p, h:h, k:h*h, d:d, delta:B*B - 4*a*C,
+          r1:Math.max(rr[0], rr[1]), r2:Math.min(rr[0], rr[1])};
+}
+function origenXmas(h){ return "x" + (h < 0 ? " − " + Math.abs(h) : " + " + h); }
+function origenPasosNumericos(k){
+  return [
+    "Se divide todo entre " + k.a + ": " + ecuacion(1, k.ba, k.ca) + ".",
+    "Se pasa la constante al otro lado: x²" + conSigno(k.ba, "x") + " = " + signoNum(-k.ca) + ".",
+    "Se suma (b/2a)² = (" + signoNum(k.B) + "/" + (2*k.a) + ")² = " + k.k + " en ambos lados: x²" + conSigno(k.ba, "x") + " + " + k.k + " = " + signoNum(-k.ca + k.k) + ".",
+    "Cuadrado perfecto: " + binomio(k.h) + " = " + signoNum(-k.ca + k.k) + ". (Con letras: (b² − 4ac)/4a² = " + k.delta + "/" + (4*k.a*k.a) + " = " + (k.delta/(4*k.a*k.a)) + ".)",
+    "Raíz cuadrada con ±: " + origenXmas(k.h) + " = ±" + k.d + ".",
+    "Se despeja x: x = " + signoNum(-k.h) + " + " + k.d + " = " + signoNum(k.r1) + " o x = " + signoNum(-k.h) + " − " + k.d + " = " + signoNum(k.r2) + "."
+  ];
+}
+var oNum = new Pasador("o-num-pasos"), oCaso = null;
+function origenNuevoCaso(){
+  oCaso = origenCasoNumerico();
+  $("o-num-enunciado").textContent = "Resolver " + ecuacion(oCaso.a, oCaso.B, oCaso.C) + " (a = " + oCaso.a + ", b = " + signoNum(oCaso.B) + ", c = " + signoNum(oCaso.C) + ")";
+  oNum.carga(origenPasosNumericos(oCaso));
+  origenMuestraFormula();
+}
+function origenMuestraFormula(){
+  var k = oCaso, caja = $("o-num-salida");
+  if (oNum.i < oNum.pasos.length){ caja.hidden = true; return; }
+  var raiz = Math.sqrt(k.delta), den = 2*k.a;
+  $("o-num-formula").textContent = "Con la fórmula: x = (" + signoNum(-k.B) + " ± √(" + k.delta + ")) / " + den +
+    " = (" + signoNum(-k.B) + " ± " + raiz + ") / " + den + ", es decir, x = " + signoNum(k.r1) + " o x = " + signoNum(k.r2) + ".";
+  $("o-num-veredicto").textContent = "Coinciden: completar el cuadrado y la fórmula dan las mismas soluciones.";
+  caja.hidden = false;
+}
+
+/* Práctica 5: cuatro tipos de pregunta */
+var p5 = {aciertos:0, total:0, ultimoTipo:-1};
+function origenSinRepetir(lista){ return lista.filter(function(o, i){ return lista.indexOf(o) === i; }); }
+function origenPreguntaAccion(){
+  var n = aleatorio(1, 6);
+  var enun = "En la derivación, la ecuación «" + ORIGEN_EXPR[n-1] + "» se convierte en «" + ORIGEN_EXPR[n] + "». ¿Qué se hizo en este paso?";
+  var otros = [];
+  for (var i = 1; i <= 6; i++) if (i !== n && Math.abs(i - n) <= 2) otros.push(ORIGEN_ACCION[i]);
+  baraja(otros);
+  var opciones = [ORIGEN_ACCION[n], ORIGEN_ACCION_MAL[n], otros[0], otros[1]];
+  return {enun:enun, opciones:opciones, correcta:ORIGEN_ACCION[n], explica:"Paso " + n + ": " + ORIGEN_EXPLICA[n]};
+}
+function origenPreguntaSiguiente(){
+  var n = aleatorio(1, 6);
+  var enun = "Se tiene «" + ORIGEN_EXPR[n-1] + "». Siguiente paso: " + ORIGEN_ACCION[n].charAt(0).toLowerCase() + ORIGEN_ACCION[n].slice(1) + ". ¿Qué ecuación queda?";
+  var opciones = [ORIGEN_EXPR[n]].concat(ORIGEN_EXPR_MAL[n]);
+  return {enun:enun, opciones:opciones, correcta:ORIGEN_EXPR[n], explica:"Paso " + n + ": " + ORIGEN_EXPLICA[n]};
+}
+function origenPreguntaSuma(){
+  var k; do { k = origenCasoNumerico(); } while (Math.abs(k.h) < 2);
+  var correcta = String(k.k);
+  /* errores: no dividir antes, no elevar al cuadrado, no sacar la mitad, b²/4a, doblar */
+  var cand = [correcta, String(k.a*k.a*k.k), signoNum(k.h), String(k.ba*k.ba), String(k.a*k.k), String(2*k.k)];
+  var opciones = origenSinRepetir(cand).slice(0, 4);
+  return {enun:"Para resolver " + ecuacion(k.a, k.B, k.C) + " completando el cuadrado, primero se divide entre " + k.a +
+                 " y queda " + ecuacion(1, k.ba, k.ca) + ". ¿Qué número se suma en ambos lados?",
+          opciones:opciones, correcta:correcta,
+          explica:"Después de dividir, el coeficiente de x es " + signoNum(k.ba) + " (es decir, b/a). Su mitad es " + signoNum(k.h) +
+                  " = b/2a, y al cuadrado queda " + k.k + ". Es el mismo número que (b/2a)² = (" + signoNum(k.B) + "/" + (2*k.a) + ")² = " + k.k + "."};
+}
+function origenPreguntaCoincide(){
+  var k = origenCasoNumerico(), D = -k.ca + k.k;
+  var correcta = String(k.delta);
+  var cand = [correcta, String(k.B*k.B + 4*k.a*k.C), String(k.B*k.B - 4*k.C), String(D), String(k.B*k.B - 2*k.a*k.C)];
+  var opciones = origenSinRepetir(cand).slice(0, 4);
+  return {enun:"Al completar el cuadrado en " + ecuacion(k.a, k.B, k.C) + " se llega a " + binomio(k.h) + " = " + D +
+                 ". Ese " + D + " es (b² − 4ac)/4a² de la fórmula. ¿Cuánto vale b² − 4ac en esta ecuación?",
+          opciones:opciones, correcta:correcta,
+          explica:"Con a = " + k.a + ", b = " + signoNum(k.B) + " y c = " + signoNum(k.C) + ": b² − 4ac = " + (k.B*k.B) + " − 4(" + k.a + ")(" + signoNum(k.C) + ") = " + k.delta +
+                  ". Y " + k.delta + "/4a² = " + k.delta + "/" + (4*k.a*k.a) + " = " + D + ": coincide con lo que dio completar el cuadrado."};
+}
+var ORIGEN_TIPOS = [origenPreguntaAccion, origenPreguntaSiguiente, origenPreguntaSuma, origenPreguntaCoincide];
+function origenGeneraP5(){
+  var t; do { t = aleatorio(0, ORIGEN_TIPOS.length - 1); } while (t === p5.ultimoTipo);
+  p5.ultimoTipo = t;
+  return ORIGEN_TIPOS[t]();
+}
+function nuevaP5(){
+  var pr = origenGeneraP5();
+  $("p5-enun").textContent = pr.enun;
+  preparaOpciones("p5", pr.opciones, pr.correcta, p5, pr.explica);
+}
+
+$("o-siguiente").addEventListener("click", function(){ oLetras.uno(); origenMuestraResultado(); });
+$("o-todo").addEventListener("click", function(){ oLetras.todos(); origenMuestraResultado(); });
+$("o-reinicia").addEventListener("click", origenReiniciaLetras);
+$("o-num-siguiente").addEventListener("click", function(){ oNum.uno(); origenMuestraFormula(); });
+$("o-num-todo").addEventListener("click", function(){ oNum.todos(); origenMuestraFormula(); });
+$("o-num-caso").addEventListener("click", origenNuevoCaso);
+$("p5-nuevo").addEventListener("click", nuevaP5);
+origenReiniciaLetras(); origenNuevoCaso(); nuevaP5();
 
 /* ============================================================
    Navegación: anclas, abrir/cerrar todo

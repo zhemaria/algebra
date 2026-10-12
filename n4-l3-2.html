@@ -1,0 +1,524 @@
+<!doctype html>
+<!--
+  Interactivo · Lección 3.2 — Factorizar es deshacer la multiplicación
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #deshacer
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 3.2: factorizar es deshacer la multiplicación</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 3.2 del Nivel 4: factorizar es el camino inverso de multiplicar; pasar de la forma factorizada a la desarrollada y comprobar una factorización multiplicando.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#bf360c; --tema-d:#8c2708; --tema-bg:#fbe9e7; --tema-bg2:#f8d3cc;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:190px;}
+  .campo input[type="text"]{width:260px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:560px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas td.constante{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  tr.destacada td{background:var(--tema-bg);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;}
+    .campo input[type="range"],.campo input[type="text"]{width:100%;} }
+  .direccion{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .direccion .btn-sec[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .formas{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin:6px 0;}
+  .forma{background:#fff;border:2px solid var(--tema-bg2);border-radius:8px;padding:6px 14px;color:var(--tema-d);}
+  .forma.activa{border-color:var(--tema);background:var(--tema-bg);}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 3 · Multiplicación y factorización</div>
+    <h1>Lección 3.2 · Factorizar es deshacer la multiplicación</h1>
+    <div class="meta">Práctica interactiva de la sección 1 de la lección. El factor común y la diferencia de cuadrados tienen su propio interactivo.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#deshacer">Factorizar es deshacer la multiplicación</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="deshacer" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Factorizar es deshacer la multiplicación</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p><strong>Factorizar</strong> un polinomio significa escribirlo como un producto. Es lo contrario de multiplicar:
+      al multiplicar se parte de los factores y se llega al polinomio; al factorizar se parte del polinomio y se
+      descubre qué factores lo produjeron. Con números pasa lo mismo: 3 · 4 = 12 es una multiplicación, y escribir
+      12 como 3 · 4 es factorizarlo.</p>
+      <p class="formula">3(x + 2) <span aria-hidden="true">⇄</span><span class="sr-only">, en las dos direcciones,</span> 3x + 6</p>
+      <p>Por eso la mejor manera de comprobar una factorización es <strong>volver a multiplicar</strong>: si se obtiene
+      el polinomio original, la factorización es correcta. Elige una expresión y cambia la dirección.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;">
+            <label for="d-expr">Expresión</label>
+            <select id="d-expr"></select>
+          </div>
+        </div>
+        <div class="direccion" role="group" aria-label="Dirección">
+          <button type="button" class="btn-sec" id="d-multiplicar" aria-pressed="true">Multiplicar <span aria-hidden="true">→</span></button>
+          <button type="button" class="btn-sec" id="d-factorizar" aria-pressed="false"><span aria-hidden="true">←</span> Factorizar</button>
+        </div>
+      </div>
+
+      <div class="grafica">
+        <svg id="d-svg" viewBox="0 0 460 140" role="img" aria-labelledby="d-svg-t d-svg-d">
+          <title id="d-svg-t">Multiplicar y factorizar son caminos opuestos</title>
+          <desc id="d-svg-d">A la izquierda, la forma factorizada; a la derecha, la forma desarrollada. La flecha resaltada indica la dirección elegida.</desc>
+        </svg>
+        <p class="pie-grafica" id="d-svg-texto"></p>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="d-titulo"></div>
+        <div class="pasos" id="d-pasos"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Verificar siempre:</strong> después de factorizar, multiplica los factores. Si el resultado es el polinomio
+        original, la respuesta es correcta. Esta comprobación elimina casi todos los errores.
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Dos errores que la comprobación descubre.</strong> El de <strong>signo</strong>: 3(x − 2) da 3x − 6, no 3x + 6.
+        Y el de <strong>factor incompleto</strong>, cuando el número de fuera no se multiplica por todos los términos:
+        3(x + 6) da 3x + 18, no 3x + 6.
+      </div>
+
+      <h3>Practica: forma factorizada, forma desarrollada y comprobación</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 3.2 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function mcd(a,b){ a=Math.abs(a); b=Math.abs(b); while (b){ var t=b; b=a%b; a=t; } return a; }
+function baraja(lista){
+  for (var i = lista.length-1; i > 0; i--){ var j = aleatorio(0,i), t = lista[i]; lista[i] = lista[j]; lista[j] = t; }
+  return lista;
+}
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function llenaSelect(sel, banco){
+  banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+var MENOS = "−";
+
+/* Escritura de expresiones: término en x con coeficiente (1 → «x») */
+function tx(c){ return (c === 1 ? "" : c) + "x"; }
+function signo(s){ return s > 0 ? " + " : " " + MENOS + " "; }
+/* a(mx ± b) */
+function factorizada(a, m, s, b){ return a + "(" + tx(m) + signo(s) + b + ")"; }
+/* amx ± ab */
+function desarrollada(c1, s, c0){ return tx(c1) + signo(s) + c0; }
+
+/* Motor común de práctica (generador: cada pulsación crea un ejercicio nuevo) */
+function creaPractica(generador, ids){
+  var estado = {p:null, resuelta:false, aciertos:0, total:0, ultimo:""};
+  function pinta(){
+    var p, intentos = 0;
+    do { p = generador(); intentos++; } while (p.q === estado.ultimo && intentos < 20);
+    estado.p = p; estado.ultimo = p.q; estado.resuelta = false;
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = estado.p;
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · Factorizar es deshacer la multiplicación
+   ============================================================ */
+/* Cada entrada: forma factorizada, forma desarrollada y los productos parciales */
+var EXPRESIONES = [
+  { etiqueta:"Con números: 3 · 4 y 12", fact:"3 · 4", des:"12", numerica:true },
+  { etiqueta:"3(x + 2) y 3x + 6", a:"3", fact:"3(x + 2)", des:"3x + 6",
+    terminos:["x","2"], productos:["3x","6"], cuentas:["3 · x = 3x","3 · 2 = 6"] },
+  { etiqueta:"5(x " + MENOS + " 4) y 5x " + MENOS + " 20", a:"5", fact:"5(x " + MENOS + " 4)", des:"5x " + MENOS + " 20",
+    terminos:["x",MENOS + "4"], productos:["5x",MENOS + "20"], cuentas:["5 · x = 5x","5 · (" + MENOS + "4) = " + MENOS + "20"] },
+  { etiqueta:"2(3x + 1) y 6x + 2", a:"2", fact:"2(3x + 1)", des:"6x + 2",
+    terminos:["3x","1"], productos:["6x","2"], cuentas:["2 · 3x = 6x","2 · 1 = 2"] },
+  { etiqueta:"4(2x " + MENOS + " 3) y 8x " + MENOS + " 12", a:"4", fact:"4(2x " + MENOS + " 3)", des:"8x " + MENOS + " 12",
+    terminos:["2x",MENOS + "3"], productos:["8x",MENOS + "12"], cuentas:["4 · 2x = 8x","4 · (" + MENOS + "3) = " + MENOS + "12"] },
+  { etiqueta:"x(x + 5) y x² + 5x", a:"x", fact:"x(x + 5)", des:"x² + 5x",
+    terminos:["x","5"], productos:["x²","5x"], cuentas:["x · x = x²","x · 5 = 5x"] }
+];
+var direccion = "multiplicar";
+
+function dibujaFlechas(e){
+  var svg = $("d-svg"); limpiaSVG(svg);
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el); return el;
+  }
+  var mult = direccion === "multiplicar";
+  var izqActiva = !mult, derActiva = mult;   /* se resalta la forma a la que se llega */
+  [[20, e.fact, izqActiva, "Forma factorizada"], [290, e.des, derActiva, "Forma desarrollada"]].forEach(function(c){
+    crea("rect", {x:c[0], y:40, width:150, height:48, rx:8, fill:c[2] ? "#fbe9e7" : "#fff",
+                  stroke:"#bf360c", "stroke-width":c[2] ? 3.5 : 2});
+    crea("text", {x:c[0]+75, y:71, "text-anchor":"middle", "font-size":18, "font-weight":700, fill:"#8c2708"}, c[1]);
+    crea("text", {x:c[0]+75, y:110, "text-anchor":"middle", "font-size":12, fill:"#555"}, c[3]);
+  });
+  var cM = mult ? "#00695c" : "#9e9e9e", cF = mult ? "#9e9e9e" : "#bf360c";
+  crea("line", {x1:176, y1:54, x2:278, y2:54, stroke:cM, "stroke-width":mult ? 4 : 2});
+  crea("polygon", {points:"285,54 274,48 274,60", fill:cM});
+  crea("text", {x:230, y:44, "text-anchor":"middle", "font-size":13, "font-weight":700, fill:mult ? "#00695c" : "#6b6b6b"}, "multiplicar");
+  crea("line", {x1:284, y1:76, x2:182, y2:76, stroke:cF, "stroke-width":mult ? 2 : 4});
+  crea("polygon", {points:"175,76 186,70 186,82", fill:cF});
+  crea("text", {x:230, y:98, "text-anchor":"middle", "font-size":13, "font-weight":700, fill:mult ? "#6b6b6b" : "#8c2708"}, "factorizar");
+  $("d-svg-texto").textContent = mult
+    ? "Multiplicar: de la forma factorizada " + e.fact + " se llega a la forma desarrollada " + e.des + "."
+    : "Factorizar: de la forma desarrollada " + e.des + " se vuelve a la forma factorizada " + e.fact + ".";
+}
+
+function actualizaDeshacer(){
+  var e = EXPRESIONES[parseInt($("d-expr").value,10) || 0];
+  var mult = direccion === "multiplicar";
+  $("d-multiplicar").setAttribute("aria-pressed", mult ? "true" : "false");
+  $("d-factorizar").setAttribute("aria-pressed", mult ? "false" : "true");
+  dibujaFlechas(e);
+  var pasos = [];
+  if (e.numerica){
+    if (mult){
+      $("d-titulo").textContent = "Multiplicar: 3 · 4 = 12";
+      pasos = ["Se parte de los factores <strong>3</strong> y <strong>4</strong>.",
+               "Se multiplican: 3 · 4 = <strong>12</strong>. El resultado es el producto."];
+    } else {
+      $("d-titulo").textContent = "Factorizar: 12 = 3 · 4";
+      pasos = ["Se parte del número <strong>12</strong> y se pregunta: ¿qué números multiplicados dan 12?",
+               "Una respuesta es <strong>3 · 4</strong>: 12 queda escrito como un producto.",
+               "Comprobación: 3 · 4 = 12. Se vuelve al número original, así que la factorización es correcta."];
+    }
+  } else if (mult){
+    $("d-titulo").textContent = "Multiplicar: " + e.fact + " = " + e.des;
+    pasos = ["El factor de fuera, <strong>" + e.a + "</strong>, multiplica a <strong>cada</strong> término del paréntesis: " +
+               e.terminos[0] + " y " + e.terminos[1] + ".",
+             "Primer producto: " + e.cuentas[0] + ". Segundo producto: " + e.cuentas[1] + ".",
+             "Se juntan los dos productos: <strong>" + e.des + "</strong>. Esta es la forma desarrollada."];
+  } else {
+    $("d-titulo").textContent = "Factorizar: " + e.des + " = " + e.fact;
+    pasos = ["Se parte del polinomio <strong>" + e.des + "</strong> y se pregunta qué producto lo produjo.",
+             "Ese producto es <strong>" + e.fact + "</strong>: el polinomio queda escrito como un producto de factores.",
+             "Comprobación, volviendo a multiplicar: " + e.cuentas[0] + " y " + e.cuentas[1] + ", que juntos dan " + e.des +
+               ". Es el polinomio original, así que la factorización es correcta."];
+  }
+  $("d-pasos").innerHTML = pasos.map(function(t,i){
+    return '<div class="paso"><span class="n" aria-hidden="true">' + (i+1) + '</span>' + t + '</div>';
+  }).join("");
+}
+
+/* Parámetros de un ejercicio: a(mx ± b) = (am)x ± ab, con a ≠ b y mcd(m, b) = 1 */
+function parametros(){
+  var a, b, m;
+  do { a = aleatorio(2,9); b = aleatorio(1,9); m = aleatorio(1,3); }
+  while (a === b || mcd(m,b) !== 1);
+  return {a:a, b:b, m:m, s:Math.random() < 0.5 ? 1 : -1};
+}
+function armaOpciones(lista){
+  /* lista[0] es la correcta; se barajan conservando la referencia */
+  var orden = baraja(lista.map(function(t,i){ return i; }));
+  return { ops:orden.map(function(i){ return lista[i]; }), ok:orden.indexOf(0) };
+}
+
+/* Tipo A: ¿cuál es la forma factorizada de…? */
+function ejFactorizada(){
+  var P = parametros(), a = P.a, b = P.b, m = P.m, s = P.s;
+  var poli = desarrollada(a*m, s, a*b);
+  var correcta = factorizada(a, m, s, b);
+  var dSigno = factorizada(a, m, -s, b);
+  var dIncompleto = factorizada(a, m, s, a*b);
+  var tercera, nota3;
+  if (m > 1){
+    tercera = a + "(x" + signo(s) + b + ")";
+    nota3 = tercera + " da " + desarrollada(a, s, a*b) + ": el término en x no coincide";
+  } else {
+    tercera = b + "(x" + signo(s) + a + ")";
+    nota3 = tercera + " da " + desarrollada(b, s, a*b) + ": el término en x no coincide";
+  }
+  var r = armaOpciones([correcta, dSigno, dIncompleto, tercera]);
+  return { q:"¿Cuál es la forma factorizada de " + poli + "?", ops:r.ops, ok:r.ok,
+    exp:"Se comprueba multiplicando: " + a + " · " + tx(m) + " = " + tx(a*m) + " y " + a + " · " + (s > 0 ? b : "(" + MENOS + b + ")") +
+        " = " + (s > 0 ? "" : MENOS) + (a*b) + ", así que " + correcta + " = " + poli + ", el polinomio original. " +
+        "En cambio, " + dSigno + " da " + desarrollada(a*m, -s, a*b) + " (el signo cambia); " +
+        dIncompleto + " da " + desarrollada(a*m, s, a*a*b) + " (el " + (a*b) + " se multiplicó otra vez por " + a + "); y " + nota3 + "." };
+}
+
+/* Tipo B: ¿qué producto da…? */
+function ejDesarrollada(){
+  var P = parametros(), a = P.a, b = P.b, m = P.m, s = P.s;
+  var f = factorizada(a, m, s, b);
+  var correcta = desarrollada(a*m, s, a*b);
+  var dIncompleto = desarrollada(a*m, s, b);            /* solo multiplicó el primer término */
+  var dSigno = desarrollada(a*m, -s, a*b);
+  var dPrimero = desarrollada(m, s, a*b);                /* solo multiplicó el segundo término */
+  var r = armaOpciones([correcta, dIncompleto, dSigno, dPrimero]);
+  return { q:"¿Qué polinomio se obtiene al multiplicar " + f + "?", ops:r.ops, ok:r.ok,
+    exp:"El " + a + " multiplica a cada término del paréntesis: " + a + " · " + tx(m) + " = " + tx(a*m) + " y " +
+        a + " · " + (s > 0 ? b : "(" + MENOS + b + ")") + " = " + (s > 0 ? "" : MENOS) + (a*b) + ". Resultado: " + correcta +
+        ". Si el " + a + " se multiplica solo por uno de los dos términos, el factor queda incompleto; y el signo del paréntesis se conserva." };
+}
+
+/* Tipo C: comprobar una factorización propuesta multiplicando */
+function ejComprobar(){
+  var P = parametros(), a = P.a, b = P.b, m = P.m, s = P.s;
+  var poli = desarrollada(a*m, s, a*b);
+  var caso = aleatorio(0,2);   /* 0: correcta; 1: factor incompleto; 2: signo cambiado */
+  var propuesta, prod, lista;
+  if (caso === 0){
+    propuesta = factorizada(a, m, s, b); prod = poli;
+    lista = ["Da " + poli + ": es correcta",
+             "Da " + desarrollada(a*m, s, b) + ": no es correcta",
+             "Da " + desarrollada(a*m, -s, a*b) + ": no es correcta"];
+  } else if (caso === 1){
+    propuesta = factorizada(a, m, s, a*b); prod = desarrollada(a*m, s, a*a*b);
+    lista = ["Da " + prod + ": no es correcta",
+             "Da " + poli + ": es correcta",
+             "Da " + desarrollada(a*m, -s, a*a*b) + ": no es correcta"];
+  } else {
+    propuesta = factorizada(a, m, -s, b); prod = desarrollada(a*m, -s, a*b);
+    lista = ["Da " + prod + ": no es correcta",
+             "Da " + poli + ": es correcta",
+             "Da " + desarrollada(a*m, -s, b) + ": no es correcta"];
+  }
+  var r = armaOpciones(lista);
+  var bProp = caso === 1 ? a*b : b, sProp = caso === 2 ? -s : s;
+  return { q:"Alguien escribe " + poli + " = " + propuesta + ". Multiplica para comprobar: ¿qué se obtiene y es correcta la factorización?",
+    ops:r.ops, ok:r.ok,
+    exp:"Se multiplica " + propuesta + ": " + a + " · " + tx(m) + " = " + tx(a*m) + " y " + a + " · " +
+        (sProp > 0 ? bProp : "(" + MENOS + bProp + ")") + " = " + (sProp > 0 ? "" : MENOS) + (a*bProp) + ". Se obtiene " + prod + ". " +
+        (caso === 0 ? "Es el polinomio original, así que la factorización es correcta."
+                    : "No es el polinomio original " + poli + ", así que la factorización no es correcta" +
+                      (caso === 1 ? ": dentro del paréntesis debía quedar " + b + ", porque " + a + " · " + b + " = " + (a*b) + "."
+                                  : ": el signo del paréntesis debía ser el mismo del polinomio.")) };
+}
+
+/* Tipo D: reconocer la forma factorizada (un producto) frente a la desarrollada (una suma) */
+function ejReconocer(){
+  var P = parametros(), a = P.a, b = P.b, m = P.m, s = P.s;
+  var correcta = factorizada(a, m, s, b);
+  var lista = [correcta, desarrollada(a*m, s, a*b),
+               a + " · " + tx(m) + signo(s) + a + " · " + b];
+  var r = armaOpciones(lista);
+  return { q:"Las tres expresiones valen lo mismo. ¿Cuál está en forma factorizada?", ops:r.ops, ok:r.ok,
+    exp:"Factorizar es escribir como un producto. " + correcta + " es un solo producto: " + a + " por (" + tx(m) + signo(s) + b + "). " +
+        "Las otras dos son sumas (o restas) de términos, aunque una de ellas lleve el signo de multiplicar dentro de cada término. " +
+        "Pasa lo mismo con los números: 3 · 4 es una factorización de 12, pero 3 + 9 no lo es." };
+}
+
+var GENERADORES = [ejFactorizada, ejDesarrollada, ejComprobar, ejReconocer];
+function ejercicioDeshacer(){ return GENERADORES[aleatorio(0, GENERADORES.length-1)](); }
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+llenaSelect($("d-expr"), EXPRESIONES);
+$("d-expr").value = "1";
+$("d-expr").addEventListener("change", actualizaDeshacer);
+$("d-multiplicar").addEventListener("click", function(){ direccion = "multiplicar"; actualizaDeshacer(); });
+$("d-factorizar").addEventListener("click", function(){ direccion = "factorizar"; actualizaDeshacer(); });
+actualizaDeshacer();
+
+creaPractica(ejercicioDeshacer, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

@@ -1,0 +1,1090 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 1.2 — La pendiente: concepto, fórmula e interpretación
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #dos-puntos · #tipos · #tasa
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 1.2: la pendiente</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 1.2 del Nivel 4: calcular la pendiente a partir de dos puntos, identificar los cuatro tipos de pendiente e interpretar la pendiente como tasa de cambio con sus unidades.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#1a237e; --tema-d:#10174f; --tema-bg:#e8eaf6; --tema-bg2:#c5cae9;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-sec[aria-pressed="true"]{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:190px;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .grupo-puntos{display:flex;gap:26px;flex-wrap:wrap;}
+  .grupo-puntos fieldset{border:1px solid #d8d8d8;border-radius:8px;padding:8px 14px 12px;margin:0;}
+  .grupo-puntos legend{font-weight:700;color:var(--tema-d);padding:0 6px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:460px;height:auto;max-height:60vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .grafica.ancha svg{max-width:560px;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:4px;display:inline-block;}
+  .m-recta{background:#1a237e;}
+  .m-avance{background:#bf360c;}
+  .m-subida{background:#00695c;}
+
+  .visual-practica{margin:6px 0 12px;}
+  .visual-practica svg{width:100%;max-width:300px;height:auto;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .visual-practica svg.ancho{max-width:440px;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas tr.destacada td{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  table.reglas.compacta{width:auto;min-width:260px;}
+  table.reglas.compacta td,table.reglas.compacta th{text-align:center;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campo input[type="range"]{width:100%;}
+    .grupo-puntos{flex-direction:column;gap:12px;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 1 · Geometría analítica</div>
+    <h1>Lección 1.2 · La pendiente: concepto, fórmula e interpretación</h1>
+    <div class="meta">Tres prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#dos-puntos">La pendiente a partir de dos puntos</a></li>
+      <li><a href="#tipos">Los cuatro tipos de pendiente</a></li>
+      <li><a href="#tasa">La pendiente como tasa de cambio</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="dos-puntos" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La pendiente a partir de dos puntos</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Cuando se conocen dos puntos (x₁, y₁) y (x₂, y₂), la pendiente se calcula con la fórmula:</p>
+      <p class="formula">m = (y₂ − y₁) / (x₂ − x₁)</p>
+      <p>El numerador es la <strong>elevación</strong> (Δy, cuánto sube o baja) y el denominador es el
+      <strong>avance</strong> (Δx, cuánto se desplaza a la derecha). Mueve los dos puntos y sigue los tres pasos:
+      elevación, avance y cociente.</p>
+
+      <div class="panel">
+        <div class="grupo-puntos">
+          <fieldset>
+            <legend>Punto 1 (x₁, y₁)</legend>
+            <div class="campos">
+              <div class="campo">
+                <label for="d-x1">x₁ = <span class="valor-rango" id="d-x1-val">−2</span></label>
+                <input type="range" id="d-x1" min="-7" max="7" step="1" value="-2">
+              </div>
+              <div class="campo">
+                <label for="d-y1">y₁ = <span class="valor-rango" id="d-y1-val">−3</span></label>
+                <input type="range" id="d-y1" min="-7" max="7" step="1" value="-3">
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Punto 2 (x₂, y₂)</legend>
+            <div class="campos">
+              <div class="campo">
+                <label for="d-x2">x₂ = <span class="valor-rango" id="d-x2-val">2</span></label>
+                <input type="range" id="d-x2" min="-7" max="7" step="1" value="2">
+              </div>
+              <div class="campo">
+                <label for="d-y2">y₂ = <span class="valor-rango" id="d-y2-val">5</span></label>
+                <input type="range" id="d-y2" min="-7" max="7" step="1" value="5">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn-sec" id="d-intercambia">Intercambiar los dos puntos</button>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="d-aviso" role="alert"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="d-paso1"></div>
+        <div class="linea" id="d-paso2"></div>
+        <div class="linea" id="d-paso3"></div>
+        <div class="linea veredicto" id="d-resultado"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="d-svg" viewBox="0 0 460 460" role="img" aria-labelledby="d-svg-t d-svg-d">
+          <title id="d-svg-t">La recta que pasa por los dos puntos</title>
+          <desc id="d-svg-d">Plano cartesiano con los dos puntos, la recta que los une y el triángulo de avance y elevación.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m-recta" aria-hidden="true"></span> Recta</span>
+          <span><span class="muestra m-avance" aria-hidden="true"></span> Avance (Δx)</span>
+          <span><span class="muestra m-subida" aria-hidden="true"></span> Elevación (Δy)</span>
+        </div>
+        <p class="pie-grafica" id="d-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Mantén el mismo orden:</strong> el punto que se reste primero en el numerador debe ser el mismo que se
+        reste primero en el denominador. Si se invierte uno solo de los dos, el signo de la pendiente queda equivocado.
+        Pulsa «Intercambiar los dos puntos»: los dos restos cambian de signo a la vez y la pendiente no cambia.
+      </div>
+
+      <h3>Practica: calcula la pendiente</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="visual-practica" id="p1-visual"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="tipos">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Los cuatro tipos de pendiente</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>El signo y el valor de la pendiente describen la dirección de la recta. Las rectas se leen siempre
+      <strong>de izquierda a derecha</strong>.</p>
+
+      <table class="reglas" id="tabla-tipos">
+        <caption>Tipos de pendiente: dirección de la recta y signo o valor de la pendiente. La fila del tipo actual aparece resaltada.</caption>
+        <thead><tr><th scope="col">Tipo</th><th scope="col">¿Cómo se ve la recta?</th><th scope="col">Valor de m</th></tr></thead>
+        <tbody>
+          <tr data-tipo="positiva"><td>Positiva</td><td>Sube de izquierda a derecha.</td><td>m &gt; 0</td></tr>
+          <tr data-tipo="negativa"><td>Negativa</td><td>Baja de izquierda a derecha.</td><td>m &lt; 0</td></tr>
+          <tr data-tipo="cero"><td>Cero</td><td>Horizontal (plana).</td><td>m = 0</td></tr>
+          <tr data-tipo="indefinida"><td>Indefinida</td><td>Vertical.</td><td>m no existe (avance = 0)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <p class="nota" style="margin-top:0;">La recta parte del punto (−3, 0). Cambia la elevación y el avance, o elige directamente un tipo.</p>
+        <div class="campos">
+          <div class="campo">
+            <label for="t-dy">Elevación Δy = <span class="valor-rango" id="t-dy-val">3</span></label>
+            <input type="range" id="t-dy" min="-6" max="6" step="1" value="3">
+          </div>
+          <div class="campo">
+            <label for="t-dx">Avance Δx = <span class="valor-rango" id="t-dx-val">2</span></label>
+            <input type="range" id="t-dx" min="0" max="6" step="1" value="2">
+          </div>
+        </div>
+        <div class="fila-btn" role="group" aria-label="Ejemplos de cada tipo">
+          <button type="button" class="btn-sec" data-ejemplo="positiva">Positiva</button>
+          <button type="button" class="btn-sec" data-ejemplo="negativa">Negativa</button>
+          <button type="button" class="btn-sec" data-ejemplo="cero">Cero</button>
+          <button type="button" class="btn-sec" data-ejemplo="indefinida">Indefinida</button>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="t-aviso" role="alert"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="t-cuenta"></div>
+        <div class="linea veredicto" id="t-veredicto"></div>
+        <div class="linea" id="t-explica"></div>
+      </div>
+
+      <div class="grafica">
+        <svg id="t-svg" viewBox="0 0 460 460" role="img" aria-labelledby="t-svg-t t-svg-d">
+          <title id="t-svg-t">La recta según su elevación y su avance</title>
+          <desc id="t-svg-d">Plano cartesiano con la recta que parte del punto (−3, 0) y el triángulo de avance y elevación.</desc>
+        </svg>
+        <p class="pie-grafica" id="t-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>¿Por qué la vertical es indefinida?</strong> En una recta vertical todos los puntos tienen la misma x,
+        así que el avance (x₂ − x₁) es 0. Como no se puede dividir entre 0, la pendiente no existe. En cambio, en la
+        horizontal la elevación es 0, así que m = 0/avance = 0.
+      </div>
+      <div class="caja-tip">
+        <strong>¿Cuál es más empinada?</strong> La más empinada es la que tiene el mayor valor absoluto de la pendiente.
+        Una recta con m = −5 es más empinada que una con m = 3, aunque una baje y la otra suba. Fíjate en el valor
+        |m| que aparece arriba al mover los deslizadores.
+      </div>
+
+      <h3>Practica: clasifica la pendiente</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="visual-practica" id="p2-visual"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 3 ============ -->
+  <details class="modulo" id="tasa">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>La pendiente como tasa de cambio</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Fuera del plano, la pendiente cobra un significado muy útil: es una <strong>tasa de cambio</strong>, es decir,
+      cuánto cambia una cantidad por cada unidad de la otra. Las unidades de la pendiente son siempre
+      «<strong>unidades de y por cada unidad de x</strong>».</p>
+
+      <table class="reglas">
+        <caption>Ejemplos de la pendiente interpretada como tasa de cambio en distintos contextos.</caption>
+        <thead><tr><th scope="col">Situación</th><th scope="col">La pendiente representa…</th></tr></thead>
+        <tbody>
+          <tr><td>Distancia recorrida vs. tiempo</td><td>la velocidad (kilómetros por hora).</td></tr>
+          <tr><td>Salario vs. horas trabajadas</td><td>la paga por hora (dólares por hora).</td></tr>
+          <tr><td>Costo total vs. unidades compradas</td><td>el precio por unidad (dólares por unidad).</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:230px;">
+            <label for="c-caso">Situación</label>
+            <select id="c-caso"></select>
+          </div>
+          <div class="campo">
+            <label for="c-a">Primera fila</label>
+            <select id="c-a"></select>
+          </div>
+          <div class="campo">
+            <label for="c-b">Segunda fila</label>
+            <select id="c-b"></select>
+          </div>
+        </div>
+        <p class="nota">Elige dos filas cualesquiera de la tabla: como la gráfica es una recta, la tasa sale siempre igual.</p>
+      </div>
+
+      <div id="c-enunciado" class="panel" style="background:#fff;"></div>
+      <div id="c-tabla"></div>
+
+      <div class="caja-aviso" id="c-aviso" role="alert"></div>
+
+      <div class="pasos" id="c-pasos" aria-live="polite"></div>
+
+      <div class="grafica ancha">
+        <svg id="c-svg" viewBox="0 0 560 380" role="img" aria-labelledby="c-svg-t c-svg-d">
+          <title id="c-svg-t">Gráfica de la situación</title>
+          <desc id="c-svg-d">Gráfica de la recta de la situación con las dos filas elegidas marcadas.</desc>
+        </svg>
+        <p class="pie-grafica" id="c-svg-texto"></p>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>El signo también se interpreta.</strong> Una tasa positiva indica que la cantidad aumenta; una negativa,
+        que disminuye. Un tanque que se vacía a −10 litros por minuto pierde 10 litros cada minuto: conviene decirlo
+        con palabras, no solo con el signo.
+      </div>
+
+      <h3>Practica: calcula e interpreta la tasa</h3>
+      <div class="practica">
+        <div class="enun" id="p3-enun"></div>
+        <div class="visual-practica" id="p3-visual"></div>
+        <div class="opciones" id="p3-opciones"></div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p3-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p3-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 1.2 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function elige(lista){ return lista[aleatorio(0, lista.length-1)]; }
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function mcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=b; b=a%b; a=t; } return a || 1; }
+/* Número con signo menos tipográfico */
+function num(n){ n = redondea(n, 2); return n < 0 ? "−" + Math.abs(n) : String(n); }
+/* Número entre paréntesis si es negativo (para restas) */
+function par(n){ return n < 0 ? "(" + num(n) + ")" : num(n); }
+function fraccion(nu, de){
+  if (de < 0){ nu = -nu; de = -de; }
+  var g = mcd(nu, de);
+  nu /= g; de /= g;
+  return de === 1 ? num(nu) : (nu < 0 ? "−" + Math.abs(nu) : nu) + "/" + de;
+}
+function punto(p){ return "(" + num(p[0]) + ", " + num(p[1]) + ")"; }
+function baraja(lista){
+  var a = lista.slice();
+  for (var i = a.length - 1; i > 0; i--){ var j = aleatorio(0, i); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function sinRepetidos(lista){
+  var vistos = {};
+  for (var i = 0; i < lista.length; i++){ if (vistos[lista[i]]) return false; vistos[lista[i]] = true; }
+  return true;
+}
+/* Arma una pregunta: opciones = [{t, pista}] con la correcta en la posición 0; se barajan */
+function armaPregunta(q, opciones, exp, visual, datos, fijo){
+  var orden = opciones.map(function(o,i){ return i; });
+  if (!fijo) orden = baraja(orden);
+  return { q:q, exp:exp, visual:visual || "", datos:datos,
+           ops: orden.map(function(i){ return opciones[i].t; }),
+           pistas: orden.map(function(i){ return opciones[i].pista || ""; }),
+           ok: orden.indexOf(0) };
+}
+function tipoDe(dy, dx){
+  if (dx === 0) return "indefinida";
+  if (dy === 0) return "cero";
+  return dy/dx > 0 ? "positiva" : "negativa";
+}
+var NOMBRE_TIPO = {positiva:"Positiva", negativa:"Negativa", cero:"Cero", indefinida:"Indefinida"};
+
+/* ============================================================
+   Plano cartesiano (devuelve el contenido del SVG como texto)
+   ============================================================ */
+var contadorSVG = 0;
+function plano(o){
+  var W = o.W || 460, H = o.H || 460, m = o.margen || 30;
+  var r = o.rango || {x0:-8, x1:8, y0:-8, y1:8};
+  var paso = o.paso || 2;
+  var idClip = "clip" + (++contadorSVG);
+  function px(x){ return m + (x - r.x0)/(r.x1 - r.x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - r.y0)/(r.y1 - r.y0) * (H - 2*m); }
+  var s = '<defs><clipPath id="' + idClip + '"><rect x="' + m + '" y="' + m + '" width="' + (W-2*m) + '" height="' + (H-2*m) + '"></rect></clipPath></defs>';
+  function linea(x1,y1,x2,y2,attrs){
+    var t = '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '"';
+    for (var k in attrs) t += ' ' + k + '="' + attrs[k] + '"';
+    return t + '></line>';
+  }
+  function texto(x,y,cont,attrs){
+    var t = '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '"';
+    for (var k in attrs) t += ' ' + k + '="' + attrs[k] + '"';
+    return t + '>' + cont + '</text>';
+  }
+  for (var gx = Math.ceil(r.x0); gx <= r.x1; gx++) s += linea(px(gx), m, px(gx), H-m, {stroke:"#ececec","stroke-width":1});
+  for (var gy = Math.ceil(r.y0); gy <= r.y1; gy++) s += linea(m, py(gy), W-m, py(gy), {stroke:"#ececec","stroke-width":1});
+  s += linea(m, py(0), W-m, py(0), {stroke:"#555","stroke-width":2});
+  s += linea(px(0), m, px(0), H-m, {stroke:"#555","stroke-width":2});
+  s += texto(W-m, py(0)-8, "x", {"text-anchor":"end","font-size":13,fill:"#555"});
+  s += texto(px(0)+8, m+12, "y", {"font-size":13,fill:"#555"});
+  if (o.numeros !== false){
+    for (var tx = Math.ceil(r.x0/paso)*paso; tx <= r.x1; tx += paso)
+      if (tx !== 0) s += texto(px(tx), py(0)+16, num(tx), {"text-anchor":"middle","font-size":12,fill:"#555"});
+    for (var ty = Math.ceil(r.y0/paso)*paso; ty <= r.y1; ty += paso)
+      if (ty !== 0) s += texto(px(0)-7, py(ty)+4, num(ty), {"text-anchor":"end","font-size":12,fill:"#555"});
+  }
+  (o.rectas || []).forEach(function(rc){
+    var p = rc.p, q = rc.q, at = {stroke:(rc.color || "#1a237e"), "stroke-width":(rc.ancho || 3), "clip-path":"url(#" + idClip + ")"};
+    if (p[0] === q[0]) s += linea(px(p[0]), py(r.y0), px(p[0]), py(r.y1), at);
+    else {
+      var k = (q[1]-p[1])/(q[0]-p[0]);
+      var ya = p[1] + k*(r.x0 - p[0]), yb = p[1] + k*(r.x1 - p[0]);
+      s += linea(px(r.x0), py(ya), px(r.x1), py(yb), at);
+    }
+  });
+  if (o.triangulo){
+    var a = o.triangulo.p, b = o.triangulo.q;
+    var halo = {stroke:"#fff","stroke-width":4,"paint-order":"stroke","font-size":13,"font-weight":"bold"};
+    if (a[0] !== b[0]){
+      s += linea(px(a[0]), py(a[1]), px(b[0]), py(a[1]), {stroke:"#bf360c","stroke-width":4});
+      var ha = {}; for (var k1 in halo) ha[k1] = halo[k1]; ha.fill = "#bf360c"; ha["text-anchor"] = "middle";
+      var abajo = b[1] >= a[1];
+      s += texto((px(a[0])+px(b[0]))/2, py(a[1]) + (abajo ? 18 : -8), "Δx = " + num(b[0]-a[0]), ha);
+    }
+    if (a[1] !== b[1]){
+      s += linea(px(b[0]), py(a[1]), px(b[0]), py(b[1]), {stroke:"#00695c","stroke-width":4});
+      var hb = {}; for (var k2 in halo) hb[k2] = halo[k2]; hb.fill = "#00695c";
+      var derecha = px(b[0]) < W - 80;
+      hb["text-anchor"] = derecha ? "start" : "end";
+      s += texto(px(b[0]) + (derecha ? 8 : -8), (py(a[1])+py(b[1]))/2 + 4, "Δy = " + num(b[1]-a[1]), hb);
+    }
+  }
+  (o.marcas || []).forEach(function(mk){
+    s += '<circle cx="' + px(mk.p[0]).toFixed(1) + '" cy="' + py(mk.p[1]).toFixed(1) + '" r="7" fill="#fff" stroke="#10174f" stroke-width="3"></circle>';
+    if (mk.etiqueta)
+      s += texto(px(mk.p[0]), py(mk.p[1]) + (mk.debajo ? 24 : -13), mk.etiqueta,
+                 {"text-anchor":"middle","font-size":13,"font-weight":"bold",fill:"#10174f",stroke:"#fff","stroke-width":4,"paint-order":"stroke"});
+  });
+  return s;
+}
+function encabezadoSVG(id, titulo, desc){
+  return '<title id="' + id + '-t">' + titulo + '</title><desc id="' + id + '-d">' + desc + '</desc>';
+}
+function pintaSVG(svg, titulo, desc, cuerpo){
+  svg.innerHTML = encabezadoSVG(svg.id, titulo, desc) + cuerpo;
+}
+
+/* ============================================================
+   Motor común de práctica (cada banco es un generador aleatorio)
+   ============================================================ */
+function creaPractica(generador, ids){
+  var estado = {p:null, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    var p = generador(), intentos = 0;
+    while (estado.p && p.q === estado.p.q && p.visual === estado.p.visual && intentos++ < 20) p = generador();
+    estado.p = p; estado.resuelta = false;
+    $(ids.enun).textContent = p.q;
+    $(ids.visual).innerHTML = p.visual;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = estado.p;
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal";
+      $(ids.fb).textContent = "✗ Todavía no. " + (p.pistas[j] ? p.pistas[j] + " " : "") + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · La pendiente a partir de dos puntos
+   ============================================================ */
+function leeDosPuntos(){
+  return { x1:parseInt($("d-x1").value,10), y1:parseInt($("d-y1").value,10),
+           x2:parseInt($("d-x2").value,10), y2:parseInt($("d-y2").value,10) };
+}
+function actualizaDosPuntos(){
+  var d = leeDosPuntos();
+  ["x1","y1","x2","y2"].forEach(function(k){ $("d-" + k + "-val").textContent = num(d[k]); });
+  var dy = d.y2 - d.y1, dx = d.x2 - d.x1;
+  var P1 = [d.x1, d.y1], P2 = [d.x2, d.y2];
+  var svg = $("d-svg");
+
+  if (dx === 0 && dy === 0){
+    $("d-aviso").innerHTML = "<strong>Los dos puntos son el mismo.</strong> Por un solo punto pasan infinitas rectas, así que no hay una pendiente que calcular. Mueve uno de los dos puntos.";
+    $("d-aviso").className = "caja-aviso visible";
+    ["d-paso1","d-paso2","d-paso3","d-resultado"].forEach(function(id){ $(id).textContent = ""; });
+    pintaSVG(svg, "Un solo punto", "Plano cartesiano con un único punto en " + punto(P1) + ".",
+             plano({marcas:[{p:P1, etiqueta:punto(P1)}]}));
+    $("d-svg-texto").textContent = "Solo hay un punto en " + punto(P1) + ".";
+    return;
+  }
+  $("d-paso1").innerHTML = "<strong>1. Elevación (numerador):</strong> y₂ − y₁ = " + num(d.y2) + " − " + par(d.y1) + " = <strong>" + num(dy) + "</strong>.";
+  $("d-paso2").innerHTML = "<strong>2. Avance (denominador):</strong> x₂ − x₁ = " + num(d.x2) + " − " + par(d.x1) + " = <strong>" + num(dx) + "</strong>.";
+  if (dx === 0){
+    $("d-aviso").innerHTML = "<strong>El avance es 0.</strong> Los dos puntos tienen la misma x, la recta es vertical y no se puede dividir entre 0.";
+    $("d-aviso").className = "caja-aviso visible";
+    $("d-paso3").innerHTML = "<strong>3. Cociente:</strong> m = " + num(dy) + " / 0, que no se puede calcular.";
+    $("d-resultado").textContent = "La pendiente es indefinida (la recta es vertical).";
+  } else {
+    $("d-aviso").className = "caja-aviso";
+    var simple = fraccion(dy, dx), g = mcd(dy, dx);
+    var bruto = num(dy) + " / " + par(dx);
+    var texto3 = "<strong>3. Cociente:</strong> m = " + bruto + " = <strong>" + simple + "</strong>";
+    var notas = [];
+    if (dy === 0) notas.push("0 dividido entre cualquier número distinto de 0 es 0");
+    else {
+      if (g > 1 && Math.abs(dx) !== g) notas.push("se simplifica dividiendo arriba y abajo entre " + g);
+      else if (g > 1) notas.push("la división es exacta");
+      if (dx < 0) notas.push("el signo menos del denominador se escribe delante del resultado");
+    }
+    if (notas.length) texto3 += " (" + notas.join("; ") + ")";
+    $("d-paso3").innerHTML = texto3 + ".";
+    var t = tipoDe(dy, dx);
+    $("d-resultado").textContent = "La pendiente es " + simple +
+      (t === "positiva" ? " (positiva: la recta sube)." : t === "negativa" ? " (negativa: la recta baja)." : " (cero: la recta es horizontal).");
+  }
+  pintaSVG(svg, "La recta que pasa por " + punto(P1) + " y " + punto(P2),
+    "Plano cartesiano con los puntos " + punto(P1) + " y " + punto(P2) + ", la recta que los une y el triángulo con avance " + num(dx) + " y elevación " + num(dy) + ".",
+    plano({rectas:[{p:P1, q:P2}], triangulo:{p:P1, q:P2},
+           marcas:[{p:P1, etiqueta:"P₁ " + punto(P1), debajo: d.y1 < d.y2 || (d.y1 === d.y2 && d.y1 > 5)},
+                   {p:P2, etiqueta:"P₂ " + punto(P2), debajo: d.y2 < d.y1 || (d.y1 === d.y2 && d.y2 > 5)}]}));
+  $("d-svg-texto").textContent = "Desde P₁ se avanza " + num(dx) + " en horizontal (tramo naranja) y se " +
+    (dy >= 0 ? "sube " : "baja ") + Math.abs(dy) + " en vertical (tramo verde) hasta llegar a P₂.";
+}
+
+/* Generador de la práctica 1: calcular m dados dos puntos */
+function genDosPuntos(){
+  for (var intento = 0; intento < 200; intento++){
+    var x1 = aleatorio(-6,6), y1 = aleatorio(-6,6), x2 = aleatorio(-6,6), y2 = aleatorio(-6,6);
+    var dx = x2 - x1, dy = y2 - y1;
+    if (dx === 0) continue;
+    var horizontal = (dy === 0);
+    if (horizontal && Math.random() > 0.12) continue;
+    if (!horizontal && Math.abs(dy) === Math.abs(dx)) continue;     /* evita m = ±1: el cociente invertido coincidiría */
+    if (Math.abs(dy) > 9 || Math.abs(dx) > 8) continue;
+    var correcta = fraccion(dy, dx);
+    var ops;
+    var exp = "Elevación: y₂ − y₁ = " + num(y2) + " − " + par(y1) + " = " + num(dy) +
+              ". Avance: x₂ − x₁ = " + num(x2) + " − " + par(x1) + " = " + num(dx) +
+              ". Cociente: m = " + num(dy) + " / " + par(dx) + " = " + correcta + ".";
+    if (horizontal){
+      ops = [
+        {t:"0"},
+        {t:"Indefinida", pista:"Invertiste el cociente: el avance va abajo y la elevación arriba. Como la elevación es 0, la pendiente vale 0; indefinida es cuando el avance es 0."},
+        {t:num(dx), pista:"Ese número es el avance (Δx), no la pendiente. Falta dividir la elevación entre el avance."},
+        {t:num(y1), pista:"Ese número es la coordenada y de los puntos, no la pendiente."}
+      ];
+      exp += " La recta es horizontal.";
+    } else {
+      ops = [
+        {t:correcta},
+        {t:fraccion(dx, dy), pista:"Invertiste el cociente: pusiste el avance (Δx) arriba y la elevación (Δy) abajo."},
+        {t:fraccion(-dy, dx), pista:"El signo quedó equivocado: restaste en un orden arriba y en el otro abajo. El punto que se resta primero arriba debe restarse primero abajo."},
+        {t:fraccion(-dx, dy), pista:"Invertiste el cociente y además el signo quedó equivocado por restar en distinto orden arriba y abajo."}
+      ];
+    }
+    var textos = ops.map(function(o){ return o.t; });
+    if (!sinRepetidos(textos)) continue;
+    var q = "¿Cuál es la pendiente de la recta que pasa por " + punto([x1,y1]) + " y " + punto([x2,y2]) + "?";
+    return armaPregunta(q, ops, exp, "", {x1:x1, y1:y1, x2:x2, y2:y2, tipo:"dos-puntos", respuesta:correcta, horizontal:horizontal});
+  }
+  return armaPregunta("¿Cuál es la pendiente de la recta que pasa por (1, 2) y (4, 11)?",
+    [{t:"3"},{t:"1/3", pista:"Invertiste el cociente."},{t:"−3", pista:"Revisa el orden de la resta."},{t:"−1/3", pista:"Invertiste el cociente y el signo."}],
+    "Elevación: 11 − 2 = 9. Avance: 4 − 1 = 3. m = 9 / 3 = 3.", "", {x1:1,y1:2,x2:4,y2:11,tipo:"dos-puntos",respuesta:"3",horizontal:false});
+}
+
+/* ============================================================
+   MÓDULO 2 · Los cuatro tipos de pendiente
+   ============================================================ */
+var EJEMPLOS_TIPO = { positiva:{dy:3, dx:2}, negativa:{dy:-4, dx:3}, cero:{dy:0, dx:4}, indefinida:{dy:5, dx:0} };
+function actualizaTipos(){
+  var dy = parseInt($("t-dy").value,10), dx = parseInt($("t-dx").value,10);
+  $("t-dy-val").textContent = num(dy); $("t-dx-val").textContent = num(dx);
+  var A = [-3, 0], B = [-3 + dx, dy];
+  var svg = $("t-svg");
+  var tipo = (dx === 0 && dy === 0) ? null : tipoDe(dy, dx);
+
+  Array.prototype.forEach.call(document.querySelectorAll("#tabla-tipos tbody tr"), function(tr){
+    tr.className = tr.getAttribute("data-tipo") === tipo ? "destacada" : "";
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-ejemplo]"), function(b){
+    b.setAttribute("aria-pressed", b.getAttribute("data-ejemplo") === tipo ? "true" : "false");
+  });
+
+  if (!tipo){
+    $("t-aviso").innerHTML = "<strong>Elevación 0 y avance 0.</strong> Los dos puntos coinciden y no determinan ninguna recta. Cambia uno de los dos valores.";
+    $("t-aviso").className = "caja-aviso visible";
+    ["t-cuenta","t-veredicto","t-explica"].forEach(function(id){ $(id).textContent = ""; });
+    pintaSVG(svg, "Un solo punto", "Plano cartesiano con un único punto en (−3, 0).", plano({marcas:[{p:A, etiqueta:punto(A)}]}));
+    $("t-svg-texto").textContent = "";
+    return;
+  }
+  $("t-aviso").className = "caja-aviso";
+  if (dx === 0){
+    $("t-cuenta").innerHTML = "<strong>Cociente:</strong> m = Δy / Δx = " + num(dy) + " / 0, que no se puede calcular.";
+    $("t-veredicto").textContent = "Pendiente indefinida: la recta es vertical.";
+    $("t-explica").textContent = "Todos los puntos de la recta tienen la misma x (x = −3), así que el avance es 0 y no se puede dividir entre 0.";
+  } else {
+    var m = fraccion(dy, dx), absm = fraccion(Math.abs(dy), dx);
+    $("t-cuenta").innerHTML = "<strong>Cociente:</strong> m = Δy / Δx = " + num(dy) + " / " + par(dx) + " = <strong>" + m + "</strong>" +
+      (dy === 0 ? "" : " · inclinación |m| = " + absm);
+    $("t-veredicto").textContent = "Pendiente " + NOMBRE_TIPO[tipo].toLowerCase() + (tipo === "cero" ? ": la recta es horizontal." : tipo === "positiva" ? ": la recta sube de izquierda a derecha." : ": la recta baja de izquierda a derecha.");
+    $("t-explica").textContent = tipo === "cero"
+      ? "La elevación es 0: la recta no sube ni baja, y m = 0 / " + dx + " = 0."
+      : "Cuanto mayor es |m|, más empinada es la recta. Con |m| = " + absm + (Math.abs(dy/dx) > 1 ? ", la recta sube o baja más de una unidad por cada unidad de avance." : Math.abs(dy/dx) < 1 ? ", la recta sube o baja menos de una unidad por cada unidad de avance." : ", la recta sube o baja exactamente una unidad por cada unidad de avance.");
+  }
+  pintaSVG(svg, "Recta de pendiente " + NOMBRE_TIPO[tipo].toLowerCase(),
+    "Plano cartesiano con la recta que pasa por (−3, 0) y " + punto(B) + ". Avance " + dx + ", elevación " + num(dy) + ": pendiente " + NOMBRE_TIPO[tipo].toLowerCase() + ".",
+    plano({rectas:[{p:A, q:B}], triangulo:{p:A, q:B},
+           marcas:[{p:A, etiqueta:punto(A), debajo: dy > 0}, {p:B, etiqueta:punto(B), debajo: dy < 0}]}));
+  $("t-svg-texto").textContent = "La recta pasa por (−3, 0) y " + punto(B) + ".";
+}
+
+/* Gráfica pequeña para la práctica 2 */
+function svgPractica(p, q){
+  var id = "pv" + (++contadorSVG);
+  return '<svg id="' + id + '" viewBox="0 0 300 300" role="img" aria-labelledby="' + id + '-t ' + id + '-d">' +
+    encabezadoSVG(id, "Gráfica de una recta", "Recta en el plano cartesiano que pasa por los puntos marcados " + punto(p) + " y " + punto(q) + ".") +
+    plano({W:300, H:300, margen:22, rango:{x0:-6, x1:6, y0:-6, y1:6}, paso:2,
+           rectas:[{p:p, q:q}], marcas:[{p:p}, {p:q}]}) + '</svg>';
+}
+var PENDIENTES_EMP = [
+  {t:"1/4", v:0.25}, {t:"1/2", v:0.5}, {t:"2/3", v:2/3}, {t:"3/4", v:0.75}, {t:"1", v:1},
+  {t:"3/2", v:1.5}, {t:"2", v:2}, {t:"5/2", v:2.5}, {t:"3", v:3}, {t:"4", v:4}, {t:"5", v:5}, {t:"6", v:6}
+];
+function textoM(e, signo){ return "m = " + (signo < 0 ? "−" : "") + e.t; }
+function genTipos(){
+  var modo = Math.random();
+  var tiposOrden = ["positiva","negativa","cero","indefinida"];
+  if (modo < 0.2){
+    /* ¿Cuál es la más empinada? */
+    for (var intento = 0; intento < 100; intento++){
+      var elegidos = baraja(PENDIENTES_EMP).slice(0, 4);
+      elegidos.sort(function(a,b){ return b.v - a.v; });
+      var signos = elegidos.map(function(){ return Math.random() < 0.5 ? -1 : 1; });
+      if (Math.random() < 0.65) signos[0] = -1;
+      /* la mayor con signo debe ser una positiva distinta de la correcta, si la correcta es negativa */
+      if (signos[0] < 0 && signos.slice(1).every(function(s){ return s < 0; })) signos[1] = 1;
+      var ops = elegidos.map(function(e,i){
+        return {t:textoM(e, signos[i]),
+                pista: i === 0 ? "" : (signos[i] > 0 && signos[0] < 0 && i === signos.indexOf(1)
+                  ? "Elegiste la de mayor valor con signo, pero el signo solo indica si sube o baja. Lo empinado se mide con el valor absoluto."
+                  : "Esa no es la de mayor valor absoluto.")};
+      });
+      if (!sinRepetidos(ops.map(function(o){ return o.t; }))) continue;
+      var exp = "La más empinada es la que tiene el mayor valor absoluto de la pendiente. Los valores absolutos son " +
+        elegidos.map(function(e){ return e.t; }).join(", ") + ", y el mayor es " + elegidos[0].t + ": por eso la respuesta es " + textoM(elegidos[0], signos[0]) + ".";
+      return armaPregunta("¿Cuál de estas pendientes corresponde a la recta más empinada?", ops, exp, "",
+        {tipo:"empinada", valores:elegidos.map(function(e,i){ return e.v*signos[i]; }), respuesta:textoM(elegidos[0], signos[0])});
+    }
+  }
+  /* Clasificar desde dos puntos o desde una gráfica */
+  var tipo = elige(tiposOrden);
+  var p, q, dx, dy;
+  for (var k = 0; k < 200; k++){
+    var x1 = aleatorio(-5,5), y1 = aleatorio(-5,5);
+    if (tipo === "positiva"){ dx = aleatorio(1,5); dy = aleatorio(1,5); }
+    else if (tipo === "negativa"){ dx = aleatorio(1,5); dy = -aleatorio(1,5); }
+    else if (tipo === "cero"){ dx = aleatorio(2,6); dy = 0; }
+    else { dx = 0; dy = (Math.random() < 0.5 ? 1 : -1) * aleatorio(2,6); }
+    var x2 = x1 + dx, y2 = y1 + dy;
+    if (x2 < -5 || x2 > 5 || y2 < -5 || y2 > 5) continue;
+    p = [x1,y1]; q = [x2,y2];
+    break;
+  }
+  var desdeGrafica = modo >= 0.6;
+  if (!desdeGrafica && Math.random() < 0.5){ var t = p; p = q; q = t; dx = -dx; dy = -dy; } /* a veces el primer punto es el de la derecha */
+  var pistas = {
+    positiva:"Una pendiente positiva sube de izquierda a derecha: elevación y avance tienen el mismo signo.",
+    negativa:"Una pendiente negativa baja de izquierda a derecha: elevación y avance tienen signos distintos.",
+    cero:"Pendiente cero es la recta horizontal: la elevación es 0. No la confundas con la vertical.",
+    indefinida:"Indefinida es la recta vertical: el avance es 0. No la confundas con la horizontal, que tiene pendiente 0."
+  };
+  var ops2 = [{t:NOMBRE_TIPO[tipo]}];
+  tiposOrden.forEach(function(tt){ if (tt !== tipo) ops2.push({t:NOMBRE_TIPO[tt], pista:pistas[tt]}); });
+
+  var cuenta = "Elevación: " + num(q[1]) + " − " + par(p[1]) + " = " + num(q[1]-p[1]) +
+               ". Avance: " + num(q[0]) + " − " + par(p[0]) + " = " + num(q[0]-p[0]) + ". ";
+  var cierre = {
+    positiva:"El cociente es " + fraccion(q[1]-p[1], q[0]-p[0] || 1) + ", mayor que 0: pendiente positiva, la recta sube de izquierda a derecha.",
+    negativa:"El cociente es " + fraccion(q[1]-p[1], q[0]-p[0] || 1) + ", menor que 0: pendiente negativa, la recta baja de izquierda a derecha.",
+    cero:"La elevación es 0, así que m = 0: la recta es horizontal.",
+    indefinida:"El avance es 0 y no se puede dividir entre 0: la pendiente es indefinida y la recta es vertical."
+  }[tipo];
+  var qtxt, visual = "", exp;
+  if (desdeGrafica){
+    qtxt = "¿Qué tipo de pendiente tiene la recta de la gráfica?";
+    var izq = p[0] <= q[0] ? p : q, der = p[0] <= q[0] ? q : p;
+    visual = svgPractica(izq, der);
+    var lectura = {positiva:"De izquierda a derecha la recta sube.", negativa:"De izquierda a derecha la recta baja.",
+                   cero:"La recta es horizontal: no sube ni baja.", indefinida:"La recta es vertical."}[tipo];
+    exp = lectura + " Con los puntos marcados " + punto(izq) + " y " + punto(der) + ": " +
+          "elevación " + num(der[1]-izq[1]) + ", avance " + num(der[0]-izq[0]) + ". " + cierre;
+  } else {
+    qtxt = "¿Qué tipo de pendiente tiene la recta que pasa por " + punto(p) + " y " + punto(q) + "?";
+    exp = cuenta + cierre;
+  }
+  return armaPregunta(qtxt, ops2, exp, visual, {tipo:"clasificar", p:p, q:q, respuesta:NOMBRE_TIPO[tipo], grafica:desdeGrafica}, true);
+}
+/* Las cuatro categorías se presentan siempre en el orden de la tabla */
+function genTiposOrdenado(){
+  var p = genTipos();
+  if (p.datos.tipo !== "clasificar") return p;
+  var orden = ["Positiva","Negativa","Cero","Indefinida"];
+  var correcta = p.ops[p.ok];
+  var pistas = {};
+  p.ops.forEach(function(t,i){ pistas[t] = p.pistas[i]; });
+  p.ops = orden.slice();
+  p.pistas = orden.map(function(t){ return pistas[t]; });
+  p.ok = orden.indexOf(correcta);
+  return p;
+}
+
+/* ============================================================
+   MÓDULO 3 · La pendiente como tasa de cambio
+   ============================================================ */
+/* Cada contexto: nombres y unidades [singular, plural]; art = la cantidad y con su artículo */
+var CONTEXTOS = [
+  { id:"auto", xArt:"el tiempo", etiqueta:"Distancia recorrida por un auto vs. tiempo",
+    enunciado:"Un auto viaja por la carretera a velocidad constante. La tabla da la distancia recorrida según el tiempo.",
+    xNom:"Tiempo", yNom:"Distancia", xU:["hora","horas"], yU:["kilómetro","kilómetros"], xAbr:"h", yAbr:"km",
+    art:"la distancia recorrida", tasas:[45,50,55,60,65,70,75,80], bs:[0], x0s:[1,2], pasos:[2],
+    xs:[1,2,3,4,5], tasa:60, b:0, representa:"la velocidad del auto" },
+  { id:"salario", xArt:"las horas trabajadas", etiqueta:"Salario vs. horas trabajadas",
+    enunciado:"Una trabajadora cobra por hora. La tabla da lo que gana según las horas trabajadas.",
+    xNom:"Horas trabajadas", yNom:"Salario", xU:["hora","horas"], yU:["dólar","dólares"], xAbr:"h", yAbr:"$",
+    art:"la paga", tasas:[12,14,15,16,18,20,22], bs:[0], x0s:[2,4], pasos:[2,4],
+    xs:[2,4,6,8,10], tasa:15, b:0, representa:"la paga por hora" },
+  { id:"costo", xArt:"el número de camisetas", sinUx:true, etiqueta:"Costo total vs. camisetas compradas",
+    enunciado:"Una tienda vende camisetas al mismo precio cada una. La tabla da el costo total según el número de camisetas.",
+    xNom:"Camisetas", yNom:"Costo total", xU:["camiseta","camisetas"], yU:["dólar","dólares"], xAbr:"camisetas", yAbr:"$",
+    art:"el costo total", tasas:[6,7,8,9,12], bs:[0], x0s:[1,2,3], pasos:[2,3],
+    xs:[1,2,3,4,5], tasa:8, b:0, representa:"el precio por camiseta" },
+  { id:"taxi", xArt:"las millas recorridas", etiqueta:"Costo de un viaje en taxi vs. millas",
+    enunciado:"Un taxi cobra $3 al subir y luego una cantidad fija por cada milla. La tabla da el costo del viaje según las millas.",
+    xNom:"Millas", yNom:"Costo del viaje", xU:["milla","millas"], yU:["dólar","dólares"], xAbr:"millas", yAbr:"$",
+    art:"el costo del viaje", tasas:[2,2.5,3], bs:[3], x0s:[0,2], pasos:[2,4],
+    xs:[0,2,4,6,8], tasa:2.5, b:3, representa:"el precio por milla; los $3 iniciales no cambian la pendiente" },
+  { id:"tanque", xArt:"el tiempo", etiqueta:"Agua en un tanque que se vacía vs. tiempo",
+    enunciado:"Un tanque lleno de agua se vacía a ritmo constante. La tabla da el agua que queda según los minutos transcurridos.",
+    xNom:"Tiempo", yNom:"Agua en el tanque", xU:["minuto","minutos"], yU:["litro","litros"], xAbr:"min", yAbr:"L",
+    art:"el agua del tanque", tasas:[-5,-8,-10,-12,-15], bs:[200,250,300], x0s:[0,5], pasos:[2,5],
+    xs:[0,5,10,15,20], tasa:-10, b:300, representa:"la rapidez con que se vacía el tanque" },
+  { id:"luz", xArt:"el consumo", etiqueta:"Factura de electricidad vs. kilovatios-hora",
+    enunciado:"La compañía de electricidad cobra lo mismo por cada kilovatio-hora (kWh). La tabla da el costo según el consumo.",
+    xNom:"Consumo", yNom:"Costo", xU:["kilovatio-hora","kilovatios-hora"], yU:["dólar","dólares"], xAbr:"kWh", yAbr:"$",
+    art:"el costo de la factura", tasas:[0.12,0.15,0.2], bs:[0], x0s:[100,200], pasos:[100,200],
+    xs:[100,200,300,400,500], tasa:0.15, b:0, representa:"el precio de cada kWh" }
+];
+function textoTasa(ctx, r){ return num(r) + " " + ctx.yU[1] + " por " + ctx.xU[0]; }
+function valorY(ctx, r, b, x){ return redondea(b + r*x, 2); }
+function enX(ctx){ return ctx.sinUx ? "" : " (en " + ctx.xU[1] + ")"; }
+function de(t){ return t.indexOf("el ") === 0 ? "del " + t.slice(3) : "de " + t; }
+function minus(t){ return t.charAt(0).toLowerCase() + t.slice(1); }
+function capitaliza(t){ return t.charAt(0).toUpperCase() + t.slice(1); }
+function tablaHTML(ctx, xs, ys, destacadas, caption){
+  var filas = xs.map(function(x,i){
+    return '<tr' + (destacadas && destacadas.indexOf(i) >= 0 ? ' class="destacada"' : '') + '><td>' + num(x) + '</td><td>' + num(ys[i]) + '</td></tr>';
+  }).join("");
+  return '<table class="reglas compacta"><caption>' + caption + '</caption><thead><tr>' +
+    '<th scope="col">' + ctx.xNom + ' (' + ctx.xU[1] + ')</th><th scope="col">' + ctx.yNom + ' (' + ctx.yU[1] + ')</th>' +
+    '</tr></thead><tbody>' + filas + '</tbody></table>';
+}
+function pasoBonito(rango){
+  var bruto = rango / 5, pot = Math.pow(10, Math.floor(Math.log(bruto)/Math.LN10));
+  var opciones = [1,2,2.5,5,10];
+  for (var i = 0; i < opciones.length; i++) if (opciones[i]*pot >= bruto) return opciones[i]*pot;
+  return 10*pot;
+}
+/* Gráfica de la situación: primer cuadrante, ejes con unidades */
+function graficaContexto(ctx, xs, ys, A, B, W, H){
+  W = W || 560; H = H || 380;
+  var ml = 64, mr = 22, mt = 22, mb = 52;
+  var xmax = xs[xs.length-1] + (xs[1]-xs[0]) * 0.5;
+  var ymaxDato = Math.max.apply(null, ys);
+  var pasoY = pasoBonito(ymaxDato), ymax = Math.ceil(ymaxDato*1.08/pasoY)*pasoY;
+  var pasoX = xs[1] - xs[0];
+  function px(x){ return ml + x/xmax * (W - ml - mr); }
+  function py(y){ return H - mb - y/ymax * (H - mt - mb); }
+  var s = "";
+  for (var gy = 0; gy <= ymax + 1e-9; gy += pasoY){
+    s += '<line x1="' + ml + '" y1="' + py(gy).toFixed(1) + '" x2="' + (W-mr) + '" y2="' + py(gy).toFixed(1) + '" stroke="#ececec"></line>';
+    s += '<text x="' + (ml-6) + '" y="' + (py(gy)+4).toFixed(1) + '" text-anchor="end" font-size="12" fill="#555">' + num(redondea(gy,2)) + '</text>';
+  }
+  for (var gx = 0; gx <= xmax + 1e-9; gx += pasoX){
+    s += '<line x1="' + px(gx).toFixed(1) + '" y1="' + mt + '" x2="' + px(gx).toFixed(1) + '" y2="' + (H-mb) + '" stroke="#ececec"></line>';
+    s += '<text x="' + px(gx).toFixed(1) + '" y="' + (H-mb+16) + '" text-anchor="middle" font-size="12" fill="#555">' + num(gx) + '</text>';
+  }
+  s += '<line x1="' + ml + '" y1="' + (H-mb) + '" x2="' + (W-mr) + '" y2="' + (H-mb) + '" stroke="#555" stroke-width="2"></line>';
+  s += '<line x1="' + ml + '" y1="' + mt + '" x2="' + ml + '" y2="' + (H-mb) + '" stroke="#555" stroke-width="2"></line>';
+  s += '<text x="' + ((ml + W - mr)/2) + '" y="' + (H-12) + '" text-anchor="middle" font-size="13" font-weight="bold" fill="#10174f">' + ctx.xNom + ' (' + ctx.xU[1] + ')</text>';
+  s += '<text x="16" y="' + ((mt + H - mb)/2) + '" text-anchor="middle" font-size="13" font-weight="bold" fill="#10174f" transform="rotate(-90 16 ' + ((mt + H - mb)/2) + ')">' + ctx.yNom + ' (' + ctx.yU[1] + ')</text>';
+  var x0 = xs[0], x1 = xs[xs.length-1];
+  s += '<line x1="' + px(x0).toFixed(1) + '" y1="' + py(ys[0]).toFixed(1) + '" x2="' + px(x1).toFixed(1) + '" y2="' + py(ys[ys.length-1]).toFixed(1) + '" stroke="#1a237e" stroke-width="3"></line>';
+  if (A !== null && B !== null && A !== B){
+    var a = [xs[A], ys[A]], b = [xs[B], ys[B]];
+    s += '<line x1="' + px(a[0]).toFixed(1) + '" y1="' + py(a[1]).toFixed(1) + '" x2="' + px(b[0]).toFixed(1) + '" y2="' + py(a[1]).toFixed(1) + '" stroke="#bf360c" stroke-width="4"></line>';
+    s += '<line x1="' + px(b[0]).toFixed(1) + '" y1="' + py(a[1]).toFixed(1) + '" x2="' + px(b[0]).toFixed(1) + '" y2="' + py(b[1]).toFixed(1) + '" stroke="#00695c" stroke-width="4"></line>';
+  }
+  xs.forEach(function(x,i){
+    var marcada = (i === A || i === B);
+    s += '<circle cx="' + px(x).toFixed(1) + '" cy="' + py(ys[i]).toFixed(1) + '" r="' + (marcada ? 7 : 4) + '" fill="' + (marcada ? "#fff" : "#1a237e") + '" stroke="#10174f" stroke-width="' + (marcada ? 3 : 1) + '"></circle>';
+    if (marcada)
+      s += '<text x="' + px(x).toFixed(1) + '" y="' + (py(ys[i]) - 13).toFixed(1) + '" text-anchor="middle" font-size="13" font-weight="bold" fill="#10174f" stroke="#fff" stroke-width="4" paint-order="stroke">' + punto([x, ys[i]]) + '</text>';
+  });
+  return s;
+}
+function interpretacion(ctx, r){
+  return "Por cada " + ctx.xU[0] + " más, " + ctx.art + " " + (r > 0 ? "aumenta " : "disminuye ") + num(Math.abs(r)) + " " + (Math.abs(r) === 1 ? ctx.yU[0] : ctx.yU[1]) + ".";
+}
+function llenaFilas(){
+  var ctx = CONTEXTOS[parseInt($("c-caso").value,10) || 0];
+  ["c-a","c-b"].forEach(function(id, k){
+    var sel = $(id); sel.innerHTML = "";
+    ctx.xs.forEach(function(x,i){
+      var op = document.createElement("option");
+      op.value = i; op.textContent = ctx.xNom + " = " + num(x) + " " + ctx.xU[1]; sel.appendChild(op);
+    });
+    sel.value = k === 0 ? 0 : 2;
+  });
+}
+function actualizaTasa(){
+  var ctx = CONTEXTOS[parseInt($("c-caso").value,10) || 0];
+  var A = parseInt($("c-a").value,10), B = parseInt($("c-b").value,10);
+  var ys = ctx.xs.map(function(x){ return valorY(ctx, ctx.tasa, ctx.b, x); });
+  $("c-enunciado").innerHTML = "<strong>Situación:</strong> " + ctx.enunciado;
+  $("c-tabla").innerHTML = tablaHTML(ctx, ctx.xs, ys, [A,B], "Tabla de la situación. Las dos filas elegidas aparecen resaltadas.");
+  var svg = $("c-svg");
+  if (A === B){
+    $("c-aviso").innerHTML = "<strong>Elegiste la misma fila dos veces.</strong> Con una sola fila el cambio de x es 0 y no hay cociente que calcular. Elige dos filas distintas.";
+    $("c-aviso").className = "caja-aviso visible";
+    $("c-pasos").innerHTML = "";
+    pintaSVG(svg, "Gráfica de la situación", "Recta de la situación: " + ctx.etiqueta + ".", graficaContexto(ctx, ctx.xs, ys, null, null));
+    $("c-svg-texto").textContent = "";
+    return;
+  }
+  $("c-aviso").className = "caja-aviso";
+  var xa = ctx.xs[A], xb = ctx.xs[B], ya = ys[A], yb = ys[B];
+  var dy = redondea(yb - ya, 2), dx = xb - xa, r = redondea(dy/dx, 2);
+  var pasos = [
+    "<strong>Cambio de y (elevación):</strong> " + num(yb) + " − " + par(ya) + " = <strong>" + num(dy) + " " + ctx.yU[1] + "</strong>.",
+    "<strong>Cambio de x (avance):</strong> " + num(xb) + " − " + par(xa) + " = <strong>" + num(dx) + " " + ctx.xU[1] + "</strong>.",
+    "<strong>Pendiente:</strong> m = " + num(dy) + " / " + num(dx) + " = <strong>" + num(r) + "</strong>.",
+    "<strong>Unidades:</strong> unidades de y por cada unidad de x, es decir, <strong>" + ctx.yU[1] + " por " + ctx.xU[0] + "</strong>. La tasa es " + textoTasa(ctx, r) + ".",
+    "<strong>Interpretación:</strong> " + minus(interpretacion(ctx, r)) + " La pendiente representa " + ctx.representa + "."
+  ];
+  $("c-pasos").innerHTML = pasos.map(function(t,i){
+    return '<div class="paso"><span class="n" aria-hidden="true">' + (i+1) + '</span>' + t + '</div>';
+  }).join("");
+  pintaSVG(svg, "Gráfica: " + ctx.etiqueta,
+    "Recta que pasa por los puntos de la tabla. Están marcados " + punto([xa,ya]) + " y " + punto([xb,yb]) + ", con un avance de " + num(dx) + " " + ctx.xU[1] + " y un cambio de " + num(dy) + " " + ctx.yU[1] + ".",
+    graficaContexto(ctx, ctx.xs, ys, A, B));
+  $("c-svg-texto").textContent = "Entre " + punto([xa,ya]) + " y " + punto([xb,yb]) + ": tramo naranja = avance (" + num(dx) + "), tramo verde = cambio de y (" + num(dy) + ").";
+}
+
+/* Generador de la práctica 3 */
+function genTasa(){
+  for (var intento = 0; intento < 200; intento++){
+    var ctx = elige(CONTEXTOS);
+    var r = elige(ctx.tasas), b = elige(ctx.bs), x0 = elige(ctx.x0s), paso = elige(ctx.pasos);
+    var xs = [0,1,2,3].map(function(i){ return x0 + i*paso; });
+    var ys = xs.map(function(x){ return valorY(ctx, r, b, x); });
+    if (ys.some(function(y){ return y < 0; })) continue;
+    var modo = Math.random();
+    if (modo < 0.35){
+      /* Interpretar una pendiente dada */
+      var signo = r > 0 ? "disminuye " : "aumenta ";
+      var ops = [
+        {t:interpretacion(ctx, r)},
+        {t:"Por cada " + ctx.xU[0] + " más, " + ctx.art + " " + signo + num(Math.abs(r)) + " " + ctx.yU[1] + ".",
+         pista:"Revisa el signo: una pendiente " + (r > 0 ? "positiva indica que la cantidad aumenta." : "negativa indica que la cantidad disminuye.")},
+        {t:"Al empezar (en 0 " + ctx.xU[1] + "), " + ctx.art + " ya es de " + num(Math.abs(r)) + " " + ctx.yU[1] + ".",
+         pista:"Eso describe el punto de partida (el valor de y cuando x = 0), no la pendiente. La pendiente es cuánto cambia y por cada unidad de x."},
+        {t:"Hacen falta " + num(Math.abs(r)) + " " + ctx.xU[1] + " por cada " + ctx.yU[0] + ".",
+         pista:"Invertiste las unidades: la pendiente se mide en unidades de y por cada unidad de x."}
+      ];
+      if (!sinRepetidos(ops.map(function(o){ return o.t; }))) continue;
+      var q = "La gráfica " + de(ctx.art) + " (en " + ctx.yU[1] + ") en función " + de(ctx.xArt) +
+              enX(ctx) + " es una recta de pendiente " + num(r) + ". ¿Qué significa esa pendiente?";
+      var exp = "Las unidades son " + ctx.yU[1] + " por " + ctx.xU[0] + ". Una pendiente de " + num(r) + " indica que " +
+                minus(interpretacion(ctx, r));
+      return armaPregunta(q, ops, exp, "", {tipo:"interpretar", r:r, ctx:ctx.id, respuesta:interpretacion(ctx, r)});
+    }
+    /* Calcular desde una tabla o desde una gráfica */
+    var i = aleatorio(0,2), j = aleatorio(i+1,3);
+    var dy = redondea(ys[j] - ys[i], 2), dx = xs[j] - xs[i];
+    var correcta = textoTasa(ctx, r);
+    var ops3 = [
+      {t:correcta},
+      {t:num(r) + " " + ctx.xU[1] + " por " + ctx.yU[0], pista:"Invertiste las unidades: la tasa se expresa en unidades de y por cada unidad de x."},
+      {t:num(dy) + " " + ctx.yU[1] + " por " + ctx.xU[0], pista:"Ese es el cambio de y (" + num(dy) + "), pero falta dividirlo entre el cambio de x (" + num(dx) + ")."}
+    ];
+    if (r < 0) ops3.push({t:num(-r) + " " + ctx.yU[1] + " por " + ctx.xU[0], pista:"Revisa el signo: y baja de " + num(ys[i]) + " a " + num(ys[j]) + ", así que el cambio de y es negativo (valor final menos valor inicial)."});
+    else ops3.push({t:num(ys[j]) + " " + ctx.yU[1] + " por " + ctx.xU[0], pista:"Ese es el valor de y en una fila, no cuánto cambia por cada unidad de x."});
+    if (!sinRepetidos(ops3.map(function(o){ return o.t; }))) continue;
+    var visual, qq;
+    var exp3 = "Cambio de y: " + num(ys[j]) + " − " + par(ys[i]) + " = " + num(dy) + ". Cambio de x: " + num(xs[j]) + " − " + par(xs[i]) + " = " + num(dx) +
+               ". m = " + num(dy) + " / " + num(dx) + " = " + num(r) + ", en " + ctx.yU[1] + " por " + ctx.xU[0] + ". " + interpretacion(ctx, r);
+    if (modo < 0.7){
+      qq = ctx.enunciado.split(". ")[0] + ". La tabla muestra " + ctx.art + " según " + ctx.xArt + ". ¿Cuál es la tasa de cambio (la pendiente)?";
+      visual = tablaHTML(ctx, xs, ys, null, capitaliza(ctx.art) + " según " + ctx.xArt + ".");
+    } else {
+      var id = "pc" + (++contadorSVG);
+      qq = ctx.enunciado.split(". ")[0] + ". La gráfica muestra " + ctx.art + " (en " + ctx.yU[1] + ") según " + ctx.xArt + enX(ctx) + ". ¿Cuál es la tasa de cambio (la pendiente)?";
+      visual = '<svg class="ancho" id="' + id + '" viewBox="0 0 440 300" role="img" aria-labelledby="' + id + '-t ' + id + '-d">' +
+        encabezadoSVG(id, "Gráfica: " + ctx.art + " según " + ctx.xArt,
+          "Recta que pasa por los puntos marcados " + punto([xs[i],ys[i]]) + " y " + punto([xs[j],ys[j]]) + ".") +
+        graficaContexto(ctx, xs, ys, i, j, 440, 300) + '</svg>';
+      exp3 = "Con los puntos marcados. " + exp3;
+    }
+    return armaPregunta(qq, ops3, exp3, visual, {tipo:"calcular", r:r, xs:xs, ys:ys, i:i, j:j, ctx:ctx.id, respuesta:correcta, grafica: modo >= 0.7});
+  }
+  return armaPregunta("Un auto recorre 120 km en 2 horas a velocidad constante. ¿Cuál es la tasa de cambio?",
+    [{t:"60 kilómetros por hora"},{t:"60 horas por kilómetro", pista:"Invertiste las unidades."},{t:"120 kilómetros por hora", pista:"Falta dividir entre 2."},{t:"2 kilómetros por hora", pista:"Ese es el tiempo."}],
+    "m = 120 / 2 = 60 kilómetros por hora.", "", {tipo:"respaldo", r:60, respuesta:"60 kilómetros por hora"});
+}
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+["d-x1","d-y1","d-x2","d-y2"].forEach(function(id){ $(id).addEventListener("input", actualizaDosPuntos); });
+$("d-intercambia").addEventListener("click", function(){
+  var d = leeDosPuntos();
+  $("d-x1").value = d.x2; $("d-y1").value = d.y2; $("d-x2").value = d.x1; $("d-y2").value = d.y1;
+  actualizaDosPuntos();
+});
+actualizaDosPuntos();
+
+["t-dy","t-dx"].forEach(function(id){ $(id).addEventListener("input", actualizaTipos); });
+Array.prototype.forEach.call(document.querySelectorAll("[data-ejemplo]"), function(b){
+  b.addEventListener("click", function(){
+    var e = EJEMPLOS_TIPO[b.getAttribute("data-ejemplo")];
+    $("t-dy").value = e.dy; $("t-dx").value = e.dx;
+    actualizaTipos();
+  });
+});
+actualizaTipos();
+
+CONTEXTOS.forEach(function(c,i){
+  var op = document.createElement("option"); op.value = i; op.textContent = c.etiqueta; $("c-caso").appendChild(op);
+});
+$("c-caso").addEventListener("change", function(){ llenaFilas(); actualizaTasa(); });
+["c-a","c-b"].forEach(function(id){ $(id).addEventListener("change", actualizaTasa); });
+llenaFilas();
+actualizaTasa();
+
+creaPractica(genDosPuntos, {enun:"p1-enun",visual:"p1-visual",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+creaPractica(genTiposOrdenado, {enun:"p2-enun",visual:"p2-visual",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+creaPractica(genTasa, {enun:"p3-enun",visual:"p3-visual",opciones:"p3-opciones",fb:"p3-fb",marcador:"p3-marcador",nuevo:"p3-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

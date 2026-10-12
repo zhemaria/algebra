@@ -6,6 +6,7 @@
   Licencia: Creative Commons CC BY-NC-SA 4.0
   https://creativecommons.org/licenses/by-nc-sa/4.0/
   Anclas internas: #maquina · #linea-vertical · #notacion · #dominio-rango
+  Composición de funciones (complemento): #composicion · #cadena · #orden · #tablas · #expresion
 -->
 <html lang="es">
 <head>
@@ -13,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactivo · Lección 7.2: funciones, notación f(x), dominio y rango</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Interactivo de práctica para la Lección 7.2 del Nivel 4: la máquina de funciones, la prueba de la línea vertical, evaluar f(x) y hallar dominio y rango.">
+<meta name="description" content="Interactivo de práctica para la Lección 7.2 del Nivel 4: la máquina de funciones, la prueba de la línea vertical, evaluar f(x) y hallar dominio y rango, y la composición de funciones del complemento.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
@@ -131,6 +132,28 @@
   footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
   footer.pie a{color:var(--tema-d);}
   @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campo input[type="range"]{width:100%;} }
+
+  /* ===== Composición de funciones (módulos 5 a 8) ===== */
+  nav.indice .sep-indice{margin:14px 0 4px;font-size:14px;font-weight:700;color:var(--tema-d);
+                         text-transform:uppercase;letter-spacing:.4px;border-top:2px solid var(--tema-bg2);padding-top:10px;}
+  h2.separador{display:flex;align-items:center;gap:12px;margin:30px 0 6px;font-size:19px;color:var(--tema-d);}
+  h2.separador::before,h2.separador::after{content:"";flex:1;height:3px;background:var(--tema-bg2);border-radius:2px;}
+  p.sub-separador{text-align:center;font-size:14px;color:var(--gris);margin:0 0 16px;}
+  .formula{text-align:center;font-size:19px;font-weight:700;color:var(--tema-d);margin:12px 0;}
+  .maquina.cadena{gap:8px;}
+  .maquina.cadena .caja-maq{min-width:86px;padding:10px 12px;}
+  .maquina.cadena .caja-maq .val{font-size:20px;}
+  .maquina.cadena .caja-regla{min-width:120px;}
+  .caja-regla-f{background:var(--tema-bg2);border-color:var(--tema-d);min-width:120px;}
+  .caja-regla-f .rot{color:var(--tema-d);}
+  .caja-regla-f .val{color:var(--tema-d);font-size:19px;}
+  .caja-maq.activa{box-shadow:0 0 0 4px #f9a825;}
+  .cadena-et{font-weight:700;color:var(--tema-d);margin:16px 0 0;text-align:center;}
+  table.reglas th[scope="row"]{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas td.centro,table.reglas th.centro{text-align:center;}
+  table.reglas td.resalta1{background:#fff3c4;outline:3px solid #f9a825;outline-offset:-3px;font-weight:700;}
+  table.reglas td.resalta2{background:var(--ok-bg);outline:3px solid var(--ok);outline-offset:-3px;font-weight:700;color:var(--ok);}
+  .extra-practica table.reglas{max-width:420px;}
 </style>
 </head>
 <body>
@@ -139,7 +162,7 @@
   <header class="principal">
     <div class="ruta">Nivel 4 · Tema 7 · Sistemas de desigualdades y funciones</div>
     <h1>Lección 7.2 · Relaciones vs. funciones, notación f(x) y dominio/rango</h1>
-    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+    <div class="meta">Ocho prácticas interactivas en una sola página, cuatro de ellas sobre la composición de funciones del complemento. Cada sección de la lección enlaza directamente con su práctica.</div>
   </header>
 
   <nav class="indice" aria-labelledby="titulo-indice">
@@ -149,6 +172,13 @@
       <li><a href="#linea-vertical">La prueba de la línea vertical</a></li>
       <li><a href="#notacion">La notación f(x): evaluar funciones</a></li>
       <li><a href="#dominio-rango">Dominio y rango</a></li>
+    </ol>
+    <p class="sep-indice"><a href="#composicion">Composición de funciones</a></p>
+    <ol start="5">
+      <li><a href="#cadena">Dos máquinas en cadena</a></li>
+      <li><a href="#orden">El orden importa</a></li>
+      <li><a href="#tablas">Composición con tablas y en contexto</a></li>
+      <li><a href="#expresion">La expresión de f(g(x))</a></li>
     </ol>
     <div class="controles-todo">
       <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
@@ -386,6 +416,250 @@
       <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
     </div>
   </details>
+
+  <!-- ============ COMPOSICIÓN DE FUNCIONES (complemento de la lección) ============ -->
+  <h2 class="separador" id="composicion">Composición de funciones</h2>
+  <p class="sub-separador">Módulos del complemento de la Lección 7.2: dos funciones que actúan una después de la otra.</p>
+
+  <!-- ============ MÓDULO 5 ============ -->
+  <details class="modulo" id="cadena">
+    <summary>
+      <span class="num" aria-hidden="true">5</span>
+      <h2>Dos máquinas en cadena</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En la composición <strong>f(g(x))</strong>, que se lee «f de g de x», hay dos máquinas conectadas en cadena.
+      Primero el valor x entra en la máquina <strong>g</strong>. Lo que sale, g(x), entra después en la máquina
+      <strong>f</strong>. El resultado final es f(g(x)). Elige las dos máquinas y la entrada, y sigue el recorrido paso a paso.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:200px;">
+            <label for="c-g">Máquina g (actúa primero)</label>
+            <select id="c-g"></select>
+          </div>
+          <div class="campo" style="flex:1;min-width:200px;">
+            <label for="c-f">Máquina f (actúa después)</label>
+            <select id="c-f"></select>
+          </div>
+          <div class="campo">
+            <label for="c-x">Entrada x</label>
+            <input type="number" id="c-x" value="4" step="1">
+          </div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="c-sig">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="c-todo">Ver todos los pasos</button>
+          <button type="button" class="btn-sec" id="c-reset">Empezar de nuevo</button>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="c-aviso" role="alert"></div>
+
+      <div class="maquina cadena" id="c-visual"></div>
+      <div class="pasos" id="c-pasos" aria-live="polite"></div>
+
+      <div class="caja-tip">
+        <strong>Otra forma de escribirlo:</strong> algunos libros escriben (f ∘ g)(x), con un pequeño círculo, que se lee
+        «f compuesta con g». Significa exactamente lo mismo que f(g(x)).
+      </div>
+
+      <h3>Practica: sigue la cadena</h3>
+      <div class="practica">
+        <div class="enun" id="p5-enun"></div>
+        <div class="opciones" id="p5-opciones"></div>
+        <div class="fb" id="p5-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p5-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p5-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 6 ============ -->
+  <details class="modulo" id="orden">
+    <summary>
+      <span class="num" aria-hidden="true">6</span>
+      <h2>El orden importa</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Al cambiar el orden de las funciones, normalmente cambia el resultado. En f(g(x)) actúa primero la g; en
+      g(f(x)), primero la f. Elige un par de funciones, mueve el valor de x y compara las dos cadenas.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;">
+            <label for="o-par">Funciones</label>
+            <select id="o-par"></select>
+          </div>
+          <div class="campo">
+            <label for="o-x">Valor de x = <span class="valor-rango" id="o-x-val">3</span></label>
+            <input type="range" id="o-x" min="-4" max="5" step="1" value="3">
+          </div>
+        </div>
+      </div>
+
+      <p class="cadena-et" id="o-et-fg"></p>
+      <div class="maquina cadena" id="o-visual-fg"></div>
+      <p class="cadena-et" id="o-et-gf"></p>
+      <div class="maquina cadena" id="o-visual-gf"></div>
+
+      <div id="o-tabla"></div>
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="o-veredicto"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Regla para no confundirse:</strong> actúa primero la función que está <strong>más cerca de la x</strong>.
+        En f(g(x)), la g toca a la x, así que g va primero. En g(f(x)), va primero la f.
+      </div>
+
+      <h3>Practica: ¿qué va primero?</h3>
+      <div class="practica">
+        <div class="enun" id="p6-enun"></div>
+        <div class="opciones" id="p6-opciones"></div>
+        <div class="fb" id="p6-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p6-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p6-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 7 ============ -->
+  <details class="modulo" id="tablas">
+    <summary>
+      <span class="num" aria-hidden="true">7</span>
+      <h2>Composición con tablas y en contexto</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Las funciones no siempre vienen como fórmulas. Si vienen en una <strong>tabla</strong>, se busca cada valor en
+      su fila, en el mismo orden de adentro hacia afuera. Elige la composición y el número, y mira qué celdas se leen.</p>
+
+      <table class="reglas" id="t-tabla">
+        <caption>Valores de las funciones f y g para x = 1, 2, 3 y 4.</caption>
+        <thead><tr><th scope="col">x</th><th scope="col" class="centro">1</th><th scope="col" class="centro">2</th><th scope="col" class="centro">3</th><th scope="col" class="centro">4</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">g(x)</th><td class="centro" id="t-g-1">3</td><td class="centro" id="t-g-2">1</td><td class="centro" id="t-g-3">4</td><td class="centro" id="t-g-4">2</td></tr>
+          <tr><th scope="row">f(x)</th><td class="centro" id="t-f-1">5</td><td class="centro" id="t-f-2">7</td><td class="centro" id="t-f-3">2</td><td class="centro" id="t-f-4">9</td></tr>
+        </tbody>
+      </table>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="t-comp">Composición</label>
+            <select id="t-comp">
+              <option value="fg">f(g(a))</option>
+              <option value="gf">g(f(a))</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="t-a">Número a</label>
+            <select id="t-a">
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+            </select>
+          </div>
+        </div>
+        <p class="nota">La primera celda que se lee queda con borde amarillo; la segunda, con borde verde.</p>
+      </div>
+
+      <div class="pasos" id="t-pasos" aria-live="polite"></div>
+      <div class="caja-aviso" id="t-aviso" role="alert"></div>
+
+      <h3>En contexto: un cupón y el impuesto</h3>
+      <p>En la vida real, la composición aparece cada vez que un resultado pasa por <strong>dos procesos seguidos</strong>.
+      Una tienda aplica un cupón de $10, d(x) = x − 10, y un impuesto del 8 %, t(x) = 1.08x. Cambia el precio y compara
+      los dos órdenes.</p>
+      <div class="panel">
+        <div class="campo">
+          <label for="t-precio">Precio del artículo: $<span class="valor-rango" id="t-precio-val">50</span></label>
+          <input type="range" id="t-precio" min="20" max="100" step="5" value="50">
+        </div>
+      </div>
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="t-cupon-primero"></div>
+        <div class="linea" id="t-impuesto-primero"></div>
+        <div class="linea veredicto" id="t-diferencia"></div>
+      </div>
+
+      <h3>Practica: tablas y contexto</h3>
+      <div class="practica">
+        <div class="enun" id="p7-enun"></div>
+        <div class="extra-practica" id="p7-extra"></div>
+        <div class="opciones" id="p7-opciones"></div>
+        <div class="fb" id="p7-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p7-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p7-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 8 ============ -->
+  <details class="modulo" id="expresion">
+    <summary>
+      <span class="num" aria-hidden="true">8</span>
+      <h2>La expresión de f(g(x))</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>A veces se pide la <strong>fórmula</strong> de la composición, no un número. Se sustituye la expresión completa
+      de la función de adentro en lugar de la x de la función de afuera, con paréntesis. Después se simplifica y se
+      comprueba con un número.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;">
+            <label for="e-par">Funciones</label>
+            <select id="e-par"></select>
+          </div>
+          <div class="campo">
+            <label for="e-orden">Expresión que se busca</label>
+            <select id="e-orden">
+              <option value="fg">f(g(x))</option>
+              <option value="gf">g(f(x))</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="e-k">Comprobar con x = <span class="valor-rango" id="e-k-val">4</span></label>
+            <input type="range" id="e-k" min="-3" max="5" step="1" value="4">
+          </div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="e-sig">Mostrar el primer paso</button>
+          <button type="button" class="btn-sec" id="e-todo">Ver todos los pasos</button>
+          <button type="button" class="btn-sec" id="e-reset">Empezar de nuevo</button>
+        </div>
+      </div>
+
+      <p class="formula" id="e-planteo"></p>
+      <div class="pasos" id="e-pasos" aria-live="polite"></div>
+
+      <div class="caja-atencion">
+        <strong>Cuidado:</strong> (x + 1)² no es x² + 1. Al elevar un binomio al cuadrado aparece el término del medio, 2x.
+        Si tienes dudas, comprueba con un número: con x = 3, (3 + 1)² = 16, pero 3² + 1 = 10.
+      </div>
+
+      <h3>Practica: escribe la expresión</h3>
+      <div class="practica">
+        <div class="enun" id="p8-enun"></div>
+        <div class="opciones" id="p8-opciones"></div>
+        <div class="fb" id="p8-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p8-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p8-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
 
   <footer class="pie">
     <p><strong>Interactivo de la Lección 7.2 · Nivel 4 · Matemáticas</strong><br>
@@ -914,6 +1188,628 @@ creaPractica(BANCO_P3, {enun:"p3-enun",opciones:"p3-opciones",fb:"p3-fb",marcado
 creaPractica(BANCO_P4, {enun:"p4-enun",opciones:"p4-opciones",fb:"p4-fb",marcador:"p4-marcador",nuevo:"p4-nuevo"});
 
 abrePorHash();
+</script>
+<script>
+/* ============================================================
+   COMPOSICIÓN DE FUNCIONES · módulos 5 a 8
+   Todo va dentro de una función propia para no chocar con los
+   nombres del resto de la página. Usa $ y aleatorio de arriba.
+   ============================================================ */
+(function(){
+  var MENOS = "−";
+  var SUP = {2:"²", 3:"³", 4:"⁴"};
+
+  /* ---- Polinomios como listas de coeficientes [c0, c1, c2, ...] ---- */
+  function pLimpia(p){ var q = p.slice(); while (q.length > 1 && q[q.length-1] === 0) q.pop(); return q; }
+  function pSuma(a,b){ var r = []; for (var i = 0; i < Math.max(a.length,b.length); i++) r.push((a[i]||0) + (b[i]||0)); return pLimpia(r); }
+  function pPor(a,b){
+    var r = []; for (var i = 0; i < a.length + b.length - 1; i++) r.push(0);
+    for (var i2 = 0; i2 < a.length; i2++) for (var j = 0; j < b.length; j++) r[i2+j] += a[i2]*b[j];
+    return pLimpia(r);
+  }
+  function pEscala(a,k){ return pLimpia(a.map(function(c){ return c*k; })); }
+  function pPotencia(a,n){ var r = [1]; for (var i = 0; i < n; i++) r = pPor(r,a); return r; }
+  function pCompone(ext, int){ /* ext(int(x)) */
+    var r = [0];
+    for (var i = 0; i < ext.length; i++) if (ext[i]) r = pSuma(r, pEscala(pPotencia(int,i), ext[i]));
+    return r;
+  }
+  function pEval(p,x){ var s = 0; for (var i = p.length-1; i >= 0; i--) s = s*x + p[i]; return s; }
+  function pIgual(a,b){ a = pLimpia(a); b = pLimpia(b); if (a.length !== b.length) return false;
+    for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) return false; return true; }
+
+  /* ---- Formato ---- */
+  function num(n){ n = Math.round(n*100)/100; return n < 0 ? MENOS + Math.abs(n) : String(n); }
+  function dinero(n){ return "$" + (Math.round(n*100)/100).toFixed(2); }
+  function monomio(c, g, primero){ /* c·x^g con su signo de enlace */
+    var abs = Math.abs(c), cuerpo;
+    if (g === 0) cuerpo = String(abs);
+    else cuerpo = (abs === 1 ? "" : String(abs)) + "x" + (g > 1 ? SUP[g] : "");
+    if (primero) return (c < 0 ? MENOS : "") + cuerpo;
+    return (c < 0 ? " " + MENOS + " " : " + ") + cuerpo;
+  }
+  function terminos(lista){ /* lista de [coef, grado] sin simplificar */
+    var t = lista.filter(function(m){ return m[0] !== 0; });
+    if (!t.length) return "0";
+    return t.map(function(m,i){ return monomio(m[0], m[1], i === 0); }).join("");
+  }
+  function listaDe(p){ var l = []; for (var i = p.length-1; i >= 0; i--) if (p[i]) l.push([p[i], i]); return l; }
+  function poli(p){ return terminos(listaDe(p)); }
+
+  /* Sustituye la x de p por un número: «2(7) − 3», «(−3)² + 1», «4 + 3» */
+  function sustNum(p, v){
+    var vs = num(v), partes = [], l = listaDe(p);
+    l.forEach(function(m, i){
+      var c = m[0], g = m[1], abs = Math.abs(c), cuerpo;
+      if (g === 0) cuerpo = String(abs);
+      else {
+        var base = (v < 0 || abs !== 1) ? "(" + vs + ")" : vs;
+        if (g > 1) base = (abs === 1 && v >= 0) ? vs + SUP[g] : "(" + vs + ")" + SUP[g];
+        cuerpo = (abs === 1 ? "" : String(abs)) + base;
+      }
+      partes.push(i === 0 ? (c < 0 ? MENOS : "") + cuerpo : (c < 0 ? " " + MENOS + " " : " + ") + cuerpo);
+    });
+    return partes.length ? partes.join("") : "0";
+  }
+  /* Sustituye la x de p por una expresión entre paréntesis: «3(x − 2) + 1», «(x + 1)²» */
+  function sustExpr(p, q){
+    var interior = poli(q), l = listaDe(p), partes = [];
+    var simple = (listaDe(q).length === 1 && q.length === 2 && q[1] === 1); /* q = x */
+    l.forEach(function(m, i){
+      var c = m[0], g = m[1], abs = Math.abs(c), cuerpo;
+      if (g === 0) cuerpo = String(abs);
+      else {
+        var base = simple ? "x" : "(" + interior + ")";
+        cuerpo = (abs === 1 ? "" : String(abs)) + base + (g > 1 ? SUP[g] : "");
+      }
+      partes.push(i === 0 ? (c < 0 ? MENOS : "") + cuerpo : (c < 0 ? " " + MENOS + " " : " + ") + cuerpo);
+    });
+    return partes.join("");
+  }
+  function evalTexto(nombre, p, v){ /* «g(4) = 4 + 3 = 7» */
+    var s = sustNum(p, v), r = num(pEval(p, v));
+    return nombre + "(" + num(v) + ") = " + (s === r ? r : s + " = " + r);
+  }
+  function baraja(a){ for (var i = a.length-1; i > 0; i--){ var j = aleatorio(0,i), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function elige(a){ return a[aleatorio(0, a.length-1)]; }
+  function noCero(min,max){ var n = 0; while (n === 0) n = aleatorio(min,max); return n; }
+
+  /* ---- Motor de práctica con números aleatorios ----
+     gen() devuelve {q, extra?, ok:{t}, malas:[{t, nota}], exp}            */
+  function compPractica(gen, ids){
+    var est = {p:null, resuelta:false, aciertos:0, total:0};
+    function pinta(){
+      var p = gen();
+      var ops = [{t:p.ok.t, correcta:true}].concat(p.malas.map(function(m){ return {t:m.t, nota:m.nota}; }));
+      p.ops = baraja(ops);
+      est.p = p; est.resuelta = false;
+      $(ids.enun).textContent = p.q;
+      if (ids.extra) $(ids.extra).innerHTML = p.extra || "";
+      var cont = $(ids.opciones); cont.innerHTML = "";
+      p.ops.forEach(function(o){
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "opcion"; b.textContent = o.t;
+        b.setAttribute("aria-pressed","false");
+        b.addEventListener("click", function(){ responde(o, b); });
+        cont.appendChild(b);
+      });
+      $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+    }
+    function responde(o, btn){
+      if (est.resuelta) return;
+      est.resuelta = true; est.total++;
+      Array.prototype.forEach.call($(ids.opciones).children, function(b, k){
+        b.disabled = true;
+        if (est.p.ops[k].correcta) b.className = "opcion correcta";
+        else if (b === btn) b.className = "opcion incorrecta";
+      });
+      btn.setAttribute("aria-pressed","true");
+      if (o.correcta){
+        est.aciertos++;
+        $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + est.p.exp;
+      } else {
+        $(ids.fb).className = "fb mal";
+        $(ids.fb).textContent = "✗ Todavía no. " + (o.nota ? o.nota + " " : "") + est.p.exp;
+      }
+      $(ids.marcador).textContent = "Aciertos: " + est.aciertos + " de " + est.total;
+    }
+    $(ids.nuevo).addEventListener("click", pinta);
+    pinta();
+  }
+  /* Escoge hasta 3 distractores distintos entre sí y de la respuesta correcta */
+  function filtra(correcta, candidatos, n){
+    var vistos = {}, sal = [];
+    vistos[correcta] = true;
+    candidatos.forEach(function(c){
+      if (sal.length >= (n||3)) return;
+      if (vistos[c.t]) return;
+      vistos[c.t] = true; sal.push(c);
+    });
+    return sal;
+  }
+
+  /* ---- Cajas de máquina (mismo estilo que el módulo 1) ---- */
+  function caja(rot, val, clase){
+    return '<div class="caja-maq ' + (clase||"") + '"><span class="rot">' + rot + '</span><span class="val">' + val + '</span></div>';
+  }
+  var FL = '<span class="flecha" aria-hidden="true">→</span>';
+  function cadenaHTML(n1, p1, n2, p2, x, activa){
+    /* activa: 0 nada, 1 la primera máquina, 2 la segunda, 3 resultado */
+    var v1 = (x === null) ? null : pEval(p1, x);
+    var v2 = (v1 === null) ? null : pEval(p2, v1);
+    return caja("entrada", x === null ? "x" : num(x), activa === 1 ? "activa" : "") + FL +
+      caja("máquina " + n1, poli(p1), "caja-regla" + (activa === 1 ? " activa" : "")) + FL +
+      caja(n1 + "(x)", (v1 === null || activa < 2) ? "?" : num(v1), activa === 2 ? "activa" : "") + FL +
+      caja("máquina " + n2, poli(p2), "caja-regla-f" + (activa === 2 ? " activa" : "")) + FL +
+      caja(n2 + "(" + n1 + "(x))", (v2 === null || activa < 3) ? "?" : num(v2), activa === 3 ? "activa" : "");
+  }
+
+  /* ============================================================
+     MÓDULO 5 · Dos máquinas en cadena
+     ============================================================ */
+  var C_G = [
+    {etiqueta:"g(x) = x + 3", p:[3,1]},
+    {etiqueta:"g(x) = x − 3", p:[-3,1]},
+    {etiqueta:"g(x) = 2x − 5", p:[-5,2]},
+    {etiqueta:"g(x) = −2x", p:[0,-2]},
+    {etiqueta:"g(x) = x²", p:[0,0,1]}
+  ];
+  var C_F = [
+    {etiqueta:"f(x) = 2x", p:[0,2]},
+    {etiqueta:"f(x) = 3x − 2", p:[-2,3]},
+    {etiqueta:"f(x) = x² + 1", p:[1,0,1]},
+    {etiqueta:"f(x) = 2x + 1", p:[1,2]},
+    {etiqueta:"f(x) = 4x − 1", p:[-1,4]}
+  ];
+  var cEst = {k:0, pasos:[]};
+  function cDatos(){
+    var g = C_G[parseInt($("c-g").value,10) || 0], f = C_F[parseInt($("c-f").value,10) || 0];
+    var x = parseFloat($("c-x").value);
+    return {g:g, f:f, x:x};
+  }
+  function cReinicia(){
+    var d = cDatos();
+    cEst.k = 0; $("c-pasos").innerHTML = "";
+    if (isNaN(d.x) || Math.abs(d.x) > 50 || d.x !== Math.round(d.x)){
+      $("c-aviso").innerHTML = "<strong>Revisa la entrada.</strong> Escribe un número entero entre −50 y 50 para que la cadena dé resultados claros.";
+      $("c-aviso").className = "caja-aviso visible";
+      $("c-visual").innerHTML = cadenaHTML("g", d.g.p, "f", d.f.p, null, 0);
+      $("c-sig").disabled = true; cEst.pasos = [];
+      return;
+    }
+    $("c-aviso").className = "caja-aviso";
+    var gx = pEval(d.g.p, d.x), fgx = pEval(d.f.p, gx);
+    cEst.pasos = [
+      "La entrada x = " + num(d.x) + " entra en la máquina g, que actúa primero: " + evalTexto("g", d.g.p, d.x) + ".",
+      "La salida de g, el " + num(gx) + ", entra en la máquina f: " + evalTexto("f", d.f.p, gx) + ".",
+      "Resultado final: <strong>f(g(" + num(d.x) + ")) = " + num(fgx) + "</strong>. Fíjate en que nunca se calculó f(" + num(d.x) + "): la f solo recibe lo que sale de g."
+    ];
+    $("c-visual").innerHTML = cadenaHTML("g", d.g.p, "f", d.f.p, d.x, 0);
+    $("c-sig").disabled = false; $("c-sig").textContent = "Mostrar el primer paso";
+  }
+  function cAgrega(i){
+    var div = document.createElement("div"); div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + cEst.pasos[i];
+    $("c-pasos").appendChild(div);
+  }
+  function cSiguiente(){
+    if (cEst.k >= cEst.pasos.length) return;
+    cAgrega(cEst.k); cEst.k++;
+    var d = cDatos();
+    $("c-visual").innerHTML = cadenaHTML("g", d.g.p, "f", d.f.p, d.x, cEst.k);
+    var fin = cEst.k >= cEst.pasos.length;
+    $("c-sig").textContent = fin ? "No quedan más pasos" : "Siguiente paso";
+    $("c-sig").disabled = fin;
+  }
+  function cTodo(){
+    if (!cEst.pasos.length) return;
+    $("c-pasos").innerHTML = ""; cEst.pasos.forEach(function(t,i){ cAgrega(i); });
+    cEst.k = cEst.pasos.length;
+    var d = cDatos();
+    $("c-visual").innerHTML = cadenaHTML("g", d.g.p, "f", d.f.p, d.x, 3);
+    $("c-sig").textContent = "No quedan más pasos"; $("c-sig").disabled = true;
+  }
+
+  /* Familias de funciones para las prácticas numéricas */
+  function linealAzar(minA, maxA){ return [noCero(-6,6), noCero(minA, maxA)]; }
+  function funcAzar(){
+    var r = aleatorio(1,10);
+    if (r <= 6) return linealAzar(-4, 4);
+    if (r <= 8) return [aleatorio(-3,3), 0, 1];           /* x² + c */
+    return [aleatorio(-5,5), 1];                           /* x + c  */
+  }
+  function parFG(){ /* f y g, como mucho una cuadrática, valores manejables */
+    var f, g, a, ok = false;
+    while (!ok){
+      f = funcAzar(); g = funcAzar();
+      if (f.length === 3 && g.length === 3) continue;
+      if (pIgual(f, g)) continue;
+      a = aleatorio(-4, 5);
+      var fga = pEval(f, pEval(g, a)), gfa = pEval(g, pEval(f, a));
+      ok = Math.abs(fga) <= 150 && Math.abs(gfa) <= 150;
+    }
+    return {f:f, g:g, a:a};
+  }
+  function genP5(){
+    var d, fga, gfa, cand, malas, intentos = 0;
+    do {
+      d = parFG();
+      var ga = pEval(d.g, d.a), fa = pEval(d.f, d.a);
+      fga = pEval(d.f, ga); gfa = pEval(d.g, fa);
+      cand = [
+        {t:num(gfa), nota:"Esa respuesta es g(f(" + num(d.a) + ")): invertiste el orden y aplicaste primero la f."},
+        {t:num(fa*ga), nota:"Esa respuesta es f(" + num(d.a) + ") · g(" + num(d.a) + "): la composición no es una multiplicación."},
+        {t:num(ga), nota:"Esa respuesta es solo g(" + num(d.a) + "): falta meter ese resultado en la máquina f."},
+        {t:num(fa), nota:"Esa respuesta es solo f(" + num(d.a) + "): la x no entra directamente en f, primero pasa por g."}
+      ];
+      malas = filtra(num(fga), cand, 3);
+      intentos++;
+    } while (malas.length < 3 && intentos < 50);
+    var ga2 = pEval(d.g, d.a);
+    return {
+      q:"f(x) = " + poli(d.f) + " y g(x) = " + poli(d.g) + ". ¿Cuánto vale f(g(" + num(d.a) + "))?",
+      ok:{t:num(fga)}, malas:malas,
+      exp:"Adentro: " + evalTexto("g", d.g, d.a) + ". Afuera: " + evalTexto("f", d.f, ga2) + ". Por lo tanto, f(g(" + num(d.a) + ")) = " + num(fga) + ".",
+      datos:{tipo:"fg", f:d.f, g:d.g, a:d.a}
+    };
+  }
+
+  /* ============================================================
+     MÓDULO 6 · El orden importa
+     ============================================================ */
+  var O_PARES = [
+    {etiqueta:"f(x) = 2x y g(x) = x + 5", f:[0,2], g:[5,1]},
+    {etiqueta:"f(x) = x + 1 y g(x) = 3x", f:[1,1], g:[0,3]},
+    {etiqueta:"f(x) = x² y g(x) = x + 2", f:[0,0,1], g:[2,1]},
+    {etiqueta:"f(x) = 2x + 3 y g(x) = x − 1", f:[3,2], g:[-1,1]},
+    {etiqueta:"f(x) = x² y g(x) = x − 4", f:[0,0,1], g:[-4,1]}
+  ];
+  function oActualiza(){
+    var par = O_PARES[parseInt($("o-par").value,10) || 0];
+    var x = parseInt($("o-x").value,10);
+    $("o-x-val").textContent = num(x);
+    var gx = pEval(par.g, x), fgx = pEval(par.f, gx);
+    var fx = pEval(par.f, x), gfx = pEval(par.g, fx);
+    $("o-et-fg").textContent = "f(g(" + num(x) + ")): actúa primero la g";
+    $("o-visual-fg").innerHTML = cadenaHTML("g", par.g, "f", par.f, x, 3);
+    $("o-et-gf").textContent = "g(f(" + num(x) + ")): actúa primero la f";
+    $("o-visual-gf").innerHTML = cadenaHTML("f", par.f, "g", par.g, x, 3);
+    $("o-tabla").innerHTML =
+      '<table class="reglas"><caption>Comparación entre f(g(' + num(x) + ')) y g(f(' + num(x) + ')).</caption>' +
+      '<thead><tr><th scope="col">Composición</th><th scope="col">Primero</th><th scope="col">Después</th><th scope="col">Resultado</th></tr></thead><tbody>' +
+      '<tr><td>f(g(' + num(x) + '))</td><td>' + evalTexto("g", par.g, x) + '</td><td>' + evalTexto("f", par.f, gx) + '</td><td>' + num(fgx) + '</td></tr>' +
+      '<tr><td>g(f(' + num(x) + '))</td><td>' + evalTexto("f", par.f, x) + '</td><td>' + evalTexto("g", par.g, fx) + '</td><td>' + num(gfx) + '</td></tr>' +
+      '</tbody></table>';
+    var v = $("o-veredicto");
+    if (fgx !== gfx){
+      v.textContent = "Resultados distintos: f(g(" + num(x) + ")) = " + num(fgx) + " y g(f(" + num(x) + ")) = " + num(gfx) + ". Cambiar el orden cambió el resultado.";
+      v.className = "linea veredicto mal";
+    } else {
+      v.textContent = "Aquí coinciden los dos: " + num(fgx) + ". Es una casualidad de este valor de x; mueve el deslizador y verás que en general no son iguales.";
+      v.className = "linea veredicto bien";
+    }
+  }
+  function genP6(){
+    var tipo = aleatorio(1,3);
+    if (tipo === 1){ /* calcular g(f(a)) */
+      var d, malas, gfa, intentos = 0;
+      do {
+        d = parFG();
+        var fa = pEval(d.f, d.a), ga = pEval(d.g, d.a);
+        gfa = pEval(d.g, fa);
+        malas = filtra(num(gfa), [
+          {t:num(pEval(d.f, ga)), nota:"Esa respuesta es f(g(" + num(d.a) + ")): aplicaste primero la g, pero en g(f(x)) la que toca a la x es la f."},
+          {t:num(fa*ga), nota:"Esa respuesta es f(" + num(d.a) + ") · g(" + num(d.a) + "): la composición no es una multiplicación."},
+          {t:num(fa), nota:"Esa respuesta es solo f(" + num(d.a) + "): falta meter ese resultado en g."},
+          {t:num(ga), nota:"Esa respuesta es solo g(" + num(d.a) + "): la g no recibe la x, recibe lo que sale de f."}
+        ], 3);
+        intentos++;
+      } while ((malas.length < 3 || pEval(d.f, pEval(d.g, d.a)) === gfa) && intentos < 50);
+      var fa2 = pEval(d.f, d.a);
+      return {
+        q:"f(x) = " + poli(d.f) + " y g(x) = " + poli(d.g) + ". ¿Cuánto vale g(f(" + num(d.a) + "))?",
+        ok:{t:num(gfa)}, malas:malas,
+        exp:"La f está más cerca de la x, así que va primero: " + evalTexto("f", d.f, d.a) + ". Después, " + evalTexto("g", d.g, fa2) + ". Por lo tanto, g(f(" + num(d.a) + ")) = " + num(gfa) + ".",
+        datos:{tipo:"gf", f:d.f, g:d.g, a:d.a}
+      };
+    }
+    if (tipo === 2){ /* ¿qué se calcula primero? */
+      var ext = elige(["f","g"]), int = ext === "f" ? "g" : "f", a = aleatorio(2,9);
+      var expr = ext + "(" + int + "(" + a + "))";
+      return {
+        q:"Para calcular " + expr + ", ¿qué se calcula primero?",
+        ok:{t:int + "(" + a + ")"},
+        malas:[
+          {t:ext + "(" + a + ")", nota:"La " + ext + " está afuera: actúa al final, no al principio."},
+          {t:"f(" + a + ") · g(" + a + ")", nota:"La composición no es una multiplicación de las dos funciones."},
+          {t:"f(" + a + ") + g(" + a + ")", nota:"La composición tampoco es una suma: una función va dentro de la otra."}
+        ],
+        exp:"Actúa primero la función más cercana al número: en " + expr + " es la " + int + ". Se calcula " + int + "(" + a + ") y ese resultado entra en " + ext + ".",
+        datos:{tipo:"primero", ext:ext, int:int, a:a}
+      };
+    }
+    /* tipo 3 · ¿son iguales f(g(a)) y g(f(a))? */
+    var d3, fg3, gf3;
+    do { d3 = parFG(); fg3 = pEval(d3.f, pEval(d3.g, d3.a)); gf3 = pEval(d3.g, pEval(d3.f, d3.a)); } while (fg3 === gf3);
+    var A = num(d3.a);
+    return {
+      q:"Con f(x) = " + poli(d3.f) + " y g(x) = " + poli(d3.g) + ", ¿es f(g(" + A + ")) igual a g(f(" + A + "))?",
+      ok:{t:"No: f(g(" + A + ")) = " + num(fg3) + " y g(f(" + A + ")) = " + num(gf3)},
+      malas:[
+        {t:"No: f(g(" + A + ")) = " + num(gf3) + " y g(f(" + A + ")) = " + num(fg3), nota:"Los dos números son los correctos, pero están intercambiados: invertiste el orden en ambas."},
+        {t:"Sí, las dos valen " + num(fg3), nota:"Solo calculaste una de las dos composiciones."},
+        {t:"Sí, las dos valen " + num(gf3), nota:"Solo calculaste una de las dos composiciones."}
+      ],
+      exp:"f(g(" + A + ")): primero " + evalTexto("g", d3.g, d3.a) + " y luego f da " + num(fg3) + ". g(f(" + A + ")): primero " + evalTexto("f", d3.f, d3.a) + " y luego g da " + num(gf3) + ". El orden cambia el resultado.",
+      datos:{tipo:"iguales", f:d3.f, g:d3.g, a:d3.a}
+    };
+  }
+
+  /* ============================================================
+     MÓDULO 7 · Composición con tablas y en contexto
+     ============================================================ */
+  var T_G = {1:3, 2:1, 3:4, 4:2}, T_F = {1:5, 2:7, 3:2, 4:9};
+  function tActualiza(){
+    var comp = $("t-comp").value, a = parseInt($("t-a").value,10);
+    ["g","f"].forEach(function(n){ for (var i = 1; i <= 4; i++) $("t-" + n + "-" + i).className = "centro"; });
+    var int = comp === "fg" ? "g" : "f", ext = comp === "fg" ? "f" : "g";
+    var TI = int === "g" ? T_G : T_F, TE = ext === "g" ? T_G : T_F;
+    var v1 = TI[a];
+    $("t-" + int + "-" + a).className = "centro resalta1";
+    var expr = ext + "(" + int + "(" + a + "))";
+    var h = '<div class="paso"><span class="n" aria-hidden="true">1</span>Adentro: en la fila de ' + int + ', ' + int + '(' + a + ') = ' + v1 + '.</div>';
+    if (TE[v1] === undefined){
+      $("t-pasos").innerHTML = h;
+      $("t-aviso").innerHTML = "<strong>La tabla no alcanza.</strong> " + int + "(" + a + ") = " + v1 +
+        ", pero la tabla solo da valores para x = 1, 2, 3 y 4. Sin " + ext + "(" + v1 + ") no se puede calcular " + expr +
+        " con esta tabla. Prueba con otro número.";
+      $("t-aviso").className = "caja-aviso visible";
+      return;
+    }
+    $("t-aviso").className = "caja-aviso";
+    $("t-" + ext + "-" + v1).className = "centro resalta2";
+    h += '<div class="paso"><span class="n" aria-hidden="true">2</span>Afuera: ese ' + v1 + ' se busca en la fila de ' + ext + ': ' + ext + '(' + v1 + ') = ' + TE[v1] + '.</div>' +
+         '<div class="paso"><span class="n" aria-hidden="true">3</span><strong>' + expr + ' = ' + TE[v1] + '</strong>.</div>';
+    $("t-pasos").innerHTML = h;
+  }
+  function tPrecio(){
+    var x = parseInt($("t-precio").value,10);
+    $("t-precio-val").textContent = x;
+    var dx = x - 10, tdx = 1.08*dx, tx = 1.08*x, dtx = tx - 10;
+    $("t-cupon-primero").innerHTML = "<strong>Primero el cupón y luego el impuesto:</strong> t(d(" + x + ")) = t(" + dx + ") = 1.08 · " + dx + " = " + dinero(tdx) + ".";
+    $("t-impuesto-primero").innerHTML = "<strong>Primero el impuesto y luego el cupón:</strong> d(t(" + x + ")) = d(" + num(tx) + ") = " + num(tx) + " − 10 = " + dinero(dtx) + ".";
+    $("t-diferencia").textContent = "Con el cupón primero se paga " + dinero(dtx - tdx) + " menos. El orden de los procesos cambia el precio.";
+    $("t-diferencia").className = "linea veredicto bien";
+  }
+  function permutacion(){ return baraja([1,2,3,4]); }
+  function tablaHTML(g, f){
+    var fila = function(n, v){ return '<tr><th scope="row">' + n + '(x)</th>' + v.map(function(c){ return '<td class="centro">' + c + '</td>'; }).join("") + '</tr>'; };
+    return '<table class="reglas"><caption>Valores de f y g para este ejercicio.</caption>' +
+      '<thead><tr><th scope="col">x</th><th scope="col" class="centro">1</th><th scope="col" class="centro">2</th><th scope="col" class="centro">3</th><th scope="col" class="centro">4</th></tr></thead>' +
+      '<tbody>' + fila("g", g) + fila("f", f) + '</tbody></table>';
+  }
+  function genP7(){
+    if (aleatorio(1,5) <= 3){
+      var g, f, a, comp, malas, res, intentos = 0;
+      do {
+        g = permutacion(); f = permutacion(); a = aleatorio(1,4); comp = elige(["fg","gf"]);
+        var ga = g[a-1], fa = f[a-1];
+        var fga = f[ga-1], gfa = g[fa-1];
+        var int = comp === "fg" ? "g" : "f", ext = comp === "fg" ? "f" : "g";
+        var vi = comp === "fg" ? ga : fa, ve = comp === "fg" ? fa : ga;
+        res = comp === "fg" ? fga : gfa;
+        var otra = comp === "fg" ? gfa : fga;
+        malas = filtra(String(res), [
+          {t:String(otra), nota:"Esa respuesta es " + int + "(" + ext + "(" + a + ")): invertiste el orden."},
+          {t:String(vi), nota:"Esa respuesta es solo " + int + "(" + a + "): falta buscar ese número en la fila de " + ext + "."},
+          {t:String(fa*ga), nota:"Esa respuesta es f(" + a + ") · g(" + a + "): la composición no es una multiplicación."},
+          {t:String(ve), nota:"Esa respuesta es " + ext + "(" + a + "): la " + ext + " no recibe el " + a + ", recibe lo que sale de " + int + "."}
+        ], 3);
+        intentos++;
+      } while (malas.length < 3 && intentos < 200);
+      var INT = comp === "fg" ? "g" : "f", EXT = comp === "fg" ? "f" : "g";
+      var TI = INT === "g" ? g : f, TE = EXT === "g" ? g : f;
+      return {
+        q:"Según la tabla, ¿cuánto vale " + EXT + "(" + INT + "(" + a + "))?",
+        extra:tablaHTML(g, f),
+        ok:{t:String(res)}, malas:malas,
+        exp:"En la fila de " + INT + ", " + INT + "(" + a + ") = " + TI[a-1] + ". Luego, en la fila de " + EXT + ", " + EXT + "(" + TI[a-1] + ") = " + TE[TI[a-1]-1] + ".",
+        datos:{tipo:"tabla", g:g, f:f, a:a, comp:comp}
+      };
+    }
+    if (aleatorio(0,1) === 0){ /* tienda: cupón e impuesto */
+      var c = elige([5,10,15,20]), x = 5*aleatorio(Math.ceil((c+10)/5), 30);
+      var correcto = 1.08*(x - c);
+      return {
+        q:"Una tienda aplica un cupón de $" + c + ", d(x) = x − " + c + ", y después un impuesto del 8 %, t(x) = 1.08x. ¿Cuánto se paga por un artículo de $" + x + ", es decir, t(d(" + x + "))?",
+        ok:{t:dinero(correcto)},
+        malas:filtra(dinero(correcto), [
+          {t:dinero(1.08*x - c), nota:"Esa respuesta es d(t(" + x + ")): cobraste el impuesto antes del cupón."},
+          {t:dinero(x - c), nota:"Esa respuesta es solo d(" + x + "): falta aplicar el impuesto."},
+          {t:dinero(1.08*x), nota:"Esa respuesta es solo t(" + x + "): falta descontar el cupón."}
+        ], 3),
+        exp:"Adentro: d(" + x + ") = " + x + " − " + c + " = " + (x - c) + ". Afuera: t(" + (x - c) + ") = 1.08 · " + (x - c) + " = " + dinero(correcto) + ".",
+        datos:{tipo:"tienda", c:c, x:x}
+      };
+    }
+    /* taxi: tarifa y cupón */
+    var m, base, cup, cm, dc, malasTaxi, vueltas = 0;
+    do {
+      m = 2*aleatorio(4,15); base = aleatorio(2,5); cup = aleatorio(1, base);
+      cm = 0.5*m + base; dc = cm - cup;
+      malasTaxi = filtra(dinero(dc), [
+        {t:dinero(0.5*(m - cup) + base), nota:"Esa respuesta es c(d(" + m + ")): restaste el cupón a las millas en vez de al precio."},
+        {t:dinero(cm), nota:"Esa respuesta es solo c(" + m + "): falta aplicar el cupón."},
+        {t:dinero(cm*(m - cup)), nota:"Esa respuesta multiplica c(" + m + ") por d(" + m + "): la composición no es una multiplicación."}
+      ], 3);
+      vueltas++;
+    } while (malasTaxi.length < 3 && vueltas < 50);
+    return {
+      q:"Un taxi cobra c(m) = 0.5m + " + base + " dólares por m millas, y un cupón descuenta $" + cup + ": d(c) = c − " + cup + ". ¿Cuánto se paga por " + m + " millas, d(c(" + m + "))?",
+      ok:{t:dinero(dc)}, malas:malasTaxi,
+      exp:"Adentro: c(" + m + ") = 0.5(" + m + ") + " + base + " = " + num(cm) + ". Afuera: d(" + num(cm) + ") = " + num(cm) + " − " + cup + " = " + num(dc) + ". Se pagan " + dinero(dc) + ".",
+      datos:{tipo:"taxi", m:m, base:base, cup:cup}
+    };
+  }
+
+  /* ============================================================
+     MÓDULO 8 · La expresión de f(g(x))
+     ============================================================ */
+  var E_PARES = [
+    {etiqueta:"f(x) = 3x + 1 y g(x) = x − 2", f:[1,3], g:[-2,1]},
+    {etiqueta:"f(x) = x² y g(x) = x + 1", f:[0,0,1], g:[1,1]},
+    {etiqueta:"f(x) = 2x − 3 y g(x) = x + 4", f:[-3,2], g:[4,1]},
+    {etiqueta:"f(x) = 4x y g(x) = x + 2", f:[0,4], g:[2,1]},
+    {etiqueta:"f(x) = x + 3 y g(x) = x²", f:[3,1], g:[0,0,1]},
+    {etiqueta:"f(x) = 5x y g(x) = x − 3", f:[0,5], g:[-3,1]},
+    {etiqueta:"f(x) = x² y g(x) = 2x", f:[0,0,1], g:[0,2]}
+  ];
+  /* Pasos para escribir ext(int(x)) */
+  function pasosExpresion(nExt, ext, nInt, int, k){
+    var pasos = [], resultado = pCompone(ext, int);
+    var expr = nExt + "(" + nInt + "(x))";
+    pasos.push("Se escribe " + nInt + "(x) = " + poli(int) + " dentro de " + nExt + ", con paréntesis: " + expr + " = " + sustExpr(ext, int) + ".");
+    /* cuadrados de la expresión de adentro */
+    if (ext.length === 3 && ext[2] !== 0 && !(int.length === 2 && int[0] === 0 && int[1] === 1)){
+      var cuad = pPotencia(int, 2), ti = poli(int);
+      if (listaDe(int).length > 1)
+        pasos.push("Se desarrolla el cuadrado: (" + ti + ")² = (" + ti + ")(" + ti + ") = " + poli(cuad) + ".");
+      else
+        pasos.push("Se eleva al cuadrado: (" + ti + ")² = " + poli(cuad) + ". El cuadrado afecta al número y a la x.");
+    }
+    /* lista de términos sin combinar */
+    var lista = [], hayDistributiva = false;
+    for (var i = ext.length-1; i >= 0; i--){
+      if (!ext[i]) continue;
+      var parte = pEscala(pPotencia(int, i), ext[i]);
+      if (i >= 1 && ext[i] !== 1 && listaDe(int).length > 1) hayDistributiva = true;
+      lista = lista.concat(listaDe(parte));
+    }
+    var grados = {}, semejantes = false;
+    lista.forEach(function(m){ if (grados[m[1]]) semejantes = true; grados[m[1]] = true; });
+    var sinCombinar = terminos(lista);
+    var final = poli(resultado);
+    var yaDesarrollado = (ext.length === 3 && ext[2] !== 0 && final === poli(pPotencia(int, 2)) && pasos.length > 1);
+    if (yaDesarrollado){
+      /* el cuadrado ya dio la expresión final: no hay nada más que simplificar */
+    } else if (semejantes){
+      if (sinCombinar !== sustExpr(ext, int))
+        pasos.push((hayDistributiva ? "Se aplica la propiedad distributiva: " : "Se quitan los paréntesis: ") + sinCombinar + ".");
+      pasos.push("Se combinan los términos semejantes: " + final + ".");
+    } else if (sinCombinar !== sustExpr(ext, int)){
+      pasos.push((hayDistributiva ? "Se aplica la propiedad distributiva: " : "Se quitan los paréntesis: ") + final + ". No quedan términos semejantes que combinar.");
+    } else {
+      pasos.push("No hay paréntesis que quitar ni términos semejantes que combinar: la expresión ya está simplificada, " + final + ".");
+    }
+    var vi = pEval(int, k), ve = pEval(ext, vi), vf = pEval(resultado, k);
+    pasos.push("Se comprueba con un número, x = " + num(k) + ": " + nInt + "(" + num(k) + ") = " + num(vi) + " y " + nExt + "(" + num(vi) + ") = " + num(ve) +
+      "; con la fórmula, " + sustNum(resultado, k) + " = " + num(vf) + ". " + (ve === vf ? "Coinciden." : "No coinciden."));
+    pasos.push("<strong>Respuesta: " + expr + " = " + final + ".</strong>");
+    return pasos;
+  }
+  var eEst = {k:0, pasos:[]};
+  function eAgrega(i){
+    var div = document.createElement("div"); div.className = "paso";
+    div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + eEst.pasos[i];
+    $("e-pasos").appendChild(div);
+  }
+  function eReinicia(){
+    var par = E_PARES[parseInt($("e-par").value,10) || 0], orden = $("e-orden").value;
+    var k = parseInt($("e-k").value,10);
+    $("e-k-val").textContent = num(k);
+    eEst.pasos = orden === "fg" ? pasosExpresion("f", par.f, "g", par.g, k) : pasosExpresion("g", par.g, "f", par.f, k);
+    eEst.k = 0; $("e-pasos").innerHTML = "";
+    $("e-planteo").textContent = par.etiqueta + "   →   " + (orden === "fg" ? "f(g(x))" : "g(f(x))") + " = ?";
+    $("e-sig").disabled = false; $("e-sig").textContent = "Mostrar el primer paso";
+  }
+  function eSiguiente(){
+    if (eEst.k >= eEst.pasos.length) return;
+    eAgrega(eEst.k); eEst.k++;
+    var fin = eEst.k >= eEst.pasos.length;
+    $("e-sig").textContent = fin ? "No quedan más pasos" : "Siguiente paso"; $("e-sig").disabled = fin;
+  }
+  function eTodo(){
+    $("e-pasos").innerHTML = ""; eEst.pasos.forEach(function(t,i){ eAgrega(i); });
+    eEst.k = eEst.pasos.length; $("e-sig").textContent = "No quedan más pasos"; $("e-sig").disabled = true;
+  }
+  function genP8(){
+    var f, g, orden, intentos = 0, malas, correcto;
+    do {
+      var fam = aleatorio(1,4);
+      if (fam <= 2){ f = [noCero(-6,6), aleatorio(2,5)]; g = [noCero(-6,6), aleatorio(1,3)]; }
+      else if (fam === 3){ f = [0,0,1]; g = [noCero(-5,5), 1]; }
+      else { f = [noCero(-6,6), aleatorio(2,5)]; g = [aleatorio(-4,4), 0, 1]; }
+      if (aleatorio(0,1)) { var t = f; f = g; g = t; }   /* a veces la cuadrática queda adentro, a veces afuera */
+      orden = elige(["fg","gf"]);
+      var ext = orden === "fg" ? f : g, int = orden === "fg" ? g : f;
+      var nExt = orden === "fg" ? "f" : "g", nInt = orden === "fg" ? "g" : "f";
+      correcto = pCompone(ext, int);
+      var cand = [];
+      cand.push({t:poli(pCompone(int, ext)), nota:"Esa expresión es " + nInt + "(" + nExt + "(x)): sustituiste en el orden contrario."});
+      cand.push({t:poli(pPor(f, g)), nota:"Esa expresión es f(x) · g(x): la composición no es una multiplicación, es una función dentro de otra."});
+      /* error de sustituir sin paréntesis o de elevar mal el binomio */
+      if (ext.length === 3 && listaDe(int).length > 1){
+        var mal = []; mal[0] = (ext[0]||0) + ext[2]*int[0]*int[0]; mal[1] = ext[1]||0; mal[2] = ext[2]*int[1]*int[1];
+        cand.push({t:poli(pLimpia(mal)), nota:"Al elevar el binomio al cuadrado falta el término del medio: (a + b)² no es a² + b²."});
+      }
+      if (ext.length === 2 && ext[1] !== 1 && listaDe(int).length > 1){
+        var sinDist = pSuma(pEscala(pLimpia([0].concat(int.slice(1))), ext[1]), [int[0] + ext[0]]);
+        cand.push({t:poli(sinDist), nota:"El número de afuera multiplica a todo el paréntesis, también al término independiente."});
+      }
+      cand.push({t:poli(ext), nota:"Esa es solo " + nExt + "(x): falta sustituir la expresión de " + nInt + " en lugar de la x."});
+      malas = filtra(poli(correcto), cand, 3);
+      intentos++;
+    } while ((malas.length < 3 || pIgual(f, g)) && intentos < 100);
+    var NE = orden === "fg" ? "f" : "g", NI = orden === "fg" ? "g" : "f";
+    var EX = orden === "fg" ? f : g, IN = orden === "fg" ? g : f;
+    return {
+      q:"f(x) = " + poli(f) + " y g(x) = " + poli(g) + ". ¿Cuál es la expresión de " + NE + "(" + NI + "(x))?",
+      ok:{t:poli(correcto)}, malas:malas,
+      exp:"Se escribe " + NI + "(x) dentro de " + NE + ": " + NE + "(" + NI + "(x)) = " + sustExpr(EX, IN) + ". Al simplificar queda " + poli(correcto) + ".",
+      datos:{tipo:orden, f:f, g:g}
+    };
+  }
+
+  /* ---- Arranque de los módulos 5 a 8 ---- */
+  llenaSelect($("c-g"), C_G);
+  llenaSelect($("c-f"), C_F);
+  $("c-f").value = "0";
+  ["c-g","c-f"].forEach(function(id){ $(id).addEventListener("change", cReinicia); });
+  $("c-x").addEventListener("input", cReinicia);
+  $("c-sig").addEventListener("click", cSiguiente);
+  $("c-todo").addEventListener("click", cTodo);
+  $("c-reset").addEventListener("click", cReinicia);
+  cReinicia();
+
+  llenaSelect($("o-par"), O_PARES);
+  $("o-par").addEventListener("change", oActualiza);
+  $("o-x").addEventListener("input", oActualiza);
+  oActualiza();
+
+  $("t-comp").addEventListener("change", tActualiza);
+  $("t-a").addEventListener("change", tActualiza);
+  tActualiza();
+  $("t-precio").addEventListener("input", tPrecio);
+  tPrecio();
+
+  llenaSelect($("e-par"), E_PARES);
+  ["e-par","e-orden"].forEach(function(id){ $(id).addEventListener("change", eReinicia); });
+  $("e-k").addEventListener("input", eReinicia);
+  $("e-sig").addEventListener("click", eSiguiente);
+  $("e-todo").addEventListener("click", eTodo);
+  $("e-reset").addEventListener("click", eReinicia);
+  eReinicia();
+
+  compPractica(genP5, {enun:"p5-enun",opciones:"p5-opciones",fb:"p5-fb",marcador:"p5-marcador",nuevo:"p5-nuevo"});
+  compPractica(genP6, {enun:"p6-enun",opciones:"p6-opciones",fb:"p6-fb",marcador:"p6-marcador",nuevo:"p6-nuevo"});
+  compPractica(genP7, {enun:"p7-enun",extra:"p7-extra",opciones:"p7-opciones",fb:"p7-fb",marcador:"p7-marcador",nuevo:"p7-nuevo"});
+  compPractica(genP8, {enun:"p8-enun",opciones:"p8-opciones",fb:"p8-fb",marcador:"p8-marcador",nuevo:"p8-nuevo"});
+
+  /* Acceso de solo lectura para las pruebas automáticas */
+  window.__composicionN4 = {genP5:genP5, genP6:genP6, genP7:genP7, genP8:genP8,
+    pCompone:pCompone, pEval:pEval, poli:poli, pasosExpresion:pasosExpresion};
+
+})();
 </script>
 </body>
 </html>

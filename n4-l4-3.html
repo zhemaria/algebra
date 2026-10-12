@@ -5,7 +5,7 @@
   Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
   Licencia: Creative Commons CC BY-NC-SA 4.0
   https://creativecommons.org/licenses/by-nc-sa/4.0/
-  Anclas internas: #discriminante · #formula · #proyectil
+  Anclas internas: #discriminante · #formula · #proyectil · #metodos
 -->
 <html lang="es">
 <head>
@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Interactivo · Lección 4.3: la fórmula cuadrática, el discriminante y aplicaciones</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Interactivo de práctica para la Lección 4.3 del Nivel 4: el discriminante, resolver con la fórmula cuadrática y la trayectoria de un proyectil.">
+<meta name="description" content="Interactivo de práctica para la Lección 4.3 del Nivel 4: el discriminante, resolver con la fórmula cuadrática, la trayectoria de un proyectil y cómo elegir entre los tres métodos de resolución.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
@@ -152,7 +152,7 @@
   <header class="principal">
     <div class="ruta">Nivel 4 · Tema 4 · Ecuaciones cuadráticas</div>
     <h1>Lección 4.3 · La fórmula cuadrática, el discriminante y aplicaciones</h1>
-    <div class="meta">Tres prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+    <div class="meta">Cuatro prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
   </header>
 
   <nav class="indice" aria-labelledby="titulo-indice">
@@ -161,6 +161,7 @@
       <li><a href="#discriminante">El discriminante: ¿cuántas soluciones?</a></li>
       <li><a href="#formula">Resolver con la fórmula cuadrática</a></li>
       <li><a href="#proyectil">La trayectoria de un proyectil</a></li>
+      <li><a href="#metodos">Tres métodos: ¿cuál conviene?</a></li>
     </ol>
     <div class="controles-todo">
       <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
@@ -379,6 +380,94 @@
       <h3>Practica: interpreta el lanzamiento</h3>
       <p>Una pelota se lanza desde lo alto de un edificio y su altura es <strong>h(t) = −16t² + 64t + 80</strong>.</p>
       <div class="practica" id="p3-practica"></div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 4 ============ -->
+  <details class="modulo" id="metodos">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Tres métodos: ¿cuál conviene?</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Ya conoces tres formas de resolver una ecuación cuadrática: <strong>factorización</strong>, <strong>completar el cuadrado</strong> y la <strong>fórmula cuadrática</strong>. Las tres llegan a las mismas soluciones, pero no cuestan el mismo trabajo. Saber elegir ahorra tiempo:</p>
+
+      <table class="reglas">
+        <caption>Comparación de los tres métodos para resolver ecuaciones cuadráticas y cuándo conviene cada uno.</caption>
+        <thead>
+          <tr><th scope="col">Método</th><th scope="col">¿Cuándo conviene?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Factorización</td><td>Cuando el trinomio se factoriza fácilmente con enteros.</td></tr>
+          <tr><td>Completar el cuadrado</td><td>Cuando a = 1 y b es par; útil para entender la estructura.</td></tr>
+          <tr><td>Fórmula cuadrática</td><td>Siempre funciona; ideal cuando no se factoriza o las raíces no son enteras.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="caja-tip">
+        <strong>Para decidir, hazte tres preguntas en este orden:</strong> ¿el trinomio se factoriza fácilmente con enteros? Si es así, factoriza.
+        Si no, ¿a = 1 y b es par? Entonces completa el cuadrado: (b/2)² es un entero. En cualquier otro caso, usa la fórmula cuadrática, que siempre funciona.
+      </div>
+
+      <h3>Explora: una ecuación y tres caminos</h3>
+      <p>Pide una ecuación, lee la recomendación razonada y después compara cómo se resuelve con cada método.</p>
+      <div class="panel">
+        <p class="formula" id="m4-ecuacion" aria-live="polite"></p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="m4-otra">Otra ecuación</button>
+        </div>
+      </div>
+
+      <div class="salida" id="m4-razon" aria-live="polite">
+        <div class="linea" id="m4-preg1"></div>
+        <div class="linea" id="m4-preg2"></div>
+        <div class="linea veredicto" id="m4-veredicto"></div>
+      </div>
+
+      <p><strong>Ver la resolución por cada método:</strong></p>
+      <div class="fila-btn" role="group" aria-label="Elegir el método con el que se muestra la resolución">
+        <button type="button" class="btn-sec" id="m4-ver-fact" aria-pressed="false">Por factorización</button>
+        <button type="button" class="btn-sec" id="m4-ver-comp" aria-pressed="false">Completando el cuadrado</button>
+        <button type="button" class="btn-sec" id="m4-ver-form" aria-pressed="false">Con la fórmula cuadrática</button>
+      </div>
+      <div aria-live="polite">
+        <p class="veredicto" id="m4-juicio"></p>
+        <div class="pasos" id="m4-pasos"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Recuerda:</strong> la fórmula cuadrática nunca falla, pero no siempre es el camino más corto. Si eliges otro método y te atascas (no encuentras los dos enteros, o aparecen demasiadas fracciones), la fórmula siempre está disponible.
+      </div>
+
+      <h3>Practica: ¿qué método conviene más?</h3>
+      <div class="practica">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones">
+          <button type="button" class="opcion" data-op="F" aria-pressed="false">Factorización</button>
+          <button type="button" class="opcion" data-op="C" aria-pressed="false">Completar el cuadrado</button>
+          <button type="button" class="opcion" data-op="Q" aria-pressed="false">Fórmula cuadrática</button>
+        </div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p4-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p4-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <h3>Practica: elige el método y resuelve</h3>
+      <div class="practica">
+        <div class="enun" id="p5-enun"></div>
+        <p class="nota">Usa el método que más convenga. Cuando la raíz no es exacta, usa la calculadora.</p>
+        <div class="opciones" id="p5-opciones"></div>
+        <div class="fb" id="p5-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p5-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p5-marcador">Aciertos: 0 de 0</p>
+      </div>
 
       <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
     </div>
@@ -957,6 +1046,392 @@ nuevaPreguntaFormula();
 actualizaProyectil();
 construyeP3();
 abrePorHash();
+</script>
+<script>
+/* ============================================================
+   Módulo 4 · Tres métodos: ¿cuál conviene?
+   (todo el código va dentro de una función para no chocar con
+   los nombres de los módulos anteriores; solo usa sus utilidades)
+   ============================================================ */
+(function(){
+  /* --- utilidades propias del módulo --- */
+  function n4(x){ if (x === 0) return "0"; return x < 0 ? "−" + Math.abs(x) : String(x); }
+  function fr4(num, den){ return simplificaFraccion(num, den).replace("-", "−"); }
+  function esEntero4(num, den){ return num % den === 0; }
+  function red4(x){ var r = Math.round(x*100)/100; return r === 0 ? 0 : r; }
+  function baraja4(arr){
+    for (var i = arr.length - 1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+    return arr;
+  }
+  /* " + 5/2" o " − 3" a partir de una fracción con signo */
+  function signoFr4(num, den){
+    var v = num/den;
+    return (v < 0 ? " − " : " + ") + fr4(Math.abs(num), Math.abs(den));
+  }
+  /* término con x cuyo coeficiente es una fracción: " + (5/2)x", " − 3x", " + x" */
+  function terminoFrX4(num, den){
+    if (num === 0) return "";
+    var abs = fr4(Math.abs(num), Math.abs(den));
+    var v = num/den;
+    var coef = abs === "1" ? "" : (abs.indexOf("/") >= 0 ? "(" + abs + ")" : abs);
+    return (v < 0 ? " − " : " + ") + coef + "x";
+  }
+  var CUAD_NO = [2,3,5,6,7,10,11,13,14,15];
+
+  /* --- generador de ecuaciones ---
+     F    : a = 1, raíces enteras, b impar  (solo conviene factorizar)
+     Fpar : a = 1, raíces enteras, b par    (factorizar; completar también es cómodo)
+     F2   : a = 2 con factor común 2 y trinomio interior con b impar
+     C    : a = 1, b par, no se factoriza con enteros
+     Q    : no se factoriza y (a ≠ 1 o b impar)                                   */
+  function genera4(tipo){
+    var a, b, c, r1, r2, h, k;
+    if (tipo === "F" || tipo === "Fpar" || tipo === "F2"){
+      do {
+        r1 = aleatorio(-7,7); r2 = aleatorio(-7,7);
+        var s = r1 + r2;
+        var paridadOk = tipo === "Fpar" ? (s % 2 === 0 && s !== 0) : (Math.abs(s) % 2 === 1);
+      } while (r1 === r2 || r1 === 0 || r2 === 0 || !paridadOk || (tipo === "F2" && (Math.abs(r1) > 5 || Math.abs(r2) > 5)));
+      a = tipo === "F2" ? 2 : 1;
+      b = -a*(r1 + r2); c = a*r1*r2;
+      return {tipo:tipo, a:a, b:b, c:c, r1:Math.min(r1,r2), r2:Math.max(r1,r2)};
+    }
+    if (tipo === "C"){
+      h = aleatorio(1,5) * (Math.random() < 0.5 ? -1 : 1);
+      k = CUAD_NO[aleatorio(0, CUAD_NO.length - 1)];
+      return {tipo:"C", a:1, b:2*h, c:h*h - k, h:h, k:k};
+    }
+    /* Q */
+    var D;
+    do {
+      a = [1,2,2,3,3,5][aleatorio(0,5)];
+      b = aleatorio(-7,7);
+      c = aleatorio(-6,6);
+      D = b*b - 4*a*c;
+    } while (c === 0 || D <= 0 || esCuadradoPerfecto(D) ||
+             (a === 1 && Math.abs(b) % 2 === 0) || mcd(mcd(a,b),c) !== 1);
+    return {tipo:"Q", a:a, b:b, c:c};
+  }
+  function recomendado4(e){ return e.tipo.charAt(0) === "F" ? "F" : e.tipo; }
+
+  /* --- razonamiento de la recomendación --- */
+  function pregunta1(e){
+    if (e.tipo === "F" || e.tipo === "Fpar"){
+      var p = -e.r1, q = -e.r2;
+      return "1. ¿Se factoriza fácilmente con enteros? Sí: " + n4(p) + " y " + n4(q) +
+             " tienen producto " + n4(e.c) + " y suma " + n4(e.b) + ".";
+    }
+    if (e.tipo === "F2"){
+      return "1. ¿Se factoriza fácilmente con enteros? Sí: al sacar el factor común 2 queda " +
+             ecuacionTexto(1, e.b/2, e.c/2).replace(" = 0", "") + ", y " + n4(-e.r1) + " y " + n4(-e.r2) +
+             " tienen producto " + n4(e.c/2) + " y suma " + n4(e.b/2) + ".";
+    }
+    if (e.a === 1){
+      return "1. ¿Se factoriza fácilmente con enteros? No: ningún par de enteros tiene producto " +
+             n4(e.c) + " y suma " + n4(e.b) + ".";
+    }
+    return "1. ¿Se factoriza fácilmente con enteros? No: con el método ac, ningún par de enteros tiene producto a · c = " +
+           n4(e.a*e.c) + " y suma b = " + n4(e.b) + ".";
+  }
+  function pregunta2(e){
+    if (e.a !== 1) return "2. ¿a = 1 y b es par? No: a = " + e.a + ", así que habría que dividir entre " + e.a + " y trabajar con fracciones.";
+    if (Math.abs(e.b) % 2 === 1) return "2. ¿a = 1 y b es par? No: b = " + n4(e.b) + " es impar, así que (b/2)² sería una fracción.";
+    return "2. ¿a = 1 y b es par? Sí: a = 1 y b = " + n4(e.b) + ", así que (b/2)² = " + (e.b/2)*(e.b/2) + " es un entero.";
+  }
+  function veredicto4(e){
+    var r = recomendado4(e);
+    if (r === "F" && e.tipo === "Fpar")
+      return "Conviene factorizar: es el camino más corto. Como b es par, completar el cuadrado también sería cómodo.";
+    if (r === "F") return "Conviene factorizar: el trinomio se factoriza fácilmente con enteros y es el camino más corto.";
+    if (r === "C") return "Conviene completar el cuadrado: no se factoriza con enteros, pero a = 1 y b es par. La fórmula también funcionaría, aunque con más cálculo.";
+    return "Conviene la fórmula cuadrática: no se factoriza con enteros y completar el cuadrado obligaría a trabajar con fracciones. La fórmula siempre funciona.";
+  }
+
+  /* --- resolución por factorización --- */
+  function pasosFactorizacion(e){
+    var pasos = [];
+    if (e.tipo === "F" || e.tipo === "Fpar"){
+      var p = -e.r1, q = -e.r2;
+      pasos.push("Ya está en forma estándar: " + ecuacionTexto(e.a,e.b,e.c) + ".");
+      pasos.push("Dos números con producto " + n4(e.c) + " y suma " + n4(e.b) + ": " + n4(p) + " y " + n4(q) +
+                 ". Se factoriza: (x" + signoFr4(p,1) + ")(x" + signoFr4(q,1) + ") = 0.");
+      pasos.push("Se iguala cada factor a cero: x" + signoFr4(p,1) + " = 0 o x" + signoFr4(q,1) + " = 0.");
+      pasos.push("Se resuelve: x = " + n4(e.r1) + " o x = " + n4(e.r2) + ".");
+      var r = e.r1, br = e.b*r;
+      pasos.push("Verificación con x = " + n4(r) + ": (" + n4(r) + ")²" + (e.b === 0 ? "" : signoFr4(e.b,1) + "(" + n4(r) + ")") +
+                 signoFr4(e.c,1) + " = " + (r*r) + (e.b === 0 ? "" : signoFr4(br,1)) + signoFr4(e.c,1) + " = 0. Correcto.");
+      return pasos;
+    }
+    if (e.tipo === "F2"){
+      var B = e.b/2, C = e.c/2, p2 = -e.r1, q2 = -e.r2;
+      pasos.push("Ya está en forma estándar: " + ecuacionTexto(e.a,e.b,e.c) + ".");
+      pasos.push("Factor común 2: 2(" + ecuacionTexto(1,B,C).replace(" = 0","") + ") = 0.");
+      pasos.push("Dos números con producto " + n4(C) + " y suma " + n4(B) + ": " + n4(p2) + " y " + n4(q2) +
+                 ". Queda 2(x" + signoFr4(p2,1) + ")(x" + signoFr4(q2,1) + ") = 0.");
+      pasos.push("El factor 2 no puede valer cero; se iguala a cero cada factor con x: x" + signoFr4(p2,1) + " = 0 o x" + signoFr4(q2,1) + " = 0.");
+      pasos.push("Soluciones: x = " + n4(e.r1) + " y x = " + n4(e.r2) + ".");
+      return pasos;
+    }
+    /* no se factoriza: se muestran los pares que se prueban */
+    var P = e.a*e.c, pares = [];
+    for (var m = 1; m*m <= Math.abs(P); m++){
+      if (Math.abs(P) % m !== 0) continue;
+      var n = Math.abs(P)/m;
+      if (P > 0){ pares.push([m,n]); pares.push([-m,-n]); }
+      else { pares.push([m,-n]); if (m !== n) pares.push([-m,n]); }
+    }
+    var lista = pares.map(function(pq){ return n4(pq[0]) + " y " + n4(pq[1]) + " (suma " + n4(pq[0]+pq[1]) + ")"; }).join("; ");
+    pasos.push(e.a === 1
+      ? "Se buscan dos enteros con producto c = " + n4(e.c) + " y suma b = " + n4(e.b) + "."
+      : "Con el método ac se buscan dos enteros con producto a · c = " + n4(P) + " y suma b = " + n4(e.b) + ".");
+    pasos.push("Pares posibles: " + lista + ".");
+    pasos.push("Ninguna suma es " + n4(e.b) + ": el trinomio <strong>no se factoriza con enteros</strong> y este método no sirve aquí. Hay que usar otro.");
+    return pasos;
+  }
+
+  /* --- resolución completando el cuadrado (con fracciones si hace falta) --- */
+  function pasosCompletar(e){
+    var a = e.a, b = e.b, c = e.c, pasos = [];
+    var D = b*b - 4*a*c;
+    if (a !== 1){
+      pasos.push("Como a = " + a + ", se divide toda la ecuación entre " + a + ": x²" + terminoFrX4(b,a) +
+                 (c === 0 ? "" : signoFr4(c,a)) + " = 0.");
+    }
+    pasos.push("Dejar los términos con x a un lado: x²" + terminoFrX4(b,a) + " = " + fr4(-c,a) + ".");
+    /* h = b/(2a); h² = b²/(4a²); K = D/(4a²) */
+    var hTxt = fr4(Math.abs(b), 2*a), h2Txt = fr4(b*b, 4*a*a), KTxt = fr4(D, 4*a*a);
+    pasos.push("La mitad del coeficiente de x es " + fr4(b, 2*a) + "; al cuadrado: " + h2Txt +
+               (esEntero4(b, 2*a) ? "" : " (una fracción, porque " + (a === 1 ? "b es impar" : "se dividió entre a") + ")") +
+               ". Se suma a ambos lados: x²" + terminoFrX4(b,a) + " + " + h2Txt + " = " + fr4(-c,a) + " + " + h2Txt + " = " + KTxt + ".");
+    pasos.push("El lado izquierdo es un cuadrado perfecto: (x" + signoFr4(b, 2*a) + ")² = " + KTxt + ".");
+    if (D < 0){
+      pasos.push("Un cuadrado no puede valer un número negativo: la ecuación no tiene soluciones reales.");
+      return pasos;
+    }
+    var menosH = fr4(-b, 2*a);
+    if (esCuadradoPerfecto(D)){
+      var r = Math.round(Math.sqrt(D));
+      var rTxt = fr4(r, 2*a);
+      pasos.push("Raíz cuadrada de ambos lados, sin olvidar el ±: x" + signoFr4(b, 2*a) + " = ±" + rTxt + ".");
+      pasos.push("Se despeja x: x = " + menosH + " + " + rTxt + " = " + fr4(-b + r, 2*a) + "  y  x = " + menosH + " − " + rTxt + " = " + fr4(-b - r, 2*a) + ".");
+      return pasos;
+    }
+    var raizTxt = KTxt.indexOf("/") >= 0 ? "√(" + KTxt + ")" : "√" + KTxt;
+    pasos.push("Raíz cuadrada de ambos lados, sin olvidar el ±: x" + signoFr4(b, 2*a) + " = ±" + raizTxt + ".");
+    var x1 = (-b + Math.sqrt(D))/(2*a), x2 = (-b - Math.sqrt(D))/(2*a);
+    pasos.push("Se despeja x: x = " + menosH + " ± " + raizTxt + ". Con calculadora: x ≈ " + n4(red4(x1)) + "  y  x ≈ " + n4(red4(x2)) + ".");
+    return pasos;
+  }
+
+  /* --- valoración de cada método para la ecuación actual --- */
+  function juicio4(e, metodo){
+    var r = recomendado4(e);
+    if (metodo === "F"){
+      return r === "F" ? "Factorización: funciona y es el camino más corto para esta ecuación."
+                       : "Factorización: no sirve aquí, porque el trinomio no se factoriza con enteros.";
+    }
+    if (metodo === "C"){
+      if (r === "C") return "Completar el cuadrado: funciona y es el camino más directo, porque a = 1 y b es par.";
+      if (e.a === 1 && e.b % 2 === 0) return "Completar el cuadrado: funciona y es cómodo porque b es par, aunque factorizar es todavía más corto.";
+      if (e.a === 1) return "Completar el cuadrado: funciona, pero como b es impar aparecen fracciones.";
+      return "Completar el cuadrado: funciona, pero primero hay que dividir entre a y aparecen fracciones.";
+    }
+    return r === "Q" ? "Fórmula cuadrática: es la que conviene; siempre funciona y aquí los otros métodos no sirven o se llenan de fracciones."
+                     : "Fórmula cuadrática: siempre funciona, pero en esta ecuación requiere más cálculo que el método recomendado.";
+  }
+
+  /* ============ Exploración ============ */
+  var exp4 = null;
+  var BOTONES4 = {F:"m4-ver-fact", C:"m4-ver-comp", Q:"m4-ver-form"};
+  function nuevaExploracion4(){
+    var tipos = ["F","Fpar","F2","C","C","Q","Q"];
+    var anterior = exp4 ? exp4.tipo : null, t;
+    do { t = tipos[aleatorio(0, tipos.length - 1)]; } while (t === anterior);
+    exp4 = genera4(t);
+    $("m4-ecuacion").textContent = ecuacionTexto(exp4.a, exp4.b, exp4.c);
+    $("m4-preg1").textContent = pregunta1(exp4);
+    $("m4-preg2").textContent = pregunta2(exp4);
+    $("m4-veredicto").textContent = veredicto4(exp4);
+    $("m4-juicio").textContent = "Elige un método para ver la resolución.";
+    $("m4-pasos").innerHTML = "";
+    Object.keys(BOTONES4).forEach(function(k){ $(BOTONES4[k]).setAttribute("aria-pressed","false"); });
+  }
+  function verMetodo4(metodo){
+    var pasos = metodo === "F" ? pasosFactorizacion(exp4)
+              : metodo === "C" ? pasosCompletar(exp4)
+              : construyePasos(exp4.a, exp4.b, exp4.c);   /* motor del módulo 2 */
+    $("m4-juicio").textContent = juicio4(exp4, metodo);
+    var cont = $("m4-pasos");
+    cont.innerHTML = "";
+    pasos.forEach(function(t, i){
+      var div = document.createElement("div");
+      div.className = "paso";
+      div.innerHTML = '<span class="n" aria-hidden="true">' + (i+1) + '</span>' + t;
+      cont.appendChild(div);
+    });
+    Object.keys(BOTONES4).forEach(function(k){ $(BOTONES4[k]).setAttribute("aria-pressed", k === metodo ? "true" : "false"); });
+  }
+
+  /* ============ Práctica 4 · ¿qué método conviene más? ============ */
+  var p4 = {e:null, resuelta:false, aciertos:0, total:0};
+  var NOMBRE4 = {F:"factorización", C:"completar el cuadrado", Q:"la fórmula cuadrática"};
+  function explicaMetodo4(e){
+    var r = recomendado4(e), D = e.b*e.b - 4*e.a*e.c;
+    if (r === "F"){
+      var base = e.tipo === "F2"
+        ? "Sacando el factor común 2 queda 2(" + ecuacionTexto(1,e.b/2,e.c/2).replace(" = 0","") + ") = 0, y " + n4(-e.r1) + " y " + n4(-e.r2) +
+          " tienen producto " + n4(e.c/2) + " y suma " + n4(e.b/2) + ": se factoriza fácilmente con enteros."
+        : n4(-e.r1) + " y " + n4(-e.r2) + " tienen producto " + n4(e.c) + " y suma " + n4(e.b) + ": se factoriza fácilmente con enteros.";
+      return base + " Por eso conviene la factorización: x = " + n4(e.r1) + " y x = " + n4(e.r2) + ". " +
+        (e.tipo === "F2" ? "Completar el cuadrado obligaría a dividir entre 2" : "Completar el cuadrado obligaría a usar (b/2)² = " + fr4(e.b*e.b, 4) + ", una fracción") +
+        ", y la fórmula funcionaría, pero con más cálculo.";
+    }
+    if (r === "C"){
+      return "Ningún par de enteros tiene producto " + n4(e.c) + " y suma " + n4(e.b) + ", así que no se factoriza. Pero a = 1 y b = " + n4(e.b) +
+        " es par: (b/2)² = " + (e.h*e.h) + " es entero y queda (x" + signoFr4(e.h,1) + ")² = " + e.k + ", es decir, x = " + n4(-e.h) + " ± √" + e.k +
+        ". Por eso conviene completar el cuadrado. La fórmula también funcionaría, aunque con más cálculo.";
+    }
+    var porque = e.a !== 1 ? "a = " + e.a + " obligaría a dividir entre " + e.a + " y trabajar con fracciones"
+                           : "b = " + n4(e.b) + " es impar y (b/2)² sería una fracción";
+    return (e.a === 1 ? "Ningún par de enteros tiene producto " + n4(e.c) + " y suma " + n4(e.b)
+                      : "Con el método ac, ningún par de enteros tiene producto " + n4(e.a*e.c) + " y suma " + n4(e.b)) +
+      ", así que no se factoriza; y para completar el cuadrado, " + porque +
+      ". Por eso conviene la fórmula cuadrática, que siempre funciona: D = " + D + " y x ≈ " +
+      n4(red4((-e.b - Math.sqrt(D))/(2*e.a))) + " o x ≈ " + n4(red4((-e.b + Math.sqrt(D))/(2*e.a))) + ".";
+  }
+  function nuevaP4(){
+    var tipos = ["F","F","F2","C","C","C","Q","Q","Q"];
+    p4.e = genera4(tipos[aleatorio(0, tipos.length - 1)]);
+    p4.resuelta = false;
+    $("p4-enun").textContent = "¿Qué método conviene más para resolver " + ecuacionTexto(p4.e.a, p4.e.b, p4.e.c) + " ?";
+    $("p4-fb").className = "fb"; $("p4-fb").textContent = "";
+    Array.prototype.forEach.call($("p4-opciones").children, function(btn){
+      btn.className = "opcion"; btn.setAttribute("aria-pressed","false"); btn.disabled = false;
+    });
+  }
+  function respondeP4(btn){
+    if (p4.resuelta) return;
+    p4.resuelta = true; p4.total++;
+    var correcta = recomendado4(p4.e), elegida = btn.getAttribute("data-op");
+    Array.prototype.forEach.call($("p4-opciones").children, function(b2){
+      b2.disabled = true;
+      if (b2.getAttribute("data-op") === correcta) b2.className = "opcion correcta";
+      else if (b2 === btn) b2.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (elegida === correcta){
+      p4.aciertos++;
+      $("p4-fb").className = "fb bien";
+      $("p4-fb").textContent = "✓ Correcto. " + explicaMetodo4(p4.e);
+    } else {
+      $("p4-fb").className = "fb mal";
+      $("p4-fb").textContent = "✗ Todavía no: elegiste " + NOMBRE4[elegida] + ". " + explicaMetodo4(p4.e);
+    }
+    $("p4-marcador").textContent = "Aciertos: " + p4.aciertos + " de " + p4.total;
+  }
+
+  /* ============ Práctica 5 · elige el método y resuelve ============ */
+  var p5 = {e:null, ok:0, resuelta:false, aciertos:0, total:0, exp:""};
+  function parTexto4(x, y, aprox){
+    var lo = Math.min(x,y), hi = Math.max(x,y), s = aprox ? " ≈ " : " = ";
+    return "x" + s + n4(lo) + " y x" + s + n4(hi);
+  }
+  function construyeP5(e){
+    var D = e.b*e.b - 4*e.a*e.c, correcta, cands = [], exp;
+    if (e.tipo === "F" || e.tipo === "F2"){
+      correcta = parTexto4(e.r1, e.r2, false);
+      cands.push(parTexto4(-e.r1, -e.r2, false));          /* no cambiar el signo al despejar */
+      cands.push(parTexto4(-e.r1, e.r2, false));           /* cambiar solo un signo */
+      cands.push(parTexto4(e.r1, -e.r2, false));
+      cands.push(parTexto4(e.r1 + 1, e.r2 + 1, false));    /* respaldo */
+      cands.push(parTexto4(e.r1 - 1, e.r2 - 1, false));    /* respaldo */
+      exp = "Conviene factorizar. " + (e.tipo === "F2"
+        ? "Factor común 2: 2(" + ecuacionTexto(1,e.b/2,e.c/2).replace(" = 0","") + ") = 0; "
+        : "") + "dos números con producto " + n4(e.tipo === "F2" ? e.c/2 : e.c) + " y suma " + n4(e.tipo === "F2" ? e.b/2 : e.b) +
+        " son " + n4(-e.r1) + " y " + n4(-e.r2) + ", así que " + (e.tipo === "F2" ? "2" : "") + "(x" + signoFr4(-e.r1,1) + ")(x" + signoFr4(-e.r2,1) +
+        ") = 0. Al igualar cada factor a cero el signo cambia: x = " + n4(e.r1) + " y x = " + n4(e.r2) + ".";
+    } else if (e.tipo === "C"){
+      correcta = "x = " + n4(-e.h) + " ± √" + e.k;
+      cands.push("x = " + n4(e.h) + " ± √" + e.k);          /* signo de b/2 sin cambiar */
+      if (-e.c > 0 && -e.c !== e.k) cands.push("x = " + n4(-e.h) + " ± √" + (-e.c));   /* sumar (b/2)² solo a la izquierda */
+      cands.push("x = " + n4(-e.h) + " ± " + e.k);          /* olvidar la raíz */
+      cands.push("x = " + n4(-e.h) + " + √" + e.k + " solamente");   /* olvidar el ± */
+      exp = "Conviene completar el cuadrado (a = 1 y b par): x²" + termino(e.b,"x") + " = " + n4(-e.c) + "; se suma (" + n4(e.b) + "/2)² = " +
+        (e.h*e.h) + " a ambos lados: (x" + signoFr4(e.h,1) + ")² = " + e.k + "; raíz con ±: x" + signoFr4(e.h,1) + " = ±√" + e.k +
+        "; x = " + n4(-e.h) + " ± √" + e.k + " (x ≈ " + n4(red4(-e.h - Math.sqrt(e.k))) + " y x ≈ " + n4(red4(-e.h + Math.sqrt(e.k))) + ").";
+    } else {
+      var s = Math.sqrt(D);
+      var x1 = red4((-e.b + s)/(2*e.a)), x2 = red4((-e.b - s)/(2*e.a));
+      correcta = parTexto4(x1, x2, true);
+      cands.push(parTexto4(red4((e.b + s)/(2*e.a)), red4((e.b - s)/(2*e.a)), true));    /* olvidar el signo de −b */
+      var Dmal = e.b*e.b + 4*e.a*e.c;                                                  /* error de signo en −4ac */
+      if (Dmal >= 0 && Dmal !== D) cands.push(parTexto4(red4((-e.b + Math.sqrt(Dmal))/(2*e.a)), red4((-e.b - Math.sqrt(Dmal))/(2*e.a)), true));
+      cands.push(parTexto4(red4((-e.b + s)/e.a), red4((-e.b - s)/e.a), true));          /* dividir entre a y no entre 2a */
+      cands.push(parTexto4(red4((-e.b + s)/2), red4((-e.b - s)/2), true));              /* dividir entre 2 y no entre 2a */
+      cands.push(parTexto4(-x1, x2, true));                                              /* respaldo: un signo cambiado */
+      exp = "Conviene la fórmula cuadrática: no se factoriza con enteros y " +
+        (e.a !== 1 ? "a = " + e.a + " llenaría de fracciones el completar el cuadrado. " : "b es impar, así que completar el cuadrado daría fracciones. ") +
+        "a = " + e.a + ", b = " + n4(e.b) + ", c = " + n4(e.c) + "; D = (" + n4(e.b) + ")² − 4(" + e.a + ")(" + n4(e.c) + ") = " + D +
+        "; √" + D + " ≈ " + red4(s) + "; x = (" + n4(-e.b) + " ± " + red4(s) + ") / " + (2*e.a) + ", es decir, " + correcta + ".";
+    }
+    var distintos = [];
+    cands.forEach(function(t){ if (t !== correcta && distintos.indexOf(t) < 0) distintos.push(t); });
+    var ops = baraja4([correcta, distintos[0], distintos[1]]);
+    return {ops:ops, ok:ops.indexOf(correcta), exp:exp};
+  }
+  function nuevaP5(){
+    var tipos = ["F","F2","C","C","Q","Q"];
+    p5.e = genera4(tipos[aleatorio(0, tipos.length - 1)]);
+    var q = construyeP5(p5.e);
+    p5.ok = q.ok; p5.exp = q.exp; p5.resuelta = false;
+    $("p5-enun").textContent = "Resuelve " + ecuacionTexto(p5.e.a, p5.e.b, p5.e.c) + " con el método que más convenga.";
+    var cont = $("p5-opciones"); cont.innerHTML = "";
+    q.ops.forEach(function(texto, j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ respondeP5(j, btn); });
+      cont.appendChild(btn);
+    });
+    $("p5-fb").className = "fb"; $("p5-fb").textContent = "";
+  }
+  function respondeP5(j, btn){
+    if (p5.resuelta) return;
+    p5.resuelta = true; p5.total++;
+    Array.prototype.forEach.call($("p5-opciones").children, function(b2, k){
+      b2.disabled = true;
+      if (k === p5.ok) b2.className = "opcion correcta";
+      else if (b2 === btn) b2.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p5.ok){
+      p5.aciertos++;
+      $("p5-fb").className = "fb bien"; $("p5-fb").textContent = "✓ Correcto. " + p5.exp;
+    } else {
+      $("p5-fb").className = "fb mal"; $("p5-fb").textContent = "✗ Todavía no. " + p5.exp;
+    }
+    $("p5-marcador").textContent = "Aciertos: " + p5.aciertos + " de " + p5.total;
+  }
+
+  /* --- arranque del módulo 4 --- */
+  $("m4-otra").addEventListener("click", nuevaExploracion4);
+  $("m4-ver-fact").addEventListener("click", function(){ verMetodo4("F"); });
+  $("m4-ver-comp").addEventListener("click", function(){ verMetodo4("C"); });
+  $("m4-ver-form").addEventListener("click", function(){ verMetodo4("Q"); });
+  Array.prototype.forEach.call($("p4-opciones").children, function(btn){
+    btn.addEventListener("click", function(){ respondeP4(btn); });
+  });
+  $("p4-nuevo").addEventListener("click", nuevaP4);
+  $("p5-nuevo").addEventListener("click", nuevaP5);
+  nuevaExploracion4();
+  nuevaP4();
+  nuevaP5();
+
+  /* acceso para pruebas automáticas (no se usa en la página) */
+  window.__modulo4 = {genera:genera4, recomendado:recomendado4, construyeP5:construyeP5,
+                      explica:explicaMetodo4, pasosF:pasosFactorizacion, pasosC:pasosCompletar,
+                      pregunta1:pregunta1, pregunta2:pregunta2, veredicto:veredicto4, juicio:juicio4};
+})();
 </script>
 </body>
 </html>

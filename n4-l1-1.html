@@ -1,0 +1,627 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 1.1 — El plano cartesiano: pares ordenados, distancia y punto medio
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #perimetro
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lección 1.1 · El plano cartesiano: pares ordenados, distancia y punto medio</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 1.1 del Nivel 4: calcular el perímetro de figuras en el plano cartesiano midiendo cada lado con la resta o con la fórmula de la distancia.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#1a237e; --tema-d:#10174f; --tema-bg:#e8eaf6; --tema-bg2:#c5cae9;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:190px;}
+  .campo input[type="text"]{width:260px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:560px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:4px;display:inline-block;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas td.constante{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  tr.destacada td{background:var(--tema-bg);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;}
+    .campo input[type="range"],.campo input[type="text"]{width:100%;} }
+  .m-recto{background:#00695c;}
+  .m-inclinado{background:#bf360c;}
+  .grafica svg.cuadrada{max-width:520px;max-height:60vh;}
+  .tabla-lados{overflow-x:auto;}
+  td.num-largo{white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 1 · Geometría analítica</div>
+    <h1>Lección 1.1 · El plano cartesiano: pares ordenados, distancia y punto medio</h1>
+    <div class="meta">Una práctica interactiva para la sección 4 de la lección. El índice enlaza directamente con ella.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#perimetro">Figuras en el plano: el perímetro</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="perimetro" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Figuras en el plano: el perímetro</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Cuando los vértices de una figura se dan como puntos del plano, la fórmula de la distancia permite medir cada
+      lado y sumarlos para obtener el <strong>perímetro</strong>. Elige una figura, pide nuevas coordenadas y observa
+      cómo se mide cada lado.</p>
+      <p class="formula">d = √[(x₂ − x₁)² + (y₂ − y₁)²]</p>
+
+      <div class="caja-tip">
+        <strong>Atajo útil:</strong> cuando dos puntos comparten la misma coordenada x, el segmento es vertical y su
+        longitud es la diferencia de las y. Si comparten la misma y, es horizontal y su longitud es la diferencia de
+        las x. Solo los lados inclinados requieren la fórmula completa.
+      </div>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;">
+            <label for="f-figura">Figura</label>
+            <select id="f-figura"></select>
+          </div>
+          <div class="campo">
+            <button type="button" class="btn" id="f-nueva">Nuevas coordenadas</button>
+          </div>
+        </div>
+        <p class="nota" id="f-nota"></p>
+      </div>
+
+      <div class="grafica">
+        <svg id="f-svg" class="cuadrada" viewBox="0 0 520 520" role="img" aria-labelledby="f-svg-t f-svg-d">
+          <title id="f-svg-t">La figura en el plano cartesiano</title>
+          <desc id="f-svg-d">Cuadrícula con los ejes x e y y un polígono con sus vértices y la longitud de cada lado.</desc>
+        </svg>
+        <div class="leyenda">
+          <span><span class="muestra m-recto" aria-hidden="true"></span> Lado horizontal o vertical (se resta)</span>
+          <span><span class="muestra m-inclinado" aria-hidden="true"></span> Lado inclinado (fórmula de la distancia)</span>
+        </div>
+        <p class="pie-grafica" id="f-svg-texto"></p>
+      </div>
+
+      <div class="tabla-lados" id="f-tabla"></div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="f-vertices"></div>
+        <div class="linea veredicto" id="f-perimetro"></div>
+        <div class="linea" id="f-comentario"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Cuidado con los signos.</strong> Para la distancia entre x = −3 y x = 5 se calcula 5 − (−3) = 8, no 5 − 3 = 2.
+        Y en un lado inclinado la distancia no es la suma de Δx y Δy: hay que elevar al cuadrado, sumar y sacar la raíz.
+      </div>
+
+      <h3>Practica: calcula el perímetro</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 1.1 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function barajaIndice(actual,largo){
+  var i = aleatorio(0,largo-1);
+  if (largo > 1) while (i === actual) i = aleatorio(0,largo-1);
+  return i;
+}
+function barajaLista(arr){
+  for (var i = arr.length - 1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  return arr;
+}
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function signo(n){ return n < 0 ? "−" + Math.abs(n) : String(n); }
+function paren(n){ return n < 0 ? "(" + signo(n) + ")" : String(n); }
+function punto(p){ return "(" + signo(p[0]) + ", " + signo(p[1]) + ")"; }
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function llenaSelect(sel, banco){
+  banco.forEach(function(e,i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = e.etiqueta; sel.appendChild(op);
+  });
+}
+
+/* ============================================================
+   Medición de los lados (el mismo método de la lección)
+   ============================================================ */
+var LETRAS = ["A","B","C","D"];
+function midaLado(P, Q, nombre){
+  var dx = Q[0] - P[0], dy = Q[1] - P[1];
+  var lado = {nombre:nombre, P:P, Q:Q};
+  if (dy === 0){
+    var xM = Math.max(P[0],Q[0]), xm = Math.min(P[0],Q[0]);
+    lado.tipo = "horizontal"; lado.valor = xM - xm; lado.exacto = true;
+    lado.calculo = signo(xM) + " − " + paren(xm) + " = " + lado.valor;
+    lado.texto = "Lado " + nombre + " (horizontal, misma y): " + lado.calculo + ".";
+  } else if (dx === 0){
+    var yM = Math.max(P[1],Q[1]), ym = Math.min(P[1],Q[1]);
+    lado.tipo = "vertical"; lado.valor = yM - ym; lado.exacto = true;
+    lado.calculo = signo(yM) + " − " + paren(ym) + " = " + lado.valor;
+    lado.texto = "Lado " + nombre + " (vertical, misma x): " + lado.calculo + ".";
+  } else {
+    var s = dx*dx + dy*dy, r = Math.sqrt(s), raiz = Math.round(r);
+    lado.tipo = "inclinado"; lado.suma = s;
+    lado.exacto = (raiz*raiz === s);
+    lado.valor = lado.exacto ? raiz : redondea(r,1);
+    lado.calculo = "√[(" + signo(Q[0]) + " − " + paren(P[0]) + ")² + (" + signo(Q[1]) + " − " + paren(P[1]) + ")²] = √(" +
+      (dx*dx) + " + " + (dy*dy) + ") = √" + s + (lado.exacto ? " = " + raiz : " ≈ " + lado.valor);
+    lado.texto = "Lado " + nombre + " (inclinado): d = " + lado.calculo + ".";
+  }
+  return lado;
+}
+function midaFigura(V){
+  var lados = [];
+  for (var i = 0; i < V.length; i++){
+    var j = (i + 1) % V.length;
+    lados.push(midaLado(V[i], V[j], LETRAS[i] + LETRAS[j]));
+  }
+  var total = redondea(lados.reduce(function(s,l){ return s + l.valor; }, 0), 1);
+  var exacto = lados.every(function(l){ return l.exacto; });
+  return {lados:lados, perimetro:total, exacto:exacto,
+          suma: lados.map(function(l){ return String(l.valor); }).join(" + ") + (exacto ? " = " : " ≈ ") + total};
+}
+function explicaFigura(V){
+  var m = midaFigura(V);
+  return m.lados.map(function(l){ return l.texto; }).join(" ") + " Perímetro: " + m.suma + " unidades.";
+}
+function areaDoble(V){
+  var s = 0;
+  for (var i = 0; i < V.length; i++){ var j = (i+1) % V.length; s += V[i][0]*V[j][1] - V[j][0]*V[i][1]; }
+  return s;
+}
+function textoVertices(V){
+  var partes = V.map(function(p,i){ return LETRAS[i] + punto(p); });
+  return partes.slice(0,-1).join(", ") + " y " + partes[partes.length-1];
+}
+
+/* ============================================================
+   Exploración · figuras con coordenadas enteras
+   ============================================================ */
+function pm(){ return Math.random() < 0.5 ? -1 : 1; }
+function inicio(largo, s, lim){ return s > 0 ? aleatorio(-lim, lim - largo) : aleatorio(-lim + largo, lim); }
+var FIGURAS = [
+  { etiqueta:"Ejemplo 5 de la lección: A(0, 0), B(3, 0) y C(0, 4)", nombre:"triángulo", fija:true,
+    genera:function(){ return [[0,0],[3,0],[0,4]]; } },
+  { etiqueta:"Triángulo rectángulo (un lado horizontal y otro vertical)", nombre:"triángulo rectángulo",
+    genera:function(){
+      var a = aleatorio(2,7), b = aleatorio(2,7), sx = pm(), sy = pm();
+      var x0 = inicio(a, sx, 7), y0 = inicio(b, sy, 7);
+      return [[x0,y0],[x0 + sx*a, y0],[x0, y0 + sy*b]];
+    } },
+  { etiqueta:"Triángulo cualquiera", nombre:"triángulo",
+    genera:function(){
+      var V;
+      do {
+        V = [[aleatorio(-7,-1), aleatorio(-7,-1)], [aleatorio(1,7), aleatorio(-7,2)], [aleatorio(-5,5), aleatorio(2,7)]];
+      } while (Math.abs(areaDoble(V)) < 8);
+      return V;
+    } },
+  { etiqueta:"Rectángulo", nombre:"rectángulo",
+    genera:function(){
+      var w = aleatorio(2,10), h = aleatorio(2,9);
+      var x0 = inicio(w, 1, 7), y0 = inicio(h, 1, 7);
+      return [[x0,y0],[x0+w,y0],[x0+w,y0+h],[x0,y0+h]];
+    } },
+  { etiqueta:"Cuadrilátero", nombre:"cuadrilátero",
+    genera:function(){
+      return [[aleatorio(-7,-1), aleatorio(-7,-1)], [aleatorio(1,7), aleatorio(-7,-1)],
+              [aleatorio(1,7), aleatorio(1,7)], [aleatorio(-7,-1), aleatorio(1,7)]];
+    } }
+];
+var verticesActuales = FIGURAS[0].genera();
+
+function dibujaFigura(svg, V, med){
+  limpiaSVG(svg);
+  var W = 520, H = 520, m = 30, r = {x0:-8, x1:8, y0:-8, y1:8};
+  function px(x){ return m + (x - r.x0)/(r.x1 - r.x0) * (W - 2*m); }
+  function py(y){ return H - m - (y - r.y0)/(r.y1 - r.y0) * (H - 2*m); }
+  function crea(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  }
+  for (var g = r.x0; g <= r.x1; g++){
+    crea("line", {x1:px(g), y1:py(r.y0), x2:px(g), y2:py(r.y1), stroke:"#e3e3e3", "stroke-width":1});
+    crea("line", {x1:px(r.x0), y1:py(g), x2:px(r.x1), y2:py(g), stroke:"#e3e3e3", "stroke-width":1});
+  }
+  crea("line", {x1:px(r.x0), y1:py(0), x2:px(r.x1), y2:py(0), stroke:"#555", "stroke-width":2});
+  crea("line", {x1:px(0), y1:py(r.y0), x2:px(0), y2:py(r.y1), stroke:"#555", "stroke-width":2});
+  crea("text", {x:px(r.x1) - 4, y:py(0) - 8, "text-anchor":"end", "font-size":13, fill:"#555"}, "x");
+  crea("text", {x:px(0) + 8, y:py(r.y1) + 14, "font-size":13, fill:"#555"}, "y");
+  for (var t = r.x0 + 2; t < r.x1; t += 2){
+    if (t === 0) continue;
+    crea("text", {x:px(t), y:py(0) + 16, "text-anchor":"middle", "font-size":12, fill:"#555"}, signo(t));
+    crea("text", {x:px(0) - 7, y:py(t) + 4, "text-anchor":"end", "font-size":12, fill:"#555"}, signo(t));
+  }
+  var cx = 0, cy = 0;
+  V.forEach(function(p){ cx += p[0]; cy += p[1]; });
+  cx /= V.length; cy /= V.length;
+  crea("polygon", {points:V.map(function(p){ return px(p[0]) + "," + py(p[1]); }).join(" "),
+                   fill:"#1a237e", "fill-opacity":0.08, stroke:"none"});
+  med.lados.forEach(function(l){
+    crea("line", {x1:px(l.P[0]), y1:py(l.P[1]), x2:px(l.Q[0]), y2:py(l.Q[1]),
+                  stroke:(l.tipo === "inclinado" ? "#bf360c" : "#00695c"), "stroke-width":4, "stroke-linecap":"round"});
+  });
+  med.lados.forEach(function(l){
+    var mx = (l.P[0] + l.Q[0])/2, my = (l.P[1] + l.Q[1])/2;
+    var nx = -(l.Q[1] - l.P[1]), ny = l.Q[0] - l.P[0];
+    var lg = Math.sqrt(nx*nx + ny*ny) || 1;
+    nx /= lg; ny /= lg;
+    if (nx*(mx - cx) + ny*(my - cy) < 0){ nx = -nx; ny = -ny; }
+    var etiqueta = (l.exacto ? "" : "≈ ") + l.valor;
+    crea("text", {x:px(mx) + nx*18, y:py(my) - ny*18 + 5, "text-anchor":"middle", "font-size":14, "font-weight":"bold",
+                  fill:(l.tipo === "inclinado" ? "#bf360c" : "#00695c"), stroke:"#fff", "stroke-width":4,
+                  "paint-order":"stroke"}, etiqueta);
+  });
+  V.forEach(function(p, i){
+    var dx = p[0] - cx, dy = p[1] - cy, lg = Math.sqrt(dx*dx + dy*dy) || 1;
+    crea("circle", {cx:px(p[0]), cy:py(p[1]), r:6, fill:"#fff", stroke:"#10174f", "stroke-width":3});
+    var tx = px(p[0]) + dx/lg*22, ty = py(p[1]) - dy/lg*20 + 5;
+    tx = Math.max(40, Math.min(W - 40, tx)); ty = Math.max(16, Math.min(H - 8, ty));
+    crea("text", {x:tx, y:ty, "text-anchor":"middle", "font-size":13, "font-weight":"bold", fill:"#10174f",
+                  stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, LETRAS[i] + punto(p));
+  });
+}
+
+function actualizaFigura(){
+  var fig = FIGURAS[parseInt($("f-figura").value,10) || 0];
+  var V = verticesActuales, med = midaFigura(V);
+  $("f-nueva").disabled = !!fig.fija;
+  $("f-nota").textContent = fig.fija
+    ? "Este es el ejemplo resuelto en la lección. Elige otra figura para pedir nuevas coordenadas."
+    : "Cada vez que pulses «Nuevas coordenadas» los vértices cambian, siempre con coordenadas enteras entre −7 y 7.";
+
+  dibujaFigura($("f-svg"), V, med);
+
+  var filas = med.lados.map(function(l){
+    return "<tr><td>" + l.nombre + "</td><td>" + l.tipo.charAt(0).toUpperCase() + l.tipo.slice(1) + "</td><td>" +
+      (l.tipo === "inclinado" ? "d = " : "") + l.calculo + "</td><td class=\"num-largo\"><strong>" +
+      (l.exacto ? "" : "≈ ") + l.valor + "</strong></td></tr>";
+  }).join("");
+  $("f-tabla").innerHTML = '<table class="reglas"><caption>Longitud de cada lado de la figura.</caption>' +
+    '<thead><tr><th scope="col">Lado</th><th scope="col">Tipo</th><th scope="col">Cálculo</th><th scope="col">Longitud</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+
+  $("f-vertices").innerHTML = "<strong>Vértices:</strong> " + textoVertices(V) + ".";
+  $("f-perimetro").textContent = "Perímetro: " + med.suma + " unidades.";
+  var inclinados = med.lados.filter(function(l){ return l.tipo === "inclinado"; }).length;
+  var com = inclinados === 0
+    ? "Todos los lados son horizontales o verticales: no hizo falta la fórmula completa, solo restar."
+    : (inclinados === med.lados.length
+      ? "Todos los lados son inclinados: cada uno se mide con la fórmula de la distancia."
+      : "Solo " + (inclinados === 1 ? "el lado inclinado necesitó" : "los " + inclinados + " lados inclinados necesitaron") +
+        " la fórmula completa; los demás se midieron restando.");
+  if (!med.exacto) com += " Las raíces que no son exactas se redondean a la décima, así que el perímetro es aproximado.";
+  $("f-comentario").textContent = com;
+
+  var descr = "Un " + fig.nombre + " con vértices " + textoVertices(V) + ". " +
+    med.lados.map(function(l){ return "El lado " + l.nombre + " es " + l.tipo + " y mide " + (l.exacto ? "" : "aproximadamente ") + l.valor; }).join(". ") +
+    ". Perímetro: " + med.perimetro + " unidades.";
+  $("f-svg-d").textContent = descr;
+  $("f-svg-texto").textContent = "Cada lado lleva escrita su longitud: en verde los que se miden restando, en naranja los que necesitan la fórmula de la distancia.";
+}
+function nuevaFigura(){
+  verticesActuales = FIGURAS[parseInt($("f-figura").value,10) || 0].genera();
+  actualizaFigura();
+}
+
+/* ============================================================
+   Práctica · perímetro a partir de los vértices
+   ============================================================ */
+var TRIPLES = [[3,4,5],[4,3,5],[6,8,10],[8,6,10],[5,12,13],[12,5,13],[9,12,15],[12,9,15]];
+function eligeTriple(maxA, maxB){
+  var lista = TRIPLES.filter(function(t){ return t[0] <= maxA && t[1] <= maxB; });
+  return lista[aleatorio(0, lista.length - 1)];
+}
+function armaPregunta(V, nombre, distractores, extra){
+  var med = midaFigura(V);
+  var correcta = med.perimetro;
+  var vistos = {}; vistos[correcta] = true;
+  var malas = [];
+  distractores.forEach(function(d){
+    var v = redondea(d.v, 1);
+    if (malas.length < 3 && !vistos[v] && v > 0 && isFinite(v)){ vistos[v] = true; malas.push({v:v, porque:d.porque}); }
+  });
+  [2, -2, 1, -1, 4].forEach(function(k){
+    var v = redondea(correcta + k, 1);
+    if (malas.length < 3 && !vistos[v] && v > 0){ vistos[v] = true; malas.push({v:v, porque:"Revisa la suma de los lados."}); }
+  });
+  var lista = [{v:correcta, porque:""}].concat(malas);
+  barajaLista(lista);
+  var ok = 0;
+  lista.forEach(function(o,i){ if (o.v === correcta && o.porque === "") ok = i; });
+  return {
+    q: "Un " + nombre + " tiene vértices en " + textoVertices(V) + ". ¿Cuál es su perímetro?" + (extra || ""),
+    ops: lista.map(function(o){ return String(o.v); }),
+    porque: lista.map(function(o){ return o.porque; }),
+    ok: ok, exp: explicaFigura(V), vertices: V, correcta: correcta, faltan: 3 - malas.length
+  };
+}
+var GENERADORES = [
+  function trianguloRectangulo(){
+    var t = eligeTriple(12, 12), a = t[0], b = t[1], c = t[2], sx = pm(), sy = pm();
+    var x0 = inicio(a, sx, 9), y0 = inicio(b, sy, 9);
+    var V = [[x0,y0],[x0 + sx*a, y0],[x0, y0 + sy*b]];
+    return armaPregunta(V, "triángulo", [
+      {v:a + b, porque:"Esa suma deja fuera el lado inclinado: el perímetro incluye los tres lados."},
+      {v:2*(a + b), porque:"El lado inclinado no mide Δx + Δy. Hay que elevar al cuadrado, sumar y sacar la raíz."},
+      {v:a + b + a*a + b*b, porque:"Faltó sacar la raíz cuadrada al medir el lado inclinado."},
+      {v:a*b/2, porque:"Ese número es el área del triángulo, no su perímetro."}
+    ]);
+  },
+  function rectangulo(){
+    var w = aleatorio(3,10), h = aleatorio(2,8);
+    while (h === w) h = aleatorio(2,8);
+    var x0 = aleatorio(Math.max(-9, 1 - w), -1), y0 = aleatorio(-8, 8 - h);
+    var V = [[x0,y0],[x0 + w,y0],[x0 + w,y0 + h],[x0,y0 + h]];
+    var x1 = x0 + w, wMal = Math.abs(Math.abs(x1) - Math.abs(x0));
+    return armaPregunta(V, "rectángulo", [
+      {v:2*(wMal + h), porque:"Revisa el signo al restar: " + signo(x1) + " − " + paren(x0) + " = " + w + "."},
+      {v:w*h, porque:"Ese número es el área (base por altura). El perímetro es la suma de los cuatro lados."},
+      {v:w + h, porque:"Solo sumaste dos lados; el rectángulo tiene cuatro."},
+      {v:2*w + h, porque:"Falta un lado: el perímetro suma los cuatro."},
+      {v:w + 2*h, porque:"Falta un lado: el perímetro suma los cuatro."}
+    ]);
+  },
+  function trianguloIsosceles(){
+    var t = eligeTriple(9, 12), a = t[0], b = t[1], c = t[2], sy = pm();
+    var x0 = aleatorio(-9, 9 - 2*a), y0 = inicio(b, sy, 9);
+    var V = [[x0,y0],[x0 + 2*a, y0],[x0 + a, y0 + sy*b]];
+    return armaPregunta(V, "triángulo", [
+      {v:2*a + c, porque:"Hay dos lados inclinados, y los dos miden " + c + "."},
+      {v:2*a + 2*(a + b), porque:"Un lado inclinado no mide Δx + Δy. Hay que usar la fórmula de la distancia."},
+      {v:2*c, porque:"Falta la base, el lado horizontal."},
+      {v:2*a + 2*(a*a + b*b), porque:"Faltó sacar la raíz cuadrada en los lados inclinados."}
+    ]);
+  },
+  function trapecio(){
+    var t = eligeTriple(8, 12), a = t[0], b = t[1], c = t[2], w = aleatorio(2, 15 - a > 8 ? 8 : 15 - a);
+    var sx = pm(), sy = pm();
+    var x0 = inicio(w + a, sx, 9), y0 = inicio(b, sy, 9);
+    var V = [[x0,y0],[x0 + sx*(w + a), y0],[x0 + sx*w, y0 + sy*b],[x0, y0 + sy*b]];
+    return armaPregunta(V, "cuadrilátero", [
+      {v:2*w + a + b, porque:"Falta el lado inclinado: el perímetro suma los cuatro lados."},
+      {v:2*w + 2*a + 2*b, porque:"El lado inclinado no mide Δx + Δy. Hay que usar la fórmula de la distancia."},
+      {v:2*w + a + b + a*a + b*b, porque:"Faltó sacar la raíz cuadrada al medir el lado inclinado."},
+      {v:2*(w + a) + 2*b, porque:"La figura no es un rectángulo: el lado de arriba y el de abajo no miden lo mismo."}
+    ]);
+  },
+  function hipotenusaNoExacta(){
+    var a, b, s;
+    do { a = aleatorio(1,6); b = aleatorio(1,6); s = a*a + b*b; } while (Math.round(Math.sqrt(s))*Math.round(Math.sqrt(s)) === s);
+    var sx = pm(), sy = pm(), x0 = inicio(a, sx, 8), y0 = inicio(b, sy, 8);
+    var V = [[x0,y0],[x0 + sx*a, y0],[x0, y0 + sy*b]];
+    var raiz = redondea(Math.sqrt(s), 1);
+    return armaPregunta(V, "triángulo", [
+      {v:a + b + redondea(Math.sqrt(a + b), 1), porque:"Las diferencias se elevan al cuadrado antes de sumarlas: √(" + (a*a) + " + " + (b*b) + "), no √(" + a + " + " + b + ")."},
+      {v:a + raiz, porque:"Falta un lado: el triángulo tiene tres y el perímetro los suma todos."},
+      {v:b + raiz, porque:"Falta un lado: el triángulo tiene tres y el perímetro los suma todos."},
+      {v:a + b + s, porque:"Faltó sacar la raíz cuadrada al medir el lado inclinado."},
+      {v:2*(a + b), porque:"El lado inclinado no mide Δx + Δy. Hay que elevar al cuadrado, sumar y sacar la raíz."}
+    ], " Redondea el lado inclinado a la décima.");
+  }
+];
+
+/* Motor de práctica (con ejercicios generados al azar) */
+function creaPractica(generadores, ids){
+  var estado = {tipo:-1, p:null, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.tipo = barajaIndice(estado.tipo, generadores.length);
+    estado.p = generadores[estado.tipo]();
+    estado.resuelta = false;
+    var p = estado.p;
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = estado.p;
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal";
+      $(ids.fb).textContent = "✗ Todavía no. " + (p.porque[j] ? p.porque[j] + " " : "") + "El procedimiento: " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+llenaSelect($("f-figura"), FIGURAS);
+$("f-figura").addEventListener("change", nuevaFigura);
+$("f-nueva").addEventListener("click", nuevaFigura);
+actualizaFigura();
+
+creaPractica(GENERADORES, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

@@ -1,0 +1,609 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 4.1 — Resolver ecuaciones cuadráticas por factorización
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #forma-estandar
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 4.1: llevar a la forma estándar primero</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 4.1 del Nivel 4: llevar una ecuación cuadrática a la forma estándar antes de factorizar y aplicar la propiedad del producto cero.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+
+
+  :root{
+    --tema:#880e4f; --tema-d:#5d0935; --tema-bg:#fce4ec; --tema-bg2:#f8bbd0;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;
+             padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);
+       border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);
+           border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border-color:var(--acento);color:#fff;
+              border-radius:8px;padding:8px 18px;font-weight:700;border-width:2px;border-style:solid;}
+  .btn-acento:hover{background:#004d40;border-color:#004d40;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;
+                 margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;
+                           background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;
+       flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:88px;padding:8px 10px;font-size:16px;
+        border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input[type="range"]{width:220px;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);
+          border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;
+        background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);
+           color:var(--tema-d);width:24px;height:24px;border-radius:50%;
+           font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:640px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);
+              font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .caja-aviso strong{color:var(--avi);}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .campo label .marca-error{color:#b71c1c;font-weight:700;}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;
+            padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;
+          padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);
+                       margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;
+             padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){
+    .campo input[type="range"]{width:100%;}
+    .campos{flex-direction:column;align-items:stretch;}
+  }
+
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+  .error-tipico{background:#fff;border:2px solid var(--mal);border-radius:10px;padding:12px 16px;margin:14px 0;}
+  .error-tipico h4{margin:0 0 6px;color:var(--mal);font-size:16px;}
+  .error-tipico .linea{margin:4px 0;}
+  .tachado{text-decoration:line-through;color:var(--mal);}
+  @media (prefers-reduced-motion:reduce){ *{scroll-behavior:auto !important;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 4 · Ecuaciones cuadráticas</div>
+    <h1>Lección 4.1 · Resolver ecuaciones cuadráticas por factorización</h1>
+    <div class="meta">Práctica interactiva de la sección «Llevar a la forma estándar primero». La lección enlaza directamente con este módulo.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#forma-estandar">Llevar a la forma estándar primero</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="forma-estandar" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Llevar a la forma estándar primero</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Muchas ecuaciones no vienen igualadas a cero. El <strong>paso 1</strong> es siempre reorganizarlas pasando
+      todos los términos a un lado, hasta llegar a la forma estándar:</p>
+      <p class="formula">ax² + bx + c = 0</p>
+      <p>La razón es la propiedad del producto cero: <strong>si A · B = 0, entonces A = 0 o B = 0</strong>. Solo funciona
+      cuando el producto es igual a <strong>cero</strong>. Si el producto es igual a 6, los factores pueden valer muchas
+      cosas (2 · 3, 1 · 6, 12 · 0.5…), y no se puede igualar cada factor a nada.</p>
+
+      <div class="error-tipico">
+        <h4>Error típico: factorizar sin igualar a cero</h4>
+        <p class="linea">Ecuación: x² + 5x = 6.</p>
+        <p class="linea"><span class="tachado">x(x + 5) = 6, así que x = 6 o x + 5 = 6.</span></p>
+        <p class="linea">Comprobación: con x = 6 queda 6² + 5(6) = 36 + 30 = 66, que no es 6. El método no vale, porque el producto no es cero.</p>
+      </div>
+      <div class="caja-tip">
+        <strong>Lo correcto:</strong> se resta 6 a ambos lados, x² + 5x − 6 = 0. Se factoriza, (x + 6)(x − 1) = 0, y ahora
+        sí se iguala cada factor a cero: x = −6 o x = 1. Comprobación: (−6)² + 5(−6) = 36 − 30 = 6.
+      </div>
+
+      <table class="reglas">
+        <caption>Al pasar un término al otro lado de la ecuación, cambia de signo.</caption>
+        <thead><tr><th scope="col">Término en el lado derecho</th><th scope="col">Operación en ambos lados</th><th scope="col">Cómo aparece en el lado izquierdo</th></tr></thead>
+        <tbody>
+          <tr><td>+ 6</td><td>Se resta 6</td><td>− 6</td></tr>
+          <tr><td>− 8</td><td>Se suma 8</td><td>+ 8</td></tr>
+          <tr><td>+ 5x</td><td>Se resta 5x</td><td>− 5x</td></tr>
+          <tr><td>− 2x</td><td>Se suma 2x</td><td>+ 2x</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Observa: de la ecuación original a las soluciones</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo" style="flex:1;min-width:240px;">
+            <label for="e-tipo">Tipo de ecuación</label>
+            <select id="e-tipo">
+              <option value="azar">Cualquiera, al azar</option>
+              <option value="T1">Un número a la derecha: x² + bx = número</option>
+              <option value="T2">x² igual a términos con x y números</option>
+              <option value="T3">Términos con x en ambos lados</option>
+              <option value="T6">Números en ambos lados</option>
+              <option value="T4">x² igual a un número</option>
+              <option value="T5">x² igual a un término con x</option>
+            </select>
+          </div>
+        </div>
+        <p class="enun" id="e-enunciado"></p>
+        <div class="fila-btn">
+          <button type="button" class="btn-acento" id="e-siguiente">Siguiente paso</button>
+          <button type="button" class="btn-sec" id="e-todo">Ver todos los pasos</button>
+          <button type="button" class="btn" id="e-caso">Otro caso</button>
+        </div>
+        <div class="pasos" id="e-pasos" aria-live="polite"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>No dividas entre x:</strong> en x² = 5x, dividir ambos lados entre x haría perder la solución x = 0.
+        Siempre se lleva todo a un lado y se factoriza; así no se pierde ninguna solución.
+      </div>
+
+      <h3>Practica: forma estándar primero</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button>
+        </div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 4.1 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Utilidades generales
+   ============================================================ */
+function $(id){ return document.getElementById(id); }
+function aleatorio(min, max){ return Math.floor(Math.random()*(max-min+1)) + min; }
+function noCero(min, max){ var v; do { v = aleatorio(min, max); } while (v === 0); return v; }
+function signoNum(n){ return n < 0 ? "−" + Math.abs(n) : String(n); }
+function baraja(arr){
+  for (var i = arr.length - 1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  return arr;
+}
+function unicos(lista){ return lista.filter(function(o, i){ return lista.indexOf(o) === i; }); }
+
+/* Un término es {c: coeficiente, g: grado 2, 1 o 0} */
+var VAR = {2:"x²", 1:"x", 0:""};
+function cuerpo(t){
+  var abs = Math.abs(t.c);
+  return (t.g > 0 && abs === 1) ? VAR[t.g] : abs + VAR[t.g];
+}
+/* Un lado de la ecuación: "x² + 5x − 6", o "0" si no tiene términos */
+function lado(terms){
+  terms = terms.filter(function(t){ return t.c !== 0; });
+  if (!terms.length) return "0";
+  return terms.map(function(t, i){
+    if (i === 0) return (t.c < 0 ? "−" : "") + cuerpo(t);
+    return (t.c < 0 ? " − " : " + ") + cuerpo(t);
+  }).join("");
+}
+function ec(izq, der){ return lado(izq) + " = " + lado(der); }
+function estandar(B, C){ return lado([{c:1,g:2},{c:B,g:1},{c:C,g:0}]) + " = 0"; }
+/* Término con su signo, para nombrarlo: «+6», «−5x» */
+function conSuSigno(t){ return (t.c < 0 ? "−" : "+") + cuerpo(t); }
+/* Factor de la raíz r: x − r */
+function factor(r){ return r === 0 ? "x" : "(x" + (r > 0 ? " − " + r : " + " + Math.abs(r)) + ")"; }
+function igualaFactor(r){ return r === 0 ? "x = 0" : "x" + (r > 0 ? " − " + r : " + " + Math.abs(r)) + " = 0"; }
+function textoSoluciones(r1, r2){
+  var a = Math.min(r1, r2), b = Math.max(r1, r2);
+  if (a === b) return "x = " + signoNum(a) + " solamente";
+  return "x = " + signoNum(a) + " y x = " + signoNum(b);
+}
+function evalua(terms, x){
+  return terms.reduce(function(s, t){ return s + t.c*Math.pow(x, t.g); }, 0);
+}
+/* Sustitución escrita: "(−6)² + 5(−6) = 36 − 30 = 6" */
+function sustituye(terms, r){
+  terms = terms.filter(function(t){ return t.c !== 0; });
+  if (!terms.length) return "0";
+  if (terms.length === 1 && terms[0].g === 0) return signoNum(terms[0].c);
+  var rr = r < 0 ? "(" + signoNum(r) + ")" : String(r);
+  var partes = [], valores = [];
+  terms.forEach(function(t, i){
+    var abs = Math.abs(t.c), txt;
+    if (t.g === 2) txt = (abs === 1 ? "" : abs) + rr + "²";
+    else if (t.g === 1) txt = (abs === 1 ? rr : abs + "(" + signoNum(r) + ")");
+    else txt = String(abs);
+    partes.push(i === 0 ? (t.c < 0 ? "−" : "") + txt : (t.c < 0 ? " − " : " + ") + txt);
+    var v = t.c*Math.pow(r, t.g);
+    valores.push(i === 0 ? signoNum(v) : (v < 0 ? " − " : " + ") + Math.abs(v));
+  });
+  var total = evalua(terms, r);
+  var s = partes.join("");
+  if (terms.length > 1) s += " = " + valores.join("");
+  return s + " = " + signoNum(total);
+}
+
+/* ============================================================
+   Generador de casos: ecuación no estándar con raíces enteras
+   ============================================================ */
+var TIPOS = ["T1","T2","T3","T6","T4","T5"];
+function raices(){
+  var r1, r2;
+  do { r1 = noCero(-8, 8); r2 = noCero(-8, 8); }
+  while (r1 === r2 || r1 + r2 === 0 || Math.abs(r1 + r2) > 12 || Math.abs(r1*r2) > 40);
+  return [r1, r2];
+}
+function generaCaso(tipo){
+  if (!tipo || tipo === "azar") tipo = TIPOS[aleatorio(0, TIPOS.length - 1)];
+  var r, B, C, izq, der, k, p, m, n;
+  if (tipo === "T4"){
+    var s = aleatorio(2, 9);
+    r = [-s, s]; izq = [{c:1,g:2}]; der = [{c:s*s,g:0}];
+  } else if (tipo === "T5"){
+    p = noCero(-9, 9); if (Math.abs(p) === 1) p = p*aleatorio(2, 9);
+    r = [0, p]; izq = [{c:1,g:2}]; der = [{c:p,g:1}];
+  } else {
+    r = raices(); B = -(r[0] + r[1]); C = r[0]*r[1];
+    if (tipo === "T1"){ izq = [{c:1,g:2},{c:B,g:1}]; der = [{c:-C,g:0}]; }
+    else if (tipo === "T2"){ izq = [{c:1,g:2}]; der = [{c:-B,g:1},{c:-C,g:0}]; }
+    else if (tipo === "T3"){
+      do { p = noCero(-6, 6); m = B + p; } while (m === 0);
+      izq = [{c:1,g:2},{c:m,g:1},{c:C,g:0}]; der = [{c:p,g:1}];
+    } else { /* T6 */
+      do { n = noCero(-9, 9); k = n - C; } while (k === 0);
+      izq = [{c:1,g:2},{c:B,g:1},{c:n,g:0}]; der = [{c:k,g:0}];
+    }
+  }
+  return armaCaso(tipo, izq, der, r);
+}
+function coef(terms, g){ return terms.reduce(function(s, t){ return s + (t.g === g ? t.c : 0); }, 0); }
+function armaCaso(tipo, izq, der, r){
+  var B = coef(izq, 1) - coef(der, 1), C = coef(izq, 0) - coef(der, 0);
+  return {tipo:tipo, izq:izq, der:der, r1:r[0], r2:r[1], B:B, C:C,
+          original:ec(izq, der), estandar:estandar(B, C)};
+}
+
+/* Pasos completos del procedimiento */
+function operacion(t){
+  return (t.c > 0 ? "se resta " : "se suma ") + cuerpo(t) + " a ambos lados";
+}
+function pasosCaso(k){
+  var pasos = [], izq = k.izq.slice(), der = k.der.slice();
+  pasos.push("La ecuación <strong>no está igualada a cero</strong>: todavía no se puede usar la propiedad del producto cero. Hay que pasar todos los términos del lado derecho al izquierdo.");
+  /* primero los términos con x, después los números */
+  var orden = der.slice().sort(function(a, b){ return b.g - a.g; });
+  orden.forEach(function(t){
+    izq.push({c:-t.c, g:t.g});
+    der = der.filter(function(d){ return d !== t; });
+    pasos.push("Se pasa el término <strong>" + conSuSigno(t) + "</strong> al lado izquierdo: " + operacion(t) +
+               ", y aparece como <strong>" + conSuSigno({c:-t.c, g:t.g}) + "</strong>. Queda " + ec(izq, der) + ".");
+  });
+  var hayRepetidos = [2,1,0].some(function(g){ return izq.filter(function(t){ return t.g === g; }).length > 1; });
+  if (hayRepetidos)
+    pasos.push("Se reducen los términos semejantes. Forma estándar: <strong>" + k.estandar + "</strong>.");
+  else
+    pasos.push("Forma estándar: <strong>" + k.estandar + "</strong>.");
+  var f;
+  if (k.C === 0){
+    f = "Factor común: <strong>" + factor(0) + factor(k.r2) + " = 0</strong>.";
+  } else if (k.B === 0){
+    f = "Es una diferencia de cuadrados: <strong>" + factor(k.r1) + factor(k.r2) + " = 0</strong>.";
+  } else {
+    var m = -k.r1, n = -k.r2;
+    f = "Se buscan dos números que multipliquen " + signoNum(k.C) + " y sumen " + signoNum(k.B) + ": son " +
+        signoNum(m) + " y " + signoNum(n) + ". Se factoriza: <strong>" + factor(k.r1) + factor(k.r2) + " = 0</strong>.";
+  }
+  pasos.push(f);
+  var a = k.r1, b = k.r2;   /* en el mismo orden que los factores */
+  pasos.push("Ahora sí, el producto es cero. Se iguala cada factor a cero: " + igualaFactor(a) + " o " + igualaFactor(b) + ".");
+  pasos.push("Se resuelve: <strong>x = " + signoNum(a) + " o x = " + signoNum(b) + "</strong>.");
+  [a, b].forEach(function(r){
+    pasos.push("Verificación en la ecuación original con x = " + signoNum(r) + ": " + sustituye(k.izq, r) +
+               " y, en el lado derecho, " + sustituye(k.der, r) + ". Los dos lados coinciden.");
+  });
+  return pasos;
+}
+
+/* ============================================================
+   Mostrar pasos uno a uno
+   ============================================================ */
+function Pasador(idPasos){ this.id = idPasos; this.pasos = []; this.i = 0; }
+Pasador.prototype.carga = function(pasos){ this.pasos = pasos; this.i = 0; $(this.id).innerHTML = ""; this.boton(); };
+Pasador.prototype.uno = function(){
+  if (this.i >= this.pasos.length) return;
+  var d = document.createElement("div");
+  d.className = "paso";
+  d.innerHTML = '<span class="n" aria-hidden="true">' + (this.i + 1) + '</span>' + this.pasos[this.i];
+  $(this.id).appendChild(d);
+  this.i++;
+  this.boton();
+};
+Pasador.prototype.todos = function(){ while (this.i < this.pasos.length) this.uno(); };
+Pasador.prototype.boton = function(){
+  var b = $("e-siguiente");
+  b.disabled = this.i >= this.pasos.length;
+  b.textContent = this.i === 0 ? "Mostrar el primer paso" : (b.disabled ? "No quedan más pasos" : "Siguiente paso");
+};
+
+var e = new Pasador("e-pasos");
+function nuevoCasoE(){
+  var k = generaCaso($("e-tipo").value);
+  $("e-enunciado").textContent = "Resolver " + k.original + ".";
+  e.carga(pasosCaso(k));
+}
+
+/* ============================================================
+   Práctica de opción múltiple (un solo intento)
+   ============================================================ */
+function preparaOpciones(pref, opciones, correcta, estado, explicacion){
+  var cont = $(pref + "-opciones");
+  cont.innerHTML = "";
+  estado.resuelta = false;
+  $(pref + "-fb").className = "fb"; $(pref + "-fb").textContent = "";
+  baraja(opciones.slice()).forEach(function(txt){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "opcion"; b.setAttribute("aria-pressed", "false");
+    b.textContent = txt;
+    b.addEventListener("click", function(){
+      if (estado.resuelta) return;
+      estado.resuelta = true; estado.total++;
+      Array.prototype.forEach.call(cont.children, function(o){
+        o.disabled = true;
+        if (o.textContent === correcta) o.className = "opcion correcta";
+        else if (o === b) o.className = "opcion incorrecta";
+      });
+      b.setAttribute("aria-pressed", "true");
+      if (txt === correcta){
+        estado.aciertos++;
+        $(pref + "-fb").className = "fb bien";
+        $(pref + "-fb").textContent = "✓ Correcto. " + explicacion;
+      } else {
+        $(pref + "-fb").className = "fb mal";
+        $(pref + "-fb").textContent = "✗ Todavía no. La respuesta es " + correcta + ". " + explicacion;
+      }
+      $(pref + "-marcador").textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+    });
+    cont.appendChild(b);
+  });
+}
+
+/* Explicación breve del traslado de términos */
+function explicaTraslado(k){
+  var frases = k.der.filter(function(t){ return t.c !== 0; }).map(function(t){
+    return conSuSigno(t) + " pasa al lado izquierdo como " + conSuSigno({c:-t.c, g:t.g}) + " (" + operacion(t) + ")";
+  });
+  return "Al trasladar, cada término cambia de signo: " + frases.join("; ") + ". Forma estándar: " + k.estandar + ".";
+}
+function explicaSolucion(k){
+  var a = k.r1, b = k.r2, f = factor(k.r1) + factor(k.r2);
+  return "Primero la forma estándar: " + k.estandar + ". Se factoriza: " + f + " = 0. Se iguala cada factor a cero: " +
+         igualaFactor(a) + " o " + igualaFactor(b) + ", así que x = " + signoNum(a) + " o x = " + signoNum(b) + ".";
+}
+/* Raíces enteras de x² + Bx + C = 0, o null */
+function raicesEnteras(B, C){
+  var d = B*B - 4*C;
+  if (d < 0) return null;
+  var s = Math.round(Math.sqrt(d));
+  if (s*s !== d || (s - B) % 2 !== 0) return null;
+  return [(-B - s)/2, (-B + s)/2];
+}
+/* Formas estándar erróneas típicas, a partir de los lados de la ecuación */
+function formasErroneas(k){
+  var lb = coef(k.izq, 1), lc = coef(k.izq, 0), rb = coef(k.der, 1), rc = coef(k.der, 0);
+  return [
+    [lb + rb, lc + rc],   /* no cambia el signo de lo que traslada */
+    [lb - rb, lc + rc],   /* cambia bien el término con x, mal el número */
+    [lb + rb, lc - rc],   /* cambia bien el número, mal el término con x */
+    [rb - lb, rc - lc]    /* resta al revés: lado derecho menos el izquierdo, pero deja x² positivo */
+  ];
+}
+
+var p1 = {aciertos:0, total:0};
+function preguntaForma(k){
+  var correcta = k.estandar;
+  var malas = unicos(formasErroneas(k).map(function(f){ return estandar(f[0], f[1]); }))
+              .filter(function(o){ return o !== correcta; });
+  if (malas.length < 2) return null;
+  return {q:"¿Cuál es la forma estándar de " + k.original + "?",
+          ops:[correcta].concat(baraja(malas).slice(0, 3)), ok:correcta, exp:explicaTraslado(k)};
+}
+function preguntaSoluciones(k){
+  var correcta = textoSoluciones(k.r1, k.r2), malas = [];
+  var a = Math.min(k.r1, k.r2), b = Math.max(k.r1, k.r2);
+  /* Producto cero aplicado sin igualar a cero */
+  if (k.tipo === "T1"){
+    var dcha = coef(k.der, 0), B = coef(k.izq, 1);
+    malas.push(textoSoluciones(dcha, dcha - B));
+  }
+  if (k.tipo === "T5"){ var nz = k.r1 === 0 ? k.r2 : k.r1; malas.push(textoSoluciones(nz, nz)); }  /* divide entre x */
+  if (k.tipo === "T4") malas.push(textoSoluciones(b, b));                               /* olvida el ± */
+  if (k.tipo === "T4") malas.push(textoSoluciones(-b*b, b*b));                          /* no saca la raíz */
+  /* Errores de signo al trasladar */
+  formasErroneas(k).forEach(function(f){
+    var r = raicesEnteras(f[0], f[1]);
+    if (r && r[0] !== r[1]) malas.push(textoSoluciones(r[0], r[1]));
+  });
+  /* Lee las raíces con el signo del factor */
+  if (a !== -b) malas.push(textoSoluciones(-a, -b));
+  malas = unicos(malas).filter(function(o){ return o !== correcta; });
+  if (malas.length < 2) return null;
+  /* Si hay distractor de producto cero sin igualar, que siempre aparezca */
+  var fijas = malas.slice(0, (k.tipo === "T1" || k.tipo === "T4" || k.tipo === "T5") ? 1 : 0);
+  var resto = baraja(malas.slice(fijas.length));
+  return {q:"Resuelve " + k.original + ". ¿Cuáles son las soluciones?",
+          ops:[correcta].concat(fijas, resto).slice(0, 4), ok:correcta, exp:explicaSolucion(k)};
+}
+function preguntaError(){
+  var k = generaCaso("T1");
+  var B = coef(k.izq, 1), dcha = coef(k.der, 0), a = Math.min(k.r1, k.r2), b = Math.max(k.r1, k.r2);
+  var q = "Un estudiante resuelve " + k.original + " así: x" + factor(-B) + " = " + signoNum(dcha) +
+          ", entonces x = " + signoNum(dcha) + " o x" + (B < 0 ? " − " + Math.abs(B) : " + " + B) + " = " + signoNum(dcha) +
+          ". ¿Qué error cometió?";
+  var correcta = "No igualó la ecuación a cero";
+  var ops = [correcta, "Factorizó mal el lado izquierdo", "Debió dividir ambos lados entre x"];
+  var exp = "La factorización x" + factor(-B) + " es correcta, pero el producto vale " + signoNum(dcha) +
+            ", no 0, y la propiedad del producto cero solo funciona con cero. " + explicaSolucion(k);
+  return {q:q, ops:ops, ok:correcta, exp:exp};
+}
+function generaPregunta(){
+  var tir = Math.random(), p = null;
+  while (!p){
+    if (tir < 0.15) p = preguntaError();
+    else {
+      var k = generaCaso("azar");
+      p = tir < 0.55 ? preguntaForma(k) : preguntaSoluciones(k);
+      if (!p) tir = Math.random();
+    }
+  }
+  return p;
+}
+function nuevaP1(){
+  var p = generaPregunta();
+  $("p1-enun").textContent = p.q;
+  preparaOpciones("p1", p.ops, p.ok, p1, p.exp);
+}
+
+/* ============================================================
+   Navegación: anclas, abrir/cerrar todo
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#", "");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){ document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; }); });
+$("cerrar-todo").addEventListener("click", function(){ document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; }); });
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+$("e-siguiente").addEventListener("click", function(){ e.uno(); });
+$("e-todo").addEventListener("click", function(){ e.todos(); });
+$("e-caso").addEventListener("click", nuevoCasoE);
+$("e-tipo").addEventListener("change", nuevoCasoE);
+$("p1-nuevo").addEventListener("click", nuevaP1);
+
+nuevoCasoE(); nuevaP1();
+abrePorHash();
+</script>
+</body>
+</html>

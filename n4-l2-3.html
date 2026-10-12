@@ -1,0 +1,695 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 2.3 — Polinomios: ¿qué es un polinomio?
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #que-es
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 2.3: ¿qué es un polinomio?</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 2.3 del Nivel 4: términos, coeficientes, grado, coeficiente principal y forma estándar de un polinomio; clasificación en monomio, binomio y trinomio, y cuándo una expresión no es un polinomio.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#004d40; --tema-d:#00332b; --tema-bg:#e0f2f1; --tema-bg2:#b2dfdb;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+    --marca:#fff59d;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-sec[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  ul.lista{margin:8px 0;padding-left:22px;}
+  ul.lista li{margin:6px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .etq-grupo{font-weight:700;color:var(--tema-d);font-size:15px;margin:0 0 6px;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* Polinomio de la exploración */
+  .pol{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:10px 8px;
+       background:#fff;border:1px solid #d8d8d8;border-radius:10px;padding:18px 12px 14px;margin:14px 0;}
+  .termino{display:inline-flex;flex-direction:column;align-items:center;border:2px solid transparent;border-radius:9px;padding:4px 8px;}
+  .termino .expr{font-size:28px;font-weight:600;white-space:nowrap;line-height:1.3;}
+  .termino .expr sup{font-size:.6em;}
+  .termino .etq{font-size:13px;font-weight:700;color:var(--tema-d);min-height:20px;margin-top:4px;white-space:nowrap;}
+  .t-coef{border-radius:5px;padding:0 1px;}
+  .t-op{color:var(--gris);font-size:28px;font-weight:600;line-height:1.3;padding-top:6px;}
+  .t-signo{margin-right:2px;}
+  .modo-terminos .termino{border-color:var(--tema);background:var(--tema-bg);}
+  .modo-coeficientes .t-coef{background:var(--marca);outline:2px dashed #8d6e00;outline-offset:1px;}
+  .modo-coeficientes .t-coef.implicito{display:inline-block;min-width:12px;height:.9em;vertical-align:middle;}
+  .modo-grado .termino{border-color:#c8c8c8;border-style:dashed;}
+  .modo-grado .termino.mayor{border-color:var(--ok);border-style:solid;background:var(--ok-bg);}
+  .modo-grado .termino.mayor .etq{color:var(--ok);}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .tipo-preg{font-size:13px;font-weight:700;color:var(--tema-d);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas td.si{color:var(--ok);font-weight:700;}
+  table.reglas td.no{color:var(--mal);font-weight:700;}
+  tr.destacada td{background:var(--tema-bg);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .termino .expr,.t-op{font-size:23px;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 2 · Volumen 3D y polinomios</div>
+    <h1>Lección 2.3 · ¿Qué es un polinomio?</h1>
+    <div class="meta">Práctica interactiva de la sección 1 de la lección: términos, coeficientes, grado y clasificación de los polinomios.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#que-es">¿Qué es un polinomio?</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="que-es" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>¿Qué es un polinomio?</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Un <strong>polinomio</strong> es una expresión formada por <strong>términos</strong> sumados o restados.
+      Cada término tiene un <strong>coeficiente</strong> (el número) y una parte literal con exponentes enteros no
+      negativos (como x, x², x³).</p>
+      <ul class="lista">
+        <li>El <strong>grado de un término</strong> es el exponente de su variable: en 5x³ el grado es 3. Un número
+        solo, como 7, no lleva x y su grado es 0.</li>
+        <li>El <strong>grado del polinomio</strong> es el mayor grado entre sus términos.</li>
+        <li>El <strong>coeficiente principal</strong> es el número del término de mayor grado.</li>
+        <li>Un polinomio está en <strong>forma estándar</strong> cuando sus términos se escriben de mayor a menor
+        grado. Así el término de mayor grado queda delante y su coeficiente es el principal.</li>
+      </ul>
+
+      <table class="reglas">
+        <caption>Clasificación de los polinomios según el número de términos.</caption>
+        <thead><tr><th scope="col">Nombre</th><th scope="col">Número de términos</th><th scope="col">Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Monomio</td><td>1 término</td><td>5x²</td></tr>
+          <tr><td>Binomio</td><td>2 términos</td><td>3x − 7</td></tr>
+          <tr><td>Trinomio</td><td>3 términos</td><td>x² + 4x − 6</td></tr>
+        </tbody>
+      </table>
+      <p>Por su grado, un polinomio se nombra con el grado de su término mayor. La clasificación completa dice las dos
+      cosas: 4x³ − 2x + 7 es un <strong>trinomio de grado 3</strong>.</p>
+
+      <h3>Explora: las partes de un polinomio</h3>
+      <div class="panel">
+        <p class="etq-grupo" id="m-etq">Resaltar</p>
+        <div class="fila-btn" role="group" aria-labelledby="m-etq" style="margin-top:0;">
+          <button type="button" class="btn-sec" data-modo="terminos" aria-pressed="true">Términos</button>
+          <button type="button" class="btn-sec" data-modo="coeficientes" aria-pressed="false">Coeficientes</button>
+          <button type="button" class="btn-sec" data-modo="grado" aria-pressed="false">Grado</button>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="m-otro">Otro polinomio</button>
+          <button type="button" class="btn-sec" id="m-estandar" aria-pressed="false">Ordenar en forma estándar</button>
+          <button type="button" class="btn-sec" id="m-ejemplo">Ver el ejemplo de la lección</button>
+        </div>
+      </div>
+
+      <div class="pol modo-terminos" id="m-pol" role="img" aria-labelledby="m-pol-texto"></div>
+      <p class="sr-only" id="m-pol-texto"></p>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="m-l1"></div>
+        <div class="linea" id="m-l2"></div>
+        <div class="linea veredicto" id="m-l3"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>Cada signo va con el término que le sigue.</strong> En 3x − 5 el segundo término es −5, no 5.
+        Y cuando no se ve ningún número delante de la x, el coeficiente es 1: en x² el coeficiente es 1 y en −x³ es −1.
+      </div>
+
+      <h3>¿Cuándo una expresión no es un polinomio?</h3>
+      <p>La condición está en la definición: los exponentes de la variable deben ser <strong>enteros no negativos</strong>
+      (0, 1, 2, 3…). Por eso no son polinomios las expresiones con un exponente negativo, con un exponente fraccionario
+      o con la variable en el denominador (porque 5/x es lo mismo que 5x<sup>−1</sup>, un exponente negativo).
+      Los coeficientes, en cambio, sí pueden ser fracciones o decimales.</p>
+      <table class="reglas">
+        <caption>Ejemplos de expresiones que son y que no son polinomios.</caption>
+        <thead><tr><th scope="col">Expresión</th><th scope="col">¿Es polinomio?</th><th scope="col">Razón</th></tr></thead>
+        <tbody>
+          <tr><td>x²/2 + 0.5x − 3</td><td class="si">Sí</td><td>Los coeficientes son fracciones o decimales, pero los exponentes (2, 1 y 0) son enteros no negativos.</td></tr>
+          <tr><td>−8</td><td class="si">Sí</td><td>Es un monomio de grado 0.</td></tr>
+          <tr><td>4x<sup>−2</sup> + 1</td><td class="no">No</td><td>El exponente −2 es negativo.</td></tr>
+          <tr><td>6x<sup>1/2</sup> − x</td><td class="no">No</td><td>El exponente 1/2 es fraccionario.</td></tr>
+          <tr><td>5/x + 2</td><td class="no">No</td><td>La variable está en el denominador.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="caja-tip">
+        <strong>Para clasificar en el examen:</strong> primero cuenta los términos (monomio, binomio o trinomio);
+        después busca el mayor exponente, aunque no esté delante, porque ese es el grado.
+      </div>
+
+      <h3>Practica: grado, términos, clasificación y forma estándar</h3>
+      <div class="practica">
+        <div class="tipo-preg" id="p1-tipo"></div>
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 2.3 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function baraja(lista){
+  var a = lista.slice();
+  for (var i = a.length - 1; i > 0; i--){ var j = aleatorio(0,i); var t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function elige(lista){ return lista[aleatorio(0, lista.length-1)]; }
+
+/* ============================================================
+   Polinomios: generación y escritura
+   ============================================================ */
+var SUP = {"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹"};
+var MENOS = "−";
+var NOMBRES = ["", "monomio", "binomio", "trinomio", "polinomio de cuatro términos"];
+function mayus(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function num(n){ return n < 0 ? MENOS + Math.abs(n) : String(n); }
+function literal(e, html){
+  if (e === 0) return "";
+  if (e === 1) return "x";
+  return html ? "x<sup>" + e + "</sup>" : "x" + String(e).split("").map(function(d){ return SUP[d]; }).join("");
+}
+/* Un término aislado, con su signo: −2x, x², 7 */
+function terminoTexto(t){
+  var a = Math.abs(t.c);
+  var coef = (a === 1 && t.e > 0) ? "" : String(a);
+  return (t.c < 0 ? MENOS : "") + coef + literal(t.e, false);
+}
+/* El polinomio completo, con signos entre términos */
+function polTexto(ts){
+  return ts.map(function(t,i){
+    var a = Math.abs(t.c);
+    var coef = (a === 1 && t.e > 0) ? "" : String(a);
+    var signo = i === 0 ? (t.c < 0 ? MENOS : "") : (t.c < 0 ? " " + MENOS + " " : " + ");
+    return signo + coef + literal(t.e, false);
+  }).join("");
+}
+function gradoDe(ts){ return Math.max.apply(null, ts.map(function(t){ return t.e; })); }
+function principal(ts){ var g = gradoDe(ts); return ts.filter(function(t){ return t.e === g; })[0]; }
+function ordenaDesc(ts){ return ts.slice().sort(function(a,b){ return b.e - a.e; }); }
+function ordenaAsc(ts){ return ts.slice().sort(function(a,b){ return a.e - b.e; }); }
+function enumera(lista){
+  if (lista.length === 1) return lista[0];
+  return lista.slice(0,-1).join(", ") + " y " + lista[lista.length-1];
+}
+/* n términos con exponentes distintos entre 0 y emax; el grado es al menos gmin */
+function polAleatorio(n, gmin, emax){
+  gmin = gmin || 1; emax = emax || 5;
+  var exps;
+  do { exps = baraja([0,1,2,3,4,5].filter(function(e){ return e <= emax; })).slice(0,n); }
+  while (Math.max.apply(null, exps) < gmin);
+  return exps.map(function(e){
+    var a = (e > 0 && Math.random() < 0.18) ? 1 : aleatorio(2,9);
+    return {c: Math.random() < 0.4 ? -a : a, e:e};
+  });
+}
+/* Desordena de modo que el primer término NO sea el de mayor grado */
+function desordenaTrampa(ts){
+  if (ts.length < 2) return ts.slice();
+  var g = gradoDe(ts), r;
+  do { r = baraja(ts); } while (r[0].e === g);
+  return r;
+}
+function esDesc(ts){ for (var i = 1; i < ts.length; i++) if (ts[i].e > ts[i-1].e) return false; return true; }
+function esAsc(ts){ for (var i = 1; i < ts.length; i++) if (ts[i].e < ts[i-1].e) return false; return true; }
+
+/* ============================================================
+   Exploración
+   ============================================================ */
+var EJEMPLO = [{c:4,e:3},{c:-2,e:1},{c:7,e:0}];
+var expl = {original:[], estandar:false, modo:"terminos"};
+
+function nuevoPolinomioExpl(){
+  var n = elige([2,3,3,3,4,4,1]);
+  var ts = polAleatorio(n, 1, 5);
+  expl.original = (n > 1 && Math.random() < 0.75) ? desordenaTrampa(ts) : ordenaDesc(ts);
+  expl.estandar = false;
+  pintaExpl();
+}
+function pintaExpl(){
+  var ts = expl.estandar ? ordenaDesc(expl.original) : expl.original;
+  var g = gradoDe(ts), n = ts.length, lider = principal(ts);
+  var cont = $("m-pol");
+  cont.className = "pol modo-" + expl.modo;
+  cont.innerHTML = "";
+  ts.forEach(function(t,i){
+    var a = Math.abs(t.c), implicito = (a === 1 && t.e > 0);
+    if (i > 0 && t.c > 0){
+      var mas = document.createElement("span");
+      mas.className = "t-op"; mas.setAttribute("aria-hidden","true"); mas.textContent = "+";
+      cont.appendChild(mas);
+    }
+    var span = document.createElement("span");
+    span.className = "termino" + (t.e === g ? " mayor" : "");
+    var expr = '<span class="t-coef' + (implicito && t.c > 0 ? " implicito" : "") + '">' +
+            (t.c < 0 ? '<span class="t-signo">' + MENOS + '</span>' : "") + (implicito ? "" : a) + '</span>' +
+            literal(t.e, true);
+    var etq;
+    if (expl.modo === "terminos") etq = "término " + (i+1);
+    else if (expl.modo === "coeficientes") etq = "coeficiente " + num(t.c) + (implicito ? " (no se escribe)" : "");
+    else etq = "grado " + t.e + (t.e === g ? " ★ mayor" : "");
+    span.innerHTML = '<span class="expr">' + expr + '</span><span class="etq">' + etq + '</span>';
+    cont.appendChild(span);
+  });
+  $("m-pol-texto").textContent = "Polinomio: " + polTexto(ts) + ".";
+
+  var lista = ts.map(terminoTexto);
+  if (expl.modo === "terminos"){
+    $("m-l1").innerHTML = "<strong>Términos:</strong> " + enumera(lista) + ". Se separan por los signos + y −, y cada signo va con el término que le sigue.";
+    $("m-l2").innerHTML = "Tiene <strong>" + n + (n === 1 ? " término" : " términos") + "</strong>.";
+    $("m-l3").textContent = "Por su número de términos es un " + NOMBRES[n] + ".";
+  } else if (expl.modo === "coeficientes"){
+    var desc = ts.map(function(t){
+      return t.e === 0 ? num(t.c) + " (número solo, sin x)" : num(t.c) + " (de " + literal(t.e, false) + ")";
+    });
+    $("m-l1").innerHTML = "<strong>Coeficientes:</strong> " + enumera(desc) + ".";
+    var hayImp = ts.some(function(t){ return Math.abs(t.c) === 1 && t.e > 0; });
+    $("m-l2").textContent = hayImp ? "Donde no se ve ningún número delante de la x, el coeficiente es 1 (o −1 si hay un signo menos)."
+                                   : "El signo forma parte del coeficiente: si el término se resta, su coeficiente es negativo.";
+    $("m-l3").textContent = "Coeficiente principal (el del término de mayor grado, " + terminoTexto(lider) + "): " + num(lider.c) + ".";
+  } else {
+    $("m-l1").innerHTML = "<strong>Grado de cada término:</strong> " + enumera(ts.map(function(t){ return terminoTexto(t) + " → " + t.e; })) + ".";
+    $("m-l2").innerHTML = "El mayor es <strong>" + g + "</strong>: el polinomio es de grado " + g +
+      " y su coeficiente principal es " + num(lider.c) + ".";
+    $("m-l3").textContent = "Clasificación: " + NOMBRES[n] + " de grado " + g + ".";
+  }
+  var yaEst = esDesc(expl.original);
+  if (expl.estandar){
+    $("m-l2").innerHTML += " <em>Forma estándar: términos de mayor a menor grado.</em>";
+  } else if (!yaEst){
+    $("m-l2").innerHTML += " <em>Este polinomio no está en forma estándar: el término de mayor grado no va delante.</em>";
+  }
+  $("m-estandar").setAttribute("aria-pressed", expl.estandar ? "true" : "false");
+  $("m-estandar").textContent = expl.estandar ? "Ver como estaba escrito" : "Ordenar en forma estándar";
+  $("m-estandar").disabled = yaEst && !expl.estandar;
+}
+function montaExploracion(){
+  document.querySelectorAll("[data-modo]").forEach(function(b){
+    b.addEventListener("click", function(){
+      expl.modo = b.getAttribute("data-modo");
+      document.querySelectorAll("[data-modo]").forEach(function(o){
+        o.setAttribute("aria-pressed", o === b ? "true" : "false");
+      });
+      pintaExpl();
+    });
+  });
+  $("m-otro").addEventListener("click", nuevoPolinomioExpl);
+  $("m-estandar").addEventListener("click", function(){ expl.estandar = !expl.estandar; pintaExpl(); });
+  $("m-ejemplo").addEventListener("click", function(){
+    expl.original = EJEMPLO.map(function(t){ return {c:t.c, e:t.e}; });
+    expl.estandar = false;
+    pintaExpl();
+  });
+  expl.original = [{c:-2,e:1},{c:4,e:3},{c:7,e:0}];
+  pintaExpl();
+}
+
+/* ============================================================
+   Práctica variada (generadores con números aleatorios)
+   ============================================================ */
+/* correcta: texto; distractores: [{t, err}] ya filtrados; fijo: conserva el orden dado */
+function armaOpciones(correcta, distractores, fijo){
+  var todas = [{t:correcta, err:null, ok:true}].concat(distractores.map(function(d){ return {t:d.t, err:d.err, ok:false}; }));
+  if (!fijo) todas = baraja(todas);
+  return { ops: todas.map(function(o){ return o.t; }),
+           ok: todas.map(function(o){ return o.ok; }).indexOf(true),
+           err: todas.map(function(o){ return o.err; }) };
+}
+/* Toma hasta k candidatos con texto distinto del correcto y entre sí */
+function filtra(correcta, cands, k){
+  var vistos = [correcta], fuera = [];
+  cands.forEach(function(c){
+    if (fuera.length < k && vistos.indexOf(c.t) === -1){ vistos.push(c.t); fuera.push(c); }
+  });
+  return fuera;
+}
+
+/* 1 · Grado del polinomio */
+function gGrado(){
+  var ts = desordenaTrampa(polAleatorio(aleatorio(2,4), 2, 5));
+  var g = gradoDe(ts), n = ts.length;
+  var suma = ts.reduce(function(s,t){ return s + t.e; }, 0);
+  var maxc = Math.max.apply(null, ts.map(function(t){ return Math.abs(t.c); }));
+  var cands = [
+    {t:String(ts[0].e), err:"Ese es el exponente del primer término escrito, pero el polinomio no está ordenado: hay que mirar todos los términos."},
+    {t:String(n), err:"Ese es el número de términos, no el grado."},
+    {t:String(suma), err:"Los exponentes de los distintos términos no se suman: el grado es el mayor de ellos."},
+    {t:String(maxc), err:"Ese número es un coeficiente; el grado lo da el exponente de la x."},
+    {t:String(g+1), err:null}, {t:String(g-1), err:null}
+  ];
+  var o = armaOpciones(String(g), filtra(String(g), cands, 3), false);
+  o.tipo = "Grado"; o.meta = {clase:"grado", ts:ts};
+  o.q = "¿Cuál es el grado del polinomio " + polTexto(ts) + "?";
+  o.exp = "Grado de cada término: " + enumera(ts.map(function(t){ return terminoTexto(t) + " → " + t.e; })) +
+          ". El mayor es " + g + ", así que el polinomio es de grado " + g + ".";
+  return o;
+}
+
+/* 2 · Número de términos */
+function gTerminos(){
+  var n = elige([1,2,2,3,3]);
+  var ts = polAleatorio(n, n === 1 ? 2 : 1, 5);
+  if (n > 1) ts = Math.random() < 0.6 ? desordenaTrampa(ts) : ordenaDesc(ts);
+  var g = gradoDe(ts);
+  var tieneConst = ts.some(function(t){ return t.e === 0; });
+  var ops = [1,2,3].map(function(k){ return mayus(NOMBRES[k]); });
+  var err = [1,2,3].map(function(k){
+    if (k === n) return null;
+    if (k === g) return "Contaste el grado (el mayor exponente), no los términos.";
+    if (k === n - 1 && tieneConst) return "El número solo, sin x, también es un término.";
+    return "Cuenta los términos: se separan por los signos + y −.";
+  });
+  var lista = ts.map(terminoTexto);
+  return { tipo:"Número de términos", meta:{clase:"terminos", ts:ts},
+    q:"¿Cómo se clasifica " + polTexto(ts) + " por su número de términos?",
+    ops:ops, ok:n-1, err:err,
+    exp: n === 1 ? "Hay un solo término, " + lista[0] + ": es un monomio. El exponente no cuenta como término."
+                 : "Los términos son " + enumera(lista) + ": son " + n + ", así que es un " + NOMBRES[n] + "." };
+}
+
+/* 3 · Clasificación completa */
+function gClasif(){
+  var n = aleatorio(1,3), ts;
+  do { ts = polAleatorio(n, 1, 5); } while (gradoDe(ts) === n && Math.random() < 0.7);
+  if (n > 1) ts = Math.random() < 0.6 ? desordenaTrampa(ts) : ordenaDesc(ts);
+  var g = gradoDe(ts);
+  function et(k, gr){ return mayus(NOMBRES[k]) + " de grado " + gr; }
+  var correcta = et(n, g);
+  var cands = [];
+  if (g >= 1 && g <= 3 && g !== n) cands.push({t:et(g, n), err:"Se intercambiaron las dos cosas: el nombre sale del número de términos y el grado, del mayor exponente."});
+  if (ts[0].e !== g) cands.push({t:et(n, ts[0].e), err:"El grado no es el exponente del primer término, sino el mayor de todos."});
+  if (n >= 2 && ts.some(function(t){ return t.e === 0; })) cands.push({t:et(n-1, g), err:"El número solo, sin x, también es un término."});
+  if (n !== g) cands.push({t:et(n, n), err:"El grado no es el número de términos: es el mayor exponente."});
+  cands.push({t:et(n, g+1), err:null});
+  if (n < 3) cands.push({t:et(n+1, g), err:null});
+  if (g > 1) cands.push({t:et(n, g-1), err:null});
+  cands.push({t:et(n === 3 ? 1 : 3, g), err:null});
+  var o = armaOpciones(correcta, filtra(correcta, cands, 3), false);
+  o.tipo = "Clasificación"; o.meta = {clase:"clasif", ts:ts};
+  o.q = "Clasifica " + polTexto(ts) + " por su número de términos y por su grado.";
+  o.exp = "Tiene " + n + (n === 1 ? " término" : " términos") + " (" + NOMBRES[n] + ") y su mayor exponente es " + g +
+          " (grado " + g + "): es un " + NOMBRES[n] + " de grado " + g + ".";
+  return o;
+}
+
+/* 4 · Coeficiente principal */
+function gPrincipal(){
+  var ts;
+  do { ts = desordenaTrampa(polAleatorio(aleatorio(2,4), 2, 5)); }
+  while (principal(ts).c === ts[0].c);
+  var lider = principal(ts), g = gradoDe(ts), c = lider.c;
+  var maxv = Math.max.apply(null, ts.map(function(t){ return t.c; }));
+  var cte = ts.filter(function(t){ return t.e === 0; });
+  var cands = [
+    {t:num(ts[0].c), err:"Ese es el coeficiente del primer término escrito, pero no es el de mayor grado."},
+    {t:num(g), err:"Ese número es el grado (el exponente), no el coeficiente."},
+    {t:num(maxv), err:"El coeficiente principal no es el número más grande, sino el del término de mayor grado."},
+    {t:num(-c), err:"El signo forma parte del coeficiente: si el término se resta, el coeficiente es negativo."}
+  ];
+  if (cte.length) cands.push({t:num(cte[0].c), err:"Ese es el número solo, de grado 0: es el de menor grado, no el de mayor."});
+  cands = baraja(cands.slice(0,3)).concat(cands.slice(3));
+  cands.push({t:num(c + (c > 0 ? 1 : -1)), err:null});
+  cands.push({t:num(c + (c > 0 ? 2 : -2)), err:null});
+  var o = armaOpciones(num(c), filtra(num(c), cands, 3), false);
+  o.tipo = "Coeficiente principal"; o.meta = {clase:"principal", ts:ts};
+  o.q = "¿Cuál es el coeficiente principal de " + polTexto(ts) + "?";
+  o.exp = "El término de mayor grado es " + terminoTexto(lider) + " (grado " + g + "). Su coeficiente es " + num(c) +
+          (Math.abs(c) === 1 ? ": cuando no se ve ningún número, el coeficiente es 1, con su signo." : ".");
+  return o;
+}
+
+/* 5 · Forma estándar */
+function gEstandar(){
+  var n = aleatorio(3,4), ts, orig;
+  do { ts = polAleatorio(n, 2, 5); } while (!ts.some(function(t){ return t.c < 0; }));
+  do { orig = baraja(ts); } while (esDesc(orig) || esAsc(orig));
+  var desc = ordenaDesc(orig), correcta = polTexto(desc);
+  var signosEnSitio = desc.map(function(t,i){ return {c: Math.abs(t.c) * (orig[i].c < 0 ? -1 : 1), e:t.e}; });
+  var porCoef = orig.slice().sort(function(a,b){ return Math.abs(b.c) - Math.abs(a.c) || b.e - a.e; });
+  var cambio = desc.map(function(t){ return {c:t.c, e:t.e}; });
+  var k = aleatorio(1, n-1); cambio[k].c = -cambio[k].c;
+  var cambio0 = desc.map(function(t){ return {c:t.c, e:t.e}; }); cambio0[0].c = -cambio0[0].c;
+  var cands = [
+    {t:polTexto(ordenaAsc(orig)), err:"Está ordenado de menor a mayor grado; la forma estándar va de mayor a menor."},
+    {t:polTexto(signosEnSitio), err:"Al mover un término, su signo se mueve con él. Aquí los signos se quedaron en su lugar."},
+    {t:polTexto(porCoef), err:"Se ordena por el exponente, no por el tamaño del coeficiente."},
+    {t:polTexto(cambio), err:"Un término cambió de signo al moverlo: cada término conserva su signo."},
+    {t:polTexto(cambio0), err:"Un término cambió de signo al moverlo: cada término conserva su signo."}
+  ];
+  var o = armaOpciones(correcta, filtra(correcta, cands, 3), false);
+  o.tipo = "Forma estándar"; o.meta = {clase:"estandar", ts:orig};
+  o.q = "¿Cuál es la forma estándar de " + polTexto(orig) + "?";
+  o.exp = "Se ordenan los términos de mayor a menor exponente (" + desc.map(function(t){ return t.e; }).join(", ") +
+          "), y cada uno se lleva su signo: " + correcta + ".";
+  return o;
+}
+
+/* 6 · ¿Es o no es polinomio? */
+var R = {
+  si:"Sí, es un polinomio", neg:"No: exponente negativo", frac:"No: exponente fraccionario",
+  den:"No: x en el denominador", cfrac:"No: coeficiente fraccionario", cdec:"No: coeficiente decimal",
+  nox:"No: no tiene variable"
+};
+function gEsPoli(){
+  var a = aleatorio(2,9), b = aleatorio(2,9), c = aleatorio(1,9);
+  var sg = function(){ return Math.random() < 0.5 ? " + " : " " + MENOS + " "; };
+  var casos = [
+    function(){ var d = elige([2,3,4,5]), e = aleatorio(2,4);
+      return {q:"x" + literal(e,false).slice(1) + "/" + d + sg() + b + "x" + sg() + c, html:false, esPoli:true, correcta:R.si,
+        d:[{t:R.cfrac, err:"Dividir entre un número es multiplicar por una fracción: x" + literal(e,false).slice(1) + "/" + d + " = (1/" + d + ")x" + literal(e,false).slice(1) + ". Los coeficientes sí pueden ser fracciones."},
+           {t:R.den, err:"La x está arriba, en el numerador; en el denominador solo hay un número."},
+           {t:R.neg, err:"Ningún exponente es negativo."}],
+        exp:"Los exponentes de la x son " + e + ", 1 y 0: todos enteros no negativos. Lo que se divide entre " + d + " es el coeficiente, y eso está permitido."}; },
+    function(){ var e = aleatorio(2,5);
+      return {q:"0." + elige([5,2,4,25,75]) + literal(e,false) + sg() + a + "x" + sg() + c, html:false, esPoli:true, correcta:R.si,
+        d:[{t:R.cdec, err:"Los coeficientes pueden ser decimales; la condición es solo para los exponentes."},
+           {t:R.frac, err:"El decimal está en el coeficiente, no en el exponente."},
+           {t:R.neg, err:"Ningún exponente es negativo."}],
+        exp:"Los exponentes son " + e + ", 1 y 0, enteros no negativos. Un coeficiente decimal no impide que sea polinomio."}; },
+    function(){ var k = aleatorio(2,12) * (Math.random() < 0.5 ? -1 : 1);
+      return {q:num(k), html:false, esPoli:true, correcta:R.si,
+        d:[{t:R.nox, err:"Un número solo es un término de grado 0 (como si fuera " + num(k) + "x⁰): es un monomio."},
+           {t:R.neg, err:"No hay ningún exponente negativo."},
+           {t:R.den, err:"No hay ninguna x, y menos en un denominador."}],
+        exp:"Un número solo es un monomio de grado 0."}; },
+    function(){ var e = aleatorio(1,3);
+      return {q:a + "x<sup>" + MENOS + e + "</sup>" + sg() + b + "x" + sg() + c, html:true, esPoli:false, correcta:R.neg,
+        d:[{t:R.si, err:"Los exponentes deben ser enteros no negativos, y " + MENOS + e + " es negativo."},
+           {t:R.frac, err:"El exponente " + MENOS + e + " es entero, pero negativo."},
+           {t:R.cfrac, err:"Los coeficientes son enteros; el problema está en el exponente."}],
+        exp:"El exponente " + MENOS + e + " es negativo, y en un polinomio los exponentes deben ser enteros no negativos."}; },
+    function(){ var e = aleatorio(1,2);
+      return {q:a + "/" + literal(e,false) + sg() + b + "x" + sg() + c, html:false, esPoli:false, correcta:R.den,
+        d:[{t:R.si, err:"Aunque se vean exponentes enteros, la x está en el denominador: " + a + "/" + literal(e,false) + " = " + a + "x⁻" + SUP[e] + "."},
+           {t:R.cfrac, err:"Lo que va abajo no es un número, es la x: eso equivale a un exponente negativo."},
+           {t:R.frac, err:"No hay exponentes fraccionarios: el problema es que la x está en el denominador."}],
+        exp:"La x está en el denominador: " + a + "/" + literal(e,false) + " = " + a + "x⁻" + SUP[e] + ", con exponente negativo."}; },
+    function(){ var f = elige(["1/2","1/3","3/2"]);
+      return {q:a + "x<sup>" + f + "</sup>" + sg() + b + "x" + sg() + c, html:true, esPoli:false, correcta:R.frac,
+        d:[{t:R.si, err:"El exponente " + f + " no es un número entero."},
+           {t:R.neg, err:"El exponente " + f + " es positivo, pero no es entero."},
+           {t:R.cfrac, err:"Los coeficientes son enteros; la fracción está en el exponente."}],
+        exp:"El exponente " + f + " es fraccionario, y en un polinomio los exponentes deben ser enteros no negativos."}; }
+  ];
+  var caso = elige(casos)();
+  var o = armaOpciones(caso.correcta, caso.d, false);
+  o.tipo = "¿Es un polinomio?"; o.meta = {clase:"espoli", esPoli:caso.esPoli, expr:caso.q};
+  o.q = "¿Es un polinomio la expresión " + caso.q + "?";
+  o.html = caso.html;
+  o.exp = caso.exp;
+  return o;
+}
+
+var GENERADORES = [gGrado, gTerminos, gClasif, gPrincipal, gEstandar, gEsPoli];
+var ultimoGen = -1;
+function generaVariado(){
+  var i = aleatorio(0, GENERADORES.length-1);
+  while (i === ultimoGen) i = aleatorio(0, GENERADORES.length-1);
+  ultimoGen = i;
+  return GENERADORES[i]();
+}
+
+/* Motor común de práctica (con generador aleatorio) */
+function creaPractica(generar, ids){
+  var estado = {p:null, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    estado.resuelta = false;
+    var p = estado.p = generar();
+    $(ids.tipo).textContent = p.tipo;
+    if (p.html) $(ids.enun).innerHTML = p.q; else $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = estado.p;
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal";
+      $(ids.fb).textContent = "✗ Todavía no. " + (p.err && p.err[j] ? p.err[j] + " " : "") + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+montaExploracion();
+creaPractica(generaVariado, {tipo:"p1-tipo",enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+abrePorHash();
+</script>
+</body>
+</html>

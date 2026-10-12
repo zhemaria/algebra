@@ -1,0 +1,712 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 2.1 — Volumen de esferas, conos y pirámides
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #formulas · #esfera
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 2.1: volumen de esferas, conos y pirámides</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 2.1 del Nivel 4: reconocer la esfera, el cono y la pirámide en la hoja de fórmulas del GED, identificar sus medidas y calcular el volumen de la esfera.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#004d40; --tema-d:#00332b; --tema-bg:#e0f2f1; --tema-bg2:#b2dfdb;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:190px;}
+  .campo input[type="text"]{width:260px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);width:24px;height:24px;
+           border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:560px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+  .leyenda{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:14px;margin-top:8px;}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px;}
+  .muestra{width:26px;height:4px;display:inline-block;}
+  .m-radio{background:#bf360c;}
+  .m-diametro{background:#1a237e;}
+  .selector{display:flex;gap:10px;flex-wrap:wrap;}
+  .selector .opcion{flex:1;min-width:140px;text-align:center;font-weight:700;}
+  .check{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--tema-d);margin-top:12px;}
+  .check input{width:20px;height:20px;}
+  .check input:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas td.constante{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  tr.destacada td{background:var(--tema-bg);font-weight:700;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;}
+    .campo input[type="range"],.campo input[type="text"]{width:100%;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 2 · Volumen 3D y polinomios</div>
+    <h1>Lección 2.1 · Volumen de esferas, conos y pirámides</h1>
+    <div class="meta">Dos prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#formulas">La hoja de fórmulas del GED y los tres sólidos</a></li>
+      <li><a href="#esfera">Volumen de la esfera</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="formulas" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>La hoja de fórmulas del GED y los tres sólidos</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En el examen GED no se memorizan las fórmulas de volumen: se entregan en una
+      <a href="https://www.ged.com/content/dam/websites/ged/resources/faq/math-formula-sheet-es.pdf" target="_blank" rel="noopener noreferrer"><strong>hoja de fórmulas</strong><span class="sr-only"> (PDF, se abre en una pestaña nueva)</span></a>.
+      La destreza que se evalúa es <strong>localizar la fórmula correcta</strong>, sustituir bien las dimensiones y calcular.</p>
+
+      <table class="reglas" id="tabla-solidos">
+        <caption>Fórmulas de volumen de la esfera, el cono y la pirámide según la hoja del GED.</caption>
+        <thead><tr><th scope="col">Sólido</th><th scope="col">Fórmula del volumen</th><th scope="col">Datos que se necesitan</th></tr></thead>
+        <tbody>
+          <tr data-solido="esfera"><td>Esfera</td><td>V = 4/3 πr³</td><td>el radio r</td></tr>
+          <tr data-solido="cono"><td>Cono</td><td>V = 1/3 πr²h</td><td>el radio r de la base y la altura h</td></tr>
+          <tr data-solido="piramide"><td>Pirámide</td><td>V = 1/3 × (Área de la base) × h</td><td>el área de la base y la altura h</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Explora: reconoce cada sólido y sus medidas</h3>
+      <p>Elige un sólido. La figura marca las medidas que pide su fórmula, y abajo se explica qué es cada una.</p>
+      <div class="panel">
+        <div class="selector" role="group" aria-label="Elegir sólido">
+          <button type="button" class="opcion" data-solido="esfera" aria-pressed="true">Esfera</button>
+          <button type="button" class="opcion" data-solido="cono" aria-pressed="false">Cono</button>
+          <button type="button" class="opcion" data-solido="piramide" aria-pressed="false">Pirámide</button>
+        </div>
+        <label class="check" for="f-diametro"><input type="checkbox" id="f-diametro"> Mostrar también el diámetro</label>
+        <p class="nota" id="f-nota-diam"></p>
+      </div>
+
+      <div class="grafica">
+        <svg id="f-svg" viewBox="0 0 560 300" role="img" aria-labelledby="f-svg-t f-svg-d">
+          <title id="f-svg-t">El sólido elegido con sus medidas</title>
+          <desc id="f-svg-d">Dibujo del sólido elegido con el radio, la altura o el área de la base señalados.</desc>
+        </svg>
+        <div class="leyenda" id="f-leyenda"></div>
+        <p class="pie-grafica" id="f-svg-texto"></p>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="f-formula"></div>
+        <div class="linea" id="f-datos"></div>
+        <div class="linea" id="f-medidas"></div>
+        <div class="linea" id="f-cuidado"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>El factor 1/3:</strong> tanto el cono como la pirámide llevan 1/3. Esto se debe a que un cono cabe tres
+        veces dentro de un cilindro de la misma base y altura, y una pirámide cabe tres veces dentro de un prisma de la
+        misma base y altura.
+      </div>
+
+      <h3>Practica: la fórmula y los datos correctos</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="esfera">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Volumen de la esfera</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Una esfera queda definida solo por su <strong>radio</strong>. Su volumen es:</p>
+      <p class="formula">V = 4/3 πr³</p>
+      <p>El radio se eleva al cubo (al ser una medida en tres dimensiones) y se multiplica por π y por 4/3.
+      Mueve el deslizador y sigue los pasos del cálculo.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="e-tipo">El problema da</label>
+            <select id="e-tipo">
+              <option value="radio">el radio</option>
+              <option value="diametro">el diámetro</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="e-valor"><span id="e-etiqueta">Radio r</span> = <span class="valor-rango" id="e-valor-val">3</span> cm</label>
+            <input type="range" id="e-valor" min="1" max="12" step="1" value="3">
+          </div>
+        </div>
+      </div>
+
+      <div class="grafica">
+        <svg id="e-svg" viewBox="0 0 560 300" role="img" aria-labelledby="e-svg-t e-svg-d">
+          <title id="e-svg-t">La esfera y su radio</title>
+          <desc id="e-svg-d">Esfera dibujada a escala con el radio marcado.</desc>
+        </svg>
+        <p class="pie-grafica" id="e-svg-texto"></p>
+      </div>
+
+      <div class="pasos" id="e-pasos" aria-live="polite"></div>
+      <div class="salida" aria-live="polite">
+        <div class="linea veredicto" id="e-resultado"></div>
+        <div class="linea" id="e-aprox"></div>
+      </div>
+
+      <div class="caja-atencion">
+        <strong>El radio, no el diámetro:</strong> si el problema da el diámetro, primero se divide entre 2 para obtener
+        el radio. Un error común es usar el diámetro directamente en la fórmula.
+      </div>
+      <div class="caja-tip">
+        <strong>Sobre π:</strong> la respuesta exacta se deja en términos de π (por ejemplo, 36π). Para el valor
+        aproximado, usa lo que indique el problema: π ≈ 3.14 o la tecla π de la calculadora. Las dos formas pueden
+        diferir un poco en las últimas cifras; si no se indica nada, la tecla π da el resultado más exacto.
+      </div>
+
+      <h3>Practica: calcula el volumen de la esfera</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 2.1 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function elige(lista){ return lista[aleatorio(0, lista.length-1)]; }
+function redondea(n,d){ var f = Math.pow(10, d||2); return Math.round(n*f)/f; }
+function num(n){ return String(redondea(n,2)); }
+function limpiaSVG(svg){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1) return;
+    var t = n.tagName.toLowerCase();
+    if (t !== "title" && t !== "desc") svg.removeChild(n);
+  });
+}
+function creaEn(svg){
+  return function(tag, attrs, texto){
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    if (texto !== undefined) el.textContent = texto;
+    svg.appendChild(el);
+    return el;
+  };
+}
+function mcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=b; b=a%b; a=t; } return a || 1; }
+/* Coeficiente de π como fracción: num/den simplificado, en el formato de la lección (36π, 4/3 π) */
+function coefPi(n, d){
+  var g = mcd(n, d); n /= g; d /= g;
+  if (d === 1) return (n === 1 ? "" : n) + "π";
+  return n + "/" + d + " π";
+}
+/* Mezcla la correcta con los distractores, sin repetir textos */
+function armaOpciones(correcta, distractores){
+  var lista = [correcta];
+  distractores.forEach(function(t){ if (lista.indexOf(t) === -1) lista.push(t); });
+  for (var i = lista.length - 1; i > 0; i--){
+    var j = aleatorio(0, i), t = lista[i]; lista[i] = lista[j]; lista[j] = t;
+  }
+  return {ops: lista, ok: lista.indexOf(correcta)};
+}
+
+/* Motor común de práctica: cada «Otro ejercicio» pide un ejercicio nuevo al generador */
+function creaPractica(genera, ids){
+  var estado = {p:null, resuelta:false, aciertos:0, total:0};
+  function pinta(){
+    var p = genera(), intentos = 0;
+    while (estado.p && p.q === estado.p.q && intentos++ < 20) p = genera();
+    estado.p = p;
+    estado.resuelta = false;
+    $(ids.enun).textContent = p.q;
+    var cont = $(ids.opciones); cont.innerHTML = "";
+    p.ops.forEach(function(texto,j){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "opcion"; btn.textContent = texto;
+      btn.setAttribute("aria-pressed","false");
+      btn.addEventListener("click", function(){ responde(j, btn); });
+      cont.appendChild(btn);
+    });
+    $(ids.fb).className = "fb"; $(ids.fb).textContent = "";
+  }
+  function responde(j, btn){
+    if (estado.resuelta) return;
+    estado.resuelta = true; estado.total++;
+    var p = estado.p;
+    Array.prototype.forEach.call($(ids.opciones).children, function(b,k){
+      b.disabled = true;
+      if (k === p.ok) b.className = "opcion correcta";
+      else if (b === btn) b.className = "opcion incorrecta";
+    });
+    btn.setAttribute("aria-pressed","true");
+    if (j === p.ok){
+      estado.aciertos++;
+      $(ids.fb).className = "fb bien"; $(ids.fb).textContent = "✓ Correcto. " + p.exp;
+    } else {
+      $(ids.fb).className = "fb mal"; $(ids.fb).textContent = "✗ Todavía no. " + p.exp;
+    }
+    $(ids.marcador).textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+  }
+  $(ids.nuevo).addEventListener("click", pinta);
+  pinta();
+}
+
+/* ============================================================
+   MÓDULO 1 · La hoja de fórmulas y los tres sólidos
+   ============================================================ */
+var F_ESFERA = "V = 4/3 πr³", F_CONO = "V = 1/3 πr²h",
+    F_PIRAMIDE = "V = 1/3 × (Área de la base) × h",
+    F_CILINDRO = "V = πr²h", F_PRISMA = "V = (Área de la base) × h";
+
+var SOLIDOS = {
+  esfera: {
+    nombre:"Esfera", formula:F_ESFERA, datos:"Solo hace falta el radio r.",
+    medidas:"<strong>Radio r:</strong> la distancia del centro de la esfera a cualquier punto de su superficie. Es la única medida que pide la fórmula.",
+    cuidado:"<strong>Cuidado:</strong> el radio se eleva al cubo. Si el problema da el diámetro (la distancia de lado a lado pasando por el centro), primero se divide entre 2.",
+    texto:"Esfera con el radio r marcado desde el centro hasta la superficie."
+  },
+  cono: {
+    nombre:"Cono", formula:F_CONO, datos:"Hacen falta el radio r de la base y la altura h.",
+    medidas:"<strong>Radio r:</strong> el de la base circular. <strong>Altura h:</strong> la distancia de la punta a la base, medida en línea recta y perpendicular a la base (no por el costado inclinado).",
+    cuidado:"<strong>Cuidado:</strong> solo el radio se eleva al cuadrado, no la altura. Y no se olvida el factor 1/3: sin él, la fórmula sería la del cilindro.",
+    texto:"Cono con el radio r de la base y la altura h, que baja recta desde la punta hasta el centro de la base."
+  },
+  piramide: {
+    nombre:"Pirámide", formula:F_PIRAMIDE, datos:"Hacen falta el área de la base y la altura h.",
+    medidas:"<strong>Área de la base:</strong> el área del polígono de abajo; si es un cuadrado de lado a, vale a × a; si es un rectángulo, largo × ancho. <strong>Altura h:</strong> la distancia de la punta a la base, en línea recta.",
+    cuidado:"<strong>Cuidado:</strong> primero se calcula el área de la base y solo después se aplica 1/3 × base × altura. El lado de la base no es el área.",
+    texto:"Pirámide de base cuadrada con la base sombreada (su área) y la altura h desde la punta hasta el centro de la base."
+  }
+};
+var solidoActual = "esfera";
+
+function dibujaSolido(){
+  var svg = $("f-svg"), crea = creaEn(svg), diam = $("f-diametro").checked;
+  limpiaSVG(svg);
+  var fuerte = "#004d40", relleno = "#b2dfdb", rojo = "#bf360c", azul = "#1a237e";
+  function etiqueta(x, y, t, color, ancla){
+    crea("text", {x:x, y:y, "text-anchor":ancla || "middle", "font-size":17, "font-weight":"bold", fill:color,
+                  stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, t);
+  }
+  var leyenda = "";
+  if (solidoActual === "esfera"){
+    crea("circle", {cx:280, cy:150, r:110, fill:relleno, stroke:fuerte, "stroke-width":3});
+    crea("ellipse", {cx:280, cy:150, rx:110, ry:32, fill:"none", stroke:"#00695c", "stroke-width":1.5, "stroke-dasharray":"5 4"});
+    if (diam){
+      crea("line", {x1:170, y1:150, x2:390, y2:150, stroke:azul, "stroke-width":3});
+      etiqueta(225, 180, "d = 2r", azul);
+    }
+    crea("line", {x1:280, y1:150, x2:390, y2:150, stroke:rojo, "stroke-width":4});
+    crea("circle", {cx:280, cy:150, r:4, fill:fuerte});
+    etiqueta(335, 140, "r", rojo);
+  } else if (solidoActual === "cono"){
+    crea("path", {d:"M 170 230 L 280 40 L 390 230", fill:relleno, stroke:fuerte, "stroke-width":3});
+    crea("ellipse", {cx:280, cy:230, rx:110, ry:30, fill:relleno, stroke:fuerte, "stroke-width":3});
+    crea("line", {x1:280, y1:40, x2:280, y2:230, stroke:rojo, "stroke-width":3, "stroke-dasharray":"7 5"});
+    crea("polyline", {points:"280,216 294,216 294,230", fill:"none", stroke:rojo, "stroke-width":2});
+    if (diam){
+      crea("line", {x1:170, y1:230, x2:390, y2:230, stroke:azul, "stroke-width":3});
+      etiqueta(215, 252, "d = 2r", azul);
+    }
+    crea("line", {x1:280, y1:230, x2:390, y2:230, stroke:rojo, "stroke-width":4});
+    etiqueta(335, 222, "r", rojo);
+    etiqueta(268, 140, "h", rojo, "end");
+  } else {
+    crea("polygon", {points:"160,240 360,240 420,190 220,190", fill:relleno, stroke:fuerte, "stroke-width":3});
+    crea("text", {x:290, y:221, "text-anchor":"middle", "font-size":14, "font-weight":"bold", fill:"#00332b"}, "Área de la base");
+    crea("line", {x1:160, y1:240, x2:290, y2:50, stroke:fuerte, "stroke-width":3});
+    crea("line", {x1:360, y1:240, x2:290, y2:50, stroke:fuerte, "stroke-width":3});
+    crea("line", {x1:420, y1:190, x2:290, y2:50, stroke:fuerte, "stroke-width":3});
+    crea("line", {x1:220, y1:190, x2:290, y2:50, stroke:fuerte, "stroke-width":1.5, "stroke-dasharray":"5 4"});
+    crea("line", {x1:290, y1:50, x2:290, y2:205, stroke:rojo, "stroke-width":3, "stroke-dasharray":"7 5"});
+    etiqueta(302, 130, "h", rojo, "start");
+    etiqueta(260, 266, "a", fuerte);
+  }
+  leyenda = '<span><span class="muestra m-radio" aria-hidden="true"></span> ' +
+    ({esfera:"Radio r", cono:"Radio r y altura h", piramide:"Altura h"})[solidoActual] + '</span>';
+  if (diam && solidoActual !== "piramide")
+    leyenda += '<span><span class="muestra m-diametro" aria-hidden="true"></span> Diámetro d</span>';
+  $("f-leyenda").innerHTML = leyenda;
+  $("f-svg-texto").textContent = SOLIDOS[solidoActual].texto +
+    (diam && solidoActual !== "piramide" ? " El diámetro atraviesa todo el círculo y mide el doble del radio." : "");
+}
+function actualizaSolido(){
+  var s = SOLIDOS[solidoActual];
+  Array.prototype.forEach.call(document.querySelectorAll(".selector .opcion"), function(b){
+    b.setAttribute("aria-pressed", b.getAttribute("data-solido") === solidoActual ? "true" : "false");
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#tabla-solidos tbody tr"), function(tr){
+    tr.className = tr.getAttribute("data-solido") === solidoActual ? "destacada" : "";
+  });
+  $("f-diametro").disabled = solidoActual === "piramide";
+  $("f-nota-diam").textContent = solidoActual === "piramide"
+    ? "La pirámide de la hoja del GED no usa radio ni diámetro: usa el área de la base."
+    : "Activa la casilla para comparar el radio con el diámetro.";
+  $("f-formula").textContent = s.nombre + ": " + s.formula;
+  $("f-datos").textContent = s.datos;
+  $("f-medidas").innerHTML = s.medidas;
+  $("f-cuidado").innerHTML = s.cuidado;
+  dibujaSolido();
+}
+
+/* Generadores de la práctica 1 */
+var SITUACIONES = {
+  esfera: [
+    function(){ return "Una pelota de " + aleatorio(5,15) + " cm de radio"; },
+    function(){ return "Un globo esférico de " + aleatorio(2,9) + " m de radio"; },
+    function(){ return "Un depósito con forma de esfera de " + aleatorio(2,8) + " m de radio"; }
+  ],
+  cono: [
+    function(){ return "Un cucurucho de helado de " + aleatorio(2,5) + " cm de radio y " + aleatorio(8,14) + " cm de altura"; },
+    function(){ return "Un embudo con forma de cono de " + aleatorio(4,9) + " cm de radio y " + aleatorio(10,20) + " cm de altura"; },
+    function(){ return "Un montón de arena con forma de cono de " + aleatorio(2,6) + " m de radio y " + aleatorio(2,5) + " m de altura"; }
+  ],
+  piramide: [
+    function(){ return "Una tienda de campaña con forma de pirámide de base cuadrada de " + aleatorio(2,4) + " m de lado y " + aleatorio(2,3) + " m de altura"; },
+    function(){ return "Un adorno con forma de pirámide de base rectangular de " + aleatorio(6,10) + " cm por " + aleatorio(3,5) + " cm y " + aleatorio(8,15) + " cm de altura"; },
+    function(){ return "Una pirámide de piedra de base cuadrada de " + aleatorio(20,60) + " m de lado y " + aleatorio(15,40) + " m de altura"; }
+  ]
+};
+function genFormula(){
+  var tipo = elige(["esfera","cono","piramide"]);
+  var situacion = elige(SITUACIONES[tipo])();
+  var correcta, distractores, exp;
+  if (tipo === "esfera"){
+    correcta = F_ESFERA; distractores = [F_CONO, F_CILINDRO, F_PIRAMIDE];
+    exp = "Es una esfera: solo da el radio, y en la hoja del GED su fórmula es V = 4/3 πr³. Las fórmulas con h necesitan una altura, y la esfera no la tiene.";
+  } else if (tipo === "cono"){
+    correcta = F_CONO; distractores = [F_CILINDRO, F_ESFERA, F_PIRAMIDE];
+    exp = "Es un cono: base circular y una punta, con radio y altura. Su fórmula es V = 1/3 πr²h. Sin el 1/3, πr²h es la del cilindro, que tiene tres veces más volumen.";
+  } else {
+    correcta = F_PIRAMIDE; distractores = [F_PRISMA, F_CONO, F_ESFERA];
+    exp = "Es una pirámide: base de polígono y una punta. Su fórmula es V = 1/3 × (Área de la base) × h. Sin el 1/3, (Área de la base) × h es la del prisma.";
+  }
+  var o = armaOpciones(correcta, distractores);
+  return {q: situacion + ". ¿Qué fórmula de la hoja del GED da su volumen?", ops:o.ops, ok:o.ok, exp:exp};
+}
+function genRadioDiametro(){
+  var d = 2*aleatorio(3,14), r = d/2;
+  var objeto = elige(["una pelota","una bola de boliche","un globo esférico","una naranja"]);
+  var u = elige(["cm","pulgadas"]);
+  var o = armaOpciones("r = " + r, ["r = " + d, "r = " + (2*d)]);
+  return {q:"El diámetro de " + objeto + " mide " + d + " " + u + ". ¿Qué valor de r se sustituye en V = 4/3 πr³?",
+    ops:o.ops, ok:o.ok,
+    exp:"El diámetro es el doble del radio, así que r = " + d + " ÷ 2 = " + r + ". Usar " + d + " directamente como radio es el error más común: el volumen saldría 8 veces más grande. Y multiplicar por 2 da otra vez un número mayor que el diámetro, cuando el radio siempre es más pequeño."};
+}
+function genDatosCono(){
+  var d = 2*aleatorio(2,9), r = d/2, h = aleatorio(5,20);
+  while (h === r || h === d) h = aleatorio(5,20);
+  var orden = aleatorio(0,1);
+  var enun = orden ? "Un cono mide " + h + " cm de alto y su base tiene " + d + " cm de diámetro."
+                   : "La base de un cono tiene " + d + " cm de diámetro y el cono mide " + h + " cm de alto.";
+  var o = armaOpciones("r = " + r + " y h = " + h,
+    ["r = " + d + " y h = " + h, "r = " + h + " y h = " + r, "r = " + r + " y h = " + d]);
+  return {q: enun + " ¿Qué valores se sustituyen en V = 1/3 πr²h?", ops:o.ops, ok:o.ok,
+    exp:"La altura es lo que el cono mide de alto: h = " + h + ". El dato de la base es el diámetro, así que el radio es " + d + " ÷ 2 = " + r + ". Entonces r = " + r + " y h = " + h + "."};
+}
+function genAreaBase(){
+  var h = aleatorio(5,15), a, b, q, correcta, distractores, exp;
+  if (aleatorio(0,1)){
+    a = elige([3,5,6,7,8,9,10,12]);
+    while (h === a) h = aleatorio(5,15);
+    correcta = a*a; distractores = [4*a, 2*a, a*h];
+    q = "Una pirámide tiene base cuadrada de " + a + " m de lado y " + h + " m de altura. ¿Cuánto vale el área de la base que se sustituye en la fórmula?";
+    exp = "La base es un cuadrado, así que su área es lado × lado: " + a + " × " + a + " = " + (a*a) + " m². " +
+          "Sumar los cuatro lados (" + (4*a) + ") da el perímetro, no el área; y la altura no entra en el área de la base.";
+  } else {
+    a = aleatorio(5,12); b = aleatorio(2,a-1);
+    correcta = a*b; distractores = [2*a + 2*b, a + b, a*h];
+    q = "Una pirámide tiene base rectangular de " + a + " m de largo por " + b + " m de ancho y " + h + " m de altura. ¿Cuánto vale el área de la base que se sustituye en la fórmula?";
+    exp = "La base es un rectángulo, así que su área es largo × ancho: " + a + " × " + b + " = " + (a*b) + " m². " +
+          "Sumar los lados (" + (2*a + 2*b) + ") da el perímetro, no el área; y la altura no entra en el área de la base.";
+  }
+  var o = armaOpciones(correcta + " m²", distractores.map(function(n){ return n + " m²"; }));
+  return {q:q, ops:o.ops, ok:o.ok, exp:exp};
+}
+function genQueDato(){
+  var tipo = elige(["esfera","cono","piramide"]);
+  var correcta, distractores, exp;
+  if (tipo === "esfera"){
+    correcta = "Solo el radio";
+    distractores = ["El radio y la altura", "El área de la base y la altura"];
+    exp = "La esfera queda definida solo por su radio: V = 4/3 πr³ no lleva h.";
+  } else if (tipo === "cono"){
+    correcta = "El radio de la base y la altura";
+    distractores = ["Solo el radio", "El área de la base y el diámetro"];
+    exp = "La fórmula del cono, V = 1/3 πr²h, lleva r (de la base circular) y h.";
+  } else {
+    correcta = "El área de la base y la altura";
+    distractores = ["El lado de la base y la altura", "El radio y la altura"];
+    exp = "La fórmula de la pirámide, V = 1/3 × (Área de la base) × h, lleva el área de la base y la altura h. El lado no basta: con él primero se calcula el área de la base.";
+  }
+  var o = armaOpciones(correcta, distractores);
+  return {q:"Según la hoja del GED, ¿qué datos hacen falta para el volumen de " +
+    (tipo === "esfera" ? "una esfera" : tipo === "cono" ? "un cono" : "una pirámide") + "?", ops:o.ops, ok:o.ok, exp:exp};
+}
+function genP1(){ return elige([genFormula, genFormula, genRadioDiametro, genDatosCono, genAreaBase, genQueDato])(); }
+
+/* ============================================================
+   MÓDULO 2 · Volumen de la esfera
+   ============================================================ */
+function actualizaEsfera(){
+  var porDiam = $("e-tipo").value === "diametro";
+  var sl = $("e-valor");
+  if (porDiam){ sl.min = 2; sl.max = 24; sl.step = 2; } else { sl.min = 1; sl.max = 12; sl.step = 1; }
+  var v = parseInt(sl.value, 10);
+  if (porDiam && v % 2) v = Math.min(24, v + 1);
+  if (v < parseInt(sl.min,10)) v = parseInt(sl.min,10);
+  if (v > parseInt(sl.max,10)) v = parseInt(sl.max,10);
+  sl.value = v;
+  var r = porDiam ? v/2 : v;
+  $("e-etiqueta").textContent = porDiam ? "Diámetro d" : "Radio r";
+  $("e-valor-val").textContent = v;
+
+  var cubo = r*r*r, k = coefPi(4*cubo, 3);
+  var pasos = [];
+  if (porDiam) pasos.push("Se obtiene el radio: el problema da el diámetro, así que r = " + v + " ÷ 2 = <strong>" + r + "</strong>.");
+  pasos.push("Se eleva el radio al cubo: " + r + "³ = " + r + " × " + r + " × " + r + " = <strong>" + cubo + "</strong>.");
+  pasos.push("Se sustituye: V = 4/3 · π · " + cubo + ".");
+  pasos.push("Se simplifica: 4/3 · " + cubo + " = " + (4*cubo % 3 === 0 ? (4*cubo/3) : (4*cubo) + "/3") +
+             ", así que <strong>V = " + k + "</strong>.");
+  $("e-pasos").innerHTML = pasos.map(function(t,i){
+    return '<div class="paso"><span class="n" aria-hidden="true">' + (i+1) + '</span>' + t + '</div>';
+  }).join("");
+  $("e-resultado").textContent = "Volumen exacto: V = " + k + " cm³";
+  $("e-aprox").innerHTML = "Valor aproximado: con π ≈ 3.14, V ≈ " + num(4*cubo/3*3.14) +
+    " cm³; con la tecla π de la calculadora, V ≈ " + num(redondea(4*cubo/3*Math.PI,1)) + " cm³.";
+
+  var svg = $("e-svg"), crea = creaEn(svg);
+  limpiaSVG(svg);
+  var R = 10 + r*10;
+  crea("circle", {cx:280, cy:150, r:R, fill:"#b2dfdb", stroke:"#004d40", "stroke-width":3});
+  crea("ellipse", {cx:280, cy:150, rx:R, ry:R*0.3, fill:"none", stroke:"#00695c", "stroke-width":1.5, "stroke-dasharray":"5 4"});
+  if (porDiam) crea("line", {x1:280-R, y1:150, x2:280, y2:150, stroke:"#1a237e", "stroke-width":3});
+  crea("line", {x1:280, y1:150, x2:280+R, y2:150, stroke:"#bf360c", "stroke-width":4});
+  crea("circle", {cx:280, cy:150, r:4, fill:"#004d40"});
+  crea("text", {x:280 + R/2, y:140, "text-anchor":"middle", "font-size":16, "font-weight":"bold", fill:"#bf360c",
+                stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, "r = " + r);
+  if (porDiam) crea("text", {x:280, y:150 + R*0.3 + 22, "text-anchor":"middle", "font-size":16, "font-weight":"bold", fill:"#1a237e",
+                stroke:"#fff", "stroke-width":4, "paint-order":"stroke"}, "d = " + v);
+  $("e-svg-texto").textContent = "Esfera de radio " + r + " cm" + (porDiam ? " (diámetro " + v + " cm)" : "") +
+    ". Al duplicar el radio, el volumen se multiplica por 8, porque el radio está elevado al cubo.";
+}
+
+/* Generador de la práctica 2 */
+function genP2(){
+  var porDiam = aleatorio(0,1) === 1;
+  var aprox = aleatorio(0,2) === 0;
+  var objeto = elige(["una esfera","una pelota","un globo esférico","una bola de cristal"]);
+  var u = elige(["cm","m","pulgadas"]);
+  var r, cubo, cuadrado;
+  if (aprox) r = 3*aleatorio(1,3); else r = aleatorio(2,9);
+  var d = 2*r;
+  cubo = r*r*r; cuadrado = r*r;
+  var dato = porDiam ? "de " + d + " " + u + " de diámetro" : "de " + r + " " + u + " de radio";
+  var u3 = u === "pulgadas" ? "pulgadas cúbicas" : u + "³";
+  var correcta, dist = [], exp, q;
+  function exacto(n, den){ return coefPi(n, den) + " " + u3; }
+  function apr(coef){ return num(coef*3.14) + " " + u3; }
+  if (!aprox){
+    q = "¿Cuál es el volumen de " + objeto + " " + dato + "? Deja la respuesta en términos de π.";
+    correcta = exacto(4*cubo, 3);
+    dist.push(exacto(4*cuadrado, 3));            // al cuadrado en lugar de al cubo
+    dist.push(exacto(cubo, 1));                  // olvidar 4/3
+    if (porDiam) dist.push(exacto(4*d*d*d, 3));  // diámetro como radio
+    else dist.push(exacto(3*cubo, 4));           // invertir la fracción: 3/4
+  } else {
+    q = "¿Cuál es el volumen aproximado de " + objeto + " " + dato + "? Usa π ≈ 3.14.";
+    correcta = apr(4*cubo/3);
+    dist.push(apr(4*cuadrado/3));
+    dist.push(apr(cubo));
+    if (porDiam) dist.push(apr(4*d*d*d/3));
+  }
+  var o = armaOpciones(correcta, dist);
+  var cuenta4 = (4*cubo % 3 === 0) ? String(4*cubo/3) : (4*cubo) + "/3";
+  exp = (porDiam ? "Primero el radio: r = " + d + " ÷ 2 = " + r + ". " : "") +
+        "Se eleva el radio al cubo: " + r + "³ = " + cubo + " (no al cuadrado, que da " + cuadrado + "). " +
+        "Se multiplica por 4/3: 4/3 · " + cubo + " = " + cuenta4 + ", así que V = " + coefPi(4*cubo,3) +
+        (aprox ? " ≈ " + cuenta4 + " × 3.14 = " + num(4*cubo/3*3.14) : "") + " " + u3 + ".";
+  return {q:q, ops:o.ops, ok:o.ok, exp:exp};
+}
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+Array.prototype.forEach.call(document.querySelectorAll(".selector .opcion"), function(b){
+  b.addEventListener("click", function(){ solidoActual = b.getAttribute("data-solido"); actualizaSolido(); });
+});
+$("f-diametro").addEventListener("change", dibujaSolido);
+actualizaSolido();
+
+$("e-tipo").addEventListener("change", function(){
+  /* Se conserva la misma esfera: se cambia solo el dato que se muestra */
+  var sl = $("e-valor"), v = parseInt(sl.value, 10);
+  if ($("e-tipo").value === "diametro"){ sl.min = 2; sl.max = 24; sl.step = 2; sl.value = v*2; }
+  else { sl.min = 1; sl.max = 12; sl.step = 1; sl.value = Math.max(1, v/2); }
+  actualizaEsfera();
+});
+$("e-valor").addEventListener("input", actualizaEsfera);
+actualizaEsfera();
+
+creaPractica(genP1, {enun:"p1-enun",opciones:"p1-opciones",fb:"p1-fb",marcador:"p1-marcador",nuevo:"p1-nuevo"});
+creaPractica(genP2, {enun:"p2-enun",opciones:"p2-opciones",fb:"p2-fb",marcador:"p2-marcador",nuevo:"p2-nuevo"});
+
+abrePorHash();
+</script>
+</body>
+</html>

@@ -1,0 +1,842 @@
+<!doctype html>
+<!--
+  Interactivo general · Lección 2.2 — Figuras 3D compuestas y área de la superficie
+  Nivel 4 · Spanish ASE Math 4 · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #descomponer · #optimizacion
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactivo · Lección 2.2: figuras compuestas y optimización</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo de práctica para la Lección 2.2 del Nivel 4: descomponer una figura 3D compuesta en sólidos simples, decidir si sus volúmenes se suman o se restan, y comparar el material que usan cajas del mismo volumen.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#004d40; --tema-d:#00332b; --tema-bg:#e0f2f1; --tema-bg2:#b2dfdb;
+    --acento:#00695c; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-sec[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,
+  input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  button[disabled]{opacity:.55;cursor:not-allowed;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;
+       align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  ul.lista{margin:8px 0;padding-left:24px;}
+  ul.lista li{margin:4px 0;}
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label,.campo .rotulo{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="range"]{width:240px;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .valor-rango{font-weight:700;color:var(--tema-d);}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .grupo-piezas{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  .grupo-piezas .btn-sec{padding:6px 14px;}
+
+  .grafica{text-align:center;margin:16px 0;}
+  .grafica svg{width:100%;max-width:560px;height:auto;max-height:52vh;border:1px solid #d8d8d8;border-radius:8px;background:#fff;}
+  .pie-grafica{font-size:14px;color:var(--gris);margin-top:6px;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+  .veredicto.bien{color:var(--ok);}
+  .veredicto.mal{color:var(--mal);}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;
+              padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+  .practica .grafica svg{max-width:300px;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+  table.reglas tr.destacada td{background:var(--tema-bg);color:var(--tema-d);font-weight:700;}
+  table.reglas td.minima{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .tabla-scroll{overflow-x:auto;}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;}
+    .campo input[type="range"]{width:100%;} }
+  @media (prefers-reduced-motion:reduce){ *{scroll-behavior:auto !important;} }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Nivel 4 · Tema 2 · Volumen 3D y polinomios</div>
+    <h1>Lección 2.2 · Figuras 3D compuestas y área de la superficie</h1>
+    <div class="meta">Dos prácticas interactivas en una sola página. Cada sección de la lección enlaza directamente con su práctica.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">Contenido de esta página</h2>
+    <ol>
+      <li><a href="#descomponer">Descomponer una figura compuesta</a></li>
+      <li><a href="#optimizacion">Una idea de optimización</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Abrir todo</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Cerrar todo</button>
+    </div>
+  </nav>
+
+  <!-- ============ MÓDULO 1 ============ -->
+  <details class="modulo" id="descomponer" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>Descomponer una figura compuesta</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Una <strong>figura compuesta</strong> es la unión (o la diferencia) de sólidos simples. La estrategia es siempre la misma:</p>
+      <ul class="lista">
+        <li>Identificar las partes simples que la forman (cilindro, cono, semiesfera, prisma…).</li>
+        <li>Calcular el volumen de cada parte por separado.</li>
+        <li><strong>Sumar</strong> los volúmenes si las partes se unen, o <strong>restar</strong> si hay un hueco.</li>
+      </ul>
+      <p>Elige una figura. Marca las piezas en que se descompone (cada pieza correcta se colorea en el dibujo) y decide si sus volúmenes se suman o se restan. Después comprueba tu descomposición.</p>
+
+      <div class="panel">
+        <div class="campo">
+          <label for="d-figura">Figura</label>
+          <select id="d-figura"></select>
+        </div>
+        <div class="campo" style="margin-top:12px;">
+          <span class="rotulo" id="d-piezas-rotulo">1. ¿En qué sólidos simples se descompone?</span>
+          <div class="grupo-piezas" id="d-piezas" role="group" aria-labelledby="d-piezas-rotulo"></div>
+        </div>
+        <div class="campo" style="margin-top:12px;">
+          <span class="rotulo" id="d-op-rotulo">2. ¿Los volúmenes se suman o se restan?</span>
+          <div class="grupo-piezas" role="group" aria-labelledby="d-op-rotulo">
+            <button type="button" class="btn-sec" id="d-sumar" aria-pressed="false">Se suman</button>
+            <button type="button" class="btn-sec" id="d-restar" aria-pressed="false">Se restan</button>
+          </div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="d-comprobar">Comprobar mi descomposición</button>
+          <button type="button" class="btn-sec" id="d-mostrar">Mostrar la respuesta</button>
+          <button type="button" class="btn-sec" id="d-reiniciar">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="caja-aviso" id="d-aviso" role="alert"></div>
+
+      <div class="grafica">
+        <svg id="d-svg" viewBox="0 0 360 300" role="img" aria-labelledby="d-svg-t d-svg-d">
+          <title id="d-svg-t">Figura compuesta</title>
+          <desc id="d-svg-d"></desc>
+        </svg>
+        <p class="pie-grafica" id="d-svg-texto"></p>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="d-marcadas"></div>
+        <div class="linea" id="d-operacion"></div>
+        <div class="linea veredicto" id="d-veredicto"></div>
+        <div class="linea" id="d-detalle"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>¿Sumar o restar?</strong> Si las partes se juntan para formar un cuerpo más grande, se suman. Si una parte se quita (un agujero, un hueco), se resta. Conviene hacer un dibujo y rotular cada parte antes de calcular.
+      </div>
+
+      <h3>Practica: identifica las piezas y la operación</h3>
+      <div class="practica">
+        <div class="enun" id="p1-enun"></div>
+        <div class="grafica">
+          <svg id="p1-svg" viewBox="0 0 360 300" role="img" aria-labelledby="p1-svg-t p1-svg-d">
+            <title id="p1-svg-t">Figura del ejercicio</title>
+            <desc id="p1-svg-d"></desc>
+          </svg>
+        </div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p1-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <!-- ============ MÓDULO 2 ============ -->
+  <details class="modulo" id="optimizacion">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Una idea de optimización</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>En diseño e ingeniería interesa lograr un volumen dado usando la <strong>menor cantidad de material</strong> posible, es decir, con la menor área de superficie. Entre dos cajas que guardan el mismo volumen, la que tenga menor área de superficie usa menos cartón.</p>
+      <p class="formula">Área de la caja = 2(largo·ancho + largo·alto + ancho·alto)</p>
+      <p>Elige un volumen y mueve el deslizador para recorrer todas las cajas de medidas enteras que guardan exactamente ese volumen. La tabla marca en verde la que usa menos cartón.</p>
+
+      <div class="panel">
+        <div class="campos">
+          <div class="campo">
+            <label for="o-volumen">Volumen que debe guardar la caja</label>
+            <select id="o-volumen"></select>
+          </div>
+          <div class="campo">
+            <label for="o-caja">Caja: <span class="valor-rango" id="o-caja-val"></span></label>
+            <input type="range" id="o-caja" min="0" max="7" step="1" value="0">
+          </div>
+        </div>
+        <p class="nota">El deslizador va de la caja que más cartón usa a la que menos usa.</p>
+      </div>
+
+      <div class="grafica">
+        <svg id="o-svg" viewBox="0 0 420 300" role="img" aria-labelledby="o-svg-t o-svg-d">
+          <title id="o-svg-t">Caja elegida</title>
+          <desc id="o-svg-d"></desc>
+        </svg>
+      </div>
+
+      <div class="salida" aria-live="polite">
+        <div class="linea" id="o-vol"></div>
+        <div class="linea" id="o-area"></div>
+        <div class="linea veredicto" id="o-veredicto"></div>
+      </div>
+
+      <div class="tabla-scroll" id="o-tabla"></div>
+
+      <div class="caja-tip">
+        <strong>Lo que muestra la tabla:</strong> todas las cajas guardan lo mismo, pero no gastan lo mismo. Las formas más «compactas», parecidas a un cubo, tienden a tener menor área de superficie. En el ejemplo de la lección, la caja de 10 × 10 × 1 usa 240 unidades² de cartón y la de 5 × 5 × 4 solo 130.
+      </div>
+      <div class="caja-atencion">
+        <strong>Mismo volumen no significa mismo material.</strong> El volumen mide lo que cabe dentro; el área de superficie mide el material que lo envuelve. Son dos cuentas distintas.
+      </div>
+
+      <h3>Practica: ¿qué diseño usa menos material?</h3>
+      <div class="practica">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">Otro ejercicio</button></div>
+        <p class="marcador" id="p2-marcador">Aciertos: 0 de 0</p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Volver al contenido</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Interactivo de la Lección 2.2 · Nivel 4 · Matemáticas</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>Esta obra se distribuye bajo licencia
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function eligeDe(arr){ return arr[aleatorio(0, arr.length-1)]; }
+function baraja(arr){
+  for (var i = arr.length - 1; i > 0; i--){ var j = Math.floor(Math.random()*(i+1)); var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
+  return arr;
+}
+
+/* Pregunta de opción múltiple con un solo intento */
+function preparaOpciones(pref, ej, estado){
+  var cont = $(pref + "-opciones");
+  cont.innerHTML = "";
+  estado.resuelta = false;
+  $(pref + "-enun").textContent = ej.q;
+  $(pref + "-fb").className = "fb"; $(pref + "-fb").textContent = "";
+  baraja(ej.ops.slice()).forEach(function(txt){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "opcion"; b.setAttribute("aria-pressed", "false");
+    b.textContent = txt;
+    b.addEventListener("click", function(){
+      if (estado.resuelta) return;
+      estado.resuelta = true; estado.total++;
+      Array.prototype.forEach.call(cont.children, function(o){
+        o.disabled = true;
+        if (o.textContent === ej.ok) o.className = "opcion correcta";
+        else if (o === b) o.className = "opcion incorrecta";
+      });
+      b.setAttribute("aria-pressed", "true");
+      if (txt === ej.ok){
+        estado.aciertos++;
+        $(pref + "-fb").className = "fb bien";
+        $(pref + "-fb").textContent = "✓ Correcto. " + ej.exp;
+      } else {
+        $(pref + "-fb").className = "fb mal";
+        $(pref + "-fb").textContent = "✗ Todavía no. La respuesta es «" + ej.ok + "». " + ej.exp;
+      }
+      $(pref + "-marcador").textContent = "Aciertos: " + estado.aciertos + " de " + estado.total;
+    });
+    cont.appendChild(b);
+  });
+}
+
+/* ============================================================
+   MÓDULO 1 · Descomponer una figura compuesta
+   ============================================================ */
+var PIEZAS = [
+  {id:"cilindro",   f:false, nombre:"Cilindro",           color:"#80cbc4"},
+  {id:"cono",       f:false, nombre:"Cono",               color:"#ffcc80"},
+  {id:"semiesfera", f:true,  nombre:"Semiesfera",         color:"#b39ddb"},
+  {id:"esfera",     f:true,  nombre:"Esfera",             color:"#b39ddb"},
+  {id:"prisma",     f:false, nombre:"Prisma rectangular", color:"#90caf9"},
+  {id:"triangular", f:false, nombre:"Prisma triangular",  color:"#ef9a9a"},
+  {id:"piramide",   f:true,  nombre:"Pirámide",           color:"#fff59d"}
+];
+function pieza(id){ for (var i = 0; i < PIEZAS.length; i++) if (PIEZAS[i].id === id) return PIEZAS[i]; return null; }
+
+var FIGURAS = [
+  { id:"silo", etiqueta:"Silo", partes:["cilindro","cono"], op:"+",
+    formula:"V = V(cilindro) + V(cono)",
+    desc:"Un silo: un cilindro en la parte de abajo coronado por un cono en la parte de arriba.",
+    nota:"El cilindro y el cono se juntan para formar un cuerpo más grande, así que sus volúmenes se suman." },
+  { id:"tanque", etiqueta:"Tanque con tapa redonda", partes:["cilindro","semiesfera"], op:"+",
+    formula:"V = V(cilindro) + V(semiesfera)",
+    desc:"Un tanque: un cilindro coronado por una semiesfera, es decir, media esfera.",
+    nota:"Arriba hay media esfera, no una esfera completa: su volumen es la mitad de 4/3 πr³. Las dos partes se juntan, así que se suman." },
+  { id:"capsula", etiqueta:"Cápsula de medicina", partes:["cilindro","semiesfera"], op:"+", altEsfera:true,
+    formula:"V = V(cilindro) + 2 · V(semiesfera) = V(cilindro) + V(esfera)",
+    desc:"Una cápsula: un cilindro con una semiesfera en cada extremo.",
+    nota:"Hay una semiesfera en cada extremo. Las dos semiesferas juntas forman una esfera completa, así que basta sumar el cilindro y una esfera." },
+  { id:"casa", etiqueta:"Casa (prisma con techo)", partes:["prisma","triangular"], op:"+",
+    formula:"V = V(prisma rectangular) + V(prisma triangular)",
+    desc:"Una casa: un prisma rectangular con un techo en forma de prisma triangular.",
+    nota:"El techo es un prisma triangular (sus caras de los extremos son triángulos), no una pirámide. Las dos partes se juntan, así que se suman." },
+  { id:"cubo", etiqueta:"Cubo con pirámide", partes:["prisma","piramide"], op:"+",
+    formula:"V = V(cubo) + V(pirámide)",
+    desc:"Un cubo con una pirámide de base cuadrada encima.",
+    nota:"El cubo es un prisma rectangular con las tres medidas iguales. La pirámide termina en una punta, a diferencia del prisma triangular. Se suman." },
+  { id:"perforada", etiqueta:"Caja perforada", partes:["prisma","cilindro"], op:"−",
+    formula:"V = V(prisma) − V(cilindro)",
+    desc:"Un prisma rectangular al que se le perforó un hueco en forma de cilindro que lo atraviesa de arriba abajo.",
+    nota:"El cilindro es un hueco: es material que se quitó. Por eso su volumen se resta del volumen del prisma completo." }
+];
+
+/* ---- Dibujos (SVG en texto) ---- */
+var TRAZO = 'stroke="#00332b" stroke-width="2.5" stroke-linejoin="round"';
+function parte(p, d, extra){
+  return '<path class="parte" data-p="' + p + '" d="' + d + '" fill="#f4f4f4" ' + TRAZO + (extra || "") + '/>';
+}
+function rotulo(p, x, y, texto){
+  return '<text class="rotulo-parte" data-p="' + p + '" x="' + x + '" y="' + y + '" text-anchor="middle" font-size="14" ' +
+         'font-weight="bold" fill="#00332b" stroke="#fff" stroke-width="4" paint-order="stroke" visibility="hidden">' + texto + '</text>';
+}
+/* Cuerpo de cilindro vertical: centro cx, radio rx, achatado ry, de yA (arriba) a yB (abajo) */
+function cuerpoCil(cx, rx, ry, yA, yB){
+  var x1 = cx - rx, x2 = cx + rx;
+  return "M" + x1 + "," + yA + " A" + rx + "," + ry + " 0 0 0 " + x2 + "," + yA +
+         " L" + x2 + "," + yB + " A" + rx + "," + ry + " 0 0 1 " + x1 + "," + yB + " Z";
+}
+function cupula(cx, rx, ry, y, alto){
+  return "M" + (cx-rx) + "," + y + " A" + rx + "," + alto + " 0 0 1 " + (cx+rx) + "," + y +
+         " A" + rx + "," + ry + " 0 0 1 " + (cx-rx) + "," + y + " Z";
+}
+function cuenco(cx, rx, ry, y, alto){
+  return "M" + (cx-rx) + "," + y + " A" + rx + "," + ry + " 0 0 0 " + (cx+rx) + "," + y +
+         " A" + rx + "," + alto + " 0 0 1 " + (cx-rx) + "," + y + " Z";
+}
+function poli(puntos){ return "M" + puntos.map(function(p){ return p[0] + "," + p[1]; }).join(" L") + " Z"; }
+
+var DIBUJOS = {
+  silo: function(){
+    return parte("cilindro", cuerpoCil(180, 62, 16, 120, 250)) +
+           parte("cono", "M118,120 L180,40 L242,120 A62,16 0 0 1 118,120 Z") +
+           rotulo("cilindro", 180, 200, "cilindro") + rotulo("cono", 180, 108, "cono");
+  },
+  tanque: function(){
+    return parte("cilindro", cuerpoCil(180, 62, 16, 120, 255)) +
+           parte("semiesfera", cupula(180, 62, 16, 120, 62)) +
+           rotulo("cilindro", 180, 200, "cilindro") + rotulo("semiesfera", 180, 100, "semiesfera");
+  },
+  capsula: function(){
+    return parte("cilindro", cuerpoCil(180, 48, 13, 105, 195)) +
+           parte("semiesfera", cupula(180, 48, 13, 105, 48)) +
+           parte("semiesfera", cuenco(180, 48, 13, 195, 48)) +
+           rotulo("cilindro", 180, 158, "cilindro") +
+           rotulo("semiesfera", 180, 88, "semiesfera") + rotulo("semiesfera", 180, 232, "semiesfera");
+  },
+  casa: function(){
+    return parte("prisma", poli([[85,150],[225,150],[225,255],[85,255]])) +
+           parte("prisma", poli([[225,150],[285,115],[285,220],[225,255]])) +
+           parte("triangular", poli([[85,150],[155,85],[215,50],[145,115]])) +
+           parte("triangular", poli([[85,150],[155,85],[225,150]])) +
+           parte("triangular", poli([[155,85],[215,50],[285,115],[225,150]])) +
+           rotulo("prisma", 155, 210, "prisma rectangular") + rotulo("triangular", 158, 136, "prisma triangular");
+  },
+  cubo: function(){
+    return parte("prisma", poli([[105,150],[215,150],[215,260],[105,260]])) +
+           parte("prisma", poli([[215,150],[270,118],[270,228],[215,260]])) +
+           parte("piramide", poli([[105,150],[215,150],[188,40]])) +
+           parte("piramide", poli([[215,150],[270,118],[188,40]])) +
+           rotulo("prisma", 160, 212, "cubo") + rotulo("piramide", 175, 132, "pirámide");
+  },
+  perforada: function(){
+    return parte("prisma", poli([[60,160],[240,160],[300,120],[120,120]])) +
+           parte("prisma", poli([[60,160],[240,160],[240,235],[60,235]])) +
+           parte("prisma", poli([[240,160],[300,120],[300,195],[240,235]])) +
+           '<ellipse cx="180" cy="140" rx="34" ry="11" fill="#455a64" stroke="#00332b" stroke-width="2.5"/>' +
+           parte("cilindro", "M146,140 A34,11 0 0 0 214,140 L214,215 A34,11 0 0 1 146,215 Z",
+                 ' stroke-dasharray="6 4" fill-opacity="0.85"') +
+           rotulo("prisma", 110, 205, "prisma") + rotulo("cilindro", 180, 262, "cilindro (hueco)");
+  },
+  tubo: function(){
+    return parte("cilindro", cuerpoCil(180, 70, 18, 90, 240)) +
+           '<ellipse cx="180" cy="90" rx="70" ry="18" fill="#f4f4f4" stroke="#00332b" stroke-width="2.5"/>' +
+           '<ellipse cx="180" cy="90" rx="34" ry="9" fill="#455a64" stroke="#00332b" stroke-width="2.5"/>' +
+           '<path d="M146,90 L146,240 M214,90 L214,240" stroke="#00332b" stroke-width="2" stroke-dasharray="6 4" fill="none"/>';
+  }
+};
+function pintaFigura(svg, idFig, descTexto){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType === 1 && n.tagName.toLowerCase() !== "title" && n.tagName.toLowerCase() !== "desc") svg.removeChild(n);
+    else if (n.nodeType === 3) svg.removeChild(n);
+  });
+  var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  svg.appendChild(g);
+  g.innerHTML = DIBUJOS[idFig]();
+  var desc = svg.querySelector("desc");
+  if (desc) desc.textContent = descTexto;
+}
+function resalta(svg, conjunto){
+  Array.prototype.forEach.call(svg.querySelectorAll(".parte"), function(el){
+    var p = el.getAttribute("data-p");
+    el.setAttribute("fill", conjunto[p] ? pieza(p).color : "#f4f4f4");
+  });
+  Array.prototype.forEach.call(svg.querySelectorAll(".rotulo-parte"), function(el){
+    el.setAttribute("visibility", conjunto[el.getAttribute("data-p")] ? "visible" : "hidden");
+  });
+}
+
+/* ---- Estado de la exploración ---- */
+var dEst = {fig:FIGURAS[0], sel:{}, op:null};
+function figuraActual(){ return FIGURAS[parseInt($("d-figura").value, 10) || 0]; }
+function nombreMin(id){ return pieza(id).nombre.toLowerCase(); }
+function piezaValida(fig, id){ return fig.partes.indexOf(id) >= 0 || (fig.altEsfera && id === "esfera"); }
+function partesMarcadas(){
+  return PIEZAS.filter(function(p){ return dEst.sel[p.id]; }).map(function(p){ return p.id; });
+}
+function actualizaD(){
+  var fig = dEst.fig;
+  var vis = {};
+  partesMarcadas().forEach(function(id){ vis[id === "esfera" ? "semiesfera" : id] = true; });
+  resalta($("d-svg"), vis);
+  Array.prototype.forEach.call($("d-piezas").children, function(b){
+    b.setAttribute("aria-pressed", dEst.sel[b.getAttribute("data-p")] ? "true" : "false");
+  });
+  $("d-sumar").setAttribute("aria-pressed", dEst.op === "+" ? "true" : "false");
+  $("d-restar").setAttribute("aria-pressed", dEst.op === "−" ? "true" : "false");
+  var m = partesMarcadas();
+  $("d-marcadas").innerHTML = "<strong>Piezas marcadas:</strong> " + (m.length ? m.map(nombreMin).join(", ") : "ninguna todavía") + ".";
+  $("d-operacion").innerHTML = "<strong>Operación:</strong> " + (dEst.op === "+" ? "se suman" : dEst.op === "−" ? "se restan" : "sin elegir") + ".";
+  $("d-svg-texto").textContent = m.length ? "Las piezas marcadas aparecen coloreadas y rotuladas en el dibujo." : "Marca una pieza para verla resaltada en el dibujo.";
+}
+function avisoD(html){
+  if (html){ $("d-aviso").innerHTML = html; $("d-aviso").className = "caja-aviso visible"; }
+  else { $("d-aviso").innerHTML = ""; $("d-aviso").className = "caja-aviso"; }
+}
+function reiniciaD(){
+  dEst.fig = figuraActual(); dEst.sel = {}; dEst.op = null;
+  pintaFigura($("d-svg"), dEst.fig.id, dEst.fig.desc);
+  $("d-svg-t").textContent = "Figura compuesta: " + dEst.fig.etiqueta.toLowerCase();
+  avisoD("");
+  $("d-veredicto").textContent = ""; $("d-veredicto").className = "linea veredicto";
+  $("d-detalle").textContent = "";
+  actualizaD();
+}
+function alternaPieza(id){
+  var fig = dEst.fig;
+  $("d-veredicto").textContent = ""; $("d-detalle").textContent = "";
+  if (dEst.sel[id]){ delete dEst.sel[id]; avisoD(""); actualizaD(); return; }
+  if (!piezaValida(fig, id)){
+    var msg = "<strong>En esta figura no hay " + (pieza(id).f ? "ninguna " : "ningún ") + nombreMin(id) + ".</strong> ";
+    if (id === "esfera") msg = "<strong>Aquí no hay una esfera completa.</strong> Fíjate: la parte redonda es solo media esfera, una semiesfera. ";
+    if (id === "piramide" && fig.id === "casa") msg += "El techo tiene un triángulo en cada extremo y una arista larga arriba: eso es un prisma triangular. La pirámide termina en una sola punta.";
+    else if (id === "triangular" && fig.id === "cubo") msg += "Lo de arriba termina en una sola punta: es una pirámide.";
+    else if (id === "cono" && (fig.id === "tanque" || fig.id === "capsula")) msg += "La parte de arriba es redonda, no termina en punta: es una semiesfera.";
+    else if (id === "semiesfera" && fig.id === "silo") msg += "La parte de arriba termina en punta: es un cono.";
+    else msg += "Observa el dibujo con calma: ¿qué sólidos simples ves?";
+    avisoD(msg);
+    return;
+  }
+  if (fig.altEsfera){ if (id === "esfera") delete dEst.sel.semiesfera; if (id === "semiesfera") delete dEst.sel.esfera; }
+  dEst.sel[id] = true;
+  avisoD(id === "esfera" && fig.altEsfera ? "<strong>Buena observación.</strong> Cada extremo es una semiesfera, y las dos juntas forman una esfera completa." : "");
+  actualizaD();
+}
+function comprobarD(){
+  var fig = dEst.fig, ver = $("d-veredicto"), det = $("d-detalle");
+  var faltan = fig.partes.filter(function(id){
+    return !(dEst.sel[id] || (fig.altEsfera && id === "semiesfera" && dEst.sel.esfera));
+  });
+  if (faltan.length){
+    ver.className = "linea veredicto mal";
+    ver.textContent = "Todavía falta " + (faltan.length === 1 ? "una pieza." : "más de una pieza.");
+    det.textContent = "Revisa el dibujo: hay una parte que aún no está coloreada.";
+    return;
+  }
+  if (!dEst.op){
+    ver.className = "linea veredicto mal";
+    ver.textContent = "Las piezas están bien. Falta decidir la operación.";
+    det.textContent = "Pregúntate: ¿las partes se juntan, o una de ellas es un hueco que se quitó?";
+    return;
+  }
+  if (dEst.op !== fig.op){
+    ver.className = "linea veredicto mal";
+    ver.textContent = "Las piezas están bien, pero la operación no.";
+    det.textContent = fig.op === "−" ? "El cilindro es un hueco: es una parte que se quitó, así que su volumen se resta." :
+                                       "Aquí no hay ningún hueco: las partes se juntan para formar un cuerpo más grande, así que se suman.";
+    return;
+  }
+  ver.className = "linea veredicto bien";
+  ver.textContent = "¡Descomposición correcta! " + fig.formula;
+  det.textContent = fig.nota;
+}
+function mostrarD(){
+  dEst.sel = {};
+  dEst.fig.partes.forEach(function(id){ dEst.sel[id] = true; });
+  dEst.op = dEst.fig.op;
+  avisoD("");
+  actualizaD();
+  comprobarD();
+}
+
+/* ---- Práctica 1 ---- */
+var PLANTILLAS_P1 = [
+  function(){ var r = aleatorio(2,6), h = aleatorio(6,12), k = aleatorio(2,5);
+    return {fig:"silo", q:"Un silo está formado por un cilindro de radio " + r + " m y altura " + h + " m, con un cono de altura " + k + " m encima. ¿Cómo se calcula su volumen?",
+      ok:"V(cilindro) + V(cono)", d:["V(cilindro) − V(cono)","V(cilindro) + V(pirámide)","V(cilindro) + V(semiesfera)"], op:"+",
+      exp:"El silo se descompone en un cilindro (abajo) y un cono (arriba, termina en punta). Las dos partes se juntan, así que sus volúmenes se suman."}; },
+  function(){ var r = aleatorio(2,6), h = aleatorio(5,12);
+    return {fig:"tanque", q:"Un tanque es un cilindro de radio " + r + " y altura " + h + ", coronado por una semiesfera de radio " + r + ". ¿Cómo se calcula su volumen?",
+      ok:"V(cilindro) + V(semiesfera)", d:["V(cilindro) + V(esfera)","V(cilindro) − V(semiesfera)","V(cilindro) + V(cono)"], op:"+",
+      exp:"Las piezas son un cilindro y una semiesfera (media esfera, no una entera). Se juntan, así que se suman: V(cilindro) + V(semiesfera)."}; },
+  function(){ var r = eligeDe([0.5,1,1.5,2]), h = aleatorio(2,6);
+    return {fig:"capsula", q:"Una cápsula es un cilindro de radio " + r + " cm y " + h + " cm de largo, con una semiesfera en cada extremo. ¿Cómo se calcula su volumen?",
+      ok:"V(cilindro) + V(esfera)", d:["V(cilindro) + V(semiesfera)","V(cilindro) + 2 · V(esfera)","V(cilindro) − V(esfera)"], op:"+",
+      exp:"Hay una semiesfera en cada extremo, y dos semiesferas forman una esfera completa: V(cilindro) + 2 · V(semiesfera) = V(cilindro) + V(esfera)."}; },
+  function(){ var a = aleatorio(6,12), b = aleatorio(4,8), c = aleatorio(3,6);
+    return {fig:"casa", q:"Una casita de madera es un prisma rectangular de " + a + " × " + b + " × " + c + " pies con un techo en forma de prisma triangular. ¿Cómo se calcula su volumen?",
+      ok:"V(prisma rectangular) + V(prisma triangular)", d:["V(prisma rectangular) + V(pirámide)","V(prisma rectangular) − V(prisma triangular)","V(prisma rectangular) + V(cono)"], op:"+",
+      exp:"El cuerpo es un prisma rectangular y el techo, un prisma triangular (un triángulo en cada extremo, no una sola punta). Se juntan, así que se suman."}; },
+  function(){ var L = aleatorio(3,9), k = aleatorio(2,6);
+    return {fig:"cubo", q:"Un cubo de lado " + L + " tiene encima una pirámide de base " + L + " × " + L + " y altura " + k + ". ¿Cómo se calcula el volumen de la figura?",
+      ok:"V(cubo) + V(pirámide)", d:["V(cubo) − V(pirámide)","V(cubo) + V(prisma triangular)","V(cubo) + V(cono)"], op:"+",
+      exp:"La figura es un cubo con una pirámide de base cuadrada encima (termina en una sola punta). Las partes se juntan, así que se suman."}; },
+  function(){ var a = aleatorio(8,12), b = aleatorio(6,10), c = aleatorio(3,6), r = aleatorio(1,2);
+    return {fig:"perforada", q:"A un prisma de " + a + " × " + b + " × " + c + " se le perfora un cilindro de radio " + r + " que lo atraviesa. ¿Cómo se calcula el volumen del sólido que queda?",
+      ok:"V(prisma) − V(cilindro)", d:["V(prisma) + V(cilindro)","V(cilindro) − V(prisma)","V(prisma) − V(cono)"], op:"−",
+      exp:"El cilindro es un hueco: se quita del prisma. Se calcula el prisma completo y se le resta el cilindro: V(prisma) − V(cilindro)."}; },
+  function(){ var R = aleatorio(4,8), r = aleatorio(1,R-2), h = aleatorio(6,15);
+    return {fig:"tubo", q:"Un tubo es un cilindro de radio " + R + " y altura " + h + " con un hueco cilíndrico de radio " + r + " por el centro. ¿Cómo se calcula el volumen del material?",
+      ok:"V(cilindro exterior) − V(hueco)", d:["V(cilindro exterior) + V(hueco)","V(hueco) − V(cilindro exterior)","V(cilindro exterior) − V(cono)"], op:"−",
+      exp:"El material es el cilindro completo menos el hueco del centro: V(cilindro exterior) − V(hueco). Un hueco siempre se resta."}; }
+];
+var DESC_P1 = {
+  silo:"Un cilindro con un cono encima.", tanque:"Un cilindro con una semiesfera encima.",
+  capsula:"Un cilindro con una semiesfera en cada extremo.", casa:"Un prisma rectangular con un techo en forma de prisma triangular.",
+  cubo:"Un cubo con una pirámide encima.", perforada:"Un prisma rectangular con un hueco cilíndrico que lo atraviesa.",
+  tubo:"Un cilindro con un hueco cilíndrico por el centro, como un tubo."
+};
+function genP1(){
+  var t = eligeDe(PLANTILLAS_P1)();
+  if (Math.random() < 0.3){
+    var suma = t.op === "+";
+    return {fig:t.fig, q:t.q.replace(/¿Cómo se calcula[^?]*\?$/, "¿Los volúmenes de sus partes se suman o se restan?"),
+      ok: suma ? "Se suman" : "Se restan",
+      ops:["Se suman","Se restan","Se multiplican"],
+      exp: suma ? "No hay ningún hueco: las partes se juntan para formar un cuerpo más grande, así que sus volúmenes se suman. " + t.exp
+                : "Hay un hueco, es decir, una parte que se quitó, así que su volumen se resta. " + t.exp};
+  }
+  return {fig:t.fig, q:t.q, ok:t.ok, ops:[t.ok].concat(t.d), exp:t.exp};
+}
+var p1 = {resuelta:false, aciertos:0, total:0};
+function nuevaP1(){
+  var ej = genP1();
+  pintaFigura($("p1-svg"), ej.fig, DESC_P1[ej.fig]);
+  preparaOpciones("p1", ej, p1);
+}
+
+/* ============================================================
+   MÓDULO 2 · Una idea de optimización
+   ============================================================ */
+/* Cajas de medidas enteras largo ≥ ancho ≥ alto con volumen V */
+function cajas(V){
+  var lista = [];
+  for (var c = 1; c * c * c <= V; c++){
+    if (V % c) continue;
+    for (var b = c; b * b * c <= V; b++){
+      if ((V / c) % b) continue;
+      var a = V / (b * c);
+      if (a >= b) lista.push([a, b, c]);
+    }
+  }
+  lista.sort(function(x, y){ return y[0] - x[0] || y[1] - x[1]; });
+  return lista;
+}
+function area(k){ return 2 * (k[0]*k[1] + k[0]*k[2] + k[1]*k[2]); }
+function medidas(k){ return k[0] + " × " + k[1] + " × " + k[2]; }
+function cuentaArea(k){
+  return "2(" + k[0] + "·" + k[1] + " + " + k[0] + "·" + k[2] + " + " + k[1] + "·" + k[2] + ") = 2(" +
+         (k[0]*k[1]) + " + " + (k[0]*k[2]) + " + " + (k[1]*k[2]) + ") = " + area(k);
+}
+
+var VOLUMENES = [100, 64, 36];
+function llenaVolumenes(){
+  VOLUMENES.forEach(function(v, i){
+    var op = document.createElement("option");
+    op.value = i; op.textContent = v + " unidades³" + (v === 100 ? " (el ejemplo de la lección)" : "");
+    $("o-volumen").appendChild(op);
+  });
+}
+function listaActual(){
+  return cajasRazonables(VOLUMENES[parseInt($("o-volumen").value, 10) || 0])
+    .sort(function(x, y){ return area(y) - area(x); });
+}
+function cambiaVolumen(){
+  var l = listaActual();
+  $("o-caja").max = l.length - 1;
+  $("o-caja").value = 0;
+  actualizaO();
+}
+function svgEl(svg, tag, attrs, texto){
+  var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (var k in attrs) el.setAttribute(k, attrs[k]);
+  if (texto !== undefined) el.textContent = texto;
+  svg.appendChild(el);
+  return el;
+}
+function dibujaCaja(svg, k){
+  Array.prototype.slice.call(svg.childNodes).forEach(function(n){
+    if (n.nodeType !== 1 || (n.tagName.toLowerCase() !== "title" && n.tagName.toLowerCase() !== "desc")) svg.removeChild(n);
+  });
+  var largo = k[0], ancho = k[1], alto = k[2];
+  var fx = 0.6, fy = 0.35;
+  var s = Math.min(270 / (largo + fx * ancho), 190 / (alto + fy * ancho));
+  var L = largo * s, H = alto * s, dx = fx * ancho * s, dy = fy * ancho * s;
+  var x0 = (400 - (L + dx)) / 2 - 10, y0 = (300 - (H + dy)) / 2 + dy;
+  var est = {stroke:"#00332b", "stroke-width":2, "stroke-linejoin":"round"};
+  function cara(pts, color){
+    var a = {d:poli(pts), fill:color}; for (var q in est) a[q] = est[q];
+    svgEl(svg, "path", a);
+  }
+  cara([[x0,y0],[x0+L,y0],[x0+L+dx,y0-dy],[x0+dx,y0-dy]], "#b2dfdb");
+  cara([[x0+L,y0],[x0+L+dx,y0-dy],[x0+L+dx,y0+H-dy],[x0+L,y0+H]], "#80cbc4");
+  cara([[x0,y0],[x0+L,y0],[x0+L,y0+H],[x0,y0+H]], "#e0f2f1");
+  var txt = {"font-size":14, "font-weight":"bold", fill:"#00332b", stroke:"#fff", "stroke-width":4, "paint-order":"stroke"};
+  function etiqueta(x, y, ancla, t){
+    var a = {x:x, y:y, "text-anchor":ancla}; for (var q in txt) a[q] = txt[q];
+    svgEl(svg, "text", a, t);
+  }
+  etiqueta(x0 + L/2, y0 + H + 20, "middle", "largo " + largo);
+  etiqueta(x0 - 8, y0 + H/2 + 5, "end", "alto " + alto);
+  etiqueta(x0 + L + dx/2 + 10, y0 - dy/2 - 4, "start", "ancho " + ancho);
+}
+function actualizaO(){
+  var l = listaActual(), i = parseInt($("o-caja").value, 10) || 0;
+  if (i > l.length - 1) i = l.length - 1;
+  var k = l[i], V = k[0]*k[1]*k[2];
+  var areas = l.map(area), minA = Math.min.apply(null, areas), iMin = areas.indexOf(minA);
+  $("o-caja-val").textContent = medidas(k) + " (" + (i+1) + " de " + l.length + ")";
+  dibujaCaja($("o-svg"), k);
+  $("o-svg-d").textContent = "Caja de largo " + k[0] + ", ancho " + k[1] + " y alto " + k[2] + ". Guarda " + V + " unidades cúbicas y su área de superficie es " + area(k) + " unidades cuadradas.";
+  $("o-vol").innerHTML = "<strong>Volumen:</strong> " + k[0] + " · " + k[1] + " · " + k[2] + " = " + V + " unidades³.";
+  $("o-area").innerHTML = "<strong>Área de superficie (cartón):</strong> " + cuentaArea(k) + " unidades².";
+  var ver = $("o-veredicto");
+  if (i === iMin){
+    ver.className = "linea veredicto bien";
+    ver.textContent = "Esta es la caja que usa menos cartón: " + minA + " unidades².";
+  } else {
+    ver.className = "linea veredicto";
+    ver.textContent = "Guarda lo mismo, pero usa " + (area(k) - minA) + " unidades² más de cartón que la caja de " + medidas(l[iMin]) + ".";
+  }
+  var filas = l.map(function(c, j){
+    return '<tr' + (j === i ? ' class="destacada"' : '') + '><td>' + medidas(c) + (j === i ? ' <span class="sr-only">(caja elegida)</span>' : '') + '</td>' +
+           '<td>' + V + '</td><td' + (j === iMin ? ' class="minima"' : '') + '>' + areas[j] + (j === iMin ? ' (la menor)' : '') + '</td></tr>';
+  }).join("");
+  $("o-tabla").innerHTML = '<table class="reglas"><caption>Cajas de medidas enteras (largo de 25 como máximo) que guardan ' + V +
+    ' unidades³, ordenadas de más a menos cartón. La fila resaltada es la caja del deslizador; en verde, la de menor área.</caption>' +
+    '<thead><tr><th scope="col">Caja (largo × ancho × alto)</th><th scope="col">Volumen (unidades³)</th><th scope="col">Área de superficie (unidades²)</th></tr></thead>' +
+    '<tbody>' + filas + '</tbody></table>';
+}
+
+/* ---- Práctica 2 ---- */
+var VOL_P2 = [24, 36, 48, 60, 64, 72, 80, 90, 96, 100, 120];
+function cajasRazonables(V){ return cajas(V).filter(function(k){ return k[0] <= 25; }); }
+function dosCajas(){
+  var V, l, a, b;
+  do {
+    V = eligeDe(VOL_P2); l = cajasRazonables(V);
+    a = eligeDe(l); b = eligeDe(l);
+  } while (a === b || area(a) === area(b));
+  return {V:V, a:a, b:b};
+}
+var TIPOS_P2 = [
+  function(){ /* ¿cuál usa menos? dos cajas */
+    var c = dosCajas(), Aa = area(c.a), Ab = area(c.b);
+    var ok = Aa < Ab ? "La caja A" : "La caja B";
+    return {q:"Dos cajas guardan " + c.V + " unidades³. La caja A mide " + medidas(c.a) + " y la caja B mide " + medidas(c.b) + ". ¿Cuál usa menos cartón?",
+      ok:ok, ops:["La caja A","La caja B","Las dos usan igual"],
+      exp:"Área de A: " + cuentaArea(c.a) + ". Área de B: " + cuentaArea(c.b) + ". Con el mismo volumen, usa menos cartón la de menor área: " + (Aa < Ab ? "la caja A" : "la caja B") + "."};
+  },
+  function(){ /* tres cajas */
+    var V, l, t;
+    do {
+      V = eligeDe(VOL_P2); l = cajasRazonables(V);
+      t = baraja(l.slice()).slice(0, 3);
+    } while (t.length < 3 || area(t[0]) === area(t[1]) || area(t[0]) === area(t[2]) || area(t[1]) === area(t[2]));
+    var ar = t.map(area), m = Math.min.apply(null, ar), letra = ["A","B","C"][ar.indexOf(m)];
+    return {q:"Tres cajas guardan " + V + " unidades³ cada una: A mide " + medidas(t[0]) + ", B mide " + medidas(t[1]) + " y C mide " + medidas(t[2]) + ". ¿Cuál usa menos material?",
+      ok:"La caja " + letra, ops:["La caja A","La caja B","La caja C","Las tres usan igual"],
+      exp:"Áreas: A = " + ar[0] + ", B = " + ar[1] + ", C = " + ar[2] + " unidades², cada una con 2(largo·ancho + largo·alto + ancho·alto). La menor es la de la caja " + letra + ", que es la más compacta."};
+  },
+  function(){ /* cuánto cartón usa una caja */
+    var k, A, d1, d2, d3;
+    do {
+      k = [aleatorio(3,12), aleatorio(2,8), aleatorio(1,6)];
+      A = area(k); d1 = A / 2; d2 = k[0]*k[1]*k[2]; d3 = 2*(k[0]*k[1] + k[0]*k[2]);
+    } while (d1 === d2 || d2 === A || d3 === A || d3 === d2 || d3 === d1);
+    return {q:"Una caja mide " + medidas(k) + ". ¿Cuánto cartón hace falta para construirla (su área de superficie)?",
+      ok:A + " unidades²", ops:[A + " unidades²", d1 + " unidades²", d2 + " unidades²", d3 + " unidades²"],
+      exp:"Área = " + cuentaArea(k) + " unidades². Cada par de caras opuestas es igual, por eso se multiplica por 2. No se confunda con el volumen, " + k[0] + " · " + k[1] + " · " + k[2] + " = " + d2 + "."};
+  },
+  function(){ /* cuánto se ahorra */
+    var c, Aa, Ab, dif, mitad, menor;
+    do {
+      c = dosCajas(); Aa = area(c.a); Ab = area(c.b);
+      dif = Math.abs(Aa - Ab); mitad = dif / 2; menor = Math.min(Aa, Ab);
+    } while (mitad === menor || dif === menor);
+    return {q:"Dos cajas guardan " + c.V + " unidades³: una mide " + medidas(c.a) + " y la otra " + medidas(c.b) + ". ¿Cuánto cartón ahorra la que usa menos?",
+      ok:dif + " unidades²", ops:[dif + " unidades²", mitad + " unidades²", menor + " unidades²", "0, guardan lo mismo"],
+      exp:"Áreas: " + cuentaArea(c.a) + " y " + cuentaArea(c.b) + ". El ahorro es la diferencia: " + Math.max(Aa,Ab) + " − " + menor + " = " + dif + " unidades². Que guarden el mismo volumen no significa que usen el mismo material."};
+  }
+];
+function genP2(){ return eligeDe(TIPOS_P2)(); }
+var p2 = {resuelta:false, aciertos:0, total:0};
+function nuevaP2(){ preparaOpciones("p2", genP2(), p2); }
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function abrePorHash(){
+  var h = window.location.hash.replace("#","");
+  if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){
+    el.open = true;
+    el.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+document.querySelectorAll('nav.indice a[href^="#"]').forEach(function(a){
+  a.addEventListener("click", function(){
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el && el.tagName.toLowerCase() === "details") el.open = true;
+  });
+});
+$("abrir-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; });
+});
+$("cerrar-todo").addEventListener("click", function(){
+  document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; });
+});
+window.addEventListener("hashchange", abrePorHash);
+
+/* ============================================================
+   Arranque
+   ============================================================ */
+FIGURAS.forEach(function(f, i){
+  var op = document.createElement("option"); op.value = i; op.textContent = f.etiqueta; $("d-figura").appendChild(op);
+});
+PIEZAS.forEach(function(p){
+  var b = document.createElement("button");
+  b.type = "button"; b.className = "btn-sec"; b.setAttribute("aria-pressed", "false");
+  b.setAttribute("data-p", p.id); b.textContent = p.nombre;
+  b.addEventListener("click", function(){ alternaPieza(p.id); });
+  $("d-piezas").appendChild(b);
+});
+$("d-figura").addEventListener("change", reiniciaD);
+$("d-sumar").addEventListener("click", function(){ dEst.op = "+"; $("d-veredicto").textContent = ""; $("d-detalle").textContent = ""; actualizaD(); });
+$("d-restar").addEventListener("click", function(){ dEst.op = "−"; $("d-veredicto").textContent = ""; $("d-detalle").textContent = ""; actualizaD(); });
+$("d-comprobar").addEventListener("click", comprobarD);
+$("d-mostrar").addEventListener("click", mostrarD);
+$("d-reiniciar").addEventListener("click", reiniciaD);
+reiniciaD();
+$("p1-nuevo").addEventListener("click", nuevaP1);
+nuevaP1();
+
+llenaVolumenes();
+$("o-volumen").addEventListener("change", cambiaVolumen);
+$("o-caja").addEventListener("input", actualizaO);
+cambiaVolumen();
+$("p2-nuevo").addEventListener("click", nuevaP2);
+nuevaP2();
+
+abrePorHash();
+</script>
+</body>
+</html>
