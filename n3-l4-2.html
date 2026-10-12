@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#880e4f; --tema-d:#560027; --tema-bg:#fce4ec; --tema-bg2:#f8bbd0;
+    --tema:#bf360c; --tema-d:#8c2708; --tema-bg:#fbe9e7; --tema-bg2:#f7d9d3;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -826,7 +826,7 @@ function objetosSVG(cx, yBase, cajas, circulos){
   items.forEach(function(t, j){
     var fila = Math.floor(j / porFila), col = j % porFila, enFila = Math.min(porFila, items.length - fila*porFila);
     var x = cx - (enFila * ancho)/2 + col*ancho + ancho/2, y = yBase - 18 - fila*34;
-    if (t === "c") s += '<rect x="' + (x-15) + '" y="' + (y-15) + '" width="30" height="30" rx="4" fill="#880e4f"/><text x="' + x + '" y="' + (y+7) + '" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">x</text>';
+    if (t === "c") s += '<rect x="' + (x-15) + '" y="' + (y-15) + '" width="30" height="30" rx="4" fill="#bf360c"/><text x="' + x + '" y="' + (y+7) + '" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">x</text>';
     else s += '<circle cx="' + x + '" cy="' + y + '" r="13" fill="#fff8e1" stroke="#5c3900" stroke-width="2"/><text x="' + x + '" y="' + (y+6) + '" text-anchor="middle" font-size="15" font-weight="700" fill="#5c3900">1</text>';
   });
   return s;

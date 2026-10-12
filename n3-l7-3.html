@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --tema:#37474f; --tema-d:#263238; --tema-bg:#cfd8dc; --tema-bg2:#b8c4ca;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -868,11 +868,11 @@ function cajaSVG(grupos, voz, opc){
   s += linea([x0, yEje], [x1, yEje], "#424242", 2);
   for (var v = E.lo; v <= E.hi + 1e-9; v += E.paso){ s += linea([X(v), yEje - 6], [X(v), yEje + 6], "#424242", 2) + texto([X(v), yEje + 22], nv(v), 18, "#222", 400); }
   grupos.forEach(function(g, i){
-    var y = 30 + i*alto, c = g.c, col = g.color || "#006064", bmin = g.bigMin !== undefined ? g.bigMin : c.min, bmax = g.bigMax !== undefined ? g.bigMax : c.max;
+    var y = 30 + i*alto, c = g.c, col = g.color || "#37474f", bmin = g.bigMin !== undefined ? g.bigMin : c.min, bmax = g.bigMax !== undefined ? g.bigMax : c.max;
     if (grupos.length > 1) s += texto([x0 - 14, y + 2], g.nombre, 22, col, 700, "end");
     s += linea([X(bmin), y], [X(c.q1), y], col, 3) + linea([X(c.q3), y], [X(bmax), y], col, 3);
     s += linea([X(bmin), y - 12], [X(bmin), y + 12], col, 3) + linea([X(bmax), y - 12], [X(bmax), y + 12], col, 3);
-    s += '<rect x="' + f1(X(c.q1)) + '" y="' + (y - 20) + '" width="' + f1(Math.max(X(c.q3) - X(c.q1), 1)) + '" height="40" fill="' + (g.relleno || "#e0f7fa") + '" stroke="' + col + '" stroke-width="3"/>';
+    s += '<rect x="' + f1(X(c.q1)) + '" y="' + (y - 20) + '" width="' + f1(Math.max(X(c.q3) - X(c.q1), 1)) + '" height="40" fill="' + (g.relleno || "#cfd8dc") + '" stroke="' + col + '" stroke-width="3"/>';
     s += linea([X(c.med), y - 20], [X(c.med), y + 20], "#b71c1c", 4);
     (g.atip || []).forEach(function(a){ s += '<circle cx="' + f1(X(a)) + '" cy="' + y + '" r="7" fill="#fff" stroke="#b71c1c" stroke-width="3"/>'; });
     if (opc.rotulos) [["mín", bmin], ["Q1", c.q1], ["Q2", c.med], ["Q3", c.q3], ["máx", bmax]].forEach(function(p, k){ s += texto([X(p[1]), y - 32 + (k % 2 ? 0 : -2)], p[0], 16, "#424242", 700); });
@@ -888,7 +888,7 @@ function histSVG(clases, voz, opc){
   var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">';
   for (var f = 0; f <= top; f += paso){ s += linea([x0, Y(f)], [x1, Y(f)], "#e0e0e0", 1) + texto([x0 - 8, Y(f)], f, 17, "#424242", 400, "end"); }
   clases.forEach(function(c, i){
-    s += '<rect x="' + f1(x0 + i*w) + '" y="' + f1(Y(c.f)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(c.f)) + '" fill="' + (opc.marcar === i ? "#f9a825" : "#4dd0e1") + '" stroke="#006064" stroke-width="2"/>';
+    s += '<rect x="' + f1(x0 + i*w) + '" y="' + f1(Y(c.f)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(c.f)) + '" fill="' + (opc.marcar === i ? "#f9a825" : "#90a4ae") + '" stroke="#37474f" stroke-width="2"/>';
     s += texto([x0 + i*w, yb + 20], nv(c.a), 17, "#222", 400);
   });
   s += texto([x1, yb + 20], nv(clases[n-1].b), 17, "#222", 400);

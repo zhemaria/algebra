@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#bf360c; --tema-d:#8a2508; --tema-bg:#fbe9e7; --tema-bg2:#ffccbc;
+    --tema:#004d40; --tema-d:#00352c; --tema-bg:#e0f2f1; --tema-bg2:#cce8e4;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -669,7 +669,7 @@ function rectaSVG(a, b, paso, marcas, titulo){
     if (entero) s += '<text x="' + xv + '" y="' + (y + 38) + '" text-anchor="middle" font-size="24" fill="#222">' + Math.round(v) + '</text>';
   }
   (marcas || []).forEach(function(m){
-    var xm = X(m.v), col = m.color || "#bf360c";
+    var xm = X(m.v), col = m.color || "#004d40";
     s += '<path d="M' + xm + ' ' + (y - 4) + ' l-11 -18 h22 z" fill="' + col + '"/>';
     s += '<text x="' + xm + '" y="' + (y - (m.alto ? 58 : 28)) + '" text-anchor="middle" font-size="22" font-weight="700" fill="' + col + '">' + m.txt + '</text>';
   });
@@ -703,8 +703,8 @@ function diagramaSVG(n){
   var dentro = n ? PERTENECE[n.t] : [];
   function caja(id, x, yy, w, h, ex, ey){
     var on = dentro.indexOf(id) >= 0;
-    return '<rect x="' + x + '" y="' + yy + '" width="' + w + '" height="' + h + '" rx="14" fill="' + (on ? "#fbe9e7" : "#ffffff") + '" stroke="' + (on ? "#bf360c" : "#9e9e9e") +
-           '" stroke-width="' + (on ? 4 : 2) + '"/><text x="' + ex + '" y="' + ey + '" font-size="16" font-weight="700" fill="' + (on ? "#8a2508" : "#424242") + '">' + CONJ[id] + '</text>';
+    return '<rect x="' + x + '" y="' + yy + '" width="' + w + '" height="' + h + '" rx="14" fill="' + (on ? "#e0f2f1" : "#ffffff") + '" stroke="' + (on ? "#004d40" : "#9e9e9e") +
+           '" stroke-width="' + (on ? 4 : 2) + '"/><text x="' + ex + '" y="' + ey + '" font-size="16" font-weight="700" fill="' + (on ? "#00352c" : "#424242") + '">' + CONJ[id] + '</text>';
   }
   var s = '<svg class="diagrama" viewBox="0 0 560 330" role="img" aria-label="' +
           (n ? "Diagrama de conjuntos: " + n.txt + " pertenece a " + dentro.map(function(c){ return CONJ[c]; }).join(", ") : "Diagrama de conjuntos de los números reales") + '">';
@@ -858,7 +858,7 @@ function nuevoRE(){
 }
 function pintaRE(){
   var x = parseFloat($("re-pos").value), marcas = [{ v: x, txt: "tu marca", color: "#0d47a1" }];
-  if (RE.resuelto) marcas.push({ v: RE.v, txt: RE.txt + " ≈ " + aprox(RE.v, 2), color: "#8a2508", alto: true });
+  if (RE.resuelto) marcas.push({ v: RE.v, txt: RE.txt + " ≈ " + aprox(RE.v, 2), color: "#00352c", alto: true });
   $("re-val").textContent = x.toFixed(2);
   $("re-pos").setAttribute("aria-valuetext", x.toFixed(2));
   $("re-recta").innerHTML = rectaSVG(0, 7, 0.5, marcas, "Recta numérica de 0 a 7. Tu marca está en " + x.toFixed(2) + (RE.resuelto ? ". El valor real es " + aprox(RE.v, 2) : ""));

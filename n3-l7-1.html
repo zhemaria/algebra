@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#006064; --tema-d:#00363a; --tema-bg:#e0f7fa; --tema-bg2:#b2ebf2;
+    --tema:#37474f; --tema-d:#263238; --tema-bg:#cfd8dc; --tema-bg2:#b8c4ca;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -902,11 +902,11 @@ function cajaSVG(grupos, voz, opc){
   s += linea([x0, yEje], [x1, yEje], "#424242", 2);
   for (var v = E.lo; v <= E.hi + 1e-9; v += E.paso){ s += linea([X(v), yEje - 6], [X(v), yEje + 6], "#424242", 2) + texto([X(v), yEje + 22], nv(v), 18, "#222", 400); }
   grupos.forEach(function(g, i){
-    var y = 30 + i*alto, c = g.c, col = g.color || "#006064", bmin = g.bigMin !== undefined ? g.bigMin : c.min, bmax = g.bigMax !== undefined ? g.bigMax : c.max;
+    var y = 30 + i*alto, c = g.c, col = g.color || "#37474f", bmin = g.bigMin !== undefined ? g.bigMin : c.min, bmax = g.bigMax !== undefined ? g.bigMax : c.max;
     if (grupos.length > 1) s += texto([x0 - 14, y + 2], g.nombre, 22, col, 700, "end");
     s += linea([X(bmin), y], [X(c.q1), y], col, 3) + linea([X(c.q3), y], [X(bmax), y], col, 3);
     s += linea([X(bmin), y - 12], [X(bmin), y + 12], col, 3) + linea([X(bmax), y - 12], [X(bmax), y + 12], col, 3);
-    s += '<rect x="' + f1(X(c.q1)) + '" y="' + (y - 20) + '" width="' + f1(Math.max(X(c.q3) - X(c.q1), 1)) + '" height="40" fill="' + (g.relleno || "#e0f7fa") + '" stroke="' + col + '" stroke-width="3"/>';
+    s += '<rect x="' + f1(X(c.q1)) + '" y="' + (y - 20) + '" width="' + f1(Math.max(X(c.q3) - X(c.q1), 1)) + '" height="40" fill="' + (g.relleno || "#cfd8dc") + '" stroke="' + col + '" stroke-width="3"/>';
     s += linea([X(c.med), y - 20], [X(c.med), y + 20], "#b71c1c", 4);
     (g.atip || []).forEach(function(a){ s += '<circle cx="' + f1(X(a)) + '" cy="' + y + '" r="7" fill="#fff" stroke="#b71c1c" stroke-width="3"/>'; });
     if (opc.rotulos) [["mín", bmin], ["Q1", c.q1], ["Q2", c.med], ["Q3", c.q3], ["máx", bmax]].forEach(function(p, k){ s += texto([X(p[1]), y - 32 + (k % 2 ? 0 : -2)], p[0], 16, "#424242", 700); });
@@ -922,7 +922,7 @@ function histSVG(clases, voz, opc){
   var s = '<svg class="figura" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + voz + '">';
   for (var f = 0; f <= top; f += paso){ s += linea([x0, Y(f)], [x1, Y(f)], "#e0e0e0", 1) + texto([x0 - 8, Y(f)], f, 17, "#424242", 400, "end"); }
   clases.forEach(function(c, i){
-    s += '<rect x="' + f1(x0 + i*w) + '" y="' + f1(Y(c.f)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(c.f)) + '" fill="' + (opc.marcar === i ? "#f9a825" : "#4dd0e1") + '" stroke="#006064" stroke-width="2"/>';
+    s += '<rect x="' + f1(x0 + i*w) + '" y="' + f1(Y(c.f)) + '" width="' + f1(w) + '" height="' + f1(yb - Y(c.f)) + '" fill="' + (opc.marcar === i ? "#f9a825" : "#90a4ae") + '" stroke="#37474f" stroke-width="2"/>';
     s += texto([x0 + i*w, yb + 20], nv(c.a), 17, "#222", 400);
   });
   s += texto([x1, yb + 20], nv(clases[n-1].b), 17, "#222", 400);
@@ -952,12 +952,12 @@ function pintaCaja(){
   var cg = Math.cos(g), sg = Math.sin(g), cp = Math.cos(phi), sp = Math.sin(phi);
   function prj(p){ var x = p[0] - l/2, y = p[1] - w/2, z = p[2]; var xr = x*cg - y*sg, yr = x*sg + y*cg; return [xr, z*cp + yr*sp]; }
   var caras = [
-    { n: [0,-1,0], p: function(u, v){ return [u, 0, v]; }, U: l, V: h, col: "#b2ebf2" },
-    { n: [0,1,0], p: function(u, v){ return [u, w, v]; }, U: l, V: h, col: "#b2ebf2" },
+    { n: [0,-1,0], p: function(u, v){ return [u, 0, v]; }, U: l, V: h, col: "#b8c4ca" },
+    { n: [0,1,0], p: function(u, v){ return [u, w, v]; }, U: l, V: h, col: "#b8c4ca" },
     { n: [-1,0,0], p: function(u, v){ return [0, u, v]; }, U: w, V: h, col: "#80deea" },
     { n: [1,0,0], p: function(u, v){ return [l, u, v]; }, U: w, V: h, col: "#80deea" },
-    { n: [0,0,1], p: function(u, v){ return [u, v, h]; }, U: l, V: w, col: "#e0f7fa" },
-    { n: [0,0,-1], p: function(u, v){ return [u, v, 0]; }, U: l, V: w, col: "#e0f7fa" }
+    { n: [0,0,1], p: function(u, v){ return [u, v, h]; }, U: l, V: w, col: "#cfd8dc" },
+    { n: [0,0,-1], p: function(u, v){ return [u, v, 0]; }, U: l, V: w, col: "#cfd8dc" }
   ];
   var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
   caras.forEach(function(c){ [[0,0],[c.U,0],[c.U,c.V],[0,c.V]].forEach(function(q){ var p = prj(c.p(q[0], q[1])); minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minY = Math.min(minY, p[1]); maxY = Math.max(maxY, p[1]); }); });
@@ -969,7 +969,7 @@ function pintaCaja(){
     var yr = c.n[0]*sg + c.n[1]*cg, d = yr*cp - c.n[2]*sp;
     if (!(d < 0)) return;
     var pts = [[0,0],[c.U,0],[c.U,c.V],[0,c.V]].map(function(q){ return T(c.p(q[0], q[1])); });
-    s += '<polygon points="' + pts.map(function(p){ return f1(p[0]) + "," + f1(p[1]); }).join(" ") + '" fill="' + c.col + '" stroke="#006064" stroke-width="2.5"/>';
+    s += '<polygon points="' + pts.map(function(p){ return f1(p[0]) + "," + f1(p[1]); }).join(" ") + '" fill="' + c.col + '" stroke="#37474f" stroke-width="2.5"/>';
     for (var u = 1; u < c.U; u++) s += linea(T(c.p(u, 0)), T(c.p(u, c.V)), "#00838f", 1);
     for (var v = 1; v < c.V; v++) s += linea(T(c.p(0, v)), T(c.p(c.U, v)), "#00838f", 1);
   });
@@ -1001,9 +1001,9 @@ function pintaCil(){
   $("ci-rv").textContent = nv(r); $("ci-hv").textContent = nv(h);
   var esc = Math.min(160 / r, 220 / h, 40), R = r*esc, Hh = h*esc, cx = 300, yt = 150 - Hh/2, yb = 150 + Hh/2, ry = Math.max(R*0.3, 6);
   var s = '<svg class="figura" viewBox="0 0 640 310" role="img" aria-label="Cilindro de radio ' + nv(r) + ' y altura ' + nv(h) + '.">';
-  s += '<path d="M' + f1(cx - R) + ' ' + f1(yt) + ' L' + f1(cx - R) + ' ' + f1(yb) + ' A' + f1(R) + ' ' + f1(ry) + ' 0 0 0 ' + f1(cx + R) + ' ' + f1(yb) + ' L' + f1(cx + R) + ' ' + f1(yt) + '" fill="#b2ebf2" stroke="#006064" stroke-width="2.5"/>';
-  s += '<path d="M' + f1(cx - R) + ' ' + f1(yb) + ' A' + f1(R) + ' ' + f1(ry) + ' 0 0 1 ' + f1(cx + R) + ' ' + f1(yb) + '" fill="none" stroke="#006064" stroke-width="1.5" stroke-dasharray="5 4"/>';
-  s += '<ellipse cx="' + cx + '" cy="' + f1(yt) + '" rx="' + f1(R) + '" ry="' + f1(ry) + '" fill="#e0f7fa" stroke="#006064" stroke-width="2.5"/>';
+  s += '<path d="M' + f1(cx - R) + ' ' + f1(yt) + ' L' + f1(cx - R) + ' ' + f1(yb) + ' A' + f1(R) + ' ' + f1(ry) + ' 0 0 0 ' + f1(cx + R) + ' ' + f1(yb) + ' L' + f1(cx + R) + ' ' + f1(yt) + '" fill="#b8c4ca" stroke="#37474f" stroke-width="2.5"/>';
+  s += '<path d="M' + f1(cx - R) + ' ' + f1(yb) + ' A' + f1(R) + ' ' + f1(ry) + ' 0 0 1 ' + f1(cx + R) + ' ' + f1(yb) + '" fill="none" stroke="#37474f" stroke-width="1.5" stroke-dasharray="5 4"/>';
+  s += '<ellipse cx="' + cx + '" cy="' + f1(yt) + '" rx="' + f1(R) + '" ry="' + f1(ry) + '" fill="#cfd8dc" stroke="#37474f" stroke-width="2.5"/>';
   s += linea([cx, yt], [cx + R, yt], "#b71c1c", 3) + texto([cx + R/2, yt - ry - 10], "r = " + nv(r), 18, "#b71c1c");
   s += linea([cx + R + 22, yt], [cx + R + 22, yb], "#0d47a1", 2) + texto([cx + R + 30, (yt + yb)/2], "h = " + nv(h), 18, "#0d47a1", 700, "start");
   $("ci-svg").innerHTML = s + '</svg>';

@@ -19,7 +19,7 @@
 <style>
 
   :root{
-    --tema:#bf360c; --tema-d:#8a2508; --tema-bg:#fbe9e7; --tema-bg2:#ffccbc;
+    --tema:#004d40; --tema-d:#00352c; --tema-bg:#e0f2f1; --tema-bg2:#cce8e4;
     --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
     --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
     --avi:#5c3900; --avi-bg:#fff8e1;
@@ -655,7 +655,7 @@ function rectaSVG(a, b, paso, marcas, titulo){
     if (entero) s += '<text x="' + xv + '" y="' + (y + 38) + '" text-anchor="middle" font-size="24" fill="#222">' + Math.round(v) + '</text>';
   }
   (marcas || []).forEach(function(m){
-    var xm = X(m.v), col = m.color || "#bf360c";
+    var xm = X(m.v), col = m.color || "#004d40";
     s += '<path d="M' + xm + ' ' + (y - 4) + ' l-11 -18 h22 z" fill="' + col + '"/>';
     s += '<text x="' + xm + '" y="' + (y - (m.alto ? 58 : 28)) + '" text-anchor="middle" font-size="22" font-weight="700" fill="' + col + '">' + m.txt + '</text>';
   });
