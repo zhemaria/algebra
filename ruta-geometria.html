@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ruta de Geometría · Niveles 1 a 3 · GEDparaHispanos</title>
 <meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
-<meta name="description" content="Ruta transversal de Geometría: las 49 prácticas interactivas de los Niveles 1, 2 y 3 de Matemáticas de GEDparaHispanos, ordenadas por subtema de lo más sencillo a lo más avanzado.">
+<meta name="description" content="Ruta transversal de Geometría: las 59 prácticas interactivas de los Niveles 1 a 4 de Matemáticas de GEDparaHispanos, ordenadas por subtema de lo más sencillo a lo más avanzado.">
 <meta name="license" content="CC BY-NC-SA 4.0">
 <link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <style>
@@ -104,6 +104,7 @@
   details.tema{border-left-color:#283593;}
   .nivel{display:inline-block;font-size:12px;font-weight:700;color:#fff;border-radius:999px;padding:2px 10px;margin-bottom:4px;}
   .nivel.n1{background:#00695c;} .nivel.n2{background:#1565c0;} .nivel.n3{background:#6a1b9a;}
+.nivel.n4{background:#b71c1c;}
   .origen{display:block;font-size:13px;color:#555;margin-top:2px;}
   .intro-sub{margin:4px 0 10px;color:#333;}
   .ruta-mapa{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 4px;padding:0;list-style:none;}
@@ -120,7 +121,7 @@
   <header class="principal">
     <div class="ruta">Nivel 4 · Rutas transversales · GEDparaHispanos</div>
     <h1>Ruta de Geometría: de los Niveles 1 a 3</h1>
-    <p>La geometría se estudia en tres niveles, y cada uno se apoya en el anterior. Aquí están todas sus prácticas en un
+    <p>La geometría se estudia en los cuatro niveles, y cada uno se apoya en el anterior. Aquí están todas sus prácticas en un
     solo camino, ordenadas por subtema de lo más sencillo a lo más avanzado. Cada tarjeta dice de qué nivel viene: si algo
     le cuesta, empiece por la tarjeta anterior. No es retroceder; es afirmar la base.</p>
   </header>
@@ -346,6 +347,15 @@ var SUB = [
     "lec": "7.2",
     "lectit": "Perímetro de polígonos",
     "url": "https://zhemaria.github.io/algebra/n1-l7-2.html#problemas"
+   },
+   {
+    "titulo": "El perímetro en el plano cartesiano",
+    "desc": "Medir cada lado de una figura dada por sus vértices y sumar.",
+    "claves": "perimetro plano cartesiano vertices coordenadas distancia lados",
+    "nivel": 4,
+    "lec": "1.1",
+    "lectit": "El plano cartesiano: pares ordenados, distancia y punto medio",
+    "url": "https://zhemaria.github.io/algebra/n4-l1-1.html#perimetro"
    }
   ]
  },
@@ -583,6 +593,15 @@ var SUB = [
     "lec": "6.2",
     "lectit": "Teorema de Pitágoras: aplicaciones y converso",
     "url": "https://zhemaria.github.io/algebra/n3-l6-2.html#converso"
+   },
+   {
+    "titulo": "La distancia entre dos puntos",
+    "desc": "La fórmula de la distancia: Pitágoras en el plano cartesiano.",
+    "claves": "distancia dos puntos formula pitagoras plano cartesiano",
+    "nivel": 4,
+    "lec": "1.1",
+    "lectit": "El plano cartesiano: pares ordenados, distancia y punto medio",
+    "url": "https://zhemaria.github.io/interactivos/distancia/"
    }
   ]
  },
@@ -669,6 +688,78 @@ var SUB = [
     "lec": "7.1",
     "lectit": "Volumen de prismas y cilindros",
     "url": "https://zhemaria.github.io/algebra/n3-l7-1.html#capacidad"
+   },
+   {
+    "titulo": "La hoja de fórmulas y los tres sólidos",
+    "desc": "Esfera, cono y pirámide: qué fórmula usar y qué dato es cada medida.",
+    "claves": "hoja de formulas ged esfera cono piramide radio diametro area base",
+    "nivel": 4,
+    "lec": "2.1",
+    "lectit": "Volumen de esferas, conos y pirámides",
+    "url": "https://zhemaria.github.io/algebra/n4-l2-1.html#formulas"
+   },
+   {
+    "titulo": "Volumen de la esfera",
+    "desc": "V = 4/3 πr³, con el radio o con el diámetro.",
+    "claves": "volumen esfera radio pi cubo 4/3",
+    "nivel": 4,
+    "lec": "2.1",
+    "lectit": "Volumen de esferas, conos y pirámides",
+    "url": "https://zhemaria.github.io/algebra/n4-l2-1.html#esfera"
+   },
+   {
+    "titulo": "Volumen del cono",
+    "desc": "Un tercio del cilindro con la misma base y altura.",
+    "claves": "volumen cono un tercio 1/3 radio altura",
+    "nivel": 4,
+    "lec": "2.1",
+    "lectit": "Volumen de esferas, conos y pirámides",
+    "url": "https://zhemaria.github.io/geometria/vol_cono/"
+   },
+   {
+    "titulo": "Volumen de la pirámide",
+    "desc": "Un tercio del prisma con la misma base y altura.",
+    "claves": "volumen piramide un tercio base altura",
+    "nivel": 4,
+    "lec": "2.1",
+    "lectit": "Volumen de esferas, conos y pirámides",
+    "url": "https://zhemaria.github.io/geometria/vol_piramide/"
+   },
+   {
+    "titulo": "Descomponer una figura compuesta",
+    "desc": "Reconocer las piezas y decidir si se suman o se restan.",
+    "claves": "figura compuesta descomponer piezas hueco sumar restar",
+    "nivel": 4,
+    "lec": "2.2",
+    "lectit": "Figuras 3D compuestas y área de superficie",
+    "url": "https://zhemaria.github.io/algebra/n4-l2-2.html#descomponer"
+   },
+   {
+    "titulo": "Volumen de figuras compuestas",
+    "desc": "Calcular el volumen de cada pieza y combinarlos.",
+    "claves": "volumen figuras compuestas silo tanque piezas",
+    "nivel": 4,
+    "lec": "2.2",
+    "lectit": "Figuras 3D compuestas y área de superficie",
+    "url": "https://zhemaria.github.io/geometria/compuestas_3d/"
+   },
+   {
+    "titulo": "Área de superficie",
+    "desc": "Sumar las áreas de todas las caras del sólido.",
+    "claves": "area de superficie caras sólido prisma cilindro",
+    "nivel": 4,
+    "lec": "2.2",
+    "lectit": "Figuras 3D compuestas y área de superficie",
+    "url": "https://zhemaria.github.io/geometria/area_superficie/"
+   },
+   {
+    "titulo": "Una idea de optimización",
+    "desc": "Con el mismo volumen, la caja que usa menos cartón.",
+    "claves": "optimizacion caja carton minimo area superficie",
+    "nivel": 4,
+    "lec": "2.2",
+    "lectit": "Figuras 3D compuestas y área de superficie",
+    "url": "https://zhemaria.github.io/algebra/n4-l2-2.html#optimizacion"
    }
   ]
  }
