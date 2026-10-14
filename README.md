@@ -18,6 +18,13 @@ Reúnen los ejercicios de un tema que aparece en varios niveles, para verlo en c
 - [Ruta de Geometría](https://zhemaria.github.io/algebra/ruta-geometria.html)
 - [Ruta de Estadística y probabilidad](https://zhemaria.github.io/algebra/ruta-estadistica.html)
 
+## Comprensión lectora en matemáticas (Three Reads)
+
+Interactivos bilingües (español e inglés) que practican la rutina de las tres lecturas en problemas de la vida real:
+
+- [Leer para entender los números](https://zhemaria.github.io/algebra/comprension-numeros.html) (Nivel 1): operaciones, varios pasos, decimales, fracciones con tendedero (*Clothesline Math*), medidas y tablas, y detective numérico.
+- [Leer para entender el álgebra](https://zhemaria.github.io/algebra/comprension-algebra.html) (Nivel 2): variables, expresiones, términos semejantes y ecuaciones de un paso. Su guía docente es `guia-docente-comprension-algebra.html`.
+
 ## Cómo se llaman los archivos
 
 - `nN-lT-L.html`: el interactivo de la Lección T.L del Nivel N (por ejemplo, `n2-l7-1.html`).

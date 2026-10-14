@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<!--
+  Leer para entender los números / Reading to Understand Numbers
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.
+  Licencia / License: Creative Commons BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/
+-->
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leer para entender los números · Reading to Understand Numbers</title>
+<meta name="description" content="Ejercicios bilingües del Nivel 1 (Iniciación y dominio numérico): operaciones, decimales, fracciones, medidas y tablas en problemas de la vida real, con la rutina de las tres lecturas.">
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#1a1a1a; --suave:#444; --papel:#fbfaf7; --blanco:#fff; --borde:#d4d0c8;
+  --primario:#0d47a1; --primario-claro:#e3f2fd;
+  --ok:#1b5e20; --ok-fondo:#e6f4e7; --mal:#8b1a1a; --mal-fondo:#fbeaea; --aviso:#5C3900; --aviso-fondo:#fff4dc;
+  --t1:#0d47a1; --t2:#5C3900; --t3:#1b5e20; --t4:#4a148c; --t5:#8b1a1a; --t6:#00525b;
+  --radio:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:18px;line-height:1.6}
+a{color:var(--primario)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+var{font-family:"Times New Roman",Georgia,serif;font-style:italic;font-size:1.1em}
+.contenedor{max-width:920px;margin:0 auto;padding:0 16px}
+.saltar{position:absolute;left:-9999px;top:0;background:var(--primario);color:#fff;padding:8px 12px;z-index:10}
+.saltar:focus{left:8px;top:8px}
+
+/* Idiomas */
+html[data-lang="es"] .en{display:none}
+html[data-lang="en"] .es{display:none}
+html[data-lang="bi"] .en{display:block;font-style:italic;color:var(--suave);font-size:.92em;margin-top:2px}
+html[data-lang="bi"] .en var{color:var(--suave)}
+html[data-lang="bi"] .opcion .en{color:inherit}
+html[data-lang="bi"] .tabla-palabras .en{display:block}
+html[data-lang="bi"] :is(h1,h2,h3,.etq,.btn,button,summary,nav a,.sub) .en{display:inline;color:inherit;font-size:inherit;margin:0}
+html[data-lang="bi"] :is(h1,h2,h3,.etq,.btn,button,summary,nav a,.sub) .en::before{content:" / ";font-style:normal}
+html[data-lang="bi"] .opcion .en{display:block;font-size:.92em}
+html[data-lang="bi"] .opcion .en::before{content:none}
+
+/* Cabecera */
+header.cabecera{background:var(--primario);color:#fff;padding:28px 0 22px}
+header.cabecera h1{margin:0 0 6px;font-size:1.9rem;line-height:1.2}
+header.cabecera .sub{margin:0;font-size:1.05rem;opacity:.95}
+header.cabecera .autor{margin:10px 0 0;font-size:.9rem}
+.barra{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.barra .grupo{display:flex;gap:0;border:2px solid #fff;border-radius:8px;overflow:hidden}
+.barra .grupo button{background:transparent;color:#fff;border:0;padding:8px 14px;font:inherit;font-size:.95rem;cursor:pointer;min-height:44px}
+.barra .grupo button[aria-pressed="true"]{background:#fff;color:var(--primario);font-weight:700}
+.btn{font:inherit;font-size:.95rem;border-radius:8px;padding:8px 14px;cursor:pointer;min-height:44px;border:2px solid var(--primario);background:var(--blanco);color:var(--primario)}
+.btn:hover{background:var(--primario-claro)}
+.btn-claro{border-color:#fff;background:transparent;color:#fff}
+.btn-claro:hover{background:rgba(255,255,255,.15)}
+.btn-lleno{background:var(--primario);color:#fff}
+.btn-lleno:hover{background:#0a3a85}
+
+/* Índice */
+nav.indice{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);padding:16px 20px;margin:24px 0}
+nav.indice h2{margin:0 0 8px;font-size:1.2rem}
+nav.indice ol{margin:0;padding-left:1.4em;columns:2;column-gap:32px}
+nav.indice li{break-inside:avoid;margin:4px 0}
+.acciones-indice{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* Cajas */
+.caja{background:var(--blanco);border:1px solid var(--borde);border-left:6px solid var(--primario);border-radius:var(--radio);padding:16px 20px;margin:18px 0}
+.caja h2,.caja h3{margin-top:0}
+.caja-idea{border-left-color:var(--c,var(--primario));background:var(--blanco)}
+.caja-consejo{border-left-color:var(--aviso);background:var(--aviso-fondo)}
+.marcos{display:grid;gap:8px;grid-template-columns:1fr;margin:8px 0 0;padding:0;list-style:none}
+.marcos li{background:var(--primario-claro);border-radius:8px;padding:8px 12px}
+.lecturas{list-style:none;padding:0;margin:12px 0;display:grid;gap:10px}
+.lecturas li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;background:var(--blanco);border:1px solid var(--borde);border-radius:8px;padding:10px 12px}
+.num-circulo{width:40px;height:40px;border-radius:50%;background:var(--primario);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+/* Secciones grandes */
+details.seccion-grande{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);margin:18px 0;scroll-margin-top:12px}
+details.seccion-grande > summary{list-style:none;cursor:pointer;display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:var(--radio);background:var(--c);color:#fff}
+details.seccion-grande > summary::-webkit-details-marker{display:none}
+details.seccion-grande > summary .num-circulo{background:#fff;color:var(--c);flex:0 0 40px}
+details.seccion-grande > summary h2{margin:0;font-size:1.25rem;line-height:1.25}
+details.seccion-grande > summary .progreso{margin-left:auto;font-size:.85rem;white-space:nowrap;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:20px}
+details.seccion-grande > summary .chev{transition:transform .2s;font-size:1rem}
+details.seccion-grande[open] > summary .chev{transform:rotate(90deg)}
+details.seccion-grande[open] > summary{border-radius:var(--radio) var(--radio) 0 0}
+.cuerpo{padding:6px 20px 20px}
+.indicadores{font-size:.88rem;color:var(--suave);margin:10px 0 0}
+
+/* Tabla */
+.tabla-palabras{width:100%;border-collapse:collapse;margin:10px 0;font-size:.95rem}
+.tabla-palabras caption{text-align:left;font-weight:700;padding:4px 0 8px}
+.tabla-palabras th,.tabla-palabras td{border:1px solid var(--borde);padding:6px 10px;text-align:left;vertical-align:top}
+.tabla-palabras th{background:var(--primario-claro)}
+.tabla-scroll{overflow-x:auto}
+
+/* Ejercicios */
+article.ejercicio{border:1px solid var(--borde);border-radius:var(--radio);padding:14px 16px;margin:16px 0;background:#fff;scroll-margin-top:12px}
+article.ejercicio.hecho{border-color:var(--ok);box-shadow:inset 4px 0 0 var(--ok)}
+article.ejercicio h3{margin:0 0 8px;font-size:1.08rem;color:var(--c)}
+article.ejercicio h3 .marca{color:var(--ok);margin-left:6px}
+.historia{background:#f5f3ee;border-radius:8px;padding:12px 14px;margin:8px 0 12px;position:relative}
+.historia p{margin:0}
+.btn-oir{margin-top:8px;font-size:.85rem;padding:4px 10px;min-height:36px}
+.paso{border-top:1px dashed var(--borde);padding:10px 0 4px}
+.paso:first-of-type{border-top:0}
+.etq{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;background:var(--c);color:#fff;border-radius:6px;padding:2px 8px;margin:0 0 6px}
+.preg{margin:0 0 8px;font-weight:700}
+.opciones{display:grid;gap:8px}
+.opcion{display:block;width:100%;text-align:left;font:inherit;font-size:1rem;background:#fff;border:2px solid var(--borde);border-radius:8px;padding:8px 12px;cursor:pointer;color:var(--tinta);min-height:44px}
+.opcion:hover:not([disabled]){border-color:var(--c)}
+.opcion.correcta{border-color:var(--ok);background:var(--ok-fondo)}
+.opcion.incorrecta{border-color:var(--mal);background:var(--mal-fondo)}
+.opcion[disabled]{cursor:default}
+.fila-entrada{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fila-entrada input{font:inherit;font-size:1.05rem;padding:8px 10px;border:2px solid #767676;border-radius:8px;min-width:200px;min-height:44px}
+.fila-entrada input.bien{border-color:var(--ok);background:var(--ok-fondo)}
+.fila-entrada input.malo{border-color:var(--mal)}
+.ayuda{font-size:.85rem;color:var(--suave);margin:4px 0 0}
+textarea{width:100%;min-height:90px;font:inherit;font-size:1rem;padding:8px 10px;border:2px solid #767676;border-radius:8px}
+.fb{margin-top:8px}
+.fb:empty{display:none}
+.fb .msg{border-radius:8px;padding:8px 12px}
+.fb .msg.ok{background:var(--ok-fondo);color:var(--ok);border-left:5px solid var(--ok)}
+.fb .msg.mal{background:var(--mal-fondo);color:var(--mal);border-left:5px solid var(--mal)}
+.fb .msg.info{background:var(--aviso-fondo);color:var(--aviso);border-left:5px solid var(--aviso)}
+.fb .msg.sol{background:var(--primario-claro);color:var(--primario);border-left:5px solid var(--primario)}
+.modelo{background:var(--primario-claro);border-radius:8px;padding:10px 12px;margin-top:8px}
+.recta-entradas{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:8px}
+.recta-entradas div{display:flex;align-items:center;gap:6px}
+.recta-entradas input{width:90px;min-width:0;font:inherit;font-size:1.05rem;padding:6px 8px;border:2px solid #767676;border-radius:8px;min-height:44px}
+.recta-entradas input.bien{border-color:var(--ok);background:var(--ok-fondo)}
+.recta-entradas input.malo{border-color:var(--mal)}
+.recta-svg{width:100%;height:auto;margin-top:8px}
+.oculto{display:none!important}
+
+/* Repaso y tablas de datos */
+.repaso{font-size:.92rem;margin:6px 0 0}
+.repaso a{margin-right:4px}
+.tabla-datos{width:100%;max-width:520px;border-collapse:collapse;margin:0 0 12px;font-size:.95rem}
+.tabla-datos caption{text-align:left;font-weight:700;padding:0 0 6px}
+.tabla-datos th,.tabla-datos td{border:1px solid var(--borde);padding:6px 10px;text-align:left}
+.tabla-datos th{background:var(--primario-claro)}
+html[data-lang="bi"] .tabla-datos .en{display:block}
+
+/* Tendedero (Clothesline Math) */
+.tarjetas{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.tarjeta{font:inherit;font-size:1.1rem;font-weight:700;min-width:72px;min-height:48px;padding:6px 12px;border:2px solid var(--c);border-radius:8px;background:#fff;color:var(--tinta);cursor:pointer}
+.tarjeta:hover:not([disabled]){background:var(--primario-claro)}
+.tarjeta[disabled]{opacity:.35;cursor:default}
+.orden-elegido{min-height:56px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:2px dashed var(--borde);border-radius:8px;padding:6px 10px;margin-bottom:8px}
+.orden-elegido .vacio{color:var(--suave);font-size:.92rem}
+.orden-elegido .ficha{background:var(--c);color:#fff;font-weight:700;border-radius:6px;padding:4px 10px}
+.orden-elegido .sep{color:var(--suave)}
+.acciones-tendedero{display:flex;flex-wrap:wrap;gap:8px}
+.tend-scroll{overflow-x:auto;margin-top:8px}
+.tendedero-svg{width:100%;min-width:560px;height:auto;display:block}
+
+/* Referencias y pie */
+.referencias{font-size:.95rem}
+.referencias li{margin:6px 0;overflow-wrap:anywhere}
+footer{margin-top:32px;padding:20px 0 32px;border-top:1px solid var(--borde);font-size:.9rem;color:var(--suave)}
+
+@media (max-width:640px){
+  body{font-size:17px}
+  header.cabecera h1{font-size:1.5rem}
+  nav.indice ol{columns:1}
+  details.seccion-grande > summary{flex-wrap:wrap}
+  details.seccion-grande > summary .progreso{margin-left:54px}
+  .fila-entrada input{min-width:0;width:100%}
+  .cuerpo{padding:6px 10px 16px}
+  .caja{padding:12px 14px}
+  article.ejercicio{padding:12px}
+}
+@media print{
+  body{background:#fff;font-size:12pt}
+  header.cabecera{background:#fff;color:#000;border-bottom:2px solid #000;padding:8px 0}
+  .barra,.acciones-indice,.btn-oir,.btn,.ayuda,.saltar,nav.indice{display:none!important}
+  details.seccion-grande > summary{background:#fff!important;color:#000;border-bottom:2px solid #000}
+  details.seccion-grande > summary .num-circulo{border:2px solid #000;color:#000}
+  details.seccion-grande > summary .progreso,details.seccion-grande > summary .chev{display:none}
+  article.ejercicio{break-inside:avoid;box-shadow:none!important}
+  .etq{background:#fff!important;color:#000;border:1px solid #000}
+  .opcion{border:1px solid #000;background:#fff!important}
+  .opcion::before{content:"○  "}
+  .fila-entrada input,textarea{border:0;border-bottom:1px solid #000;border-radius:0;background:#fff!important}
+  .fb,.modelo,.acciones-tendedero,.orden-elegido{display:none!important}
+  .tarjeta{opacity:1!important;border:1px solid #000}
+}
+</style>
+</head>
+<body>
+<a class="saltar" href="#contenido"><span class="es">Saltar al contenido</span><span class="en">Skip to content</span></a>
+
+<header class="cabecera">
+  <div class="contenedor">
+    <h1><span class="es">Leer para entender los números</span><span class="en">Reading to understand numbers</span></h1>
+    <p class="sub"><span class="es">Nivel 1 · Iniciación y dominio numérico: operaciones, decimales, fracciones, medidas y tablas en problemas de la vida real, con la rutina de las tres lecturas</span><span class="en">Level 1 · Getting started with numbers: operations, decimals, fractions, measurement and tables in real-life problems, with the Three Reads routine</span></p>
+    <p class="autor">José M. Fernández · ABE/ASE Math Master Teacher · Harry S. Truman College — City Colleges of Chicago</p>
+    <div class="barra">
+      <div class="grupo" role="group" aria-label="Idioma / Language">
+        <button type="button" data-set-lang="es" aria-pressed="true">Español</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+        <button type="button" data-set-lang="bi" aria-pressed="false">ES + EN</button>
+      </div>
+      <button type="button" class="btn btn-claro" id="btn-imprimir"><span class="es">🖨️ Hoja imprimible</span><span class="en">🖨️ Printable worksheet</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="contenido" class="contenedor">
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice"><span class="es">Contenido</span><span class="en">Contents</span></h2>
+    <ol id="lista-indice">
+      <li><a href="#rutina"><span class="es">Antes de empezar: leer tres veces</span><span class="en">Before you start: read three times</span></a></li>
+    </ol>
+    <div class="acciones-indice">
+      <button type="button" class="btn" id="abrir-todo"><span class="es">Abrir todo</span><span class="en">Open all</span></button>
+      <button type="button" class="btn" id="cerrar-todo"><span class="es">Cerrar todo</span><span class="en">Close all</span></button>
+    </div>
+  </nav>
+
+  <section id="rutina" class="caja" aria-labelledby="titulo-rutina">
+    <h2 id="titulo-rutina"><span class="es">Antes de empezar: leer tres veces</span><span class="en">Before you start: read three times</span></h2>
+    <p><span class="es">En matemáticas, muchos errores no vienen de las cuentas, sino de la lectura: se suma cuando había que multiplicar, se usa un número que sobraba o se responde otra pregunta. Por eso, en estos ejercicios no se empieza calculando: primero se lee el problema tres veces, cada vez con una pregunta distinta. Si practicas esta rutina desde el primer nivel, se volverá un hábito para todo el GED.</span><span class="en">In math, many mistakes come not from the arithmetic but from the reading: adding when you needed to multiply, using a number that was not needed, or answering a different question. That is why these exercises do not start with calculating: first you read the problem three times, each time with a different question. If you practice this routine from the first level, it will become a habit for the whole GED.</span></p>
+    <ol class="lecturas">
+      <li><span class="num-circulo" aria-hidden="true">1</span><div><strong><span class="es">1.ª lectura · La idea general</span><span class="en">1st read · The big idea</span></strong><br><span class="es">¿De qué trata la situación? Cuéntalo con tus palabras, <strong>sin usar números</strong>.</span><span class="en">What is the situation about? Tell it in your own words, <strong>without using numbers</strong>.</span></div></li>
+      <li><span class="num-circulo" aria-hidden="true">2</span><div><strong><span class="es">2.ª lectura · Cantidades y unidades</span><span class="en">2nd read · Quantities and units</span></strong><br><span class="es">¿Qué se puede contar o medir? ¿En qué unidades viene cada dato (dólares, horas, libras)? ¿Hay algún dato que sobra?</span><span class="en">What can be counted or measured? What units does each piece of information use (dollars, hours, pounds)? Is any information not needed?</span></div></li>
+      <li><span class="num-circulo" aria-hidden="true">3</span><div><strong><span class="es">3.ª lectura · La estrategia</span><span class="en">3rd read · The strategy</span></strong><br><span class="es">¿Qué pregunta el problema? ¿Qué operación u operaciones lo resuelven? ¿Hay una pregunta escondida que hay que responder primero?</span><span class="en">What does the problem ask? Which operation or operations solve it? Is there a hidden question you must answer first?</span></div></li>
+      <li><span class="num-circulo" aria-hidden="true">✔</span><div><strong><span class="es">Estimar, resolver y comprobar</span><span class="en">Estimate, solve and check</span></strong><br><span class="es">Calcula y pregúntate: ¿mi respuesta está cerca de mi estimación? ¿Tiene sentido en la historia?</span><span class="en">Calculate and ask yourself: is my answer close to my estimate? Does it make sense in the story?</span></div></li>
+    </ol>
+    <h3><span class="es">Frases para explicar tu razonamiento</span><span class="en">Sentence frames to explain your thinking</span></h3>
+    <ul class="marcos">
+      <li><span class="es">La situación trata de…</span><span class="en">The situation is about…</span></li>
+      <li><span class="es">La respuesta va a estar en… (dólares, horas, tazas…)</span><span class="en">The answer will be in… (dollars, hours, cups…)</span></li>
+      <li><span class="es">El dato ___ no hace falta porque…</span><span class="en">The information ___ is not needed because…</span></li>
+      <li><span class="es">Primero tengo que saber…</span><span class="en">First I need to know…</span></li>
+      <li><span class="es">Mi respuesta tiene sentido porque…</span><span class="en">My answer makes sense because…</span></li>
+    </ul>
+    <div class="caja caja-consejo">
+      <h3><span class="es">¿Por qué leer así?</span><span class="en">Why read this way?</span></h3>
+      <p><span class="es">Un estudio reciente de la Universidad Texas A&amp;M (Niileksela, Hajovsky y colaboradores, 2026) encontró que la <strong>comprensión del lenguaje</strong> y el <strong>razonamiento</strong> —saber separar lo que importa de lo que no— están entre las habilidades que más se relacionan con el éxito en matemáticas. La buena noticia: ambas se pueden practicar. Eso es lo que harás aquí.</span><span class="en">A recent study from Texas A&amp;M University (Niileksela, Hajovsky, and colleagues, 2026) found that <strong>language comprehension</strong> and <strong>reasoning</strong>—telling what matters from what does not—are among the abilities most closely tied to success in math. The good news: both can be practiced. That is what you will do here.</span></p>
+    </div>
+    <p class="ayuda"><span class="es">Cada ejercicio tiene un botón 🔊 para escuchar la historia. En las respuestas escritas tienes dos intentos; después verás la solución. Al final de cada tema hay enlaces a las lecciones del Nivel 1 por si quieres repasar.</span><span class="en">Each exercise has a 🔊 button to listen to the story. On written answers you get two tries; after that you will see the solution. Each topic links to the Level 1 lessons in case you want to review.</span></p>
+  </section>
+
+  <div id="temas"></div>
+
+  <section id="referencias" class="caja" aria-labelledby="titulo-ref">
+    <h2 id="titulo-ref"><span class="es">Referencias</span><span class="en">References</span></h2>
+    <ul class="referencias">
+      <li>GED Testing Service. (2014). <i>Assessment guide for educators: Mathematical reasoning</i>. <a href="https://www.ged.com/wp-content/uploads/assessment_guide_for_educators_math.pdf" target="_blank" rel="noopener noreferrer">ged.com</a></li>
+      <li>Lawson, E. (2026, octubre). Why are some people good at math while others struggle? <i>Phys.org</i>. <a href="https://phys.org/news/2026-10-people-good-math-struggle.html" target="_blank" rel="noopener noreferrer">phys.org</a></li>
+      <li>Niileksela, C. R., Hajovsky, D. B., Cocar-Montenegro, F. P., Schneider, W. J., Flanagan, D. P., &amp; Alfonso, V. C. (2026). Cognitive–mathematics relations: A meta-analysis of norm-referenced standardized test batteries. <i>Journal of Intelligence, 14</i>(7), 142. <a href="https://doi.org/10.3390/jintelligence14070142" target="_blank" rel="noopener noreferrer">https://doi.org/10.3390/jintelligence14070142</a></li>
+      <li>Shore, C. (s. f.). <i>Clothesline Math</i>. <a href="https://clotheslinemath.com/" target="_blank" rel="noopener noreferrer">clotheslinemath.com</a></li>
+      <li>Zwiers, J., Dieckmann, J., Rutherford-Quach, S., Daro, V., Skarin, R., Weiss, S., &amp; Malamut, J. (2017). <i>Principles for the design of mathematics curricula: Promoting language and content development</i>. Stanford University, UL/SCALE. <a href="https://ul.stanford.edu/sites/default/files/resource/2021-11/Principles%20for%20the%20Design%20of%20Mathematics%20Curricula_1.pdf" target="_blank" rel="noopener noreferrer">ul.stanford.edu</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p><span class="es">Este material se distribuye con la licencia</span><span class="en">This material is licensed under</span> <a rel="license noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative Commons BY-NC-SA 4.0</a>.</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+/* ====== Utilidades de idioma ====== */
+const b = (es, en) => ({ es, en: en === undefined ? es : en });
+const L = (o) => (typeof o === "string") ? o : '<span class="es" lang="es">' + o.es + '</span><span class="en" lang="en">' + o.en + '</span>';
+
+const UI = {
+  l1: b("1.ª lectura · La idea general", "1st read · The big idea"),
+  l2: b("2.ª lectura · Cantidades y unidades", "2nd read · Quantities and units"),
+  l3: b("3.ª lectura · La estrategia", "3rd read · The strategy"),
+  r:  b("Estimar, resolver y comprobar", "Estimate, solve and check"),
+  ok: b("✔ ¡Correcto!", "✔ Correct!"),
+  noMc: b("✘ Todavía no.", "✘ Not yet."),
+  otra: b("✘ Todavía no. Te queda un intento.", "✘ Not yet. You have one more try."),
+  sol: b("Mira la solución:", "Look at the solution:"),
+  noSimpl: b("Tu expresión es equivalente, pero todavía no está simplificada: junta los términos semejantes y vuelve a intentarlo.", "Your expression is equivalent, but it is not simplified yet: combine like terms and try again."),
+  invalida: b("No pude leer esa expresión. Usa números, las letras del problema y los signos + − * / ( ).", "I could not read that expression. Use numbers, the letters in the problem, and the signs + − * / ( )."),
+  numInvalido: b("Escribe un número (por ejemplo: 12, −3 o 4.5).", "Type a number (for example: 12, −3, or 4.5)."),
+  comprobar: b("Comprobar", "Check"),
+  verEjemplo: b("Ver un ejemplo de respuesta", "See a sample answer"),
+  escuchar: b("🔊 Escuchar", "🔊 Listen"),
+  ayudaExpr: b("Puedes escribir la multiplicación pegada (2.25v) o con asterisco (2.25*v).", "You can write multiplication side by side (2.25v) or with an asterisk (2.25*v)."),
+  ejercicio: b("Ejercicio", "Exercise"),
+  de: b("de", "of"),
+  hechos: b("hechos", "done"),
+  tuRespuesta: b("Tu respuesta", "Your answer"),
+  escribeAqui: b("Escribe aquí tu respuesta.", "Write your answer here."),
+  rectaOk: b("✔ ¡Muy bien! Así quedan en la recta numérica:", "✔ Well done! This is how they look on the number line:"),
+  ayudaFrac: b("Puedes escribir una fracción (3/4), un número mixto con un espacio (1 1/2) o un decimal (1.5).", "You can write a fraction (3/4), a mixed number with a space (1 1/2), or a decimal (1.5)."),
+  numInvalidoFrac: b("Escribe un número, una fracción o un número mixto (por ejemplo: 8, 3/4 o 1 1/2).", "Type a number, a fraction, or a mixed number (for example: 8, 3/4, or 1 1/2)."),
+  deshacer: b("↩ Deshacer", "↩ Undo"),
+  reiniciar: b("Empezar de nuevo", "Start over"),
+  vacio: b("Toca las tarjetas en orden, de la menor a la mayor.", "Tap the cards in order, from least to greatest."),
+  faltan: b("Todavía faltan tarjetas por colgar.", "There are still cards to hang."),
+  tendOk: b("✔ ¡Muy bien! Así quedan en el tendedero:", "✔ Well done! This is how they hang on the clothesline:"),
+  tendOtra: b("Te queda un intento. Revisa este par:", "You have one more try. Check this pair:"),
+  tendSol: b("Así quedan en el tendedero:", "This is how they hang on the clothesline:"),
+  repasa: b("Para repasar:", "To review:")
+};
+
+/* ====== Contenido ====== */
+const TEMAS = [
+/* ---------------- TEMA 1 ---------------- */
+{ id:"tema1", color:"var(--t1)",
+  titulo: b("¿Qué operación pide la historia?", "Which operation does the story call for?"),
+  indicadores: "GED®: Q.2.a · Q.2.e · MP.1.a · MP.1.e",
+  repaso: [["n1-l1-3.html", b("Lección 1.3: suma y resta en problemas verbales", "Lesson 1.3: addition and subtraction word problems")], ["n1-l2-3.html", b("Lección 2.3: multiplicación y división en problemas verbales", "Lesson 2.3: multiplication and division word problems")]],
+  idea: b("Las palabras clave ayudan, pero pueden engañar. La pregunta más segura es: <strong>¿qué está pasando en la historia?</strong> ¿Se juntan cantidades, se separan o se comparan, se repiten grupos iguales o se reparte en partes iguales? Esta tabla resume las cuatro situaciones.",
+          "Key words help, but they can be misleading. The safest question is: <strong>what is happening in the story?</strong> Are amounts joined, separated or compared, are equal groups repeated, or is something shared equally? This table sums up the four situations."),
+  tabla: true,
+  consejo: b("«En total» no siempre significa sumar: «24 cajas de 30 huevos, ¿cuántos huevos en total?» es una multiplicación. Y «¿cuánto <em>más</em> necesita?» casi siempre es una resta. Antes de elegir la operación, imagina la escena.",
+             "“In total” does not always mean add: “24 boxes of 30 eggs, how many eggs in total?” is a multiplication. And “how much <em>more</em> does she need?” is almost always a subtraction. Before you choose the operation, picture the scene."),
+  items: [
+  { titulo: b("El cheque de Ana", "Ana’s paycheck"),
+    texto: b("Ana trabaja en una fábrica de dulces del West Side. Gana $18 por hora. Esta semana trabajó 35 horas. Su hija empieza la escuela el lunes. ¿Cuánto ganó Ana esta semana, antes de impuestos?",
+             "Ana works at a candy factory on the West Side. She earns $18 an hour. This week she worked 35 hours. Her daughter starts school on Monday. How much did Ana earn this week, before taxes?"),
+    pasos: [
+      { l:"l1", tipo:"mc", preg: b("Sin usar números, ¿de qué trata la situación?", "Without using numbers, what is the situation about?"),
+        ops: [
+          { t: b("Ana quiere saber cuánto ganó por su trabajo de la semana.", "Ana wants to know how much she earned for her work this week."), ok:true, fb: b("Exacto: es una historia sobre el pago de una semana de trabajo.", "Exactly: it is a story about the pay for one week of work.") },
+          { t: b("Ana quiere saber cuánto cuesta la inscripción de su hija.", "Ana wants to know how much her daughter’s school enrollment costs."), fb: b("La hija aparece en el texto, pero la pregunta no trata de la escuela.", "Her daughter appears in the text, but the question is not about school.") },
+          { t: b("Ana quiere comparar los sueldos de dos fábricas distintas.", "Ana wants to compare the wages at two different factories."), fb: b("En la historia solo hay una fábrica y un sueldo.", "There is only one factory and one wage in the story.") } ] },
+      { l:"l2", tipo:"mc", preg: b("¿Qué dato <strong>no</strong> hace falta para responder la pregunta?", "Which information is <strong>not</strong> needed to answer the question?"),
+        ops: [
+          { t: b("Que gana $18 por hora", "That she earns $18 an hour"), fb: b("Ese dato sí hace falta: es lo que gana en cada hora.", "That information is needed: it is what she earns each hour.") },
+          { t: b("Que trabajó 35 horas", "That she worked 35 hours"), fb: b("Ese dato sí hace falta: el pago depende de las horas.", "That information is needed: the pay depends on the hours.") },
+          { t: b("Que su hija empieza el lunes", "That her daughter starts on Monday"), ok:true, fb: b("Bien visto: es información de sobra.", "Good catch: it is extra information.") } ] },
+      { l:"l3", tipo:"mc", preg: b("¿Qué operación resuelve el problema?", "Which operation solves the problem?"),
+        ops: [
+          { t: "18 + 35", fb: b("Sumar dólares y horas no tiene sentido: son cantidades de distinta clase.", "Adding dollars and hours makes no sense: they are different kinds of amounts.") },
+          { t: "18 × 35", ok:true, fb: b("Correcto: son 35 grupos iguales de $18, uno por cada hora.", "Correct: there are 35 equal groups of $18, one for each hour.") },
+          { t: "35 ÷ 18", fb: b("Aquí no se reparte nada: cada hora se suma otra vez el mismo pago.", "Nothing is being shared here: each hour the same pay is added again.") } ] },
+      { l:"r", tipo:"num", resp:630, preg: b("Resuelve: ¿cuánto ganó Ana? (en dólares)", "Solve: how much did Ana earn? (in dollars)"),
+        trampas: [ { v:53, fb: b("53 es 18 + 35. Si Ana trabajó 35 horas, gana $18 treinta y cinco veces: hay que multiplicar.", "53 is 18 + 35. If Ana worked 35 hours, she earns $18 thirty-five times: you need to multiply.") } ],
+        sol: b("18 × 35 = $630. Comprobación con una estimación: 20 × 35 = 700, un poco más que 630 ✔. Tiene sentido.", "18 × 35 = $630. Check with an estimate: 20 × 35 = 700, a bit more than 630 ✔. It makes sense.") } ] },
+
+  { titulo: b("La renta compartida", "Splitting the rent"),
+    texto: b("Tres compañeros de cuarto pagan en partes iguales un apartamento de Logan Square que cuesta $1,650 al mes. El edificio tiene 4 pisos. ¿Cuánto paga cada uno al mes?",
+             "Three roommates split the rent equally on a Logan Square apartment that costs $1,650 a month. The building has 4 floors. How much does each one pay per month?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Qué dato sobra?", "Which information is extra?"),
+        ops: [
+          { t: b("Que son tres compañeros", "That there are three roommates"), fb: b("Ese dato hace falta: entre ellos se reparte la renta.", "That information is needed: the rent is shared among them.") },
+          { t: b("Que la renta es de $1,650", "That the rent is $1,650"), fb: b("Ese dato hace falta: es lo que se reparte.", "That information is needed: it is what is shared.") },
+          { t: b("Que el edificio tiene 4 pisos", "That the building has 4 floors"), ok:true, fb: b("Correcto: los pisos no cambian lo que paga cada uno.", "Correct: the floors do not change what each one pays.") } ] },
+      { l:"l3", tipo:"mc", preg: b("¿Qué está pasando en la historia?", "What is happening in the story?"),
+        ops: [
+          { t: b("Se reparte una cantidad en partes iguales.", "An amount is shared into equal parts."), ok:true, fb: b("Exacto: repartir en partes iguales es dividir, 1,650 ÷ 3.", "Exactly: sharing into equal parts means dividing, 1,650 ÷ 3.") },
+          { t: b("Se repite tres veces la misma cantidad.", "The same amount is repeated three times."), fb: b("Eso daría lo que pagan tres apartamentos, no lo que paga cada persona.", "That would give the rent for three apartments, not what each person pays.") },
+          { t: b("Se quita una cantidad pequeña de otra.", "A small amount is taken away from another."), fb: b("Restar 3 dólares no tiene sentido: 3 son personas, no dólares.", "Subtracting 3 dollars makes no sense: 3 is people, not dollars.") } ] },
+      { l:"r", tipo:"num", resp:550, preg: b("Resuelve: ¿cuánto paga cada uno? (en dólares)", "Solve: how much does each one pay? (in dollars)"),
+        trampas: [ { v:4950, fb: b("4,950 es 1,650 × 3: eso sería la renta de tres meses. Cada persona debe pagar <em>menos</em> que la renta completa.", "4,950 is 1,650 × 3: that would be three months of rent. Each person must pay <em>less</em> than the whole rent.") }, { v:412.5, fb: b("Dividiste entre 4, el número de pisos. La renta se reparte entre las 3 personas.", "You divided by 4, the number of floors. The rent is shared among the 3 people.") } ],
+        sol: b("1,650 ÷ 3 = $550. Comprobación: 550 × 3 = 1,650 ✔", "1,650 ÷ 3 = $550. Check: 550 × 3 = 1,650 ✔") } ] },
+
+  { titulo: b("El carro usado", "The used car"),
+    texto: b("Luis quiere comprar un carro usado que cuesta $1,200. Ya tiene ahorrados $785. ¿Cuánto dinero más necesita?",
+             "Luis wants to buy a used car that costs $1,200. He has already saved $785. How much more money does he need?"),
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("La pregunta dice «más». ¿Qué operación pide de verdad?", "The question says “more.” Which operation does it really call for?"),
+        ops: [
+          { t: b("Sumar, porque dice «más»: 1,200 + 785", "Add, because it says “more”: 1,200 + 785"), fb: b("Es la trampa de la palabra clave. Si sumas, el resultado sería mayor que el precio del carro.", "That is the key-word trap. If you add, the result would be more than the price of the car.") },
+          { t: b("Restar, porque se busca lo que falta: 1,200 − 785", "Subtract, because we want what is missing: 1,200 − 785"), ok:true, fb: b("Correcto: «cuánto falta» se encuentra con una resta.", "Correct: “how much is missing” is found by subtracting.") },
+          { t: b("Dividir, porque compara dos cantidades: 1,200 ÷ 785", "Divide, because it compares two amounts: 1,200 ÷ 785"), fb: b("Dividir diría cuántas veces cabe una cantidad en la otra, y eso no se pregunta.", "Dividing would tell how many times one amount fits into the other, and that is not what is asked.") } ] },
+      { l:"r", tipo:"num", resp:415, preg: b("Resuelve: ¿cuánto le falta? (en dólares)", "Solve: how much is he missing? (in dollars)"),
+        trampas: [ { v:1985, fb: b("1,985 es la suma. Luis no necesita más dinero del que cuesta el carro.", "1,985 is the sum. Luis does not need more money than the car costs.") }, { v:525, fb: b("Revisa la resta con reagrupación: 1,200 − 785.", "Check the subtraction with regrouping: 1,200 − 785.") } ],
+        sol: b("1,200 − 785 = $415. Comprobación: 785 + 415 = 1,200 ✔", "1,200 − 785 = $415. Check: 785 + 415 = 1,200 ✔") } ] },
+
+  { titulo: b("Los huevos de la tienda", "The store’s eggs"),
+    texto: b("Una tienda de la calle 26 recibió 24 cajas de huevos. Cada caja trae 30 huevos. ¿Cuántos huevos llegaron en total?",
+             "A store on 26th Street received 24 boxes of eggs. Each box holds 30 eggs. How many eggs arrived in total?"),
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("La pregunta dice «en total». ¿Qué está pasando?", "The question says “in total.” What is happening?"),
+        ops: [
+          { t: b("Se juntan dos cantidades distintas: 24 + 30", "Two different amounts are joined: 24 + 30"), fb: b("24 son cajas y 30 son huevos: no se suman cajas con huevos.", "24 is boxes and 30 is eggs: you do not add boxes to eggs.") },
+          { t: b("Se repiten grupos iguales: 24 × 30", "Equal groups are repeated: 24 × 30"), ok:true, fb: b("Correcto: 24 grupos de 30 huevos. «En total» aquí pide multiplicar.", "Correct: 24 groups of 30 eggs. “In total” here calls for multiplying.") },
+          { t: b("Se reparte en partes iguales: 30 ÷ 24", "Something is shared equally: 30 ÷ 24"), fb: b("Nadie reparte los huevos: llegan cajas llenas.", "No one is sharing the eggs: full boxes arrive.") } ] },
+      { l:"r", tipo:"num", resp:720, preg: b("Resuelve: ¿cuántos huevos llegaron?", "Solve: how many eggs arrived?"),
+        trampas: [ { v:54, fb: b("54 es 24 + 30. Con 54 huevos no se llenarían ni dos cajas.", "54 is 24 + 30. 54 eggs would not even fill two boxes.") } ],
+        sol: b("24 × 30 = 720 huevos.", "24 × 30 = 720 eggs.") } ] },
+
+  { titulo: b("Las mesas de la graduación", "The graduation tables"),
+    texto: b("Para la graduación del GED se esperan 50 invitados. En cada mesa caben 6 sillas. ¿Cuántas mesas hay que preparar para que nadie se quede de pie?",
+             "For the GED graduation, 50 guests are expected. Each table seats 6. How many tables must be set up so that no one is left standing?"),
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("50 ÷ 6 = 8 y sobran 2. ¿Qué significan esos 2 en la historia?", "50 ÷ 6 = 8 with 2 left over. What do those 2 mean in the story?"),
+        ops: [
+          { t: b("Dos mesas que no hacen falta", "Two tables that are not needed"), fb: b("El residuo no cuenta mesas, cuenta personas.", "The remainder does not count tables; it counts people.") },
+          { t: b("Dos invitados que todavía no tienen silla", "Two guests who still have no seat"), ok:true, fb: b("Exacto: con 8 mesas se sientan 48 personas y quedan 2 sin lugar.", "Exactly: 8 tables seat 48 people, and 2 are left without a place.") },
+          { t: b("Dos sillas vacías en cada una de las mesas", "Two empty chairs at each of the tables"), fb: b("Con 8 mesas llenas no queda ninguna silla vacía.", "With 8 full tables no chair is empty.") } ] },
+      { l:"r", tipo:"num", resp:9, preg: b("¿Cuántas mesas hay que preparar?", "How many tables must be set up?"),
+        trampas: [ { v:8, fb: b("Con 8 mesas, 2 invitados se quedan de pie. Hace falta una mesa más.", "With 8 tables, 2 guests are left standing. One more table is needed.") }, { v:8.33, fb: b("No se puede preparar una parte de mesa: la respuesta debe ser un número entero de mesas.", "You cannot set up part of a table: the answer must be a whole number of tables.") } ],
+        sol: b("9 mesas: 8 mesas llenas (48 personas) y una mesa más para los 2 que faltan. En la vida real, a veces hay que <strong>redondear hacia arriba</strong>.", "9 tables: 8 full tables (48 people) and one more table for the remaining 2. In real life, sometimes you must <strong>round up</strong>.") } ] },
+
+  { titulo: b("Inventa tu historia", "Write your own story"),
+    pasos: [
+      { tipo:"abierta", preg: b("Inventa una situación de tu vida para 120 ÷ 4 y otra para 120 − 4. Explica en qué se diferencian las dos historias.", "Make up a situation from your life for 120 ÷ 4 and another for 120 − 4. Explain how the two stories are different."),
+        modelo: b("120 ÷ 4: cuatro hermanos pagan en partes iguales una cena de $120; cada uno paga $30. 120 − 4: tenía $120 y gasté $4 en el autobús; me quedan $116. En la primera se <em>reparte</em> en partes iguales; en la segunda se <em>quita</em> una cantidad.", "120 ÷ 4: four siblings split a $120 dinner equally; each one pays $30. 120 − 4: I had $120 and spent $4 on the bus; I have $116 left. In the first one, an amount is <em>shared</em> equally; in the second, an amount is <em>taken away</em>.") } ] }
+  ] },
+
+/* ---------------- TEMA 2 ---------------- */
+{ id:"tema2", color:"var(--t2)",
+  titulo: b("Problemas de varios pasos", "Multi-step problems"),
+  indicadores: "GED®: Q.2.a · Q.2.e · MP.1.b · MP.3.a · MP.4.a",
+  repaso: [["n1-l2-3.html", b("Lección 2.3: multiplicación y división en problemas verbales", "Lesson 2.3: multiplication and division word problems")], ["n1-l5-3.html", b("Lección 5.3: problemas verbales de un paso", "Lesson 5.3: one-step word problems")]],
+  idea: b("Muchos problemas de la vida real esconden una <strong>pregunta intermedia</strong>: algo que hay que saber antes de responder lo que se pregunta. En la tercera lectura, pregúntate: «¿qué necesito saber primero?». Y recuerda el orden de las operaciones: primero lo que está entre paréntesis, después multiplicar y dividir, y al final sumar y restar.",
+          "Many real-life problems hide an <strong>in-between question</strong>: something you must know before answering what is asked. On the third read, ask yourself: “What do I need to know first?” And remember the order of operations: first what is in parentheses, then multiply and divide, and last add and subtract."),
+  consejo: b("Escribe un plan antes de calcular: «Paso 1: busco…; Paso 2: con eso, calculo…». Un plan escrito evita que uses un número en el lugar equivocado.", "Write a plan before you calculate: “Step 1: I find…; Step 2: with that, I calculate…” A written plan keeps you from using a number in the wrong place."),
+  items: [
+  { titulo: b("La compra en el supermercado", "Shopping at the supermarket"),
+    texto: b("Gloria compra 3 galones de leche a $4 cada uno y una bolsa de arroz de $7. Paga con un billete de $50. ¿Cuánto le dan de cambio?",
+             "Gloria buys 3 gallons of milk at $4 each and a bag of rice for $7. She pays with a $50 bill. How much change does she get?"),
+    pasos: [
+      { l:"l1", tipo:"mc", preg: b("Sin usar números, ¿de qué trata la situación?", "Without using numbers, what is the situation about?"),
+        ops: [
+          { t: b("Gloria paga una compra y quiere saber cuánto le devuelven.", "Gloria pays for her groceries and wants to know her change."), ok:true, fb: b("Exacto.", "Exactly.") },
+          { t: b("Gloria compara el precio de la leche en dos tiendas.", "Gloria compares the price of milk at two stores."), fb: b("Solo hay una tienda y un precio para la leche.", "There is only one store and one price for milk.") },
+          { t: b("Gloria reparte la compra entre varias personas.", "Gloria splits the groceries among several people."), fb: b("No se reparte nada: Gloria paga sola.", "Nothing is shared: Gloria pays by herself.") } ] },
+      { l:"l3", tipo:"mc", preg: b("¿Qué hay que saber <strong>primero</strong>?", "What do you need to know <strong>first</strong>?"),
+        ops: [
+          { t: b("Cuánto cuesta toda la compra", "How much all the groceries cost"), ok:true, fb: b("Correcto: esa es la pregunta escondida. Sin el total no se puede saber el cambio.", "Correct: that is the hidden question. Without the total you cannot find the change.") },
+          { t: b("Cuántos billetes de $50 lleva", "How many $50 bills she has"), fb: b("La historia ya dice que paga con un billete.", "The story already says she pays with one bill.") },
+          { t: b("Cuánto pesa la bolsa de arroz", "How much the bag of rice weighs"), fb: b("El peso no cambia lo que paga.", "The weight does not change what she pays.") } ] },
+      { l:"l3", tipo:"mc", preg: b("¿Qué expresión representa el cambio?", "Which expression represents the change?"),
+        ops: [
+          { t: "50 − (3 × 4 + 7)", ok:true, fb: b("Correcto: al billete se le resta el total de la compra.", "Correct: the total of the groceries is subtracted from the bill.") },
+          { t: "50 − 3 × 4 + 7", fb: b("Sin paréntesis, el 7 se <em>suma</em> al cambio, como si el arroz fuera un regalo.", "Without parentheses, the 7 is <em>added</em> to the change, as if the rice were a gift.") },
+          { t: "(50 − 3) × 4 + 7", fb: b("Esa expresión le resta 3 dólares al billete, y 3 son galones.", "That expression subtracts 3 dollars from the bill, but 3 is gallons.") } ] },
+      { l:"r", tipo:"num", resp:31, preg: b("Resuelve: ¿cuánto le dan de cambio? (en dólares)", "Solve: how much change does she get? (in dollars)"),
+        trampas: [ { v:45, fb: b("45 sale de 50 − 3 × 4 + 7: el arroz se sumó en lugar de restarse.", "45 comes from 50 − 3 × 4 + 7: the rice was added instead of subtracted.") }, { v:39, fb: b("Te faltó contar los 3 galones: la leche cuesta 3 × 4 = $12, no $4.", "You forgot the 3 gallons: the milk costs 3 × 4 = $12, not $4.") } ],
+        sol: b("Compra: 3 × 4 + 7 = 12 + 7 = $19. Cambio: 50 − 19 = $31. Comprobación: 19 + 31 = 50 ✔", "Groceries: 3 × 4 + 7 = 12 + 7 = $19. Change: 50 − 19 = $31. Check: 19 + 31 = 50 ✔") } ] },
+
+  { titulo: b("Las horas extra", "Overtime"),
+    texto: b("Pedro trabaja en un almacén. Le pagan $20 por hora durante las primeras 40 horas de la semana y $30 por cada hora extra. Esta semana trabajó 46 horas. ¿Cuánto ganó?",
+             "Pedro works at a warehouse. He is paid $20 an hour for the first 40 hours of the week and $30 for each overtime hour. This week he worked 46 hours. How much did he earn?"),
+    pasos: [
+      { l:"l2", tipo:"num", resp:6, preg: b("Pregunta escondida: ¿cuántas horas extra trabajó?", "Hidden question: how many overtime hours did he work?"),
+        trampas: [ { v:46, fb: b("46 son todas las horas. Las horas extra son solo las que pasan de 40.", "46 is all the hours. Overtime hours are only the ones over 40.") } ],
+        sol: b("46 − 40 = 6 horas extra.", "46 − 40 = 6 overtime hours.") },
+      { l:"r", tipo:"num", resp:980, preg: b("Resuelve: ¿cuánto ganó Pedro esta semana? (en dólares)", "Solve: how much did Pedro earn this week? (in dollars)"),
+        trampas: [ { v:920, fb: b("920 es 46 × 20: pagaste todas las horas al precio normal. Las 6 horas extra se pagan a $30.", "920 is 46 × 20: you paid every hour at the regular rate. The 6 overtime hours are paid at $30.") }, { v:1380, fb: b("1,380 es 46 × 30: solo las horas extra se pagan a $30.", "1,380 is 46 × 30: only the overtime hours are paid at $30.") }, { v:180, fb: b("180 es solo el pago de las horas extra. Falta sumar las 40 horas normales.", "180 is only the overtime pay. You still need to add the 40 regular hours.") } ],
+        sol: b("Horas normales: 40 × 20 = $800. Horas extra: 6 × 30 = $180. Total: 800 + 180 = $980.", "Regular hours: 40 × 20 = $800. Overtime: 6 × 30 = $180. Total: 800 + 180 = $980.") } ] },
+
+  { titulo: b("La tarjeta Ventra", "The Ventra card"),
+    texto: b("Carla carga $40 en su tarjeta Ventra el lunes. Cada viaje en el tren cuesta $2.50. De lunes a viernes va al trabajo en tren, ida y vuelta. ¿Cuánto dinero le queda en la tarjeta el viernes por la noche?",
+             "Carla puts $40 on her Ventra card on Monday. Each train ride costs $2.50. Monday through Friday she takes the train to work and back. How much money is left on the card on Friday night?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("«Ida y vuelta» de lunes a viernes. ¿Cuántos viajes son?", "“To work and back” Monday through Friday. How many rides is that?"),
+        ops: [
+          { t: b("5 viajes, uno por día", "5 rides, one per day"), fb: b("«Ida y vuelta» son dos viajes cada día: uno para ir y otro para regresar.", "“To work and back” is two rides each day: one to go and one to return.") },
+          { t: b("10 viajes, dos por día", "10 rides, two per day"), ok:true, fb: b("Correcto: 5 días × 2 viajes = 10 viajes.", "Correct: 5 days × 2 rides = 10 rides.") },
+          { t: b("7 viajes, uno por cada día", "7 rides, one for each day"), fb: b("De lunes a viernes son 5 días, no 7.", "Monday through Friday is 5 days, not 7.") } ] },
+      { l:"r", tipo:"num", resp:15, preg: b("Resuelve: ¿cuánto le queda en la tarjeta? (en dólares)", "Solve: how much is left on the card? (in dollars)"),
+        trampas: [ { v:27.5, fb: b("Contaste solo 5 viajes. Ida y vuelta son 10 viajes.", "You counted only 5 rides. To work and back is 10 rides.") }, { v:25, fb: b("$25 es lo que <em>gastó</em>. La pregunta es cuánto le <em>queda</em>.", "$25 is what she <em>spent</em>. The question asks what is <em>left</em>.") } ],
+        sol: b("Gasto: 10 × 2.50 = $25. Le queda: 40 − 25 = $15.", "Spent: 10 × 2.50 = $25. Left: 40 − 25 = $15.") } ] },
+
+  { titulo: b("El cuaderno y los bolígrafos", "The notebook and the pens"),
+    texto: b("José compró un cuaderno de $5 y 3 paquetes de bolígrafos de $4 cada uno. Su amigo escribió 5 + 3 × 4 y calculó que José gastó $32.",
+             "José bought a $5 notebook and 3 packs of pens at $4 each. His friend wrote 5 + 3 × 4 and figured that José spent $32."),
+    pasos: [
+      { tipo:"mc", preg: b("¿Qué error cometió el amigo?", "What mistake did the friend make?"),
+        ops: [
+          { t: b("Sumó primero, 5 + 3 = 8, y después multiplicó por 4.", "He added first, 5 + 3 = 8, and then multiplied by 4."), ok:true, fb: b("Correcto: se multiplica antes de sumar. Además, 8 × 4 cobraría 4 dólares también por el cuaderno.", "Correct: you multiply before you add. Also, 8 × 4 would charge 4 dollars for the notebook too.") },
+          { t: b("Escribió mal la expresión: debía ser 5 × 3 + 4.", "He wrote the wrong expression: it should be 5 × 3 + 4."), fb: b("La expresión 5 + 3 × 4 está bien: el error está en el orden en que la calculó.", "The expression 5 + 3 × 4 is right: the mistake is in the order he calculated it.") },
+          { t: b("No hay error: $32 es lo que José gastó.", "There is no mistake: $32 is what José spent."), fb: b("Comprueba: el cuaderno ($5) y los bolígrafos ($12) no llegan a $32.", "Check: the notebook ($5) and the pens ($12) do not add up to $32.") } ] },
+      { l:"r", tipo:"num", resp:17, preg: b("¿Cuánto gastó José de verdad? (en dólares)", "How much did José really spend? (in dollars)"),
+        trampas: [ { v:32, fb: b("Esa es la respuesta del amigo. Multiplica primero: 3 × 4.", "That is the friend’s answer. Multiply first: 3 × 4.") } ],
+        sol: b("5 + 3 × 4 = 5 + 12 = $17.", "5 + 3 × 4 = 5 + 12 = $17.") } ] },
+
+  { titulo: b("Pintar la sala", "Painting the living room"),
+    texto: b("Para pintar su sala, Rogelio necesita 2 galones de pintura por cada pared. La sala tiene 3 paredes que pintar. Cada galón cuesta $28 y tiene un cupón de $10 de descuento sobre el total. ¿Cuánto paga?",
+             "To paint his living room, Rogelio needs 2 gallons of paint for each wall. The room has 3 walls to paint. Each gallon costs $28, and he has a $10-off coupon on the total. How much does he pay?"),
+    pasos: [
+      { l:"l2", tipo:"num", resp:6, preg: b("Pregunta escondida: ¿cuántos galones necesita?", "Hidden question: how many gallons does he need?"),
+        trampas: [ { v:5, fb: b("Son 2 galones <em>por cada</em> pared: se multiplica, 3 × 2.", "It is 2 gallons <em>for each</em> wall: multiply, 3 × 2.") }, { v:2, fb: b("2 galones son para una sola pared. Hay 3 paredes.", "2 gallons is for just one wall. There are 3 walls.") } ],
+        sol: b("3 × 2 = 6 galones.", "3 × 2 = 6 gallons.") },
+      { l:"r", tipo:"num", resp:158, preg: b("Resuelve: ¿cuánto paga Rogelio? (en dólares)", "Solve: how much does Rogelio pay? (in dollars)"),
+        trampas: [ { v:168, fb: b("168 es el precio sin el cupón. Falta restar los $10.", "168 is the price without the coupon. You still need to subtract the $10.") }, { v:178, fb: b("El cupón es un descuento: se resta, no se suma.", "The coupon is a discount: subtract it, do not add it.") } ],
+        sol: b("6 × 28 = $168. Con el cupón: 168 − 10 = $158.", "6 × 28 = $168. With the coupon: 168 − 10 = $158.") } ] },
+
+  { titulo: b("Ahora planifica tú", "Now you make the plan"),
+    pasos: [
+      { tipo:"abierta", preg: b("Escribe una historia de dos pasos que se resuelva con 100 − 4 × 15. Escribe también el plan: «Paso 1… Paso 2…».", "Write a two-step story that is solved with 100 − 4 × 15. Also write the plan: “Step 1… Step 2…”"),
+        modelo: b("Tenía $100 y compré 4 camisas de $15 cada una. ¿Cuánto me queda? Paso 1: busco cuánto costaron las camisas: 4 × 15 = $60. Paso 2: le resto eso a lo que tenía: 100 − 60 = $40.", "I had $100 and bought 4 shirts at $15 each. How much do I have left? Step 1: I find what the shirts cost: 4 × 15 = $60. Step 2: I subtract that from what I had: 100 − 60 = $40.") } ] }
+  ] },
+
+/* ---------------- TEMA 3 ---------------- */
+{ id:"tema3", color:"var(--t3)",
+  titulo: b("Decimales en el dinero y en las medidas", "Decimals in money and measurement"),
+  indicadores: "GED®: Q.1.a · Q.2.a · Q.2.e · Q.3.a · MP.1.e",
+  repaso: [["n1-l3-1.html", b("Lección 3.1: decimales", "Lesson 3.1: decimals")], ["n1-l3-2.html", b("Lección 3.2: operaciones con decimales", "Lesson 3.2: operations with decimals")]],
+  idea: b("Los decimales aparecen todos los días: en los precios, en la gasolina, en las libras de carne. Para trabajar con ellos hay que <strong>alinear el punto decimal</strong> al sumar y restar, y <strong>estimar</strong> antes de calcular: si 12 galones a casi $4 cuestan unos $48, una respuesta de $466.80 tiene el punto en el lugar equivocado.",
+          "Decimals show up every day: in prices, in gas, in pounds of meat. To work with them, <strong>line up the decimal points</strong> when you add and subtract, and <strong>estimate</strong> before you calculate: if 12 gallons at almost $4 cost about $48, an answer of $466.80 has the decimal point in the wrong place."),
+  consejo: b("Un decimal con más cifras no es más grande: 2.375 es menor que 2.5. Para comparar, escribe los dos con la misma cantidad de cifras: 2.375 y 2.500.", "A decimal with more digits is not bigger: 2.375 is less than 2.5. To compare, write both with the same number of digits: 2.375 and 2.500."),
+  items: [
+  { titulo: b("Llenar el tanque", "Filling the tank"),
+    texto: b("Javier llena el tanque de su carro rojo con 12 galones de gasolina. El galón cuesta $3.89. ¿Cuánto paga?",
+             "Javier fills the tank of his red car with 12 gallons of gas. A gallon costs $3.89. How much does he pay?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("Antes de calcular, estima. ¿Cerca de cuánto debe salir?", "Before you calculate, estimate. About how much should it come to?"),
+        ops: [
+          { t: b("Cerca de $16, porque 12 + 4 = 16", "About $16, because 12 + 4 = 16"), fb: b("Se paga $3.89 <em>por cada</em> galón: 12 veces, no una sola.", "He pays $3.89 <em>for each</em> gallon: 12 times, not just once.") },
+          { t: b("Cerca de $48, porque 12 × 4 = 48", "About $48, because 12 × 4 = 48"), ok:true, fb: b("Muy bien: $3.89 es casi $4, así que el total es un poco menos de $48.", "Well done: $3.89 is almost $4, so the total is a little less than $48.") },
+          { t: b("Cerca de $480, porque 12 × 40 = 480", "About $480, because 12 × 40 = 480"), fb: b("El galón cuesta casi $4, no $40.", "A gallon costs almost $4, not $40.") } ] },
+      { l:"r", tipo:"num", resp:46.68, preg: b("Resuelve: ¿cuánto paga Javier? (en dólares)", "Solve: how much does Javier pay? (in dollars)"),
+        trampas: [ { v:466.8, fb: b("Revisa el punto decimal: tu estimación decía cerca de $48.", "Check the decimal point: your estimate said about $48.") }, { v:15.89, fb: b("15.89 es 12 + 3.89. Hay que multiplicar.", "15.89 is 12 + 3.89. You need to multiply.") } ],
+        sol: b("12 × 3.89 = $46.68. Comprobación: está cerca de la estimación de $48 ✔", "12 × 3.89 = $46.68. Check: it is close to the $48 estimate ✔") } ] },
+
+  { titulo: b("¿Cuál paquete conviene?", "Which package is the better buy?"),
+    texto: b("En el supermercado hay dos paquetes del mismo arroz. El de 3 libras cuesta $4.50 y el de 5 libras cuesta $6.95. Mercedes quiere saber cuál le sale más barato por libra.",
+             "At the supermarket there are two packages of the same rice. The 3-pound bag costs $4.50 and the 5-pound bag costs $6.95. Mercedes wants to know which one costs less per pound."),
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("¿Cómo se encuentra el precio de una libra?", "How do you find the price of one pound?"),
+        ops: [
+          { t: b("Se divide el precio entre las libras.", "Divide the price by the pounds."), ok:true, fb: b("Correcto: se reparte el precio entre las libras. Eso se llama <strong>precio unitario</strong>.", "Correct: the price is shared among the pounds. That is called the <strong>unit price</strong>.") },
+          { t: b("Se divide las libras entre el precio.", "Divide the pounds by the price."), fb: b("Eso diría cuántas libras se compran con un dólar, no lo que cuesta una libra.", "That would tell how many pounds one dollar buys, not what one pound costs.") },
+          { t: b("Se multiplica el precio por las libras.", "Multiply the price by the pounds."), fb: b("Así el resultado sería mayor que el precio del paquete entero.", "Then the result would be more than the price of the whole bag.") } ] },
+      { l:"l3", tipo:"num", resp:1.39, preg: b("¿Cuánto cuesta una libra en el paquete de 5 libras? (en dólares)", "How much does one pound cost in the 5-pound bag? (in dollars)"),
+        trampas: [ { v:34.75, fb: b("34.75 es 6.95 × 5. Una libra debe costar menos que el paquete.", "34.75 is 6.95 × 5. One pound must cost less than the bag.") } ],
+        sol: b("6.95 ÷ 5 = $1.39 por libra. (El de 3 libras: 4.50 ÷ 3 = $1.50 por libra.)", "6.95 ÷ 5 = $1.39 per pound. (The 3-pound bag: 4.50 ÷ 3 = $1.50 per pound.)") },
+      { l:"r", tipo:"mc", preg: b("¿Cuál paquete conviene más?", "Which package is the better buy?"),
+        ops: [
+          { t: b("El de 3 libras, porque cuesta menos dinero", "The 3-pound bag, because it costs less money"), fb: b("Cuesta menos en total, pero cada libra sale más cara: $1.50 contra $1.39.", "It costs less in total, but each pound is more expensive: $1.50 versus $1.39.") },
+          { t: b("El de 5 libras, porque la libra sale más barata", "The 5-pound bag, because each pound costs less"), ok:true, fb: b("Correcto: $1.39 por libra es menos que $1.50.", "Correct: $1.39 per pound is less than $1.50.") },
+          { t: b("Los dos cuestan lo mismo, porque es el mismo arroz", "Both cost the same, because it is the same rice"), fb: b("Es el mismo arroz, pero el precio por libra es distinto.", "It is the same rice, but the price per pound is different.") } ] } ] },
+
+  { titulo: b("El cambio en la taquería", "Change at the taquería"),
+    texto: b("En una taquería de Pilsen, Ramón pide una orden de tacos de $8.75 y un agua de horchata de $1.50. Paga con un billete de $20. ¿Cuánto le devuelven?",
+             "At a taquería in Pilsen, Ramón orders tacos for $8.75 and an horchata for $1.50. He pays with a $20 bill. How much change does he get?"),
+    pasos: [
+      { l:"l2", tipo:"num", resp:10.25, preg: b("Pregunta escondida: ¿cuánto cuesta la comida? (en dólares)", "Hidden question: how much does the meal cost? (in dollars)"),
+        trampas: [ { v:8.9, fb: b("Parece que sumaste 8.75 + 0.15. Alinea el punto decimal: 1.50 son un dólar y cincuenta centavos.", "It looks like you added 8.75 + 0.15. Line up the decimal points: 1.50 is one dollar and fifty cents.") }, { v:23.75, fb: b("Alinea los puntos decimales antes de sumar: 8.75 + 1.50.", "Line up the decimal points before adding: 8.75 + 1.50.") } ],
+        sol: b("8.75 + 1.50 = $10.25", "8.75 + 1.50 = $10.25") },
+      { l:"r", tipo:"num", resp:9.75, preg: b("Resuelve: ¿cuánto le devuelven? (en dólares)", "Solve: how much change does he get? (in dollars)"),
+        trampas: [ { v:10.25, fb: b("$10.25 es lo que costó la comida, no el cambio.", "$10.25 is what the meal cost, not the change.") }, { v:11.1, fb: b("Revisa el costo de la comida: 8.75 + 1.50 = 10.25.", "Check the cost of the meal: 8.75 + 1.50 = 10.25.") } ],
+        sol: b("20.00 − 10.25 = $9.75. Comprobación: 10.25 + 9.75 = 20.00 ✔", "20.00 − 10.25 = $9.75. Check: 10.25 + 9.75 = 20.00 ✔") } ] },
+
+  { titulo: b("Los paquetes de carne", "The packages of meat"),
+    texto: b("En la carnicería, Ana compara tres paquetes de carne molida. Pesan 2.5 lb, 2.45 lb y 2.375 lb. Quiere llevarse el que pese más.",
+             "At the butcher shop, Ana compares three packages of ground beef. They weigh 2.5 lb, 2.45 lb and 2.375 lb. She wants the one that weighs the most."),
+    pasos: [
+      { l:"r", tipo:"mc", preg: b("¿Cuál paquete pesa más?", "Which package weighs the most?"),
+        ops: [
+          { t: "2.375 lb", fb: b("Tener más cifras no lo hace más grande: 2.375 es menor que 2.500.", "Having more digits does not make it bigger: 2.375 is less than 2.500.") },
+          { t: "2.45 lb", fb: b("Compara las décimas: 2.<strong>4</strong>5 tiene 4 décimas y 2.<strong>5</strong> tiene 5.", "Compare the tenths: 2.<strong>4</strong>5 has 4 tenths and 2.<strong>5</strong> has 5.") },
+          { t: "2.5 lb", ok:true, fb: b("Correcto: 2.500 > 2.450 > 2.375.", "Correct: 2.500 > 2.450 > 2.375.") } ] } ] },
+
+  { titulo: b("La cuenta entre tres", "Splitting the check three ways"),
+    texto: b("Tres amigas comen juntas y la cuenta es de $47.50. Quieren pagar partes iguales y que alcance para cubrir toda la cuenta. ¿Cuánto debe poner cada una, redondeado al centavo?",
+             "Three friends eat together, and the check is $47.50. They want to pay equal shares and have enough to cover the whole check. How much should each one put in, rounded to the cent?"),
+    pasos: [
+      { l:"r", tipo:"num", resp:15.84, preg: b("¿Cuánto debe poner cada una? (en dólares)", "How much should each one put in? (in dollars)"),
+        trampas: [ { v:15.83, fb: b("47.50 ÷ 3 = 15.8333…, que normalmente se redondea a 15.83. Pero 3 × 15.83 = 47.49: ¡falta un centavo! Para que alcance, hay que redondear hacia arriba.", "47.50 ÷ 3 = 15.8333…, which usually rounds to 15.83. But 3 × 15.83 = 47.49: one cent short! To have enough, round up.") }, { v:142.5, fb: b("142.50 es 47.50 × 3. Cada amiga paga una parte, no la cuenta tres veces.", "142.50 is 47.50 × 3. Each friend pays one share, not the check three times.") } ],
+        sol: b("47.50 ÷ 3 = 15.8333… Con $15.83 cada una se juntan $47.49, y falta un centavo. Por eso cada una pone <strong>$15.84</strong> (juntan $47.52). Aquí la situación decide hacia dónde redondear.", "47.50 ÷ 3 = 15.8333… With $15.83 each they collect $47.49, one cent short. So each one puts in <strong>$15.84</strong> (they collect $47.52). Here the situation decides which way to round.") } ] },
+
+  { titulo: b("El sueldo por hora", "The hourly wage"),
+    texto: b("Esperanza trabajó 35 horas esta semana en un restaurante y recibió $612.50 antes de impuestos. El restaurante tiene 12 mesas. ¿Cuánto le pagan por hora?",
+             "Esperanza worked 35 hours this week at a restaurant and received $612.50 before taxes. The restaurant has 12 tables. How much is she paid per hour?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Qué dato sobra?", "Which information is extra?"),
+        ops: [
+          { t: b("Las 35 horas", "The 35 hours"), fb: b("Ese dato hace falta: el pago se reparte entre las horas.", "That information is needed: the pay is shared among the hours.") },
+          { t: b("Los $612.50", "The $612.50"), fb: b("Ese dato hace falta: es lo que se reparte.", "That information is needed: it is what is shared.") },
+          { t: b("Las 12 mesas", "The 12 tables"), ok:true, fb: b("Correcto: las mesas no cambian el sueldo por hora.", "Correct: the tables do not change the hourly wage.") } ] },
+      { l:"r", tipo:"num", resp:17.5, preg: b("Resuelve: ¿cuánto le pagan por hora? (en dólares)", "Solve: how much is she paid per hour? (in dollars)"),
+        trampas: [ { v:21437.5, fb: b("Multiplicaste. Un sueldo de miles de dólares por hora no tiene sentido: hay que repartir el pago entre las horas.", "You multiplied. A wage of thousands of dollars an hour makes no sense: share the pay among the hours.") }, { v:51.04, fb: b("Dividiste entre 12, el número de mesas. El pago se reparte entre las 35 horas.", "You divided by 12, the number of tables. The pay is shared among the 35 hours.") } ],
+        sol: b("612.50 ÷ 35 = $17.50 por hora. Comprobación: 17.50 × 35 = 612.50 ✔", "612.50 ÷ 35 = $17.50 per hour. Check: 17.50 × 35 = 612.50 ✔") } ] }
+  ] },
+
+/* ---------------- TEMA 4 ---------------- */
+{ id:"tema4", color:"var(--t4)",
+  titulo: b("Fracciones en la vida diaria", "Fractions in everyday life"),
+  indicadores: "GED®: Q.1.a · Q.2.a · Q.2.e · MP.2.b · MP.1.e",
+  repaso: [["n1-l4-1.html", b("Lección 4.1: fracciones equivalentes", "Lesson 4.1: equivalent fractions")], ["n1-l4-2.html", b("Lección 4.2: suma y resta de fracciones", "Lesson 4.2: adding and subtracting fractions")], ["n1-l4-3.html", b("Lección 4.3: multiplicación y división de fracciones", "Lesson 4.3: multiplying and dividing fractions")], ["n1-l4-4.html", b("Lección 4.4: números mixtos", "Lesson 4.4: mixed numbers")]],
+  idea: b("Las fracciones están en la cocina (3/4 de taza), en el reloj (media hora), en la ferretería (un tornillo de 1 1/4 pulgadas). Antes de calcular, pregúntate si la respuesta debe ser <strong>mayor o menor</strong> que lo que tienes. Y recuerda: «¿cuántas veces cabe?» es una división; «3/8 <em>de</em> los estudiantes» es una multiplicación.",
+          "Fractions are in the kitchen (3/4 cup), on the clock (half an hour), at the hardware store (a 1 1/4-inch screw). Before you calculate, ask whether the answer should be <strong>bigger or smaller</strong> than what you have. And remember: “how many times does it fit?” is a division; “3/8 <em>of</em> the students” is a multiplication."),
+  consejo: b("En las respuestas puedes escribir una fracción (3/4), un número mixto con un espacio (1 1/2) o un decimal (1.5). En el ejercicio 4.5 vas a colgar números en un <strong>tendedero</strong>, como en <em>Clothesline Math</em>: los que valen lo mismo cuelgan juntos.",
+             "In your answers you can write a fraction (3/4), a mixed number with a space (1 1/2) or a decimal (1.5). In exercise 4.5 you will hang numbers on a <strong>clothesline</strong>, as in <em>Clothesline Math</em>: numbers with the same value hang together."),
+  items: [
+  { titulo: b("El arroz con leche", "Rice pudding"),
+    texto: b("La receta de arroz con leche de la abuela es para 4 personas y lleva 3/4 de taza de azúcar. Rosa la va a preparar para 8 personas. ¿Cuánta azúcar necesita?",
+             "Grandma’s rice pudding recipe serves 4 people and uses 3/4 cup of sugar. Rosa is going to make it for 8 people. How much sugar does she need?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("Antes de calcular: ¿necesita más o menos de 3/4 de taza?", "Before you calculate: does she need more or less than 3/4 cup?"),
+        ops: [
+          { t: b("Más, porque cocina para más personas", "More, because she is cooking for more people"), ok:true, fb: b("Correcto: con el doble de personas, el doble de azúcar.", "Correct: twice the people, twice the sugar.") },
+          { t: b("Menos, porque la porción se reparte entre más personas", "Less, because the serving is shared among more people"), fb: b("Si se usa menos azúcar, cada persona recibe menos. La receta debe crecer.", "If she uses less sugar, each person gets less. The recipe must grow.") },
+          { t: b("Lo mismo, porque es la misma receta de la abuela", "The same, because it is the same recipe from grandma"), fb: b("La receta es la misma, pero la cantidad cambia con el número de personas.", "The recipe is the same, but the amount changes with the number of people.") } ] },
+      { l:"r", tipo:"num", frac:true, resp:1.5, preg: b("Resuelve: ¿cuántas tazas de azúcar necesita?", "Solve: how many cups of sugar does she need?"),
+        trampas: [ { v:0.375, fb: b("3/8 es la mitad de 3/4. Para 8 personas hace falta el doble, no la mitad.", "3/8 is half of 3/4. For 8 people you need twice as much, not half.") }, { v:6, fb: b("6 tazas sería 3/4 × 8, como si la receta fuera para una sola persona. La receta es para 4: basta con duplicarla.", "6 cups would be 3/4 × 8, as if the recipe were for one person. The recipe is for 4: just double it.") } ],
+        sol: b("8 personas es el doble de 4. 2 × 3/4 = 6/4 = 1 1/2 tazas.", "8 people is twice 4. 2 × 3/4 = 6/4 = 1 1/2 cups.") } ] },
+
+  { titulo: b("Las horas de Marta", "Marta’s hours"),
+    texto: b("Marta limpia casas. El lunes trabajó 3 3/4 horas y el martes trabajó 4 1/2 horas. ¿Cuántas horas trabajó en los dos días?",
+             "Marta cleans houses. On Monday she worked 3 3/4 hours and on Tuesday she worked 4 1/2 hours. How many hours did she work on the two days?"),
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("Para sumar 3/4 + 1/2, ¿qué hay que hacer primero?", "To add 3/4 + 1/2, what do you need to do first?"),
+        ops: [
+          { t: b("Escribir 1/2 como 2/4, para tener el mismo denominador", "Write 1/2 as 2/4, to have the same denominator"), ok:true, fb: b("Correcto: solo se suman partes del mismo tamaño. Media hora son 2 cuartos de hora.", "Correct: you can only add parts of the same size. Half an hour is 2 quarters of an hour.") },
+          { t: b("Sumar arriba y abajo por separado: 3 + 1 y 4 + 2", "Add the tops and the bottoms separately: 3 + 1 and 4 + 2"), fb: b("Eso daría 4/6, que es menos que 3/4. Sumar no puede dar menos que uno de los sumandos.", "That would give 4/6, which is less than 3/4. Adding cannot give less than one of the parts.") },
+          { t: b("Cambiar las dos fracciones a sextos, porque 4 + 2 = 6", "Change both fractions to sixths, because 4 + 2 = 6"), fb: b("El denominador común es un múltiplo de 4 y de 2, como 4. No se suman los denominadores.", "The common denominator is a multiple of 4 and 2, such as 4. You do not add denominators.") } ] },
+      { l:"r", tipo:"num", frac:true, resp:8.25, preg: b("Resuelve: ¿cuántas horas trabajó en total?", "Solve: how many hours did she work in total?"),
+        trampas: [ { v:7.6667, fb: b("Parece que sumaste numeradores y denominadores (4/6). Escribe 1/2 como 2/4 y suma cuartos.", "It looks like you added the tops and bottoms (4/6). Write 1/2 as 2/4 and add fourths.") }, { v:7.25, fb: b("Revisa las partes fraccionarias: 3/4 + 2/4 = 5/4, que es 1 1/4. Ese entero se suma a las horas.", "Check the fraction parts: 3/4 + 2/4 = 5/4, which is 1 1/4. That whole hour is added to the hours.") } ],
+        sol: b("3 3/4 + 4 2/4 = 7 5/4 = 8 1/4 horas (8 horas y 15 minutos).", "3 3/4 + 4 2/4 = 7 5/4 = 8 1/4 hours (8 hours and 15 minutes).") } ] },
+
+  { titulo: b("Las faldas de la costurera", "The seamstress’s skirts"),
+    texto: b("Doña Elena es costurera. Tiene 6 yardas de tela y cada falda necesita 3/4 de yarda. ¿Cuántas faldas puede hacer?",
+             "Doña Elena is a seamstress. She has 6 yards of fabric, and each skirt needs 3/4 of a yard. How many skirts can she make?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("Antes de calcular: ¿podrá hacer más de 6 faldas o menos de 6?", "Before you calculate: will she make more than 6 skirts or fewer than 6?"),
+        ops: [
+          { t: b("Más de 6, porque cada falda usa menos de una yarda", "More than 6, because each skirt uses less than a yard"), ok:true, fb: b("Correcto: si cada falda usara una yarda, saldrían 6. Como usa menos, salen más.", "Correct: if each skirt used one yard, she would get 6. Since each uses less, she gets more.") },
+          { t: b("Menos de 6, porque una fracción siempre achica la cantidad", "Fewer than 6, because a fraction always makes things smaller"), fb: b("Multiplicar por 3/4 achica, pero aquí la pregunta es cuántas veces cabe 3/4 en 6.", "Multiplying by 3/4 makes things smaller, but here the question is how many times 3/4 fits into 6.") },
+          { t: b("Exactamente 6, porque tiene 6 yardas de tela", "Exactly 6, because she has 6 yards of fabric"), fb: b("Eso pasaría si cada falda usara una yarda completa.", "That would happen if each skirt used a whole yard.") } ] },
+      { l:"l3", tipo:"mc", preg: b("¿Qué operación resuelve el problema?", "Which operation solves the problem?"),
+        ops: [
+          { t: "6 ÷ 3/4", ok:true, fb: b("Correcto: ¿cuántas veces cabe 3/4 en 6?", "Correct: how many times does 3/4 fit into 6?") },
+          { t: "6 × 3/4", fb: b("Eso sería tres cuartas partes de la tela, 4 1/2 yardas: un pedazo de tela, no un número de faldas.", "That would be three fourths of the fabric, 4 1/2 yards: a piece of fabric, not a number of skirts.") },
+          { t: "6 − 3/4", fb: b("Eso sería la tela que queda después de hacer una sola falda.", "That would be the fabric left after making just one skirt.") } ] },
+      { l:"r", tipo:"num", frac:true, resp:8, preg: b("Resuelve: ¿cuántas faldas puede hacer?", "Solve: how many skirts can she make?"),
+        trampas: [ { v:4.5, fb: b("4 1/2 es 6 × 3/4. Tu estimación decía más de 6 faldas.", "4 1/2 is 6 × 3/4. Your estimate said more than 6 skirts.") } ],
+        sol: b("6 ÷ 3/4 = 6 × 4/3 = 24/3 = 8 faldas. Comprobación: 8 × 3/4 = 24/4 = 6 yardas ✔", "6 ÷ 3/4 = 6 × 4/3 = 24/3 = 8 skirts. Check: 8 × 3/4 = 24/4 = 6 yards ✔") } ] },
+
+  { titulo: b("Los estudiantes de la noche", "The evening students"),
+    texto: b("En la clase de GED de la noche hay 24 estudiantes. 3/8 de ellos llegan en autobús, y los demás llegan en tren o en carro. La clase empieza a las 6:00 p. m. ¿Cuántos estudiantes llegan en autobús?",
+             "There are 24 students in the evening GED class. 3/8 of them come by bus, and the rest come by train or by car. Class starts at 6:00 p.m. How many students come by bus?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Qué dato sobra?", "Which information is extra?"),
+        ops: [
+          { t: b("Que hay 24 estudiantes", "That there are 24 students"), fb: b("Ese dato hace falta: es el grupo completo.", "That information is needed: it is the whole group.") },
+          { t: b("Que 3/8 llegan en autobús", "That 3/8 come by bus"), fb: b("Ese dato hace falta: es la parte que se busca.", "That information is needed: it is the part we are looking for.") },
+          { t: b("Que la clase empieza a las 6:00", "That class starts at 6:00"), ok:true, fb: b("Correcto: la hora no cambia cuántos llegan en autobús.", "Correct: the time does not change how many come by bus.") } ] },
+      { l:"r", tipo:"num", resp:9, preg: b("Resuelve: ¿cuántos estudiantes llegan en autobús?", "Solve: how many students come by bus?"),
+        trampas: [ { v:64, fb: b("64 es 24 ÷ 3/8. ¡No puede haber más estudiantes en autobús que en toda la clase! «3/8 de 24» es una multiplicación.", "64 is 24 ÷ 3/8. There cannot be more bus riders than students in the class! “3/8 of 24” is a multiplication.") }, { v:15, fb: b("15 son los que <em>no</em> llegan en autobús. Revisa la pregunta.", "15 is the number who do <em>not</em> come by bus. Read the question again.") } ],
+        sol: b("3/8 de 24: 24 ÷ 8 = 3 (un octavo), y 3 × 3 = 9 estudiantes.", "3/8 of 24: 24 ÷ 8 = 3 (one eighth), and 3 × 3 = 9 students.") } ] },
+
+  { titulo: b("El tendedero de los tornillos", "The screw clothesline"),
+    texto: b("En la ferretería, Tomás encontró tornillos de estas longitudes, en pulgadas: 3/4, 0.5, 1 1/4, 0.2, 6/8 y 1.1. Quiere ordenarlos del más corto al más largo.",
+             "At the hardware store, Tomás found screws of these lengths, in inches: 3/4, 0.5, 1 1/4, 0.2, 6/8 and 1.1. He wants to put them in order from shortest to longest."),
+    pasos: [
+      { tipo:"ordenar", min:0, max:2,
+        tarjetas: [ { t:"3/4", v:0.75 }, { t:"0.5", v:0.5 }, { t:"1 1/4", v:1.25 }, { t:"0.2", v:0.2 }, { t:"6/8", v:0.75 }, { t:"1.1", v:1.1 } ],
+        preg: b("Cuelga las tarjetas en el tendedero: tócalas en orden, <strong>del menor al mayor</strong>. Si dos valen lo mismo, van juntas.", "Hang the cards on the clothesline: tap them in order, <strong>from least to greatest</strong>. If two have the same value, they go together."),
+        sol: b("0.2 < 0.5 < 3/4 = 6/8 < 1.1 < 1 1/4. Como 3/4 = 0.75 y 6/8 = 0.75, esas dos tarjetas cuelgan juntas.", "0.2 < 0.5 < 3/4 = 6/8 < 1.1 < 1 1/4. Since 3/4 = 0.75 and 6/8 = 0.75, those two cards hang together.") },
+      { l:"r", tipo:"mc", preg: b("¿Por qué 1 1/4 va después de 1.1?", "Why does 1 1/4 go after 1.1?"),
+        ops: [
+          { t: b("Porque 1 1/4 = 1.25, y 1.25 es mayor que 1.10", "Because 1 1/4 = 1.25, and 1.25 is greater than 1.10"), ok:true, fb: b("Correcto: al escribirlos como decimales con las mismas cifras, se comparan fácilmente.", "Correct: when you write them as decimals with the same number of digits, they are easy to compare.") },
+          { t: b("Porque las fracciones siempre van después de los decimales", "Because fractions always go after decimals"), fb: b("No es así: 3/4 está antes que 1.1. Lo que importa es el valor.", "That is not true: 3/4 comes before 1.1. What matters is the value.") },
+          { t: b("Porque 1 1/4 tiene más números escritos que 1.1", "Because 1 1/4 has more numbers written than 1.1"), fb: b("La cantidad de cifras no dice cuál es mayor: 0.2 tiene pocas y 1.1 también.", "The number of digits does not tell which is greater.") } ] } ] },
+
+  { titulo: b("¿Qué receta lleva más aceite?", "Which recipe uses more oil?"),
+    texto: b("Una receta de pan lleva 2/3 de taza de aceite y otra receta de pan lleva 3/5 de taza. Luisa quiere usar la que lleve menos aceite.",
+             "One bread recipe uses 2/3 cup of oil and another bread recipe uses 3/5 cup. Luisa wants to use the one with less oil."),
+    pasos: [
+      { l:"r", tipo:"mc", preg: b("¿Cuál receta lleva <strong>más</strong> aceite?", "Which recipe uses <strong>more</strong> oil?"),
+        ops: [
+          { t: b("La de 3/5, porque 5 es mayor que 3", "The 3/5 one, because 5 is greater than 3"), fb: b("Un denominador mayor hace partes más pequeñas: un quinto es menor que un tercio.", "A bigger denominator makes smaller parts: one fifth is less than one third.") },
+          { t: b("La de 2/3, porque 2/3 = 10/15 y 3/5 = 9/15", "The 2/3 one, because 2/3 = 10/15 and 3/5 = 9/15"), ok:true, fb: b("Correcto: con el mismo denominador, se comparan los numeradores. Luisa debe usar la de 3/5.", "Correct: with the same denominator, compare the numerators. Luisa should use the 3/5 recipe.") },
+          { t: b("Llevan lo mismo, porque las dos son menos de una taza", "They use the same, because both are less than a cup"), fb: b("Las dos son menos de una taza, pero no son iguales: 10/15 y 9/15.", "Both are less than a cup, but they are not equal: 10/15 and 9/15.") } ] } ] },
+
+  { titulo: b("Inventa tu historia", "Write your own story"),
+    pasos: [
+      { tipo:"abierta", preg: b("Inventa una situación de tu vida para 2 1/2 − 3/4 y resuélvela. ¿La respuesta es mayor o menor que 2? ¿Por qué?", "Make up a situation from your life for 2 1/2 − 3/4 and solve it. Is the answer more or less than 2? Why?"),
+        modelo: b("Compré 2 1/2 libras de queso y usé 3/4 de libra para las quesadillas. ¿Cuánto me queda? 2 2/4 − 3/4 = 1 6/4 − 3/4 = 1 3/4 libras. Es menos que 2 porque le quité más de media libra a 2 1/2.", "I bought 2 1/2 pounds of cheese and used 3/4 of a pound for quesadillas. How much is left? 2 2/4 − 3/4 = 1 6/4 − 3/4 = 1 3/4 pounds. It is less than 2 because I took more than half a pound away from 2 1/2.") } ] }
+  ] },
+
+/* ---------------- TEMA 5 ---------------- */
+{ id:"tema5", color:"var(--t5)",
+  titulo: b("Medidas, tiempo y tablas", "Measurement, time and tables"),
+  indicadores: "GED®: Q.2.e · Q.3.a · Q.3.c · Q.6.c · MP.2.c",
+  repaso: [["n1-l6-1.html", b("Lección 6.1: sistema inglés de medidas", "Lesson 6.1: customary measurement")], ["n1-l6-2.html", b("Lección 6.2: sistema métrico, tiempo y temperatura", "Lesson 6.2: metric system, time and temperature")], ["n1-l6-3.html", b("Lección 6.3: problemas aplicados de medición", "Lesson 6.3: measurement word problems")], ["n1-l8-1.html", b("Lección 8.1: leer tablas de datos", "Lesson 8.1: reading data tables")]],
+  idea: b("En las medidas, la segunda lectura es clave: <strong>¿en qué unidades viene cada dato y en qué unidades se pide la respuesta?</strong> Un pie tiene 12 pulgadas (no 10) y una hora tiene 60 minutos (no 100). En una tabla, lee primero el título y los encabezados: te dicen qué significa cada número.",
+          "In measurement, the second read is key: <strong>what units does each piece of information use, and what units does the answer need?</strong> A foot has 12 inches (not 10), and an hour has 60 minutes (not 100). In a table, read the title and the headings first: they tell you what each number means."),
+  consejo: b("Escribe la unidad junto a cada número mientras trabajas (80 pulgadas, 8 horas, $12.25). Si al final la unidad no coincide con la pregunta, algo falta.", "Write the unit next to each number as you work (80 inches, 8 hours, $12.25). If at the end the unit does not match the question, something is missing."),
+  items: [
+  { titulo: b("La puerta nueva", "The new door"),
+    texto: b("Don Felipe va a comprar una puerta. El hueco mide 6 pies 8 pulgadas de alto, y en la tienda las puertas vienen marcadas en pulgadas. ¿Cuántas pulgadas mide el hueco?",
+             "Don Felipe is going to buy a door. The doorway is 6 feet 8 inches tall, and at the store the doors are labeled in inches. How many inches tall is the doorway?"),
+    pasos: [
+      { l:"r", tipo:"num", resp:80, preg: b("¿Cuántas pulgadas mide el hueco?", "How many inches tall is the doorway?"),
+        trampas: [ { v:68, fb: b("68 supone que un pie tiene 10 pulgadas. Un pie tiene 12 pulgadas.", "68 assumes a foot has 10 inches. A foot has 12 inches.") }, { v:14, fb: b("14 es 6 + 8: sumaste pies con pulgadas. Primero convierte los pies.", "14 is 6 + 8: you added feet to inches. Convert the feet first.") } ],
+        sol: b("6 pies × 12 = 72 pulgadas; 72 + 8 = 80 pulgadas.", "6 feet × 12 = 72 inches; 72 + 8 = 80 inches.") } ] },
+
+  { titulo: b("El horario de trabajo", "The work schedule"),
+    texto: b("Héctor entra a trabajar a las 7:45 a. m. y sale a las 4:15 p. m. Tiene 30 minutos para almorzar, que no le pagan. ¿Cuántas horas le pagan ese día?",
+             "Héctor starts work at 7:45 a.m. and leaves at 4:15 p.m. He has a 30-minute lunch break that is unpaid. How many hours is he paid for that day?"),
+    pasos: [
+      { l:"l2", tipo:"num", frac:true, resp:8.5, preg: b("Pregunta escondida: ¿cuánto tiempo pasa de las 7:45 a. m. a las 4:15 p. m.? (en horas)", "Hidden question: how much time passes from 7:45 a.m. to 4:15 p.m.? (in hours)"),
+        trampas: [ { v:3.5, fb: b("Restar 7:45 de 4:15 no sirve, porque una hora es de la mañana y la otra de la tarde. Cuenta por partes: de 7:45 a 12:00, y de 12:00 a 4:15.", "Subtracting 7:45 from 4:15 does not work, because one time is a.m. and the other p.m. Count in parts: from 7:45 to 12:00, and from 12:00 to 4:15.") }, { v:8.3, fb: b("8 horas y 30 minutos no es 8.3 horas: 30 minutos son media hora, 0.5.", "8 hours and 30 minutes is not 8.3 hours: 30 minutes is half an hour, 0.5.") } ],
+        sol: b("De 7:45 a 12:00 son 4 h 15 min; de 12:00 a 4:15 son 4 h 15 min. Total: 8 h 30 min = 8 1/2 horas.", "From 7:45 to 12:00 is 4 h 15 min; from 12:00 to 4:15 is 4 h 15 min. Total: 8 h 30 min = 8 1/2 hours.") },
+      { l:"r", tipo:"num", frac:true, resp:8, preg: b("Resuelve: ¿cuántas horas le pagan?", "Solve: how many hours is he paid for?"),
+        trampas: [ { v:8.5, fb: b("Falta quitar los 30 minutos del almuerzo, que no se pagan.", "You still need to take away the unpaid 30-minute lunch.") }, { v:8.2, fb: b("30 minutos son 0.5 horas, no 0.3.", "30 minutes is 0.5 hours, not 0.3.") } ],
+        sol: b("8 1/2 − 1/2 = 8 horas pagadas.", "8 1/2 − 1/2 = 8 paid hours.") } ] },
+
+  { titulo: b("Una mañana de enero", "A January morning"),
+    texto: b("Una mañana de enero en Chicago, el termómetro marcaba −5 °F a las 7:00 a. m. A las 2:00 p. m. marcaba 18 °F. ¿Cuántos grados subió la temperatura?",
+             "One January morning in Chicago, the thermometer read −5 °F at 7:00 a.m. At 2:00 p.m. it read 18 °F. How many degrees did the temperature rise?"),
+    pasos: [
+      { l:"r", tipo:"num", resp:23, preg: b("¿Cuántos grados subió?", "How many degrees did it rise?"),
+        trampas: [ { v:13, fb: b("13 sería la subida si hubiera empezado en 5 °F. Desde −5 hasta 0 ya sube 5 grados, y de 0 a 18, otros 18.", "13 would be the rise if it had started at 5 °F. From −5 to 0 it already rises 5 degrees, and from 0 to 18, another 18.") }, { v:7, fb: b("Las horas no se usan: se pregunta por los grados.", "The hours are not used: the question asks about degrees.") } ],
+        sol: b("De −5 a 0: 5 grados. De 0 a 18: 18 grados. Total: 5 + 18 = 23 °F. Es decir, 18 − (−5) = 23.", "From −5 to 0: 5 degrees. From 0 to 18: 18 degrees. Total: 5 + 18 = 23 °F. In other words, 18 − (−5) = 23.") } ] },
+
+  { titulo: b("La lavandería", "The laundromat"),
+    texto: b("Elena lava 2 cargas de ropa en la lavadora grande y después seca todo en una secadora durante 40 minutos. Mira la tabla de precios. ¿Cuánto paga en total?",
+             "Elena washes 2 loads of laundry in the large washer and then dries everything in one dryer for 40 minutes. Look at the price table. How much does she pay in total?"),
+    tabla: { cap: b("Precios de la lavandería La Espiga", "La Espiga laundromat prices"),
+             cab: [b("Servicio", "Service"), b("Precio", "Price")],
+             filas: [ [b("Lavadora chica (una carga)", "Small washer (one load)"), "$3.25"], [b("Lavadora grande (una carga)", "Large washer (one load)"), "$5.50"], [b("Secadora", "Dryer"), b("$0.25 por cada 8 minutos", "$0.25 for every 8 minutes")], [b("Horario", "Hours"), b("Todos los días, de 6:00 a. m. a 10:00 p. m.", "Every day, 6:00 a.m. to 10:00 p.m.")] ] },
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Qué filas de la tabla <strong>no</strong> se usan?", "Which rows of the table are <strong>not</strong> used?"),
+        ops: [
+          { t: b("La lavadora chica y el horario", "The small washer and the hours"), ok:true, fb: b("Correcto: Elena usa la lavadora grande y la secadora.", "Correct: Elena uses the large washer and the dryer.") },
+          { t: b("La secadora y la lavadora chica", "The dryer and the small washer"), fb: b("La secadora sí se usa: seca la ropa 40 minutos.", "The dryer is used: she dries the clothes for 40 minutes.") },
+          { t: b("La lavadora grande y el horario", "The large washer and the hours"), fb: b("La lavadora grande sí se usa: lava 2 cargas.", "The large washer is used: she washes 2 loads.") } ] },
+      { l:"l3", tipo:"num", resp:1.25, preg: b("¿Cuánto cuesta secar 40 minutos? (en dólares)", "How much does it cost to dry for 40 minutes? (in dollars)"),
+        trampas: [ { v:10, fb: b("40 × 0.25 = 10 cobraría $0.25 por cada <em>minuto</em>. El precio es por cada 8 minutos.", "40 × 0.25 = 10 would charge $0.25 for each <em>minute</em>. The price is for every 8 minutes.") } ],
+        sol: b("40 ÷ 8 = 5 periodos de 8 minutos; 5 × 0.25 = $1.25.", "40 ÷ 8 = 5 eight-minute periods; 5 × 0.25 = $1.25.") },
+      { l:"r", tipo:"num", resp:12.25, preg: b("Resuelve: ¿cuánto paga Elena en total? (en dólares)", "Solve: how much does Elena pay in total? (in dollars)"),
+        trampas: [ { v:6.75, fb: b("Contaste una sola carga. Elena lava 2 cargas.", "You counted only one load. Elena washes 2 loads.") }, { v:21, fb: b("Revisa la secadora: cuesta $1.25, no $10.", "Check the dryer: it costs $1.25, not $10.") } ],
+        sol: b("Lavar: 2 × 5.50 = $11.00. Secar: $1.25. Total: 11.00 + 1.25 = $12.25.", "Washing: 2 × 5.50 = $11.00. Drying: $1.25. Total: 11.00 + 1.25 = $12.25.") } ] },
+
+  { titulo: b("La cuenta de la luz", "The electric bill"),
+    texto: b("Una familia de Little Village anotó lo que pagó de luz en tres meses. Quieren saber cuánto ahorraron en marzo comparado con enero.",
+             "A family in Little Village wrote down what they paid for electricity over three months. They want to know how much they saved in March compared with January."),
+    tabla: { cap: b("Pagos de luz de la familia", "The family’s electric payments"),
+             cab: [b("Mes", "Month"), b("Pago", "Payment")],
+             filas: [ [b("Enero", "January"), "$94.20"], [b("Febrero", "February"), "$87.65"], [b("Marzo", "March"), "$71.40"] ] },
+    pasos: [
+      { l:"l3", tipo:"mc", preg: b("¿Qué operación responde la pregunta?", "Which operation answers the question?"),
+        ops: [
+          { t: "94.20 − 71.40", ok:true, fb: b("Correcto: comparar «cuánto menos» es una resta. Febrero no se usa.", "Correct: comparing “how much less” is a subtraction. February is not used.") },
+          { t: "94.20 + 87.65 + 71.40", fb: b("Esa suma da lo que pagaron en los tres meses, no lo que ahorraron.", "That sum gives what they paid in all three months, not what they saved.") },
+          { t: "94.20 − 87.65", fb: b("Esa resta compara enero con febrero. La pregunta es sobre marzo.", "That subtraction compares January with February. The question is about March.") } ] },
+      { l:"r", tipo:"num", resp:22.8, preg: b("Resuelve: ¿cuánto ahorraron? (en dólares)", "Solve: how much did they save? (in dollars)"),
+        trampas: [ { v:6.55, fb: b("Comparaste enero con febrero. La pregunta compara enero con marzo.", "You compared January with February. The question compares January with March.") }, { v:23.2, fb: b("Revisa la resta de los centavos: 0.20 − 0.40 necesita reagrupar.", "Check the cents: 0.20 − 0.40 needs regrouping.") } ],
+        sol: b("94.20 − 71.40 = $22.80. Comprobación: 71.40 + 22.80 = 94.20 ✔", "94.20 − 71.40 = $22.80. Check: 71.40 + 22.80 = 94.20 ✔") } ] },
+
+  { titulo: b("La carrera de 5 kilómetros", "The 5K race"),
+    texto: b("Gabriela se inscribió en una carrera de 5 kilómetros en el lakefront. Su aplicación cuenta en millas. Un kilómetro es aproximadamente 0.62 millas. ¿Cuántas millas va a correr, aproximadamente?",
+             "Gabriela signed up for a 5-kilometer race on the lakefront. Her app counts in miles. One kilometer is about 0.62 miles. About how many miles will she run?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿La respuesta en millas será mayor o menor que 5?", "Will the answer in miles be more or less than 5?"),
+        ops: [
+          { t: b("Menor, porque una milla es más larga que un kilómetro", "Less, because a mile is longer than a kilometer"), ok:true, fb: b("Correcto: con unidades más largas se necesitan menos.", "Correct: with longer units, you need fewer of them.") },
+          { t: b("Mayor, porque al convertir siempre sale un número mayor", "More, because converting always gives a bigger number"), fb: b("No siempre: depende de si la nueva unidad es más larga o más corta.", "Not always: it depends on whether the new unit is longer or shorter.") },
+          { t: b("Igual, porque la distancia de la carrera no cambia", "The same, because the race distance does not change"), fb: b("La distancia no cambia, pero el número sí, porque cambia la unidad.", "The distance does not change, but the number does, because the unit changes.") } ] },
+      { l:"r", tipo:"num", resp:3.1, preg: b("Resuelve: ¿cuántas millas va a correr?", "Solve: how many miles will she run?"),
+        trampas: [ { v:8.06, fb: b("Dividiste entre 0.62. Tu respuesta debía ser menor que 5.", "You divided by 0.62. Your answer should be less than 5.") }, { v:31, fb: b("Revisa el punto decimal: 5 × 0.62 = 3.10.", "Check the decimal point: 5 × 0.62 = 3.10.") } ],
+        sol: b("5 × 0.62 = 3.1 millas, aproximadamente.", "5 × 0.62 = 3.1 miles, approximately.") } ] }
+  ] },
+
+/* ---------------- TEMA 6 ---------------- */
+{ id:"tema6", color:"var(--t6)",
+  titulo: b("Detective numérico: datos que sobran, datos que faltan y errores", "Number detective: extra information, missing information and mistakes"),
+  indicadores: "GED®: MP.1.d · MP.1.e · MP.2.c · MP.3.c · MP.5.a",
+  repaso: [["n1-l5-3.html", b("Lección 5.3: problemas verbales de un paso", "Lesson 5.3: one-step word problems")], ["n1-repaso.html", b("Repaso del Nivel 1", "Level 1 review")]],
+  idea: b("Los investigadores llaman <strong>razonamiento fluido</strong> a la capacidad de distinguir la información importante de la que no lo es. Un buen lector matemático se pregunta: ¿qué datos sobran?, ¿falta algún dato?, ¿la respuesta tiene sentido? En el GED aparecen problemas con datos de más, y algunos no se pueden resolver con lo que dan.",
+          "Researchers call the ability to tell important information from unimportant information <strong>fluid reasoning</strong>. A good math reader asks: What information is extra? Is anything missing? Does the answer make sense? On the GED there are problems with extra information, and some cannot be solved with what is given."),
+  consejo: b("No todos los números de un problema se usan. Y «falta información» también puede ser la respuesta correcta. Siempre termina con la pregunta: ¿mi respuesta tiene sentido en la historia?", "Not every number in a problem gets used. And “there is not enough information” can be the correct answer. Always finish with the question: does my answer make sense in the story?"),
+  items: [
+  { titulo: b("¿Cuántos años tiene el chofer?", "How old is the driver?"),
+    texto: b("Un autobús de la CTA sale de la terminal con 25 pasajeros. En la primera parada bajan 8 y suben 5.", "A CTA bus leaves the terminal with 25 passengers. At the first stop, 8 get off and 5 get on."),
+    pasos: [ { tipo:"mc", preg: b("¿Cuántos años tiene el chofer?", "How old is the driver?"),
+      ops: [
+        { t: b("22 años", "22 years old"), fb: b("22 son los pasajeros que quedan (25 − 8 + 5), no la edad de una persona.", "22 is the number of passengers left (25 − 8 + 5), not a person’s age.") },
+        { t: b("38 años", "38 years old"), fb: b("Sumar todos los números (25 + 8 + 5) no tiene nada que ver con la edad del chofer.", "Adding all the numbers (25 + 8 + 5) has nothing to do with the driver’s age.") },
+        { t: b("No se puede saber con estos datos.", "It cannot be known from this information."), ok:true, fb: b("¡Exacto! Ningún dato habla de la edad. Combinar números sin entender la situación es justamente el error que queremos evitar.", "Exactly! No information is about age. Combining numbers without understanding the situation is exactly the mistake we want to avoid.") } ] } ] },
+
+  { titulo: b("Las camisas de Miguel", "Miguel’s shirts"),
+    texto: b("Miguel compró 4 camisas iguales y unos pantalones de $35 para una entrevista de trabajo. ¿Cuánto pagó en total?", "Miguel bought 4 identical shirts and a pair of $35 pants for a job interview. How much did he pay in total?"),
+    pasos: [ { tipo:"mc", preg: b("¿Cuánto pagó Miguel?", "How much did Miguel pay?"),
+      ops: [
+        { t: "$39", fb: b("4 + 35 suma camisas con dólares. Además, las camisas no salen gratis.", "4 + 35 adds shirts to dollars. Besides, the shirts are not free.") },
+        { t: "$140", fb: b("4 × 35 supone que cada camisa cuesta lo mismo que los pantalones, y eso no lo dice la historia.", "4 × 35 assumes each shirt costs the same as the pants, and the story does not say that.") },
+        { t: b("No se puede saber: falta el precio de las camisas.", "It cannot be known: the price of the shirts is missing."), ok:true, fb: b("Correcto: sin el precio de cada camisa no se puede calcular el total.", "Correct: without the price of each shirt, the total cannot be found.") } ] } ] },
+
+  { titulo: b("¿Tiene sentido?", "Does it make sense?"),
+    texto: b("Una estudiante calculó que 4 libras de manzanas a $1.98 la libra cuestan $79.20.", "A student figured that 4 pounds of apples at $1.98 a pound cost $79.20."),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("Sin calcular exactamente, ¿qué está mal?", "Without calculating exactly, what is wrong?"),
+        ops: [
+          { t: b("El punto decimal: 4 libras a casi $2 cuestan cerca de $8.", "The decimal point: 4 pounds at almost $2 cost about $8."), ok:true, fb: b("Correcto: la estimación descubre el error enseguida.", "Correct: the estimate catches the mistake right away.") },
+          { t: b("Debió sumar: 4 + 1.98 es lo que se paga.", "She should have added: 4 + 1.98 is what you pay."), fb: b("Multiplicar está bien: es $1.98 por cada libra. El problema es el tamaño del resultado.", "Multiplying is right: it is $1.98 for each pound. The problem is the size of the result.") },
+          { t: b("Nada: las manzanas son caras en invierno.", "Nothing: apples are expensive in winter."), fb: b("Aunque estén caras, 4 libras a $1.98 no pueden costar casi $80.", "Even if they are expensive, 4 pounds at $1.98 cannot cost almost $80.") } ] },
+      { l:"r", tipo:"num", resp:7.92, preg: b("¿Cuál es el precio correcto? (en dólares)", "What is the correct price? (in dollars)"),
+        trampas: [ { v:79.2, fb: b("Esa es la respuesta de la estudiante. Revisa el punto decimal.", "That is the student’s answer. Check the decimal point.") } ],
+        sol: b("4 × 1.98 = $7.92. Está cerca de la estimación de $8 ✔", "4 × 1.98 = $7.92. It is close to the $8 estimate ✔") } ] },
+
+  { titulo: b("Una suma de fracciones equivocada", "A wrong fraction sum"),
+    texto: b("Un estudiante quiere saber cuánta pizza comieron él y su hermano. Él comió 1/2 pizza y su hermano 1/3. Escribió 1/2 + 1/3 = 2/5.", "A student wants to know how much pizza he and his brother ate. He ate 1/2 of a pizza and his brother ate 1/3. He wrote 1/2 + 1/3 = 2/5."),
+    pasos: [
+      { tipo:"mc", preg: b("¿Cómo sabes, sin calcular, que 2/5 no puede ser correcto?", "How do you know, without calculating, that 2/5 cannot be right?"),
+        ops: [
+          { t: b("Porque 2/5 es menos que 1/2, y él solo ya comió 1/2.", "Because 2/5 is less than 1/2, and he alone already ate 1/2."), ok:true, fb: b("¡Muy bien razonado! Juntos no pueden haber comido menos que uno de ellos.", "Very good reasoning! Together they cannot have eaten less than one of them.") },
+          { t: b("Porque las fracciones nunca se pueden sumar entre sí.", "Because fractions can never be added together."), fb: b("Las fracciones sí se suman, pero con el mismo denominador.", "Fractions can be added, but with the same denominator.") },
+          { t: b("Porque la respuesta debería tener un 6 en el numerador.", "Because the answer should have a 6 in the numerator."), fb: b("El 6 va en el denominador común (sextos), no en el numerador.", "The 6 goes in the common denominator (sixths), not in the numerator.") } ] },
+      { l:"r", tipo:"num", frac:true, resp:0.8333, preg: b("¿Cuánta pizza comieron entre los dos? (escribe una fracción)", "How much pizza did the two of them eat? (write a fraction)"),
+        trampas: [ { v:0.4, fb: b("Esa es la respuesta del estudiante. Usa sextos: 1/2 = 3/6 y 1/3 = 2/6.", "That is the student’s answer. Use sixths: 1/2 = 3/6 and 1/3 = 2/6.") } ],
+        sol: b("1/2 + 1/3 = 3/6 + 2/6 = 5/6 de pizza.", "1/2 + 1/3 = 3/6 + 2/6 = 5/6 of a pizza.") } ] },
+
+  { titulo: b("Los dobladillos", "The hems"),
+    texto: b("Una costurera cobra $12 por cada dobladillo de pantalón. El sábado tenía 15 pedidos en su lista. Al final del día había cobrado $132. ¿Cuántos dobladillos hizo?", "A seamstress charges $12 for each pant hem. On Saturday she had 15 orders on her list. At the end of the day she had collected $132. How many hems did she do?"),
+    pasos: [
+      { l:"l2", tipo:"mc", preg: b("¿Para qué sirve el dato de los 15 pedidos?", "What is the information about the 15 orders useful for?"),
+        ops: [
+          { t: b("Para multiplicarlo por $12 y saber lo que cobró", "To multiply it by $12 and find what she collected"), fb: b("15 × 12 = 180 sería lo que cobraría si los hiciera todos, y ya sabemos que cobró $132.", "15 × 12 = 180 would be what she collected if she did them all, and we already know she collected $132.") },
+          { t: b("Para comprobar: no pudo hacer más de 15 dobladillos", "To check: she could not do more than 15 hems"), ok:true, fb: b("¡Muy bien pensado! Ese dato no se usa para calcular, pero sí para comprobar.", "Very good thinking! That information is not used to calculate, but it is used to check.") },
+          { t: b("Para sumarlo a los $132 que cobró ese día", "To add it to the $132 she collected that day"), fb: b("No se suman pedidos con dólares.", "You do not add orders to dollars.") } ] },
+      { l:"r", tipo:"num", resp:11, preg: b("Resuelve: ¿cuántos dobladillos hizo?", "Solve: how many hems did she do?"),
+        trampas: [ { v:15, fb: b("15 son los pedidos de la lista. Si los hubiera hecho todos, habría cobrado $180.", "15 is the orders on the list. If she had done them all, she would have collected $180.") }, { v:120, fb: b("Restaste 132 − 12. Cada dobladillo cuesta $12: hay que ver cuántas veces cabe 12 en 132.", "You subtracted 132 − 12. Each hem costs $12: find how many times 12 fits into 132.") } ],
+        sol: b("132 ÷ 12 = 11 dobladillos. Comprobación: 11 × 12 = 132 ✔, y 11 es menor que 15 ✔. Tiene sentido.", "132 ÷ 12 = 11 hems. Check: 11 × 12 = 132 ✔, and 11 is less than 15 ✔. It makes sense.") } ] },
+
+  { titulo: b("Ahora, tú eres el autor", "Now you are the author"),
+    pasos: [ { tipo:"abierta", preg: b("Escribe un problema de tu vida que se resuelva con 3 × 2.50 + 4. Incluye un dato que sobre y resuélvelo.", "Write a problem from your life that is solved with 3 × 2.50 + 4. Include one piece of extra information, and solve it."),
+      modelo: b("El domingo, en el mercado de la calle Maxwell, compré 3 elotes a $2.50 cada uno y un agua fresca de $4. Fui con mis 2 hijos. ¿Cuánto gasté? (Dato que sobra: los 2 hijos.) 3 × 2.50 + 4 = 7.50 + 4 = $11.50.", "On Sunday, at the Maxwell Street market, I bought 3 elotes at $2.50 each and an agua fresca for $4. I went with my 2 children. How much did I spend? (Extra information: the 2 children.) 3 × 2.50 + 4 = 7.50 + 4 = $11.50.") } ] }
+  ] }
+];
+
+const TABLA = [
+  [b("Se juntan o se agregan cantidades","Amounts are joined or added on"), "+", b("Tengo $20 y me pagan $15 más.","I have $20 and get paid $15 more.")],
+  [b("Se quita, se compara o se busca cuánto falta","Something is taken away, compared, or we look for how much is missing"), "−", b("El carro cuesta $1,200 y tengo $785. ¿Cuánto me falta?","The car costs $1,200 and I have $785. How much am I missing?")],
+  [b("Se repiten grupos iguales («por cada», «cada uno»)","Equal groups are repeated (“for each,” “each”)"), "×", b("24 cajas de 30 huevos cada una.","24 boxes of 30 eggs each.")],
+  [b("Se reparte en partes iguales o se pregunta cuántas veces cabe","Something is shared equally, or we ask how many times it fits"), "÷", b("$1,650 entre 3 personas.","$1,650 shared by 3 people.")]
+];
+
+/* ====== Evaluador seguro de expresiones ====== */
+function preparar(str, vars) {
+  let s = String(str).toLowerCase()
+    .replace(/[−–—]/g, "-").replace(/[×·]/g, "*").replace(/÷/g, "/")
+    .replace(/\s+/g, "").replace(/\$/g, "");
+  s = s.replace(/(\d),(\d)/g, "$1.$2");
+  if (!s) return null;
+  if (!/^[0-9a-z+\-*/().^]+$/.test(s)) return null;
+  const letras = s.match(/[a-z]/g) || [];
+  for (const ch of letras) if (!vars.includes(ch)) return null;
+  s = s.replace(/(\d|\))(?=[a-z(])/g, "$1*").replace(/([a-z])(?=[a-z(\d])/g, "$1*");
+  s = s.replace(/\^/g, "**");
+  return s;
+}
+function evaluar(s, valores) {
+  const e = s.replace(/[a-z]/g, ch => "(" + valores[ch] + ")");
+  try { const v = Function('"use strict";return (' + e + ");")(); return (typeof v === "number" && isFinite(v)) ? v : NaN; }
+  catch (err) { return NaN; }
+}
+const PRUEBAS = [2.5, -1.3, 4.7, 7.1, -3.6];
+function equivalentes(a, bb, vars) {
+  for (let k = 0; k < 4; k++) {
+    const val = {}; [...vars].forEach((ch, i) => { val[ch] = PRUEBAS[(k + i * 2) % PRUEBAS.length] + i; });
+    const x = evaluar(a, val), y = evaluar(bb, val);
+    if (isNaN(x) || isNaN(y)) return false;
+    if (Math.abs(x - y) > 1e-6 * (1 + Math.abs(y))) return false;
+  }
+  return true;
+}
+function estaSimplificada(s, vars) {
+  if (s.includes("(")) return false;
+  for (const ch of vars) { const c = (s.match(new RegExp(ch, "g")) || []).length; if (c > 1) return false; }
+  const terminos = []; let actual = "";
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if ((c === "+" || c === "-") && i > 0 && !"*/(".includes(s[i - 1])) { terminos.push(actual); actual = c; }
+    else actual += c;
+  }
+  terminos.push(actual);
+  return terminos.filter(t => !/[a-z]/.test(t)).length <= 1;
+}
+function leerNumero(str) {
+  let s = String(str).trim().replace(/[−–—]/g, "-").replace(/[⁄∕]/g, "/").replace(/[^0-9.,\-\/ ]/g, " ").trim().replace(/\s*\/\s*/g, "/").replace(/\s+/g, " ");
+  let m = s.match(/^(-?)(\d+) (\d+)\/(\d+)$/);
+  if (m) { const d = +m[4]; if (!d) return NaN; return (m[1] ? -1 : 1) * (+m[2] + (+m[3]) / d); }
+  m = s.match(/^(-?\d+)\/(\d+)$/);
+  if (m) { const d = +m[2]; if (!d) return NaN; return (+m[1]) / d; }
+  s = s.replace(/ /g, "");
+  if (/^-?\d{1,3}(,\d{3})+(\.\d+)?$/.test(s)) s = s.replace(/,/g, "");
+  else s = s.replace(",", ".");
+  if (!/^-?\d*\.?\d+$/.test(s)) return NaN;
+  return parseFloat(s);
+}
+
+/* ====== Construcción de la página ====== */
+const esc = (t) => t; // el contenido es propio y de confianza
+let contador = 0;
+const estado = {}; // por ejercicio: pasos pendientes
+
+function msg(tipo, contenido) { return '<div class="msg ' + tipo + '">' + contenido + "</div>"; }
+
+function htmlPaso(p, idE, k) {
+  const idP = idE + "-p" + k;
+  let h = '<div class="paso" id="' + idP + '">';
+  if (p.l) h += '<p class="etq">' + L(UI[p.l]) + "</p>";
+  h += '<p class="preg">' + L(p.preg) + "</p>";
+  if (p.tipo === "mc") {
+    h += '<div class="opciones" role="group">';
+    p.ops.forEach((o, i) => { h += '<button type="button" class="opcion" data-i="' + i + '">' + L(o.t) + "</button>"; });
+    h += "</div>";
+  } else if (p.tipo === "expr" || p.tipo === "num") {
+    h += '<div class="fila-entrada"><input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="' + (p.tipo === "num" ? "decimal" : "text") + '" aria-describedby="' + idP + '-fb"><button type="button" class="btn btn-lleno comprobar">' + L(UI.comprobar) + "</button></div>";
+    if (p.tipo === "expr") h += '<p class="ayuda">' + L(UI.ayudaExpr) + "</p>";
+    if (p.frac) h += '<p class="ayuda">' + L(UI.ayudaFrac) + "</p>";
+  } else if (p.tipo === "abierta") {
+    h += '<textarea aria-label="Respuesta / Answer"></textarea><button type="button" class="btn ver-modelo" style="margin-top:8px">' + L(UI.verEjemplo) + '</button><div class="modelo oculto">' + L(p.modelo) + "</div>";
+  } else if (p.tipo === "ordenar") {
+    h += '<div class="tarjetas" role="group">';
+    p.tarjetas.forEach((c, i) => { h += '<button type="button" class="tarjeta" data-i="' + i + '">' + c.t + "</button>"; });
+    h += '</div><div class="orden-elegido" aria-live="polite"><span class="vacio">' + L(UI.vacio) + "</span></div>";
+    h += '<div class="acciones-tendedero"><button type="button" class="btn deshacer">' + L(UI.deshacer) + '</button><button type="button" class="btn reiniciar">' + L(UI.reiniciar) + '</button><button type="button" class="btn btn-lleno comprobar-orden">' + L(UI.comprobar) + "</button></div>";
+  } else if (p.tipo === "recta") {
+    h += '<div class="recta-entradas">';
+    p.exprs.forEach((e, i) => { h += '<div><span aria-hidden="true">' + e[1] + ' =</span><input type="text" inputmode="decimal" data-i="' + i + '" aria-label="' + e[1].replace(/<[^>]+>/g, "") + '"></div>'; });
+    h += '</div><button type="button" class="btn btn-lleno comprobar-recta">' + L(UI.comprobar) + '</button>';
+  }
+  h += '<div class="fb" id="' + idP + '-fb" aria-live="polite"></div></div>';
+  return h;
+}
+
+function construir() {
+  const cont = document.getElementById("temas");
+  const lista = document.getElementById("lista-indice");
+  let html = "";
+  TEMAS.forEach((t, ti) => {
+    const n = ti + 1;
+    const li = document.createElement("li");
+    li.innerHTML = '<a href="#' + t.id + '">' + L(t.titulo) + "</a>";
+    lista.appendChild(li);
+    html += '<details class="seccion-grande" id="' + t.id + '" style="--c:' + t.color + '"' + (ti === 0 ? " open" : "") + ">";
+    html += '<summary><span class="num-circulo" aria-hidden="true">' + n + "</span><h2>" + L(b("Tema " + n + ". ", "Topic " + n + ". ")) + L(t.titulo) + '</h2><span class="progreso" data-tema="' + t.id + '"></span><span class="chev" aria-hidden="true">▶</span></summary>';
+    html += '<div class="cuerpo"><p class="indicadores">' + t.indicadores + "</p>";
+    if (t.repaso) html += '<p class="repaso">' + L(UI.repasa) + " " + t.repaso.map(r => '<a href="' + r[0] + '" target="_blank" rel="noopener noreferrer">' + L(r[1]) + "</a>").join(" · ") + "</p>";
+    html += '<div class="caja caja-idea"><h3>' + L(b("La idea clave", "The key idea")) + "</h3><p>" + L(t.idea) + "</p>";
+    if (t.tabla) {
+      html += '<div class="tabla-scroll"><table class="tabla-palabras"><caption>' + L(b("¿Qué está pasando en la historia?", "What is happening in the story?")) + '</caption><thead><tr><th scope="col">' + L(b("Situación", "Situation")) + '</th><th scope="col">' + L(b("Operación", "Operation")) + '</th><th scope="col">' + L(b("Ejemplo", "Example")) + "</th></tr></thead><tbody>";
+      TABLA.forEach(r => { html += "<tr><td>" + L(r[0]) + "</td><td>" + r[1] + "</td><td>" + L(r[2]) + "</td></tr>"; });
+      html += "</tbody></table></div>";
+    }
+    html += "</div>";
+    html += '<div class="caja caja-consejo"><h3>' + L(b("Lee como matemático", "Read like a mathematician")) + "</h3><p>" + L(t.consejo) + "</p></div>";
+    t.items.forEach((it, ii) => {
+      const idE = "t" + n + "-e" + (ii + 1);
+      estado[idE] = { pend: 0, tema: t.id };
+      html += '<article class="ejercicio" id="' + idE + '"><h3>' + L(UI.ejercicio) + " " + n + "." + (ii + 1) + " · " + L(it.titulo) + '<span class="marca" aria-hidden="true"></span></h3>';
+      if (it.texto) html += '<div class="historia"><p>' + L(it.texto) + '</p><button type="button" class="btn btn-oir" data-oir="' + idE + '">' + L(UI.escuchar) + "</button></div>";
+      if (it.tabla) {
+        html += '<div class="tabla-scroll"><table class="tabla-datos"><caption>' + L(it.tabla.cap) + "</caption><thead><tr>" + it.tabla.cab.map(c => '<th scope="col">' + L(c) + "</th>").join("") + "</tr></thead><tbody>";
+        it.tabla.filas.forEach(f => { html += "<tr>" + f.map(c => "<td>" + L(c) + "</td>").join("") + "</tr>"; });
+        html += "</tbody></table></div>";
+      }
+      it.pasos.forEach((p, k) => { estado[idE].pend++; html += htmlPaso(p, idE, k); });
+      html += "</article>";
+    });
+    html += "</div></details>";
+  });
+  cont.innerHTML = html;
+  const ref = document.createElement("li"); ref.innerHTML = '<a href="#referencias">' + L(b("Referencias", "References")) + "</a>"; lista.appendChild(ref);
+  actualizarProgreso();
+  conectar();
+}
+
+function buscarPaso(idE, k) {
+  const [t, e] = idE.match(/\d+/g).map(Number);
+  return TEMAS[t - 1].items[e - 1].pasos[k];
+}
+
+function pasoTerminado(idE) {
+  estado[idE].pend--;
+  if (estado[idE].pend <= 0) {
+    const art = document.getElementById(idE);
+    art.classList.add("hecho");
+    art.querySelector(".marca").textContent = " ✔";
+  }
+  actualizarProgreso();
+}
+
+function actualizarProgreso() {
+  TEMAS.forEach(t => {
+    const ids = Object.keys(estado).filter(k => estado[k].tema === t.id);
+    const hechos = ids.filter(k => estado[k].pend <= 0).length;
+    const el = document.querySelector('.progreso[data-tema="' + t.id + '"]');
+    if (el) el.innerHTML = hechos + " " + L(UI.de) + " " + ids.length + " " + L(UI.hechos);
+  });
+}
+
+function conectar() {
+  document.querySelectorAll("article.ejercicio").forEach(art => {
+    const idE = art.id;
+    art.querySelectorAll(".paso").forEach((div, k) => {
+      const p = buscarPaso(idE, k);
+      const fb = div.querySelector(".fb");
+      if (p.tipo === "mc") {
+        div.querySelectorAll(".opcion").forEach(btn => btn.addEventListener("click", () => {
+          const o = p.ops[+btn.dataset.i];
+          if (o.ok) {
+            btn.classList.add("correcta");
+            div.querySelectorAll(".opcion").forEach(x => { x.disabled = true; });
+            fb.innerHTML = msg("ok", L(UI.ok) + " " + L(o.fb));
+            pasoTerminado(idE);
+          } else {
+            btn.classList.add("incorrecta");
+            fb.innerHTML = msg("mal", L(UI.noMc) + " " + L(o.fb));
+          }
+        }));
+      } else if (p.tipo === "expr" || p.tipo === "num") {
+        const inp = div.querySelector("input"), bot = div.querySelector(".comprobar");
+        let intentos = 0, cerrado = false;
+        const revisar = () => {
+          if (cerrado) return;
+          let correcto = false, especial = null;
+          if (p.tipo === "expr") {
+            const s = preparar(inp.value, p.vars), r = preparar(p.resp, p.vars);
+            if (s === null || isNaN(evaluar(s, Object.fromEntries([...p.vars].map(c => [c, 1.7]))))) { fb.innerHTML = msg("info", L(UI.invalida)); return; }
+            if (equivalentes(s, r, p.vars)) {
+              if (p.simpl && !estaSimplificada(s, p.vars)) { fb.innerHTML = msg("info", L(UI.noSimpl)); return; }
+              correcto = true;
+            } else if (p.trampas) {
+              for (const tr of p.trampas) if (equivalentes(s, preparar(tr.e, p.vars), p.vars)) { especial = tr.fb; break; }
+            }
+          } else {
+            const v = leerNumero(inp.value);
+            if (isNaN(v)) { fb.innerHTML = msg("info", L(p.frac ? UI.numInvalidoFrac : UI.numInvalido)); return; }
+            correcto = Math.abs(v - p.resp) < 0.005;
+            if (!correcto && p.trampas) for (const tr of p.trampas) if (Math.abs(v - tr.v) < 0.005) { especial = tr.fb; break; }
+          }
+          if (correcto) {
+            inp.classList.remove("malo"); inp.classList.add("bien"); inp.readOnly = true; bot.disabled = true; cerrado = true;
+            fb.innerHTML = msg("ok", L(UI.ok) + (p.sol ? " " + L(p.sol) : ""));
+            pasoTerminado(idE);
+            return;
+          }
+          intentos++;
+          inp.classList.add("malo");
+          if (intentos < 2) {
+            fb.innerHTML = msg("mal", L(UI.otra) + (especial ? " " + L(especial) : ""));
+          } else {
+            cerrado = true; inp.readOnly = true; bot.disabled = true;
+            fb.innerHTML = (especial ? msg("mal", L(especial)) : "") + msg("sol", L(UI.sol) + " " + L(p.sol));
+            pasoTerminado(idE);
+          }
+        };
+        bot.addEventListener("click", revisar);
+        inp.addEventListener("keydown", ev => { if (ev.key === "Enter") revisar(); });
+      } else if (p.tipo === "abierta") {
+        let visto = false;
+        div.querySelector(".ver-modelo").addEventListener("click", () => {
+          div.querySelector(".modelo").classList.toggle("oculto");
+          if (!visto) { visto = true; pasoTerminado(idE); }
+        });
+      } else if (p.tipo === "ordenar") {
+        const zona = div.querySelector(".orden-elegido");
+        const botones = [...div.querySelectorAll(".tarjeta")];
+        let elegidas = [], intentos = 0, cerrado = false;
+        const pintar = () => {
+          botones.forEach((bt, i) => { bt.disabled = cerrado || elegidas.includes(i); });
+          zona.innerHTML = elegidas.length ? elegidas.map(i => '<span class="ficha">' + p.tarjetas[i].t + "</span>").join('<span class="sep" aria-hidden="true">→</span>') : '<span class="vacio">' + L(UI.vacio) + "</span>";
+        };
+        botones.forEach((bt, i) => bt.addEventListener("click", () => { if (cerrado || elegidas.includes(i)) return; elegidas.push(i); pintar(); }));
+        div.querySelector(".deshacer").addEventListener("click", () => { if (!cerrado) { elegidas.pop(); pintar(); } });
+        div.querySelector(".reiniciar").addEventListener("click", () => { if (!cerrado) { elegidas = []; fb.innerHTML = ""; pintar(); } });
+        div.querySelector(".comprobar-orden").addEventListener("click", () => {
+          if (cerrado) return;
+          if (elegidas.length < p.tarjetas.length) { fb.innerHTML = msg("info", L(UI.faltan)); return; }
+          let malo = -1;
+          for (let j = 1; j < elegidas.length; j++) if (p.tarjetas[elegidas[j]].v < p.tarjetas[elegidas[j - 1]].v - 1e-9) { malo = j; break; }
+          if (malo < 0 || ++intentos >= 2) {
+            cerrado = true; pintar();
+            div.querySelectorAll(".acciones-tendedero .btn").forEach(x => { x.disabled = true; });
+            fb.innerHTML = (malo < 0 ? msg("ok", L(UI.tendOk)) : msg("sol", L(UI.sol) + " " + L(p.sol))) + (malo < 0 ? msg("sol", L(p.sol)) : "") + dibujarTendedero(p);
+            pasoTerminado(idE);
+          } else {
+            const a = p.tarjetas[elegidas[malo - 1]], c = p.tarjetas[elegidas[malo]];
+            fb.innerHTML = msg("mal", L(UI.tendOtra) + " " + L(b("«" + a.t + "» no puede ir antes de «" + c.t + "»: " + a.t + " vale " + String(a.v) + " y " + c.t + " vale " + String(c.v) + ".", "“" + a.t + "” cannot come before “" + c.t + "”: " + a.t + " equals " + String(a.v) + " and " + c.t + " equals " + String(c.v) + ".")));
+          }
+        });
+      } else if (p.tipo === "recta") {
+        const bot = div.querySelector(".comprobar-recta");
+        let intentos = 0, cerrado = false;
+        bot.addEventListener("click", () => {
+          if (cerrado) return;
+          let todos = true;
+          const vals = p.exprs.map(e => evaluar(preparar(e[0], "x"), { x: p.x }));
+          div.querySelectorAll(".recta-entradas input").forEach((inp, i) => {
+            const v = leerNumero(inp.value);
+            const ok = !isNaN(v) && Math.abs(v - vals[i]) < 0.005;
+            inp.classList.toggle("bien", ok); inp.classList.toggle("malo", !ok);
+            if (!ok) todos = false;
+          });
+          if (todos || ++intentos >= 2) {
+            cerrado = true; bot.disabled = true;
+            div.querySelectorAll(".recta-entradas input").forEach(i => { i.readOnly = true; });
+            fb.innerHTML = (todos ? msg("ok", L(UI.rectaOk)) : msg("sol", L(UI.sol) + " " + L(p.sol))) + dibujarRecta(p.exprs, vals);
+            pasoTerminado(idE);
+          } else {
+            fb.innerHTML = msg("mal", L(UI.otra));
+          }
+        });
+      }
+    });
+  });
+  document.querySelectorAll("[data-oir]").forEach(btn => btn.addEventListener("click", () => leerEnVoz(btn)));
+}
+
+function dibujarRecta(exprs, vals) {
+  const min = -10, max = 10, W = 640, x0 = 30, x1 = W - 30;
+  const X = v => x0 + (v - min) * (x1 - x0) / (max - min);
+  let s = '<svg class="recta-svg" viewBox="0 0 ' + W + ' 120" role="img" aria-label="' + exprs.map((e, i) => e[1].replace(/<[^>]+>/g, "") + " = " + vals[i]).join(", ") + '">';
+  s += '<line x1="' + x0 + '" y1="80" x2="' + x1 + '" y2="80" stroke="#1a1a1a" stroke-width="2"/>';
+  for (let v = min; v <= max; v++) {
+    s += '<line x1="' + X(v) + '" y1="' + (v % 2 === 0 ? 72 : 75) + '" x2="' + X(v) + '" y2="' + (v % 2 === 0 ? 88 : 85) + '" stroke="#1a1a1a"/>';
+    if (v % 2 === 0) s += '<text x="' + X(v) + '" y="106" font-size="13" text-anchor="middle" fill="#1a1a1a">' + (v < 0 ? "−" + (-v) : v) + "</text>";
+  }
+  exprs.forEach((e, i) => {
+    const etiqueta = e[1].replace(/<var>(.*?)<\/var>/g, '<tspan font-style="italic" font-family="Times New Roman, serif">$1</tspan>');
+    s += '<line x1="' + X(vals[i]) + '" y1="34" x2="' + X(vals[i]) + '" y2="80" stroke="#4a148c" stroke-width="1.5" stroke-dasharray="3 3"/>';
+    s += '<circle cx="' + X(vals[i]) + '" cy="80" r="6" fill="#4a148c"/>';
+    s += '<rect x="' + (X(vals[i]) - 24) + '" y="10" width="48" height="26" rx="6" fill="#fff" stroke="#4a148c" stroke-width="2"/>';
+    s += '<text x="' + X(vals[i]) + '" y="28" font-size="15" text-anchor="middle" fill="#1a1a1a">' + etiqueta + "</text>";
+  });
+  return s + "</svg>";
+}
+
+function dibujarTendedero(p) {
+  const W = 680, x0 = 40, x1 = W - 40, cw = 58, ch = 34;
+  const X = v => x0 + (v - p.min) * (x1 - x0) / (p.max - p.min);
+  const orden = p.tarjetas.map((c, i) => ({ c, i })).sort((a, z) => a.c.v - z.c.v);
+  const ult = [];
+  orden.forEach(o => { let n = 0; while (ult[n] !== undefined && X(o.c.v) - ult[n] < cw + 4) n++; o.n = n; ult[n] = X(o.c.v); });
+  const niveles = Math.max(...orden.map(o => o.n)) + 1;
+  const H = 70 + niveles * (ch + 12) + 40;
+  const lineaY = H - 34;
+  let s = '<div class="tend-scroll" tabindex="0" aria-label="Tendedero / Clothesline"><svg class="tendedero-svg" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + orden.map(o => o.c.t + " = " + o.c.v).join(", ") + '">';
+  s += '<path d="M' + (x0 - 20) + ' 28 Q ' + (W / 2) + ' 40 ' + (x1 + 20) + ' 28" fill="none" stroke="#5C3900" stroke-width="2.5"/>';
+  const yCuerda = x => 28 + 12 * (1 - Math.pow((x - W / 2) / ((x1 - x0) / 2 + 20), 2));
+  [p.min, (p.min + p.max) / 2, p.max].concat([0.5, 1.5].filter(v => v > p.min && v < p.max && v !== (p.min + p.max) / 2)).forEach(v => {
+    s += '<line x1="' + X(v) + '" y1="' + (yCuerda(X(v)) + 2) + '" x2="' + X(v) + '" y2="' + lineaY + '" stroke="#bbb" stroke-dasharray="2 4"/>';
+  });
+  s += '<line x1="' + x0 + '" y1="' + lineaY + '" x2="' + x1 + '" y2="' + lineaY + '" stroke="#1a1a1a" stroke-width="2"/>';
+  for (let k = 0; k <= Math.round((p.max - p.min) * 4); k++) {
+    const v = p.min + k / 4, grande = (k % 2 === 0);
+    s += '<line x1="' + X(v) + '" y1="' + (lineaY - (grande ? 8 : 5)) + '" x2="' + X(v) + '" y2="' + (lineaY + (grande ? 8 : 5)) + '" stroke="#1a1a1a"/>';
+    if (grande) { const e = Math.floor(v + 1e-9), f = Math.round((v - e) * 2); s += '<text x="' + X(v) + '" y="' + (lineaY + 24) + '" font-size="14" text-anchor="middle" fill="#1a1a1a">' + (f ? (e ? e + " 1/2" : "1/2") : e) + "</text>"; }
+  }
+  orden.forEach(o => {
+    const x = X(o.c.v), y = 52 + o.n * (ch + 12);
+    s += '<line x1="' + x + '" y1="' + yCuerda(x) + '" x2="' + x + '" y2="' + y + '" stroke="#4a148c" stroke-width="1.5"/>';
+    s += '<rect x="' + (x - 4) + '" y="' + (yCuerda(x) - 6) + '" width="8" height="14" rx="2" fill="#5C3900"/>';
+    s += '<rect x="' + (x - cw / 2) + '" y="' + y + '" width="' + cw + '" height="' + ch + '" rx="6" fill="#fff" stroke="#4a148c" stroke-width="2"/>';
+    s += '<text x="' + x + '" y="' + (y + 23) + '" font-size="16" font-weight="700" text-anchor="middle" fill="#1a1a1a">' + o.c.t + "</text>";
+    s += '<line x1="' + x + '" y1="' + (y + ch) + '" x2="' + x + '" y2="' + lineaY + '" stroke="#4a148c" stroke-width="1" stroke-dasharray="3 3"/>';
+    s += '<circle cx="' + x + '" cy="' + lineaY + '" r="5" fill="#4a148c"/>';
+  });
+  return s + "</svg></div>";
+}
+
+/* ====== Lectura en voz alta (DUA) ====== */
+const DEN = { es: { 2:["medio","medios"], 3:["tercio","tercios"], 4:["cuarto","cuartos"], 5:["quinto","quintos"], 6:["sexto","sextos"], 8:["octavo","octavos"], 10:["décimo","décimos"], 12:["doceavo","doceavos"] },
+              en: { 2:["half","halves"], 3:["third","thirds"], 4:["fourth","fourths"], 5:["fifth","fifths"], 6:["sixth","sixths"], 8:["eighth","eighths"], 10:["tenth","tenths"], 12:["twelfth","twelfths"] } };
+function paraVoz(txt, lang) {
+  const d = DEN[lang];
+  const frac = (n, q) => d[q] ? ((+n === 1 ? (lang === "es" ? "un " : "one ") + d[q][0] : n + " " + d[q][1])) : n + (lang === "es" ? " sobre " : " over ") + q;
+  let t = txt.replace(/(\d+) (\d+)\/(\d+)/g, (m, e, n, q) => e + (lang === "es" ? " y " : " and ") + frac(n, q))
+             .replace(/(\d+)\/(\d+)/g, (m, n, q) => frac(n, q))
+             .replace(/\$(\d[\d,]*(?:\.\d+)?)/g, (m, v) => v + (lang === "es" ? " dólares" : " dollars"))
+             .replace(/−/g, lang === "es" ? " menos " : " minus ");
+  return t;
+}
+function leerEnVoz(btn) {
+  if (!("speechSynthesis" in window)) return;
+  const art = document.getElementById(btn.dataset.oir);
+  const modo = document.documentElement.dataset.lang;
+  const p = art.querySelector(".historia p");
+  speechSynthesis.cancel();
+  const decir = (lang) => {
+    const el = p.querySelector("." + lang); if (!el) return;
+    const u = new SpeechSynthesisUtterance(paraVoz(el.textContent, lang));
+    u.lang = lang === "es" ? "es-US" : "en-US"; u.rate = 0.9;
+    speechSynthesis.speak(u);
+  };
+  if (modo === "en") decir("en"); else { decir("es"); if (modo === "bi") decir("en"); }
+}
+
+/* ====== Idioma, índice, impresión ====== */
+function ponerIdioma(lang) {
+  document.documentElement.dataset.lang = lang;
+  document.documentElement.lang = lang === "en" ? "en" : "es";
+  document.querySelectorAll("[data-set-lang]").forEach(b2 => b2.setAttribute("aria-pressed", b2.dataset.setLang === lang ? "true" : "false"));
+  try { localStorage.setItem("comprension-numeros-idioma", lang); } catch (e) {}
+}
+function abrirDestino() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h) return;
+  const el = document.getElementById(h);
+  if (!el) return;
+  const det = el.tagName === "DETAILS" ? el : el.closest("details");
+  if (det) det.open = true;
+  setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  construir();
+  let lang = "es";
+  try { lang = localStorage.getItem("comprension-numeros-idioma") || "es"; } catch (e) {}
+  const q = new URLSearchParams(location.search).get("lang");
+  if (q && ["es", "en", "bi"].includes(q)) lang = q;
+  ponerIdioma(lang);
+  document.querySelectorAll("[data-set-lang]").forEach(btn => btn.addEventListener("click", () => ponerIdioma(btn.dataset.setLang)));
+  document.getElementById("abrir-todo").addEventListener("click", () => document.querySelectorAll("details.seccion-grande").forEach(d => d.open = true));
+  document.getElementById("cerrar-todo").addEventListener("click", () => document.querySelectorAll("details.seccion-grande").forEach(d => d.open = false));
+  document.getElementById("btn-imprimir").addEventListener("click", () => window.print());
+  window.addEventListener("beforeprint", () => document.querySelectorAll("details.seccion-grande").forEach(d => d.open = true));
+  document.querySelectorAll('nav.indice a').forEach(a => a.addEventListener("click", () => setTimeout(abrirDestino, 0)));
+  window.addEventListener("hashchange", abrirDestino);
+  abrirDestino();
+  if (!("speechSynthesis" in window)) document.querySelectorAll(".btn-oir").forEach(x => x.classList.add("oculto"));
+});
+</script>
+</body>
+</html>
