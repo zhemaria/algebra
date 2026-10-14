@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--
+  Guía docente · Leer para entender los números / Teacher Guide · Reading to Understand Numbers
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.
+  Licencia / License: Creative Commons BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/
+-->
+<html lang="es" data-lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía docente · Leer para entender los números</title>
+<meta name="description" content="Guía docente bilingüe del Nivel 1: fundamentación, uso en clase, alineación con el GED, análisis de errores y clave de respuestas de «Leer para entender los números».">
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--tinta:#1a1a1a;--suave:#444;--papel:#fbfaf7;--borde:#d4d0c8;--primario:#0d47a1;--primario-claro:#e3f2fd;--aviso:#5C3900;--aviso-fondo:#fff4dc;--radio:10px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.6}
+a{color:var(--primario)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+var{font-family:"Times New Roman",Georgia,serif;font-style:italic;font-size:1.1em}
+.contenedor{max-width:920px;margin:0 auto;padding:0 16px}
+html[data-lang="es"] .en{display:none}
+html[data-lang="en"] .es{display:none}
+html[data-lang="bi"] .en{display:block;font-style:italic;color:var(--suave);font-size:.93em;margin-top:2px}
+html[data-lang="bi"] :is(h1,h2,h3,summary,button,nav a,th,.sub) .en{display:inline;color:inherit;font-size:inherit;margin:0}
+html[data-lang="bi"] :is(h1,h2,h3,summary,button,nav a,th,.sub) .en::before{content:" / ";font-style:normal}
+header{background:var(--primario);color:#fff;padding:26px 0 20px}
+header h1{margin:0 0 6px;font-size:1.8rem;line-height:1.2}
+header p{margin:4px 0}
+.barra{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.grupo{display:flex;border:2px solid #fff;border-radius:8px;overflow:hidden}
+.grupo button{background:transparent;color:#fff;border:0;padding:8px 14px;font:inherit;font-size:.95rem;cursor:pointer;min-height:44px}
+.grupo button[aria-pressed="true"]{background:#fff;color:var(--primario);font-weight:700}
+.btn{font:inherit;font-size:.95rem;border-radius:8px;padding:8px 14px;cursor:pointer;min-height:44px;border:2px solid var(--primario);background:#fff;color:var(--primario);text-decoration:none;display:inline-flex;align-items:center}
+.btn-claro{border-color:#fff;background:transparent;color:#fff}
+nav.indice{background:#fff;border:1px solid var(--borde);border-radius:var(--radio);padding:16px 20px;margin:22px 0}
+nav.indice h2{margin:0 0 8px;font-size:1.15rem}
+nav.indice ol{margin:0;padding-left:1.4em;columns:2;column-gap:32px}
+nav.indice li{break-inside:avoid;margin:3px 0}
+.acciones{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+details.seccion{background:#fff;border:1px solid var(--borde);border-radius:var(--radio);margin:14px 0;scroll-margin-top:12px}
+details.seccion>summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:center;padding:12px 16px;background:var(--primario-claro);border-radius:var(--radio)}
+details.seccion>summary::-webkit-details-marker{display:none}
+details.seccion[open]>summary{border-radius:var(--radio) var(--radio) 0 0}
+details.seccion>summary h2{margin:0;font-size:1.15rem;color:var(--primario)}
+.num{flex:0 0 36px;width:36px;height:36px;border-radius:50%;background:var(--primario);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.chev{margin-left:auto;color:var(--primario);transition:transform .2s}
+details.seccion[open]>summary .chev{transform:rotate(90deg)}
+.cuerpo{padding:4px 20px 18px}
+.cuerpo h3{color:var(--primario);margin:18px 0 6px}
+.nota{background:var(--aviso-fondo);border-left:5px solid var(--aviso);border-radius:8px;padding:10px 14px;margin:12px 0;color:#2b1c00}
+.cita{border-left:4px solid var(--primario);padding:4px 14px;margin:10px 0;color:var(--suave)}
+.tabla-scroll{overflow-x:auto;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+caption{text-align:left;font-weight:700;padding:4px 0 8px}
+th,td{border:1px solid var(--borde);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--primario-claro)}
+code{background:#f0ede6;padding:1px 5px;border-radius:4px;font-size:.9em;overflow-wrap:anywhere}
+.referencias li{margin:8px 0;overflow-wrap:anywhere}
+footer{margin-top:30px;padding:18px 0 30px;border-top:1px solid var(--borde);font-size:.9rem;color:var(--suave)}
+@media (max-width:640px){header h1{font-size:1.45rem}nav.indice ol{columns:1}.cuerpo{padding:4px 12px 14px}}
+@media print{
+  body{background:#fff;font-size:11pt}
+  header{background:#fff;color:#000;border-bottom:2px solid #000}
+  .barra,.acciones,nav.indice{display:none!important}
+  details.seccion>summary{background:#fff}
+  details.seccion{break-inside:auto;border:0}
+  table{break-inside:auto} tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="contenedor">
+    <h1><span class="es">Guía docente · Leer para entender los números</span><span class="en">Teacher guide · Reading to understand numbers</span></h1>
+    <p class="sub"><span class="es">Nivel 1 · Iniciación y dominio numérico: problemas de la vida real con la rutina de las tres lecturas</span><span class="en">Level 1 · Getting started with numbers: real-life problems with the Three Reads routine</span></p>
+    <p style="font-size:.9rem">José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago · <span class="es">Trabajo adicional del curso «Empower Students to Pass the GED® Math Test» · octubre de 2026</span><span class="en">Additional work for the course “Empower Students to Pass the GED® Math Test” · October 2026</span></p>
+    <div class="barra">
+      <div class="grupo" role="group" aria-label="Idioma / Language">
+        <button type="button" data-set-lang="es" aria-pressed="true">Español</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+        <button type="button" data-set-lang="bi" aria-pressed="false">ES + EN</button>
+      </div>
+      <a class="btn btn-claro" href="comprension-numeros.html" target="_blank" rel="noopener noreferrer"><span class="es">Abrir los ejercicios</span><span class="en">Open the exercises</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="contenedor">
+<nav class="indice" aria-labelledby="t-indice">
+  <h2 id="t-indice"><span class="es">Contenido</span><span class="en">Contents</span></h2>
+  <ol>
+    <li><a href="#proposito"><span class="es">Propósito</span><span class="en">Purpose</span></a></li>
+    <li><a href="#fundamentacion"><span class="es">Fundamentación: la investigación</span><span class="en">Rationale: the research</span></a></li>
+    <li><a href="#pd"><span class="es">Conexión con el curso de desarrollo profesional</span><span class="en">Connection to the professional development course</span></a></li>
+    <li><a href="#diseno"><span class="es">Diseño y alineación con el GED®</span><span class="en">Design and GED® alignment</span></a></li>
+    <li><a href="#uso"><span class="es">Cómo usar el material</span><span class="en">How to use the material</span></a></li>
+    <li><a href="#errores"><span class="es">Análisis de errores</span><span class="en">Error analysis</span></a></li>
+    <li><a href="#clave"><span class="es">Clave de respuestas</span><span class="en">Answer key</span></a></li>
+    <li><a href="#referencias"><span class="es">Referencias</span><span class="en">References</span></a></li>
+  </ol>
+  <div class="acciones">
+    <button type="button" class="btn" id="abrir-todo"><span class="es">Abrir todo</span><span class="en">Open all</span></button>
+    <button type="button" class="btn" id="cerrar-todo"><span class="es">Cerrar todo</span><span class="en">Close all</span></button>
+  </div>
+</nav>
+
+
+<!-- 1 -->
+<details class="seccion" id="proposito" open>
+<summary><span class="num" aria-hidden="true">1</span><h2><span class="es">Propósito</span><span class="en">Purpose</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">En mis clases de ABE/ASE observo constantemente que los estudiantes con menos comprensión lectora suelen ser también los que menos comprenden los conceptos matemáticos. Esa relación no empieza en el álgebra: aparece mucho antes. Ya en el Nivel 1, muchos errores no son de cálculo, sino de lectura: el estudiante suma cuando la historia pide multiplicar, usa un número que sobraba, olvida una pregunta escondida o da el área cuando se pedía el perímetro.</span><span class="en">In my ABE/ASE classes I constantly see that the students with the weakest reading comprehension also tend to have the most trouble understanding math concepts. That connection does not begin in algebra: it starts much earlier. Already at Level 1, many errors are not computational but reading errors: students add when the story calls for multiplying, use a number that was not needed, miss a hidden question, or give the area when the perimeter was asked.</span></p><p><span class="es">Por eso este material lleva la rutina de las tres lecturas al <strong>primer nivel</strong>. Si el estudiante crea esos mecanismos desde que empieza sus estudios, aplicarlos se vuelve natural, y llega al álgebra y a la geometría del GED con el hábito ya formado. <strong>Leer para entender los números</strong> reúne 45 ejercicios bilingües (español e inglés) en siete temas: elegir la operación, problemas de varios pasos, decimales, fracciones, medidas y tablas, geometría y un tema integrador de razonamiento («Detective numérico»). En cada ejercicio la lectura <em>forma parte</em> de la tarea matemática: antes de calcular, el estudiante describe la situación, identifica las cantidades y sus unidades, y descarta lo que sobra.</span><span class="en">That is why this material brings the Three Reads routine to <strong>the first level</strong>. If students build these habits from the moment they begin, using them becomes natural, and they reach GED algebra and geometry with the habit already in place. <strong>Reading to Understand Numbers</strong> contains 45 bilingual exercises (Spanish and English) across seven topics: choosing the operation, multi-step problems, decimals, fractions, measurement and tables, geometry, and an integrative reasoning topic (“Number Detective”). In every exercise, reading <em>is part of</em> the math task: before calculating, students describe the situation, identify the quantities and their units, and set aside what is not needed.</span></p><p><span class="es">El tema de geometría responde a una dificultad particular del estudiante adulto: las figuras le son familiares —la señal de alto, el piso de la cocina, la cerca del patio—, pero el vocabulario no. Palabras como <em>perímetro</em>, <em>área</em>, <em>altura</em> o <em>perpendicular</em> deciden qué cálculo hacer, y un estudiante que no las domina falla aunque sepa multiplicar. Por eso ese tema une cada término con un objeto de la vida diaria antes de pedir cualquier cálculo.</span><span class="en">The geometry topic addresses a particular difficulty for adult learners: the shapes are familiar—the stop sign, the kitchen floor, the backyard fence—but the vocabulary is not. Words such as <em>perimeter</em>, <em>area</em>, <em>height</em>, or <em>perpendicular</em> decide which calculation to do, and a student who does not own them fails even when they can multiply. That is why the topic links each term to an everyday object before asking for any calculation.</span></p><p><span class="es">Es material abierto: lo pueden usar otros docentes con estudiantes hispanohablantes, con estudiantes de habla inglesa o en grupos mixtos, porque cada texto existe en los dos idiomas y puede mostrarse en uno solo o en ambos a la vez. Es el compañero de <a href="comprension-algebra.html" target="_blank" rel="noopener noreferrer">Leer para entender el álgebra</a>, que continúa la rutina en el Nivel 2.</span><span class="en">It is an open resource: other teachers can use it with Spanish-speaking students, English-speaking students, or mixed groups, because every text exists in both languages and can be shown in one language or both at once. It is the companion to <a href="comprension-algebra.html" target="_blank" rel="noopener noreferrer">Reading to Understand Algebra</a>, which continues the routine at Level 2.</span></p>
+</div>
+</details>
+
+<!-- 2 -->
+<details class="seccion" id="fundamentacion">
+<summary><span class="num" aria-hidden="true">2</span><h2><span class="es">Fundamentación: la investigación</span><span class="en">Rationale: the research</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">Niileksela, Hajovsky y colaboradores (2026) publicaron en el <i>Journal of Intelligence</i> un metaanálisis que relaciona las habilidades cognitivas medidas por baterías de pruebas estandarizadas con cuatro áreas de la matemática: conocimiento matemático, cálculo, resolución de problemas y fluidez. Según la nota de la Universidad Texas A&amp;M (Lawson, 2026), el análisis reunió datos de 122 baterías de pruebas. Los resultados que más interesan para este material son tres:</span><span class="en">Niileksela, Hajovsky, and colleagues (2026) published a meta-analysis in the <i>Journal of Intelligence</i> relating cognitive abilities measured by standardized test batteries to four areas of mathematics: math knowledge, calculation, problem solving, and fluency. According to the Texas A&amp;M University news release (Lawson, 2026), the analysis brought together data from 122 test batteries. Three findings matter most for this material:</span></p>
+<ul>
+<li><span class="es"><strong>Comprensión y conocimiento (lenguaje, vocabulario, razonamiento verbal).</strong> Tuvo efectos de moderados a grandes en la mayoría de las habilidades matemáticas, sobre todo en el conocimiento matemático y la resolución de problemas, aunque no en la fluidez de cálculo.</span><span class="en"><strong>Comprehension-knowledge (language, vocabulary, verbal reasoning).</strong> It had moderate-to-large effects on most math skills, especially math knowledge and problem solving, though not on math fluency.</span></li>
+<li><span class="es"><strong>Razonamiento fluido.</strong> Fue uno de los dos predictores más constantes, con relaciones moderadas o grandes con todas las habilidades matemáticas. Hajovsky lo describe como la capacidad de «discernir qué información es relevante y cuál no».</span><span class="en"><strong>Fluid reasoning.</strong> It was one of the two most consistent predictors, with moderate or large relations to all math skills. Hajovsky describes it as the ability to “discern which information is relevant and which is not.”</span></li>
+<li><span class="es"><strong>Sentido numérico.</strong> Resultó una base sólida, con un efecto directo grande en la resolución de problemas y el conocimiento matemático. Los autores advierten que ese resultado se apoya en pocas matrices de correlación.</span><span class="en"><strong>Number sense.</strong> It proved to be a strong foundation, with a large direct effect on problem solving and math knowledge. The authors caution that this result rests on few correlation matrices.</span></li>
+</ul>
+<p><span class="es">Hajovsky propone además mirar el <strong>patrón de errores</strong> y no solo la calificación, para saber si la dificultad viene del lenguaje, del razonamiento o de la eficiencia en el cálculo, y ajustar la enseñanza en consecuencia.</span><span class="en">Hajovsky also proposes looking at the <strong>pattern of errors</strong>, not just the score, to tell whether a difficulty comes from language, reasoning, or calculation efficiency, and to adjust instruction accordingly.</span></p>
+<div class="nota"><span class="es"><strong>Una precaución honesta.</strong> Se trata de un estudio correlacional: muestra que estas habilidades van juntas, no que enseñar lectura mejore por sí solo el rendimiento en matemáticas. Por eso este material no separa una «clase de lectura» de una «clase de matemáticas»: integra la comprensión dentro de la tarea matemática misma, que es donde el estudiante la necesita. Los autores también subrayan que estas habilidades siguen desarrollándose con el tiempo y la práctica, algo muy alentador para estudiantes adultos.</span><span class="en"><strong>An honest caveat.</strong> This is a correlational study: it shows that these abilities go together, not that teaching reading will by itself raise math achievement. That is why this material does not separate a “reading lesson” from a “math lesson”: it builds comprehension into the math task itself, where students actually need it. The authors also stress that these abilities keep developing with time and practice, which is very encouraging for adult learners.</span></div>
+<h3><span class="es">Cómo se traduce en el diseño</span><span class="en">How it shapes the design</span></h3><div class="tabla-scroll"><table>
+<caption><span class="es">Hallazgos del estudio y su aplicación en los ejercicios</span><span class="en">Study findings and how the exercises apply them</span></caption>
+<thead><tr><th scope="col"><span class="es">Hallazgo</span><span class="en">Finding</span></th><th scope="col"><span class="es">En los ejercicios</span><span class="en">In the exercises</span></th></tr></thead>
+<tbody>
+<tr><td><span class="es">Comprensión y lenguaje</span><span class="en">Comprehension and language</span></td><td><span class="es">Primera lectura sin números; tabla «¿qué está pasando en la historia?» en lugar de una lista de palabras clave; trampas de lenguaje («en total» que es multiplicar, «¿cuánto más?» que es restar, «ida y vuelta»); tabla de vocabulario de geometría con objetos de la vida diaria.</span><span class="en">First read without numbers; a “what is happening in the story?” table instead of a key-word list; language traps (“in total” that means multiply, “how much more?” that means subtract, “to work and back”); a geometry vocabulary table with everyday objects.</span></td></tr>
+<tr><td><span class="es">Razonamiento fluido</span><span class="en">Fluid reasoning</span></td><td><span class="es">Datos que sobran en casi todas las historias, incluso en las tablas de precios; problemas sin solución por falta de datos; preguntas escondidas que hay que responder primero; un dato que no se usa para calcular, pero sí para comprobar (los dobladillos).</span><span class="en">Extra information in nearly every story, even in price tables; problems with no solution because data are missing; hidden questions that must be answered first; a fact not used to calculate but used to check (the hems).</span></td></tr>
+<tr><td><span class="es">Sentido numérico</span><span class="en">Number sense</span></td><td><span class="es">Estimar antes de calcular (la gasolina, las manzanas); tendedero con fracciones y decimales equivalentes; decidir si la respuesta debe ser mayor o menor; redondear según lo que pide la situación (las mesas, la cuenta entre tres).</span><span class="en">Estimating before calculating (the gas, the apples); a clothesline with equivalent fractions and decimals; deciding whether the answer should be bigger or smaller; rounding as the situation requires (the tables, the split check).</span></td></tr>
+<tr><td><span class="es">Análisis de errores</span><span class="en">Error analysis</span></td><td><span class="es">Cada opción incorrecta y cada respuesta equivocada previsible tiene su propia retroalimentación; hay ejercicios dedicados a encontrar el error de otro estudiante (el amigo de José, las manzanas, la suma de fracciones).</span><span class="en">Every wrong option and every predictable wrong answer has its own feedback; some exercises are devoted to finding another student’s mistake (José’s friend, the apples, the fraction sum).</span></td></tr>
+</tbody></table></div>
+</div>
+</details>
+
+<!-- 3 -->
+<details class="seccion" id="pd">
+<summary><span class="num" aria-hidden="true">3</span><h2><span class="es">Conexión con el curso de desarrollo profesional</span><span class="en">Connection to the professional development course</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">Este material extiende dos rutinas trabajadas en el curso «Empower Students to Pass the GED® Math Test».</span><span class="en">This material extends two routines from the course “Empower Students to Pass the GED® Math Test.”</span></p><h3><span class="es">Tres lecturas (<i>Three Reads</i>, MLR6)</span><span class="en">Three Reads (MLR6)</span></h3><p><span class="es">Es una de las rutinas de lenguaje matemático (MLR) de Zwiers et al. (2017). Los pasos de los ejercicios están rotulados como <strong>1.ª lectura</strong> (la idea general, sin números), <strong>2.ª lectura</strong>, <strong>3.ª lectura</strong> (la estrategia: qué operación y si hay una pregunta escondida) y <strong>Estimar, resolver y comprobar</strong>. Respecto de la versión de álgebra, hice dos adaptaciones propias del Nivel 1: la segunda lectura se llama «Cantidades y <em>unidades</em>», porque aquí la cantidad que más se confunde no es una variable, sino la unidad (dólares, horas, pies, pies cuadrados), y el último paso empieza por <em>estimar</em>, porque la estimación es el control más eficaz contra el punto decimal mal colocado. El ejercicio 7.1, «¿Cuántos años tiene el chofer?», es una versión del ejemplo del pastor que se presentó en el curso.</span><span class="en">It is one of the Mathematical Language Routines (MLRs) of Zwiers et al. (2017). Exercise steps are labeled <strong>1st read</strong> (the big idea, no numbers), <strong>2nd read</strong>, <strong>3rd read</strong> (the strategy: which operation, and whether there is a hidden question), and <strong>Estimate, solve and check</strong>. Compared with the algebra version, I made two changes suited to Level 1: the second read is called “Quantities and <em>units</em>,” because the quantity students confuse most here is not a variable but the unit (dollars, hours, feet, square feet), and the last step begins with <em>estimating</em>, because estimation is the most effective check against a misplaced decimal point. Exercise 7.1, “How old is the driver?”, is a version of the shepherd example presented in the course.</span></p><h3><span class="es">Tendedero matemático (<i>Clothesline Math</i>)</span><span class="en">Clothesline Math</span></h3><p><span class="es">El ejercicio 4.5 es un tendedero con seis longitudes de tornillos: 3/4, 0.5, 1 1/4, 0.2, 6/8 y 1.1 pulgadas. El estudiante las cuelga en orden y ve en el dibujo que 3/4 y 6/8 cuelgan juntas, porque son equivalentes. La mezcla de fracciones y decimales es deliberada: obliga a pensar en el valor y no en la forma en que está escrito el número (Q.1.a). Si el orden no es correcto, el programa señala el primer par que está fuera de lugar y dice cuánto vale cada tarjeta. En Zoom puede hacerse primero en una plantilla compartida y después confirmarse en el interactivo.</span><span class="en">Exercise 4.5 is a clothesline with six screw lengths: 3/4, 0.5, 1 1/4, 0.2, 6/8, and 1.1 inches. Students hang them in order and see in the drawing that 3/4 and 6/8 hang together, because they are equivalent. Mixing fractions and decimals is deliberate: it forces students to think about value rather than how the number is written (Q.1.a). If the order is wrong, the program points to the first pair that is out of place and gives the value of each card. On Zoom it can be done first on a shared template and then confirmed in the interactive.</span></p><h3><span class="es">Apoyos lingüísticos</span><span class="en">Language supports</span></h3><p><span class="es">Los ejercicios incluyen marcos de oración bilingües («La respuesta va a estar en… (dólares, horas, tazas…)», «Primero tengo que saber…», «El dato ___ no hace falta porque…»), la opción de escuchar cada historia y la vista simultánea en los dos idiomas. En geometría, la tabla de vocabulario y los consejos de cada tema aprovechan las raíces de las palabras (<em>octá-</em> es ocho; <em>perí-</em> es alrededor) y la unidad de la respuesta («cuadrados» señala el área).</span><span class="en">The exercises include bilingual sentence frames (“The answer will be in… (dollars, hours, cups…),” “First I need to know…,” “The information ___ is not needed because…”), the option to listen to each story, and a side-by-side view in both languages. In geometry, the vocabulary table and the topic tips use word roots (<em>octa-</em> means eight; <em>peri-</em> means around) and the unit of the answer (“square” signals area).</span></p>
+</div>
+</details>
+
+<!-- 4 -->
+<details class="seccion" id="diseno">
+<summary><span class="num" aria-hidden="true">4</span><h2><span class="es">Diseño y alineación con el GED®</span><span class="en">Design and GED® alignment</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<div class="tabla-scroll"><table>
+<caption><span class="es">Temas, ejercicios e indicadores del GED®</span><span class="en">Topics, exercises, and GED® indicators</span></caption>
+<thead><tr><th scope="col"><span class="es">Tema</span><span class="en">Topic</span></th><th scope="col"><span class="es">Ejercicios</span><span class="en">Exercises</span></th><th scope="col"><span class="es">Indicadores</span><span class="en">Indicators</span></th><th scope="col"><span class="es">Énfasis de lectura</span><span class="en">Reading focus</span></th></tr></thead>
+<tbody>
+<tr><td><a href="comprension-numeros.html#tema1" target="_blank" rel="noopener noreferrer"><span class="es">1. ¿Qué operación pide la historia?</span><span class="en">1. Which operation does the story call for?</span></a></td><td>6</td><td>Q.2.a · Q.2.e · MP.1.a · MP.1.e</td><td><span class="es">Juntar, quitar o comparar, grupos iguales, repartir; trampas de palabras clave; el residuo en la vida real</span><span class="en">Joining, taking away or comparing, equal groups, sharing; key-word traps; the remainder in real life</span></td></tr>
+<tr><td><a href="comprension-numeros.html#tema2" target="_blank" rel="noopener noreferrer"><span class="es">2. Problemas de varios pasos</span><span class="en">2. Multi-step problems</span></a></td><td>6</td><td>Q.2.a · Q.2.e · MP.1.b · MP.3.a · MP.4.a</td><td><span class="es">La pregunta escondida; «ida y vuelta»; el orden de las operaciones</span><span class="en">The hidden question; “to work and back”; order of operations</span></td></tr>
+<tr><td><a href="comprension-numeros.html#tema3" target="_blank" rel="noopener noreferrer"><span class="es">3. Decimales en el dinero y en las medidas</span><span class="en">3. Decimals in money and measurement</span></a></td><td>6</td><td>Q.1.a · Q.2.a · Q.2.e · Q.3.a · MP.1.e</td><td><span class="es">Estimar antes de calcular; precio unitario; alinear el punto decimal; redondear según la situación</span><span class="en">Estimating first; unit price; lining up decimals; rounding as the situation requires</span></td></tr>
+<tr><td><a href="comprension-numeros.html#tema4" target="_blank" rel="noopener noreferrer"><span class="es">4. Fracciones en la vida diaria</span><span class="en">4. Fractions in everyday life</span></a></td><td>7</td><td>Q.1.a · Q.2.a · Q.2.e · MP.2.b · MP.1.e</td><td><span class="es">¿Mayor o menor?; «¿cuántas veces cabe?» frente a «3/8 <em>de</em>»; tendedero</span><span class="en">Bigger or smaller?; “how many times does it fit?” versus “3/8 <em>of</em>”; clothesline</span></td></tr>
+<tr><td><a href="comprension-numeros.html#tema5" target="_blank" rel="noopener noreferrer"><span class="es">5. Medidas, tiempo y tablas</span><span class="en">5. Measurement, time and tables</span></a></td><td>6</td><td>Q.2.e · Q.3.a · Q.3.c · Q.6.c · MP.2.c</td><td><span class="es">Unidades de cada dato y de la respuesta; horas de la mañana y de la tarde; leer encabezados de tablas</span><span class="en">Units of each piece of data and of the answer; a.m. and p.m.; reading table headings</span></td></tr>
+<tr><td><a href="comprension-numeros.html#tema6" target="_blank" rel="noopener noreferrer"><span class="es">6. Geometría: palabras nuevas para figuras conocidas</span><span class="en">6. Geometry: new words for familiar shapes</span></a></td><td>8</td><td>Q.4.a · Q.4.c · MP.2.b · MP.2.c</td><td><span class="es">Vocabulario: perímetro frente a área, base y altura, paralelas y perpendiculares, nombres de polígonos</span><span class="en">Vocabulary: perimeter versus area, base and height, parallel and perpendicular, polygon names</span></td></tr>
+<tr><td><a href="comprension-numeros.html#tema7" target="_blank" rel="noopener noreferrer"><span class="es">7. Detective numérico</span><span class="en">7. Number detective</span></a></td><td>6</td><td>MP.1.d · MP.1.e · MP.2.c · MP.3.c · MP.5.a</td><td><span class="es">Datos que sobran, datos que faltan, ¿tiene sentido?, errores ajenos, escribir problemas propios</span><span class="en">Extra data, missing data, does it make sense?, others’ mistakes, writing one’s own problems</span></td></tr>
+</tbody></table></div><h3><span class="es">Relación con las lecciones del Nivel 1</span><span class="en">Connection to the Level 1 lessons</span></h3><p><span class="es">Cada tema del interactivo enlaza, al principio, los interactivos de las lecciones del Nivel 1 que trabajan el mismo contenido, para que el estudiante pueda repasar el procedimiento cuando el error no es de lectura sino de cálculo.</span><span class="en">At the top of each topic, the interactive links to the Level 1 lesson interactives that cover the same content, so students can review the procedure when the error is not a reading error but a calculation error.</span></p><div class="tabla-scroll"><table>
+<caption><span class="es">Temas del interactivo y lecciones del Nivel 1</span><span class="en">Interactive topics and Level 1 lessons</span></caption>
+<thead><tr><th scope="col"><span class="es">Tema</span><span class="en">Topic</span></th><th scope="col"><span class="es">Lecciones relacionadas</span><span class="en">Related lessons</span></th></tr></thead>
+<tbody>
+<tr><td><span class="es">1. Operación</span><span class="en">1. Operation</span></td><td>1.3 · 2.3</td></tr>
+<tr><td><span class="es">2. Varios pasos</span><span class="en">2. Multi-step</span></td><td>2.3 · 5.3</td></tr>
+<tr><td><span class="es">3. Decimales</span><span class="en">3. Decimals</span></td><td>3.1 · 3.2</td></tr>
+<tr><td><span class="es">4. Fracciones</span><span class="en">4. Fractions</span></td><td>4.1 · 4.2 · 4.3 · 4.4</td></tr>
+<tr><td><span class="es">5. Medidas y tablas</span><span class="en">5. Measurement and tables</span></td><td>6.1 · 6.2 · 6.3 · 8.1</td></tr>
+<tr><td><span class="es">6. Geometría</span><span class="en">6. Geometry</span></td><td>7.1 · 7.2 · 7.3</td></tr>
+<tr><td><span class="es">7. Detective numérico</span><span class="en">7. Number detective</span></td><td><span class="es">5.3 · Repaso del Nivel 1</span><span class="en">5.3 · Level 1 review</span></td></tr>
+</tbody></table></div><h3><span class="es">Tipos de ejercicio</span><span class="en">Exercise types</span></h3><ul>
+<li><span class="es"><strong>Historias trabajadas por pasos</strong>: las tres lecturas completas en 1.1 y 2.1, y tres pasos en ejercicios como 3.2, 4.3, 5.4 y 6.5.</span><span class="en"><strong>Stories worked step by step</strong>: the full Three Reads in 1.1 and 2.1, and three steps in exercises such as 3.2, 4.3, 5.4, and 6.5.</span></li>
+<li><span class="es"><strong>Opción múltiple con retroalimentación por opción</strong>: cada distractor representa un error de lectura real y explica por qué no funciona. Las opciones están equilibradas en longitud para que la correcta no se delate.</span><span class="en"><strong>Multiple choice with per-option feedback</strong>: each distractor represents a real reading error and explains why it does not work. Options are balanced in length so the correct one does not stand out.</span></li>
+<li><span class="es"><strong>Respuesta numérica</strong>: acepta enteros, decimales, fracciones (3/4) y números mixtos (1 1/2), con o sin el signo de dólar y con comas de miles. Reconoce las respuestas equivocadas más previsibles (el área en lugar del perímetro, la suma en lugar del producto, el punto decimal corrido) y responde a cada una. Hay dos intentos antes de ver la solución.</span><span class="en"><strong>Numeric answer</strong>: accepts whole numbers, decimals, fractions (3/4), and mixed numbers (1 1/2), with or without the dollar sign and with thousands commas. It recognizes the most predictable wrong answers (area instead of perimeter, sum instead of product, a shifted decimal point) and responds to each one. There are two tries before the solution is shown.</span></li>
+<li><span class="es"><strong>Tendedero</strong> (4.5): ordenar tarjetas tocándolas; las equivalentes cuelgan juntas.</span><span class="en"><strong>Clothesline</strong> (4.5): ordering cards by tapping them; equivalent ones hang together.</span></li>
+<li><span class="es"><strong>Figuras y tablas</strong>: los ejercicios de geometría traen el dibujo con sus medidas, y los de tablas (5.4, 5.5) traen la tabla de datos, con filas que sobran.</span><span class="en"><strong>Figures and tables</strong>: the geometry exercises include a labeled drawing, and the table exercises (5.4, 5.5) include the data table, with rows that are not needed.</span></li>
+<li><span class="es"><strong>Respuesta abierta</strong> (1.6, 2.6, 4.7, 6.8, 7.6): el estudiante inventa su propia historia o describe un objeto de su casa; luego puede ver un ejemplo de respuesta.</span><span class="en"><strong>Open response</strong> (1.6, 2.6, 4.7, 6.8, 7.6): students write their own story or describe an object at home, then can view a sample answer.</span></li>
+</ul><h3><span class="es">Diseño Universal para el Aprendizaje (DUA)</span><span class="en">Universal Design for Learning (UDL)</span></h3><ul>
+<li><span class="es"><strong>Representación:</strong> texto en español, inglés o ambos; lectura en voz alta de cada historia, que pronuncia las fracciones como palabras («tres cuartos») y el dinero como dólares; figuras con descripción para lectores de pantalla; tipografía Atkinson Hyperlegible; contraste AA o superior.</span><span class="en"><strong>Representation:</strong> text in Spanish, English, or both; read-aloud for every story, which pronounces fractions as words (“three fourths”) and money as dollars; figures described for screen readers; Atkinson Hyperlegible font; AA contrast or better.</span></li>
+<li><span class="es"><strong>Acción y expresión:</strong> elegir, escribir números en la forma que el estudiante prefiera, ordenar tarjetas, escribir historias propias; dos intentos antes de ver la solución; hoja imprimible.</span><span class="en"><strong>Action and expression:</strong> choosing, typing numbers in whatever form students prefer, ordering cards, writing their own stories; two tries before seeing the solution; printable worksheet.</span></li>
+<li><span class="es"><strong>Implicación:</strong> contextos de la vida adulta en Chicago (el cheque de la semana, la renta en Logan Square, la tarjeta Ventra, la taquería de Pilsen, la lavandería, la cuenta de la luz, las calles del centro); progreso visible por tema; el error se trata como información, no como fracaso.</span><span class="en"><strong>Engagement:</strong> adult-life contexts in Chicago (the weekly paycheck, rent in Logan Square, the Ventra card, a Pilsen taquería, the laundromat, the electric bill, downtown streets); visible progress by topic; mistakes are treated as information, not failure.</span></li>
+</ul>
+</div>
+</details>
+
+<!-- 5 -->
+<details class="seccion" id="uso">
+<summary><span class="num" aria-hidden="true">5</span><h2><span class="es">Cómo usar el material</span><span class="en">How to use the material</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<h3><span class="es">Clase en línea (Zoom)</span><span class="en">Online class (Zoom)</span></h3><ol>
+<li><span class="es">Comparta la pantalla con el ejercicio abierto y lea la historia en voz alta, con los números tapados si lo desea (la pregunta oculta, como en la rutina original).</span><span class="en">Share your screen with the exercise open and read the story aloud, covering the numbers if you wish (question hidden, as in the original routine).</span></li>
+<li><span class="es">Pida respuestas a la 1.ª lectura en el chat <em>antes</em> de hacer clic. Anote el lenguaje de los estudiantes sobre la pantalla.</span><span class="en">Ask for 1st-read responses in the chat <em>before</em> clicking. Write students’ language on the screen.</span></li>
+<li><span class="es">En la 2.ª lectura, pida que cada estudiante escriba en el chat la unidad de la respuesta («dólares», «pies cuadrados») antes de calcular. En geometría, pida que diga si se busca perímetro o área y qué palabra se lo indicó.</span><span class="en">On the 2nd read, have each student type the unit of the answer in the chat (“dollars,” “square feet”) before calculating. In geometry, have them say whether perimeter or area is needed and which word told them.</span></li>
+<li><span class="es">Para la 3.ª lectura, use salas pequeñas (Breakout rooms) de 3 o 4 estudiantes con el enlace directo al ejercicio.</span><span class="en">For the 3rd read, use small breakout rooms (Breakout rooms) of 3 or 4 students with the direct link to the exercise.</span></li>
+<li><span class="es">De vuelta en la sala principal, compare estrategias y comente las opciones incorrectas: son la mejor fuente de conversación.</span><span class="en">Back in the main room, compare strategies and discuss the wrong options: they are the best source of conversation.</span></li>
+</ol><h3><span class="es">Clase presencial o impresa</span><span class="en">In-person or printed</span></h3><p><span class="es">El botón «Hoja imprimible» abre todos los temas y genera una hoja de trabajo sin retroalimentación, con las figuras y las tablas. Imprima en el idioma que necesite (o en los dos). La clave está en la sección 7 de esta guía. El tendedero del 4.5 funciona muy bien con tarjetas de papel y un cordel en el salón.</span><span class="en">The “Printable worksheet” button opens every topic and produces a worksheet without feedback, with the figures and tables. Print in the language you need (or both). The answer key is in section 7 of this guide. The clothesline in 4.5 works very well with paper cards and a string in the classroom.</span></p><h3><span class="es">Estudio independiente (GEDparaHispanos)</span><span class="en">Independent study (GEDparaHispanos)</span></h3><p><span class="es">El interactivo está pensado para el estudiante autodidacta: cada respuesta tiene retroalimentación inmediata, el progreso por tema se ve en el encabezado y cada tema enlaza las lecciones del Nivel 1 para repasar.</span><span class="en">The interactive is designed for self-directed learners: every answer gets immediate feedback, progress by topic is shown in each header, and each topic links to the Level 1 lessons for review.</span></p><h3><span class="es">Enlaces directos</span><span class="en">Direct links</span></h3><p><span class="es">Cada tema y cada ejercicio tiene su propia ancla, útil para Brightspace (enlace externo), el chat de Zoom o un correo:</span><span class="en">Each topic and each exercise has its own anchor, useful for Brightspace (external link), Zoom chat, or email:</span></p><ul>
+<li><span class="es">Un tema:</span><span class="en">A topic:</span> <code>https://zhemaria.github.io/algebra/comprension-numeros.html#tema6</code></li>
+<li><span class="es">Un ejercicio (tema 4, ejercicio 5):</span><span class="en">An exercise (topic 4, exercise 5):</span> <code>…/comprension-numeros.html#t4-e5</code></li>
+<li><span class="es">Abrir en inglés:</span><span class="en">Open in English:</span> <code>…/comprension-numeros.html?lang=en#tema1</code></li>
+<li><span class="es">Abrir en los dos idiomas:</span><span class="en">Open in both languages:</span> <code>…/comprension-numeros.html?lang=bi</code></li>
+</ul><h3><span class="es">Secuencia sugerida</span><span class="en">Suggested sequence</span></h3><p><span class="es">El Tema 1 conviene trabajarlo al principio del curso, porque es donde se presenta la rutina; los demás temas pueden acompañar las lecciones relacionadas (sección 4) a medida que se avanza en el Nivel 1. Cada tema ocupa una sesión de 45 a 60 minutos. El Tema 7 funciona como repaso integrador o evaluación formativa antes del examen del nivel. Lo importante es que la rutina se repita en todos los temas, para que pase de ser un procedimiento a ser un hábito.</span><span class="en">Topic 1 is best done at the start of the course, because it introduces the routine; the other topics can accompany the related lessons (section 4) as the class moves through Level 1. Each topic takes one 45-to-60-minute session. Topic 7 works as an integrative review or formative assessment before the level exam. What matters is that the routine is repeated in every topic, so that it moves from a procedure to a habit.</span></p>
+</div>
+</details>
+
+<!-- 6 -->
+<details class="seccion" id="errores">
+<summary><span class="num" aria-hidden="true">6</span><h2><span class="es">Análisis de errores</span><span class="en">Error analysis</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">Siguiendo la propuesta de Hajovsky, esta tabla clasifica los errores previstos según su origen probable. Sirve para decidir qué apoyo dar: si el error es de lenguaje, se relee y se parafrasea; si es de unidades o de vocabulario, se nombra la unidad o la palabra antes de calcular; si es de razonamiento, se pregunta qué dato importa; si es de cálculo, se practica el procedimiento en la lección correspondiente.</span><span class="en">Following Hajovsky’s proposal, this table classifies the anticipated errors by their likely source. It helps decide what support to give: for a language error, reread and paraphrase; for a units or vocabulary error, name the unit or the word before calculating; for a reasoning error, ask which information matters; for a calculation error, practice the procedure in the matching lesson.</span></p><div class="tabla-scroll"><table>
+<caption><span class="es">Errores previstos y su origen probable</span><span class="en">Anticipated errors and their likely source</span></caption>
+<thead><tr><th scope="col"><span class="es">Error</span><span class="en">Error</span></th><th scope="col"><span class="es">Ejemplo</span><span class="en">Example</span></th><th scope="col"><span class="es">Origen probable</span><span class="en">Likely source</span></th><th scope="col"><span class="es">Ejercicios</span><span class="en">Exercises</span></th></tr></thead>
+<tbody>
+<tr><td><span class="es">Elegir la operación por una palabra clave</span><span class="en">Choosing the operation from a key word</span></td><td><span class="es">«en total» → sumar 24 + 30; «más» → sumar 1,200 + 785</span><span class="en">“in total” → add 24 + 30; “more” → add 1,200 + 785</span></td><td><span class="es">Lenguaje</span><span class="en">Language</span></td><td>1.3, 1.4</td></tr>
+<tr><td><span class="es">Sumar cantidades de distinta clase</span><span class="en">Adding different kinds of quantities</span></td><td><span class="es">18 + 35 (dólares y horas); 6 + 8 (pies y pulgadas)</span><span class="en">18 + 35 (dollars and hours); 6 + 8 (feet and inches)</span></td><td><span class="es">Lenguaje (unidades)</span><span class="en">Language (units)</span></td><td>1.1, 5.1</td></tr>
+<tr><td><span class="es">Ignorar el residuo o redondear sin mirar la situación</span><span class="en">Ignoring the remainder or rounding without looking at the situation</span></td><td><span class="es">8 mesas para 50 invitados; $15.83 por persona</span><span class="en">8 tables for 50 guests; $15.83 per person</span></td><td><span class="es">Razonamiento</span><span class="en">Reasoning</span></td><td>1.5, 3.5</td></tr>
+<tr><td><span class="es">No ver la pregunta escondida</span><span class="en">Missing the hidden question</span></td><td><span class="es">46 × 20 en lugar de separar las horas extra; contar 5 viajes en «ida y vuelta»</span><span class="en">46 × 20 instead of separating overtime; counting 5 rides for “to work and back”</span></td><td><span class="es">Razonamiento</span><span class="en">Reasoning</span></td><td>2.2, 2.3, 2.5, 6.7</td></tr>
+<tr><td><span class="es">Orden de las operaciones</span><span class="en">Order of operations</span></td><td><span class="es">5 + 3 × 4 = 32; 50 − 3 × 4 + 7</span><span class="en">5 + 3 × 4 = 32; 50 − 3 × 4 + 7</span></td><td><span class="es">Procedimiento</span><span class="en">Procedure</span></td><td>2.1, 2.4</td></tr>
+<tr><td><span class="es">Punto decimal mal colocado o sin alinear</span><span class="en">Misplaced or misaligned decimal point</span></td><td><span class="es">12 × 3.89 = 466.80; 8.75 + 1.50 = 8.90</span><span class="en">12 × 3.89 = 466.80; 8.75 + 1.50 = 8.90</span></td><td><span class="es">Cálculo / sentido numérico</span><span class="en">Calculation / number sense</span></td><td>3.1, 3.3, 7.3</td></tr>
+<tr><td><span class="es">Creer que más cifras es más grande</span><span class="en">Thinking more digits means bigger</span></td><td><span class="es">2.375 > 2.5</span><span class="en">2.375 > 2.5</span></td><td><span class="es">Sentido numérico</span><span class="en">Number sense</span></td><td>3.4, 4.5</td></tr>
+<tr><td><span class="es">Dividir al revés o multiplicar en lugar de dividir</span><span class="en">Dividing backwards or multiplying instead of dividing</span></td><td><span class="es">24 ÷ 3/8 = 64 estudiantes; 6 × 3/4 faldas</span><span class="en">24 ÷ 3/8 = 64 students; 6 × 3/4 skirts</span></td><td><span class="es">Razonamiento («de» frente a «cabe»)</span><span class="en">Reasoning (“of” versus “fits”)</span></td><td>3.2, 4.3, 4.4, 5.6</td></tr>
+<tr><td><span class="es">Sumar numeradores y denominadores</span><span class="en">Adding numerators and denominators</span></td><td><span class="es">1/2 + 1/3 = 2/5; 3/4 + 1/2 = 4/6</span><span class="en">1/2 + 1/3 = 2/5; 3/4 + 1/2 = 4/6</span></td><td><span class="es">Concepto</span><span class="en">Concept</span></td><td>4.2, 7.4</td></tr>
+<tr><td><span class="es">Comparar fracciones por el denominador</span><span class="en">Comparing fractions by the denominator</span></td><td><span class="es">3/5 > 2/3 «porque 5 > 3»</span><span class="en">3/5 > 2/3 “because 5 > 3”</span></td><td><span class="es">Concepto</span><span class="en">Concept</span></td><td>4.6</td></tr>
+<tr><td><span class="es">Tratar las horas y los pies como decimales</span><span class="en">Treating hours and feet as decimals</span></td><td><span class="es">30 minutos = 0.3 h; 1 pie = 10 pulgadas; restar 4:15 − 7:45</span><span class="en">30 minutes = 0.3 h; 1 foot = 10 inches; subtracting 4:15 − 7:45</span></td><td><span class="es">Lenguaje (unidades)</span><span class="en">Language (units)</span></td><td>5.1, 5.2</td></tr>
+<tr><td><span class="es">Restar cuando cruza el cero</span><span class="en">Subtracting across zero</span></td><td><span class="es">De −5 °F a 18 °F «subió 13»</span><span class="en">From −5 °F to 18 °F “rose 13”</span></td><td><span class="es">Sentido numérico</span><span class="en">Number sense</span></td><td>5.3</td></tr>
+<tr><td><span class="es">Confundir perímetro y área</span><span class="en">Confusing perimeter and area</span></td><td><span class="es">18 × 12 para una cerca; 12 + 10 + 12 + 10 para las losetas</span><span class="en">18 × 12 for a fence; 12 + 10 + 12 + 10 for tiles</span></td><td><span class="es">Lenguaje (vocabulario)</span><span class="en">Language (vocabulary)</span></td><td>6.2, 6.3, 6.4, 6.5</td></tr>
+<tr><td><span class="es">Usar el lado inclinado como altura u olvidar la mitad</span><span class="en">Using the slanted side as the height or forgetting the half</span></td><td><span class="es">3 × 2.5 ÷ 2; 3 × 2 = 6 para un triángulo</span><span class="en">3 × 2.5 ÷ 2; 3 × 2 = 6 for a triangle</span></td><td><span class="es">Lenguaje (vocabulario) / concepto</span><span class="en">Language (vocabulary) / concept</span></td><td>6.5</td></tr>
+<tr><td><span class="es">Usar todos los números</span><span class="en">Using every number</span></td><td><span class="es">25 + 8 + 5 = edad del chofer</span><span class="en">25 + 8 + 5 = the driver’s age</span></td><td><span class="es">Razonamiento</span><span class="en">Reasoning</span></td><td>7.1, 7.2, 7.5</td></tr>
+</tbody></table></div>
+</div>
+</details>
+
+<!-- 7 -->
+<details class="seccion" id="clave">
+<summary><span class="num" aria-hidden="true">7</span><h2><span class="es">Clave de respuestas</span><span class="en">Answer key</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<p><span class="es">En los pasos de opción múltiple se indica el contenido de la respuesta correcta, porque el orden de las opciones puede cambiar en futuras versiones. Las respuestas numéricas se aceptan también en forma equivalente (por ejemplo, 3/2, 1 1/2 o 1.5).</span><span class="en">For multiple-choice steps, the content of the correct answer is given, because option order may change in future versions. Numeric answers are also accepted in equivalent form (for example, 3/2, 1 1/2, or 1.5).</span></p><div class="tabla-scroll"><table>
+<caption><span class="es">Respuestas por ejercicio</span><span class="en">Answers by exercise</span></caption>
+<thead><tr><th scope="col">#</th><th scope="col"><span class="es">Respuestas (por pasos)</span><span class="en">Answers (by step)</span></th></tr></thead>
+<tbody>
+<tr><td>1.1</td><td><span class="es">Ana quiere saber cuánto ganó por su trabajo de la semana · Que su hija empieza el lunes · 18 × 35 · $630</span><span class="en">Ana wants to know how much she earned for her work this week · That her daughter starts on Monday · 18 × 35 · $630</span></td></tr>
+<tr><td>1.2</td><td><span class="es">Que el edificio tiene 4 pisos · Se reparte una cantidad en partes iguales · $550</span><span class="en">That the building has 4 floors · An amount is shared into equal parts · $550</span></td></tr>
+<tr><td>1.3</td><td><span class="es">Restar, porque se busca lo que falta: 1,200 − 785 · $415</span><span class="en">Subtract, because we want what is missing: 1,200 − 785 · $415</span></td></tr>
+<tr><td>1.4</td><td><span class="es">Se repiten grupos iguales: 24 × 30 · 720 huevos</span><span class="en">Equal groups are repeated: 24 × 30 · 720 eggs</span></td></tr>
+<tr><td>1.5</td><td><span class="es">Dos invitados que todavía no tienen silla · 9 mesas</span><span class="en">Two guests who still have no seat · 9 tables</span></td></tr>
+<tr><td>1.6</td><td><span class="es">Abierta. Debe distinguir una situación de reparto en partes iguales (120 ÷ 4 = 30) de una en la que se quita una cantidad (120 − 4 = 116).</span><span class="en">Open. Must distinguish an equal-sharing situation (120 ÷ 4 = 30) from one where an amount is taken away (120 − 4 = 116).</span></td></tr>
+<tr><td>2.1</td><td><span class="es">Gloria paga una compra y quiere saber cuánto le devuelven · Cuánto cuesta toda la compra · 50 − (3 × 4 + 7) · $31</span><span class="en">Gloria pays for her groceries and wants to know her change · How much all the groceries cost · 50 − (3 × 4 + 7) · $31</span></td></tr>
+<tr><td>2.2</td><td><span class="es">6 horas extra · $980</span><span class="en">6 overtime hours · $980</span></td></tr>
+<tr><td>2.3</td><td><span class="es">10 viajes, dos por día · $15</span><span class="en">10 rides, two per day · $15</span></td></tr>
+<tr><td>2.4</td><td><span class="es">Sumó primero, 5 + 3 = 8, y después multiplicó por 4 · $17</span><span class="en">He added first, 5 + 3 = 8, and then multiplied by 4 · $17</span></td></tr>
+<tr><td>2.5</td><td><span class="es">6 galones · $158</span><span class="en">6 gallons · $158</span></td></tr>
+<tr><td>2.6</td><td><span class="es">Abierta. La historia debe tener dos pasos y un plan escrito; el resultado es 100 − 60 = 40.</span><span class="en">Open. The story must have two steps and a written plan; the result is 100 − 60 = 40.</span></td></tr>
+<tr><td>3.1</td><td><span class="es">Cerca de $48, porque 12 × 4 = 48 · $46.68</span><span class="en">About $48, because 12 × 4 = 48 · $46.68</span></td></tr>
+<tr><td>3.2</td><td><span class="es">Se divide el precio entre las libras · $1.39 · El de 5 libras, porque la libra sale más barata</span><span class="en">Divide the price by the pounds · $1.39 · The 5-pound bag, because each pound costs less</span></td></tr>
+<tr><td>3.3</td><td><span class="es">$10.25 · $9.75</span><span class="en">$10.25 · $9.75</span></td></tr>
+<tr><td>3.4</td><td><span class="es">2.5 lb</span><span class="en">2.5 lb</span></td></tr>
+<tr><td>3.5</td><td><span class="es">$15.84</span><span class="en">$15.84</span></td></tr>
+<tr><td>3.6</td><td><span class="es">Las 12 mesas · $17.50</span><span class="en">The 12 tables · $17.50</span></td></tr>
+<tr><td>4.1</td><td><span class="es">Más, porque cocina para más personas · 1 1/2 tazas</span><span class="en">More, because she is cooking for more people · 1 1/2 cups</span></td></tr>
+<tr><td>4.2</td><td><span class="es">Escribir 1/2 como 2/4, para tener el mismo denominador · 8 1/4 horas</span><span class="en">Write 1/2 as 2/4, to have the same denominator · 8 1/4 hours</span></td></tr>
+<tr><td>4.3</td><td><span class="es">Más de 6, porque cada falda usa menos de una yarda · 6 ÷ 3/4 · 8 faldas</span><span class="en">More than 6, because each skirt uses less than a yard · 6 ÷ 3/4 · 8 skirts</span></td></tr>
+<tr><td>4.4</td><td><span class="es">Que la clase empieza a las 6:00 · 9 estudiantes</span><span class="en">That class starts at 6:00 · 9 students</span></td></tr>
+<tr><td>4.5</td><td><span class="es">0.2 < 0.5 < 3/4 = 6/8 < 1.1 < 1 1/4 · Porque 1 1/4 = 1.25, y 1.25 es mayor que 1.10</span><span class="en">0.2 < 0.5 < 3/4 = 6/8 < 1.1 < 1 1/4 · Because 1 1/4 = 1.25, and 1.25 is greater than 1.10</span></td></tr>
+<tr><td>4.6</td><td><span class="es">La de 2/3, porque 2/3 = 10/15 y 3/5 = 9/15</span><span class="en">The 2/3 one, because 2/3 = 10/15 and 3/5 = 9/15</span></td></tr>
+<tr><td>4.7</td><td><span class="es">Abierta. 2 1/2 − 3/4 = 1 3/4, menos que 2 porque se quita más de media unidad.</span><span class="en">Open. 2 1/2 − 3/4 = 1 3/4, less than 2 because more than half a unit is taken away.</span></td></tr>
+<tr><td>5.1</td><td><span class="es">80 pulgadas</span><span class="en">80 inches</span></td></tr>
+<tr><td>5.2</td><td><span class="es">8 1/2 horas · 8 horas</span><span class="en">8 1/2 hours · 8 hours</span></td></tr>
+<tr><td>5.3</td><td><span class="es">23 °F</span><span class="en">23 °F</span></td></tr>
+<tr><td>5.4</td><td><span class="es">La lavadora chica y el horario · $1.25 · $12.25</span><span class="en">The small washer and the hours · $1.25 · $12.25</span></td></tr>
+<tr><td>5.5</td><td><span class="es">94.20 − 71.40 · $22.80</span><span class="en">94.20 − 71.40 · $22.80</span></td></tr>
+<tr><td>5.6</td><td><span class="es">Menor, porque una milla es más larga que un kilómetro · 3.1 millas</span><span class="en">Less, because a mile is longer than a kilometer · 3.1 miles</span></td></tr>
+<tr><td>6.1</td><td><span class="es">8 lados · Octágono</span><span class="en">8 sides · Octagon</span></td></tr>
+<tr><td>6.2</td><td><span class="es">El perímetro del patio · El área del piso · El perímetro de la ventana</span><span class="en">The perimeter of the yard · The area of the floor · The perimeter of the window</span></td></tr>
+<tr><td>6.3</td><td><span class="es">«Rodearlo»: la cerca va alrededor · 60 pies</span><span class="en">“All around it”: the fence goes around · 60 feet</span></td></tr>
+<tr><td>6.4</td><td><span class="es">Un cuadrado que mide 1 pie por cada lado · 120 losetas (pies cuadrados)</span><span class="en">A square that measures 1 foot on each side · 120 tiles (square feet)</span></td></tr>
+<tr><td>6.5</td><td><span class="es">La línea punteada de 2 pies, derecha hacia arriba · El área, en pies cuadrados · 3 pies cuadrados</span><span class="en">The 2-foot dashed line, straight up · The area, in square feet · 3 square feet</span></td></tr>
+<tr><td>6.6</td><td><span class="es">Paralelas, porque nunca se cruzan · Un ángulo recto, de 90°</span><span class="en">Parallel, because they never cross · A right angle, 90°</span></td></tr>
+<tr><td>6.7</td><td><span class="es">El perímetro del marco · 16 pulgadas · 8 pulgadas</span><span class="en">The perimeter of the frame · 16 inches · 8 inches</span></td></tr>
+<tr><td>6.8</td><td><span class="es">Abierta. Debe usar al menos cuatro términos de la tabla de vocabulario; si mide el objeto, perímetro y área con sus unidades (pies y pies cuadrados).</span><span class="en">Open. Must use at least four terms from the vocabulary table; if the object is measured, perimeter and area with their units (feet and square feet).</span></td></tr>
+<tr><td>7.1</td><td><span class="es">No se puede saber con estos datos</span><span class="en">It cannot be known from this information</span></td></tr>
+<tr><td>7.2</td><td><span class="es">No se puede saber: falta el precio de las camisas</span><span class="en">It cannot be known: the price of the shirts is missing</span></td></tr>
+<tr><td>7.3</td><td><span class="es">El punto decimal: 4 libras a casi $2 cuestan cerca de $8 · $7.92</span><span class="en">The decimal point: 4 pounds at almost $2 cost about $8 · $7.92</span></td></tr>
+<tr><td>7.4</td><td><span class="es">Porque 2/5 es menos que 1/2, y él solo ya comió 1/2 · 5/6 de pizza</span><span class="en">Because 2/5 is less than 1/2, and he alone already ate 1/2 · 5/6 of a pizza</span></td></tr>
+<tr><td>7.5</td><td><span class="es">Para comprobar: no pudo hacer más de 15 dobladillos · 11 dobladillos</span><span class="en">To check: she could not do more than 15 hems · 11 hems</span></td></tr>
+<tr><td>7.6</td><td><span class="es">Abierta. La historia debe llevar a 3 × 2.50 + 4 = $11.50 e incluir un dato que sobra.</span><span class="en">Open. The story must lead to 3 × 2.50 + 4 = $11.50 and include one extra piece of information.</span></td></tr>
+</tbody></table></div>
+</div>
+</details>
+
+<!-- 8 -->
+<details class="seccion" id="referencias" open>
+<summary><span class="num" aria-hidden="true">8</span><h2><span class="es">Referencias</span><span class="en">References</span></h2><span class="chev" aria-hidden="true">▶</span></summary>
+<div class="cuerpo">
+<ul class="referencias">
+<li>CAST. (2024). <i>Universal design for learning guidelines</i> (version 3.0). <a href="https://udlguidelines.cast.org" target="_blank" rel="noopener noreferrer">https://udlguidelines.cast.org</a></li>
+<li>GED Testing Service. (2014). <i>Assessment guide for educators: Mathematical reasoning</i>. <a href="https://www.ged.com/wp-content/uploads/assessment_guide_for_educators_math.pdf" target="_blank" rel="noopener noreferrer">https://www.ged.com/wp-content/uploads/assessment_guide_for_educators_math.pdf</a></li>
+<li>Lawson, E. (2026, octubre). Why are some people good at math while others struggle? <i>Phys.org</i>. <a href="https://phys.org/news/2026-10-people-good-math-struggle.html" target="_blank" rel="noopener noreferrer">https://phys.org/news/2026-10-people-good-math-struggle.html</a></li>
+<li>Niileksela, C. R., Hajovsky, D. B., Cocar-Montenegro, F. P., Schneider, W. J., Flanagan, D. P., &amp; Alfonso, V. C. (2026). Cognitive–mathematics relations: A meta-analysis of norm-referenced standardized test batteries. <i>Journal of Intelligence, 14</i>(7), 142. <a href="https://doi.org/10.3390/jintelligence14070142" target="_blank" rel="noopener noreferrer">https://doi.org/10.3390/jintelligence14070142</a></li>
+<li>Shore, C. (s. f.). <i>Clothesline Math</i>. <a href="https://clotheslinemath.com/" target="_blank" rel="noopener noreferrer">https://clotheslinemath.com/</a></li>
+<li>Zwiers, J., Dieckmann, J., Rutherford-Quach, S., Daro, V., Skarin, R., Weiss, S., &amp; Malamut, J. (2017). <i>Principles for the design of mathematics curricula: Promoting language and content development</i>. Stanford University, UL/SCALE. <a href="https://ul.stanford.edu/sites/default/files/resource/2021-11/Principles%20for%20the%20Design%20of%20Mathematics%20Curricula_1.pdf" target="_blank" rel="noopener noreferrer">ul.stanford.edu</a></li>
+</ul>
+</div>
+</details>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p><span class="es">Este material se distribuye con la licencia</span><span class="en">This material is licensed under</span> <a rel="license noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">Creative Commons BY-NC-SA 4.0</a>.</p>
+  </div>
+</footer>
+<script>
+"use strict";
+function ponerIdioma(lang){
+  document.documentElement.dataset.lang = lang;
+  document.documentElement.lang = lang === "en" ? "en" : "es";
+  document.querySelectorAll("[data-set-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.setLang === lang ? "true" : "false"));
+  try { localStorage.setItem("guia-comprension-numeros-idioma", lang); } catch (e) {}
+}
+function abrirDestino(){
+  const h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
+  const el = document.getElementById(h); if (!el) return;
+  const d = el.tagName === "DETAILS" ? el : el.closest("details"); if (d) d.open = true;
+  setTimeout(() => el.scrollIntoView({behavior:"smooth", block:"start"}), 50);
+}
+document.addEventListener("DOMContentLoaded", () => {
+  let lang = "es";
+  try { lang = localStorage.getItem("guia-comprension-numeros-idioma") || "es"; } catch (e) {}
+  const q = new URLSearchParams(location.search).get("lang");
+  if (q && ["es","en","bi"].includes(q)) lang = q;
+  ponerIdioma(lang);
+  document.querySelectorAll("[data-set-lang]").forEach(b => b.addEventListener("click", () => ponerIdioma(b.dataset.setLang)));
+  document.getElementById("abrir-todo").addEventListener("click", () => document.querySelectorAll("details.seccion").forEach(d => d.open = true));
+  document.getElementById("cerrar-todo").addEventListener("click", () => document.querySelectorAll("details.seccion").forEach(d => d.open = false));
+  window.addEventListener("beforeprint", () => document.querySelectorAll("details.seccion").forEach(d => d.open = true));
+  document.querySelectorAll("nav.indice a").forEach(a => a.addEventListener("click", () => setTimeout(abrirDestino, 0)));
+  window.addEventListener("hashchange", abrirDestino);
+  abrirDestino();
+});
+</script>
+</body>
+</html>
