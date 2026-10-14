@@ -22,7 +22,7 @@ Reúnen los ejercicios de un tema que aparece en varios niveles, para verlo en c
 
 Interactivos bilingües (español e inglés) que practican la rutina de las tres lecturas en problemas de la vida real:
 
-- [Leer para entender los números](https://zhemaria.github.io/algebra/comprension-numeros.html) (Nivel 1): operaciones, varios pasos, decimales, fracciones con tendedero (*Clothesline Math*), medidas y tablas, y detective numérico.
+- [Leer para entender los números](https://zhemaria.github.io/algebra/comprension-numeros.html) (Nivel 1): operaciones, varios pasos, decimales, fracciones con tendedero (*Clothesline Math*), medidas y tablas, geometría (vocabulario, perímetro y área) y detective numérico.
 - [Leer para entender el álgebra](https://zhemaria.github.io/algebra/comprension-algebra.html) (Nivel 2): variables, expresiones, términos semejantes y ecuaciones de un paso. Su guía docente es `guia-docente-comprension-algebra.html`.
 
 ## Cómo se llaman los archivos
