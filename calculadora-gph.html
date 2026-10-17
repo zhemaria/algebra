@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!--
+  Calculadora científica GPH — GEDparaHispanos
+  José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia CC BY-NC-SA 4.0: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora científica GPH</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es">
+<style>
+  :root {
+    --tinta: #1f2937;
+    --suave: #4b5563;
+    --papel: #f5f7f8;
+    --tarjeta: #ffffff;
+    --acento: #0e7490;
+    --acento-claro: #e6f4f7;
+    --borde: #d1d9de;
+    --ok: #166534;
+    --ok-fondo: #ecfdf3;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 1.12rem;
+    line-height: 1.65;
+  }
+  header { background: var(--acento); color: #fff; padding: 30px 16px; text-align: center; }
+  header h1 { margin: 0 0 6px; font-size: 2rem; }
+  header p { margin: 0; font-size: 1.1rem; }
+  main { max-width: 880px; margin: 0 auto; padding: 24px 16px 60px; }
+  nav.indice {
+    background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 12px;
+    padding: 14px 20px; margin-bottom: 20px;
+  }
+  nav.indice h2 { margin: 0 0 6px; font-size: 1.2rem; }
+  nav.indice ol { margin: 0; padding-left: 1.4rem; }
+  nav.indice a { color: var(--acento); font-weight: 600; }
+  section {
+    background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 12px;
+    padding: 6px 24px 20px; margin-bottom: 18px; scroll-margin-top: 12px;
+  }
+  section h2 { color: var(--acento); font-size: 1.4rem; }
+  .abrir-calc {
+    background: var(--acento); color: #fff; border: none; border-radius: 10px;
+    padding: 12px 22px; font-size: 1.1rem; font-weight: 700; cursor: pointer;
+  }
+  .abrir-calc:hover { filter: brightness(1.1); }
+  .abrir-calc:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 1.02rem; }
+  caption { text-align: left; font-weight: 700; padding-bottom: 6px; }
+  th, td { border: 1px solid var(--borde); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--acento-claro); }
+  kbd {
+    display: inline-block; background: #f3f4f6; border: 1px solid #9ca3af; border-bottom-width: 3px;
+    border-radius: 6px; padding: 0 7px; font-family: inherit; font-size: .95em; font-weight: 600; white-space: nowrap;
+  }
+  .ejercicio { border-left: 5px solid var(--acento); background: var(--acento-claro); border-radius: 8px; padding: 12px 16px; margin: 14px 0; }
+  .ejercicio p { margin: 0 0 6px; }
+  details.respuesta { margin-top: 6px; }
+  details.respuesta summary { cursor: pointer; color: var(--acento); font-weight: 700; }
+  details.respuesta div { background: var(--ok-fondo); border-radius: 6px; padding: 8px 12px; margin-top: 6px; }
+  .nota { color: var(--suave); }
+  footer { text-align: center; color: var(--suave); font-size: .95rem; padding: 0 16px 90px; }
+  footer a { color: var(--acento); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Calculadora científica GPH</h1>
+  <p>Una herramienta para practicar los problemas de matemáticas del GED</p>
+</header>
+
+<main>
+  <nav class="indice" aria-label="Contenido de la página">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#usar">Cómo abrir, mover y cerrar la calculadora</a></li>
+      <li><a href="#teclas">Las teclas especiales</a></li>
+      <li><a href="#practica">Práctica</a></li>
+      <li><a href="#examen">La calculadora del examen GED</a></li>
+    </ol>
+  </nav>
+
+  <section id="usar">
+    <h2>1. Cómo abrir, mover y cerrar la calculadora</h2>
+    <ul>
+      <li><strong>Abrir:</strong> presione el botón <strong>Calculadora</strong> de la esquina inferior derecha o el botón de abajo.</li>
+      <li><strong>Mover:</strong> arrastre la barra superior de la calculadora con el ratón o con el dedo. También puede seleccionarla con la tecla <kbd>Tab</kbd> y moverla con las flechas del teclado.</li>
+      <li><strong>Cerrar:</strong> presione <kbd>✕</kbd>, o la tecla <kbd>Esc</kbd>.</li>
+      <li><strong>Ayuda:</strong> el botón <kbd>?</kbd> muestra un resumen de uso dentro de la calculadora.</li>
+    </ul>
+    <p><button class="abrir-calc" type="button" data-gph-calculadora>Abrir la calculadora</button></p>
+    <p class="nota">La calculadora recuerda el lugar donde la dejó la última vez.</p>
+  </section>
+
+  <section id="teclas">
+    <h2>2. Las teclas especiales</h2>
+    <table>
+      <caption>Funciones de la calculadora y cómo usarlas</caption>
+      <thead>
+        <tr><th scope="col">Tecla</th><th scope="col">Para qué sirve</th><th scope="col">Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><kbd>a b/c</kbd></td><td>Escribir un número mixto.</td><td>2 y 1/3: <kbd>2</kbd> <kbd>a b/c</kbd> <kbd>1</kbd> <kbd>÷</kbd> <kbd>3</kbd></td></tr>
+        <tr><td><kbd>F⇔D</kbd></td><td>Cambiar el resultado entre fracción, número mixto y decimal.</td><td>0.75 → 3/4</td></tr>
+        <tr><td><kbd>x²</kbd></td><td>Elevar al cuadrado.</td><td>5² = 25</td></tr>
+        <tr><td><kbd>xʸ</kbd></td><td>Elevar a cualquier potencia.</td><td>2 <kbd>xʸ</kbd> 5 = 32</td></tr>
+        <tr><td><kbd>√</kbd></td><td>Raíz cuadrada.</td><td><kbd>√</kbd> 49 = 7</td></tr>
+        <tr><td><kbd>ˣ√</kbd></td><td>Raíz con índice: primero el índice y después el número.</td><td>3 <kbd>ˣ√</kbd> 64 = 4</td></tr>
+        <tr><td><kbd>n!</kbd></td><td>Factorial.</td><td>5 <kbd>n!</kbd> = 120</td></tr>
+        <tr><td><kbd>nPr</kbd> / <kbd>nCr</kbd></td><td>Permutaciones y combinaciones: primero n y después r.</td><td>5 <kbd>nCr</kbd> 2 = 10</td></tr>
+        <tr><td><kbd>log</kbd> / <kbd>10ˣ</kbd></td><td>Logaritmo base 10 y su inversa.</td><td><kbd>log</kbd> 1000 <kbd>)</kbd> = 3</td></tr>
+        <tr><td><kbd>×10ⁿ</kbd></td><td>Notación científica.</td><td>4.5 <kbd>×10ⁿ</kbd> 6 = 4 500 000</td></tr>
+        <tr><td><kbd>(−)</kbd></td><td>Escribir un número negativo.</td><td><kbd>(−)</kbd> 8 + 3 = −5</td></tr>
+        <tr><td><kbd>%</kbd></td><td>Convertir un porcentaje en decimal.</td><td>15 <kbd>%</kbd> <kbd>×</kbd> 80 = 12</td></tr>
+        <tr><td><kbd>Ans</kbd></td><td>Usar el resultado anterior.</td><td><kbd>Ans</kbd> <kbd>÷</kbd> 2</td></tr>
+        <tr><td><kbd>⌫</kbd> / <kbd>AC</kbd></td><td>Borrar lo último / borrar todo.</td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="nota">También puede escribir con el teclado de la computadora: números, <kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> <kbd>^</kbd>, paréntesis y <kbd>Enter</kbd> para obtener el resultado.</p>
+  </section>
+
+  <section id="practica">
+    <h2>3. Práctica</h2>
+    <p>Resuelva cada problema con la calculadora y compruebe su respuesta.</p>
+
+    <div class="ejercicio">
+      <p><strong>a)</strong> Calcule 3 y 1/2 × 2 y 2/3. Dé la respuesta como número mixto.</p>
+      <details class="respuesta"><summary>Ver respuesta</summary>
+        <div><kbd>3</kbd> <kbd>a b/c</kbd> <kbd>1</kbd> <kbd>÷</kbd> <kbd>2</kbd> <kbd>×</kbd> <kbd>2</kbd> <kbd>a b/c</kbd> <kbd>2</kbd> <kbd>÷</kbd> <kbd>3</kbd> <kbd>=</kbd> → <strong>9 y 1/3</strong></div>
+      </details>
+    </div>
+
+    <div class="ejercicio">
+      <p><strong>b)</strong> Un círculo tiene un radio de 4 cm. Calcule su área (A = πr²) y redondee a la décima.</p>
+      <details class="respuesta"><summary>Ver respuesta</summary>
+        <div><kbd>π</kbd> <kbd>×</kbd> <kbd>4</kbd> <kbd>x²</kbd> <kbd>=</kbd> → 50.26548246 → <strong>50.3 cm²</strong></div>
+      </details>
+    </div>
+
+    <div class="ejercicio">
+      <p><strong>c)</strong> Los catetos de un triángulo rectángulo miden 6 y 8. Calcule la hipotenusa: c = √(a² + b²).</p>
+      <details class="respuesta"><summary>Ver respuesta</summary>
+        <div><kbd>√</kbd> <kbd>6</kbd> <kbd>x²</kbd> <kbd>+</kbd> <kbd>8</kbd> <kbd>x²</kbd> <kbd>)</kbd> <kbd>=</kbd> → <strong>10</strong></div>
+      </details>
+    </div>
+
+    <div class="ejercicio">
+      <p><strong>d)</strong> Divida 4.5 × 10⁶ entre 1.5 × 10³.</p>
+      <details class="respuesta"><summary>Ver respuesta</summary>
+        <div><kbd>4.5</kbd> <kbd>×10ⁿ</kbd> <kbd>6</kbd> <kbd>÷</kbd> <kbd>1.5</kbd> <kbd>×10ⁿ</kbd> <kbd>3</kbd> <kbd>=</kbd> → <strong>3000</strong>, es decir, 3 × 10³</div>
+      </details>
+    </div>
+
+    <div class="ejercicio">
+      <p><strong>e)</strong> Una chaqueta cuesta $80 y tiene un descuento del 15 %. ¿Cuánto se ahorra?</p>
+      <details class="respuesta"><summary>Ver respuesta</summary>
+        <div><kbd>15</kbd> <kbd>%</kbd> <kbd>×</kbd> <kbd>80</kbd> <kbd>=</kbd> → <strong>$12</strong></div>
+      </details>
+    </div>
+
+    <div class="ejercicio">
+      <p><strong>f)</strong> Un cubo tiene un volumen de 125 cm³. ¿Cuánto mide cada arista?</p>
+      <details class="respuesta"><summary>Ver respuesta</summary>
+        <div><kbd>3</kbd> <kbd>ˣ√</kbd> <kbd>125</kbd> <kbd>=</kbd> → <strong>5 cm</strong></div>
+      </details>
+    </div>
+
+    <div class="ejercicio">
+      <p><strong>g)</strong> Convierta 0.625 en fracción.</p>
+      <details class="respuesta"><summary>Ver respuesta</summary>
+        <div><kbd>.625</kbd> <kbd>=</kbd> <kbd>F⇔D</kbd> → <strong>5/8</strong></div>
+      </details>
+    </div>
+  </section>
+
+  <section id="examen">
+    <h2>4. La calculadora del examen GED</h2>
+    <p>En el examen GED de Razonamiento Matemático se usa la calculadora TI-30XS MultiView, que aparece en la pantalla en la parte del examen donde se permite calculadora.</p>
+    <p>La calculadora GPH tiene un diseño propio y no es una copia de esa calculadora: algunas teclas están en otro lugar o tienen otro nombre. Sin embargo, las operaciones son las mismas. Si aprende a resolver los problemas aquí, solo tendrá que familiarizarse con la ubicación de las teclas antes del examen.</p>
+  </section>
+</main>
+
+<footer>
+  <p>José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+  <p>GEDparaHispanos · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" target="_blank" rel="license noopener noreferrer">Licencia CC BY-NC-SA 4.0</a></p>
+</footer>
+
+<script src="calculadora-gph.js" defer></script>
+</body>
+</html>
