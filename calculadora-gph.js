@@ -1,5 +1,5 @@
 /*!
- * Calculadora GPH v2.2 — simulador de la TI-30XS MultiView™ — GEDparaHispanos
+ * Calculadora GPH v2.3 — simulador de la TI-30XS MultiView™ — GEDparaHispanos
  * José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
  * Licencia: CC BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
  * TI-30XS MultiView es marca de Texas Instruments. Este simulador es un recurso
@@ -1168,7 +1168,7 @@
 
   var SIMBOLO = {
     '+': '+', '-': '−', '*': '×', '/': '÷', '(': '(', ')': ')', ',': ',',
-    'neg': '<span class="gti-neg">−</span>', 'pi': 'π', 'ans': 'Ans', 'rand': 'rand', 'randint(': 'randint(',
+    'neg': '<span class="gti-neg">−</span>', 'pi': 'π', 'ans': 'ans', 'rand': 'rand', 'randint(': 'randint(',
     'sq': '<sup class="gti-sup">2</sup>', 'inv': '<sup class="gti-sup">−1</sup>', 'fact': '!',
     'nPr': '<span class="gti-prb">nPr</span>', 'nCr': '<span class="gti-prb">nCr</span>', 'pct': '%',
     'log(': 'log(', 'ln(': 'ln(', 'sin(': 'sin(', 'cos(': 'cos(', 'tan(': 'tan(',
@@ -1337,7 +1337,7 @@
   function reglaAns() {
     if (estado.pantalla !== 'home' || estado.kEdit) return;
     var e = estado.entrada;
-    if (!e.length && estado.c.fila === e && estado.ans !== null) e.push(K('ans'));
+    if (!e.length && estado.c.fila === e) e.push(K('ans'));   // siempre, como la TI (ans vale 0 al empezar o tras clear)
     if (estado.c.fila === e && estado.c.i === 0 && e.length === 1 && e[0].v === 'ans') estado.c.i = 1;
   }
 
@@ -2141,7 +2141,7 @@
         // última respuesta (Ans), como la TI. Las variables solo las borran reset y clear var.
         if (estado.entrada.length) limpiarEntrada();
         else if (estado.kEdit) { estado.kEdit = false; avisar('Constante K cancelada.'); }
-        else { estado.historial = []; estado.ans = null; }
+        else { estado.historial = []; estado.ans = null; }   // ans vuelve a 0
         return;
       case 'delete': borrar(); return;
       case 'enter': if (estado.pantalla === 'home') calcular(); return;
@@ -2592,7 +2592,7 @@
     ['basicas', 'Teclas básicas',
       '<p class="gti-paso">' + kb('2nd') + ' es verde: después de pulsarla, la siguiente tecla hace la función escrita en verde encima de ella.</p>' +
       '<p class="gti-paso">' + kb('enter') + ' calcula. ' + kb('clear') + ' borra la línea; si ya está vacía, borra la pantalla. ' + kb('delete') + ' borra lo que está en el cursor.</p>' +
-      '<p class="gti-paso">Si justo después de un resultado empiezas con una operación (' + kb('+') + ' ' + kb('−') + ' ' + kb('×') + ' ' + kb('x<sup>2</sup>') + '…), la calculadora escribe <b>Ans</b> (el resultado anterior) delante. Si pulsas ' + kb('clear') + ' hasta dejar la pantalla vacía, se borra también Ans.</p>' +
+      '<p class="gti-paso">Si empiezas un cálculo con una operación (' + kb('+') + ' ' + kb('−') + ' ' + kb('×') + ' ' + kb('x<sup>2</sup>') + '…), la calculadora escribe <b>ans</b> (el resultado anterior) delante. Si pulsas ' + kb('clear') + ' hasta dejar la pantalla vacía, ans vuelve a valer 0.</p>' +
       '<p class="gti-paso">' + kb('▲') + ' ' + kb('▼') + ' recorren los cálculos anteriores; ' + kb('enter') + ' copia el que está seleccionado.</p>'],
     ['fracciones', 'Fracciones',
       '<p class="gti-paso">' + kb('n/d') + ' abre la plantilla de fracción. Escribe el numerador, baja con ' + kb('▼') + ', escribe el denominador y sal con ' + kb('►') + '.</p>' +
@@ -2603,7 +2603,7 @@
       '<div class="gti-ej">2 ' + fr('1', '3') + ' + 1 ' + fr('1', '2') + ':<br>' + nums('2') + k2('n/d') + nums('1') + kb('▼') + nums('3') + kb('►') + kb('+') + nums('1') + k2('n/d') + nums('1') + kb('▼') + nums('2') + kb('►') + kb('enter') + ' ' + ver('23/6') + '</div>' +
       '<p class="gti-paso">La calculadora da el resultado como fracción impropia. Para verlo como número mixto pulsa ' + k2('x<sup>−1</sup>') + ' (n/d◂▸Un/d) y ' + kb('enter') + ' ' + ver('3 5/6') + '. Para verlo en decimal, pulsa ' + kb('⟷') + '.</p>'],
     ['negativos', 'Números negativos',
-      '<p class="gti-paso">Para un número negativo usa ' + kn('(−)') + ', no la resta ' + kb('−') + '. Si las confundes, la calculadora da <b>SYNTAX ERROR</b>, igual que la del examen.</p>' +
+      '<p class="gti-paso">Para un número negativo usa ' + kn('(−)') + ', no la resta ' + kb('−') + '. Si las confundes, la calculadora da <b>SYNTAX ERROR</b>, igual que la del examen. Y si empiezas con la resta, escribe <b>ans</b> delante: −5 se convierte en ans−5.</p>' +
       '<div class="gti-ej">−5 − 10 − (−5) + (−6): ' + kn('(−)') + nums('5') + kb('−') + nums('1 0') + kb('−') + kb('(') + kn('(−)') + nums('5') + kb(')') + kb('+') + kb('(') + kn('(−)') + nums('6') + kb(')') + kb('enter') + ' ' + ver('−16') + '</div>' +
       '<div class="gti-ej">−8 + 3: ' + kn('(−)') + nums('8') + kb('+') + nums('3') + kb('enter') + ' ' + ver('−5') + '</div>' +
       '<p class="gti-paso">Ojo: −3<sup>2</sup> da −9. Para elevar −3 al cuadrado, usa paréntesis: ' + kb('(') + kn('(−)') + nums('3') + kb(')') + kb('x<sup>2</sup>') + ' ' + ver('9') + '.</p>'],
