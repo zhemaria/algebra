@@ -1,5 +1,5 @@
 /*!
- * Calculadora GPH v2.1 — simulador de la TI-30XS MultiView™ — GEDparaHispanos
+ * Calculadora GPH v2.2 — simulador de la TI-30XS MultiView™ — GEDparaHispanos
  * José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
  * Licencia: CC BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
  * TI-30XS MultiView es marca de Texas Instruments. Este simulador es un recurso
@@ -604,7 +604,7 @@
       if (x.k === 'El') {
         a = out.pop();
         var j = i + 1, neg = false;
-        if (t[j] && (t[j].k === '~' || t[j].k === '-')) { neg = true; j++; }
+        if (t[j] && t[j].k === '~') { neg = true; j++; }
         b = t[j];
         if (!a || a.k !== 'n' || !b || b.k !== 'n') throw sinNumero('Notación científica incompleta: número E exponente');
         out.push({ k: 'n', v: multiplicar(a.v, potencia(Q(10n), neg ? opuesto(b.v) : b.v)) });
@@ -629,10 +629,16 @@
     var i = 0;
     function ver() { return tokens[i]; }
     function es(k) { var x = tokens[i]; return x && x.k === k; }
-    function iniciaPrimario(x) { return x && (x.k === 'n' || x.k === '(' || x.k === 'fn' || x.k === 'fn2' || x.k === '~'); }
+    function iniciaPrimario(x) { return x && (x.k === 'n' || x.k === '(' || x.k === 'fn' || x.k === 'fn2'); }
+
+    // Como en la TI: el signo negativo es la tecla (−) y la resta es −.
+    // (−) entre dos números, o − donde va un número, dan SYNTAX ERROR.
+    function errorNegativoComoResta() {
+      return errorGPH(ERR.sint, 'La tecla (−) es para números negativos. Para restar usa la tecla −');
+    }
 
     function exponente() {
-      if (es('~') || es('-')) { i++; return opuesto(exponente()); }
+      if (es('~')) { i++; return opuesto(exponente()); }
       return posfijo();
     }
 
@@ -655,6 +661,8 @@
           v = op === '*' ? multiplicar(v, r) : dividir(v, r);
         } else if (iniciaPrimario(ver())) {
           v = multiplicar(v, unario());
+        } else if (es('~')) {
+          throw errorNegativoComoResta();
         } else {
           break;
         }
@@ -663,7 +671,7 @@
     }
 
     function unario() {
-      if (es('-') || es('~')) { i++; return opuesto(unario()); }
+      if (es('~')) { i++; return opuesto(unario()); }
       return nivelProbabilidad();
     }
 
@@ -717,6 +725,8 @@
       if (x.k === 'E') return potencia(Q(10n), x.v);
       if (x.k === ',') throw errorGPH(ERR.sint, 'La coma solo se usa dentro de funciones como randint(');
       if (x.k === ')') throw errorGPH(ERR.sint, 'Sobra un paréntesis de cierre');
+      if (x.k === '-') throw errorGPH(ERR.sint, 'Para un número negativo usa la tecla (−), no la resta −');
+      if (x.k === '+' || x.k === '*' || x.k === '/') throw errorGPH(ERR.sint, 'Falta el número antes de esta operación');
       if (x.k === 'P' || x.k === 'C') throw errorGPH(ERR.sint, 'Escribe primero el número n y después nPr o nCr');
       if (x.k === '^' || x.k === 'sq' || x.k === 'inv' || x.k === '!' || x.k === '%') throw errorGPH(ERR.sint, 'Falta el número antes de esta tecla');
       throw errorGPH(ERR.sint, 'Error de sintaxis');
@@ -1327,7 +1337,7 @@
   function reglaAns() {
     if (estado.pantalla !== 'home' || estado.kEdit) return;
     var e = estado.entrada;
-    if (!e.length && estado.c.fila === e && estado.ans) e.push(K('ans'));
+    if (!e.length && estado.c.fila === e && estado.ans !== null) e.push(K('ans'));
     if (estado.c.fila === e && estado.c.i === 0 && e.length === 1 && e[0].v === 'ans') estado.c.i = 1;
   }
 
@@ -2127,9 +2137,11 @@
       case 'sto': operador('sto'); return;
       case 'clear':
         if (estado.pantalla !== 'home') { vaciar(estado.raiz); return; }
+        // Primer clear: borra la línea. Con la línea vacía: borra la pantalla y la
+        // última respuesta (Ans), como la TI. Las variables solo las borran reset y clear var.
         if (estado.entrada.length) limpiarEntrada();
         else if (estado.kEdit) { estado.kEdit = false; avisar('Constante K cancelada.'); }
-        else estado.historial = [];
+        else { estado.historial = []; estado.ans = null; }
         return;
       case 'delete': borrar(); return;
       case 'enter': if (estado.pantalla === 'home') calcular(); return;
@@ -2580,7 +2592,7 @@
     ['basicas', 'Teclas básicas',
       '<p class="gti-paso">' + kb('2nd') + ' es verde: después de pulsarla, la siguiente tecla hace la función escrita en verde encima de ella.</p>' +
       '<p class="gti-paso">' + kb('enter') + ' calcula. ' + kb('clear') + ' borra la línea; si ya está vacía, borra la pantalla. ' + kb('delete') + ' borra lo que está en el cursor.</p>' +
-      '<p class="gti-paso">Si empiezas un cálculo con una operación (' + kb('+') + ' ' + kb('×') + ' ' + kb('x<sup>2</sup>') + '…), la calculadora escribe <b>Ans</b> (el resultado anterior) delante.</p>' +
+      '<p class="gti-paso">Si justo después de un resultado empiezas con una operación (' + kb('+') + ' ' + kb('−') + ' ' + kb('×') + ' ' + kb('x<sup>2</sup>') + '…), la calculadora escribe <b>Ans</b> (el resultado anterior) delante. Si pulsas ' + kb('clear') + ' hasta dejar la pantalla vacía, se borra también Ans.</p>' +
       '<p class="gti-paso">' + kb('▲') + ' ' + kb('▼') + ' recorren los cálculos anteriores; ' + kb('enter') + ' copia el que está seleccionado.</p>'],
     ['fracciones', 'Fracciones',
       '<p class="gti-paso">' + kb('n/d') + ' abre la plantilla de fracción. Escribe el numerador, baja con ' + kb('▼') + ', escribe el denominador y sal con ' + kb('►') + '.</p>' +
@@ -2591,7 +2603,8 @@
       '<div class="gti-ej">2 ' + fr('1', '3') + ' + 1 ' + fr('1', '2') + ':<br>' + nums('2') + k2('n/d') + nums('1') + kb('▼') + nums('3') + kb('►') + kb('+') + nums('1') + k2('n/d') + nums('1') + kb('▼') + nums('2') + kb('►') + kb('enter') + ' ' + ver('23/6') + '</div>' +
       '<p class="gti-paso">La calculadora da el resultado como fracción impropia. Para verlo como número mixto pulsa ' + k2('x<sup>−1</sup>') + ' (n/d◂▸Un/d) y ' + kb('enter') + ' ' + ver('3 5/6') + '. Para verlo en decimal, pulsa ' + kb('⟷') + '.</p>'],
     ['negativos', 'Números negativos',
-      '<p class="gti-paso">Para un número negativo usa ' + kn('(−)') + ', no la resta ' + kb('−') + '.</p>' +
+      '<p class="gti-paso">Para un número negativo usa ' + kn('(−)') + ', no la resta ' + kb('−') + '. Si las confundes, la calculadora da <b>SYNTAX ERROR</b>, igual que la del examen.</p>' +
+      '<div class="gti-ej">−5 − 10 − (−5) + (−6): ' + kn('(−)') + nums('5') + kb('−') + nums('1 0') + kb('−') + kb('(') + kn('(−)') + nums('5') + kb(')') + kb('+') + kb('(') + kn('(−)') + nums('6') + kb(')') + kb('enter') + ' ' + ver('−16') + '</div>' +
       '<div class="gti-ej">−8 + 3: ' + kn('(−)') + nums('8') + kb('+') + nums('3') + kb('enter') + ' ' + ver('−5') + '</div>' +
       '<p class="gti-paso">Ojo: −3<sup>2</sup> da −9. Para elevar −3 al cuadrado, usa paréntesis: ' + kb('(') + kn('(−)') + nums('3') + kb(')') + kb('x<sup>2</sup>') + ' ' + ver('9') + '.</p>'],
     ['porcentajes', 'Porcentajes',
