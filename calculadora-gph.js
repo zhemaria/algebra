@@ -14,6 +14,8 @@
  *   data-hoja="no"        oculta el botón «Hoja de referencia» de la barra superior
  *   data-pistas="no"      la calculadora empieza sin pistas (como en el examen)
  *   data-abrir="si"       abre la calculadora al cargar la página
+ *   data-lado="izquierda" las ventanas se abren a la izquierda (útil dentro de un iframe)
+ *   data-recordar="no"    no guarda la posición de las ventanas al moverlas
  * Cualquier elemento con data-gph-calculadora abre la calculadora, y con
  * data-gph-hoja abre la hoja de referencia.
  *
@@ -944,7 +946,9 @@
     boton: attr('data-boton') !== 'no',
     hoja: attr('data-hoja') !== 'no',
     pistas: attr('data-pistas') !== 'no',
-    abrir: attr('data-abrir') === 'si'
+    abrir: attr('data-abrir') === 'si',
+    izquierda: attr('data-lado') === 'izquierda',
+    recordar: attr('data-recordar') !== 'no'
   };
 
   var CSS = [
@@ -2864,7 +2868,7 @@
     var pos = leerPosicion(clave);
     if (pos) { colocar(v, pos.x, pos.y); return; }
     var top = barra ? barra.getBoundingClientRect().bottom + 8 : 12;
-    colocar(v, window.innerWidth - ancho - 12, top);
+    colocar(v, opciones.izquierda ? 4 : window.innerWidth - ancho - 12, top);
   }
 
   function abrir() {
@@ -2907,7 +2911,7 @@
       if (pos) colocar(hoja, pos.x, pos.y);
       else {
         var top = barra ? barra.getBoundingClientRect().bottom + 8 : 12;
-        var x = abierta() ? ventana.offsetLeft - hoja.offsetWidth - 10 : window.innerWidth - hoja.offsetWidth - 12;
+        var x = opciones.izquierda ? 4 : abierta() ? ventana.offsetLeft - hoja.offsetWidth - 10 : window.innerWidth - hoja.offsetWidth - 12;
         colocar(hoja, x, top);
       }
       if (lanzadorHoja) lanzadorHoja.setAttribute('aria-expanded', 'true');
@@ -2939,10 +2943,12 @@
   }
 
   function guardarPosicion(v, clave) {
+    if (!opciones.recordar) return;
     try { localStorage.setItem(clave, JSON.stringify({ x: v.offsetLeft, y: v.offsetTop })); } catch (e) { /* sin almacenamiento */ }
   }
 
   function leerPosicion(clave) {
+    if (!opciones.recordar) return null;
     try {
       var p = JSON.parse(localStorage.getItem(clave));
       if (p && typeof p.x === 'number' && typeof p.y === 'number') return p;
