@@ -1,5 +1,5 @@
 /*!
- * Calculadora GPH v2.0 — simulador de la TI-30XS MultiView™ — GEDparaHispanos
+ * Calculadora GPH v2.1 — simulador de la TI-30XS MultiView™ — GEDparaHispanos
  * José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
  * Licencia: CC BY-NC-SA 4.0 — https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es
  * TI-30XS MultiView es marca de Texas Instruments. Este simulador es un recurso
@@ -45,7 +45,7 @@
     return e;
   }
 
-  var cfgMotor = { angulo: 'deg' };
+  var cfgMotor = { angulo: 'deg', vars: {}, pantalla: 'mathprint' };
 
   function absB(a) { return a < 0n ? -a : a; }
 
@@ -329,10 +329,124 @@
     throw errorGPH(ERR.sint, 'Error de sintaxis');
   }
 
+  function hiperbolica(f, x) {
+    var v = aNumero(x);
+    switch (f) {
+      case 'sinh': return F(Math.sinh(v));
+      case 'cosh': return F(Math.cosh(v));
+      case 'tanh': return F(Math.tanh(v));
+      case 'asinh': return F(Math.asinh(v));
+      case 'acosh':
+        if (v < 1) throw errorGPH(ERR.dom, 'cosh⁻¹ solo acepta valores mayores o iguales que 1');
+        return F(Math.acosh(v));
+      case 'atanh':
+        if (v <= -1 || v >= 1) throw errorGPH(ERR.dom, 'tanh⁻¹ solo acepta valores entre −1 y 1');
+        return F(Math.atanh(v));
+    }
+    return null;
+  }
+
   function aplicarFuncion(f, x, info) {
     if (f === 'log') return logaritmo(x);
     if (f === 'ln') return logNatural(x);
+    if (f === 'sqrt') return raizCuadrada(x);
+    if (f === 'pow10') return potencia(Q(10n), x);
+    if (f === 'exp') return esCero(x) ? Q(1n) : F(Math.exp(aNumero(x)));
+    var h = hiperbolica(f, x);
+    if (h) return h;
     return trig(f, x, info);
+  }
+
+  function aplicarFuncion2(f, a, b) {
+    var x = aNumero(a), y = aNumero(b);
+    switch (f) {
+      case 'randint':
+        if (!esEntero(a) || !esEntero(b)) throw errorGPH(ERR.dom, 'randint( necesita dos números enteros');
+        var lo = Math.min(x, y), hi = Math.max(x, y);
+        return Q(BigInt(lo + Math.floor(Math.random() * (hi - lo + 1))));
+      case 'RPr': return F(Math.sqrt(x * x + y * y));
+      case 'RPt': return F(deRadianes(Math.atan2(y, x)));
+      case 'PRx': return F(limpio(x * Math.cos(aRadianes(y))));
+      case 'PRy': return F(limpio(x * Math.sin(aRadianes(y))));
+    }
+    throw errorGPH(ERR.sint, 'Error de sintaxis');
+  }
+
+  // Convierte un ángulo dado en grados a la unidad del modo actual
+  function desdeGrados(g) {
+    if (cfgMotor.angulo === 'deg') return g;
+    if (cfgMotor.angulo === 'rad') return multiplicar(g, X(1n, 180n, 1n, 1));
+    return multiplicar(g, Q(10n, 9n));
+  }
+
+  /* ---------- Estadística ---------- */
+
+  function cuartiles(orden) {
+    function mediana(a) {
+      var n = a.length, m = Math.floor(n / 2);
+      return n % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+    }
+    var n = orden.length, mitad = Math.floor(n / 2);
+    var inf = orden.slice(0, mitad), sup = orden.slice(n % 2 ? mitad + 1 : mitad);
+    return {
+      q1: n > 1 ? mediana(inf) : orden[0],
+      med: mediana(orden),
+      q3: n > 1 ? mediana(sup) : orden[0]
+    };
+  }
+
+  function expandir(datos, frq) {
+    var out = [];
+    datos.forEach(function (x, i) {
+      var f = frq ? frq[i] : 1;
+      if (!Number.isInteger(f) || f < 0) throw errorGPH('FRQ DOMAIN ERROR', 'Las frecuencias deben ser números enteros no negativos');
+      for (var k = 0; k < f; k++) out.push(x);
+    });
+    return out;
+  }
+
+  function estadistica1(datos, frq) {
+    if (!datos.length) throw errorGPH('STAT ERROR', 'La lista de datos está vacía');
+    if (frq && frq.length !== datos.length) throw errorGPH('DIM MISMATCH ERROR', 'La lista de datos y la de frecuencias no tienen la misma cantidad de valores');
+    var x = expandir(datos, frq);
+    var n = x.length;
+    if (!n) throw errorGPH('STAT ERROR', 'No hay datos para calcular');
+    var sx = 0, sx2 = 0;
+    x.forEach(function (v) { sx += v; sx2 += v * v; });
+    var media = sx / n;
+    var ss = 0;
+    x.forEach(function (v) { ss += (v - media) * (v - media); });
+    var orden = x.slice().sort(function (a, b) { return a - b; });
+    var q = cuartiles(orden);
+    return [
+      ['n', n], ['x̄', media], ['Sx', n > 1 ? Math.sqrt(ss / (n - 1)) : null], ['σx', Math.sqrt(ss / n)],
+      ['Σx', sx], ['Σx²', sx2], ['minX', orden[0]], ['Q₁', q.q1], ['Med', q.med], ['Q₃', q.q3], ['maxX', orden[n - 1]]
+    ];
+  }
+
+  function estadistica2(xs, ys, frq) {
+    if (!xs.length || !ys.length) throw errorGPH('STAT ERROR', 'Una de las listas de datos está vacía');
+    if (xs.length !== ys.length || (frq && frq.length !== xs.length)) throw errorGPH('DIM MISMATCH ERROR', 'Las listas no tienen la misma cantidad de valores');
+    var px = [], py = [];
+    xs.forEach(function (v, i) {
+      var f = frq ? frq[i] : 1;
+      if (!Number.isInteger(f) || f < 0) throw errorGPH('FRQ DOMAIN ERROR', 'Las frecuencias deben ser números enteros no negativos');
+      for (var k = 0; k < f; k++) { px.push(v); py.push(ys[i]); }
+    });
+    var n = px.length;
+    if (n < 2) throw errorGPH('STAT ERROR', 'Se necesitan al menos dos pares de datos');
+    var sx = 0, sy = 0, sx2 = 0, sy2 = 0, sxy = 0;
+    for (var i = 0; i < n; i++) { sx += px[i]; sy += py[i]; sx2 += px[i] * px[i]; sy2 += py[i] * py[i]; sxy += px[i] * py[i]; }
+    var mx = sx / n, my = sy / n;
+    var cxx = sx2 - n * mx * mx, cyy = sy2 - n * my * my, cxy = sxy - n * mx * my;
+    var a = cxx ? cxy / cxx : null;
+    var b = a === null ? null : my - a * mx;
+    var r = cxx && cyy ? cxy / Math.sqrt(cxx * cyy) : null;
+    return [
+      ['n', n], ['x̄', mx], ['Sx', Math.sqrt(Math.max(0, cxx) / (n - 1))], ['σx', Math.sqrt(Math.max(0, cxx) / n)],
+      ['ȳ', my], ['Sy', Math.sqrt(Math.max(0, cyy) / (n - 1))], ['σy', Math.sqrt(Math.max(0, cyy) / n)],
+      ['Σx', sx], ['Σx²', sx2], ['Σy', sy], ['Σy²', sy2], ['Σxy', sxy], ['a', a], ['b', b], ['r', r]
+    ];
   }
 
   // Convierte un decimal aproximado en fracción, si hay una sencilla
@@ -366,8 +480,14 @@
        {t:'expe',  s:[exponente]}         eˣ
   */
 
-  var FUNCIONES = { 'log(': 'log', 'ln(': 'ln', 'sin(': 'sin', 'cos(': 'cos', 'tan(': 'tan', 'asin(': 'asin', 'acos(': 'acos', 'atan(': 'atan' };
-  var CONVERSIONES = { toPct: 1, toFD: 1, toUnd: 1 };
+  var FUNCIONES = {
+    'log(': 'log', 'ln(': 'ln', 'sin(': 'sin', 'cos(': 'cos', 'tan(': 'tan', 'asin(': 'asin', 'acos(': 'acos', 'atan(': 'atan',
+    'sinh(': 'sinh', 'cosh(': 'cosh', 'tanh(': 'tanh', 'asinh(': 'asinh', 'acosh(': 'acosh', 'atanh(': 'atanh',
+    'sqrt(': 'sqrt', '10^(': 'pow10', 'e^(': 'exp'
+  };
+  var FUNCIONES2 = { 'randint(': 'randint', 'RPr(': 'RPr', 'RPt(': 'RPt', 'PRx(': 'PRx', 'PRy(': 'PRy' };
+  var CONVERSIONES = { toPct: 1, toFD: 1, toUnd: 1, toDMS: 1 };
+  var DMS = { dg: Q(1n), mn: Q(1n, 60n), sg: Q(1n, 3600n) };
 
   function faltaNumero() { return errorGPH(ERR.sint, 'Falta un número'); }
 
@@ -402,7 +522,12 @@
         else if (c === 'nPr') t.push({ k: 'P' });
         else if (c === 'nCr') t.push({ k: 'C' });
         else if (c === 'pct') t.push({ k: '%' });
+        else if (c === 'var') t.push({ k: 'n', v: cfgMotor.vars[n.n] || Q(0n) });
+        else if (c === ',') t.push({ k: ',' });
+        else if (c === 'fsl' || c === 'unit' || c === 'El' || c === 'pw' || c === 'xrt' || c === 'rd' || c === 'gd' || DMS[c]) t.push({ k: c });
+        else if (c === 'sto') throw errorGPH(ERR.sint, 'Después de sto→ va una variable, al final del cálculo');
         else if (FUNCIONES[c]) t.push({ k: 'fn', f: FUNCIONES[c] });
+        else if (FUNCIONES2[c]) t.push({ k: 'fn2', f: FUNCIONES2[c] });
         else if (CONVERSIONES[c]) throw errorGPH(ERR.sint, 'La conversión debe ir al final del cálculo');
         else throw errorGPH(ERR.sint, 'Error de sintaxis');
         continue;
@@ -444,14 +569,70 @@
       }
     }
     cerrarNumero();
-    return t;
+    return combinar(t, info);
+  }
+
+  // Entrada lineal (modo CLASSIC) y ángulos en grados, minutos y segundos:
+  // une 3/4, 2u1/3, 4.5E6 y 30°15'20" en un solo número.
+  function combinar(t, info) {
+    var out = [];
+    function sinNumero(msj) { return errorGPH(ERR.sint, msj); }
+    for (var i = 0; i < t.length; i++) {
+      var x = t[i], a, b;
+      if (x.k === 'unit') {
+        var w = out.pop();
+        a = t[i + 1]; var sl = t[i + 2]; b = t[i + 3];
+        if (!w || w.k !== 'n' || !a || a.k !== 'n' || !sl || sl.k !== 'fsl' || !b || b.k !== 'n') {
+          throw sinNumero('Número mixto incompleto: entero, u, numerador, / y denominador');
+        }
+        var fr = dividir(a.v, b.v);
+        out.push({ k: 'n', v: esNegativo(w.v) ? restar(w.v, fr) : sumar(w.v, fr) });
+        info.usoFraccion = true;
+        i += 3;
+        continue;
+      }
+      if (x.k === 'fsl') {
+        a = out.pop(); b = t[i + 1];
+        if (!a || a.k !== 'n' || !b || b.k !== 'n') throw sinNumero('Fracción incompleta: numerador / denominador');
+        out.push({ k: 'n', v: dividir(a.v, b.v) });
+        info.usoFraccion = true;
+        i += 1;
+        continue;
+      }
+      if (x.k === 'El') {
+        a = out.pop();
+        var j = i + 1, neg = false;
+        if (t[j] && (t[j].k === '~' || t[j].k === '-')) { neg = true; j++; }
+        b = t[j];
+        if (!a || a.k !== 'n' || !b || b.k !== 'n') throw sinNumero('Notación científica incompleta: número E exponente');
+        out.push({ k: 'n', v: multiplicar(a.v, potencia(Q(10n), neg ? opuesto(b.v) : b.v)) });
+        i = j;
+        continue;
+      }
+      if (DMS[x.k]) {
+        a = out.pop();
+        if (!a || a.k !== 'n') throw sinNumero('Escribe el número antes de °, \' o "');
+        var g = multiplicar(a.v, DMS[x.k]);
+        var prev = out[out.length - 1];
+        if (prev && prev.dms) { out.pop(); g = sumar(prev.gr, g); }
+        out.push({ k: 'n', v: desdeGrados(g), dms: true, gr: g });
+        continue;
+      }
+      out.push(x);
+    }
+    return out;
   }
 
   function analizar(tokens, info) {
     var i = 0;
     function ver() { return tokens[i]; }
     function es(k) { var x = tokens[i]; return x && x.k === k; }
-    function iniciaPrimario(x) { return x && (x.k === 'n' || x.k === '(' || x.k === 'fn' || x.k === '~'); }
+    function iniciaPrimario(x) { return x && (x.k === 'n' || x.k === '(' || x.k === 'fn' || x.k === 'fn2' || x.k === '~'); }
+
+    function exponente() {
+      if (es('~') || es('-')) { i++; return opuesto(exponente()); }
+      return posfijo();
+    }
 
     function expresion() {
       var v = termino();
@@ -500,6 +681,10 @@
         else if (es('%')) { i++; v = dividir(v, Q(100n)); }
         else if (es('^')) { v = potencia(v, tokens[i++].v); }
         else if (es('E')) { v = multiplicar(v, potencia(Q(10n), tokens[i++].v)); }
+        else if (es('pw')) { i++; v = potencia(v, exponente()); }
+        else if (es('xrt')) { i++; v = raizN(v, exponente()); }
+        else if (es('rd')) { i++; v = F(deRadianes(aNumero(v))); }
+        else if (es('gd')) { i++; v = F(deRadianes(aNumero(v) * Math.PI / 200)); }
         else break;
       }
       return v;
@@ -519,7 +704,16 @@
         if (es(')')) i++;
         return aplicarFuncion(x.f, a, info);
       }
+      if (x.k === 'fn2') {
+        var p1 = expresion();
+        if (!es(',')) throw errorGPH(ERR.sint, 'Esta función necesita dos números separados por una coma (2nd .)');
+        i++;
+        var p2 = expresion();
+        if (es(')')) i++;
+        return aplicarFuncion2(x.f, p1, p2);
+      }
       if (x.k === 'E') return potencia(Q(10n), x.v);
+      if (x.k === ',') throw errorGPH(ERR.sint, 'La coma solo se usa dentro de funciones como randint(');
       if (x.k === ')') throw errorGPH(ERR.sint, 'Sobra un paréntesis de cierre');
       if (x.k === 'P' || x.k === 'C') throw errorGPH(ERR.sint, 'Escribe primero el número n y después nPr o nCr');
       if (x.k === '^' || x.k === 'sq' || x.k === 'inv' || x.k === '!' || x.k === '%') throw errorGPH(ERR.sint, 'Falta el número antes de esta tecla');
@@ -539,11 +733,25 @@
     return analizar(tokens, info);
   }
 
-  // Devuelve {v, modo, conversion}
+  // Devuelve {v, modo, conversion, guardar}
   function evaluarEntrada(fila, ans, cfg, previo) {
-    if (cfg) cfgMotor.angulo = cfg.angulo || 'deg';
-    var conversion = null;
+    cfg = cfg || {};
+    cfgMotor.angulo = cfg.angulo || 'deg';
+    cfgMotor.vars = cfg.vars || {};
+    cfgMotor.pantalla = cfg.pantalla || 'mathprint';
+    var conversion = null, guardar = null;
     var cuerpo = fila.slice();
+    for (var s = 0; s < cuerpo.length; s++) {
+      if (cuerpo[s].t === 'k' && cuerpo[s].v === 'sto') {
+        var dest = cuerpo[s + 1];
+        if (s !== cuerpo.length - 2 || !dest || dest.v !== 'var') {
+          throw errorGPH(ERR.sint, 'Después de sto→ pulsa la tecla de variables para elegir dónde guardar');
+        }
+        guardar = dest.n;
+        cuerpo = cuerpo.slice(0, s);
+        break;
+      }
+    }
     var ultimo = cuerpo[cuerpo.length - 1];
     if (ultimo && ultimo.t === 'k' && CONVERSIONES[ultimo.v]) {
       conversion = ultimo.v;
@@ -556,6 +764,7 @@
 
     var modo = modoPorDefecto(v, info);
     if (conversion === 'toPct') modo = 'pct';
+    else if (conversion === 'toDMS') modo = 'dms';
     else if (conversion === 'toFD') {
       if (modo === 'dec') {
         var f = aFraccion(v);
@@ -569,7 +778,8 @@
       if (racional(v) && v.d !== 1n) modo = deMixto ? 'frac' : 'mixto';
     }
     if ((modo === 'frac' || modo === 'mixto') && (!racional(v) || v.d === 1n || v.d > 9999n)) modo = 'dec';
-    return { v: v, modo: modo, conversion: conversion, info: info };
+    if (modo === 'exacto' && cfgMotor.pantalla === 'classic') modo = 'dec';
+    return { v: v, modo: modo, conversion: conversion, info: info, guardar: guardar };
   }
 
   function modoPorDefecto(v, info) {
@@ -621,6 +831,9 @@
       mant = x / Math.pow(10, e);
       ms = fijo >= 0 ? mant.toFixed(fijo) : quitarCeros(mant.toPrecision(10));
     }
+    if (cfg.pantalla === 'classic') {
+      return { html: signoBonito(ms) + '<span class="gti-E">E</span>' + signoBonito(e), texto: signoBonito(ms) + ' por 10 a la ' + signoBonito(e) };
+    }
     return {
       html: signoBonito(ms) + '<span class="gti-x10">×10</span><sup>' + signoBonito(e) + '</sup>',
       texto: signoBonito(ms) + ' por 10 a la ' + signoBonito(e)
@@ -637,8 +850,21 @@
     return '<span class="gti-rz"><span class="gti-rz-s">√</span><span class="gti-rz-a">' + r + '</span></span>';
   }
 
+  function formatoDMS(g) {
+    var signo = g < 0 ? '−' : '';
+    g = Math.abs(g);
+    var d = Math.floor(g), m = Math.floor((g - d) * 60 + 1e-9);
+    var sg = parseFloat((((g - d) * 60 - m) * 60).toPrecision(8));
+    if (sg >= 60) { sg -= 60; m++; }
+    if (m >= 60) { m -= 60; d++; }
+    var t = signo + d + '°' + m + '\'' + quitarCeros(String(sg)) + '"';
+    return { html: t, texto: signo + d + ' grados ' + m + ' minutos ' + quitarCeros(String(sg)) + ' segundos' };
+  }
+
   function formatear(v, modo, cfg) {
     cfg = cfg || {};
+    var clasico = cfg.pantalla === 'classic';
+    if (modo === 'dms') return formatoDMS(aNumero(v));
     if (modo === 'pct') {
       var pc = formatoDecimal(aNumero(v) * 100, cfg);
       return { html: pc.html + '%', texto: pc.texto + ' por ciento' };
@@ -647,7 +873,7 @@
     var signo = v.n < 0n ? '−' : '';
     var n = absB(v.n), d = v.d;
     if (!racional(v)) {
-      if (modo !== 'exacto') return formatoDecimal(aNumero(v), cfg);
+      if (modo !== 'exacto' || clasico) return formatoDecimal(aNumero(v), cfg);
       var coef = (n === 1n && (v.r !== 1n || v.p)) ? '' : n.toString();
       var arriba = coef + (v.r !== 1n ? raizHTML(v.r.toString()) : '') + (v.p ? 'π' : '');
       var habla = (coef ? coef + ' ' : '') + (v.r !== 1n ? 'raíz de ' + v.r + ' ' : '') + (v.p ? 'pi' : '');
@@ -661,10 +887,15 @@
       return { html: signoBonito(s), texto: signoBonito(s) };
     }
     if (modo === 'frac') {
+      if (clasico) return { html: signo + n + '<span class="gti-fsl">/</span>' + d, texto: signo + n + ' sobre ' + d };
       return { html: signo + fraccionHTML(n.toString(), d.toString()), texto: signo + n + ' sobre ' + d };
     }
     if (modo === 'mixto') {
       var entero = n / d, resto = n % d;
+      if (clasico) {
+        var lin = (entero === 0n ? '' : entero + '<span class="gti-u">u</span>') + resto + '<span class="gti-fsl">/</span>' + d;
+        return { html: signo + lin, texto: signo + (entero === 0n ? '' : entero + ' y ') + resto + ' sobre ' + d };
+      }
       if (entero === 0n) return { html: signo + fraccionHTML(resto.toString(), d.toString()), texto: signo + resto + ' sobre ' + d };
       return {
         html: signo + entero + '<span class="gti-mx-sep"></span>' + fraccionHTML(resto.toString(), d.toString()),
@@ -675,7 +906,8 @@
   }
 
   // Formas en que se puede mostrar un resultado con la tecla ⟷
-  function formasAlternas(v) {
+  function formasAlternas(v, cfg) {
+    if (v.e && !racional(v) && cfg && cfg.pantalla === 'classic') return ['dec'];
     if (!v.e) {
       var f = aFraccion(v);
       return racional(f) && f.d !== 1n && f.d <= 9999n ? ['dec', 'frac'] : ['dec'];
@@ -690,6 +922,8 @@
     formatear: formatear,
     formatoDecimal: formatoDecimal,
     formasAlternas: formasAlternas,
+    estadistica1: estadistica1,
+    estadistica2: estadistica2,
     aFraccion: aFraccion,
     Q: Q,
     aNumero: aNumero
@@ -851,6 +1085,28 @@
     '#gti-hoja .gti-fr{font-size:.9em}',
     '#gti-hoja .gti-rz-a{border-top-width:1.5px}',
 
+    /* Pantallas de datos, estadística y tabla */
+    '.gti-fsl{font-weight:800;margin:0 1px}',
+    '.gti-u{font-size:.8em;font-weight:800;margin:0 1px}',
+    '.gti-E{font-size:.8em;font-weight:800;margin:0 1px}',
+    '.gti-sto{font-weight:800;margin:0 2px}',
+    '.gti-var{font-family:Georgia,"Times New Roman",serif;font-weight:700}',
+    '#gti-calc .gti-mtit{font-weight:700;font-size:14px;margin-bottom:1px}',
+    '#gti-calc .gti-mlab{display:inline-block;min-width:54px;font-weight:600}',
+    '#gti-calc .gti-mact{outline:1px dashed #141c0c;outline-offset:1px}',
+    '#gti-calc .gti-mas{font-size:10px;text-align:right;line-height:10px}',
+    '#gti-calc .gti-tab3,#gti-calc .gti-tab2{font-size:15px;display:flex;flex-direction:column;height:100%}',
+    '#gti-calc .gti-tcab,#gti-calc .gti-tfila{display:grid;gap:3px}',
+    '#gti-calc .gti-tab3 .gti-tcab,#gti-calc .gti-tab3 .gti-tfila{grid-template-columns:repeat(3,1fr)}',
+    '#gti-calc .gti-tab2 .gti-tcab,#gti-calc .gti-tab2 .gti-tfila{grid-template-columns:1fr 1.4fr}',
+    '#gti-calc .gti-tcab{border-bottom:2px solid #141c0c;font-weight:700;text-align:center;font-size:13px}',
+    '#gti-calc .gti-tcab .gti-tcol{text-decoration:underline}',
+    '#gti-calc .gti-tfila{height:24px;border-bottom:1px dotted #5b6b47}',
+    '#gti-calc .gti-tcel{all:unset;box-sizing:border-box;text-align:right;padding:0 3px;line-height:23px;white-space:nowrap;overflow:hidden;cursor:pointer;font-size:14px;color:#141c0c}',
+    '#gti-calc .gti-tcel.gti-on{background:#141c0c;color:#c3cfae}',
+    '#gti-calc .gti-tcel .gti-fr{font-size:.7em}',
+    '#gti-calc .gti-tpie{margin-top:auto;font-size:15px;white-space:nowrap;overflow:hidden;padding-top:2px}',
+    '#gti-calc .gti-menu .gti-stl{font-size:14px}',
     '.gti-lector{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}',
     '@media (max-width:480px){#gti-barra button{font-size:13px;padding:6px 9px}}',
     '@media print{#gti-barra,.gti-ventana{display:none!important}}'
@@ -897,22 +1153,46 @@
   ];
 
   var SIMBOLO = {
-    '+': '+', '-': '−', '*': '×', '/': '÷', '(': '(', ')': ')',
-    'neg': '<span class="gti-neg">−</span>', 'pi': 'π', 'ans': 'Ans', 'rand': 'rand',
+    '+': '+', '-': '−', '*': '×', '/': '÷', '(': '(', ')': ')', ',': ',',
+    'neg': '<span class="gti-neg">−</span>', 'pi': 'π', 'ans': 'Ans', 'rand': 'rand', 'randint(': 'randint(',
     'sq': '<sup class="gti-sup">2</sup>', 'inv': '<sup class="gti-sup">−1</sup>', 'fact': '!',
     'nPr': '<span class="gti-prb">nPr</span>', 'nCr': '<span class="gti-prb">nCr</span>', 'pct': '%',
     'log(': 'log(', 'ln(': 'ln(', 'sin(': 'sin(', 'cos(': 'cos(', 'tan(': 'tan(',
     'asin(': 'sin<sup class="gti-sup">−1</sup>(', 'acos(': 'cos<sup class="gti-sup">−1</sup>(', 'atan(': 'tan<sup class="gti-sup">−1</sup>(',
-    'toPct': '<span class="gti-conv">▸%</span>', 'toFD': '<span class="gti-conv">▸F◂▸D</span>', 'toUnd': '<span class="gti-conv">▸n/d◂▸Un/d</span>'
+    'sinh(': 'sinh(', 'cosh(': 'cosh(', 'tanh(': 'tanh(',
+    'asinh(': 'sinh<sup class="gti-sup">−1</sup>(', 'acosh(': 'cosh<sup class="gti-sup">−1</sup>(', 'atanh(': 'tanh<sup class="gti-sup">−1</sup>(',
+    'toPct': '<span class="gti-conv">▸%</span>', 'toFD': '<span class="gti-conv">▸F◂▸D</span>', 'toUnd': '<span class="gti-conv">▸n/d◂▸Un/d</span>',
+    'toDMS': '<span class="gti-conv">▸DMS</span>',
+    'sto': '<span class="gti-sto">→</span>',
+    'dg': '°', 'mn': '\'', 'sg': '"', 'rd': '<sup class="gti-sup">r</sup>', 'gd': '<sup class="gti-sup">g</sup>',
+    'RPr(': 'R▸Pr(', 'RPt(': 'R▸Pθ(', 'PRx(': 'P▸Rx(', 'PRy(': 'P▸Ry(',
+    // Modo CLASSIC: todo en una línea
+    'fsl': '<span class="gti-fsl">/</span>', 'unit': '<span class="gti-u">u</span>', 'El': '<span class="gti-E">E</span>',
+    'pw': '^', 'xrt': '<sup class="gti-sup">x</sup>√', 'sqrt(': '√(', '10^(': '10^(', 'e^(': 'e^('
   };
 
   var HUECOS = { frac: 2, mixto: 3, pot: 1, sci: 1, raiz2: 1, raizn: 2, diez: 1, expe: 1 };
+  var VARIABLES = ['x', 'y', 'z', 't', 'a', 'b', 'c'];
+  var MAX_LISTA = 42;
+
+  function cfgInicial() { return { angulo: 'deg', notacion: 'norm', fijo: -1, pantalla: 'mathprint' }; }
+  function varsIniciales() {
+    var v = {};
+    VARIABLES.forEach(function (n) { v[n] = Q(0n); });
+    return v;
+  }
 
   /* ---------- Estado ---------- */
   var estado = {
     entrada: [],
+    raiz: null,
     c: null,
+    pantalla: 'home',
     s2: false,
+    hyp: false,
+    K: null,
+    kEdit: false,
+    ultima: null,
     historial: [],
     ans: null,
     sel: null,
@@ -920,9 +1200,15 @@
     error: null,
     aviso: '',
     pistas: opciones.pistas,
-    cfg: { angulo: 'deg', notacion: 'norm', fijo: -1 }
+    cfg: cfgInicial(),
+    vars: varsIniciales(),
+    datos: { listas: [[], [], []], col: 0, fila: 0, top: 0, celda: [] },
+    stat: { tipo: 1, fila: 0, datos: 0, x: 0, y: 1, frq: 0, res: null, nombre: '', sel: 0, top: 0 },
+    tabla: { fx: [], inicio: [K('0')], paso: [K('1')], auto: true, fila: 0, xs: [], col: 0, sel: 0, top: 0, celda: [], x0: null, dx: null }
   };
+  estado.raiz = estado.entrada;
   estado.c = { fila: estado.entrada, i: 0 };
+  var NADA = [];   // raíz de las pantallas en las que no se escribe
 
   var ventana, cuerpoCalc, lcdEstado, lcdLineas, pista, anuncio, botonesTecla = {}, btn2nd, btnPistas;
   var hoja, hojaPests = {}, hojaPaneles = {};
@@ -941,6 +1227,29 @@
     if (html !== undefined) el.innerHTML = html;
     return el;
   }
+
+  function cfgEval(extra) {
+    var vars = estado.vars;
+    if (extra) {
+      vars = {};
+      for (var k in estado.vars) vars[k] = estado.vars[k];
+      for (var e in extra) vars[e] = extra[e];
+    }
+    return { angulo: estado.cfg.angulo, notacion: estado.cfg.notacion, fijo: estado.cfg.fijo, pantalla: estado.cfg.pantalla, vars: vars };
+  }
+
+  function clasico() { return estado.cfg.pantalla === 'classic'; }
+
+  /* ---------- Pantallas ---------- */
+
+  function irA(pantalla, raiz) {
+    estado.pantalla = pantalla;
+    estado.raiz = raiz || NADA;
+    estado.c = { fila: estado.raiz, i: estado.raiz.length };
+    estado.sel = null;
+  }
+
+  function irInicio() { irA('home', estado.entrada); }
 
   /* ---------- Editor del árbol ---------- */
 
@@ -964,7 +1273,7 @@
     return null;
   }
 
-  function padreActual() { return buscarPadre(estado.entrada, estado.c.fila); }
+  function padreActual() { return buscarPadre(estado.raiz, estado.c.fila); }
 
   function contar(fila) {
     var t = 0;
@@ -972,8 +1281,14 @@
     return t;
   }
 
+  function puedeEscribir() {
+    if (estado.raiz === NADA) return false;
+    if (contar(estado.raiz) >= 90) { avisar('La entrada ya está llena.'); return false; }
+    return true;
+  }
+
   function insertar(nodo) {
-    if (contar(estado.entrada) >= 90) { avisar('La entrada ya está llena.'); return; }
+    if (!puedeEscribir()) return;
     var c = estado.c;
     c.fila.splice(c.i, 0, nodo);
     if (nodo.s) estado.c = { fila: nodo.s[0], i: 0 };
@@ -989,7 +1304,7 @@
   }
 
   function insertarPlantilla(tipo) {
-    if (contar(estado.entrada) >= 90) { avisar('La entrada ya está llena.'); return; }
+    if (!puedeEscribir()) return;
     if (tipo === 'pot') reglaAns();
     var nodo = plantilla(tipo);
     if (tipo === 'frac' || tipo === 'mixto' || tipo === 'raizn') {
@@ -1004,19 +1319,33 @@
     insertar(nodo);
   }
 
+  // Si el cálculo empieza con una operación, la TI escribe Ans delante
   function reglaAns() {
-    if (!estado.entrada.length && estado.c.fila === estado.entrada && estado.ans) estado.entrada.push(K('ans'));
-    if (estado.c.fila === estado.entrada && estado.c.i === 0 && estado.entrada.length === 1 && estado.entrada[0].v === 'ans') estado.c.i = 1;
+    if (estado.pantalla !== 'home' || estado.kEdit) return;
+    var e = estado.entrada;
+    if (!e.length && estado.c.fila === e && estado.ans) e.push(K('ans'));
+    if (estado.c.fila === e && estado.c.i === 0 && e.length === 1 && e[0].v === 'ans') estado.c.i = 1;
   }
 
   function operador(v) { reglaAns(); insertar(K(v)); }
 
   function conversion(v) {
+    if (estado.raiz === NADA) return;
     reglaAns();
-    var raiz = estado.entrada;
+    var raiz = estado.raiz;
     if (raiz.length && raiz[raiz.length - 1].t === 'k' && CONVERSIONES[raiz[raiz.length - 1].v]) raiz.pop();
     raiz.push(K(v));
     estado.c = { fila: raiz, i: raiz.length };
+  }
+
+  function teclaVariable() {
+    if (estado.raiz === NADA) return;
+    var c = estado.c, previo = c.fila[c.i - 1];
+    if (estado.ultima === 'xvar' && previo && previo.v === 'var') {
+      previo.n = VARIABLES[(VARIABLES.indexOf(previo.n) + 1) % VARIABLES.length];
+      return;
+    }
+    insertar({ t: 'k', v: 'var', n: 'x' });
   }
 
   function derecha() {
@@ -1047,21 +1376,33 @@
     else estado.c = { fila: p.fila, i: p.i };
   }
 
-  function moverVertical(dir) {
+  // Devuelve true si el cursor se movió dentro de una plantilla
+  function moverEnPlantilla(dir) {
     var p = padreActual();
-    if (p) {
-      var t = p.nodo.t, k = p.k;
-      var destino = null;
-      if (t === 'frac') destino = dir > 0 ? (k === 0 ? 1 : null) : (k === 1 ? 0 : null);
-      else if (t === 'mixto') destino = dir > 0 ? (k < 2 ? k + 1 : null) : (k === 2 ? 1 : null);
-      else if (t === 'raizn') destino = dir > 0 ? (k === 0 ? 1 : null) : (k === 1 ? 0 : null);
-      if (destino !== null) {
-        var f = p.nodo.s[destino];
-        estado.c = { fila: f, i: dir > 0 ? 0 : f.length };
-      }
-      return;
+    if (!p) return false;
+    var t = p.nodo.t, k = p.k, destino = null;
+    if (t === 'frac') destino = dir > 0 ? (k === 0 ? 1 : null) : (k === 1 ? 0 : null);
+    else if (t === 'mixto') destino = dir > 0 ? (k < 2 ? k + 1 : null) : (k === 2 ? 1 : null);
+    else if (t === 'raizn') destino = dir > 0 ? (k === 0 ? 1 : null) : (k === 1 ? 0 : null);
+    if (destino !== null) {
+      var f = p.nodo.s[destino];
+      estado.c = { fila: f, i: dir > 0 ? 0 : f.length };
     }
-    // Fuera de plantillas: recorrer el historial
+    return true;
+  }
+
+  // Dentro de una plantilla las flechas mueven el cursor por la plantilla en cualquier pantalla
+  function flechaEnPlantilla(id) {
+    if (!padreActual()) return false;
+    if (id === 'up' || id === 'down') { moverEnPlantilla(id === 'up' ? -1 : 1); return true; }
+    if (id === 'left') { izquierda(); return true; }
+    if (id === 'right') { derecha(); return true; }
+    return false;
+  }
+
+  function moverVertical(dir) {
+    if (moverEnPlantilla(dir)) return;
+    if (estado.pantalla !== 'home') return;
     var total = estado.historial.length * 2;
     if (!total) return;
     if (dir < 0) {
@@ -1081,6 +1422,7 @@
 
   function borrar() {
     var c = estado.c, f = c.fila;
+    if (f === NADA) return;
     if (!f.length) {
       var p = padreActual();
       if (!p) return;
@@ -1094,42 +1436,66 @@
     c.i--;
   }
 
+  function vaciar(fila) {
+    fila.length = 0;
+    if (estado.raiz === fila) estado.c = { fila: fila, i: 0 };
+  }
+
   function limpiarEntrada() {
     estado.entrada = [];
-    estado.c = { fila: estado.entrada, i: 0 };
+    if (estado.pantalla === 'home') { estado.raiz = estado.entrada; estado.c = { fila: estado.entrada, i: 0 }; }
   }
 
   function clonar(fila) {
     return fila.map(function (n) {
       var c = { t: n.t };
       if (n.v !== undefined) c.v = n.v;
+      if (n.n !== undefined) c.n = n.n;
       if (n.val) { c.val = n.val; c.html = n.html; }
       if (n.s) c.s = n.s.map(clonar);
       return c;
     });
   }
 
-  /* ---------- Cálculo ---------- */
+  function valorHTML(v, html) { return { t: 'k', v: 'hv', val: v, html: html }; }
+
+  /* ---------- Cálculo en la pantalla principal ---------- */
+
+  var OPERADORES_K = { '+': 1, '-': 1, '*': 1, '/': 1, pw: 1, sq: 1, inv: 1, pct: 1, fact: 1, nPr: 1, nCr: 1, xrt: 1 };
+
+  function guardarConstante() {
+    var e = estado.entrada, p = e[0];
+    if (!p || !((p.t === 'k' && OPERADORES_K[p.v]) || p.t === 'pot' || p.t === 'sci')) {
+      estado.error = { ti: ERR.sint, es: 'La constante K debe empezar con una operación, por ejemplo + 3 o × 2' };
+      return;
+    }
+    estado.K = clonar(e);
+    estado.kEdit = false;
+    limpiarEntrada();
+    avisar('Constante K guardada: ahora escribe un número y pulsa enter para aplicarle la operación. 2nd K la desactiva.');
+  }
 
   function calcular() {
     if (estado.sel !== null) { pegarHistorial(); return; }
+    if (estado.kEdit) { if (estado.entrada.length) guardarConstante(); return; }
     if (!estado.entrada.length) {
-      if (estado.historial.length) {
-        var u = estado.historial[estado.historial.length - 1];
-        estado.entrada = clonar(u.entrada);
-      } else {
-        return;
-      }
+      if (!estado.historial.length) return;
+      estado.entrada = clonar(estado.historial[estado.historial.length - 1].entrada);
+      estado.raiz = estado.entrada;
+    } else if (estado.K) {
+      estado.entrada = estado.entrada.concat(clonar(estado.K));
+      estado.raiz = estado.entrada;
     }
     try {
       var previo = estado.historial.length ? estado.historial[estado.historial.length - 1].modo : null;
-      var r = evaluarEntrada(estado.entrada, estado.ans, estado.cfg, previo);
+      var r = evaluarEntrada(estado.entrada, estado.ans, cfgEval(), previo);
+      if (r.guardar) estado.vars[r.guardar] = r.v;
       var item = { entrada: clonar(estado.entrada), v: r.v, modo: r.modo, base: r.modo === 'dec' ? null : r.modo };
       estado.historial.push(item);
       if (estado.historial.length > 30) estado.historial.shift();
       estado.ans = r.v;
       limpiarEntrada();
-      anunciar('Resultado: ' + formatear(r.v, r.modo, estado.cfg).texto);
+      anunciar('Resultado: ' + formatear(r.v, r.modo, cfgEval()).texto);
     } catch (e) {
       if (!e.gph) e = errorGPH(ERR.sint, 'Error de cálculo');
       estado.error = { ti: e.ti, es: e.message };
@@ -1144,16 +1510,16 @@
     }
     var h = estado.historial[estado.historial.length - 1];
     if (!h) return;
-    if (h.modo === 'pct') { avisar('Este resultado está expresado como por ciento.'); return; }
-    var formas = formasAlternas(h.v);
+    if (h.modo === 'pct' || h.modo === 'dms') { avisar('Este resultado ya está convertido; pulsa enter con otro cálculo.'); return; }
+    var formas = formasAlternas(h.v, estado.cfg);
     if (formas.length < 2) { avisar('Este resultado no tiene otra forma: solo se muestra como decimal o entero.'); return; }
     if (h.modo === 'dec') {
       if (!h.v.e) h.v = aFraccion(h.v);
-      h.modo = h.base || formas[0];
+      h.modo = clasico() && h.base === 'exacto' ? 'dec' : (h.base || formas[0]);
     } else {
       h.modo = 'dec';
     }
-    anunciar(formatear(h.v, h.modo, estado.cfg).texto);
+    anunciar(formatear(h.v, h.modo, cfgEval()).texto);
   }
 
   function aproximar() {
@@ -1161,7 +1527,7 @@
     var h = estado.historial[estado.historial.length - 1];
     if (!h) return;
     h.modo = 'dec';
-    anunciar(formatear(h.v, 'dec', estado.cfg).texto);
+    anunciar(formatear(h.v, 'dec', cfgEval()).texto);
   }
 
   function pegarHistorial() {
@@ -1175,16 +1541,89 @@
       c.fila.splice.apply(c.fila, [c.i, 0].concat(copia));
       c.i += copia.length;
     } else {
-      insertar({ t: 'k', v: 'hv', val: h.v, html: formatear(h.v, h.modo, estado.cfg).html });
+      insertar(valorHTML(h.v, formatear(h.v, h.modo, cfgEval()).html));
     }
+  }
+
+  function formatoCorto(v, ancho) {
+    var f = formatear(v, 'dec', cfgEval());
+    var t = f.html;
+    if (t.indexOf('<') < 0 && t.length > ancho) {
+      var n = aNumero(v);
+      t = formatoDecimal(n, { notacion: 'sci', fijo: -1, pantalla: 'classic' }).html;
+      if (t.replace(/<[^>]+>/g, '').length > ancho) t = String(n).slice(0, ancho);
+    }
+    return t;
   }
 
   /* ---------- Menús ---------- */
 
-  var MENU_PRB = [
-    { titulo: 'PRB', items: [['nPr', 'nPr'], ['nCr', 'nCr'], ['!', 'fact']] },
-    { titulo: 'RAND', items: [['rand', 'rand'], ['randint(', 'randint']] }
-  ];
+  function menuDefinicion(tipo) {
+    switch (tipo) {
+      case 'prb':
+        return [
+          { titulo: 'PRB', items: [['nPr', function () { operador('nPr'); }], ['nCr', function () { operador('nCr'); }], ['!', function () { operador('fact'); }]] },
+          { titulo: 'RAND', items: [['rand', function () { insertar(K('rand')); }], ['randint(', function () { insertar(K('randint(')); }]] }
+        ];
+      case 'angle':
+        return [
+          { titulo: 'DMS', items: [
+            ['°', function () { insertar(K('dg')); }], ['\'', function () { insertar(K('mn')); }], ['"', function () { insertar(K('sg')); }],
+            ['<sup>r</sup>', function () { insertar(K('rd')); }], ['<sup>g</sup>', function () { insertar(K('gd')); }],
+            ['▸DMS', function () { conversion('toDMS'); }]] },
+          { titulo: 'R◂▸P', items: [
+            ['R▸Pr(', function () { insertar(K('RPr(')); }], ['R▸Pθ(', function () { insertar(K('RPt(')); }],
+            ['P▸Rx(', function () { insertar(K('PRx(')); }], ['P▸Ry(', function () { insertar(K('PRy(')); }]] }
+        ];
+      case 'recall':
+        return [{ titulo: 'RECALL VAR', items: VARIABLES.map(function (n) {
+          return [n + '=' + formatoCorto(estado.vars[n], 10), function () { insertar(valorHTML(estado.vars[n], formatear(estado.vars[n], modoNatural(estado.vars[n]), cfgEval()).html)); }];
+        }) }];
+      case 'clearvar':
+        return [{ titulo: 'CLEAR VAR?', items: [['Yes', function () { estado.vars = varsIniciales(); avisar('Variables borradas: x, y, z, t, a, b y c valen 0.'); }], ['No', function () {}]] }];
+      case 'reset':
+        return [{ titulo: 'RESET?', items: [['No', function () {}], ['Yes', reiniciarTodo]] }];
+      case 'datos':
+        return [
+          { titulo: 'CLEAR', items: [
+            ['Clear L1', function () { borrarLista(0); }], ['Clear L2', function () { borrarLista(1); }],
+            ['Clear L3', function () { borrarLista(2); }], ['Clear ALL', function () { borrarLista(-1); }]] },
+          { titulo: 'FORMULA', items: [
+            ['Add/Edit Frmla', function () { avisar('Las fórmulas en las listas estarán disponibles más adelante. Por ahora escribe los datos uno por uno.'); }]] }
+        ];
+      case 'stat':
+        return [{ titulo: 'STAT', items: [
+          ['1-Var Stats', function () { irStatSetup(1); }], ['2-Var Stats', function () { irStatSetup(2); }],
+          ['StatVars', verStatVars]] }];
+    }
+    return [{ titulo: '', items: [] }];
+  }
+
+  function modoNatural(v) { return racional(v) && v.d !== 1n && v.d <= 9999n ? 'frac' : 'dec'; }
+
+  var VISIBLES_MENU = 4;
+
+  function abrirMenu(tipo) {
+    estado.sel = null;
+    if (tipo === 'mode') estado.menu = { tipo: 'mode', fila: 0, col: indiceActualModo(0) };
+    else estado.menu = { tipo: tipo, pest: 0, sel: 0, top: 0, def: menuDefinicion(tipo) };
+    var nombres = {
+      prb: 'Menú de probabilidad: 1 nPr, 2 nCr, 3 factorial', mode: 'Menú de modos', reset: 'Restablecer la calculadora: 1 No, 2 Sí',
+      angle: 'Menú de ángulos', recall: 'Recuperar variable', clearvar: 'Borrar variables: 1 Sí, 2 No', datos: 'Menú para borrar listas',
+      stat: 'Menú de estadística: 1 una variable, 2 dos variables, 3 resultados'
+    };
+    anunciar(nombres[tipo] || 'Menú');
+  }
+
+  function cerrarMenu() { estado.menu = null; }
+
+  function elegirMenu(idx) {
+    var m = estado.menu;
+    var it = m.def[m.pest].items[idx];
+    if (!it) return;
+    cerrarMenu();
+    it[1]();
+  }
 
   var MENU_MODO = [
     { clave: 'angulo', ops: [['DEG', 'deg'], ['RAD', 'rad'], ['GRAD', 'grad']] },
@@ -1193,72 +1632,46 @@
     { clave: 'pantalla', ops: [['CLASSIC', 'classic'], ['MATHPRINT', 'mathprint']] }
   ];
 
-  function valorModo(fila) {
-    var m = MENU_MODO[fila];
-    if (m.clave === 'pantalla') return 'mathprint';
-    return estado.cfg[m.clave];
-  }
-
   function indiceActualModo(fila) {
-    var v = valorModo(fila), ops = MENU_MODO[fila].ops;
+    var v = estado.cfg[MENU_MODO[fila].clave], ops = MENU_MODO[fila].ops;
     for (var i = 0; i < ops.length; i++) if (ops[i][1] === v) return i;
     return 0;
-  }
-
-  function abrirMenu(tipo) {
-    estado.sel = null;
-    if (tipo === 'prb') estado.menu = { tipo: 'prb', pest: 0, sel: 0 };
-    else if (tipo === 'mode') estado.menu = { tipo: 'mode', fila: 0, col: indiceActualModo(0) };
-    else if (tipo === 'reset') estado.menu = { tipo: 'reset', sel: 0 };
-    anunciar(tipo === 'prb' ? 'Menú de probabilidad: 1 nPr, 2 nCr, 3 factorial' :
-      tipo === 'mode' ? 'Menú de modos' : 'Restablecer la calculadora: 1 No, 2 Sí');
-  }
-
-  function cerrarMenu() { estado.menu = null; }
-
-  function elegirPrb(pest, idx) {
-    var item = MENU_PRB[pest].items[idx];
-    if (!item) return;
-    cerrarMenu();
-    var v = item[1];
-    if (v === 'nPr' || v === 'nCr' || v === 'fact') operador(v);
-    else if (v === 'rand') insertar(K('rand'));
-    else proximamente('randint(');
   }
 
   function aplicarModo(fila, col) {
     var m = MENU_MODO[fila], op = m.ops[col];
     if (!op) return;
-    if (m.clave === 'pantalla') {
-      if (op[1] === 'classic') avisar('El modo CLASSIC estará disponible próximamente. La calculadora sigue en MATHPRINT, que es como viene la del examen.');
+    var antes = estado.cfg[m.clave];
+    estado.cfg[m.clave] = op[1];
+    if (m.clave === 'pantalla' && antes !== op[1]) {
+      // Como en la TI, al cambiar de pantalla se empieza una entrada nueva
+      limpiarEntrada();
+      if (op[1] === 'classic') avisar('Modo CLASSIC: todo se escribe en una sola línea, por ejemplo 3 n/d 4 se ve 3/4 y el exponente se escribe después de ^ sin plantilla.');
       return;
     }
-    estado.cfg[m.clave] = op[1];
     anunciar(op[0] + ' seleccionado');
   }
 
-  function elegirReset(si) {
-    cerrarMenu();
-    if (!si) return;
+  function reiniciarTodo() {
     estado.historial = [];
     estado.ans = null;
-    estado.cfg = { angulo: 'deg', notacion: 'norm', fijo: -1 };
+    estado.cfg = cfgInicial();
+    estado.vars = varsIniciales();
+    estado.K = null;
+    estado.kEdit = false;
+    estado.hyp = false;
+    estado.datos = { listas: [[], [], []], col: 0, fila: 0, top: 0, celda: [] };
+    estado.stat = { tipo: 1, fila: 0, datos: 0, x: 0, y: 1, frq: 0, res: null, nombre: '', sel: 0, top: 0 };
+    estado.tabla = { fx: [], inicio: [K('0')], paso: [K('1')], auto: true, fila: 0, xs: [], col: 0, sel: 0, top: 0, celda: [], x0: null, dx: null };
     limpiarEntrada();
+    irInicio();
     avisar('Calculadora restablecida.');
   }
 
   function teclaMenu(id, segunda) {
     var m = estado.menu;
-    if (id === 'clear' || (segunda && id === 'mode') || (!segunda && id === m.tipo)) { cerrarMenu(); return; }
-    if (m.tipo === 'prb') {
-      var items = MENU_PRB[m.pest].items;
-      if (id === 'left' || id === 'right') { m.pest = 1 - m.pest; m.sel = 0; return; }
-      if (id === 'up') { m.sel = (m.sel + items.length - 1) % items.length; return; }
-      if (id === 'down') { m.sel = (m.sel + 1) % items.length; return; }
-      if (id === 'enter') { elegirPrb(m.pest, m.sel); return; }
-      if (/^[1-9]$/.test(id)) { elegirPrb(m.pest, Number(id) - 1); return; }
-      return;
-    }
+    if (id === 'clear' || (segunda && id === 'mode')) { cerrarMenu(); return; }
+    if (!segunda && (id === m.tipo || (m.tipo === 'datos' && id === 'data'))) { cerrarMenu(); return; }
     if (m.tipo === 'mode') {
       var n = MENU_MODO[m.fila].ops.length;
       if (id === 'left') { m.col = (m.col + n - 1) % n; return; }
@@ -1271,32 +1684,352 @@
       if (id === 'enter') { aplicarModo(m.fila, m.col); return; }
       return;
     }
-    if (m.tipo === 'reset') {
-      if (id === 'up' || id === 'down') { m.sel = 1 - m.sel; return; }
-      if (id === '1') { elegirReset(false); return; }
-      if (id === '2') { elegirReset(true); return; }
-      if (id === 'enter') { elegirReset(m.sel === 1); return; }
+    var items = m.def[m.pest].items;
+    if ((id === 'left' || id === 'right') && m.def.length > 1) {
+      m.pest = (m.pest + (id === 'right' ? 1 : m.def.length - 1)) % m.def.length;
+      m.sel = 0; m.top = 0;
+      return;
     }
+    if (id === 'up' || id === 'down') {
+      m.sel = (m.sel + (id === 'up' ? items.length - 1 : 1)) % items.length;
+      if (m.sel < m.top) m.top = m.sel;
+      if (m.sel >= m.top + VISIBLES_MENU) m.top = m.sel - VISIBLES_MENU + 1;
+      return;
+    }
+    if (id === 'enter') { elegirMenu(m.sel); return; }
+    if (/^[1-9]$/.test(id)) { elegirMenu(Number(id) - 1); }
+  }
+
+  /* ---------- data: editor de listas ---------- */
+
+  function irDatos() {
+    var d = estado.datos;
+    d.celda = [];
+    irA('data', d.celda);
+  }
+
+  function nuevaCelda() {
+    var d = estado.datos;
+    d.celda = [];
+    estado.raiz = d.celda;
+    estado.c = { fila: d.celda, i: 0 };
+  }
+
+  function borrarLista(i) {
+    var d = estado.datos;
+    if (i < 0) d.listas = [[], [], []];
+    else d.listas[i] = [];
+    d.fila = 0; d.top = 0;
+    if (estado.pantalla === 'data') nuevaCelda();
+    avisar(i < 0 ? 'Se borraron las tres listas.' : 'Se borró la lista L' + (i + 1) + '.');
+  }
+
+  function confirmarCelda() {
+    var d = estado.datos, L = d.listas[d.col];
+    if (!d.celda.length) return true;
+    try {
+      var r = evaluarEntrada(d.celda, estado.ans, cfgEval());
+      if (d.fila >= L.length) {
+        if (L.length >= MAX_LISTA) { avisar('Cada lista admite hasta ' + MAX_LISTA + ' datos.'); return false; }
+        L.push(r.v);
+        d.fila = L.length - 1;
+      } else {
+        L[d.fila] = r.v;
+      }
+      nuevaCelda();
+      return true;
+    } catch (e) {
+      if (!e.gph) e = errorGPH(ERR.sint, 'Error de cálculo');
+      estado.error = { ti: e.ti, es: e.message };
+      return false;
+    }
+  }
+
+  function ajustarScroll(obj, filas) {
+    if (obj.sel !== undefined) {
+      if (obj.sel < obj.top) obj.top = obj.sel;
+      if (obj.sel >= obj.top + filas) obj.top = obj.sel - filas + 1;
+    }
+  }
+
+  function teclaDatos(id) {
+    var d = estado.datos, L = d.listas[d.col];
+    if (flechaEnPlantilla(id)) return true;
+    switch (id) {
+      case 'enter':
+      case 'down':
+        if (!confirmarCelda()) return true;
+        L = d.listas[d.col];
+        d.fila = Math.min(d.fila + 1, L.length);
+        break;
+      case 'up':
+        if (!confirmarCelda()) return true;
+        if (d.fila > 0) d.fila--;
+        break;
+      case 'left':
+      case 'right':
+        if (!confirmarCelda()) return true;
+        d.col = (d.col + (id === 'right' ? 1 : 2)) % 3;
+        d.fila = Math.min(d.fila, d.listas[d.col].length);
+        nuevaCelda();
+        break;
+      case 'clear':
+        if (d.celda.length) vaciar(d.celda);
+        break;
+      case 'delete':
+        if (d.celda.length) borrar();
+        else if (d.fila < L.length) L.splice(d.fila, 1);
+        break;
+      case 'toggle':
+        break;
+      default:
+        return false;
+    }
+    if (d.fila < d.top) d.top = d.fila;
+    if (d.fila >= d.top + 3) d.top = d.fila - 2;
+    return true;
+  }
+
+  /* ---------- stat ---------- */
+
+  function filasStat() {
+    var listas = ['L1', 'L2', 'L3'], frq = ['ONE', 'L1', 'L2', 'L3'];
+    if (estado.stat.tipo === 1) {
+      return [{ lab: 'DATA:', clave: 'datos', ops: listas }, { lab: 'FRQ:', clave: 'frq', ops: frq }, { lab: 'CALC' }];
+    }
+    return [{ lab: 'xDATA:', clave: 'x', ops: listas }, { lab: 'yDATA:', clave: 'y', ops: listas }, { lab: 'FRQ:', clave: 'frq', ops: frq }, { lab: 'CALC' }];
+  }
+
+  function irStatSetup(tipo) {
+    if (estado.pantalla === 'data' && !confirmarCelda()) return;
+    estado.stat.tipo = tipo;
+    estado.stat.fila = 0;
+    irA('stat-setup');
+  }
+
+  function numerosLista(i) { return estado.datos.listas[i].map(aNumero); }
+
+  function calcularStat() {
+    var s = estado.stat;
+    try {
+      var frq = s.frq === 0 ? null : numerosLista(s.frq - 1);
+      if (s.tipo === 1) {
+        s.res = estadistica1(numerosLista(s.datos), frq);
+        s.nombre = '1-Var:L' + (s.datos + 1) + (s.frq ? ',L' + s.frq : '');
+      } else {
+        s.res = estadistica2(numerosLista(s.x), numerosLista(s.y), frq);
+        s.nombre = '2-Var:L' + (s.x + 1) + ',L' + (s.y + 1) + (s.frq ? ',L' + s.frq : '');
+      }
+      s.sel = 0; s.top = 0;
+      irA('stat-res');
+      anunciar('Resultados de ' + (s.tipo === 1 ? 'una variable' : 'dos variables') + ' calculados. Usa las flechas para leerlos.');
+    } catch (e) {
+      if (!e.gph) e = errorGPH('STAT ERROR', 'No se pudo calcular');
+      estado.error = { ti: e.ti, es: e.message };
+    }
+  }
+
+  function verStatVars() {
+    if (!estado.stat.res) { avisar('Todavía no hay resultados: primero calcula 1-Var Stats o 2-Var Stats.'); return; }
+    estado.stat.sel = 0; estado.stat.top = 0;
+    irA('stat-res');
+  }
+
+  function teclaStatSetup(id) {
+    var s = estado.stat, filas = filasStat(), f = filas[s.fila];
+    switch (id) {
+      case 'up': s.fila = (s.fila + filas.length - 1) % filas.length; return true;
+      case 'down': s.fila = (s.fila + 1) % filas.length; return true;
+      case 'left': case 'right':
+        if (f.ops) s[f.clave] = (s[f.clave] + (id === 'right' ? 1 : f.ops.length - 1)) % f.ops.length;
+        return true;
+      case 'enter':
+        if (!f.ops) calcularStat();
+        else s.fila = Math.min(s.fila + 1, filas.length - 1);
+        return true;
+      case 'clear': irInicio(); return true;
+    }
+    return true;
+  }
+
+  function etiquetaStat(i) { return i < 9 ? String(i + 1) : String.fromCharCode(65 + i - 9); }
+
+  function pegarStat(i) {
+    var r = estado.stat.res[i];
+    if (!r || r[1] === null) return;
+    irInicio();
+    insertar(valorHTML(F(r[1]), r[0]));
+  }
+
+  function teclaStatRes(id) {
+    var s = estado.stat, n = s.res.length;
+    switch (id) {
+      case 'up': s.sel = (s.sel + n - 1) % n; break;
+      case 'down': s.sel = (s.sel + 1) % n; break;
+      case 'enter': pegarStat(s.sel); return true;
+      case 'clear': irInicio(); return true;
+      default:
+        if (/^[1-9]$/.test(id)) { pegarStat(Number(id) - 1); return true; }
+        return true;
+    }
+    ajustarScroll(s, 4);
+    return true;
+  }
+
+  /* ---------- table ---------- */
+
+  function irTablaFx() { irA('tabla-fx', estado.tabla.fx); }
+
+  function raizSetup() {
+    var t = estado.tabla;
+    return t.fila === 0 ? t.inicio : t.fila === 1 ? t.paso : NADA;
+  }
+
+  function irTablaSetup() {
+    estado.tabla.fila = 0;
+    irA('tabla-setup', estado.tabla.inicio);
+  }
+
+  function evaluarSimple(fila, nombre) {
+    if (!fila.length) throw errorGPH(ERR.sint, 'Falta el valor de ' + nombre);
+    return evaluarEntrada(fila, estado.ans, cfgEval()).v;
+  }
+
+  function abrirTabla() {
+    var t = estado.tabla;
+    try {
+      t.x0 = evaluarSimple(t.inicio, 'Start');
+      t.dx = evaluarSimple(t.paso, 'Step');
+    } catch (e) {
+      estado.error = { ti: e.ti || ERR.sint, es: e.message };
+      return;
+    }
+    t.sel = 0; t.top = 0; t.col = 0;
+    t.celda = [];
+    irA('tabla', t.auto ? NADA : t.celda);
+  }
+
+  function xDeFila(k) {
+    var t = estado.tabla;
+    if (t.auto) return sumar(t.x0, multiplicar(Q(BigInt(k)), t.dx));
+    return t.xs[k] === undefined ? null : t.xs[k];
+  }
+
+  function fDe(x) {
+    try {
+      var r = evaluarEntrada(estado.tabla.fx, estado.ans, cfgEval({ x: x }));
+      return { v: r.v, modo: r.modo === 'exacto' ? 'dec' : r.modo };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function teclaTablaSetup(id) {
+    var t = estado.tabla;
+    if (flechaEnPlantilla(id)) return true;
+    function fijarFila(f) {
+      t.fila = f;
+      var r = raizSetup();
+      estado.raiz = r;
+      estado.c = { fila: r, i: r.length };
+    }
+    switch (id) {
+      case 'up': fijarFila((t.fila + 3) % 4); return true;
+      case 'down': fijarFila((t.fila + 1) % 4); return true;
+      case 'left': case 'right':
+        if (t.fila === 2) { t.auto = !t.auto; return true; }
+        if (t.fila === 3) return true;
+        return false;
+      case 'enter':
+        if (t.fila === 3) { abrirTabla(); return true; }
+        if (t.fila === 2) { fijarFila(3); return true; }
+        fijarFila(t.fila + 1);
+        return true;
+      case 'clear':
+        if (t.fila < 2) vaciar(raizSetup());
+        return true;
+      case 'toggle': return true;
+    }
+    return t.fila >= 2;
+  }
+
+  function teclaTablaFx(id) {
+    switch (id) {
+      case 'enter':
+        if (!estado.tabla.fx.length) { avisar('Escribe la función f(x) usando la tecla de variables para la x.'); return true; }
+        irTablaSetup();
+        return true;
+      case 'clear': vaciar(estado.tabla.fx); return true;
+      case 'up': case 'down':
+        moverEnPlantilla(id === 'up' ? -1 : 1);
+        return true;
+      case 'toggle': return true;
+    }
+    return false;
+  }
+
+  function teclaTabla(id) {
+    var t = estado.tabla;
+    if (flechaEnPlantilla(id)) return true;
+    function confirmarX() {
+      if (t.auto || !t.celda.length) return true;
+      try {
+        t.xs[t.sel] = evaluarEntrada(t.celda, estado.ans, cfgEval()).v;
+        t.celda = [];
+        estado.raiz = t.celda;
+        estado.c = { fila: t.celda, i: 0 };
+        return true;
+      } catch (e) {
+        estado.error = { ti: e.ti || ERR.sint, es: e.message };
+        return false;
+      }
+    }
+    switch (id) {
+      case 'up':
+        if (!confirmarX()) return true;
+        if (t.auto || t.sel > 0) t.sel--;
+        if (!t.auto && t.sel < 0) t.sel = 0;
+        break;
+      case 'down':
+      case 'enter':
+        if (!confirmarX()) return true;
+        if (id === 'down' || t.auto) {
+          if (t.auto || t.sel < t.xs.length) t.sel++;
+        } else {
+          t.sel = Math.min(t.sel + 1, t.xs.length);
+        }
+        break;
+      case 'left': case 'right':
+        if (!t.auto && t.col === 0 && t.celda.length) return false;
+        t.col = 1 - t.col;
+        break;
+      case 'clear':
+        if (!t.auto && t.celda.length) vaciar(t.celda);
+        break;
+      case 'delete':
+        if (!t.auto && t.celda.length) return false;
+        if (!t.auto && t.sel < t.xs.length) t.xs.splice(t.sel, 1);
+        break;
+      case 'toggle':
+        break;
+      default:
+        if (t.auto || t.col === 1) return true;   // en Auto no se escribe en la tabla
+        return false;
+    }
+    if (t.sel < t.top) t.top = t.sel;
+    if (t.sel >= t.top + 3) t.top = t.sel - 2;
+    return true;
   }
 
   /* ---------- Pulsar una tecla ---------- */
 
-  var NOMBRES = {
-    data: 'data (editor de datos)', stat: 'stat (estadística)', table: 'table (tabla de valores)',
-    xvar: 'variables x, y, z, t, a, b, c', sto: 'sto→ (guardar en variable)', recall: 'recall',
-    clearvar: 'clear var', K: 'K (constante)', hyp: 'hyp (hiperbólicas)', angle: 'angle (ángulos)',
-    coma: 'la coma', 'randint(': 'randint('
-  };
-
-  function proximamente(clave) {
-    avisar('La función ' + (NOMBRES[clave] || clave) + ' estará disponible próximamente.');
-  }
+  var NOMBRES = { coma: 'la coma' };
 
   function avisar(texto) {
     estado.aviso = texto;
     anunciar(texto);
     clearTimeout(temporizadorAviso);
-    temporizadorAviso = setTimeout(function () { estado.aviso = ''; mostrar(); }, 5000);
+    temporizadorAviso = setTimeout(function () { estado.aviso = ''; mostrar(); }, 6000);
   }
 
   function pulsar(id) {
@@ -1310,23 +2043,68 @@
     estado.s2 = false;
     if (estado.aviso) { estado.aviso = ''; clearTimeout(temporizadorAviso); }
 
-    if (id === 'on' && !segunda) { estado.error = null; cerrarMenu(); estado.sel = null; limpiarEntrada(); mostrar(); return; }
-    if (id === 'on' && segunda) { cerrar(); return; }
+    if (id === 'on') {
+      if (segunda) { cerrar(); return; }
+      estado.error = null; cerrarMenu(); estado.sel = null; estado.hyp = false; estado.kEdit = false;
+      limpiarEntrada(); irInicio(); mostrar();
+      return;
+    }
 
     if (estado.error) {
       estado.error = null;
       if (id === 'clear' || id === 'left' || id === 'right' || id === 'delete' || id === 'enter') { mostrar(); return; }
     }
-    if (estado.menu) { teclaMenu(id, segunda); mostrar(); return; }
-    if (estado.sel !== null && id !== 'up' && id !== 'down' && id !== 'enter') estado.sel = null;
+    if (estado.menu) { teclaMenu(id, segunda); estado.ultima = null; mostrar(); return; }
 
-    if (segunda) ejecutar2nd(id);
-    else ejecutar(id);
+    var registrada = (segunda ? '2nd ' : '') + id;
+    if (!manejarGlobal(id, segunda)) {
+      var hecho = false;
+      if (estado.pantalla === 'data') hecho = teclaDatos(id);
+      else if (estado.pantalla === 'stat-setup') hecho = teclaStatSetup(id);
+      else if (estado.pantalla === 'stat-res') hecho = teclaStatRes(id);
+      else if (estado.pantalla === 'tabla-fx') hecho = teclaTablaFx(id);
+      else if (estado.pantalla === 'tabla-setup') hecho = teclaTablaSetup(id);
+      else if (estado.pantalla === 'tabla') hecho = teclaTabla(id);
+      else if (estado.sel !== null && id !== 'up' && id !== 'down' && id !== 'enter') estado.sel = null;
+      if (!hecho) {
+        if (segunda) ejecutar2nd(id);
+        else ejecutar(id);
+      }
+    }
+    estado.ultima = registrada;
     mostrar();
+  }
+
+  // Teclas que funcionan igual en todas las pantallas
+  function manejarGlobal(id, segunda) {
+    if (segunda && id === 'mode') { irInicio(); return true; }               // quit
+    if (!segunda && id === 'mode') { abrirMenu('mode'); return true; }
+    if (!segunda && id === 'data') {
+      if (estado.pantalla === 'data') abrirMenu('datos');
+      else irDatos();
+      return true;
+    }
+    if (segunda && id === 'data') {
+      if (estado.pantalla === 'data' && !confirmarCelda()) return true;
+      abrirMenu('stat');
+      return true;
+    }
+    if (!segunda && id === 'table') { irTablaFx(); return true; }
+    if (segunda && id === 'sto') { abrirMenu('clearvar'); return true; }
+    if (segunda && id === '0') { abrirMenu('reset'); return true; }
+    if (estado.pantalla !== 'home' && (id === 'sto' || (segunda && id === '/'))) return true;
+    return false;
+  }
+
+  function trigonometrica(id, inversa) {
+    var nombre = (inversa ? 'a' : '') + id + (estado.hyp ? 'h' : '') + '(';
+    estado.hyp = false;
+    insertar(K(nombre));
   }
 
   function ejecutar(id) {
     if (/^[0-9.]$/.test(id)) { insertar(K(id)); return; }
+    var cl = clasico();
     switch (id) {
       case '+': case '-': case '*': case '/': operador(id); return;
       case '(': case ')': insertar(K(id)); return;
@@ -1334,52 +2112,63 @@
       case 'pi': insertar(K('pi')); return;
       case 'sq': operador('sq'); return;
       case 'inv': operador('inv'); return;
-      case 'pot': insertarPlantilla('pot'); return;
-      case 'nd': insertarPlantilla('frac'); return;
-      case 'x10': insertarPlantilla('sci'); return;
+      case 'pot': if (cl) operador('pw'); else insertarPlantilla('pot'); return;
+      case 'nd': if (cl) insertar(K('fsl')); else insertarPlantilla('frac'); return;
+      case 'x10': if (cl) insertar(K('El')); else insertarPlantilla('sci'); return;
       case 'log': insertar(K('log(')); return;
       case 'ln': insertar(K('ln(')); return;
-      case 'sin': case 'cos': case 'tan': insertar(K(id + '(')); return;
+      case 'sin': case 'cos': case 'tan': trigonometrica(id, false); return;
       case 'prb': abrirMenu('prb'); return;
-      case 'mode': abrirMenu('mode'); return;
+      case 'xvar': teclaVariable(); return;
+      case 'sto': operador('sto'); return;
       case 'clear':
+        if (estado.pantalla !== 'home') { vaciar(estado.raiz); return; }
         if (estado.entrada.length) limpiarEntrada();
-        else { estado.historial = []; }
+        else if (estado.kEdit) { estado.kEdit = false; avisar('Constante K cancelada.'); }
+        else estado.historial = [];
         return;
       case 'delete': borrar(); return;
-      case 'enter': calcular(); return;
-      case 'toggle': alternarResultado(); return;
+      case 'enter': if (estado.pantalla === 'home') calcular(); return;
+      case 'toggle': if (estado.pantalla === 'home') alternarResultado(); return;
       case 'left': izquierda(); return;
       case 'right': derecha(); return;
       case 'up': moverVertical(-1); return;
       case 'down': moverVertical(1); return;
-      case 'data': case 'table': case 'xvar': case 'sto': proximamente(id); return;
     }
   }
 
   function ejecutar2nd(id) {
+    var cl = clasico();
     switch (id) {
-      case 'mode': return;                                   // quit
       case 'delete': avisar('La calculadora siempre inserta lo que escribes donde está el cursor.'); return;
-      case 'log': insertarPlantilla('diez'); return;
-      case 'ln': insertarPlantilla('expe'); return;
-      case 'prb': proximamente('angle'); return;
-      case 'data': proximamente('stat'); return;
-      case 'nd': insertarPlantilla('mixto'); return;
+      case 'log': if (cl) insertar(K('10^(')); else insertarPlantilla('diez'); return;
+      case 'ln': if (cl) insertar(K('e^(')); else insertarPlantilla('expe'); return;
+      case 'prb': abrirMenu('angle'); return;
+      case 'nd': if (cl) insertar(K('unit')); else insertarPlantilla('mixto'); return;
       case 'table': conversion('toFD'); return;
-      case 'pi': proximamente('hyp'); return;
-      case 'sin': case 'cos': case 'tan': insertar(K('a' + id + '(')); return;
-      case '/': proximamente('K'); return;
-      case 'pot': insertarPlantilla('raizn'); return;
+      case 'pi':
+        estado.hyp = !estado.hyp;
+        anunciar(estado.hyp ? 'hyp activada: la próxima sin, cos o tan será hiperbólica' : 'hyp desactivada');
+        return;
+      case 'sin': case 'cos': case 'tan': trigonometrica(id, true); return;
+      case '/':
+        if (estado.K || estado.kEdit) {
+          estado.K = null; estado.kEdit = false;
+          avisar('Constante K desactivada.');
+        } else {
+          limpiarEntrada();
+          estado.kEdit = true;
+          avisar('Constante K: escribe la operación que se repetirá (por ejemplo + 3 o × 2) y pulsa enter.');
+        }
+        return;
+      case 'pot': if (cl) operador('xrt'); else insertarPlantilla('raizn'); return;
       case 'inv': conversion('toUnd'); return;
       case '(': operador('pct'); return;
       case ')': conversion('toPct'); return;
-      case 'sq': insertarPlantilla('raiz2'); return;
-      case 'xvar': proximamente('recall'); return;
-      case 'sto': proximamente('clearvar'); return;
-      case 'toggle': aproximar(); return;
-      case '0': abrirMenu('reset'); return;
-      case '.': proximamente('coma'); return;
+      case 'sq': if (cl) insertar(K('sqrt(')); else insertarPlantilla('raiz2'); return;
+      case 'xvar': abrirMenu('recall'); return;
+      case 'toggle': if (estado.pantalla === 'home') aproximar(); return;
+      case '.': insertar(K(',')); return;
       case 'neg': insertar(K('ans')); return;
       default: ejecutar(id);
     }
@@ -1390,7 +2179,7 @@
   function htmlFila(fila) {
     var c = estado.c, activa = !estado.menu && !estado.error && estado.sel === null;
     if (!fila.length) {
-      if (fila === estado.entrada) return activa ? '<span class="gti-cur"></span>' : '';
+      if (fila === estado.raiz || fila === estado.entrada) return activa && c.fila === fila ? '<span class="gti-cur"></span>' : '';
       return '<span class="gti-vacio' + (activa && c.fila === fila ? ' gti-act' : '') + '"></span>';
     }
     var out = '';
@@ -1410,7 +2199,11 @@
   }
 
   function htmlNodo(n) {
-    if (n.t === 'k') return n.v === 'hv' ? n.html : (SIMBOLO[n.v] !== undefined ? SIMBOLO[n.v] : n.v);
+    if (n.t === 'k') {
+      if (n.v === 'hv') return n.html;
+      if (n.v === 'var') return '<i class="gti-var">' + n.n + '</i>';
+      return SIMBOLO[n.v] !== undefined ? SIMBOLO[n.v] : n.v;
+    }
     var s = n.s;
     switch (n.t) {
       case 'frac': return fraccionHTML(htmlFila(s[0]), htmlFila(s[1]));
@@ -1432,35 +2225,56 @@
     var cfg = estado.cfg;
     var est = '';
     if (estado.s2) est += '<span class="gti-e2">2nd</span>';
+    if (estado.hyp) est += '<span class="gti-e2">HYP</span>';
     est += '<span>' + NOMBRE_ANGULO[cfg.angulo] + '</span>';
     if (cfg.notacion !== 'norm') est += '<span>' + cfg.notacion.toUpperCase() + '</span>';
     if (cfg.fijo >= 0) est += '<span>FIX</span>';
-    var hayMas = estado.historial.length && (estado.sel === null || estado.sel > 0);
-    est += '<span class="gti-flechas">' + (hayMas ? '▲' : '') + (estado.sel !== null ? '▼' : '') + '</span>';
+    if (estado.K || estado.kEdit) est += '<span>K</span>';
+    if (estado.pantalla === 'home') {
+      var hayMas = estado.historial.length && (estado.sel === null || estado.sel > 0);
+      est += '<span class="gti-flechas">' + (hayMas ? '▲' : '') + (estado.sel !== null ? '▼' : '') + '</span>';
+    }
     lcdEstado.innerHTML = est;
 
     if (estado.error) {
       lcdLineas.innerHTML = '<div class="gti-error">' + estado.error.ti + '<small>clear: volver · ◄ ►: corregir</small></div>';
     } else if (estado.menu) {
-      lcdLineas.innerHTML = htmlMenu();
+      lcdLineas.innerHTML = estado.menu.tipo === 'mode' ? htmlModo() : htmlMenu();
       enlazarMenu();
+    } else if (estado.pantalla === 'data') {
+      lcdLineas.innerHTML = htmlDatos();
+      enlazarCeldas();
+    } else if (estado.pantalla === 'stat-setup') {
+      lcdLineas.innerHTML = htmlStatSetup();
+      enlazarStatSetup();
+    } else if (estado.pantalla === 'stat-res') {
+      lcdLineas.innerHTML = htmlStatRes();
+      enlazarStatRes();
+    } else if (estado.pantalla === 'tabla-fx') {
+      lcdLineas.innerHTML = '<div class="gti-l gti-actual">f(<i class="gti-var">x</i>)=' + htmlFila(estado.tabla.fx) + '</div>';
+    } else if (estado.pantalla === 'tabla-setup') {
+      lcdLineas.innerHTML = htmlTablaSetup();
+      enlazarTablaSetup();
+    } else if (estado.pantalla === 'tabla') {
+      lcdLineas.innerHTML = htmlTabla();
     } else {
       var html = '';
       var desde = Math.max(0, estado.historial.length - 6);
+      var cf = cfgEval();
       for (var i = desde; i < estado.historial.length; i++) {
         var h = estado.historial[i];
         html += '<div class="gti-l' + (estado.sel === i * 2 ? ' gti-sel' : '') + '">' + htmlFilaFija(h.entrada) + '</div>';
-        html += '<div class="gti-l gti-res' + (estado.sel === i * 2 + 1 ? ' gti-sel' : '') + '">' + formatear(h.v, h.modo, cfg).html + '</div>';
+        html += '<div class="gti-l gti-res' + (estado.sel === i * 2 + 1 ? ' gti-sel' : '') + '">' + formatear(h.v, h.modo, cf).html + '</div>';
       }
-      html += '<div class="gti-l gti-actual">' + htmlFila(estado.entrada) + '</div>';
+      html += '<div class="gti-l gti-actual">' + (estado.kEdit ? 'K=' : '') + htmlFila(estado.entrada) + '</div>';
       lcdLineas.innerHTML = html;
-      var sel = lcdLineas.querySelector('.gti-sel');
-      if (sel) {
-        var top = sel.offsetTop - lcdLineas.offsetTop;
-        lcdLineas.scrollTop = Math.max(0, top - 10);
-      } else {
-        lcdLineas.scrollTop = lcdLineas.scrollHeight;
-      }
+    }
+    var sel = lcdLineas.querySelector('.gti-sel');
+    if (estado.pantalla === 'home' && !estado.menu && !estado.error) {
+      if (sel) lcdLineas.scrollTop = Math.max(0, sel.offsetTop - lcdLineas.offsetTop - 10);
+      else lcdLineas.scrollTop = lcdLineas.scrollHeight;
+    } else {
+      lcdLineas.scrollTop = 0;
     }
 
     btn2nd.setAttribute('aria-pressed', estado.s2 ? 'true' : 'false');
@@ -1480,32 +2294,37 @@
     btnPistas.setAttribute('aria-pressed', estado.pistas ? 'true' : 'false');
   }
 
-  function htmlMenu() {
+  function htmlModo() {
     var m = estado.menu, h = '<div class="gti-menu">';
-    if (m.tipo === 'prb') {
+    MENU_MODO.forEach(function (fila, f) {
+      var actual = indiceActualModo(f);
+      h += '<div class="gti-mfila' + (f === 2 ? ' gti-dig' : '') + '">';
+      fila.ops.forEach(function (op, c) {
+        var cls = (c === actual ? 'gti-on' : '') + (f === m.fila && c === m.col ? ' gti-foco' : '');
+        h += '<button type="button" data-mf="' + f + '" data-mc="' + c + '" class="' + cls + '" aria-pressed="' + (c === actual) + '">' + op[0] + '</button>';
+      });
+      h += '</div>';
+    });
+    return h + '</div>';
+  }
+
+  function htmlMenu() {
+    var m = estado.menu, def = m.def, h = '<div class="gti-menu">';
+    if (def.length > 1) {
       h += '<div class="gti-pest">';
-      MENU_PRB.forEach(function (p, i) {
+      def.forEach(function (p, i) {
         h += '<button type="button" tabindex="-1" data-pest="' + i + '" class="' + (i === m.pest ? 'gti-on' : '') + '">' + p.titulo + '</button>';
       });
       h += '</div>';
-      MENU_PRB[m.pest].items.forEach(function (it, i) {
-        h += '<div><button type="button" data-prb="' + i + '" class="' + (i === m.sel ? 'gti-on' : '') + '">' + (i + 1) + ':' + it[0] + '</button></div>';
-      });
-    } else if (m.tipo === 'mode') {
-      MENU_MODO.forEach(function (fila, f) {
-        var actual = indiceActualModo(f);
-        h += '<div class="gti-mfila' + (f === 2 ? ' gti-dig' : '') + '">';
-        fila.ops.forEach(function (op, c) {
-          var cls = (c === actual ? 'gti-on' : '') + (f === m.fila && c === m.col ? ' gti-foco' : '');
-          h += '<button type="button" data-mf="' + f + '" data-mc="' + c + '" class="' + cls + '" aria-pressed="' + (c === actual) + '">' + op[0] + '</button>';
-        });
-        h += '</div>';
-      });
-    } else if (m.tipo === 'reset') {
-      h += '<div>RESET?</div>';
-      h += '<div><button type="button" data-rs="0" class="' + (m.sel === 0 ? 'gti-on' : '') + '">1:No</button></div>';
-      h += '<div><button type="button" data-rs="1" class="' + (m.sel === 1 ? 'gti-on' : '') + '">2:Yes</button></div>';
+    } else if (def[0].titulo) {
+      h += '<div class="gti-mtit">' + def[0].titulo + '</div>';
     }
+    var items = def[m.pest].items;
+    var fin = Math.min(items.length, m.top + VISIBLES_MENU);
+    for (var i = m.top; i < fin; i++) {
+      h += '<div><button type="button" data-it="' + i + '" class="' + (i === m.sel ? 'gti-on' : '') + '">' + (i + 1) + ':' + items[i][0] + '</button></div>';
+    }
+    if (fin < items.length) h += '<div class="gti-mas" aria-hidden="true">▼</div>';
     return h + '</div>';
   }
 
@@ -1514,16 +2333,142 @@
       b.addEventListener('click', function () {
         var m = estado.menu;
         if (!m) return;
-        if (b.hasAttribute('data-pest')) { m.pest = Number(b.getAttribute('data-pest')); m.sel = 0; }
-        else if (b.hasAttribute('data-prb')) elegirPrb(m.pest, Number(b.getAttribute('data-prb')));
+        if (b.hasAttribute('data-pest')) { m.pest = Number(b.getAttribute('data-pest')); m.sel = 0; m.top = 0; }
+        else if (b.hasAttribute('data-it')) elegirMenu(Number(b.getAttribute('data-it')));
         else if (b.hasAttribute('data-mf')) {
           m.fila = Number(b.getAttribute('data-mf'));
           m.col = Number(b.getAttribute('data-mc'));
           aplicarModo(m.fila, m.col);
-        } else if (b.hasAttribute('data-rs')) elegirReset(b.getAttribute('data-rs') === '1');
+        }
         mostrar();
       });
     });
+  }
+
+  function htmlDatos() {
+    var d = estado.datos, h = '<div class="gti-tab3"><div class="gti-tcab">';
+    for (var c = 0; c < 3; c++) h += '<span class="' + (c === d.col ? 'gti-tcol' : '') + '">L' + (c + 1) + '</span>';
+    h += '</div>';
+    for (var r = d.top; r < d.top + 3; r++) {
+      h += '<div class="gti-tfila">';
+      for (var k = 0; k < 3; k++) {
+        var L = d.listas[k], val = L[r];
+        var sel = k === d.col && r === d.fila;
+        var txt = val ? formatoCorto(val, 6) : (r === L.length ? '———' : '');
+        h += '<button type="button" tabindex="-1" data-c="' + k + '" data-r="' + r + '" class="gti-tcel' + (sel ? ' gti-on' : '') + '">' + txt + '</button>';
+      }
+      h += '</div>';
+    }
+    var actual = d.listas[d.col][d.fila];
+    h += '<div class="gti-tpie">L' + (d.col + 1) + '(' + (d.fila + 1) + ')=' +
+      (d.celda.length ? htmlFila(d.celda) : (actual ? formatoCorto(actual, 12) + htmlFila(d.celda) : htmlFila(d.celda))) + '</div>';
+    return h + '</div>';
+  }
+
+  function enlazarCeldas() {
+    lcdLineas.querySelectorAll('[data-c]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        if (!confirmarCelda()) { mostrar(); return; }
+        var d = estado.datos;
+        d.col = Number(b.getAttribute('data-c'));
+        d.fila = Math.min(Number(b.getAttribute('data-r')), d.listas[d.col].length);
+        nuevaCelda();
+        mostrar();
+      });
+    });
+  }
+
+  function htmlStatSetup() {
+    var s = estado.stat, filas = filasStat();
+    var h = '<div class="gti-menu"><div class="gti-mtit">' + (s.tipo === 1 ? '1-Var' : '2-Var') + '</div>';
+    filas.forEach(function (f, i) {
+      h += '<div class="gti-mfila">';
+      if (f.ops) {
+        h += '<span class="gti-mlab">' + f.lab + '</span>';
+        f.ops.forEach(function (o, j) {
+          var cls = (s[f.clave] === j ? 'gti-on' : '') + (s.fila === i && s[f.clave] === j ? ' gti-foco' : '');
+          h += '<button type="button" data-sf="' + i + '" data-so="' + j + '" class="' + cls + '">' + o + '</button>';
+        });
+      } else {
+        h += '<button type="button" data-sf="' + i + '" class="' + (s.fila === i ? 'gti-on gti-foco' : '') + '">CALC</button>';
+      }
+      h += '</div>';
+    });
+    return h + '</div>';
+  }
+
+  function enlazarStatSetup() {
+    lcdLineas.querySelectorAll('[data-sf]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var s = estado.stat, filas = filasStat(), i = Number(b.getAttribute('data-sf')), f = filas[i];
+        s.fila = i;
+        if (f.ops) s[f.clave] = Number(b.getAttribute('data-so'));
+        else calcularStat();
+        mostrar();
+      });
+    });
+  }
+
+  function htmlStatRes() {
+    var s = estado.stat, h = '<div class="gti-menu"><div class="gti-mtit">' + s.nombre + '</div>';
+    var fin = Math.min(s.res.length, s.top + 4);
+    for (var i = s.top; i < fin; i++) {
+      var r = s.res[i];
+      var val = r[1] === null ? '' : formatoDecimal(r[1], estado.cfg).html;
+      h += '<div><button type="button" data-st="' + i + '" class="gti-stl' + (i === s.sel ? ' gti-on' : '') + '">' + etiquetaStat(i) + ':' + r[0] + '=' + val + '</button></div>';
+    }
+    if (fin < s.res.length) h += '<div class="gti-mas" aria-hidden="true">▼</div>';
+    return h + '</div>';
+  }
+
+  function enlazarStatRes() {
+    lcdLineas.querySelectorAll('[data-st]').forEach(function (b) {
+      b.addEventListener('click', function () { pegarStat(Number(b.getAttribute('data-st'))); mostrar(); });
+    });
+  }
+
+  function htmlTablaSetup() {
+    var t = estado.tabla;
+    var campo = function (fila, i) { return t.fila === i ? htmlFila(fila) : htmlFilaFija(fila); };
+    var h = '<div class="gti-menu"><div class="gti-mtit">TABLE SETUP</div>';
+    h += '<div class="gti-mfila' + (t.fila === 0 ? ' gti-mact' : '') + '"><span class="gti-mlab">Start=</span>' + campo(t.inicio, 0) + '</div>';
+    h += '<div class="gti-mfila' + (t.fila === 1 ? ' gti-mact' : '') + '"><span class="gti-mlab">Step=</span>' + campo(t.paso, 1) + '</div>';
+    h += '<div class="gti-mfila"><button type="button" data-ts="auto" class="' + (t.auto ? 'gti-on' : '') + (t.fila === 2 && t.auto ? ' gti-foco' : '') + '">Auto</button>' +
+      '<button type="button" data-ts="ask" class="' + (!t.auto ? 'gti-on' : '') + (t.fila === 2 && !t.auto ? ' gti-foco' : '') + '">Ask-x</button></div>';
+    h += '<div class="gti-mfila"><button type="button" data-ts="ok" class="' + (t.fila === 3 ? 'gti-on gti-foco' : '') + '">OK</button></div>';
+    return h + '</div>';
+  }
+
+  function enlazarTablaSetup() {
+    lcdLineas.querySelectorAll('[data-ts]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var t = estado.tabla, q = b.getAttribute('data-ts');
+        if (q === 'ok') { t.fila = 3; abrirTabla(); }
+        else { t.auto = q === 'auto'; t.fila = 2; estado.raiz = NADA; estado.c = { fila: NADA, i: 0 }; }
+        mostrar();
+      });
+    });
+  }
+
+  function htmlTabla() {
+    var t = estado.tabla, cf = cfgEval();
+    var h = '<div class="gti-tab2"><div class="gti-tcab"><span class="' + (t.col === 0 ? 'gti-tcol' : '') + '"><i class="gti-var">x</i></span>' +
+      '<span class="' + (t.col === 1 ? 'gti-tcol' : '') + '">f(<i class="gti-var">x</i>)</span></div>';
+    var pie = '';
+    for (var k = t.top; k < t.top + 3; k++) {
+      var x = xDeFila(k), y = x === null ? null : fDe(x);
+      var tx = x === null ? (k === t.xs.length && !t.auto ? '———' : '') : formatear(x, modoNatural(x), cf).html;
+      var ty = x === null ? '' : (y ? formatear(y.v, y.modo, cf).html : 'ERROR');
+      h += '<div class="gti-tfila">' +
+        '<span class="gti-tcel' + (k === t.sel && t.col === 0 ? ' gti-on' : '') + '">' + tx + '</span>' +
+        '<span class="gti-tcel' + (k === t.sel && t.col === 1 ? ' gti-on' : '') + '">' + ty + '</span></div>';
+      if (k === t.sel) {
+        if (t.col === 0) pie = '<i class="gti-var">x</i>=' + (t.celda.length || (!t.auto && x === null) ? htmlFila(t.celda) : tx);
+        else pie = 'f(<i class="gti-var">x</i>)=' + ty;
+      }
+    }
+    h += '<div class="gti-tpie">' + pie + '</div>';
+    return h + '</div>';
   }
 
   var PISTA_HUECO = {
@@ -1539,34 +2484,55 @@
 
   function textoPista() {
     if (estado.aviso) return estado.aviso;
-    if (estado.error) return '<b>' + estado.error.es + '.</b> Pulsa clear para volver a tu cálculo y corregirlo.';
+    if (estado.error) return '<b>' + estado.error.es + '.</b> Pulsa clear para volver y corregirlo.';
     if (!estado.pistas) return '';
     if (estado.s2) return '<b>2nd activa:</b> la próxima tecla hace la función escrita en verde encima de ella.';
+    if (estado.hyp) return '<b>hyp activa:</b> pulsa sin, cos o tan (o 2nd con ellas) para la función hiperbólica.';
     var m = estado.menu;
     if (m) {
-      if (m.tipo === 'prb') return 'Elige con el número de la opción (1, 2 o 3) o con ▲ ▼ y enter. ◄ ► cambian de pestaña. <b>clear</b> sale del menú.';
       if (m.tipo === 'mode') return 'Muévete con las flechas y pulsa <b>enter</b> para elegir. <b>clear</b> sale del menú.';
-      return 'Pulsa 1 para cancelar o 2 para restablecer.';
+      if (m.tipo === 'reset') return 'Pulsa 1 para cancelar o 2 para restablecer.';
+      if (m.tipo === 'clearvar') return 'Pulsa 1 para poner todas las variables en 0, o 2 para cancelar.';
+      if (m.tipo === 'recall') return 'Elige la variable cuyo valor quieres escribir en el cálculo.';
+      if (m.tipo === 'stat') return '<b>1-Var Stats</b>: media, mediana, cuartiles… de una lista. <b>2-Var Stats</b>: dos listas (x e y) y la recta de regresión.';
+      return 'Elige con el número de la opción o con ▲ ▼ y enter.' + (m.def.length > 1 ? ' ◄ ► cambian de pestaña.' : '') + ' <b>clear</b> sale del menú.';
     }
+    var pan = estado.pantalla;
+    if (pan === 'data') return 'Escribe un dato y pulsa <b>enter</b> o ▼. ◄ ► cambian de lista. <b>data</b>: borrar listas · <b>2nd data</b>: estadística · <b>2nd mode</b> (quit): salir.';
+    if (pan === 'stat-setup') return '▲ ▼ eligen la fila y ◄ ► la lista. Baja a <b>CALC</b> y pulsa <b>enter</b>.';
+    if (pan === 'stat-res') return '▲ ▼ recorren los resultados. <b>enter</b> (o el número) lleva el valor al cálculo. <b>clear</b>: salir.';
+    if (pan === 'tabla-fx') return 'Escribe la función usando la tecla <b>x<sub>abc</sub><sup>yzt</sup></b> para la <i>x</i> y pulsa <b>enter</b>.';
+    if (pan === 'tabla-setup') return '<b>Start</b>: primer valor de <i>x</i>. <b>Step</b>: de cuánto en cuánto. <b>Auto</b> llena la tabla; <b>Ask-x</b> te deja escribir cada <i>x</i>. Baja a <b>OK</b> y pulsa <b>enter</b>.';
+    if (pan === 'tabla') return estado.tabla.auto ? '▲ ▼ recorren la tabla. <b>table</b>: cambiar la función · <b>2nd mode</b> (quit): salir.' : 'Escribe un valor de <i>x</i> y pulsa <b>enter</b>. <b>2nd mode</b> (quit): salir.';
+    if (estado.kEdit) return 'Escribe la operación de la constante (por ejemplo + 3) y pulsa <b>enter</b>.';
     if (estado.sel !== null) return '▲ ▼ recorren los cálculos anteriores. <b>enter</b> copia el seleccionado en la línea de entrada.';
     var p = padreActual();
     if (p && PISTA_HUECO[p.nodo.t]) return PISTA_HUECO[p.nodo.t][p.k];
-    var e = estado.entrada;
+    var e = estado.entrada, ant = e[estado.c.i - 1];
     if (e.length) {
+      if (ant && ant.v === 'sto') return 'Ahora pulsa la tecla de variables (x<sub>abc</sub><sup>yzt</sup>) para elegir dónde guardar. Púlsala otra vez para cambiar de letra.';
+      if (ant && ant.v === 'var' && estado.ultima === 'xvar') return 'Pulsa otra vez la tecla de variables para cambiar a y, z, t, a, b o c.';
+      if (ant && ant.v === 'fsl') return '<b>CLASSIC:</b> escribe el denominador.';
+      if (ant && ant.v === 'unit') return '<b>CLASSIC:</b> escribe el numerador, pulsa <b>n/d</b> y escribe el denominador.';
+      if (ant && ant.v === 'pw') return '<b>CLASSIC:</b> escribe el exponente; si tiene operaciones, ponlo entre paréntesis.';
       for (var i = 0; i < e.length; i++) {
         if (e[i].v === 'nPr' || e[i].v === 'nCr') return 'Escribe el segundo número (r) y pulsa <b>enter</b>.';
+        if (e[i].v === 'randint(' || FUNCIONES2_UI[e[i].v]) return 'Separa los dos números con la coma (<b>2nd</b> <b>.</b>) y pulsa <b>enter</b>.';
       }
       return 'Pulsa <b>enter</b> para calcular.';
     }
+    if (estado.K) return 'Constante K activa: escribe un número y pulsa <b>enter</b>. <b>2nd ÷</b> la desactiva.';
     var h = estado.historial[estado.historial.length - 1];
     if (h) {
-      if (racional(h.v) && h.v.d !== 1n && h.modo !== 'pct') {
+      if (racional(h.v) && h.v.d !== 1n && h.modo !== 'pct' && h.modo !== 'dms') {
         return '<b>⟷</b> alterna fracción y decimal. Para verlo como número mixto: <b>2nd</b> <b>x⁻¹</b> (n/d◂▸Un/d) y <b>enter</b>.';
       }
-      if (h.v.e && !racional(h.v) && h.modo !== 'pct') return '<b>⟷</b> alterna entre la forma exacta y el decimal.';
+      if (h.v.e && !racional(h.v) && h.modo === 'exacto') return '<b>⟷</b> alterna entre la forma exacta y el decimal.';
     }
     return '';
   }
+
+  var FUNCIONES2_UI = { 'RPr(': 1, 'RPt(': 1, 'PRx(': 1, 'PRy(': 1 };
 
   /* ---------- Hoja de referencia ---------- */
 
@@ -1647,8 +2613,35 @@
       '<p class="gti-paso">' + kb('⟷') + ' alterna el último resultado entre fracción y decimal (o entre raíz exacta y decimal).</p>' +
       '<p class="gti-paso">' + k2('table') + ' (f◂▸d) convierte un decimal en fracción: 0.75 ' + k2('table') + kb('enter') + ' ' + ver('3/4') + '.</p>' +
       '<p class="gti-paso">La división con ' + kb('÷') + ' da decimal; la plantilla ' + kb('n/d') + ' da fracción.</p>'],
+    ['variables', 'Variables (sto→)',
+      '<p class="gti-paso">Para guardar un número: escríbelo (o haz el cálculo), pulsa ' + kb('sto→') + ' y después ' + kb('x<sub>abc</sub><sup>yzt</sup>') + '. Cada vez que pulsas ' + kb('x<sub>abc</sub><sup>yzt</sup>') + ' cambia la letra: x, y, z, t, a, b, c.</p>' +
+      '<div class="gti-ej">Guardar 12 en x: ' + nums('1 2') + kb('sto→') + kb('x<sub>abc</sub><sup>yzt</sup>') + kb('enter') + '<br>Usarla: ' + kb('x<sub>abc</sub><sup>yzt</sup>') + kb('×') + nums('3') + kb('enter') + ' ' + ver('36') + '</div>' +
+      '<p class="gti-paso">' + k2('x<sub>abc</sub><sup>yzt</sup>') + ' (recall) muestra lo que vale cada variable. ' + k2('sto→') + ' (clear var) las pone todas en 0.</p>' +
+      '<p class="gti-paso"><b>Fórmula cuadrática con variables.</b> Para 2<i>x</i><sup>2</sup> + 3<i>x</i> − 2 = 0, guarda 2 en <b>a</b>, 3 en <b>b</b> y −2 en <b>c</b>. Después escribe la fórmula una vez con las letras:</p>' +
+      '<div class="gti-ej">' + kb('n/d') + kn('(−)') + '<b>b</b>' + kb('+') + k2('x<sup>2</sup>') + '<b>b</b>' + kb('x<sup>2</sup>') + kb('−') + nums('4') + '<b>a</b>' + kb('×') + '<b>c</b>' + kb('►') + kb('▼') + nums('2') + '<b>a</b>' + kb('►') + kb('enter') + ' ' + ver('1/2') + '<br>' +
+      'Para la otra solución, cambia + por − ' + ver('−2') + '.</div>' +
+      '<p class="gti-paso">Ojo: entre dos letras pulsa ' + kb('×') + ', porque si pulsas dos veces seguidas la tecla de variables cambia la letra.</p>'],
+    ['estadistica', 'Datos y estadística',
+      '<p class="gti-paso">' + kb('data') + ' abre las listas L1, L2 y L3. Escribe cada dato y pulsa ' + kb('enter') + '; ' + kb('◄') + ' ' + kb('►') + ' cambian de lista. Para borrar una lista, pulsa otra vez ' + kb('data') + ' y elige Clear.</p>' +
+      '<p class="gti-paso">' + k2('data') + ' (stat) → <b>1-Var Stats</b>: elige la lista (DATA), deja FRQ en ONE, baja a CALC y pulsa ' + kb('enter') + '.</p>' +
+      '<div class="gti-ej">Datos 2, 4, 4, 5, 7: n = 5, x̄ = 4.4 (media), Med = 4 (mediana), minX = 2 y maxX = 7 (el rango es 7 − 2 = 5).</div>' +
+      '<p class="gti-paso">FRQ sirve cuando una lista dice cuántas veces se repite cada dato. <b>2-Var Stats</b> usa dos listas (x e y) y da la recta de regresión <i>y</i> = <i>ax</i> + <i>b</i> y la correlación <i>r</i>.</p>' +
+      '<p class="gti-paso">Con ▲ ▼ recorres los resultados; ' + kb('enter') + ' lleva el valor elegido a la pantalla principal. ' + k2('mode') + ' (quit) vuelve a la pantalla principal.</p>'],
+    ['tabla', 'Tabla de valores',
+      '<p class="gti-paso">' + kb('table') + ' pide la función: escríbela usando ' + kb('x<sub>abc</sub><sup>yzt</sup>') + ' para la <i>x</i> y pulsa ' + kb('enter') + '.</p>' +
+      '<p class="gti-paso">En TABLE SETUP, <b>Start</b> es el primer valor de <i>x</i> y <b>Step</b>, de cuánto en cuánto aumenta. <b>Auto</b> llena la tabla sola; <b>Ask-x</b> te deja escribir cada <i>x</i>. Baja a OK y pulsa ' + kb('enter') + '.</p>' +
+      '<div class="gti-ej">f(<i>x</i>) = <i>x</i><sup>2</sup> + 1 con Start = 2 y Step = 1: <i>x</i> = 2, 3, 4 → f(<i>x</i>) = 5, 10, 17.</div>'],
+    ['clasico', 'Modo CLASSIC',
+      '<p class="gti-paso">En ' + kb('mode') + ' puedes elegir CLASSIC: todo se escribe en una sola línea, sin plantillas. Las fracciones se ven 3/4 y los números mixtos 2u1/3.</p>' +
+      '<p class="gti-paso">En CLASSIC el exponente no tiene plantilla: si tiene operaciones, ponlo entre paréntesis, por ejemplo 2^(1+2). La raíz se escribe √( … ).</p>' +
+      '<p class="gti-paso">El examen viene en MATHPRINT, que es el modo recomendado.</p>'],
+    ['otras', 'Constante K, ángulos y más',
+      '<p class="gti-paso"><b>Constante K</b>: ' + k2('÷') + ', escribe la operación que se repite (por ejemplo ' + kb('+') + nums('3') + ') y ' + kb('enter') + '. Desde entonces, cada número que escribas con ' + kb('enter') + ' recibe esa operación. ' + k2('÷') + ' la desactiva.</p>' +
+      '<p class="gti-paso"><b>Ángulos</b>: ' + k2('prb') + ' (angle) tiene °, \', ", radianes y ▸DMS, y las conversiones R▸P y P▸R.</p>' +
+      '<p class="gti-paso"><b>Número al azar</b>: ' + kb('prb') + ' ► RAND. randint(1,6) da un entero del 1 al 6; la coma es ' + k2('.') + '.</p>' +
+      '<p class="gti-paso"><b>Hiperbólicas</b>: ' + k2('π') + ' (hyp) y después sin, cos o tan.</p>'],
     ['modos', 'Modos y errores',
-      '<p class="gti-paso">' + kb('mode') + ' abre los modos. Lo normal para el GED es <b>DEG</b>, <b>NORM</b>, <b>FLOAT</b> y <b>MATHPRINT</b>. ' + k2('0') + ' (reset) devuelve todo a como venía.</p>' +
+      '<p class="gti-paso">' + kb('mode') + ' abre los modos: ángulos (DEG, RAD, GRAD), notación (NORM, SCI, ENG), decimales (FLOAT o de 0 a 9) y pantalla (CLASSIC o MATHPRINT). Lo normal para el GED es <b>DEG</b>, <b>NORM</b>, <b>FLOAT</b> y <b>MATHPRINT</b>. ' + k2('0') + ' (reset) devuelve todo a como venía.</p>' +
       '<p class="gti-paso">Si sale <b>SYNTAX ERROR</b> u otro error, pulsa ' + kb('clear') + ' para volver a tu cálculo y corregirlo.</p>']
   ];
 
@@ -2043,7 +3036,9 @@
       var h = estado.historial[estado.historial.length - 1];
       return h ? formatear(h.v, h.modo, estado.cfg).texto : null;
     },
-    _error: function () { return estado.error; }
+    _error: function () { return estado.error; },
+    _lcd: function () { return lcdLineas.textContent; },
+    _pantalla: function () { return estado.pantalla; }
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', construir);
