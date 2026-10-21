@@ -2759,7 +2759,7 @@
       }
     });
     cuerpoCalc.appendChild(teclado);
-    cuerpoCalc.appendChild(crear('div', { 'class': 'gti-pie' }, 'GEDparaHispanos · recurso educativo'));
+    cuerpoCalc.appendChild(crear('div', { 'class': 'gti-pie' }, 'GEDparaHispanos · Zhema · recurso educativo'));
 
     ventana.appendChild(asa);
     ventana.appendChild(cuerpoCalc);
