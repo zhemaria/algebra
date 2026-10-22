@@ -1,0 +1,1487 @@
+<!doctype html>
+<!--
+  Interactivo complementario · Lección 1.2 — Tengo y debo: sumar y restar enteros
+  Nivel 2 · Conectando con el álgebra · GEDparaHispanos
+  Autor: José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago
+  Licencia: Creative Commons CC BY-NC-SA 4.0
+  https://creativecommons.org/licenses/by-nc-sa/4.0/
+  Anclas internas: #escenario · #descubrimiento · #mision-1 · #mision-2 · #mision-3 · #mision-4 · #mision-5
+                   #practica-libre · #cierre · #cierre-resolver · #cierre-inventar · #cierre-comparar · #cierre-error · #guia-docente
+  Idioma por URL: tengo-debo.html?lang=en  (es · en · bi)
+-->
+<html lang="es" data-lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tengo y debo · Sumar y restar enteros</title>
+<meta name="author" content="José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago">
+<meta name="description" content="Interactivo bilingüe para comprender la suma y la resta de números enteros con monedas (tengo) y deudas (debo), sin memorizar reglas.">
+<meta name="license" content="CC BY-NC-SA 4.0">
+<link rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<style>
+  :root{
+    --tema:#b71c1c; --tema-d:#7f1414; --tema-bg:#ffebee; --tema-bg2:#ffcdd2;
+    --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+    --oro:#ffd54f; --oro-borde:#b38400; --oro-txt:#3b2600;
+    --deuda:#c62828; --deuda-d:#8e1b1b;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:940px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .saltar{position:absolute;left:-9999px;top:0;background:#fff;color:var(--tema-d);padding:8px 14px;font-weight:700;z-index:50;}
+  .saltar:focus{left:12px;top:12px;}
+
+  /* ---------- Idiomas ---------- */
+  html[data-lang="es"] .en{display:none}
+  html[data-lang="en"] .es{display:none}
+  html[data-lang="bi"] .en{display:block;font-style:italic;color:var(--gris);font-size:.92em;margin-top:2px}
+  html[data-lang="bi"] :is(h1,h2,h3,h4,button,summary,nav a,label,.zona-cab,.grupo-tit,.saldo-num,.pill,.ruta-pasos li,.ruta,option,.bandeja,.r-expr,th,.contador) .en{display:inline;color:inherit;font-size:inherit;margin:0;font-style:normal}
+  html[data-lang="bi"] :is(h1,h2,h3,h4,button,summary,nav a,label,.zona-cab,.grupo-tit,.saldo-num,.pill,.ruta-pasos li,.ruta,.bandeja,.r-expr,th,.contador) .en::before{content:" / "}
+  html[data-lang="bi"] .opcion .en{display:block;font-size:.92em;font-style:italic}
+  html[data-lang="bi"] .opcion .en::before{content:none}
+
+  /* ---------- Cabecera ---------- */
+  header.principal{background:linear-gradient(135deg,var(--tema) 0%,var(--tema-d) 100%);color:#fff;padding:28px 26px 22px;border-radius:16px;margin-bottom:20px;position:relative;overflow:hidden;}
+  header.principal::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;
+       background:radial-gradient(circle at 35% 35%,rgba(255,213,79,.55),rgba(255,213,79,0) 70%);pointer-events:none;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:27px;font-weight:700;line-height:1.25;}
+  header.principal .meta{font-size:14px;margin:0 0 14px;}
+  .lema{font-size:16px;background:rgba(255,255,255,.12);border-left:4px solid var(--oro);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0 16px;max-width:720px;}
+  .grupo-idioma{display:inline-flex;gap:6px;flex-wrap:wrap;position:relative;z-index:1;}
+  .grupo-idioma button{background:transparent;color:#fff;border:2px solid #fff;border-radius:20px;padding:5px 14px;font-weight:700;font-size:14px;}
+  .grupo-idioma button[aria-pressed="true"]{background:#fff;color:var(--tema-d);}
+  .grupo-idioma button:focus-visible{outline:3px solid var(--oro);outline-offset:2px;}
+
+  /* ---------- Índice ---------- */
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice ol ol{list-style:lower-alpha;}
+  nav.indice li{margin:5px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  /* ---------- Botones ---------- */
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn:disabled,.btn-sec:disabled{background:#eee;color:#424242;border-color:#9e9e9e;cursor:not-allowed;}
+  .btn:focus-visible,.btn-sec:focus-visible,.opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,.h-btn:focus-visible,.eleccion:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+
+  /* ---------- Módulos ---------- */
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;scroll-margin-top:12px;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;line-height:1.3;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .progreso{margin-left:auto;font-size:13px;font-weight:700;color:var(--tema-d);background:#fff;border:1px solid var(--tema-bg2);border-radius:20px;padding:2px 10px;white-space:nowrap;}
+  .progreso:empty{display:none;}
+  .chev{color:var(--tema-d);font-weight:700;font-size:18px;}
+  .progreso:empty + .chev{margin-left:auto;}
+  details[open] > summary .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;scroll-margin-top:12px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+  .nota{font-size:14px;color:var(--gris);}
+  .ex{white-space:nowrap;}
+  .grande{font-size:21px;font-weight:700;}
+  .formula{text-align:center;font-size:21px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+  .secuencia{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;margin:14px 0;padding:0;list-style:none;}
+  .secuencia li{background:#fff;border:2px solid var(--tema-bg2);border-radius:20px;padding:4px 14px;font-weight:700;color:var(--tema-d);font-size:15px;}
+  .secuencia li + li::before{content:"→";color:var(--gris);margin-right:10px;margin-left:-4px;}
+
+  table.tabla{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.tabla caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.tabla th,table.tabla td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;vertical-align:top;}
+  table.tabla th{background:var(--tema-bg);color:var(--tema-d);}
+
+  /* ---------- Tablero ---------- */
+  .tablero{background:#f8f5ee;border:1px solid #ddd3bf;border-radius:14px;padding:14px;margin:12px 0;position:relative;}
+  .t-inicio{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0 0 10px;padding:8px 12px;background:#fff;border:1px solid #ddd3bf;border-left:5px solid var(--acento);border-radius:0 8px 8px 0;font-size:15px;}
+  .t-inicio:empty{display:none;}
+  .t-inicio .cambio{color:var(--acento);font-weight:700;}
+  .zonas{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .zona{border:2px solid;border-radius:12px;padding:10px 12px;min-height:138px;display:flex;flex-direction:column;transition:background .2s;}
+  .zona-tengo{border-color:#d9a900;background:linear-gradient(#fffbea,#fff);}
+  .zona-debo{border-color:#e57373;background:linear-gradient(#fff3f3,#fff);}
+  .zona-cab{font-weight:700;display:flex;gap:8px;align-items:center;font-size:15px;flex-wrap:wrap;}
+  .zona-tengo .zona-cab{color:var(--avi);}
+  .zona-debo .zona-cab{color:var(--tema-d);}
+  .contador{margin-left:auto;font-size:13px;font-weight:700;background:#fff;border:1px solid #ccc;border-radius:20px;padding:1px 9px;color:#333;}
+  .fichas{display:flex;flex-wrap:wrap;gap:8px;padding:8px 2px;flex:1;align-content:flex-start;}
+  .vacio{font-size:14px;color:var(--gris);font-style:italic;align-self:center;margin:auto;}
+  .ficha{touch-action:none;user-select:none;-webkit-user-select:none;border:0;cursor:grab;font-weight:800;font-size:17px;
+         display:inline-flex;align-items:center;justify-content:center;transition:transform .15s,box-shadow .15s;padding:0;position:relative;}
+  .ficha:disabled{cursor:default;}
+  .moneda{width:50px;height:50px;border-radius:50%;color:var(--oro-txt);
+          background:radial-gradient(circle at 34% 28%,#fff6d3 0,#ffe17a 30%,#fbc02d 75%,#e0a400 100%);
+          box-shadow:inset 0 0 0 3px var(--oro-borde),inset 0 0 0 6px #ffe9a3,0 2px 4px rgba(0,0,0,.28);}
+  .deuda{width:62px;height:42px;border-radius:6px;color:#fff;background:linear-gradient(160deg,#d84343,var(--deuda) 55%,#a51f1f);
+         box-shadow:0 2px 4px rgba(0,0,0,.28);}
+  .deuda::after{content:"";position:absolute;inset:4px;border:1px dashed rgba(255,255,255,.75);border-radius:3px;pointer-events:none;}
+  .ficha:not(:disabled):hover{transform:translateY(-2px);}
+  .ficha[aria-pressed="true"]{transform:translateY(-5px) scale(1.08);outline:3px solid var(--acento);outline-offset:3px;}
+  .ficha:focus-visible{outline:3px solid var(--acento);outline-offset:3px;}
+  .ficha.entra{animation:entra .32s ease-out;}
+  .ficha.sale{animation:sale .32s ease-in forwards;}
+  .ficha.se-cancela{animation:cancela .34s ease-in forwards;}
+  .ficha.arrastrando{opacity:.3;}
+  .fantasma{position:fixed;pointer-events:none;z-index:1000;transform:translate(-50%,-50%) scale(1.12);opacity:.95;margin:0;}
+  .objetivo{outline:3px dashed var(--acento)!important;outline-offset:3px;}
+  @keyframes entra{from{transform:scale(.2);opacity:0}70%{transform:scale(1.12)}to{transform:scale(1);opacity:1}}
+  @keyframes sale{to{transform:translateY(26px) scale(.4);opacity:0}}
+  @keyframes cancela{40%{transform:scale(1.2)}to{transform:scale(0) rotate(25deg);opacity:0}}
+  .burbuja-cero{position:absolute;left:50%;top:70px;transform:translateX(-50%);background:#fff;border:2px solid var(--acento);color:var(--acento);
+                font-weight:800;font-size:18px;padding:4px 14px;border-radius:20px;pointer-events:none;animation:burbuja 1s ease-out forwards;z-index:5;white-space:nowrap;}
+  @keyframes burbuja{0%{opacity:0;transform:translate(-50%,10px)}20%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-14px)}}
+  .bandeja{border:2px dashed #9e9e9e;border-radius:10px;padding:8px 10px;text-align:center;color:var(--gris);font-size:14px;margin-top:10px;background:rgba(255,255,255,.6);}
+  .bandeja.objetivo{background:#e3f2fd;color:var(--acento);}
+
+  .saldo{margin-top:12px;background:#fff;border-radius:12px;border:1px solid #ddd3bf;padding:10px 16px;}
+  .saldo-num{font-size:19px;font-weight:700;}
+  .saldo-num strong{font-size:30px;margin-left:6px;}
+  .pos{color:var(--ok);} .neg{color:var(--mal);} .cer{color:#333;}
+  .saldo-frase{margin:2px 0 4px;font-size:15px;}
+  .recta-mini{width:100%;max-width:520px;height:auto;display:block;margin:4px 0 0;}
+
+  .herramientas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px;}
+  .grupo-h{background:#fff;border:1px solid #ddd3bf;border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;}
+  .grupo-tit{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--gris);}
+  .h-btn{background:#fff;border:2px solid #767676;border-radius:8px;padding:6px 10px;font-weight:600;font-size:14.5px;color:#222;
+         display:flex;gap:8px;align-items:center;text-align:left;}
+  .h-btn:hover:not(:disabled){background:#f4f1ea;}
+  .h-btn:disabled{color:#616161;border-color:#bdbdbd;background:#f3f3f3;cursor:not-allowed;}
+  .ic{flex-shrink:0;display:inline-block;}
+  .ic-m{width:16px;height:16px;border-radius:50%;background:#fbc02d;box-shadow:inset 0 0 0 2px var(--oro-borde);}
+  .ic-d{width:20px;height:13px;border-radius:3px;background:var(--deuda);}
+  .ic-p{width:28px;height:14px;background:linear-gradient(90deg,#fbc02d 0 45%,transparent 45% 55%,var(--deuda) 55%);border-radius:7px 3px 3px 7px;}
+  .aux{flex-direction:row;flex-wrap:wrap;align-items:center;}
+  .aux .h-btn{flex:1;justify-content:center;}
+
+  .bitacora{list-style:none;margin:10px 0 0;padding:0;font-size:14px;}
+  .bitacora:empty{display:none;}
+  .bitacora li{padding:4px 10px;border-left:3px solid #ccc;margin:3px 0;background:rgba(255,255,255,.75);border-radius:0 6px 6px 0;}
+  .bitacora li:first-child{border-left-color:var(--tema);font-weight:600;}
+  .ecu{margin-left:8px;color:var(--acento);white-space:nowrap;font-weight:700;}
+  .t-aviso{display:none;background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;border-radius:8px;padding:10px 14px;margin:10px 0 0;color:var(--avi);font-size:15px;}
+  .t-aviso.visible{display:block;}
+
+  /* ---------- Retos ---------- */
+  .serie-prog{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px;padding:0;list-style:none;}
+  .pill{font-size:13px;font-weight:700;padding:3px 12px;border-radius:20px;background:#eee;color:#424242;border:1px solid #ddd;}
+  .pill.actual{background:var(--tema);color:#fff;border-color:var(--tema);}
+  .pill.hecho{background:var(--ok-bg);color:var(--ok);border-color:#a5d6a7;}
+  .reto{background:#fff;border:1px solid #e6dada;border-radius:14px;padding:16px 18px;box-shadow:0 2px 12px rgba(0,0,0,.05);}
+  .reto-cab h3{margin:0;}
+  .ruta-pasos{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:8px 0 4px;}
+  .ruta-pasos li{font-size:13px;padding:2px 10px;border-radius:20px;background:#eee;color:#424242;}
+  .ruta-pasos li.actual{background:var(--tema);color:#fff;}
+  .ruta-pasos li.hecho{background:var(--ok-bg);color:var(--ok);}
+  .ruta-pasos li.hecho::before{content:"✓ ";}
+  .historia{font-size:17px;background:#fffaf0;border-left:5px solid var(--oro-borde);color:var(--oro-txt);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;}
+  .r-paso{border-top:1px solid #eee;padding-top:10px;margin-top:14px;}
+  .r-paso h4{margin:0 0 6px;color:var(--tema-d);font-size:16px;display:flex;gap:8px;align-items:center;}
+  .r-paso h4:focus{outline:none;}
+  .r-paso .n{background:var(--tema-bg);color:var(--tema-d);width:26px;height:26px;border-radius:50%;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+  .instr{font-weight:600;}
+  .elecciones{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0;}
+  .eleccion{background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:8px;padding:7px 14px;font-weight:700;}
+  .eleccion:hover{background:var(--tema-bg);}
+  .eleccion[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .eleccion:disabled{cursor:default;opacity:.85;}
+  .campo-num{width:92px;padding:7px 10px;font-size:17px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo-num.error{border-color:var(--mal);background:var(--mal-bg);}
+  .r-expr{font-size:21px;font-weight:700;display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0;}
+  .anotado{font-size:15px;color:var(--acento);font-weight:600;}
+  .r-fin{margin-top:14px;padding:12px 16px;border-radius:10px;background:var(--ok-bg);border-left:6px solid var(--ok);color:var(--ok);}
+  .r-fin strong{font-size:17px;}
+
+  .opciones{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:9px 14px;font-size:16px;color:var(--txt);display:flex;gap:10px;}
+  .opcion .letra{font-weight:800;color:var(--tema-d);flex-shrink:0;}
+  .opcion:hover:not(:disabled){background:var(--tema-bg);border-color:var(--tema);}
+  .opcion:disabled{cursor:default;}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .preg{font-weight:700;margin:4px 0;}
+  .fb{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .fb.info{display:block;background:#e3f2fd;border-left:5px solid var(--acento);color:#0b3a7e;}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+  .mision-ok{background:var(--ok-bg);border:2px solid #a5d6a7;border-radius:12px;padding:16px 18px;color:var(--ok);}
+  .mision-ok strong{font-size:18px;}
+
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:14px 16px;margin:14px 0;}
+  .campos{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo select{padding:7px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;background:#fff;}
+  textarea{width:100%;min-height:96px;padding:10px 12px;font-size:16px;font-family:inherit;border:2px solid #767676;border-radius:8px;}
+  .modelo{background:#fffaf0;border-left:5px solid var(--oro-borde);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;color:var(--oro-txt);}
+  .lista-cheq{margin:8px 0;padding-left:22px;}
+
+  details.guia > summary{background:#eef2f8;}
+  details.guia{border-color:#c5d0e3;}
+  details.guia > summary h2,details.guia h3{color:#0b3a7e;}
+  details.guia .num{background:var(--acento);}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+
+  @media (max-width:620px){
+    .contenedor{padding:14px;}
+    .zonas{grid-template-columns:1fr;}
+    header.principal h1{font-size:22px;}
+    .cuerpo{padding:14px 14px 20px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<a class="saltar" href="#contenido"><span class="es">Saltar al contenido</span><span class="en">Skip to content</span></a>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta"><span class="es">Nivel 2 · Tema 1 · Lección 1.2 · Interactivo complementario</span><span class="en">Level 2 · Unit 1 · Lesson 1.2 · Companion interactive</span></div>
+    <h1><span class="es">Tengo y debo: sumar y restar enteros</span><span class="en">What I have and what I owe: adding and subtracting integers</span></h1>
+    <p class="meta"><span class="es">Conectando con el álgebra · GEDparaHispanos</span><span class="en">Connecting with algebra · GEDparaHispanos</span></p>
+    <p class="lema"><span class="es">No vamos a memorizar reglas. Vamos a ver <strong>qué cambia en mi saldo</strong> cuando recibo dinero, adquiero una deuda, entrego dinero o me quitan una deuda.</span><span class="en">We are not going to memorize rules. We are going to see <strong>what happens to my balance</strong> when I receive money, take on a debt, give money away, or have a debt taken away.</span></p>
+    <div class="grupo-idioma" role="group" aria-label="Idioma / Language">
+      <button type="button" data-set-lang="es" aria-pressed="true">Español</button>
+      <button type="button" data-set-lang="en" aria-pressed="false">English</button>
+      <button type="button" data-set-lang="bi" aria-pressed="false">ES + EN</button>
+    </div>
+  </header>
+
+  <main id="contenido">
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice"><span class="es">Contenido</span><span class="en">Contents</span></h2>
+    <ol>
+      <li><a href="#escenario"><span class="es">El escenario: mi cartera y mis deudas</span><span class="en">The setting: my wallet and my debts</span></a></li>
+      <li><a href="#descubrimiento"><span class="es">El descubrimiento: una moneda cancela una deuda</span><span class="en">The discovery: a coin cancels a debt</span></a></li>
+      <li><a href="#mision-1"><span class="es">Misión 1 · Reconozco mi saldo</span><span class="en">Mission 1 · I recognize my balance</span></a></li>
+      <li><a href="#mision-2"><span class="es">Misión 2 · Sumo lo que tengo</span><span class="en">Mission 2 · I add what I have</span></a></li>
+      <li><a href="#mision-3"><span class="es">Misión 3 · Sumo deudas</span><span class="en">Mission 3 · I add debts</span></a></li>
+      <li><a href="#mision-4"><span class="es">Misión 4 · Combino monedas y deudas</span><span class="en">Mission 4 · I combine coins and debts</span></a></li>
+      <li><a href="#mision-5"><span class="es">Misión 5 · Quito monedas o deudas</span><span class="en">Mission 5 · I take away coins or debts</span></a></li>
+      <li><a href="#practica-libre"><span class="es">Práctica libre</span><span class="en">Free practice</span></a></li>
+      <li><a href="#cierre"><span class="es">Cierre: ¿lo comprendí?</span><span class="en">Wrap-up: did I understand?</span></a>
+        <ol>
+          <li><a href="#cierre-resolver"><span class="es">Resolver</span><span class="en">Solve</span></a></li>
+          <li><a href="#cierre-inventar"><span class="es">Inventar</span><span class="en">Create</span></a></li>
+          <li><a href="#cierre-comparar"><span class="es">Comparar</span><span class="en">Compare</span></a></li>
+          <li><a href="#cierre-error"><span class="es">Detectar un error</span><span class="en">Spot the mistake</span></a></li>
+        </ol>
+      </li>
+      <li><a href="#guia-docente"><span class="es">Guía docente</span><span class="en">Teacher guide</span></a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo"><span class="es">Abrir todo</span><span class="en">Open all</span></button>
+      <button type="button" class="btn-sec" id="cerrar-todo"><span class="es">Cerrar todo</span><span class="en">Close all</span></button>
+    </div>
+  </nav>
+
+  <!-- ============ 1 · #escenario ============ -->
+  <details class="modulo" id="escenario" open>
+    <summary><span class="num" aria-hidden="true">1</span>
+      <h2><span class="es">El escenario: mi cartera y mis deudas</span><span class="en">The setting: my wallet and my debts</span></h2>
+      <span class="progreso"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <p><span class="es">El tablero tiene dos espacios. En <strong>Tengo</strong> están las <strong>monedas</strong>: fichas redondas y doradas con el signo <strong>+</strong>. En <strong>Debo</strong> están las <strong>deudas</strong>: fichas rectangulares y rojas con el signo <strong>−</strong>. Cada ficha vale una unidad.</span><span class="en">The board has two areas. Under <strong>I have</strong> are the <strong>coins</strong>: round gold tokens with a <strong>+</strong> sign. Under <strong>I owe</strong> are the <strong>debts</strong>: rectangular red tokens with a <strong>−</strong> sign. Each token is worth one unit.</span></p>
+      <p><span class="es">Debajo está el <strong>saldo</strong>: el resultado de comparar lo que tengo con lo que debo.</span><span class="en">Below is the <strong>balance</strong>: the result of comparing what I have with what I owe.</span></p>
+      <div class="caja-atencion"><span class="es"><strong>Ejemplo.</strong> Tengo 3 monedas y debo 5. Si uso mis monedas para pagar, todavía debo 2. Mi saldo es <span class="ex">−2</span>.</span><span class="en"><strong>Example.</strong> I have 3 coins and I owe 5. If I use my coins to pay, I still owe 2. My balance is <span class="ex">−2</span>.</span></div>
+      <h3><span class="es">Explora el tablero</span><span class="en">Explore the board</span></h3>
+      <p><span class="es">Prueba los botones. Para pagar una deuda, <strong>arrastra una moneda sobre una deuda</strong>, o toca una moneda y después una deuda. Para entregar o quitar una ficha, arrástrala a la bandeja de abajo. Todo se puede hacer también con el teclado.</span><span class="en">Try the buttons. To pay a debt, <strong>drag a coin onto a debt</strong>, or tap a coin and then a debt. To give away or remove a token, drag it to the tray below. Everything can also be done with the keyboard.</span></p>
+      <div id="tab-escenario"></div>
+      <p class="nota"><span class="es">Las fichas se distinguen por la forma, el color, el signo y la etiqueta, no solo por el color.</span><span class="en">Tokens differ by shape, color, sign and label, not only by color.</span></p>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 2 · #descubrimiento ============ -->
+  <details class="modulo" id="descubrimiento">
+    <summary><span class="num" aria-hidden="true">2</span>
+      <h2><span class="es">El descubrimiento: una moneda cancela una deuda</span><span class="en">The discovery: a coin cancels a debt</span></h2>
+      <span class="progreso" id="prog-desc"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <p><span class="es">Esta es la idea central de todo el interactivo: <strong>una moneda y una deuda juntas valen cero</strong>. El resultado de una operación no es una regla misteriosa; es lo que queda después de cancelar parejas.</span><span class="en">This is the central idea of the whole interactive: <strong>one coin and one debt together are worth zero</strong>. The result of an operation is not a mysterious rule; it is what is left after canceling pairs.</span></p>
+      <p class="formula">(+1) + (−1) = 0</p>
+      <p><span class="es">En cada reto seguirás la misma ruta:</span><span class="en">In every challenge you will follow the same path:</span></p>
+      <ol class="secuencia" aria-label="Ruta / Path">
+        <li><span class="es">Predigo</span><span class="en">I predict</span></li>
+        <li><span class="es">Manipulo</span><span class="en">I act</span></li>
+        <li><span class="es">Observo</span><span class="en">I observe</span></li>
+        <li><span class="es">Explico</span><span class="en">I explain</span></li>
+        <li><span class="es">Escribo la operación</span><span class="en">I write the operation</span></li>
+      </ol>
+      <div id="serie-desc"></div>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 3 · #mision-1 ============ -->
+  <details class="modulo" id="mision-1">
+    <summary><span class="num" aria-hidden="true">3</span>
+      <h2><span class="es">Misión 1 · Reconozco mi saldo</span><span class="en">Mission 1 · I recognize my balance</span></h2>
+      <span class="progreso" id="prog-m1"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <p><span class="es">Puedo tener dinero (saldo positivo), deber dinero (saldo negativo) o estar a mano (saldo cero). Para saberlo, cancelo las parejas y miro qué queda.</span><span class="en">I can have money (positive balance), owe money (negative balance), or be even (zero balance). To find out, I cancel pairs and look at what is left.</span></p>
+      <div id="serie-m1"></div>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 4 · #mision-2 ============ -->
+  <details class="modulo" id="mision-2">
+    <summary><span class="num" aria-hidden="true">4</span>
+      <h2><span class="es">Misión 2 · Sumo lo que tengo</span><span class="en">Mission 2 · I add what I have</span></h2>
+      <span class="progreso" id="prog-m2"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <p><span class="es">Recibo más monedas. Sumar un número positivo es <strong>añadir monedas</strong>.</span><span class="en">I receive more coins. Adding a positive number means <strong>adding coins</strong>.</span></p>
+      <div id="serie-m2"></div>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 5 · #mision-3 ============ -->
+  <details class="modulo" id="mision-3">
+    <summary><span class="num" aria-hidden="true">5</span>
+      <h2><span class="es">Misión 3 · Sumo deudas</span><span class="en">Mission 3 · I add debts</span></h2>
+      <span class="progreso" id="prog-m3"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <p><span class="es">Aparece una deuda nueva. Sumar un número negativo es <strong>añadir deudas</strong>.</span><span class="en">A new debt appears. Adding a negative number means <strong>adding debts</strong>.</span></p>
+      <div id="serie-m3"></div>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 6 · #mision-4 ============ -->
+  <details class="modulo" id="mision-4">
+    <summary><span class="num" aria-hidden="true">6</span>
+      <h2><span class="es">Misión 4 · Combino monedas y deudas</span><span class="en">Mission 4 · I combine coins and debts</span></h2>
+      <span class="progreso" id="prog-m4"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <p><span class="es">Cuando tengo monedas y deudas a la vez, <strong>pago</strong>: cancelo parejas y observo qué queda. Lo que queda es el saldo.</span><span class="en">When I have coins and debts at the same time, I <strong>pay</strong>: I cancel pairs and look at what is left. What is left is the balance.</span></p>
+      <div id="serie-m4"></div>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 7 · #mision-5 ============ -->
+  <details class="modulo" id="mision-5">
+    <summary><span class="num" aria-hidden="true">7</span>
+      <h2><span class="es">Misión 5 · Quito monedas o deudas</span><span class="en">Mission 5 · I take away coins or debts</span></h2>
+      <span class="progreso" id="prog-m5"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <p><span class="es">Aquí la resta tiene un significado claro: <strong>restar es quitar lo que indica el segundo número</strong>. Restar un positivo es entregar monedas; restar un negativo es quitar deudas.</span><span class="en">Here subtraction has a clear meaning: <strong>to subtract is to take away what the second number says</strong>. Subtracting a positive means giving away coins; subtracting a negative means taking away debts.</span></p>
+      <div class="caja-atencion"><span class="es"><strong>¿Y si no hay fichas para quitar?</strong> Puedes añadir parejas de moneda y deuda: valen cero, así que <strong>el saldo no cambia</strong>, pero aparecen las fichas que necesitas quitar.</span><span class="en"><strong>What if there are no tokens to take away?</strong> You can add coin-and-debt pairs: they are worth zero, so <strong>the balance does not change</strong>, but the tokens you need to take away appear.</span></div>
+      <div id="serie-m5"></div>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 8 · #practica-libre ============ -->
+  <details class="modulo" id="practica-libre">
+    <summary><span class="num" aria-hidden="true">8</span>
+      <h2><span class="es">Práctica libre</span><span class="en">Free practice</span></h2>
+      <span class="progreso"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <h3 id="tablero-libre"><span class="es">Tablero libre</span><span class="en">Free board</span></h3>
+      <p><span class="es">Haz lo que quieras. Cada acción queda anotada con su operación, para que veas cómo se escribe lo que acabas de hacer.</span><span class="en">Do whatever you like. Each action is recorded with its operation, so you can see how to write what you just did.</span></p>
+      <div id="tab-libre"></div>
+
+      <h3 id="arma-operacion"><span class="es">Arma tu operación</span><span class="en">Build your own operation</span></h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="pl-a"><span class="es">Primer número</span><span class="en">First number</span></label><select id="pl-a"></select></div>
+          <div class="campo"><label for="pl-op"><span class="es">Operación</span><span class="en">Operation</span></label>
+            <select id="pl-op"><option value="+">+</option><option value="-">−</option></select></div>
+          <div class="campo"><label for="pl-b"><span class="es">Segundo número</span><span class="en">Second number</span></label><select id="pl-b"></select></div>
+          <div class="campo"><label for="pl-nivel"><span class="es">Ayuda</span><span class="en">Support</span></label>
+            <select id="pl-nivel">
+              <option value="1">Historia y fichas · Story and tokens</option>
+              <option value="2">Solo fichas · Tokens only</option>
+            </select></div>
+        </div>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="pl-preparar"><span class="es">Preparar el reto</span><span class="en">Set up the challenge</span></button>
+          <button type="button" class="btn-sec" id="pl-azar"><span class="es">Uno al azar</span><span class="en">A random one</span></button>
+        </div>
+      </div>
+      <div id="pl-reto" aria-live="polite"></div>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 9 · #cierre ============ -->
+  <details class="modulo" id="cierre">
+    <summary><span class="num" aria-hidden="true">9</span>
+      <h2><span class="es">Cierre: ¿lo comprendí?</span><span class="en">Wrap-up: did I understand?</span></h2>
+      <span class="progreso"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <p><span class="es">Cuatro tipos de reto para comprobar lo que comprendiste. La historia hace comprensible la operación, las fichas permiten comprobarla y la expresión matemática llega al final.</span><span class="en">Four kinds of challenge to check what you understood. The story makes the operation make sense, the tokens let you check it, and the math expression comes at the end.</span></p>
+
+      <h3 id="cierre-resolver"><span class="es">a. Resolver</span><span class="en">a. Solve</span></h3>
+      <p><span class="es">Elige cuánta ayuda quieres. Lo ideal es ir retirándola: primero historia y fichas, después solo fichas y, al final, únicamente la operación.</span><span class="en">Choose how much support you want. The goal is to reduce it step by step: first story and tokens, then tokens only, and finally just the operation.</span></p>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="rs-nivel"><span class="es">Ayuda</span><span class="en">Support</span></label>
+            <select id="rs-nivel">
+              <option value="1">1 · Historia y fichas · Story and tokens</option>
+              <option value="2">2 · Solo fichas · Tokens only</option>
+              <option value="3">3 · Solo la operación · Operation only</option>
+            </select></div>
+        </div>
+        <div id="rs-zona"></div>
+      </div>
+
+      <h3 id="cierre-inventar"><span class="es">b. Inventar</span><span class="en">b. Create</span></h3>
+      <p><span class="es">Crea una historia para esta operación:</span><span class="en">Create a story for this operation:</span></p>
+      <p class="formula">(−2) − (−5)</p>
+      <label for="inv-texto" class="sr-only"><span class="es">Tu historia</span><span class="en">Your story</span></label>
+      <textarea id="inv-texto" placeholder="Escribe aquí tu historia · Write your story here"></textarea>
+      <p class="nota"><span class="es">Revisa tu historia: ¿empieza con una deuda de 2?, ¿dice que te quitan (o te perdonan) una deuda de 5?, ¿pregunta por el saldo final?</span><span class="en">Check your story: does it start with a debt of 2? Does it say a debt of 5 is taken away (or forgiven)? Does it ask for the final balance?</span></p>
+      <div class="fila-btn"><button type="button" class="btn-sec" id="inv-modelo-btn" aria-expanded="false" aria-controls="inv-modelo"><span class="es">Ver una historia de ejemplo</span><span class="en">See a sample story</span></button></div>
+      <div class="modelo" id="inv-modelo" hidden><span class="es">«Le debía 2 dólares a mi hermana. Ella me dijo: “Olvida 5 de lo que me debes”. Pero solo le debía 2… Como me perdonó más de lo que debía, ahora ella me debe a mí 3». Saldo final: +3.</span><span class="en">“I owed my sister 2 dollars. She said: ‘Forget 5 of what you owe me.’ But I only owed her 2… Since she forgave more than I owed, now she owes me 3.” Final balance: +3.</span></div>
+      <p><span class="es">Ahora comprueba tu historia con las fichas:</span><span class="en">Now check your story with the tokens:</span></p>
+      <div id="inv-reto"></div>
+
+      <h3 id="cierre-comparar"><span class="es">c. Comparar</span><span class="en">c. Compare</span></h3>
+      <div id="cmp-mc"></div>
+      <p><span class="es">Compruébalo: los dos tableros empiezan debiendo 5. En el primero recibe 3 monedas; en el segundo quita 3 deudas. Compara cuánto sube el saldo en cada uno.</span><span class="en">Check it: both boards start out owing 5. On the first one receive 3 coins; on the second, take away 3 debts. Compare how much the balance goes up on each one.</span></p>
+      <div id="cmp-tab1"></div>
+      <div id="cmp-tab2"></div>
+
+      <h3 id="cierre-error"><span class="es">d. Detectar un error</span><span class="en">d. Spot the mistake</span></h3>
+      <div id="ana-mc"></div>
+      <p><span class="es">Muéstraselo a Ana: quita una deuda y mira qué le pasa al saldo.</span><span class="en">Show Ana: take away one debt and watch what happens to the balance.</span></p>
+      <div id="ana-tab"></div>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+
+  <!-- ============ 10 · #guia-docente ============ -->
+  <details class="modulo guia" id="guia-docente">
+    <summary><span class="num" aria-hidden="true">10</span>
+      <h2><span class="es">Guía docente</span><span class="en">Teacher guide</span></h2>
+      <span class="progreso"></span><span class="chev" aria-hidden="true">›</span></summary>
+    <div class="cuerpo">
+      <h3><span class="es">Propósito</span><span class="en">Purpose</span></h3>
+      <p><span class="es">Que el estudiante <strong>comprenda</strong> la suma y la resta de enteros antes de formalizar reglas. La idea central es una sola: qué cambia en mi saldo cuando recibo dinero, adquiero una deuda, entrego dinero o me quitan una deuda. Las reglas («signos iguales se suman…», «restar es sumar el opuesto») llegan después, en el interactivo general de la Lección 1.2, como resumen de lo que ya se entendió.</span><span class="en">For students to <strong>understand</strong> integer addition and subtraction before formal rules. There is only one central idea: what happens to my balance when I receive money, take on a debt, give money away, or have a debt taken away. The rules (“same signs add…”, “subtracting is adding the opposite”) come later, in the main Lesson 1.2 interactive, as a summary of what is already understood.</span></p>
+
+      <h3><span class="es">Una sola mecánica</span><span class="en">One single mechanism</span></h3>
+      <p><span class="es">Todo se reduce a tres acciones: <strong>añadir, quitar y cancelar</strong> fichas. La pareja moneda-deuda vale cero; por eso cancelarla, o añadirla, nunca cambia el saldo. Se empieza con cantidades pequeñas para que el alumno pueda contar y verificar.</span><span class="en">Everything comes down to three actions: <strong>add, take away and cancel</strong> tokens. A coin-debt pair is worth zero; that is why canceling it, or adding it, never changes the balance. Quantities stay small so students can count and check.</span></p>
+
+      <table class="tabla">
+        <caption><span class="es">Cada acción y su operación</span><span class="en">Each action and its operation</span></caption>
+        <thead><tr><th scope="col"><span class="es">Acción en el tablero</span><span class="en">Action on the board</span></th><th scope="col"><span class="es">Operación</span><span class="en">Operation</span></th><th scope="col"><span class="es">Efecto en el saldo</span><span class="en">Effect on the balance</span></th></tr></thead>
+        <tbody>
+          <tr><td><span class="es">Recibo una moneda</span><span class="en">I receive a coin</span></td><td class="ex">+ (+1)</td><td><span class="es">Mejora 1</span><span class="en">Goes up 1</span></td></tr>
+          <tr><td><span class="es">Adquiero una deuda</span><span class="en">I take on a debt</span></td><td class="ex">+ (−1)</td><td><span class="es">Empeora 1</span><span class="en">Goes down 1</span></td></tr>
+          <tr><td><span class="es">Entrego una moneda</span><span class="en">I give away a coin</span></td><td class="ex">− (+1)</td><td><span class="es">Empeora 1</span><span class="en">Goes down 1</span></td></tr>
+          <tr><td><span class="es">Me quitan una deuda</span><span class="en">A debt is taken away</span></td><td class="ex">− (−1)</td><td><span class="es">Mejora 1</span><span class="en">Goes up 1</span></td></tr>
+          <tr><td><span class="es">Pago (cancelo una pareja) o añado una pareja</span><span class="en">I pay (cancel a pair) or add a pair</span></td><td class="ex">(+1) + (−1) = 0</td><td><span class="es">No cambia</span><span class="en">No change</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3><span class="es">Secuencia sugerida</span><span class="en">Suggested sequence</span></h3>
+      <p><span class="es">Escenario → descubrimiento → misiones 1 a 5 → práctica libre → cierre. Cada reto sigue la ruta <strong>Predigo → manipulo → observo → explico → escribo la operación</strong>. El tablero queda bloqueado hasta que el alumno predice (o decide probar primero), y el saldo permanece oculto hasta que comprueba sus fichas: así la predicción tiene sentido.</span><span class="en">Setting → discovery → missions 1 to 5 → free practice → wrap-up. Each challenge follows the path <strong>Predict → act → observe → explain → write the operation</strong>. The board stays locked until the student predicts (or chooses to try first), and the balance stays hidden until they check their tokens, so the prediction is meaningful.</span></p>
+
+      <h3><span class="es">La resta, con cuidado</span><span class="en">Subtraction, carefully</span></h3>
+      <p><span class="es">Se mantiene un único significado: <strong>restar es quitar lo que indica el segundo número</strong>. Cuando no hay fichas para quitar —por ejemplo, en <span class="ex">(+3) − (−2)</span>—, el alumno añade parejas que valen cero, comprueba que el saldo no cambió y entonces quita. Así descubre por qué el resultado es <span class="ex">+5</span>, sin la frase «menos por menos es más», que además confunde la resta con la multiplicación.</span><span class="en">A single meaning is kept: <strong>to subtract is to take away what the second number says</strong>. When there are no tokens to take away—for example, in <span class="ex">(+3) − (−2)</span>—the student adds zero pairs, sees that the balance did not change, and then takes away. That is how they discover why the result is <span class="ex">+5</span>, without the phrase “minus times minus is plus,” which also confuses subtraction with multiplication.</span></p>
+
+      <h3><span class="es">Retroalimentación ligada a la acción</span><span class="en">Feedback tied to the action</span></h3>
+      <p><span class="es">El programa no se limita a «correcto» o «incorrecto»: revisa qué hizo el alumno y le devuelve una pregunta. Por ejemplo: «Has quitado monedas. ¿La consigna pedía quitar monedas o quitar deudas?», «Todavía puedes cancelar una pareja» o «No quedan deudas para quitar. ¿Podemos representar el mismo saldo añadiendo parejas que valen cero?».</span><span class="en">The program does not just say “right” or “wrong”: it checks what the student did and answers with a question. For example: “You took away coins. Did the instructions ask you to take away coins or debts?”, “You can still cancel a pair,” or “There are no debts left to take away. Can we show the same balance by adding zero pairs?”</span></p>
+
+      <h3><span class="es">Errores frecuentes</span><span class="en">Common mistakes</span></h3>
+      <table class="tabla">
+        <caption><span class="es">Lo que se suele ver y qué preguntar</span><span class="en">What you often see and what to ask</span></caption>
+        <thead><tr><th scope="col"><span class="es">Error</span><span class="en">Mistake</span></th><th scope="col"><span class="es">Pregunta que ayuda</span><span class="en">A helpful question</span></th></tr></thead>
+        <tbody>
+          <tr><td><span class="es">Creer que quitar una deuda hace que deba más.</span><span class="en">Thinking that taking away a debt means owing more.</span></td><td><span class="es">«Si te perdonan una deuda, ¿tu saldo mejora o empeora?»</span><span class="en">“If a debt is forgiven, does your balance get better or worse?”</span></td></tr>
+          <tr><td><span class="es">Contar todas las fichas como si fueran monedas.</span><span class="en">Counting every token as if it were a coin.</span></td><td><span class="es">«¿Cuántas parejas puedes cancelar? ¿Qué queda?»</span><span class="en">“How many pairs can you cancel? What is left?”</span></td></tr>
+          <tr><td><span class="es">Pensar que añadir una pareja cambia el saldo.</span><span class="en">Thinking that adding a pair changes the balance.</span></td><td><span class="es">«¿Cuánto vale una moneda junto con una deuda?»</span><span class="en">“How much is a coin together with a debt worth?”</span></td></tr>
+          <tr><td><span class="es">Confundir el signo de la operación con el signo del número.</span><span class="en">Mixing up the operation sign with the number’s sign.</span></td><td><span class="es">«¿La historia pide añadir o quitar? ¿Monedas o deudas?»</span><span class="en">“Does the story ask you to add or take away? Coins or debts?”</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3><span class="es">En clase por Zoom</span><span class="en">In a Zoom class</span></h3>
+      <p><span class="es">Comparta pantalla con el tablero del escenario. Pida a la clase que prediga en el chat antes de mover las fichas y que escriba después la operación. En el cierre, la opción «Inventar» funciona bien para que cada estudiante lea su historia y el grupo la compruebe en el tablero. El idioma se puede fijar desde el enlace: <span class="ex">tengo-debo.html?lang=es</span>, <span class="ex">?lang=en</span> o <span class="ex">?lang=bi</span>, y cada sección tiene su ancla (por ejemplo, <span class="ex">#mision-5</span>).</span><span class="en">Share your screen with the setting board. Ask the class to predict in the chat before moving tokens and then write the operation. In the wrap-up, “Create” works well: each student reads their story and the group checks it on the board. The language can be set in the link: <span class="ex">tengo-debo.html?lang=es</span>, <span class="ex">?lang=en</span> or <span class="ex">?lang=bi</span>, and every section has its own anchor (for example, <span class="ex">#mision-5</span>).</span></p>
+
+      <h3><span class="es">Accesibilidad (DUA)</span><span class="en">Accessibility (UDL)</span></h3>
+      <p><span class="es">Las fichas se distinguen por forma, color, signo y etiqueta. Todo lo que se hace arrastrando se puede hacer con botones o con el teclado (Tab, Intro). Las acciones se anuncian a los lectores de pantalla, los avisos aparecen dentro de la página y se respeta la preferencia de reducir el movimiento.</span><span class="en">Tokens differ by shape, color, sign and label. Everything done by dragging can be done with buttons or the keyboard (Tab, Enter). Actions are announced to screen readers, messages appear inside the page, and the reduced-motion preference is respected.</span></p>
+
+      <h3><span class="es">Después de este interactivo</span><span class="en">After this interactive</span></h3>
+      <p><span class="es">Continúe con el <a href="https://zhemaria.github.io/algebra/n2-l1-2.html#fichas" target="_blank" rel="noopener noreferrer">interactivo general de la Lección 1.2</a>, donde el mismo modelo de fichas desemboca en la recta numérica y en las reglas.</span><span class="en">Continue with the <a href="https://zhemaria.github.io/algebra/n2-l1-2.html#fichas" target="_blank" rel="noopener noreferrer">main Lesson 1.2 interactive</a> (in Spanish), where the same token model leads to the number line and the rules.</span></p>
+      <a class="volver" href="#titulo-indice"><span class="es">↑ Volver al contenido</span><span class="en">↑ Back to contents</span></a>
+    </div>
+  </details>
+  </main>
+
+  <footer class="pie">
+    <p><strong><span class="es">Nivel 2 · Tema 1 · Números enteros · GEDparaHispanos</span><span class="en">Level 2 · Unit 1 · Integers · GEDparaHispanos</span></strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p><span class="es">Esta obra se distribuye bajo licencia</span><span class="en">This work is licensed under</span>
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribución–NoComercial–CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   Tengo y debo · motor del interactivo
+   Estructura:
+     1. Utilidades e idioma
+     2. Tablero (fichas, arrastre, botones, bitácora)
+     3. Verificación de acciones y pistas
+     4. Opción múltiple
+     5. Reto (predigo → manipulo → observo → explico → escribo)
+     6. Serie de retos (misiones)
+     7. Datos de las misiones
+     8. Práctica libre y cierre
+     9. Arranque
+   ============================================================ */
+
+/* ---------- 1. Utilidades e idioma ---------- */
+var IDIOMA = "es";
+var MOV = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+var MAXF = 30;              /* máximo de fichas en un tablero */
+var LETRAS = "abcdefghijklmnopqrstuvwxyz";
+
+function $(id){ return document.getElementById(id); }
+function aleatorio(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function baraja(lista){ var a=lista.slice(); for(var i=a.length-1;i>0;i--){ var j=aleatorio(0,i); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+/* Número con signo: +3, −2, 0 (signo menos tipográfico) */
+function fmt(n){ return n>0 ? "+"+n : (n<0 ? "−"+(-n) : "0"); }
+function par(n){ return n===0 ? "0" : "("+fmt(n)+")"; }
+/* Texto bilingüe en HTML */
+function B(es,en){
+  if (es && typeof es==="object"){ en=es.en; es=es.es; }
+  if (en===undefined) return es;
+  return '<span class="es" lang="es">'+es+'</span><span class="en" lang="en">'+en+'</span>';
+}
+/* Texto bilingüe para atributos y lectores de pantalla */
+function A(es,en){
+  if (es && typeof es==="object"){ en=es.en; es=es.es; }
+  if (en===undefined) return es;
+  return IDIOMA==="en" ? en : (IDIOMA==="bi" ? es+" / "+en : es);
+}
+function pl(n,uno,varios){ return n===1 ? uno : varios; }
+function monedasES(n){ return n+" "+pl(n,"moneda","monedas"); }
+function monedasEN(n){ return n+" "+pl(n,"coin","coins"); }
+function deudasES(n){ return n+" "+pl(n,"deuda","deudas"); }
+function deudasEN(n){ return n+" "+pl(n,"debt","debts"); }
+/* Lee un entero escrito por el alumno: acepta +3, 3, -3, −3, – 3 */
+function leeEntero(txt){
+  var t=String(txt).trim().replace(/[−–—]/g,"-").replace(/\s+/g,"");
+  if(!/^[+-]?\d+$/.test(t)) return NaN;
+  return parseInt(t,10);
+}
+function signo(n){ return n>0?1:(n<0?-1:0); }
+function claseSigno(n){ return n>0?"pos":(n<0?"neg":"cer"); }
+
+/* ---------- 2. Tablero ---------- */
+var TABLEROS = [];
+var UID = 0;
+
+function Tablero(host, opciones){
+  this.o = Object.assign({ saldoVisible:true, bitacora:true, ecuaciones:true, alCambiar:null, inicio:false, notaOculta:null }, opciones||{});
+  this.host = host;
+  this.p = []; this.n = [];
+  this.c = Tablero.cero();
+  this.hist = []; this.log = [];
+  this.sel = null; this.ocupado = false; this.activo = true;
+  this.nuevos = {}; this.inicial = [0,0];
+  this.suprimirClic = false;
+  this.construir();
+  TABLEROS.push(this);
+  this.render();
+}
+Tablero.cero = function(){ return { aP:0, aN:0, rP:0, rN:0, z:0, k:0 }; };
+
+Tablero.prototype.construir = function(){
+  var h = this.host;
+  h.innerHTML =
+    '<div class="tablero">' +
+      '<p class="t-inicio"></p>' +
+      '<div class="zonas">' +
+        '<div class="zona zona-tengo" data-t="P" role="group">' +
+          '<div class="zona-cab"><span class="ic ic-m" aria-hidden="true"></span>'+B("Tengo · monedas (+)","I have · coins (+)")+'<span class="contador c-p"></span></div>' +
+          '<div class="fichas f-p"></div></div>' +
+        '<div class="zona zona-debo" data-t="N" role="group">' +
+          '<div class="zona-cab"><span class="ic ic-d" aria-hidden="true"></span>'+B("Debo · deudas (−)","I owe · debts (−)")+'<span class="contador c-n"></span></div>' +
+          '<div class="fichas f-n"></div></div>' +
+      '</div>' +
+      '<div class="bandeja" aria-hidden="true">'+B("⇩ Arrastra aquí una ficha para entregarla o quitarla","⇩ Drag a token here to give it away or take it off")+'</div>' +
+      '<div class="t-aviso" role="status"></div>' +
+      '<div class="saldo"></div>' +
+      '<div class="herramientas" role="group">' +
+        '<div class="grupo-h"><span class="grupo-tit">'+B("Añadir","Add")+'</span>' +
+          '<button type="button" class="h-btn" data-acc="aP"><span class="ic ic-m" aria-hidden="true"></span>'+B("Recibo una moneda","I receive a coin")+'</button>' +
+          '<button type="button" class="h-btn" data-acc="aN"><span class="ic ic-d" aria-hidden="true"></span>'+B("Adquiero una deuda","I take on a debt")+'</button></div>' +
+        '<div class="grupo-h"><span class="grupo-tit">'+B("Quitar","Take away")+'</span>' +
+          '<button type="button" class="h-btn" data-acc="rP"><span class="ic ic-m" aria-hidden="true"></span>'+B("Entrego una moneda","I give away a coin")+'</button>' +
+          '<button type="button" class="h-btn" data-acc="rN"><span class="ic ic-d" aria-hidden="true"></span>'+B("Me quitan una deuda","A debt is taken away")+'</button></div>' +
+        '<div class="grupo-h"><span class="grupo-tit">'+B("Parejas que valen cero","Zero pairs")+'</span>' +
+          '<button type="button" class="h-btn" data-acc="k"><span class="ic ic-p" aria-hidden="true"></span>'+B("Pago: cancelo una pareja","I pay: cancel a pair")+'</button>' +
+          '<button type="button" class="h-btn" data-acc="z"><span class="ic ic-p" aria-hidden="true"></span>'+B("Añado una pareja","I add a pair")+'</button></div>' +
+        '<div class="grupo-h aux">' +
+          '<button type="button" class="h-btn" data-acc="u">'+B("↶ Deshacer","↶ Undo")+'</button>' +
+          '<button type="button" class="h-btn" data-acc="r">'+B("⟲ Empezar de nuevo","⟲ Start over")+'</button></div>' +
+      '</div>' +
+      '<ol class="bitacora"></ol>' +
+      '<div class="sr-only t-vivo" aria-live="polite"></div>' +
+    '</div>';
+  var yo = this;
+  this.q = function(s){ return h.querySelector(s); };
+  h.querySelectorAll("[data-acc]").forEach(function(b){
+    b.addEventListener("click", function(){ yo.accion(b.dataset.acc); });
+  });
+  var zonas = this.q(".zonas");
+  zonas.addEventListener("click", function(e){
+    var f = e.target.closest(".ficha");
+    if (!f || yo.suprimirClic) return;
+    yo.elegir(f.dataset.id, f.dataset.t);
+  });
+  zonas.addEventListener("pointerdown", function(e){ yo.inicioArrastre(e); });
+};
+
+Tablero.prototype.idNuevo = function(){ UID++; return "f"+UID; };
+Tablero.prototype.saldo = function(){ return this.p.length - this.n.length; };
+Tablero.prototype.foto = function(){ return { p:this.p.slice(), n:this.n.slice(), c:Object.assign({},this.c), log:this.log.slice() }; };
+Tablero.prototype.guardar = function(){ this.hist.push(this.foto()); if (this.hist.length>80) this.hist.shift(); };
+
+Tablero.prototype.poner = function(p, n){
+  this.p=[]; this.n=[];
+  for (var i=0;i<p;i++) this.p.push(this.idNuevo());
+  for (var j=0;j<n;j++) this.n.push(this.idNuevo());
+  this.c = Tablero.cero(); this.hist=[]; this.log=[]; this.sel=null; this.inicial=[p,n];
+  this.ocultarAviso();
+  this.render();
+};
+Tablero.prototype.ponerSaldo = function(s){ this.poner(s>0?s:0, s<0?-s:0); };
+Tablero.prototype.activar = function(si){ this.activo = !!si; this.sel=null; this.render(); };
+Tablero.prototype.verSaldo = function(si){ this.o.saldoVisible = !!si; this.render(); };
+
+Tablero.prototype.aviso = function(es,en){
+  var el = this.q(".t-aviso");
+  el.innerHTML = B(es,en); el.classList.add("visible");
+};
+Tablero.prototype.ocultarAviso = function(){ var el=this.q(".t-aviso"); el.classList.remove("visible"); el.innerHTML=""; };
+Tablero.prototype.anotar = function(es,en,ecu){ this.log.unshift({es:es,en:en,ecu:ecu}); if (this.log.length>6) this.log.pop(); };
+Tablero.prototype.anunciar = function(es,en){ this.q(".t-vivo").textContent = A(es,en); };
+
+Tablero.prototype.accion = function(acc, idElegido){
+  if (!this.activo || this.ocupado) return;
+  var yo=this, s0=this.saldo(), tot=this.p.length+this.n.length, id;
+  this.ocultarAviso();
+  if (acc==="u"){
+    if (!this.hist.length){ this.aviso("No hay nada que deshacer.","There is nothing to undo."); return; }
+    var f=this.hist.pop(); this.p=f.p; this.n=f.n; this.c=f.c; this.log=f.log; this.sel=null;
+    this.terminar("Se deshizo la última acción.","The last action was undone."); return;
+  }
+  if (acc==="r"){ var ini=this.inicial; this.poner(ini[0],ini[1]); this.terminar("El tablero volvió al principio.","The board is back at the start."); return; }
+  if ((acc==="aP"||acc==="aN") && tot>=MAXF){ this.aviso("El tablero está lleno. Cancela parejas o empieza de nuevo.","The board is full. Cancel pairs or start over."); return; }
+  if (acc==="z" && tot+2>MAXF){ this.aviso("El tablero está lleno. Cancela parejas o empieza de nuevo.","The board is full. Cancel pairs or start over."); return; }
+
+  if (acc==="aP"){
+    this.guardar(); id=this.idNuevo(); this.p.push(id); this.nuevos[id]=1; this.c.aP++;
+    this.anotar("Recibiste una moneda.","You received a coin.", par(s0)+" + (+1) = "+fmt(s0+1));
+  } else if (acc==="aN"){
+    this.guardar(); id=this.idNuevo(); this.n.push(id); this.nuevos[id]=1; this.c.aN++;
+    this.anotar("Adquiriste una deuda.","You took on a debt.", par(s0)+" + (−1) = "+fmt(s0-1));
+  } else if (acc==="z"){
+    this.guardar(); var a=this.idNuevo(), b=this.idNuevo(); this.p.push(a); this.n.push(b); this.nuevos[a]=1; this.nuevos[b]=1; this.c.z++;
+    this.anotar("Añadiste una pareja que vale cero: tu saldo no cambia.","You added a zero pair: your balance does not change.", par(s0)+" + (+1) + (−1) = "+fmt(s0));
+  } else if (acc==="rP" || acc==="rN"){
+    var lista = acc==="rP" ? this.p : this.n;
+    if (!lista.length){
+      if (acc==="rP") this.aviso("No hay monedas para entregar. Puedes añadir parejas que valen cero: el saldo no cambia y aparecen monedas.","There are no coins to give away. You can add zero pairs: the balance does not change and coins appear.");
+      else this.aviso("No hay deudas para quitar. Puedes añadir parejas que valen cero: el saldo no cambia y aparecen deudas.","There are no debts to take away. You can add zero pairs: the balance does not change and debts appear.");
+      return;
+    }
+    id = (idElegido && lista.indexOf(idElegido)>=0) ? idElegido : ((this.sel && lista.indexOf(this.sel)>=0) ? this.sel : lista[lista.length-1]);
+    this.salir([id], "sale", function(){
+      yo.guardar(); lista.splice(lista.indexOf(id),1);
+      if (acc==="rP"){ yo.c.rP++; yo.anotar("Entregaste una moneda.","You gave away a coin.", par(s0)+" − (+1) = "+fmt(s0-1)); }
+      else { yo.c.rN++; yo.anotar("Te quitaron una deuda.","A debt was taken away.", par(s0)+" − (−1) = "+fmt(s0+1)); }
+    });
+    return;
+  } else if (acc==="k"){
+    if (!this.p.length || !this.n.length){ this.aviso("No hay parejas para cancelar: necesitas al menos una moneda y una deuda.","There are no pairs to cancel: you need at least one coin and one debt."); return; }
+    var pid = (this.sel && this.p.indexOf(this.sel)>=0) ? this.sel : this.p[this.p.length-1];
+    var nid = (this.sel && this.n.indexOf(this.sel)>=0) ? this.sel : this.n[this.n.length-1];
+    this.cancelar(pid,nid); return;
+  }
+  this.sel=null;
+  var ult=this.log[0]; this.terminar(ult.es, ult.en);
+};
+
+Tablero.prototype.cancelar = function(pid, nid){
+  var yo=this, s0=this.saldo();
+  if (MOV){
+    var burbuja=document.createElement("div"); burbuja.className="burbuja-cero"; burbuja.setAttribute("aria-hidden","true");
+    burbuja.textContent="(+1) + (−1) = 0"; this.q(".tablero").appendChild(burbuja);
+    setTimeout(function(){ burbuja.remove(); }, 1050);
+  }
+  this.salir([pid,nid], "se-cancela", function(){
+    yo.guardar(); yo.p.splice(yo.p.indexOf(pid),1); yo.n.splice(yo.n.indexOf(nid),1); yo.c.k++;
+    yo.anotar("Pagaste una deuda con una moneda.","You paid a debt with a coin.", "(+1) + (−1) = 0");
+  });
+};
+
+/* Anima la salida de fichas y después aplica el cambio */
+Tablero.prototype.salir = function(ids, clase, cambio){
+  var yo=this; this.ocupado=true;
+  ids.forEach(function(id){ var el=yo.host.querySelector('[data-id="'+id+'"]'); if(el) el.classList.add(clase); });
+  setTimeout(function(){
+    yo.ocupado=false; cambio(); yo.sel=null;
+    var ult=yo.log[0]; yo.terminar(ult.es, ult.en);
+  }, MOV ? 330 : 0);
+};
+
+Tablero.prototype.terminar = function(es,en){
+  this.render();
+  var s=this.saldo();
+  if (this.o.saldoVisible) this.anunciar(es+" Saldo: "+fmt(s)+".", en+" Balance: "+fmt(s)+".");
+  else this.anunciar(es, en);
+  if (this.o.alCambiar) this.o.alCambiar(this);
+};
+
+/* Selección con clic o teclado: una moneda y luego una deuda (o al revés) = pagar */
+Tablero.prototype.elegir = function(id, t){
+  if (!this.activo || this.ocupado) return;
+  var tSel = this.sel ? (this.p.indexOf(this.sel)>=0 ? "P" : "N") : null;
+  if (!this.sel){ this.sel=id; }
+  else if (this.sel===id){ this.sel=null; this.render(); this.enfocar(id); this.anunciar("Ficha soltada.","Token released."); return; }
+  else if (tSel!==t){
+    var pid = t==="P" ? id : this.sel, nid = t==="N" ? id : this.sel;
+    this.sel=null; this.cancelar(pid,nid); return;
+  } else { this.sel=id; }
+  this.render(); this.enfocar(id);
+  if (t==="P") this.anunciar("Moneda elegida. Ahora elige una deuda para pagarla, o pulsa «Entrego una moneda».","Coin selected. Now choose a debt to pay it, or press “I give away a coin”.");
+  else this.anunciar("Deuda elegida. Ahora elige una moneda para pagarla, o pulsa «Me quitan una deuda».","Debt selected. Now choose a coin to pay it, or press “A debt is taken away”.");
+};
+Tablero.prototype.enfocar = function(id){ var el=this.host.querySelector('[data-id="'+id+'"]'); if (el) el.focus(); };
+
+/* Arrastre con puntero (ratón, lápiz o dedo) */
+Tablero.prototype.inicioArrastre = function(e){
+  var f = e.target.closest(".ficha");
+  if (!f || !this.activo || this.ocupado || (e.button!==undefined && e.button!==0)) return;
+  var yo=this;
+  var d = { f:f, id:f.dataset.id, t:f.dataset.t, x:e.clientX, y:e.clientY, on:false, fantasma:null, marca:null };
+  function mover(ev){
+    var dx=ev.clientX-d.x, dy=ev.clientY-d.y;
+    if (!d.on && Math.sqrt(dx*dx+dy*dy)>8){
+      d.on=true;
+      d.fantasma=f.cloneNode(true); d.fantasma.classList.add("fantasma"); d.fantasma.removeAttribute("data-id");
+      d.fantasma.setAttribute("aria-hidden","true"); document.body.appendChild(d.fantasma);
+      f.classList.add("arrastrando");
+    }
+    if (d.on){
+      ev.preventDefault();
+      d.fantasma.style.left=ev.clientX+"px"; d.fantasma.style.top=ev.clientY+"px";
+      var obj = yo.destino(document.elementFromPoint(ev.clientX,ev.clientY), d.t);
+      if (d.marca && d.marca!==obj) d.marca.classList.remove("objetivo");
+      if (obj) obj.classList.add("objetivo");
+      d.marca=obj;
+    }
+  }
+  function soltar(ev){
+    document.removeEventListener("pointermove", mover);
+    document.removeEventListener("pointerup", soltar);
+    document.removeEventListener("pointercancel", soltar);
+    if (!d.on) return;
+    var obj = ev.type==="pointercancel" ? null : yo.destino(document.elementFromPoint(ev.clientX,ev.clientY), d.t);
+    if (d.marca) d.marca.classList.remove("objetivo");
+    d.fantasma.remove(); f.classList.remove("arrastrando");
+    yo.suprimirClic=true; setTimeout(function(){ yo.suprimirClic=false; }, 60);
+    if (!obj) return;
+    if (obj.classList.contains("bandeja")){ yo.accion(d.t==="P"?"rP":"rN", d.id); return; }
+    var otro = obj.classList.contains("ficha") ? obj.dataset.id : (d.t==="P" ? yo.n[yo.n.length-1] : yo.p[yo.p.length-1]);
+    if (!otro) return;
+    yo.sel=null;
+    if (d.t==="P") yo.cancelar(d.id, otro); else yo.cancelar(otro, d.id);
+  }
+  document.addEventListener("pointermove", mover, {passive:false});
+  document.addEventListener("pointerup", soltar);
+  document.addEventListener("pointercancel", soltar);
+};
+/* ¿Sobre qué se puede soltar? Una ficha contraria, la zona contraria (si tiene fichas) o la bandeja */
+Tablero.prototype.destino = function(el, t){
+  if (!el || !this.host.contains(el)) return null;
+  var b = el.closest(".bandeja"); if (b) return b;
+  var f = el.closest(".ficha"); if (f && f.dataset.t && f.dataset.t!==t) return f;
+  var z = el.closest(".zona");
+  if (z && z.dataset.t!==t && (t==="P" ? this.n.length : this.p.length)) return z;
+  return null;
+};
+
+Tablero.prototype.ficha = function(t, id){
+  var nueva = this.nuevos[id] ? " entra" : "";
+  var etiqueta = t==="P" ? A("Moneda, más uno","Coin, plus one") : A("Deuda, menos uno","Debt, minus one");
+  return '<button type="button" class="ficha '+(t==="P"?"moneda":"deuda")+nueva+'" data-id="'+id+'" data-t="'+t+'"'+
+         ' aria-pressed="'+(this.sel===id)+'" aria-label="'+etiqueta+'"'+(this.activo?"":" disabled")+'>'+
+         '<span aria-hidden="true">'+(t==="P"?"+1":"−1")+'</span></button>';
+};
+
+Tablero.prototype.frase = function(){
+  var s=this.saldo(), p=this.p.length, n=this.n.length;
+  if (p===0 && n===0) return B("No tienes monedas ni deudas: estás a mano.","You have no coins and no debts: you are even.");
+  if (s>0 && n>0) return B("Si pagas "+(n===1?"tu deuda":"tus "+deudasES(n))+", te "+pl(s,"queda ","quedan ")+monedasES(s)+".","If you pay your "+deudasEN(n)+", you have "+monedasEN(s)+" left.");
+  if (s>0) return B("Tienes "+monedasES(s)+" y no debes nada.","You have "+monedasEN(s)+" and owe nothing.");
+  if (s<0 && p>0) return B("Si pagas con "+(p===1?"tu moneda":"tus "+monedasES(p))+", todavía debes "+(-s)+".","If you pay with your "+monedasEN(p)+", you still owe "+(-s)+".");
+  if (s<0) return B("Debes "+(-s)+" y no tienes monedas para pagar.","You owe "+(-s)+" and have no coins to pay with.");
+  return B("Estás a mano: "+(p===1?"tu moneda alcanza":"tus "+monedasES(p)+" alcanzan")+" justo para pagar "+(n===1?"tu deuda":"tus "+deudasES(n))+".","You are even: your "+monedasEN(p)+" are just enough to pay your "+deudasEN(n)+".");
+};
+
+/* Pequeña recta numérica del saldo (decorativa; el saldo ya se dice en texto) */
+function rectaMini(s){
+  var x=function(v){ return 20+(v+12)*20; };
+  var v=Math.max(-12,Math.min(12,s));
+  var svg='<svg class="recta-mini" viewBox="0 0 520 46" aria-hidden="true" focusable="false">';
+  svg+='<line x1="10" y1="20" x2="510" y2="20" stroke="#757575" stroke-width="2"/>';
+  for (var i=-12;i<=12;i++){
+    var alto = (i%5===0)?8:4;
+    svg+='<line x1="'+x(i)+'" y1="'+(20-alto)+'" x2="'+x(i)+'" y2="'+(20+alto)+'" stroke="#757575" stroke-width="'+(i===0?2.5:1.5)+'"/>';
+    if (i%5===0) svg+='<text x="'+x(i)+'" y="42" font-size="12" text-anchor="middle" fill="#424242">'+(i>0?"+"+i:(i<0?"−"+(-i):"0"))+'</text>';
+  }
+  var color = s>0?"#1b5e20":(s<0?"#b71c1c":"#333");
+  svg+='<line x1="'+x(0)+'" y1="20" x2="'+x(v)+'" y2="20" stroke="'+color+'" stroke-width="5" stroke-linecap="round"/>';
+  svg+='<circle cx="'+x(v)+'" cy="20" r="7.5" fill="'+color+'" stroke="#fff" stroke-width="2"/></svg>';
+  return svg;
+}
+
+Tablero.prototype.render = function(){
+  var yo=this;
+  this.q(".f-p").innerHTML = this.p.length ? this.p.map(function(id){ return yo.ficha("P",id); }).join("") : '<span class="vacio">'+B("Sin monedas","No coins")+'</span>';
+  this.q(".f-n").innerHTML = this.n.length ? this.n.map(function(id){ return yo.ficha("N",id); }).join("") : '<span class="vacio">'+B("Sin deudas","No debts")+'</span>';
+  this.nuevos = {};
+  this.q(".c-p").innerHTML = B(monedasES(this.p.length), monedasEN(this.p.length));
+  this.q(".c-n").innerHTML = B(deudasES(this.n.length), deudasEN(this.n.length));
+  this.q(".zona-tengo").setAttribute("aria-label", A("Tengo: "+monedasES(this.p.length),"I have: "+monedasEN(this.p.length)));
+  this.q(".zona-debo").setAttribute("aria-label", A("Debo: "+deudasES(this.n.length),"I owe: "+deudasEN(this.n.length)));
+  this.q(".herramientas").setAttribute("aria-label", A("Acciones del tablero","Board actions"));
+  var ti=this.q(".t-inicio");
+  if (this.o.inicio){
+    var ip=this.inicial[0], inn=this.inicial[1], dES, dEN;
+    if (ip && inn){ dES="tienes "+monedasES(ip)+" y debes "+inn; dEN="you have "+monedasEN(ip)+" and owe "+inn; }
+    else if (ip){ dES="tienes "+monedasES(ip)+" y no debes nada"; dEN="you have "+monedasEN(ip)+" and owe nothing"; }
+    else if (inn){ dES="debes "+inn+" y no tienes monedas"; dEN="you owe "+inn+" and have no coins"; }
+    else { dES="no tienes monedas ni deudas"; dEN="you have no coins and no debts"; }
+    var movido = this.hist.length>0;
+    ti.innerHTML = '<span>'+B("<strong>Punto de partida:</strong> "+dES+".","<strong>Starting point:</strong> "+dEN+".")+'</span>' +
+      (movido ? '<span class="cambio">'+B("Ya hiciste "+this.hist.length+" "+pl(this.hist.length,"cambio","cambios")+" (mira la lista de abajo).","You have made "+this.hist.length+" "+pl(this.hist.length,"change","changes")+" (see the list below).")+'</span>'
+              : '<span>'+B("Lo que cuenta la historia después, lo haces tú con los botones.","What the story says next, you do with the buttons.")+'</span>');
+  } else ti.innerHTML="";
+  var s=this.saldo(), sd=this.q(".saldo");
+  if (this.o.saldoVisible){
+    sd.innerHTML = '<div class="saldo-num">'+B("Saldo:","Balance:")+' <strong class="'+claseSigno(s)+'">'+fmt(s)+'</strong></div>'+
+                   '<p class="saldo-frase">'+this.frase()+'</p>'+rectaMini(s);
+  } else {
+    sd.innerHTML = '<div class="saldo-num">'+B("Saldo:","Balance:")+' <strong>?</strong></div>'+
+                   '<p class="saldo-frase nota">'+B(this.o.notaOculta || {es:"Lo verás cuando compruebes tus fichas. Mientras tanto, cuenta.", en:"You will see it when you check your tokens. Meanwhile, count."})+'</p>';
+  }
+  this.host.querySelectorAll(".h-btn").forEach(function(b){ b.disabled = !yo.activo; });
+  var bit=this.q(".bitacora");
+  if (!this.o.bitacora){ bit.innerHTML=""; return; }
+  bit.innerHTML = this.log.map(function(r){
+    return '<li>'+B(r.es,r.en)+((yo.o.saldoVisible && yo.o.ecuaciones) ? '<span class="ecu">'+r.ecu+'</span>' : '')+'</li>';
+  }).join("");
+};
+
+/* ---------- 3. Verificación de acciones y pistas ---------- */
+function OK(){ return { ok:true }; }
+function PISTA(es,en){ return { ok:false, es:es, en:en }; }
+
+/* Revisa que el alumno haya hecho en el tablero lo que pide la operación a ± b */
+function verificaOp(op, t, simplificar){
+  var a=op[0], sg=op[1], b=op[2], m=Math.abs(b), c=t.c;
+  var quiere = b>0 ? "P" : "N", otro = b>0 ? "N" : "P";
+  var nombreES = b>0 ? pl(m,"moneda","monedas") : pl(m,"deuda","deudas");
+  var nombreEN = b>0 ? pl(m,"coin","coins") : pl(m,"debt","debts");
+  if (sg==="+"){
+    if (c.rP || c.rN) return PISTA("La historia pide añadir, no quitar. Pulsa «Deshacer» o «Empezar de nuevo».","The story asks you to add, not to take away. Press “Undo” or “Start over”.");
+    if (c["a"+otro]>0){
+      return quiere==="P" ? PISTA("Has añadido deudas, pero la historia habla de monedas que recibes.","You added debts, but the story is about coins you receive.")
+                          : PISTA("Has añadido monedas, pero la historia habla de una deuda nueva.","You added coins, but the story is about a new debt.");
+    }
+    var x=c["a"+quiere];
+    if (x<m) return PISTA("Todavía no terminas: la historia dice "+m+" "+nombreES+" y has añadido "+x+".","Not done yet: the story says "+m+" "+nombreEN+" and you have added "+x+".");
+    if (x>m) return PISTA("Te pasaste: la historia dice "+m+" "+nombreES+" y has añadido "+x+". Usa «Deshacer».","Too many: the story says "+m+" "+nombreEN+" and you added "+x+". Use “Undo”.");
+  } else {
+    if (c.aP || c.aN) return PISTA("La historia pide quitar, no añadir. Añadir parejas que valen cero sí está permitido, porque no cambia el saldo.","The story asks you to take away, not to add. Adding zero pairs is allowed, because it does not change the balance.");
+    if (c["r"+otro]>0){
+      return quiere==="N" ? PISTA("Has quitado monedas. ¿La consigna pedía quitar monedas o quitar deudas?","You took away coins. Did the instructions ask you to take away coins or debts?")
+                          : PISTA("Has quitado deudas. ¿La consigna pedía quitar deudas o entregar monedas?","You took away debts. Did the instructions ask you to take away debts or give away coins?");
+    }
+    var r=c["r"+quiere];
+    if (r<m){
+      var quedan = quiere==="P" ? t.p.length : t.n.length;
+      if (quedan===0){
+        return quiere==="N" ? PISTA("No quedan deudas para quitar. ¿Podemos representar el mismo saldo añadiendo parejas que valen cero?","There are no debts left to take away. Can we show the same balance by adding zero pairs?")
+                            : PISTA("No quedan monedas para entregar. ¿Podemos representar el mismo saldo añadiendo parejas que valen cero?","There are no coins left to give away. Can we show the same balance by adding zero pairs?");
+      }
+      return PISTA("Todavía no terminas: la historia dice quitar "+m+" "+nombreES+" y has quitado "+r+".","Not done yet: the story says to take away "+m+" "+nombreEN+" and you have taken away "+r+".");
+    }
+    if (r>m) return PISTA("Te pasaste: la historia dice quitar "+m+" "+nombreES+" y has quitado "+r+". Usa «Deshacer».","Too many: the story says to take away "+m+" "+nombreEN+" and you took away "+r+". Use “Undo”.");
+  }
+  if (simplificar && t.p.length && t.n.length) return PISTA("Todavía puedes cancelar una pareja.","You can still cancel a pair.");
+  return OK();
+}
+function verificaSimple(t, simplificar){
+  if (simplificar && t.p.length && t.n.length) return PISTA("Todavía puedes cancelar una pareja.","You can still cancel a pair.");
+  return OK();
+}
+
+/* ---------- 4. Opción múltiple (letras, respuesta repartida al azar) ---------- */
+function opcionMultiple(host, datos, alTerminar){
+  var ops = baraja(datos.ops), intentos = 0, listo = false;
+  host.innerHTML = '<p class="preg">'+B(datos.q)+'</p><div class="opciones"></div><div class="fb" role="status"></div>';
+  var caja = host.querySelector(".opciones"), fb = host.querySelector(".fb");
+  ops.forEach(function(o,i){
+    var b=document.createElement("button"); b.type="button"; b.className="opcion";
+    b.innerHTML='<span class="letra" aria-hidden="true">'+LETRAS[i]+')</span><span>'+B(o.es,o.en)+'</span>';
+    b.addEventListener("click", function(){
+      if (listo) return;
+      if (o.ok){
+        b.classList.add("correcta"); listo=true;
+        fb.className="fb bien"; fb.innerHTML=B("¡Así es!","That’s right!")+(datos.expl?" "+B(datos.expl):"");
+      } else {
+        b.classList.add("incorrecta"); b.disabled=true; intentos++;
+        if (intentos>=2){
+          listo=true;
+          caja.querySelectorAll(".opcion").forEach(function(x,k){ if (ops[k].ok) x.classList.add("correcta"); });
+          fb.className="fb mal"; fb.innerHTML=B("La respuesta correcta está marcada en verde.","The correct answer is marked in green.")+(datos.expl?" "+B(datos.expl):"");
+        } else {
+          fb.className="fb mal"; fb.innerHTML=datos.pista ? B(datos.pista) : B("Piénsalo otra vez: mira el tablero.","Think again: look at the board.");
+        }
+      }
+      if (listo){ caja.querySelectorAll(".opcion").forEach(function(x){ x.disabled=true; }); if (alTerminar) alTerminar(); }
+    });
+    caja.appendChild(b);
+  });
+}
+
+/* Preguntas automáticas para «Explico» */
+function expCambio(antes, despues){
+  var d=signo(despues-antes);
+  return { q:{es:"¿Qué le pasó a tu saldo?", en:"What happened to your balance?"},
+    ops:[ {es:"Mejoró: ahora tengo más o debo menos", en:"It got better: now I have more or owe less", ok:d>0},
+          {es:"Empeoró: ahora tengo menos o debo más", en:"It got worse: now I have less or owe more", ok:d<0},
+          {es:"No cambió: quedó igual que al principio", en:"It did not change: it is the same as at the start", ok:d===0} ],
+    pista:{es:"Compara el saldo del principio con el del final.", en:"Compare the balance at the start with the one at the end."} };
+}
+function expTipo(s){
+  return { q:{es:"¿Cómo es tu saldo?", en:"What kind of balance do you have?"},
+    ops:[ {es:"Positivo: tengo más de lo que debo", en:"Positive: I have more than I owe", ok:s>0},
+          {es:"Negativo: debo más de lo que tengo", en:"Negative: I owe more than I have", ok:s<0},
+          {es:"Cero: estoy a mano, sin tener ni deber", en:"Zero: I am even, nothing left and nothing owed", ok:s===0} ],
+    pista:{es:"Mira qué fichas quedaron después de cancelar las parejas.", en:"Look at which tokens are left after canceling pairs."} };
+}
+
+/* Historia automática para una operación (práctica libre y cierre) */
+function historia(a, sg, b){
+  var iES = a>0 ? "Tienes "+monedasES(a) : (a<0 ? "Debes "+(-a) : "No tienes monedas ni deudas");
+  var iEN = a>0 ? "You have "+monedasEN(a) : (a<0 ? "You owe "+(-a) : "You have no coins and no debts");
+  var m=Math.abs(b), aES, aEN;
+  if (sg==="+" && b>0){ aES="y recibes "+monedasES(m); aEN="and you receive "+monedasEN(m); }
+  else if (sg==="+"){ aES="y adquieres una deuda de "+m; aEN="and you take on a debt of "+m; }
+  else if (b>0){ aES="y entregas "+monedasES(m); aEN="and you give away "+monedasEN(m); }
+  else { aES="y te quitan una deuda de "+m; aEN="and a debt of "+m+" is taken away"; }
+  return { es:iES+" "+aES+". ¿Cuál es tu saldo?", en:iEN+" "+aEN+". What is your balance?" };
+}
+function exprOp(op){ return par(op[0])+" "+(op[1]==="+"?"+":"−")+" "+par(op[2])+" ="; }
+function resultadoOp(op){ return op[1]==="+" ? op[0]+op[2] : op[0]-op[2]; }
+
+/* ---------- 5. Reto ---------- */
+var PASOS = [ {es:"Predigo",en:"I predict"}, {es:"Manipulo",en:"I act"}, {es:"Observo",en:"I observe"}, {es:"Explico",en:"I explain"}, {es:"Escribo",en:"I write"} ];
+var RID = 0;
+
+function Reto(host, spec, alTerminar){
+  RID++; this.uid="reto"+RID;
+  this.h=host; this.s=spec; this.fin=alTerminar;
+  this.pred=null; this.intEsc=0;
+  var ini = spec.ini || (spec.op ? [spec.op[0]>0?spec.op[0]:0, spec.op[0]<0?-spec.op[0]:0] : [0,0]);
+  this.saldoIni = ini[0]-ini[1];
+  this.construir(ini);
+}
+Reto.prototype.construir = function(ini){
+  var s=this.s, u=this.uid, yo=this;
+  var pasos = PASOS.map(function(p,i){ return '<li data-i="'+i+'">'+B(p)+'</li>'; }).join("");
+  var textoHist = s.soloFichas && s.op ? B("Representa con fichas: ","Show with tokens: ")+'<span class="ex grande">'+exprOp(s.op).replace(/ =$/,"")+'</span>' : B(s.hist);
+  this.h.innerHTML =
+    '<article class="reto" aria-labelledby="'+u+'-t">' +
+      '<header class="reto-cab"><h3 id="'+u+'-t">'+B("Reto "+s.t,"Challenge "+s.t)+'</h3>' +
+      '<ol class="ruta-pasos" aria-label="'+A("Pasos del reto","Challenge steps")+'">'+pasos+'</ol></header>' +
+      '<p class="historia">'+textoHist+'</p>' +
+      '<section class="r-paso" data-p="0"'+(s.pred?'':' hidden')+'><h4 tabindex="-1"><span class="n" aria-hidden="true">1</span>'+B("Predigo","I predict")+'</h4><div class="r-pred"></div></section>' +
+      '<section class="r-paso" data-p="1"><h4 tabindex="-1"><span class="n" aria-hidden="true">2</span>'+B("Manipulo","I act")+'</h4>' +
+        '<p class="instr">'+B(s.instr || {es:"Haz en el tablero lo que cuenta la historia. Después pulsa «Comprobar mis fichas».", en:"Do on the board what the story says. Then press “Check my tokens”."})+'</p>' +
+        '<div class="r-tab"></div>' +
+        '<div class="fila-btn"><button type="button" class="btn r-comp">'+B("Comprobar mis fichas","Check my tokens")+'</button></div>' +
+        '<div class="fb r-fb1" role="status"></div></section>' +
+      '<section class="r-paso" data-p="2" hidden><h4 tabindex="-1"><span class="n" aria-hidden="true">3</span>'+B("Observo","I observe")+'</h4><div class="r-obs"></div></section>' +
+      '<section class="r-paso" data-p="3" hidden><h4 tabindex="-1"><span class="n" aria-hidden="true">4</span>'+B("Explico","I explain")+'</h4><div class="r-exp"></div></section>' +
+      '<section class="r-paso" data-p="4" hidden><h4 tabindex="-1"><span class="n" aria-hidden="true">5</span>'+B("Escribo la operación","I write the operation")+'</h4><div class="r-esc"></div></section>' +
+      '<div class="r-fin" hidden></div>' +
+    '</article>';
+  this.q=function(sel){ return yo.h.querySelector(sel); };
+  this.tab = new Tablero(this.q(".r-tab"), { saldoVisible:false, inicio:true });
+  this.tab.poner(ini[0], ini[1]);
+  this.q(".r-comp").addEventListener("click", function(){ yo.comprobar(); });
+  if (s.pred){ this.armarPrediccion(); this.irA(0); }
+  else this.irA(1);
+};
+Reto.prototype.marcar = function(n){
+  this.h.querySelectorAll(".ruta-pasos li").forEach(function(li){
+    var i=+li.dataset.i; li.className = i<n ? "hecho" : (i===n ? "actual" : "");
+  });
+};
+Reto.prototype.irA = function(n, enfocar){
+  this.paso=n; this.marcar(n);
+  this.h.querySelectorAll(".r-paso").forEach(function(sec){ var p=+sec.dataset.p; if (p<=n && p>0) sec.hidden=false; });
+  this.tab.activar(n===1);
+  this.q(".r-comp").disabled = (n!==1);
+  if (enfocar){ var h=this.q('.r-paso[data-p="'+n+'"] h4'); if (h){ h.focus({preventScroll:true}); h.scrollIntoView({block:"nearest",behavior:MOV?"smooth":"auto"}); } }
+};
+Reto.prototype.armarPrediccion = function(){
+  var yo=this, s=this.s, caja=this.q(".r-pred");
+  if (s.pred==="saldo"){
+    caja.innerHTML = '<div class="r-expr"><label for="'+this.uid+'-p">'+B("Creo que mi saldo será:","I think my balance will be:")+'</label>' +
+      '<input type="text" class="campo-num" id="'+this.uid+'-p" autocomplete="off" inputmode="text"></div>' +
+      '<div class="fila-btn"><button type="button" class="btn r-anota">'+B("Anotar mi predicción","Save my prediction")+'</button>' +
+      '<button type="button" class="btn-sec r-salta">'+B("Prefiero probar primero","I’d rather try first")+'</button></div><div class="fb r-fbp" role="status"></div>';
+    var inp=caja.querySelector("input");
+    var anotar=function(){
+      var v=leeEntero(inp.value);
+      if (isNaN(v)){ inp.classList.add("error"); var f=caja.querySelector(".r-fbp"); f.className="fb mal r-fbp"; f.innerHTML=B("Escribe un número entero, por ejemplo −2 o +3.","Type a whole number, for example −2 or +3."); inp.focus(); return; }
+      inp.classList.remove("error"); yo.predecir(v);
+    };
+    caja.querySelector(".r-anota").addEventListener("click", anotar);
+    inp.addEventListener("keydown", function(e){ if (e.key==="Enter") anotar(); });
+  } else {
+    caja.innerHTML = '<p class="preg">'+B("¿Tu saldo va a mejorar, empeorar o quedar igual?","Will your balance get better, get worse, or stay the same?")+'</p><div class="elecciones">' +
+      '<button type="button" class="eleccion" data-v="1" aria-pressed="false">'+B("Mejora","Better")+'</button>' +
+      '<button type="button" class="eleccion" data-v="-1" aria-pressed="false">'+B("Empeora","Worse")+'</button>' +
+      '<button type="button" class="eleccion" data-v="0" aria-pressed="false">'+B("Queda igual","Same")+'</button></div>' +
+      '<div class="fila-btn"><button type="button" class="btn-sec r-salta">'+B("Prefiero probar primero","I’d rather try first")+'</button></div>';
+    caja.querySelectorAll(".eleccion").forEach(function(b){ b.addEventListener("click", function(){
+      caja.querySelectorAll(".eleccion").forEach(function(x){ x.setAttribute("aria-pressed", x===b?"true":"false"); });
+      yo.predecir(+b.dataset.v);
+    }); });
+  }
+  caja.querySelector(".r-salta").addEventListener("click", function(){ yo.predecir(null); });
+};
+Reto.prototype.predecir = function(v){
+  this.pred=v;
+  var caja=this.q(".r-pred");
+  caja.querySelectorAll("input,button").forEach(function(x){ x.disabled=true; });
+  var nota=document.createElement("p"); nota.className="anotado";
+  if (v===null) nota.innerHTML=B("Muy bien: prueba primero y observa.","Fine: try it first and observe.");
+  else if (this.s.pred==="saldo") nota.innerHTML=B("Predicción anotada: ","Prediction saved: ")+'<span class="ex">'+fmt(v)+'</span>';
+  else nota.innerHTML=B("Predicción anotada: ","Prediction saved: ")+(v>0?B("mejora","better"):(v<0?B("empeora","worse"):B("queda igual","same")));
+  caja.appendChild(nota);
+  this.irA(1, true);
+};
+Reto.prototype.comprobar = function(){
+  var s=this.s, t=this.tab, fb=this.q(".r-fb1"), r;
+  if (s.verif) r=s.verif(t);
+  else if (s.op) r=verificaOp(s.op, t, s.simp);
+  else r=verificaSimple(t, s.simp);
+  if (!r.ok){ fb.className="fb mal r-fb1"; fb.innerHTML=B(r.es,r.en); return; }
+  fb.className="fb bien r-fb1"; fb.innerHTML=B("¡Bien hecho! Tus fichas muestran lo que cuenta la historia.","Well done! Your tokens show what the story says.");
+  t.verSaldo(true); t.activar(false);
+  this.saldoFin=t.saldo();
+  this.observar();
+};
+Reto.prototype.observar = function(){
+  var s=this.saldoFin, html='<p>'+B("Tu saldo final es ","Your final balance is ")+'<strong class="'+claseSigno(s)+' grande">'+fmt(s)+'</strong>. '+this.tab.frase()+'</p>';
+  if (this.s.pred==="saldo" && this.pred!==null){
+    html += this.pred===s ? '<p class="anotado">'+B("¡Tu predicción fue acertada!","Your prediction was right!")+'</p>'
+      : '<p class="anotado">'+B("Habías predicho "+fmt(this.pred)+" y las fichas muestran "+fmt(s)+". ¿Qué te hizo pensar distinto?","You predicted "+fmt(this.pred)+" and the tokens show "+fmt(s)+". What made you think differently?")+'</p>';
+  } else if (this.s.pred==="cambio" && this.pred!==null){
+    var real=signo(s-this.saldoIni);
+    var palabra=function(v){ return v>0?{es:"mejora",en:"gets better"}:(v<0?{es:"empeora",en:"gets worse"}:{es:"queda igual",en:"stays the same"}); };
+    var pr=palabra(this.pred), re=palabra(real);
+    html += this.pred===real ? '<p class="anotado">'+B("¡Tu predicción fue acertada: el saldo "+re.es+"!","Your prediction was right: the balance "+re.en+"!")+'</p>'
+      : '<p class="anotado">'+B("Habías predicho que el saldo "+pr.es+"; en realidad "+re.es+". ¿Qué te hizo pensar distinto?","You predicted the balance "+pr.en+"; it actually "+re.en+". What made you think differently?")+'</p>';
+  } else if (this.s.pred){
+    html += '<p class="nota">'+B("La próxima vez, intenta predecir antes de mover las fichas: así aprendes más.","Next time, try to predict before moving the tokens: you learn more that way.")+'</p>';
+  }
+  html += '<div class="fila-btn"><button type="button" class="btn r-sig2">'+B("Continuar","Continue")+'</button></div>';
+  this.q(".r-obs").innerHTML=html;
+  var yo=this;
+  this.q(".r-sig2").addEventListener("click", function(){ this.disabled=true; yo.explicar(); });
+  this.irA(2, true);
+};
+Reto.prototype.explicar = function(){
+  var yo=this, s=this.s;
+  if (s.exp===false){ this.escribir(); return; }
+  var datos = s.exp || (s.expTipo ? expTipo(this.saldoFin) : expCambio(this.saldoIni, this.saldoFin));
+  this.irA(3, true);
+  opcionMultiple(this.q(".r-exp"), datos, function(){
+    var c=document.createElement("div"); c.className="fila-btn";
+    c.innerHTML='<button type="button" class="btn">'+B("Continuar","Continue")+'</button>';
+    yo.q(".r-exp").appendChild(c);
+    c.querySelector("button").addEventListener("click", function(){ this.disabled=true; yo.escribir(); });
+  });
+};
+Reto.prototype.escribir = function(){
+  var yo=this, s=this.s;
+  var expr = s.esc ? B(s.esc.expr) : exprOp(s.op);
+  var ans = s.esc ? s.esc.ans : resultadoOp(s.op);
+  var caja=this.q(".r-esc");
+  caja.innerHTML = '<p>'+B("Escribe con números lo que acabas de hacer.","Write in numbers what you just did.")+'</p>' +
+    '<div class="r-expr"><label for="'+this.uid+'-e"><span class="ex">'+expr+'</span></label>' +
+    '<input type="text" class="campo-num" id="'+this.uid+'-e" autocomplete="off"></div>' +
+    '<p class="nota">'+B("Escribe un entero; usa el signo menos si es negativo.","Type a whole number; use the minus sign if it is negative.")+'</p>' +
+    '<div class="fila-btn"><button type="button" class="btn r-cesc">'+B("Comprobar","Check")+'</button></div><div class="fb r-fbe" role="status"></div>';
+  var inp=caja.querySelector("input"), fb=caja.querySelector(".r-fbe"), btn=caja.querySelector(".r-cesc");
+  var revisar=function(){
+    var v=leeEntero(inp.value);
+    if (isNaN(v)){ inp.classList.add("error"); fb.className="fb mal r-fbe"; fb.innerHTML=B("Escribe un número entero, por ejemplo −2 o +3.","Type a whole number, for example −2 or +3."); return; }
+    inp.classList.remove("error");
+    if (v===ans){
+      fb.className="fb bien r-fbe"; fb.innerHTML=B("¡Correcto! ","Correct! ")+'<span class="ex">'+expr+" "+fmt(ans)+'</span>';
+      inp.disabled=true; btn.disabled=true; yo.terminar(); return;
+    }
+    yo.intEsc++;
+    if (yo.intEsc>=2){
+      fb.className="fb mal r-fbe"; fb.innerHTML=B("La respuesta es ","The answer is ")+'<span class="ex">'+fmt(ans)+'</span>. '+B("Es el saldo que quedó en tu tablero.","It is the balance left on your board.");
+      inp.disabled=true; btn.disabled=true; yo.terminar(); return;
+    }
+    fb.className="fb mal r-fbe";
+    fb.innerHTML = (v===-ans && ans!==0) ? B("Revisa el signo. ¿En tu tablero quedaron monedas (+) o deudas (−)?","Check the sign. Are there coins (+) or debts (−) left on your board?")
+                                         : B("Mira el saldo de tu tablero: lo que quedó es el resultado.","Look at your board’s balance: what is left is the result.");
+  };
+  btn.addEventListener("click", revisar);
+  inp.addEventListener("keydown", function(e){ if (e.key==="Enter") revisar(); });
+  this.irA(4, true);
+  inp.focus({preventScroll:true});
+};
+Reto.prototype.terminar = function(){
+  this.marcar(5);
+  var f=this.q(".r-fin"); f.hidden=false;
+  f.innerHTML='<strong>'+B("¡Reto superado!","Challenge complete!")+'</strong>';
+  if (this.fin) this.fin(f);
+};
+
+/* ---------- 6. Serie de retos (una misión) ---------- */
+function Serie(host, retos, opciones){
+  this.h=host; this.retos=retos; this.o=opciones||{}; this.hechos=retos.map(function(){ return false; }); this.i=0;
+  this.h.innerHTML='<ol class="serie-prog" aria-label="Retos / Challenges"></ol><div class="serie-reto"></div>';
+  this.mostrar(0);
+}
+Serie.prototype.progreso = function(){
+  var yo=this;
+  this.h.querySelector(".serie-prog").innerHTML = this.retos.map(function(r,i){
+    var cls = yo.hechos[i] ? "pill hecho" : (i===yo.i ? "pill actual" : "pill");
+    return '<li class="'+cls+'">'+(yo.hechos[i]?"✓ ":"")+B("Reto "+r.t,"Challenge "+r.t)+'</li>';
+  }).join("");
+  if (this.o.prog){ var n=this.hechos.filter(Boolean).length; $(this.o.prog).textContent = n+" / "+this.retos.length; }
+};
+Serie.prototype.mostrar = function(i){
+  var yo=this; this.i=i; this.progreso();
+  var mont=this.h.querySelector(".serie-reto");
+  new Reto(mont, this.retos[i], function(fin){
+    yo.hechos[i]=true; yo.progreso();
+    if (i+1<yo.retos.length){
+      var b=document.createElement("button"); b.type="button"; b.className="btn"; b.style.marginLeft="12px";
+      b.innerHTML=B("Siguiente reto →","Next challenge →");
+      b.addEventListener("click", function(){ yo.mostrar(i+1); mont.querySelector("h3").setAttribute("tabindex","-1"); mont.querySelector("h3").focus(); });
+      fin.appendChild(b);
+    } else yo.final(fin);
+  });
+};
+Serie.prototype.final = function(fin){
+  var yo=this, o=this.o;
+  var d=document.createElement("div"); d.className="mision-ok"; d.style.marginTop="12px";
+  d.innerHTML='<strong>'+B(o.finES||"¡Misión cumplida!", o.finEN||"Mission accomplished!")+'</strong>' +
+    (o.idea ? '<p>'+B(o.idea)+'</p>' : '') +
+    '<div class="fila-btn">' + (o.sig ? '<a class="btn" href="#'+o.sig+'" style="text-decoration:none">'+B(o.sigTxt)+'</a>' : '') +
+    '<button type="button" class="btn-sec">'+B("Repetir la misión","Repeat the mission")+'</button></div>';
+  fin.appendChild(d);
+  d.querySelector("button").addEventListener("click", function(){ yo.hechos=yo.retos.map(function(){ return false; }); yo.mostrar(0); });
+};
+
+/* ---------- 7. Datos de las misiones ---------- */
+var SERIES = {
+  desc: [
+    { t:"A", ini:[3,2], pred:"saldo",
+      hist:{es:"Tienes 3 monedas y 2 deudas. Paga tus deudas: arrastra una moneda sobre una deuda, o toca una moneda y después una deuda.", en:"You have 3 coins and 2 debts. Pay your debts: drag a coin onto a debt, or tap a coin and then a debt."},
+      instr:{es:"Paga todas las deudas que puedas. Después pulsa «Comprobar mis fichas».", en:"Pay all the debts you can. Then press “Check my tokens”."},
+      verif:function(t){
+        var c=t.c;
+        if (c.aP||c.aN||c.rP||c.rN||c.z) return PISTA("En este reto solo se paga: junta una moneda con una deuda. Pulsa «Empezar de nuevo» y prueba otra vez.","In this challenge you only pay: put a coin together with a debt. Press “Start over” and try again.");
+        if (t.n.length) return PISTA("Todavía puedes cancelar una pareja.","You can still cancel a pair.");
+        return OK();
+      },
+      exp:{ q:{es:"¿Cuánto vale una pareja formada por una moneda y una deuda?", en:"How much is a pair made of one coin and one debt worth?"},
+        ops:[ {es:"0, porque se cancelan y no cambian el saldo", en:"0, because they cancel and do not change the balance", ok:true},
+              {es:"+1, porque la moneda vale más que la deuda", en:"+1, because the coin is worth more than the debt"},
+              {es:"−1, porque la deuda pesa más que la moneda", en:"−1, because the debt weighs more than the coin"} ],
+        expl:{es:"Una moneda paga exactamente una deuda.", en:"One coin pays exactly one debt."} },
+      esc:{ expr:"(+1) + (−1) =", ans:0 } },
+    { t:"B", ini:[2,0], pred:"cambio",
+      hist:{es:"Tienes 2 monedas y no debes nada. Añade una moneda y una deuda al mismo tiempo con el botón «Añado una pareja». ¿Ha cambiado tu saldo?", en:"You have 2 coins and owe nothing. Add a coin and a debt at the same time with the “I add a pair” button. Has your balance changed?"},
+      instr:{es:"Añade una pareja y pulsa «Comprobar mis fichas».", en:"Add a pair and press “Check my tokens”."},
+      verif:function(t){
+        var c=t.c;
+        if (c.aP||c.aN||c.rP||c.rN) return PISTA("En este reto solo se añade la pareja: usa el botón «Añado una pareja». Pulsa «Empezar de nuevo» y prueba otra vez.","In this challenge you only add the pair: use the “I add a pair” button. Press “Start over” and try again.");
+        if (!c.z) return PISTA("Usa el botón «Añado una pareja».","Use the “I add a pair” button.");
+        if (!t.n.length) return PISTA("Cancelaste la pareja que añadiste. Añade otra y déjala en el tablero.","You canceled the pair you added. Add another one and leave it on the board.");
+        return OK();
+      },
+      exp:{ q:{es:"Añadiste una moneda y una deuda. ¿Por qué tu saldo no cambió?", en:"You added a coin and a debt. Why did your balance not change?"},
+        ops:[ {es:"Porque la pareja vale cero: lo que suma la moneda lo resta la deuda", en:"Because the pair is worth zero: what the coin adds, the debt takes away", ok:true},
+              {es:"Porque el saldo solo cambia cuando se añaden dos monedas", en:"Because the balance only changes when two coins are added"},
+              {es:"Porque las deudas nuevas no cuentan hasta que se pagan", en:"Because new debts do not count until they are paid"} ],
+        expl:{es:"Esta idea será la llave de la resta en la Misión 5.", en:"This idea will be the key to subtraction in Mission 5."} },
+      esc:{ expr:"(+2) + (+1) + (−1) =", ans:2 } }
+  ],
+  m1: [
+    { t:"A", ini:[4,0], pred:"saldo", expTipo:true,
+      hist:{es:"Tienes 4 monedas y no debes nada.", en:"You have 4 coins and owe nothing."},
+      instr:{es:"Observa tus fichas. Cuando sepas tu saldo, pulsa «Comprobar mis fichas».", en:"Look at your tokens. When you know your balance, press “Check my tokens”."},
+      esc:{ expr:{es:"Saldo =", en:"Balance ="}, ans:4 } },
+    { t:"B", ini:[0,3], pred:"saldo", expTipo:true,
+      hist:{es:"No tienes monedas y debes 3.", en:"You have no coins and you owe 3."},
+      instr:{es:"Observa tus fichas. Cuando sepas tu saldo, pulsa «Comprobar mis fichas».", en:"Look at your tokens. When you know your balance, press “Check my tokens”."},
+      esc:{ expr:{es:"Saldo =", en:"Balance ="}, ans:-3 } },
+    { t:"C", ini:[3,5], pred:"saldo", expTipo:true, simp:true,
+      hist:{es:"Tienes 3 monedas y debes 5. Usa tus monedas para pagar lo que puedas.", en:"You have 3 coins and you owe 5. Use your coins to pay what you can."},
+      instr:{es:"Cancela parejas hasta que no quede ninguna. Después pulsa «Comprobar mis fichas».", en:"Cancel pairs until none are left. Then press “Check my tokens”."},
+      esc:{ expr:{es:"Saldo =", en:"Balance ="}, ans:-2 } },
+    { t:"D", ini:[4,4], pred:"saldo", expTipo:true, simp:true,
+      hist:{es:"Tienes 4 monedas y debes 4.", en:"You have 4 coins and you owe 4."},
+      instr:{es:"Cancela parejas hasta que no quede ninguna. Después pulsa «Comprobar mis fichas».", en:"Cancel pairs until none are left. Then press “Check my tokens”."},
+      esc:{ expr:{es:"Saldo =", en:"Balance ="}, ans:0 } }
+  ],
+  m2: [
+    { t:"A", op:[3,"+",2], pred:"saldo", hist:{es:"Tienes 3 monedas y recibes 2 más por un trabajo.", en:"You have 3 coins and you receive 2 more for a job."} },
+    { t:"B", op:[4,"+",3], pred:"saldo", hist:{es:"Tienes 4 monedas y te devuelven 3 que habías prestado.", en:"You have 4 coins and you get back 3 that you had lent."} },
+    { t:"C", op:[0,"+",5], pred:"cambio", hist:{es:"No tienes monedas ni deudas y recibes 5 monedas.", en:"You have no coins and no debts, and you receive 5 coins."} }
+  ],
+  m3: [
+    { t:"A", op:[-3,"+",-2], pred:"saldo", hist:{es:"Debes 3 y pides prestadas 2 monedas más.", en:"You owe 3 and you borrow 2 more coins."} },
+    { t:"B", op:[-1,"+",-4], pred:"cambio", hist:{es:"Debes 1 y te llega una factura de 4.", en:"You owe 1 and you get a bill for 4."} },
+    { t:"C", op:[0,"+",-3], pred:"saldo", hist:{es:"No tienes monedas ni deudas y adquieres una deuda de 3.", en:"You have no coins and no debts, and you take on a debt of 3."},
+      exp:{ q:{es:"¿Qué le pasa al saldo cuando se suma una deuda?", en:"What happens to the balance when you add a debt?"},
+        ops:[ {es:"Baja: cada deuda nueva le resta 1 a mi saldo", en:"It goes down: each new debt takes 1 off my balance", ok:true},
+              {es:"Sube: más fichas en el tablero dan más saldo", en:"It goes up: more tokens on the board means more balance"},
+              {es:"No cambia: las deudas no entran en el saldo", en:"It does not change: debts are not part of the balance"} ] } }
+  ],
+  m4: [
+    { t:"A", op:[3,"+",-5], pred:"saldo", simp:true,
+      hist:{es:"Tienes 3 monedas y adquieres una deuda de 5. Paga con tus monedas lo que puedas.", en:"You have 3 coins and take on a debt of 5. Pay what you can with your coins."},
+      instr:{es:"Añade las deudas, cancela todas las parejas que puedas y pulsa «Comprobar mis fichas».", en:"Add the debts, cancel all the pairs you can, and press “Check my tokens”."},
+      exp:{ q:{es:"¿Por qué el saldo es −2?", en:"Why is the balance −2?"},
+        ops:[ {es:"Porque 3 monedas pagan 3 deudas y quedan 2 sin pagar", en:"Because 3 coins pay 3 debts and 2 are left unpaid", ok:true},
+              {es:"Porque se juntan 3 y 5 y se pone el signo del mayor", en:"Because 3 and 5 are put together with the larger sign"},
+              {es:"Porque las monedas y las deudas siempre se restan", en:"Because coins and debts are always subtracted"} ],
+        expl:{es:"El resultado es lo que queda después de cancelar parejas.", en:"The result is what is left after canceling pairs."} } },
+    { t:"B", op:[-4,"+",7], pred:"saldo", simp:true,
+      hist:{es:"Debes 4 y recibes 7 monedas. Paga tus deudas.", en:"You owe 4 and you receive 7 coins. Pay your debts."},
+      instr:{es:"Añade las monedas, cancela todas las parejas que puedas y pulsa «Comprobar mis fichas».", en:"Add the coins, cancel all the pairs you can, and press “Check my tokens”."} },
+    { t:"C", op:[5,"+",-5], pred:"cambio", simp:true,
+      hist:{es:"Tienes 5 monedas y adquieres una deuda de 5.", en:"You have 5 coins and take on a debt of 5."},
+      instr:{es:"Añade las deudas, cancela todas las parejas que puedas y pulsa «Comprobar mis fichas».", en:"Add the debts, cancel all the pairs you can, and press “Check my tokens”."},
+      exp:{ q:{es:"¿Cómo quedó tu situación?", en:"Where do you stand now?"},
+        ops:[ {es:"A mano: cada moneda pagó una deuda y no sobró nada", en:"Even: each coin paid one debt and nothing was left", ok:true},
+              {es:"Con 5 monedas, porque las deudas no se pagaron", en:"With 5 coins, because the debts were not paid"},
+              {es:"Con 10 fichas, porque se juntaron todas", en:"With 10 tokens, because they were all put together"} ] } }
+  ],
+  m5: [
+    { t:"A", op:[5,"-",2], pred:"saldo", hist:{es:"Tienes 5 monedas y entregas 2 para pagar el pasaje.", en:"You have 5 coins and you give away 2 to pay your fare."} },
+    { t:"B", op:[-5,"-",-2], pred:"cambio", hist:{es:"Debes 5 y te perdonan 2 de deuda. ¿Cuánto debes ahora?", en:"You owe 5 and 2 of your debt is forgiven. How much do you owe now?"},
+      exp:{ q:{es:"Te perdonaron 2 de deuda y tu saldo sigue siendo negativo. ¿Qué pasó?", en:"2 of your debt was forgiven and your balance is still negative. What happened?"},
+        ops:[ {es:"Mejoró: pasé de deber 5 a deber solo 3", en:"It got better: I went from owing 5 to owing only 3", ok:true},
+              {es:"Empeoró: quitar fichas siempre baja el saldo", en:"It got worse: taking away tokens always lowers the balance"},
+              {es:"No cambió: si sigo debiendo, da lo mismo", en:"It did not change: if I still owe, it is all the same"} ],
+        expl:{es:"El saldo mejora aunque todavía sea negativo.", en:"The balance improves even though it is still negative."} } },
+    { t:"C", op:[3,"-",-2], pred:"saldo",
+      hist:{es:"Tienes 3 monedas y te quitan una deuda de 2… pero no tienes deudas. ¿Cómo puedes quitar 2 deudas?", en:"You have 3 coins and a debt of 2 is taken away… but you have no debts. How can you take away 2 debts?"},
+      instr:{es:"Pista: puedes añadir parejas que valen cero. ¿Cambia tu saldo al hacerlo? Después quita las 2 deudas y pulsa «Comprobar mis fichas».", en:"Hint: you can add zero pairs. Does your balance change when you do? Then take away the 2 debts and press “Check my tokens”."},
+      exp:{ q:{es:"¿Por qué tu saldo terminó en +5?", en:"Why did your balance end at +5?"},
+        ops:[ {es:"Las parejas no cambiaron el saldo y, al quitar 2 deudas, quedaron 5 monedas", en:"The pairs did not change the balance, and when 2 debts were taken away, 5 coins were left", ok:true},
+              {es:"Porque menos por menos es más, y la resta se convierte en una suma", en:"Because minus times minus is plus, and the subtraction turns into addition"},
+              {es:"Porque las parejas que añadí me regalaron dos monedas más", en:"Because the pairs I added gave me two extra coins for free"} ],
+        expl:{es:"Quitar una deuda mejora el saldo, igual que recibir una moneda.", en:"Taking away a debt improves the balance, just like receiving a coin."} } },
+    { t:"D", op:[2,"-",4], pred:"saldo",
+      hist:{es:"Tienes 2 monedas y tienes que entregar 4.", en:"You have 2 coins and you have to give away 4."},
+      instr:{es:"Pista: si no te alcanzan las monedas, añade parejas que valen cero. Después entrega las 4 monedas y pulsa «Comprobar mis fichas».", en:"Hint: if you do not have enough coins, add zero pairs. Then give away the 4 coins and press “Check my tokens”."} }
+  ]
+};
+
+/* ---------- 8. Práctica libre y cierre ---------- */
+function llenarSelect(sel, desde, hasta, valor, sinCero){
+  var h="";
+  for (var v=desde; v<=hasta; v++){ if (sinCero && v===0) continue; h+='<option value="'+v+'"'+(v===valor?" selected":"")+'>'+fmt(v)+'</option>'; }
+  sel.innerHTML=h;
+}
+function iniciarPracticaLibre(){
+  var libre = new Tablero($("tab-libre"), {saldoVisible:true});
+  libre.poner(0,0);
+  llenarSelect($("pl-a"), -8, 8, 3);
+  llenarSelect($("pl-b"), -8, 8, -2, true);
+  $("pl-op").value="-";
+  var preparar=function(){
+    var a=+$("pl-a").value, sg=$("pl-op").value, b=+$("pl-b").value, nivel=$("pl-nivel").value;
+    var op=[a,sg,b];
+    new Reto($("pl-reto"), { t:"★", op:op, pred:"saldo", hist:historia(a,sg,b), soloFichas:nivel==="2" }, null);
+  };
+  $("pl-preparar").addEventListener("click", preparar);
+  $("pl-azar").addEventListener("click", function(){
+    $("pl-a").value=aleatorio(-6,6); $("pl-op").value=Math.random()<.5?"+":"-";
+    var b=0; while(b===0) b=aleatorio(-6,6); $("pl-b").value=b; preparar();
+  });
+}
+
+/* Cierre a · Resolver, con ayuda que se retira */
+function Resolver(host, nivelSel){
+  this.h=host; this.sel=nivelSel; this.k=0; this.aciertos=0; this.total=0; this.op=[-4,"+",7]; this.int=0;
+  var yo=this;
+  nivelSel.addEventListener("change", function(){ yo.mostrar(); });
+  this.mostrar();
+}
+Resolver.prototype.nuevo = function(){
+  var a, b, sg, intento=0;
+  do { a=aleatorio(-6,6); b=aleatorio(-6,6); sg=Math.random()<.5?"+":"-"; intento++; }
+  while ((b===0 || (a===this.op[0] && b===this.op[2] && sg===this.op[1])) && intento<50);
+  this.op=[a,sg,b]; this.k++; this.int=0; this.mostrar();
+};
+Resolver.prototype.mostrar = function(){
+  var yo=this, nivel=+this.sel.value, op=this.op, ans=resultadoOp(op), u="rs"+this.k;
+  var letra=LETRAS[this.k%26];
+  var html='<p class="preg">'+B("Ejercicio "+letra,"Exercise "+letra)+'</p>';
+  if (nivel===1) html+='<p class="historia">'+B(historia(op[0],op[1],op[2]))+'</p>';
+  if (nivel<=2) html+='<div class="rs-tab"></div>';
+  if (nivel===1) html+='<div class="r-expr"><label for="'+u+'">'+B("Mi saldo final:","My final balance:")+'</label><input type="text" class="campo-num" id="'+u+'" autocomplete="off"></div>';
+  else html+='<div class="r-expr"><label for="'+u+'"><span class="ex">'+exprOp(op)+'</span></label><input type="text" class="campo-num" id="'+u+'" autocomplete="off"></div>';
+  html+='<div class="fila-btn"><button type="button" class="btn rs-comp">'+B("Comprobar","Check")+'</button><button type="button" class="btn-sec rs-otro">'+B("Otro ejercicio","Another exercise")+'</button></div>'+
+        '<div class="fb rs-fb" role="status"></div><p class="marcador">'+B("Aciertos: "+this.aciertos+" de "+this.total,"Correct: "+this.aciertos+" of "+this.total)+'</p>';
+  this.h.innerHTML=html;
+  if (nivel<=2){
+    var t=new Tablero(this.h.querySelector(".rs-tab"), {saldoVisible:false, ecuaciones:false, inicio:true, notaOculta:{es:"Haz la operación con las fichas y escribe abajo el saldo que queda.", en:"Do the operation with the tokens and type the balance that is left below."}});
+    t.ponerSaldo(op[0]);
+    this.tab=t;
+  }
+  var inp=this.h.querySelector("input"), fb=this.h.querySelector(".rs-fb"), btn=this.h.querySelector(".rs-comp");
+  var revisar=function(){
+    var v=leeEntero(inp.value);
+    if (isNaN(v)){ inp.classList.add("error"); fb.className="fb mal rs-fb"; fb.innerHTML=B("Escribe un número entero, por ejemplo −2 o +3.","Type a whole number, for example −2 or +3."); return; }
+    inp.classList.remove("error");
+    var final=function(ok){
+      yo.total++; if (ok) yo.aciertos++;
+      inp.disabled=true; btn.disabled=true;
+      yo.h.querySelector(".marcador").innerHTML=B("Aciertos: "+yo.aciertos+" de "+yo.total,"Correct: "+yo.aciertos+" of "+yo.total);
+    };
+    if (v===ans){
+      fb.className="fb bien rs-fb";
+      fb.innerHTML=B("¡Correcto! ","Correct! ")+(nivel===1 ? B("Así se escribe: ","This is how you write it: ") : "")+'<span class="ex">'+exprOp(op)+" "+fmt(ans)+'</span>';
+      final(true); return;
+    }
+    yo.int++;
+    if (yo.int>=2){
+      fb.className="fb mal rs-fb";
+      fb.innerHTML=B("La respuesta es ","The answer is ")+'<span class="ex">'+exprOp(op)+" "+fmt(ans)+'</span>. '+B("Pruébalo con fichas: ","Try it with tokens: ")+B(historia(op[0],op[1],op[2])).replace(/¿Cuál es tu saldo\?|What is your balance\?/g,"");
+      final(false); return;
+    }
+    fb.className="fb mal rs-fb";
+    fb.innerHTML = (v===-ans && ans!==0) ? B("Revisa el signo: ¿al final tienes o debes?","Check the sign: at the end, do you have or do you owe?")
+      : (nivel<=2 ? B("Haz la operación en el tablero y mira qué queda.","Do the operation on the board and see what is left.")
+                  : B("Imagina las fichas: ¿la operación pide añadir o quitar? ¿Monedas o deudas?","Picture the tokens: does the operation ask you to add or take away? Coins or debts?"));
+  };
+  btn.addEventListener("click", revisar);
+  inp.addEventListener("keydown", function(e){ if (e.key==="Enter") revisar(); });
+  this.h.querySelector(".rs-otro").addEventListener("click", function(){ yo.nuevo(); });
+};
+
+function iniciarCierre(){
+  new Resolver($("rs-zona"), $("rs-nivel"));
+
+  $("inv-modelo-btn").addEventListener("click", function(){
+    var m=$("inv-modelo"), abierto=!m.hidden; m.hidden=abierto; this.setAttribute("aria-expanded", String(!abierto));
+  });
+  new Reto($("inv-reto"), { t:"★", op:[-2,"-",-5], pred:"saldo",
+    hist:{es:"Empiezas debiendo 2 y te quitan una deuda de 5.", en:"You start out owing 2 and a debt of 5 is taken away."},
+    instr:{es:"Quita las 5 deudas. Si no te alcanzan, añade parejas que valen cero. Después pulsa «Comprobar mis fichas».", en:"Take away the 5 debts. If there are not enough, add zero pairs. Then press “Check my tokens”."} }, null);
+
+  opcionMultiple($("cmp-mc"), {
+    q:{es:"¿Es lo mismo recibir 3 monedas que quitar una deuda de 3?", en:"Is receiving 3 coins the same as taking away a debt of 3?"},
+    ops:[ {es:"Sí: en los dos casos mi saldo mejora 3", en:"Yes: in both cases my balance goes up by 3", ok:true},
+          {es:"No: recibir mejora el saldo y quitar lo empeora", en:"No: receiving raises the balance and taking away lowers it"},
+          {es:"No: quitar una deuda no cambia el saldo", en:"No: taking away a debt does not change the balance"} ],
+    expl:{es:"Por eso (−5) − (−3) da lo mismo que (−5) + (+3): en los dos casos el saldo pasa a −2.", en:"That is why (−5) − (−3) gives the same as (−5) + (+3): in both cases the balance becomes −2."} });
+  var t1=new Tablero($("cmp-tab1"), {saldoVisible:true}); t1.poner(0,5);
+  var t2=new Tablero($("cmp-tab2"), {saldoVisible:true}); t2.poner(0,5);
+
+  opcionMultiple($("ana-mc"), {
+    q:{es:"Ana dice que quitar una deuda hace que debas más. ¿Qué le mostrarías con las fichas?", en:"Ana says that taking away a debt makes you owe more. What would you show her with the tokens?"},
+    ops:[ {es:"Que al retirar una deuda quedan menos deudas y el saldo sube", en:"That removing a debt leaves fewer debts and the balance goes up", ok:true},
+          {es:"Que tiene razón: al quitar fichas el saldo siempre baja", en:"That she is right: removing tokens always lowers the balance"},
+          {es:"Que quitar una deuda es igual que añadir otra deuda", en:"That taking away a debt is the same as adding another debt"} ],
+    expl:{es:"Quitar una deuda mejora el saldo, aunque siga siendo negativo.", en:"Taking away a debt improves the balance, even if it is still negative."} });
+  var ta=new Tablero($("ana-tab"), {saldoVisible:true}); ta.poner(0,4);
+}
+
+/* ---------- 9. Arranque ---------- */
+function ponerIdioma(l){
+  if (["es","en","bi"].indexOf(l)<0) l="es";
+  IDIOMA=l;
+  document.documentElement.dataset.lang=l;
+  document.documentElement.lang = l==="en" ? "en" : "es";
+  document.querySelectorAll("[data-set-lang]").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.setLang===l ? "true" : "false"); });
+  try { localStorage.setItem("tengo-debo-idioma", l); } catch(e){}
+  TABLEROS.forEach(function(t){ t.render(); });
+}
+function abrePorHash(){
+  var h=decodeURIComponent(location.hash.slice(1)); if (!h) return;
+  var el=document.getElementById(h); if (!el) return;
+  var d = el.tagName==="DETAILS" ? el : el.closest("details"); if (d) d.open=true;
+  setTimeout(function(){ el.scrollIntoView({block:"start"}); }, 30);
+}
+(function(){
+  var l=null;
+  try { l=new URLSearchParams(location.search).get("lang"); } catch(e){}
+  if (!l){ try { l=localStorage.getItem("tengo-debo-idioma"); } catch(e){} }
+  ponerIdioma(l||"es");
+  document.querySelectorAll("[data-set-lang]").forEach(function(b){ b.addEventListener("click", function(){ ponerIdioma(b.dataset.setLang); }); });
+
+  var esc=new Tablero($("tab-escenario"), {saldoVisible:true}); esc.poner(3,5);
+  new Serie($("serie-desc"), SERIES.desc, { prog:"prog-desc", finES:"¡Descubrimiento hecho!", finEN:"Discovery made!",
+    idea:{es:"Una moneda y una deuda valen cero: cancelarlas o añadirlas nunca cambia el saldo.", en:"A coin and a debt are worth zero: canceling or adding them never changes the balance."},
+    sig:"mision-1", sigTxt:{es:"Ir a la Misión 1 →", en:"Go to Mission 1 →"} });
+  new Serie($("serie-m1"), SERIES.m1, { prog:"prog-m1", idea:{es:"Para saber mi saldo, cancelo parejas y miro qué queda.", en:"To find my balance, I cancel pairs and look at what is left."}, sig:"mision-2", sigTxt:{es:"Ir a la Misión 2 →", en:"Go to Mission 2 →"} });
+  new Serie($("serie-m2"), SERIES.m2, { prog:"prog-m2", idea:{es:"Sumar monedas siempre mejora el saldo.", en:"Adding coins always improves the balance."}, sig:"mision-3", sigTxt:{es:"Ir a la Misión 3 →", en:"Go to Mission 3 →"} });
+  new Serie($("serie-m3"), SERIES.m3, { prog:"prog-m3", idea:{es:"Sumar deudas siempre empeora el saldo: debo más.", en:"Adding debts always makes the balance worse: I owe more."}, sig:"mision-4", sigTxt:{es:"Ir a la Misión 4 →", en:"Go to Mission 4 →"} });
+  new Serie($("serie-m4"), SERIES.m4, { prog:"prog-m4", idea:{es:"Cuando hay monedas y deudas, pago con parejas: el saldo es lo que queda.", en:"When there are coins and debts, I pay with pairs: the balance is what is left."}, sig:"mision-5", sigTxt:{es:"Ir a la Misión 5 →", en:"Go to Mission 5 →"} });
+  new Serie($("serie-m5"), SERIES.m5, { prog:"prog-m5", idea:{es:"Restar es quitar. Quitar monedas empeora el saldo; quitar deudas lo mejora. Si no hay qué quitar, añado parejas que valen cero.", en:"Subtracting is taking away. Taking away coins lowers the balance; taking away debts raises it. If there is nothing to take away, I add zero pairs."}, sig:"practica-libre", sigTxt:{es:"Ir a la práctica libre →", en:"Go to free practice →"} });
+
+  iniciarPracticaLibre();
+  iniciarCierre();
+
+  $("abrir-todo").addEventListener("click", function(){ document.querySelectorAll("details.modulo").forEach(function(d){ d.open=true; }); });
+  $("cerrar-todo").addEventListener("click", function(){ document.querySelectorAll("details.modulo").forEach(function(d){ d.open=false; }); });
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){ a.addEventListener("click", function(){ setTimeout(abrePorHash, 0); }); });
+  window.addEventListener("hashchange", abrePorHash);
+  abrePorHash();
+})();
+</script>
+</body>
+</html>
