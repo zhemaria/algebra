@@ -156,7 +156,7 @@
   .saldo-frase{margin:2px 0 4px;font-size:15px;}
   .recta-mini{width:100%;max-width:520px;height:auto;display:block;margin:4px 0 0;}
 
-  .herramientas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px;}
+  .herramientas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;}
   .grupo-h{background:#fff;border:1px solid #ddd3bf;border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;}
   .grupo-tit{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--gris);}
   .h-btn{background:#fff;border:2px solid #767676;border-radius:8px;padding:6px 10px;font-weight:600;font-size:14.5px;color:#222;
@@ -167,8 +167,11 @@
   .ic-m{width:16px;height:16px;border-radius:50%;background:#fbc02d;box-shadow:inset 0 0 0 2px var(--oro-borde);}
   .ic-d{width:20px;height:13px;border-radius:3px;background:var(--deuda);}
   .ic-p{width:28px;height:14px;background:linear-gradient(90deg,#fbc02d 0 45%,transparent 45% 55%,var(--deuda) 55%);border-radius:7px 3px 3px 7px;}
-  .aux{flex-direction:row;flex-wrap:wrap;align-items:center;}
-  .aux .h-btn{flex:1;justify-content:center;}
+  .t-aux{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:10px;}
+  .t-aux .h-btn{justify-content:center;white-space:nowrap;}
+  .t-aux.fuera{margin:0 0 0 auto;}
+  .zonas{margin-top:12px;}
+  .rs-fila{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;}
 
   .bitacora{list-style:none;margin:10px 0 0;padding:0;font-size:14px;}
   .bitacora:empty{display:none;}
@@ -599,7 +602,7 @@ var TABLEROS = [];
 var UID = 0;
 
 function Tablero(host, opciones){
-  this.o = Object.assign({ saldoVisible:true, bitacora:true, ecuaciones:true, alCambiar:null, inicio:false, notaOculta:null }, opciones||{});
+  this.o = Object.assign({ saldoVisible:true, bitacora:true, ecuaciones:true, alCambiar:null, inicio:false, notaOculta:null, sinSaldo:false, auxEn:null }, opciones||{});
   this.host = host;
   this.p = []; this.n = [];
   this.c = Tablero.cero();
@@ -618,17 +621,6 @@ Tablero.prototype.construir = function(){
   h.innerHTML =
     '<div class="tablero">' +
       '<p class="t-inicio"></p>' +
-      '<div class="zonas">' +
-        '<div class="zona zona-tengo" data-t="P" role="group">' +
-          '<div class="zona-cab"><span class="ic ic-m" aria-hidden="true"></span>'+B("Tengo · monedas (+)","I have · coins (+)")+'<span class="contador c-p"></span></div>' +
-          '<div class="fichas f-p"></div></div>' +
-        '<div class="zona zona-debo" data-t="N" role="group">' +
-          '<div class="zona-cab"><span class="ic ic-d" aria-hidden="true"></span>'+B("Debo · deudas (−)","I owe · debts (−)")+'<span class="contador c-n"></span></div>' +
-          '<div class="fichas f-n"></div></div>' +
-      '</div>' +
-      '<div class="bandeja" aria-hidden="true">'+B("⇩ Arrastra aquí una ficha para entregarla o quitarla","⇩ Drag a token here to give it away or take it off")+'</div>' +
-      '<div class="t-aviso" role="status"></div>' +
-      '<div class="saldo"></div>' +
       '<div class="herramientas" role="group">' +
         '<div class="grupo-h"><span class="grupo-tit">'+B("Añadir","Add")+'</span>' +
           '<button type="button" class="h-btn" data-acc="aP"><span class="ic ic-m" aria-hidden="true"></span>'+B("Recibo una moneda","I receive a coin")+'</button>' +
@@ -639,10 +631,21 @@ Tablero.prototype.construir = function(){
         '<div class="grupo-h"><span class="grupo-tit">'+B("Parejas que valen cero","Zero pairs")+'</span>' +
           '<button type="button" class="h-btn" data-acc="k"><span class="ic ic-p" aria-hidden="true"></span>'+B("Pago: cancelo una pareja","I pay: cancel a pair")+'</button>' +
           '<button type="button" class="h-btn" data-acc="z"><span class="ic ic-p" aria-hidden="true"></span>'+B("Añado una pareja","I add a pair")+'</button></div>' +
-        '<div class="grupo-h aux">' +
-          '<button type="button" class="h-btn" data-acc="u">'+B("↶ Deshacer","↶ Undo")+'</button>' +
-          '<button type="button" class="h-btn" data-acc="r">'+B("⟲ Empezar de nuevo","⟲ Start over")+'</button></div>' +
       '</div>' +
+      '<div class="zonas">' +
+        '<div class="zona zona-tengo" data-t="P" role="group">' +
+          '<div class="zona-cab"><span class="ic ic-m" aria-hidden="true"></span>'+B("Tengo · monedas (+)","I have · coins (+)")+'<span class="contador c-p"></span></div>' +
+          '<div class="fichas f-p"></div></div>' +
+        '<div class="zona zona-debo" data-t="N" role="group">' +
+          '<div class="zona-cab"><span class="ic ic-d" aria-hidden="true"></span>'+B("Debo · deudas (−)","I owe · debts (−)")+'<span class="contador c-n"></span></div>' +
+          '<div class="fichas f-n"></div></div>' +
+      '</div>' +
+      '<div class="bandeja" aria-hidden="true">'+B("⇩ Arrastra aquí una ficha para entregarla o quitarla","⇩ Drag a token here to give it away or take it off")+'</div>' +
+      '<div class="t-aviso" role="status"></div>' +
+      '<div class="t-aux">' +
+        '<button type="button" class="h-btn" data-acc="u">'+B("↶ Deshacer","↶ Undo")+'</button>' +
+        '<button type="button" class="h-btn" data-acc="r">'+B("⟲ Empezar de nuevo","⟲ Start over")+'</button></div>' +
+      '<div class="saldo"></div>' +
       '<ol class="bitacora"></ol>' +
       '<div class="sr-only t-vivo" aria-live="polite"></div>' +
     '</div>';
@@ -658,6 +661,10 @@ Tablero.prototype.construir = function(){
     yo.elegir(f.dataset.id, f.dataset.t);
   });
   zonas.addEventListener("pointerdown", function(e){ yo.inicioArrastre(e); });
+  this.aux = this.q(".t-aux");
+  this.botones = Array.prototype.slice.call(h.querySelectorAll(".h-btn"));
+  if (this.o.auxEn){ this.aux.classList.add("fuera"); this.o.auxEn.appendChild(this.aux); }
+  if (this.o.sinSaldo) this.q(".saldo").hidden = true;
 };
 
 Tablero.prototype.idNuevo = function(){ UID++; return "f"+UID; };
@@ -735,7 +742,7 @@ Tablero.prototype.cancelar = function(pid, nid){
   var yo=this, s0=this.saldo();
   if (MOV){
     var burbuja=document.createElement("div"); burbuja.className="burbuja-cero"; burbuja.setAttribute("aria-hidden","true");
-    burbuja.textContent="(+1) + (−1) = 0"; this.q(".tablero").appendChild(burbuja);
+    burbuja.textContent="(+1) + (−1) = 0"; burbuja.style.top=(this.q(".zonas").offsetTop+50)+"px"; this.q(".tablero").appendChild(burbuja);
     setTimeout(function(){ burbuja.remove(); }, 1050);
   }
   this.salir([pid,nid], "se-cancela", function(){
@@ -896,7 +903,7 @@ Tablero.prototype.render = function(){
     sd.innerHTML = '<div class="saldo-num">'+B("Saldo:","Balance:")+' <strong>?</strong></div>'+
                    '<p class="saldo-frase nota">'+B(this.o.notaOculta || {es:"Lo verás cuando compruebes tus fichas. Mientras tanto, cuenta.", en:"You will see it when you check your tokens. Meanwhile, count."})+'</p>';
   }
-  this.host.querySelectorAll(".h-btn").forEach(function(b){ b.disabled = !yo.activo; });
+  this.botones.forEach(function(b){ b.disabled = !yo.activo; });
   var bit=this.q(".bitacora");
   if (!this.o.bitacora){ bit.innerHTML=""; return; }
   bit.innerHTML = this.log.map(function(r){
@@ -1033,7 +1040,7 @@ Reto.prototype.construir = function(ini){
       '<section class="r-paso" data-p="1"><h4 tabindex="-1"><span class="n" aria-hidden="true">2</span>'+B("Manipulo","I act")+'</h4>' +
         '<p class="instr">'+B(s.instr || {es:"Haz en el tablero lo que cuenta la historia. Después pulsa «Comprobar mis fichas».", en:"Do on the board what the story says. Then press “Check my tokens”."})+'</p>' +
         '<div class="r-tab"></div>' +
-        '<div class="fila-btn"><button type="button" class="btn r-comp">'+B("Comprobar mis fichas","Check my tokens")+'</button></div>' +
+        '<div class="fila-btn r-fila"><button type="button" class="btn r-comp">'+B("Comprobar mis fichas","Check my tokens")+'</button></div>' +
         '<div class="fb r-fb1" role="status"></div></section>' +
       '<section class="r-paso" data-p="2" hidden><h4 tabindex="-1"><span class="n" aria-hidden="true">3</span>'+B("Observo","I observe")+'</h4><div class="r-obs"></div></section>' +
       '<section class="r-paso" data-p="3" hidden><h4 tabindex="-1"><span class="n" aria-hidden="true">4</span>'+B("Explico","I explain")+'</h4><div class="r-exp"></div></section>' +
@@ -1041,7 +1048,7 @@ Reto.prototype.construir = function(ini){
       '<div class="r-fin" hidden></div>' +
     '</article>';
   this.q=function(sel){ return yo.h.querySelector(sel); };
-  this.tab = new Tablero(this.q(".r-tab"), { saldoVisible:false, inicio:true });
+  this.tab = new Tablero(this.q(".r-tab"), { saldoVisible:false, inicio:true, auxEn:this.q(".r-fila") });
   this.tab.poner(ini[0], ini[1]);
   this.q(".r-comp").addEventListener("click", function(){ yo.comprobar(); });
   if (s.pred){ this.armarPrediccion(); this.irA(0); }
@@ -1371,13 +1378,14 @@ Resolver.prototype.mostrar = function(){
   var html='<p class="preg">'+B("Ejercicio "+letra,"Exercise "+letra)+'</p>';
   if (nivel===1) html+='<p class="historia">'+B(historia(op[0],op[1],op[2]))+'</p>';
   if (nivel<=2) html+='<div class="rs-tab"></div>';
+  html+='<div class="rs-fila"><div class="rs-resp">';
   if (nivel===1) html+='<div class="r-expr"><label for="'+u+'">'+B("Mi saldo final:","My final balance:")+'</label><input type="text" class="campo-num" id="'+u+'" autocomplete="off"></div>';
   else html+='<div class="r-expr"><label for="'+u+'"><span class="ex">'+exprOp(op)+'</span></label><input type="text" class="campo-num" id="'+u+'" autocomplete="off"></div>';
   html+='<div class="fila-btn"><button type="button" class="btn rs-comp">'+B("Comprobar","Check")+'</button><button type="button" class="btn-sec rs-otro">'+B("Otro ejercicio","Another exercise")+'</button></div>'+
-        '<div class="fb rs-fb" role="status"></div><p class="marcador">'+B("Aciertos: "+this.aciertos+" de "+this.total,"Correct: "+this.aciertos+" of "+this.total)+'</p>';
+        '<div class="fb rs-fb" role="status"></div><p class="marcador">'+B("Aciertos: "+this.aciertos+" de "+this.total,"Correct: "+this.aciertos+" of "+this.total)+'</p></div><div class="rs-aux"></div></div>';
   this.h.innerHTML=html;
   if (nivel<=2){
-    var t=new Tablero(this.h.querySelector(".rs-tab"), {saldoVisible:false, ecuaciones:false, inicio:true, notaOculta:{es:"Haz la operación con las fichas y escribe abajo el saldo que queda.", en:"Do the operation with the tokens and type the balance that is left below."}});
+    var t=new Tablero(this.h.querySelector(".rs-tab"), {saldoVisible:false, ecuaciones:false, inicio:true, sinSaldo:true, auxEn:this.h.querySelector(".rs-aux")});
     t.ponerSaldo(op[0]);
     this.tab=t;
   }
