@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<!-- LearnGED · Level 1 · Lesson 1.1 · Place value — interactive (English)
+     José M. Fernández · CC BY-NC-SA 4.0 -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice · Lesson 1.1 · Place value and whole numbers · LearnGED</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="https://www.learnged.com/favicon.svg" type="image/svg+xml">
+<style>
+
+  :root{
+    --tema:#1565c0; --tema-d:#0d47a1; --tema-bg:#e3f2fd; --tema-bg2:#bbdefb;
+    --acento:#0d47a1; --txt:#222; --bg:#f5f7fa; --gris:#555;
+    --ok:#1b5e20; --ok-bg:#e8f5e9; --mal:#b71c1c; --mal-bg:#ffebee;
+    --avi:#5c3900; --avi-bg:#fff8e1;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;margin:0;background:var(--bg);
+       color:var(--txt);line-height:1.6;font-size:16px;}
+  .contenedor{max-width:900px;margin:0 auto;padding:22px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+           overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  header.principal{background:var(--tema);color:#fff;padding:28px 26px;border-radius:14px;margin-bottom:20px;}
+  header.principal .ruta{font-size:13px;letter-spacing:.4px;text-transform:uppercase;}
+  header.principal h1{margin:8px 0 6px;font-size:24px;font-weight:700;}
+  header.principal .meta{font-size:14px;}
+
+  nav.indice{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:16px 20px;margin-bottom:18px;}
+  nav.indice h2{margin:0 0 10px;font-size:17px;color:var(--tema-d);}
+  nav.indice ol{margin:0;padding-left:22px;}
+  nav.indice li{margin:6px 0;}
+  nav.indice a{color:var(--tema-d);font-weight:600;}
+  .controles-todo{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  button{font-family:inherit;font-size:15px;cursor:pointer;}
+  .btn{background:var(--tema);color:#fff;border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn:hover{background:var(--tema-d);border-color:var(--tema-d);}
+  .btn-sec{background:#fff;color:var(--tema-d);border:2px solid var(--tema);border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-sec:hover{background:var(--tema-bg);}
+  .btn-acento{background:var(--acento);border:2px solid var(--acento);color:#fff;border-radius:8px;padding:8px 18px;font-weight:700;}
+  .btn-acento:hover{background:#0a3a82;border-color:#0a3a82;}
+  .btn:focus-visible,.btn-sec:focus-visible,.btn-acento:focus-visible,
+  .opcion:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{
+    outline:3px solid var(--acento);outline-offset:2px;}
+
+  details.modulo{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;margin-bottom:18px;overflow:hidden;}
+  details.modulo > summary{list-style:none;cursor:pointer;padding:16px 20px;background:var(--tema-bg);
+                           display:flex;align-items:center;gap:14px;}
+  details.modulo > summary::-webkit-details-marker{display:none;}
+  details.modulo > summary h2{margin:0;font-size:19px;color:var(--tema-d);font-weight:700;}
+  .num{background:var(--tema);color:#fff;width:32px;height:32px;border-radius:50%;
+       display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;font-size:16px;}
+  .chev{margin-left:auto;color:var(--tema-d);font-weight:700;font-size:18px;}
+  details[open] .chev{transform:rotate(90deg);display:inline-block;}
+  .cuerpo{padding:18px 22px 24px;}
+
+  h3{color:var(--tema-d);font-size:17px;margin:22px 0 8px;}
+  h3:first-child{margin-top:4px;}
+  p{margin:10px 0;}
+
+  .formula{text-align:center;font-size:20px;font-weight:700;color:var(--tema-d);margin:14px 0;}
+  .panel{background:#fafafa;border:1px solid #d8d8d8;border-radius:10px;padding:16px 18px;margin:14px 0;}
+  .campos{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;}
+  .campo{display:flex;flex-direction:column;gap:4px;}
+  .campo label{font-weight:700;color:var(--tema-d);font-size:15px;}
+  .campo input[type="number"]{width:96px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;max-width:100%;}
+  .nota{font-size:14px;color:var(--gris);}
+  .fila-btn{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+  .caja-aviso{background:var(--avi-bg);border:2px solid #f9a825;border-left:8px solid #f9a825;
+              border-radius:8px;padding:14px 18px;margin:14px 0;color:var(--avi);font-size:15px;display:none;}
+  .caja-aviso.visible{display:block;}
+  .campo input.error{border-color:#b71c1c;background:#ffebee;}
+
+  .salida{background:var(--tema-bg);border-left:6px solid var(--tema);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+  .salida .linea{margin:6px 0;}
+  .veredicto{font-weight:700;font-size:17px;color:var(--tema-d);}
+
+  .pasos{margin:12px 0;}
+  .paso{margin:8px 0;padding:10px 12px 10px 42px;position:relative;background:#fff;border:1px solid #e0e0e0;border-radius:8px;}
+  .paso .n{position:absolute;left:10px;top:10px;background:var(--tema-bg);color:var(--tema-d);
+           width:24px;height:24px;border-radius:50%;font-size:13px;font-weight:700;text-align:center;line-height:24px;}
+
+  /* fracción algebraica */
+  .frac{display:inline-block;text-align:center;vertical-align:middle;margin:0 6px;}
+  .frac .arriba{display:block;padding:2px 10px;border-bottom:3px solid var(--tema);font-weight:700;font-size:18px;}
+  .frac .abajo{display:block;padding:2px 10px;font-weight:700;font-size:18px;}
+  .fraccion-grande{text-align:center;font-size:18px;margin:18px 0;color:var(--tema-d);}
+  .igual{display:inline-block;font-size:22px;font-weight:700;color:var(--tema);margin:0 8px;vertical-align:middle;}
+  .tok{display:inline-block;padding:0 2px;}
+  .tok.cancelado{text-decoration:line-through;text-decoration-thickness:3px;
+                 text-decoration-color:#b71c1c;color:#b71c1c;}
+
+  .caja-tip{background:var(--ok-bg);border-left:5px solid var(--ok);padding:12px 16px;
+            border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--ok);}
+  .caja-atencion{background:var(--avi-bg);border-left:5px solid #f9a825;padding:12px 16px;
+                 border-radius:0 8px 8px 0;margin:14px 0;font-size:15px;color:var(--avi);}
+
+  .practica{background:#fff;border:2px dashed var(--tema-bg2);border-radius:10px;padding:16px 18px;margin:18px 0;}
+  .enun{font-weight:700;margin-bottom:10px;font-size:17px;}
+  .opciones{display:flex;flex-direction:column;gap:8px;}
+  .opcion{text-align:left;background:#fff;border:2px solid #767676;border-radius:8px;padding:10px 14px;font-size:16px;color:var(--txt);}
+  .opcion:hover{background:var(--tema-bg);border-color:var(--tema);}
+  .opcion[aria-pressed="true"]{border-color:var(--tema);background:var(--tema-bg);}
+  .opcion.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .opcion.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:15px;display:none;}
+  .fb.bien{display:block;background:var(--ok-bg);border-left:5px solid var(--ok);color:var(--ok);}
+  .fb.mal{display:block;background:var(--mal-bg);border-left:5px solid var(--mal);color:var(--mal);}
+  .marcador{font-size:14px;color:var(--gris);margin-top:10px;font-weight:700;}
+
+  table.reglas{width:100%;border-collapse:collapse;margin:14px 0;font-size:15px;}
+  table.reglas caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  table.reglas th,table.reglas td{border:1px solid #c8c8c8;padding:9px 12px;text-align:left;}
+  table.reglas th{background:var(--tema-bg);color:var(--tema-d);}
+
+  .volver{display:inline-block;margin-top:16px;font-size:14px;color:var(--tema-d);font-weight:700;}
+
+  footer.pie{background:#fff;border-top:4px solid var(--tema);border-radius:12px;padding:20px 24px;
+             margin-top:26px;font-size:14px;color:var(--gris);}
+  footer.pie a{color:var(--tema-d);}
+  .campos-sci .campo input[type="text"]{width:120px;}
+  .campos-sci .campo input.corto{width:84px;}
+  @media (max-width:560px){ .campos{flex-direction:column;align-items:stretch;} .campos.campos-sci{flex-direction:row;align-items:flex-end;flex-wrap:nowrap;gap:10px;} }
+
+  .btn:disabled,.btn-sec:disabled{background:#eeeeee;color:#424242;border-color:#9e9e9e;cursor:not-allowed;}
+  input:disabled,select:disabled{background:#f3f3f3;cursor:not-allowed;}
+  .campo input[type="text"]{width:150px;padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .campo input.ancho{width:230px;}
+  .campo input.corto{width:96px;}
+  .enun .ex, .opcion .ex, .salida .ex, .lista-orden .ex{font-size:18px;}
+  .ex{white-space:nowrap;}
+  sup{font-size:.72em;}
+
+  .centro{text-align:center;}
+
+  /* radicales */
+  .rad{white-space:nowrap;}
+  .rad .rc{border-top:2px solid currentColor;padding:0 3px 0 2px;margin-left:1px;}
+  .fracc{display:inline-block;text-align:center;vertical-align:middle;margin:0 3px;line-height:1.15;}
+  .fracc .fa{display:block;padding:0 4px;border-bottom:2px solid currentColor;}
+  .fracc .fb2{display:block;padding:0 4px;}
+  .periodo{text-decoration:overline;}
+  .grande{font-size:22px;font-weight:700;}
+  .estado{text-align:center;font-size:18px;margin:10px 0;color:var(--tema-d);}
+
+  /* tabla de cuadrados */
+  .cuadros{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;margin:12px 0;}
+  .cuadro{border:2px solid var(--tema-bg2);border-radius:8px;background:#fff;text-align:center;padding:4px 2px;font-size:14px;}
+  .cuadro strong{display:block;font-size:18px;color:var(--txt);}
+  .cuadro.divide{background:var(--tema-bg);border-color:var(--tema);}
+  .cuadro.mayor{background:var(--tema);border-color:var(--tema-d);}
+  .cuadro.mayor, .cuadro.mayor strong{color:#fff;}
+
+  /* botones de elección dentro de un panel */
+  .elecciones{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+  .eleccion{background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:8px;padding:8px 14px;font-weight:700;font-size:16px;}
+  .eleccion:hover{background:var(--tema-bg);}
+  .eleccion[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .eleccion:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* casillas de selección múltiple */
+  .casillas{display:flex;flex-direction:column;gap:8px;margin:10px 0;}
+  .casilla{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #767676;border-radius:8px;padding:8px 12px;font-size:16px;cursor:pointer;}
+  .casilla input{width:20px;height:20px;accent-color:var(--tema);}
+  .casilla.correcta{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .casilla.incorrecta{border-color:var(--mal);background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .casilla:focus-within{outline:3px solid var(--acento);outline-offset:2px;}
+
+  /* diagrama y recta */
+  .diagrama{max-width:560px;margin:10px auto;display:block;width:100%;height:auto;}
+  .recta-svg{width:100%;max-width:680px;height:auto;display:block;margin:8px auto;overflow:visible;}
+  input[type="range"]{width:100%;accent-color:var(--tema);}
+  input[type="range"]:focus-visible{outline:3px solid var(--acento);outline-offset:4px;}
+
+  /* expresiones algebraicas */
+  .alg{white-space:nowrap;}
+  .fam-x{background:#e3f2fd;color:#0d47a1;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-y{background:#e8f5e9;color:#1b5e20;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-x2{background:#f3e5f5;color:#4a148c;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fam-k{background:#fff8e1;color:#5c3900;border-radius:6px;padding:1px 6px;font-weight:700;}
+  .fila-term{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#fff;border:1px solid #d8d8d8;border-radius:8px;padding:8px 12px;margin:6px 0;}
+  .fila-term .t{min-width:70px;font-size:18px;font-weight:700;}
+  .fila-term.bien{border-color:var(--ok);background:var(--ok-bg);}
+  .fila-term.mal{border-color:var(--mal);background:var(--mal-bg);}
+  .balanza{width:100%;max-width:620px;height:auto;display:block;margin:6px auto;}
+  .comparar{width:100%;border-collapse:collapse;margin:12px 0;font-size:16px;}
+  .comparar caption{text-align:left;font-size:14px;color:var(--gris);margin-bottom:6px;font-style:italic;}
+  .comparar th,.comparar td{border:1px solid #c8c8c8;padding:8px 10px;text-align:center;}
+  .comparar th{background:var(--tema-bg);color:var(--tema-d);}
+  .comparar td.si{background:var(--ok-bg);color:var(--ok);font-weight:700;}
+  .comparar td.no{background:var(--mal-bg);color:var(--mal);font-weight:700;}
+  .tabla-scroll{overflow-x:auto;}
+  .fila-term select{padding:8px 10px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+
+  .lado-a-lado{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  .lado-a-lado > div{background:#fff;border:1px solid #d8d8d8;border-radius:10px;padding:12px 14px;}
+  .lado-a-lado h4{margin:0 0 8px;font-size:16px;color:var(--tema-d);}
+  @media (max-width:640px){ .lado-a-lado{grid-template-columns:1fr;} }
+  .verdad{font-weight:700;}
+  .verdad.si{color:var(--ok);} .verdad.no{color:var(--mal);}
+
+  .figura{width:100%;max-width:640px;height:auto;display:block;margin:8px auto;}
+  .figura .ang{cursor:pointer;}
+  .figura .ang:focus{outline:none;}
+  .figura .ang:focus-visible circle, .figura .ang:focus-visible rect{stroke:#0d47a1;stroke-width:4;}
+  .lista-angulos{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0;}
+  .leyenda-c{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:14px;margin:6px 0;}
+  .leyenda-c span::before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:-2px;}
+  .leyenda-c .l-sel::before{background:#0d47a1;} .leyenda-c .l-ig::before{background:#1b5e20;} .leyenda-c .l-sup::before{background:#b71c1c;}
+
+  .datos{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+  .dato{min-width:40px;text-align:center;padding:6px 8px;border:2px solid var(--tema-bg2);border-radius:8px;background:#fff;font-weight:700;font-size:17px;}
+  .dato.med{background:var(--tema);border-color:var(--tema-d);color:#fff;}
+  .dato.q{background:#fff8e1;border-color:#f9a825;color:#5c3900;}
+  .dato.baja{border-color:#90caf9;} .dato.alta{border-color:#a5d6a7;}
+  .dato.atip{background:#ffebee;border-color:#b71c1c;color:#b71c1c;}
+  .tabla-frec input{width:70px;padding:6px 8px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .tabla-frec td.bien input{border-color:var(--ok);background:var(--ok-bg);} .tabla-frec td.mal input{border-color:var(--mal);background:var(--mal-bg);}
+
+  .tarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:12px 0;}
+  a.tarjeta-ext{display:block;background:#fff;border:2px solid var(--tema-bg2);border-left:8px solid var(--tema);border-radius:10px;padding:14px 16px;color:var(--txt);text-decoration:none;}
+  a.tarjeta-ext:hover{background:var(--tema-bg);}
+  a.tarjeta-ext strong{display:block;color:var(--tema-d);font-size:17px;margin-bottom:4px;}
+  a.tarjeta-ext .ir{display:block;margin-top:8px;font-weight:700;color:var(--acento);}
+  .slots{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:12px 0;}
+  .slot{min-width:84px;text-align:center;border:2px solid var(--tema);border-radius:10px;padding:8px;background:#fff;}
+  .slot strong{display:block;font-size:24px;color:var(--tema-d);}
+  .slot span{font-size:13px;color:var(--gris);}
+  .arreglos{font-family:Consolas,'Courier New',monospace;font-size:16px;display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;max-height:220px;overflow-y:auto;}
+  .arreglos span{background:#fff;border:1px solid #d8d8d8;border-radius:6px;padding:3px 8px;}
+  .arreglos span.grupo{background:var(--tema-bg);border-color:var(--tema-bg2);}
+
+  /* ordenar */
+  .lista-orden{list-style:none;margin:12px 0;padding:0;counter-reset:ord;}
+  .lista-orden li{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #d8d8d8;border-radius:8px;padding:8px 12px;margin:8px 0;counter-increment:ord;}
+  .lista-orden li::before{content:counter(ord);background:var(--tema-bg);color:var(--tema-d);width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
+  .lista-orden li.bien{border-color:var(--ok);background:var(--ok-bg);}
+  .lista-orden li.mal{border-color:var(--mal);background:var(--mal-bg);}
+  .lista-orden .nombre{flex:1;font-weight:700;font-size:20px;}
+  .lista-orden .flechas{display:flex;gap:6px;}
+  .lista-orden .flechas button{background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:6px;width:40px;height:36px;font-weight:700;}
+  .lista-orden .flechas button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  .signos{display:flex;gap:10px;margin:8px 0;}
+  .signos button{min-width:64px;font-size:24px;font-weight:700;background:#fff;border:2px solid var(--tema);color:var(--tema-d);border-radius:8px;padding:4px 14px;}
+  .signos button[aria-pressed="true"]{background:var(--tema);color:#fff;}
+  .signos button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+  table.patron td,table.patron th{text-align:center;}
+  table.patron tr.nueva td{background:#fff8e1;}
+
+  .fr3{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:center;font-size:22px;font-weight:700;margin:10px 0;}
+  .tarjetas-c{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin:10px 0;}
+  .tarjetas-c button{background:#fff;border:2px solid var(--tema-bg2);border-radius:10px;padding:10px 4px;font-size:18px;font-weight:700;color:var(--tema-d);min-height:58px;}
+  .tarjetas-c button[aria-pressed="true"]{background:var(--tema);color:#fff;border-color:var(--tema-d);}
+  .tarjetas-c button:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+  mark.op-act{background:#fff3e0;color:inherit;border-radius:5px;padding:0 3px;outline:2px solid #bf360c;}
+  .expr-paso{font-size:20px;margin:6px 0 2px;line-height:2.2;}
+  .expr-grande{font-size:24px;font-weight:700;line-height:2.2;}
+  .n1{color:#0d47a1;font-weight:700;} .n2{color:#1b5e20;font-weight:700;} .n3{color:#6a1b9a;font-weight:700;}
+  .piramide{display:grid;gap:6px;max-width:560px;margin:12px auto;}
+  .piramide div{margin:0 auto;border-radius:8px;padding:8px 12px;color:#fff;font-weight:700;text-align:center;}
+  .piramide .pz1{width:40%;background:#7f2408;} .piramide .pz2{width:60%;background:#bf360c;} .piramide .pz3{width:80%;background:#e64a19;} .piramide .pz4{width:100%;background:#ff7043;color:#3e1200;}
+  .piramide span{display:block;font-weight:400;font-size:14px;}
+
+  .grupos{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0;}
+  .grupo{border:2px dashed var(--tema-bg2);border-radius:10px;padding:6px 8px;display:flex;flex-wrap:wrap;gap:3px;max-width:180px;justify-content:center;}
+  .ico{font-size:22px;line-height:1;}
+  .tableros{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+  .tablero{background:#fff;border:2px solid var(--tema-bg2);border-radius:12px;padding:12px 14px;}
+  .tablero h4{margin:0 0 6px;color:var(--tema-d);font-size:16px;}
+  .barra-v{height:22px;background:var(--tema);border-radius:4px;transition:width .2s;}
+  @media (prefers-reduced-motion:reduce){.barra-v{transition:none;}}
+
+  .tabla-frec input, .tabla-dep input{width:100px;padding:6px 8px;font-size:16px;border:2px solid #767676;border-radius:7px;font-family:inherit;}
+  .tabla-dep td.bien input{border-color:var(--ok);background:var(--ok-bg);} .tabla-dep td.mal input{border-color:var(--mal);background:var(--mal-bg);}
+  .cadena{font-size:20px;line-height:2.6;}
+  .cadena .tach{text-decoration:line-through;text-decoration-color:#b71c1c;text-decoration-thickness:2px;}
+  .termo{display:flex;gap:24px;align-items:center;justify-content:center;flex-wrap:wrap;}
+  .campo select{max-width:100%;}
+  .campos .campo{max-width:100%;}
+
+  .datos{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+  .dato{min-width:40px;text-align:center;padding:6px 8px;border:2px solid var(--tema-bg2);border-radius:8px;background:#fff;font-weight:700;font-size:17px;}
+  .dato.med{background:var(--tema);border-color:var(--tema-d);color:#fff;}
+  .dato.moda{background:#fff8e1;border-color:#f9a825;}
+  .dato.ext{border-color:#0d47a1;color:#0d47a1;}
+  .medidas4{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:10px 0;}
+  .medidas4 div{background:#fff;border:2px solid var(--tema-bg2);border-radius:10px;padding:10px;text-align:center;}
+  .medidas4 strong{display:block;font-size:24px;color:var(--tema-d);}
+
+  .columna{font-family:Consolas,'Courier New',monospace;font-size:26px;line-height:1.35;display:inline-block;text-align:right;margin:8px 0;padding:8px 16px;background:#fff;border:2px solid var(--tema-bg2);border-radius:10px;}
+  .columna .lleva{font-size:16px;color:#b71c1c;font-weight:700;letter-spacing:0;}
+  .columna .raya{border-top:3px solid #222;}
+  .columna .act{background:#fff3e0;outline:2px solid #ef6c00;border-radius:4px;}
+  .columna .tach{text-decoration:line-through;color:#9e9e9e;}
+  .columna .nuevo{color:#b71c1c;font-size:15px;vertical-align:super;}
+  table.vp{border-collapse:collapse;margin:8px auto;}
+  table.vp th,table.vp td{border:1px solid #bbdefb;padding:6px 8px;text-align:center;min-width:44px;}
+  table.vp th{font-size:12px;background:var(--tema-bg);color:var(--tema-d);line-height:1.2;}
+  table.vp td{font-size:26px;font-weight:700;}
+  table.vp td.sel{background:#fff3e0;color:#b71c1c;}
+  table.vp tr.fila-grupo td{font-size:13px;font-weight:700;color:#fff;background:var(--tema);}
+  table.columna{border-collapse:collapse;}
+  table.columna td{min-width:30px;padding:2px 6px;text-align:center;}
+  table.columna td.bajo{border-bottom:3px solid #222;}
+  table.columna td.raya{border-top:none;}
+  .paso input[type=text]{padding:6px 8px;font-size:17px;border:2px solid #767676;border-radius:7px;font-family:inherit;width:130px;}
+  .paso input[type=text]:focus-visible{outline:3px solid var(--acento);outline-offset:2px;}
+
+
+  /* LearnGED · additions for two-try feedback */
+  .fb.pista{background:var(--avi-bg);color:var(--avi);border-left:5px solid #f9a825;}
+  .marcado{color:#b71c1c;text-decoration:underline;}
+  .opcion .lee{font-weight:400;color:var(--gris);font-size:.9em;}
+  .opcion.incorrecta[disabled]{opacity:.85;}
+  .saltar{position:absolute;left:-999px;top:0;background:var(--tema-d);color:#fff;padding:8px 14px;z-index:10;}
+  .saltar:focus{left:8px;top:8px;}
+  .pie .tm{font-size:12px;color:var(--gris);}
+  .fb em{font-style:normal;font-weight:600;}
+</style>
+</head>
+<body>
+<a class="saltar" href="#titulo-indice">Skip to contents</a>
+<div class="contenedor">
+
+  <header class="principal">
+    <div class="ruta">Level 1 · Topic 1 · Whole numbers</div>
+    <h1>Lesson 1.1 · Place value and whole numbers</h1>
+    <div class="meta">Four practice activities on one page. The exercises change every time, so you can practice as many times as you want. If you make a mistake, you get a hint and another try.</div>
+  </header>
+
+  <nav class="indice" aria-labelledby="titulo-indice">
+    <h2 id="titulo-indice">On this page</h2>
+    <ol>
+      <li><a href="#place-value">The place value chart</a></li>
+      <li><a href="#read-write">Reading and writing numbers</a></li>
+      <li><a href="#compare">Comparing and ordering</a></li>
+      <li><a href="#round">Rounding</a></li>
+    </ol>
+    <div class="controles-todo">
+      <button type="button" class="btn-sec" id="abrir-todo">Open all</button>
+      <button type="button" class="btn-sec" id="cerrar-todo">Close all</button>
+    </div>
+  </nav>
+
+  <!-- ============ MODULE 1 · #place-value ============ -->
+  <details class="modulo" id="place-value" open>
+    <summary>
+      <span class="num" aria-hidden="true">1</span>
+      <h2>The place value chart</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Where a digit is decides what it is worth. The digit 5 is worth five in 5, fifty in 50, and five hundred in 500.
+      Each time a digit moves one place to the <strong>left</strong>, it is worth <strong>10 times more</strong>.
+      We split big numbers into groups of three digits: ones, thousands, and millions. In writing, a comma separates the groups: 3,482,651.</p>
+
+      <h3>Put a number in the chart</h3>
+      <div class="panel">
+        <div class="campos"><div class="campo"><label for="vp-n">Type a number (up to 9 digits)</label><input type="text" inputmode="numeric" class="ancho" id="vp-n" value="3,482,651"></div></div>
+        <div class="caja-aviso" id="vp-aviso" role="alert"></div>
+        <div class="tabla-scroll" id="vp-tabla"></div>
+        <p>Tap a digit to see what it is worth:</p>
+        <div class="lista-angulos" id="vp-dig" role="group" aria-label="Digits of the number"></div>
+        <div class="salida" id="vp-salida" aria-live="polite"></div>
+      </div>
+
+      <h3>Practice: what is the digit worth?</h3>
+      <div class="practica" id="p1">
+        <div class="enun" id="p1-enun"></div>
+        <div class="opciones" id="p1-opciones"></div>
+        <div class="fb" id="p1-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p1-nuevo">New exercise</button></div>
+        <p class="marcador" id="p1-marcador"></p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Back to contents</a>
+    </div>
+  </details>
+
+  <!-- ============ MODULE 2 · #read-write ============ -->
+  <details class="modulo" id="read-write">
+    <summary>
+      <span class="num" aria-hidden="true">2</span>
+      <h2>Reading and writing numbers</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>To read a number, read each group of three digits and then say the group's name, from left to right:
+      "three <strong>million</strong>, four hundred eighty-two <strong>thousand</strong>, six hundred fifty-one."
+      The last group (the ones) has no name at the end.</p>
+
+      <h3>From numbers to words</h3>
+      <div class="panel">
+        <div class="campos"><div class="campo"><label for="le-n">Type a number (up to 9 digits)</label><input type="text" inputmode="numeric" class="ancho" id="le-n" value="208,040"></div></div>
+        <div class="salida" id="le-salida" aria-live="polite"></div>
+      </div>
+
+      <div class="caja-tip">
+        <strong>Zero holds the place:</strong> in 208,040 the zeros tell you there are no ten thousands, no hundreds, and no ones.
+        If you took them out, the number would change completely.
+      </div>
+
+      <h3>Practice: how do you read it?</h3>
+      <div class="practica" id="p2">
+        <div class="enun" id="p2-enun"></div>
+        <div class="opciones" id="p2-opciones"></div>
+        <div class="fb" id="p2-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p2-nuevo">New exercise</button></div>
+        <p class="marcador" id="p2-marcador"></p>
+      </div>
+
+      <h3>Practice: from words to numbers</h3>
+      <div class="practica" id="p3">
+        <div class="enun" id="p3-enun"></div>
+        <div class="campos"><div class="campo"><label for="p3-r">Number</label><input type="text" autocomplete="off" inputmode="numeric" class="ancho" id="p3-r"></div></div>
+        <p class="nota">Type digits only. You can use commas to separate the groups.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p3-comprobar">Check</button>
+          <button type="button" class="btn-sec" id="p3-nuevo">New exercise</button>
+        </div>
+        <div class="fb" id="p3-fb" role="status"></div>
+        <p class="marcador" id="p3-marcador"></p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Back to contents</a>
+    </div>
+  </details>
+
+  <!-- ============ MODULE 3 · #compare ============ -->
+  <details class="modulo" id="compare">
+    <summary>
+      <span class="num" aria-hidden="true">3</span>
+      <h2>Comparing and ordering</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>We use three symbols: <strong>&gt;</strong> means "is greater than," <strong>&lt;</strong> means "is less than,"
+      and <strong>=</strong> means "is equal to." Think of the symbol as an open mouth: it always "eats" the bigger number.</p>
+      <table class="reglas">
+        <caption>How to compare two numbers</caption>
+        <thead><tr><th scope="col">Step</th><th scope="col">What to do</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Count the digits. The number with more digits is greater.</td></tr>
+          <tr><td>2</td><td>If they have the same number of digits, compare from left to right.</td></tr>
+          <tr><td>3</td><td>The first digit that is different decides.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Compare step by step</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="cp-a">First number</label><input type="text" inputmode="numeric" class="corto" id="cp-a" value="4,729"></div>
+          <div class="campo"><label for="cp-b">Second number</label><input type="text" inputmode="numeric" class="corto" id="cp-b" value="4,813"></div>
+        </div>
+        <div class="salida" id="cp-salida" aria-live="polite"></div>
+      </div>
+
+      <h3>Practice: which symbol goes between them?</h3>
+      <div class="practica" id="p4">
+        <div class="enun" id="p4-enun"></div>
+        <div class="opciones" id="p4-opciones"></div>
+        <div class="fb" id="p4-fb" role="status"></div>
+        <div class="fila-btn"><button type="button" class="btn" id="p4-nuevo">New exercise</button></div>
+        <p class="marcador" id="p4-marcador"></p>
+      </div>
+
+      <h3>Practice: put the numbers in order from least to greatest</h3>
+      <div class="panel">
+        <p class="nota">Use the arrows to move each number up or down. The smallest number goes at the top.</p>
+        <ol class="lista-orden" id="or-lista"></ol>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="or-comprobar">Check the order</button>
+          <button type="button" class="btn-sec" id="or-nuevo">New numbers</button>
+        </div>
+        <div class="fb" id="or-fb" role="status"></div>
+        <p class="marcador" id="or-marcador"></p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Back to contents</a>
+    </div>
+  </details>
+
+  <!-- ============ MODULE 4 · #round ============ -->
+  <details class="modulo" id="round">
+    <summary>
+      <span class="num" aria-hidden="true">4</span>
+      <h2>Rounding</h2>
+      <span class="chev" aria-hidden="true">›</span>
+    </summary>
+    <div class="cuerpo">
+      <p>Rounding means changing a number to a close number that is easier to use: $19 is "about twenty dollars."
+      Use the <strong>neighbor on the right</strong> rule: look at the digit just to the right of the place you are rounding to.
+      If it is 0, 1, 2, 3, or 4, the place stays the same. If it is 5, 6, 7, 8, or 9, the place goes up by one.
+      Every digit to the right becomes zero.</p>
+
+      <h3>Which one is it closer to?</h3>
+      <div class="panel">
+        <div class="campos">
+          <div class="campo"><label for="rd-n">Number</label><input type="text" inputmode="numeric" class="corto" id="rd-n" value="48,213"></div>
+          <div class="campo"><label for="rd-l">Round to the nearest</label><select id="rd-l"><option value="1">ten</option><option value="2">hundred</option><option value="3" selected>thousand</option><option value="4">ten thousand</option></select></div>
+        </div>
+        <div id="rd-svg"></div>
+        <div class="salida" id="rd-salida" aria-live="polite"></div>
+      </div>
+
+      <h3>Practice: round the number</h3>
+      <div class="practica" id="p5">
+        <div class="enun" id="p5-enun"></div>
+        <div class="campos"><div class="campo"><label for="p5-r">Rounded number</label><input type="text" autocomplete="off" inputmode="numeric" class="ancho" id="p5-r"></div></div>
+        <p class="nota">Type digits only.</p>
+        <div class="fila-btn">
+          <button type="button" class="btn" id="p5-comprobar">Check</button>
+          <button type="button" class="btn-sec" id="p5-nuevo">New exercise</button>
+        </div>
+        <div class="fb" id="p5-fb" role="status"></div>
+        <p class="marcador" id="p5-marcador"></p>
+      </div>
+
+      <a class="volver" href="#titulo-indice">↑ Back to contents</a>
+    </div>
+  </details>
+
+  <footer class="pie">
+    <p><strong>Level 1 · Topic 1 · Whole numbers · LearnGED</strong><br>
+    José M. Fernández, ABE/ASE Math Master Teacher, Harry S. Truman College — City Colleges of Chicago.</p>
+    <p>This work is licensed under
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a>.</p>
+    <p class="tm">GED® is a registered trademark of the American Council on Education (ACE) and administered exclusively by GED Testing Service LLC under license. LearnGED is not affiliated with, endorsed by, or approved by ACE or GED Testing Service.</p>
+  </footer>
+</div>
+
+<script>
+/* LearnGED · Level 1 · Lesson 1.1 · Place value — interactive (English)
+   Feedback philosophy (as in Lumi): first mistake → a hint and another try;
+   second mistake → the answer, explained. Praise the strategy, not the person. */
+"use strict";
+function $(id){ return document.getElementById(id); }
+function aleatorio(min, max){ return Math.floor(Math.random() * (max - min + 1)) + min; }
+function elige(lista){ return lista[aleatorio(0, lista.length - 1)]; }
+function baraja(lista){ var a = lista.slice(); for (var i = a.length - 1; i > 0; i--){ var j = aleatorio(0, i), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function f1(x){ return Math.round(x * 10) / 10; }
+function linea(p, q, color, ancho){ return '<line x1="' + f1(p[0]) + '" y1="' + f1(p[1]) + '" x2="' + f1(q[0]) + '" y2="' + f1(q[1]) + '" stroke="' + (color || "#424242") + '" stroke-width="' + (ancho || 2) + '"/>'; }
+function texto(p, t, tam, color, peso){ return '<text x="' + f1(p[0]) + '" y="' + f1(p[1]) + '" text-anchor="middle" dominant-baseline="middle" font-size="' + (tam || 18) + '" font-weight="' + (peso || 700) + '" fill="' + (color || "#222") + '">' + t + '</text>'; }
+
+/* ---------- Numbers in English ---------- */
+function com(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+var ONES = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+var TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+function under1000(n){
+  var h = Math.floor(n / 100), r = n % 100, p = [];
+  if (h) p.push(ONES[h] + " hundred");
+  if (r){ p.push(r < 20 ? ONES[r] : TENS[Math.floor(r / 10)] + (r % 10 ? "-" + ONES[r % 10] : "")); }
+  return p.join(" ");
+}
+/* Groups: [digits, words, group name]  (US style: no "and", commas between groups) */
+function groups(n){
+  var m = Math.floor(n / 1e6), t = Math.floor(n / 1000) % 1000, u = n % 1000, g = [];
+  if (m) g.push([com(m), under1000(m) + " million", "millions"]);
+  if (t) g.push([String(t), under1000(t) + " thousand", "thousands"]);
+  if (u) g.push([String(u), under1000(u), "ones"]);
+  return g;
+}
+function words(n){ if (n === 0) return "zero"; return groups(n).map(function(g){ return g[1]; }).join(", "); }
+function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+var PLACE = ["ones", "tens", "hundreds", "thousands", "ten thousands", "hundred thousands", "millions", "ten millions", "hundred millions"];
+var PLACE1 = ["one", "ten", "hundred", "thousand", "ten thousand", "hundred thousand", "million", "ten million", "hundred million"];
+function p10(k){ return Math.pow(10, k); }
+function leeNum(t){ var s = String(t).replace(/[\s ,]/g, "").replace(/\$/g, ""); return /^\d+$/.test(s) ? parseInt(s, 10) : null; }
+
+/* ---------- Praise for the strategy (rotates) ---------- */
+var ELOGIO = ["You worked step by step. That strategy works.", "Good strategy: you checked each part before you answered.", "Careful work pays off.", "You used the rule correctly.", "Nice work: you took your time."];
+var ELOGIO2 = ["You used the hint well.", "Good recovery: you checked your work and fixed it.", "Mistakes help us learn. You found the right answer."];
+
+/* ---------- Multiple choice with two tries ---------- */
+function creaPracticaOM(pre, gen){
+  var est = { primero: 0, pista: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function marcador(){ $(pre + "-marcador").textContent = est.total ? "Solved: " + (est.primero + est.pista) + " of " + est.total + " (" + est.primero + " on the first try)" : ""; }
+  function pinta(){
+    var q, n = 0;
+    do { q = gen(); n++; } while (n < 50 && !valida(q));
+    est.actual = q; est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = q.enun;
+    var cont = $(pre + "-opciones"); cont.innerHTML = "";
+    (q.enOrden ? q.opciones.slice() : baraja(q.opciones)).forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opcion"; b.innerHTML = o.html;
+      b.setAttribute("data-clave", o.clave);
+      b.addEventListener("click", function(){ responde(b); });
+      cont.appendChild(b);
+    });
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function valida(q){
+    var vistas = {}, hay = 0;
+    q.opciones = q.opciones.filter(function(o){ if (vistas[o.clave]) return false; vistas[o.clave] = 1; return true; });
+    q.opciones.forEach(function(o){ if (o.clave === q.correcta) hay++; });
+    return hay === 1 && q.opciones.length >= 3;
+  }
+  function cierra(){
+    est.resuelta = true; est.total++;
+    Array.prototype.forEach.call($(pre + "-opciones").children, function(b){
+      b.disabled = true;
+      if (b.getAttribute("data-clave") === est.actual.correcta) b.classList.add("correcta");
+    });
+  }
+  function responde(btn){
+    if (est.resuelta || btn.disabled) return;
+    var q = est.actual, clave = btn.getAttribute("data-clave"), ok = clave === q.correcta, fb = $(pre + "-fb");
+    est.intentos++;
+    if (ok){
+      if (est.intentos === 1) est.primero++; else est.pista++;
+      cierra();
+      fb.className = "fb bien";
+      fb.innerHTML = "✓ Correct. " + q.bien + " <em>" + (est.intentos === 1 ? elige(ELOGIO) : elige(ELOGIO2)) + "</em>";
+    } else if (est.intentos === 1){
+      btn.classList.add("incorrecta"); btn.disabled = true;
+      fb.className = "fb pista";
+      fb.innerHTML = "<strong>Not yet.</strong> " + ((q.pistas && q.pistas[clave]) || q.pista) + " <strong>Try again.</strong>";
+    } else {
+      btn.classList.add("incorrecta");
+      cierra();
+      fb.className = "fb mal";
+      fb.innerHTML = "<strong>Here is how to solve it.</strong> " + q.mal + " Press <em>New exercise</em> to try one more.";
+    }
+    marcador();
+  }
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta(); marcador();
+}
+
+/* ---------- Typed answer with two tries ---------- */
+function creaPracticaLibre(pre, gen){
+  var est = { primero: 0, pista: 0, total: 0, actual: null, resuelta: false, intentos: 0 };
+  function marcador(){ $(pre + "-marcador").textContent = est.total ? "Solved: " + (est.primero + est.pista) + " of " + est.total + " (" + est.primero + " on the first try)" : ""; }
+  function pinta(){
+    est.actual = gen(); est.resuelta = false; est.intentos = 0;
+    $(pre + "-enun").innerHTML = est.actual.enun;
+    $(pre + "-r").value = ""; $(pre + "-r").disabled = false; $(pre + "-r").classList.remove("error");
+    $(pre + "-comprobar").disabled = false;
+    $(pre + "-fb").className = "fb"; $(pre + "-fb").innerHTML = "";
+  }
+  function bloquea(){ $(pre + "-r").disabled = true; $(pre + "-comprobar").disabled = true; }
+  function comprueba(){
+    if (est.resuelta) return;
+    var q = est.actual, fb = $(pre + "-fb"), res = q.evalua($(pre + "-r").value);
+    $(pre + "-r").classList.toggle("error", res.estado === "invalido");
+    if (res.estado === "invalido"){ fb.className = "fb pista"; fb.innerHTML = res.msg; return; }
+    est.intentos++;
+    if (res.estado === "bien"){
+      est.resuelta = true; est.total++; if (est.intentos === 1) est.primero++; else est.pista++;
+      fb.className = "fb bien"; fb.innerHTML = "✓ Correct. " + q.solucion + " <em>" + (est.intentos === 1 ? elige(ELOGIO) : elige(ELOGIO2)) + "</em>";
+      bloquea();
+    } else if (est.intentos >= 2){
+      est.resuelta = true; est.total++;
+      fb.className = "fb mal"; fb.innerHTML = "<strong>Here is how to solve it.</strong> " + q.solucion + " Press <em>New exercise</em> to try one more.";
+      bloquea();
+    } else {
+      fb.className = "fb pista"; fb.innerHTML = "<strong>Not yet.</strong> " + res.msg + " <strong>You have one more try.</strong>";
+      $(pre + "-r").focus();
+    }
+    marcador();
+  }
+  $(pre + "-comprobar").addEventListener("click", comprueba);
+  $(pre + "-r").addEventListener("keydown", function(ev){ if (ev.key === "Enter") comprueba(); });
+  $(pre + "-nuevo").addEventListener("click", pinta);
+  pinta(); marcador();
+}
+function numN(res, pistas, general){
+  return function(t){
+    var v = leeNum(t);
+    if (v === null) return { estado: "invalido", msg: "Type a whole number using digits only (you can use commas)." };
+    if (v === res) return { estado: "bien" };
+    for (var i = 0; i < (pistas || []).length; i++) if (v === pistas[i].v) return { estado: "mal", msg: pistas[i].msg };
+    return { estado: "mal", msg: general || "Check your answer one more time." };
+  };
+}
+
+/* ---------- Navigation by anchors ---------- */
+function abrePorHash(){
+  var h = decodeURIComponent(window.location.hash.replace("#", "")); if (!h) return;
+  var el = document.getElementById(h);
+  if (el && el.tagName.toLowerCase() === "details"){ el.open = true; el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+}
+function iniciaNavegacion(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(){ var el = document.getElementById(a.getAttribute("href").slice(1)); if (el && el.tagName.toLowerCase() === "details") el.open = true; });
+  });
+  $("abrir-todo").addEventListener("click", function(){ document.querySelectorAll("details.modulo").forEach(function(d){ d.open = true; }); });
+  $("cerrar-todo").addEventListener("click", function(){ document.querySelectorAll("details.modulo").forEach(function(d){ d.open = false; }); });
+  window.addEventListener("hashchange", abrePorHash);
+  abrePorHash();
+}
+
+/* ============ MODULE 1 · place value ============ */
+var COL = ["Hundred millions", "Ten millions", "Millions", "Hundred thousands", "Ten thousands", "Thousands", "Hundreds", "Tens", "Ones"];
+var VP = { n: 3482651, sel: null };
+function pintaVP(){
+  var n = leeNum($("vp-n").value), av = $("vp-aviso");
+  if (n === null || n > 999999999){ av.className = "caja-aviso visible"; av.textContent = "Type a whole number with up to 9 digits."; return; }
+  av.className = "caja-aviso"; av.textContent = "";
+  if (n !== VP.n){ VP.n = n; VP.sel = null; }
+  var s = String(n), d = []; for (var i = 0; i < 9 - s.length; i++) d.push(null); d = d.concat(s.split("").map(Number));
+  var h = '<table class="vp"><caption class="sr-only">Place value chart for ' + com(n) + '</caption><tr class="fila-grupo"><td colspan="3">Millions</td><td colspan="3">Thousands</td><td colspan="3">Ones</td></tr><tr>' +
+    COL.map(function(c){ return '<th scope="col">' + c + '</th>'; }).join("") + '</tr><tr>' +
+    d.map(function(x, i){ return '<td class="' + (i === VP.sel ? "sel" : "") + '">' + (x === null ? "" : x) + '</td>'; }).join("") + '</tr></table>';
+  $("vp-tabla").innerHTML = h;
+  var bt = "";
+  d.forEach(function(x, i){ if (x !== null) bt += '<button type="button" class="eleccion" data-i="' + i + '" aria-pressed="' + (i === VP.sel) + '" aria-label="The ' + x + ' in the ' + PLACE[8 - i] + ' place">' + x + '</button>'; });
+  $("vp-dig").innerHTML = bt;
+  $("vp-dig").querySelectorAll("button").forEach(function(b){ b.addEventListener("click", function(){ VP.sel = +b.getAttribute("data-i"); pintaVP(); var nb = $("vp-dig").querySelector('[data-i="' + VP.sel + '"]'); if (nb) nb.focus(); }); });
+  var out = '<div class="linea">In words: <strong>' + words(n) + '</strong></div>';
+  var partes = d.map(function(x, i){ return x ? com(x * p10(8 - i)) : null; }).filter(function(x){ return x; });
+  out += '<div class="linea">Expanded form: ' + com(n) + ' = ' + (partes.length ? partes.join(" + ") : "0") + '</div>';
+  if (VP.sel !== null && d[VP.sel] !== null){ var k = 8 - VP.sel, x = d[VP.sel]; out += '<div class="linea veredicto">The ' + x + ' is in the ' + PLACE[k] + ' place: it is worth ' + x + ' × ' + com(p10(k)) + ' = ' + com(x * p10(k)) + '</div>'; }
+  $("vp-salida").innerHTML = out;
+}
+function numConDigito(){ var n; do { n = aleatorio(10000, 9999999); } while (new Set(String(n)).size < String(n).length - 1); return n; }
+function genValor(){
+  var n = numConDigito(), s = String(n), i;
+  do { i = aleatorio(0, s.length - 2); } while (s[i] === "0");
+  var x = +s[i], k = s.length - 1 - i, v = x * p10(k);
+  var cand = [v, x * p10(k - 1), x * p10(k + 1), x].filter(function(y, j, a){ return a.indexOf(y) === j; });
+  var cont = -1, marcado = com(n).split("").map(function(c){ if (/\d/.test(c)){ cont++; if (cont === i) return '<strong class="marcado">' + c + '</strong>'; } return c; }).join("");
+  var pistas = {};
+  pistas["v" + x] = "That is just the digit. Its place makes it worth more. Which column is it in?";
+  pistas["v" + x * p10(k - 1)] = "Count the places again. Start at the ones place on the right and move left one place at a time.";
+  pistas["v" + x * p10(k + 1)] = "Count the places again. Start at the ones place on the right and move left one place at a time.";
+  return { enun: "In the number " + marcado + ", what is the underlined digit " + x + " worth?",
+    opciones: cand.map(function(y){ return { html: com(y) + " (" + words(y) + ")", clave: "v" + y }; }), correcta: "v" + v,
+    pistas: pistas, pista: "Find the column of the digit in the place value chart.",
+    bien: "The " + x + " is in the " + PLACE[k] + " place: " + x + " × " + com(p10(k)) + " = " + com(v) + ".",
+    mal: "The " + x + " is in the " + PLACE[k] + " place, so it is worth " + x + " × " + com(p10(k)) + " = " + com(v) + "." };
+}
+
+/* ============ MODULE 2 · read and write ============ */
+function pintaLE(){
+  var n = leeNum($("le-n").value);
+  if (n === null || n > 999999999){ $("le-salida").innerHTML = "Type a whole number with up to 9 digits."; return; }
+  if (n === 0){ $("le-salida").innerHTML = '<div class="linea veredicto">"zero"</div>'; return; }
+  var partes = com(n).split(","), nombres = ["ones", "thousands", "millions"], h = "";
+  partes.forEach(function(p, i){
+    var pos = partes.length - 1 - i, val = +p;
+    h += '<div class="linea">Step ' + (i + 1) + '. The ' + nombres[pos] + ' group: ' + p + ' → ' + (val ? '"' + under1000(val) + (pos === 2 ? " million" : pos === 1 ? " thousand" : "") + '"' : "nothing to say (all zeros)") + '</div>';
+  });
+  $("le-salida").innerHTML = '<div class="linea grande">' + com(n) + '</div>' + h + '<div class="linea veredicto">"' + cap(words(n)) + '"</div>';
+}
+function numConCeros(){ var d = String(aleatorio(1, 9)), L = aleatorio(4, 7); for (var i = 1; i < L; i++) d += Math.random() < 0.4 ? "0" : String(aleatorio(1, 9)); return +d; }
+function variantes(n){
+  var s = String(n), v = [], i;
+  for (i = 1; i < s.length && v.length < 6; i++){ if (s[i] === "0"){ var t = s.slice(0, i) + s.slice(i + 1); if (t.length > 1) v.push(+t); } }
+  v.push(n * 10, Math.floor(n / 10));
+  for (i = 0; i < s.length - 1; i++){ if (s[i] !== s[i + 1]){ v.push(+(s.slice(0, i) + s[i + 1] + s[i] + s.slice(i + 2))); break; } }
+  return v.filter(function(x, j, a){ return x !== n && x > 0 && a.indexOf(x) === j; });
+}
+function pistaGrupos(n, x){
+  if (String(x).length !== String(n).length) return "Count the digits. Each group of thousands or millions needs all three of its digits, even when some are zero.";
+  return "Read the number one group at a time, from left to right. Check the order of the digits in each group.";
+}
+function genLeer(){
+  var n = numConCeros(), otros = baraja(variantes(n)).slice(0, 3), ops = [n].concat(otros), pistas = {};
+  otros.forEach(function(x){ pistas["n" + x] = pistaGrupos(n, x); });
+  return { enun: "How do you read the number <strong>" + com(n) + "</strong>?",
+    opciones: ops.map(function(x){ return { html: cap(words(x)), clave: "n" + x }; }), correcta: "n" + n, pistas: pistas,
+    pista: "Read one group at a time, from left to right.",
+    bien: "Read by groups: " + groups(n).map(function(p){ return p[0] + ' → "' + p[1] + '"'; }).join("; ") + ".",
+    mal: "Read it by groups: " + groups(n).map(function(p){ return p[0] + ' → "' + p[1] + '"'; }).join("; ") + ". All together: " + words(n) + "." };
+}
+function todosGrupos(n){
+  var partes = com(n).split(","), nombres = ["", " thousand", " million"], plural = ["ones", "thousands", "millions"];
+  return partes.map(function(p, i){
+    var pos = partes.length - 1 - i, val = +p;
+    return val ? '"' + under1000(val) + nombres[pos] + '" → ' + p : "no " + plural[pos] + " → " + p;
+  });
+}
+function genEscribir(){
+  var n = numConCeros(), vs = variantes(n);
+  return { enun: 'Write with digits: "' + words(n) + '"',
+    solucion: "Write one group at a time: " + todosGrupos(n).join("; ") + ". The number is " + com(n) + ".",
+    evalua: numN(n, vs.map(function(v){ return { v: v, msg: String(v).length !== String(n).length ? "Check the zeros. Each group of thousands or millions needs all three of its digits, even when some are zero." : "Check the order of the digits." }; }), "Write one group at a time. Remember that each group after the first has three digits.") };
+}
+
+/* ============ MODULE 3 · compare and order ============ */
+function pintaCP(){
+  var a = leeNum($("cp-a").value), b = leeNum($("cp-b").value), s = $("cp-salida");
+  if (a === null || b === null){ s.innerHTML = "Type two whole numbers."; return; }
+  var A = String(a), B = String(b), r, h = '<div class="linea">Step 1. ' + com(a) + ' has ' + A.length + ' digits and ' + com(b) + ' has ' + B.length + '.';
+  if (A.length !== B.length){ h += ' The number with more digits is greater.</div>'; r = A.length > B.length ? ">" : "<"; }
+  else {
+    h += ' Same number of digits: look inside.</div>';
+    var i = 0; while (i < A.length && A[i] === B[i]) i++;
+    if (i === A.length){ h += '<div class="linea">All the digits are the same.</div>'; r = "="; }
+    else {
+      if (i > 0) h += '<div class="linea">Step 2. From left to right, the digits up to the ' + PLACE[A.length - i] + ' place are the same.</div>';
+      h += '<div class="linea">Step ' + (i > 0 ? 3 : 2) + '. In the ' + PLACE[A.length - 1 - i] + ' place: ' + A[i] + ' and ' + B[i] + '. This digit decides!</div>';
+      r = A[i] > B[i] ? ">" : "<";
+    }
+  }
+  h += '<div class="linea veredicto">' + com(a) + ' ' + { ">": "&gt;", "<": "&lt;", "=": "=" }[r] + ' ' + com(b) + '</div>';
+  s.innerHTML = h;
+}
+function genCompara(){
+  var t = aleatorio(1, 3), a, b;
+  if (t === 1){ a = aleatorio(10000, 99999); var s = String(a).split(""), i = aleatorio(1, 3), tmp = s[i]; s[i] = s[i + 1]; s[i + 1] = tmp; b = +s.join(""); if (a === b) b = a + 100; }
+  else if (t === 2){ a = aleatorio(1000, 9999); b = aleatorio(100, 999); if (Math.random() < 0.5){ var c = a; a = b; b = c; } }
+  else { a = aleatorio(10000, 99999); b = Math.random() < 0.2 ? a : a + elige([-1, 1]) * elige([10, 100, 1000]); }
+  var r = a > b ? ">" : (a < b ? "<" : "=");
+  var o = [ { html: com(a) + " &gt; " + com(b) + " <span class='lee'>(greater than)</span>", clave: ">" }, { html: com(a) + " &lt; " + com(b) + " <span class='lee'>(less than)</span>", clave: "<" }, { html: com(a) + " = " + com(b) + " <span class='lee'>(equal to)</span>", clave: "=" } ];
+  var difDig = String(a).length !== String(b).length;
+  return { enOrden: true, enun: "Which symbol goes between <strong>" + com(a) + "</strong> and <strong>" + com(b) + "</strong>?", opciones: o, correcta: r,
+    pista: difDig ? "Count the digits of each number first." : (r === "=" ? "Compare each digit, from left to right. Are any of them different?" : "Both numbers have the same number of digits. Compare from left to right and find the first digit that is different."),
+    bien: r === "=" ? "They are the same number." : "The greater number is " + com(Math.max(a, b)) + ".",
+    mal: r === "=" ? "Every digit is the same, so the numbers are equal." : (difDig ? "The number with more digits is greater: " + com(Math.max(a, b)) + "." : "From left to right, the first different digit decides: the greater number is " + com(Math.max(a, b)) + ".") };
+}
+var OR = { lista: [], primero: 0, pista: 0, total: 0, resuelto: false, intentos: 0 };
+function marcadorOR(){ $("or-marcador").textContent = OR.total ? "Solved: " + (OR.primero + OR.pista) + " of " + OR.total + " (" + OR.primero + " on the first try)" : ""; }
+function nuevoOR(){
+  var base = aleatorio(10, 99) * 1000, s = [];
+  while (s.length < 5){ var n = Math.random() < 0.6 ? base + aleatorio(0, 999) : aleatorio(1000, 99999); if (s.indexOf(n) < 0) s.push(n); }
+  OR.lista = baraja(s); OR.resuelto = false; OR.intentos = 0; $("or-fb").className = "fb"; $("or-fb").innerHTML = ""; $("or-comprobar").disabled = false; pintaOR();
+}
+function pintaOR(foco, marcas){
+  var ol = $("or-lista"); ol.innerHTML = "";
+  OR.lista.forEach(function(v, i){
+    var li = document.createElement("li");
+    if (marcas) li.className = marcas[i] ? "bien" : "mal";
+    li.innerHTML = '<span class="nombre">' + com(v) + '</span><span class="flechas"><button type="button" data-i="' + i + '" data-d="-1" aria-label="Move ' + com(v) + ' up">↑</button><button type="button" data-i="' + i + '" data-d="1" aria-label="Move ' + com(v) + ' down">↓</button></span>';
+    ol.appendChild(li);
+  });
+  ol.querySelectorAll("button").forEach(function(b){
+    var i = +b.getAttribute("data-i"), d = +b.getAttribute("data-d");
+    b.disabled = OR.resuelto || (d < 0 && i === 0) || (d > 0 && i === OR.lista.length - 1);
+    b.addEventListener("click", function(){ var j = i + d, t = OR.lista[i]; OR.lista[i] = OR.lista[j]; OR.lista[j] = t; pintaOR({ i: j, d: d }); });
+  });
+  if (foco){ var bb = ol.querySelector('button[data-i="' + foco.i + '"][data-d="' + foco.d + '"]'); if (!bb || bb.disabled) bb = ol.querySelector('button[data-i="' + foco.i + '"]:not([disabled])'); if (bb) bb.focus(); }
+}
+function compruebaOR(){
+  if (OR.resuelto) return;
+  var bien = OR.lista.slice().sort(function(a, b){ return a - b; }), marcas = OR.lista.map(function(v, i){ return v === bien[i]; }), ok = marcas.every(Boolean), fb = $("or-fb");
+  OR.intentos++;
+  if (ok){
+    OR.resuelto = true; OR.total++; if (OR.intentos === 1) OR.primero++; else OR.pista++;
+    fb.className = "fb bien"; fb.innerHTML = "✓ Correct order: " + bien.map(com).join(" &lt; ") + ". <em>" + (OR.intentos === 1 ? elige(ELOGIO) : elige(ELOGIO2)) + "</em>";
+    $("or-comprobar").disabled = true; pintaOR(null, marcas);
+  } else if (OR.intentos === 1){
+    fb.className = "fb pista"; fb.innerHTML = "<strong>Not yet.</strong> The numbers marked in red are not in the right place. Count the digits first, then compare from left to right. <strong>Try again.</strong>";
+    pintaOR(null, marcas);
+  } else {
+    OR.resuelto = true; OR.total++;
+    fb.className = "fb mal"; fb.innerHTML = "<strong>Here is the correct order:</strong> " + bien.map(com).join(" &lt; ") + ". Press <em>New numbers</em> to try again.";
+    $("or-comprobar").disabled = true; pintaOR(null, marcas);
+  }
+  marcadorOR();
+}
+
+/* ============ MODULE 4 · rounding ============ */
+function redondea(n, k){ var p = p10(k); return Math.round(n / p) * p; }
+function pintaRD(){
+  var n = leeNum($("rd-n").value), k = +$("rd-l").value, s = $("rd-salida");
+  if (n === null || n > 99999999){ s.innerHTML = "Type a whole number."; $("rd-svg").innerHTML = ""; return; }
+  var p = p10(k), lo = Math.floor(n / p) * p, hi = lo + p, r = redondea(n, k), vec = Math.floor(n / p10(k - 1)) % 10;
+  var x0 = 60, x1 = 580; function X(v){ return x0 + (v - lo) / p * (x1 - x0); }
+  var svg = '<svg class="figura" viewBox="0 0 640 150" role="img" aria-label="' + com(n) + ' is between ' + com(lo) + ' and ' + com(hi) + '. It is closer to ' + com(r) + '.">' + linea([x0 - 20, 70], [x1 + 20, 70], "#424242", 2);
+  for (var t = 0; t <= 10; t++) svg += linea([X(lo + p * t / 10), 70 - (t % 5 ? 6 : 12)], [X(lo + p * t / 10), 70 + (t % 5 ? 6 : 12)], "#424242", t % 5 ? 1 : 2);
+  svg += texto([X(lo), 108], com(lo), 22, r === lo ? "#1b5e20" : "#424242", 700) + texto([X(hi), 108], com(hi), 22, r === hi ? "#1b5e20" : "#424242", 700) + texto([X(lo + p / 2), 108], com(lo + p / 2), 17, "#757575", 400);
+  svg += '<circle cx="' + f1(X(n)) + '" cy="70" r="8" fill="#b71c1c"/>' + texto([X(n), 36], com(n), 22, "#b71c1c");
+  $("rd-svg").innerHTML = svg + '</svg>';
+  s.innerHTML = '<div class="linea">The neighbor on the right (the ' + PLACE[k - 1] + ' digit) is <strong>' + vec + '</strong>: ' + (vec >= 5 ? "5 or more, so the " + PLACE[k] + " digit goes up by one." : "4 or less, so the " + PLACE[k] + " digit stays the same.") + '</div><div class="linea veredicto">' + com(n) + ' rounded to the nearest ' + PLACE1[k] + ' ≈ ' + com(r) + '</div>';
+}
+function genRedondeo(){
+  var k = aleatorio(1, 4), n = aleatorio(p10(k + 1), p10(k + 3) - 1), r = redondea(n, k), lo = Math.floor(n / p10(k)) * p10(k), otro = r === lo ? lo + p10(k) : lo, vec = Math.floor(n / p10(k - 1)) % 10;
+  var ctx = elige(["", "A city has " + com(n) + " people. ", "A car has " + com(n) + " miles on it. ", "A purchase cost $" + com(n) + ". "]);
+  return { enun: ctx + "Round <strong>" + com(n) + "</strong> to the nearest " + PLACE1[k] + ".",
+    solucion: "The neighbor on the right (the " + PLACE[k - 1] + " digit) is " + vec + ": " + (vec >= 5 ? "5 or more, so round up" : "4 or less, so the " + PLACE[k] + " digit stays the same") + ". The answer is " + com(r) + ".",
+    evalua: numN(r, [
+      { v: otro, msg: "Look again at the neighbor on the right: with 5 or more, round up; with 4 or less, the digit stays the same." },
+      { v: +String(r).slice(0, String(r).length - k), msg: "Remember the zeros: every digit to the right of the rounded place becomes zero." }
+    ], "Find the " + PLACE[k] + " digit first. Then look at the digit to its right.") };
+}
+
+/* ---------- Start ---------- */
+$("vp-n").addEventListener("input", pintaVP); pintaVP();
+creaPracticaOM("p1", genValor);
+$("le-n").addEventListener("input", pintaLE); pintaLE();
+creaPracticaOM("p2", genLeer);
+creaPracticaLibre("p3", genEscribir);
+["cp-a", "cp-b"].forEach(function(id){ $(id).addEventListener("input", pintaCP); }); pintaCP();
+creaPracticaOM("p4", genCompara);
+$("or-comprobar").addEventListener("click", compruebaOR); $("or-nuevo").addEventListener("click", nuevoOR); nuevoOR(); marcadorOR();
+$("rd-l").addEventListener("change", pintaRD); $("rd-n").addEventListener("input", pintaRD); pintaRD();
+creaPracticaLibre("p5", genRedondeo);
+iniciaNavegacion();
+
+</script>
+</body>
+</html>
