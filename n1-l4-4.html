@@ -457,10 +457,12 @@
       <span class="chev" aria-hidden="true">›</span>
     </summary>
     <div class="cuerpo">
-      <p>Se puede operar <strong>enteros con enteros y fracciones con fracciones</strong> (con denominador común). Al restar, si la
-      fracción de arriba es menor, se <strong>pide prestado</strong> un entero: 1 = 4/4, 1 = 8/8. O, si prefiere, se pasa todo a impropias.</p>
+      <p>La forma de la lección: <strong>se pasa todo a fracciones impropias</strong>, se busca un denominador común, se suman o restan los
+      numeradores y se regresa a número mixto. Otra forma es operar <strong>enteros con enteros y fracciones con fracciones</strong>; al restar,
+      si la fracción de arriba es menor, se <strong>pide prestado</strong> un entero (1 = 4/4, 1 = 8/8). El paso a paso muestra las dos formas
+      para que pueda compararlas.</p>
 
-      <h3>Paso a paso</h3>
+      <h3>Paso a paso, de dos formas</h3>
       <div class="panel">
         <div class="campos">
           <div class="campo"><label for="sr-a">Primer número</label><input type="text" class="corto" id="sr-a" value="5 1/4"></div>
@@ -1298,7 +1300,7 @@ function barraFr(n, d, col, voz, ancho){
 
 function mixAz(){ var d = aleatorio(2, 8), n = aleatorio(1, d - 1); while (mcd(n, d) > 1) n = aleatorio(1, d - 1); return { e: aleatorio(1, 5), n: n, d: d }; }
 function mixV(m){ return fr(m.e*m.d + m.n, m.d); }
-function mixS(m){ return m.e + " " + m.n + "/" + m.d; }
+function mixS(m){ return m.n ? m.e + " " + m.n + "/" + m.d : String(m.e); }
 function mixH(m){ return envuelve(m.e + "&nbsp;" + fracVis(m.n, m.d), m.e + " y " + m.n + " sobre " + m.d); }
 /* MÓDULO 1 */
 function pintaCV(){
@@ -1330,36 +1332,47 @@ function genMD(){
 function leeMix(t){ var s = String(t).trim().replace(/\s+/g, " "), m = s.match(/^(\d+) (\d+)\/(\d+)$/); if (m && +m[3] > 0 && +m[2] < +m[3]) return { e: +m[1], n: +m[2], d: +m[3] }; if (/^\d+$/.test(s)) return { e: +s, n: 0, d: 1 }; return null; }
 function pasosSR(a, b, o){
   var M = a.d * b.d / mcd(a.d, b.d), an = a.n*M/a.d, bn = b.n*M/b.d, h = [];
-  if (a.d !== b.d) h.push("Denominador común " + M + ": " + mixS(a) + " = " + a.e + " " + an + "/" + M + " y " + mixS(b) + " = " + b.e + " " + bn + "/" + M + ".");
+  if (a.d !== b.d && a.n && b.n) h.push("Denominador común " + M + ": " + mixS(a) + " = " + a.e + " " + an + "/" + M + " y " + mixS(b) + " = " + b.e + " " + bn + "/" + M + ".");
   var e = o === "+" ? a.e + b.e : a.e - b.e, n = o === "+" ? an + bn : an - bn, ea = a.e, na = an;
-  if (o === "-" && an < bn){ h.push("Arriba hay " + an + "/" + M + " y hay que quitar " + bn + "/" + M + ": no alcanza. Se pide prestado 1 entero = " + M + "/" + M + ": " + a.e + " " + an + "/" + M + " → " + (a.e - 1) + " " + (an + M) + "/" + M + "."); ea = a.e - 1; na = an + M; e = ea - b.e; n = na - bn; }
-  h.push((o === "+" ? "Se suman" : "Se restan") + " los enteros: " + (o === "+" ? a.e + " + " + b.e : ea + " − " + b.e) + " = " + e + ". Y las fracciones: " + (o === "+" ? an + " + " + bn : na + " − " + bn) + " = " + n + "/" + M + ".");
+  if (o === "-" && an < bn){ h.push((an ? "Arriba hay " + an + "/" + M : "Arriba no hay fracción") + " y hay que quitar " + bn + "/" + M + ": no alcanza. Se pide prestado 1 entero = " + M + "/" + M + ": " + (an ? a.e + " " + an + "/" + M : a.e) + " → " + (a.e - 1) + " " + (an + M) + "/" + M + "."); ea = a.e - 1; na = an + M; e = ea - b.e; n = na - bn; }
+  h.push((o === "+" ? "Se suman" : "Se restan") + " los enteros: " + (o === "+" ? a.e + " + " + b.e : ea + " − " + b.e) + " = " + e + ". Y las fracciones: " + (o === "+" ? an + "/" + M + " + " + bn + "/" + M : na + "/" + M + " − " + bn + "/" + M) + " = " + n + "/" + M + ".");
   if (n >= M){ h.push(n + "/" + M + " es más de un entero: " + n + "/" + M + " = 1 " + (n - M) + "/" + M + ", que se suma al " + e + "."); e += 1; n -= M; }
   var R = fsum(fr(e, 1), fr(n, M)); var sf = fr(n, M);
   if (n && sf.d !== M) h.push("Se simplifica la fracción: " + n + "/" + M + " = " + sf.n + "/" + sf.d + ".");
   return { pasos: h, R: R };
 }
+/* La forma de la lección: todo a impropias */
+function pasosImp(a, b, o){
+  var M = a.d * b.d / mcd(a.d, b.d), A = a.e*a.d + a.n, B = b.e*b.d + b.n, A2 = A*M/a.d, B2 = B*M/b.d, r = o === "+" ? A2 + B2 : A2 - B2, R = fr(r, M), h = [];
+  h.push("Se pasa a impropias: " + mixS(a) + " = " + A + "/" + a.d + " y " + mixS(b) + " = " + B + "/" + b.d + ".");
+  if (a.d !== b.d) h.push("Denominador común " + M + ": " + A2 + "/" + M + " y " + B2 + "/" + M + ".");
+  h.push((o === "+" ? "Se suman" : "Se restan") + " los numeradores: " + A2 + " " + (o === "+" ? "+" : "−") + " " + B2 + " = " + r + "; queda " + r + "/" + M + (R.d !== M ? " = " + R.n + "/" + R.d : "") + ".");
+  if (R.n >= R.d && R.d > 1) h.push("Se regresa a mixto: " + R.n + " ÷ " + R.d + " = " + Math.floor(R.n / R.d) + ", sobra " + (R.n % R.d) + "; queda " + mixTxt(R) + ".");
+  return { pasos: h, R: R };
+}
+function listaPasos(p){ return p.map(function(x, i){ return '<div class="linea">' + (i + 1) + '. ' + x + '</div>'; }).join(""); }
 function pintaSR(){
   var a = leeMix($("sr-a").value), b = leeMix($("sr-b").value), o = $("sr-o").value, s = $("sr-salida");
   if (!a || !b || a.d > 12 || b.d > 12){ s.innerHTML = "Escriba dos números mixtos con un espacio, por ejemplo 5 1/4 y 2 3/4 (denominadores hasta 12)."; return; }
   if (o === "-" && fval(mixV(a)) < fval(mixV(b))){ s.innerHTML = "Para restar, el primer número tiene que ser el mayor."; return; }
-  var P = pasosSR(a, b, o);
-  s.innerHTML = P.pasos.map(function(p, i){ return '<div class="linea">' + (i + 1) + '. ' + p + '</div>'; }).join("") + '<div class="linea veredicto">' + mixS(a) + ' ' + (o === "+" ? "+" : "−") + ' ' + mixS(b) + ' = ' + mixHTML(P.R) + '</div>';
+  var P = pasosImp(a, b, o);
+  s.innerHTML = '<div class="linea"><strong>La forma de la lección: fracciones impropias</strong></div>' + listaPasos(P.pasos) +
+    '<div class="linea" style="margin-top:10px"><strong>Otra forma: enteros y fracciones</strong></div>' + listaPasos(pasosSR(a, b, o).pasos) + '<div class="linea veredicto">' + mixS(a) + ' ' + (o === "+" ? "+" : "−") + ' ' + mixS(b) + ' = ' + mixHTML(P.R) + '</div>';
 }
 function genSR(){
   var a = mixAz(), b = mixAz(), suma = Math.random() < 0.5;
   if (!suma){ if (a.e <= b.e) a.e = b.e + aleatorio(1, 3); if (Math.random() < 0.6){ b.d = a.d; b.n = aleatorio(a.n, a.d - 1); if (b.n === a.n && a.n < a.d - 1) b.n++; } }
   var R = suma ? fsum(mixV(a), mixV(b)) : fres(mixV(a), mixV(b));
   var mal = !suma && a.n*b.d < b.n*a.d ? fsum(fr(a.e - b.e, 1), fr(Math.abs(a.n*b.d - b.n*a.d), a.d*b.d)) : null;
-  return { enun: "Calcule " + mixH(a) + (suma ? " + " : " − ") + mixH(b) + ".", correcta: mixTxt(R), solucion: pasosSR(a, b, suma ? "+" : "-").pasos.join(" ") + " Resultado: " + mixTxt(R) + ".",
-    evalua: evFr(R, mal ? [{ v: mal, msg: "Parece que se restó la fracción al revés. Cuando la de arriba es menor, se pide prestado un entero." }] : [], true) };
+  return { enun: "Calcule " + mixH(a) + (suma ? " + " : " − ") + mixH(b) + ".", correcta: mixTxt(R), solucion: pasosImp(a, b, suma ? "+" : "-").pasos.join(" ") + " Resultado: " + mixTxt(R) + ".",
+    evalua: evFr(R, mal ? [{ v: mal, msg: "Parece que se restó la fracción al revés. Pase todo a impropias, o pida prestado un entero cuando la fracción de arriba sea menor." }] : [], true) };
 }
 /* MÓDULO 4 */
 function genCtx(){
   var t = aleatorio(1, 4), R, enun, sol, p = [];
-  if (t === 1){ var tabla = { e: aleatorio(6, 9), n: 1, d: 2 }, corte = { e: aleatorio(2, 4), n: 3, d: 4 }; R = fres(mixV(tabla), mixV(corte)); enun = "Una tabla mide " + mixS(tabla) + " pies. Se cortan " + mixS(corte) + " pies. ¿Cuánto queda?"; sol = pasosSR(tabla, corte, "-").pasos.join(" "); }
+  if (t === 1){ var tabla = { e: aleatorio(6, 9), n: 1, d: 2 }, corte = { e: aleatorio(2, 4), n: 3, d: 4 }; R = fres(mixV(tabla), mixV(corte)); enun = "Una tabla mide " + mixS(tabla) + " pies. Se cortan " + mixS(corte) + " pies. ¿Cuánto queda?"; sol = pasosImp(tabla, corte, "-").pasos.join(" "); }
   else if (t === 2){ var h = { e: 1, n: 3, d: 4 }, k = aleatorio(2, 4); R = fmul(mixV(h), fr(k, 1)); enun = "Una receta lleva " + mixS(h) + " tazas de harina. ¿Cuántas tazas se necesitan para hacer " + k + " veces la receta?"; sol = "7/4 × " + k + " = " + frTxt(R) + " = " + mixTxt(R) + "."; p.push({ v: fr(k + 3*k, 4 + 0*k) , msg: "" }); p = []; }
-  else if (t === 3){ var a = { e: aleatorio(1, 3), n: 1, d: 2 }, b = { e: aleatorio(1, 3), n: 1, d: 4 }; R = fsum(mixV(a), mixV(b)); enun = "Una persona trabajó " + mixS(a) + " horas el lunes y " + mixS(b) + " horas el martes. ¿Cuántas horas trabajó en total?"; sol = pasosSR(a, b, "+").pasos.join(" "); }
+  else if (t === 3){ var a = { e: aleatorio(1, 3), n: 1, d: 2 }, b = { e: aleatorio(1, 3), n: 1, d: 4 }; R = fsum(mixV(a), mixV(b)); enun = "Una persona trabajó " + mixS(a) + " horas el lunes y " + mixS(b) + " horas el martes. ¿Cuántas horas trabajó en total?"; sol = pasosImp(a, b, "+").pasos.join(" "); }
   else { var cinta = { e: aleatorio(4, 7), n: 1, d: 2 }, pz = fr(3, 4); R = fdiv(mixV(cinta), pz); if (R.d !== 1) return genCtx(); enun = "¿Cuántos pedazos de 3/4 de yarda se cortan de una cinta de " + mixS(cinta) + " yardas?"; sol = frTxt(mixV(cinta)) + " ÷ 3/4 = " + frTxt(mixV(cinta)) + " × 4/3 = " + R.n + "."; }
   return { enun: enun, correcta: mixTxt(R), solucion: sol, evalua: evFr(R, p, true) };
 }
